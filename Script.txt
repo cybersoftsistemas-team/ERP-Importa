@@ -1,0 +1,1 @@
+select * from pedidosRepresentantes where Pedido = 'T842'

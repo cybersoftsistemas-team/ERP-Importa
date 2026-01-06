@@ -1,0 +1,632 @@
+object Utilitarios_ImportarPlanoContas: TUtilitarios_ImportarPlanoContas
+  Left = 483
+  Top = 275
+  BorderStyle = bsDialog
+  Caption = 'Utilitarios_ImportarPlanoContas'
+  ClientHeight = 633
+  ClientWidth = 965
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poOwnerFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Image1: TImage
+    Left = 0
+    Top = 0
+    Width = 965
+    Height = 45
+    Align = alTop
+    Stretch = True
+  end
+  object RxLabel3: TRxLabel
+    Left = 5
+    Top = 1
+    Width = 199
+    Height = 23
+    Caption = 'IMPORTA'#199#195'O DE DADOS'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -19
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold, fsItalic]
+    ParentFont = False
+    ShadowColor = clBlack
+    ShadowPos = spRightBottom
+    Transparent = True
+  end
+  object RxLabel4: TRxLabel
+    Left = 5
+    Top = 22
+    Width = 308
+    Height = 18
+    Caption = 'Importa'#231#227'o do Plano de Contas em arquivo texto.'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -15
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold, fsItalic]
+    ParentFont = False
+    ShadowColor = clBlack
+    ShadowPos = spRightBottom
+    Transparent = True
+  end
+  object StaticText2: TStaticText
+    Left = 4
+    Top = 49
+    Width = 50
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Arquivo'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 0
+    Transparent = False
+    StyleElements = []
+  end
+  object cArquivo: TFilenameEdit
+    Left = 56
+    Top = 49
+    Width = 900
+    Height = 21
+    Filter = 'All files (*.*)|*.txt'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    NumGlyphs = 1
+    ParentFont = False
+    TabOrder = 1
+    Text = ''
+    OnChange = cArquivoChange
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 606
+    Width = 965
+    Height = 27
+    Align = alBottom
+    BevelOuter = bvLowered
+    TabOrder = 2
+    DesignSize = (
+      965
+      27)
+    object bImportar: TButton
+      Left = 814
+      Top = 1
+      Width = 75
+      Height = 25
+      Anchors = [akTop, akRight]
+      Caption = '&Importar'
+      TabOrder = 0
+      OnClick = bImportarClick
+    end
+    object Button3: TButton
+      Left = 889
+      Top = 1
+      Width = 75
+      Height = 25
+      Anchors = [akTop, akRight]
+      Caption = '&Sair'
+      TabOrder = 1
+      OnClick = bSairClick
+    end
+  end
+  object GroupBox1: TGroupBox
+    Left = 4
+    Top = 74
+    Width = 761
+    Height = 112
+    Caption = 'Layout'
+    TabOrder = 3
+    object Label1: TLabel
+      Left = 441
+      Top = 19
+      Width = 49
+      Height = 13
+      Caption = 'Separador'
+    end
+    object cContaCol: TRxSpinEdit
+      Left = 50
+      Top = 63
+      Width = 60
+      Height = 21
+      Color = clBlue
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 0
+      OnChange = cContaColChange
+    end
+    object cContaTam: TRxSpinEdit
+      Left = 111
+      Top = 63
+      Width = 60
+      Height = 21
+      Color = clBlue
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+      OnChange = cContaColChange
+    end
+    object StaticText3: TStaticText
+      Left = 7
+      Top = 44
+      Width = 41
+      Height = 40
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = '    Conta'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 2
+      Transparent = False
+      StyleElements = []
+    end
+    object cCodigoCol: TRxSpinEdit
+      Left = 232
+      Top = 63
+      Width = 60
+      Height = 21
+      Color = clFuchsia
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 3
+      OnChange = cContaColChange
+    end
+    object cCodigoTam: TRxSpinEdit
+      Left = 293
+      Top = 63
+      Width = 60
+      Height = 21
+      Color = clFuchsia
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 4
+      OnChange = cContaColChange
+    end
+    object StaticText4: TStaticText
+      Left = 187
+      Top = 44
+      Width = 43
+      Height = 40
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = '   C'#243'digo'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 5
+      Transparent = False
+      StyleElements = []
+    end
+    object cNomeCol: TRxSpinEdit
+      Left = 405
+      Top = 63
+      Width = 60
+      Height = 21
+      Color = clGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 6
+      OnChange = cContaColChange
+    end
+    object cNomeTam: TRxSpinEdit
+      Left = 466
+      Top = 63
+      Width = 60
+      Height = 21
+      Color = clGreen
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 7
+      OnChange = cContaColChange
+    end
+    object StaticText5: TStaticText
+      Left = 367
+      Top = 44
+      Width = 36
+      Height = 40
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = '  Nome'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 8
+      Transparent = False
+      StyleElements = []
+    end
+    object cSintCol: TRxSpinEdit
+      Left = 633
+      Top = 63
+      Width = 60
+      Height = 21
+      Color = clRed
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 9
+      OnChange = cContaColChange
+    end
+    object cSintTam: TRxSpinEdit
+      Left = 694
+      Top = 63
+      Width = 60
+      Height = 21
+      Color = clRed
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 10
+      OnChange = cContaColChange
+    end
+    object StaticText6: TStaticText
+      Left = 538
+      Top = 44
+      Width = 93
+      Height = 40
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = '  Sintetica/Analitica'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 11
+      Transparent = False
+      StyleElements = []
+    end
+    object StaticText1: TStaticText
+      Left = 7
+      Top = 15
+      Width = 140
+      Height = 21
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Layout do Plano de Contas'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 12
+      Transparent = False
+      StyleElements = []
+    end
+    object cLayout: TComboBox
+      Left = 149
+      Top = 15
+      Width = 254
+      Height = 21
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 13
+      OnChange = cLayoutChange
+      Items.Strings = (
+        'PROSOFT'
+        'ALTERDATA'
+        'MASTERCONT'
+        'QUESTOR'
+        'TOPLOG')
+    end
+    object StaticText7: TStaticText
+      Left = 50
+      Top = 44
+      Width = 60
+      Height = 18
+      Alignment = taCenter
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Coluna'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 14
+      Transparent = False
+      StyleElements = []
+    end
+    object StaticText8: TStaticText
+      Left = 111
+      Top = 44
+      Width = 60
+      Height = 18
+      Alignment = taCenter
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Tamanho'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 15
+      Transparent = False
+      StyleElements = []
+    end
+    object StaticText9: TStaticText
+      Left = 232
+      Top = 44
+      Width = 60
+      Height = 18
+      Alignment = taCenter
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Coluna'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 16
+      Transparent = False
+      StyleElements = []
+    end
+    object StaticText10: TStaticText
+      Left = 293
+      Top = 44
+      Width = 60
+      Height = 18
+      Alignment = taCenter
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Tamanho'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 17
+      Transparent = False
+      StyleElements = []
+    end
+    object StaticText11: TStaticText
+      Left = 405
+      Top = 44
+      Width = 60
+      Height = 18
+      Alignment = taCenter
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Coluna'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 18
+      Transparent = False
+      StyleElements = []
+    end
+    object StaticText12: TStaticText
+      Left = 466
+      Top = 44
+      Width = 60
+      Height = 18
+      Alignment = taCenter
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Tamanho'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 19
+      Transparent = False
+      StyleElements = []
+    end
+    object StaticText13: TStaticText
+      Left = 633
+      Top = 44
+      Width = 60
+      Height = 18
+      Alignment = taCenter
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Coluna'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 20
+      Transparent = False
+      StyleElements = []
+    end
+    object StaticText14: TStaticText
+      Left = 694
+      Top = 44
+      Width = 60
+      Height = 18
+      Alignment = taCenter
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Tamanho'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 21
+      Transparent = False
+      StyleElements = []
+    end
+    object Edit1: TEdit
+      Left = 496
+      Top = 15
+      Width = 121
+      Height = 21
+      TabOrder = 22
+      Text = 'Edit1'
+    end
+  end
+  object ListBox1: TTextListBox
+    Left = 4
+    Top = 192
+    Width = 954
+    Height = 391
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Courier New'
+    Font.Style = []
+    ItemHeight = 15
+    ParentFont = False
+    TabOrder = 4
+    OnClick = cContaColChange
+  end
+  object cNome: TRadioGroup
+    Left = 768
+    Top = 74
+    Width = 189
+    Height = 111
+    Caption = 'Nome da Conta'
+    ItemIndex = 0
+    Items.Strings = (
+      'Nenhum'
+      'Primeira Letra em Maiusculo'
+      'Tudo maiusculo'
+      'Tudo minusculo')
+    TabOrder = 5
+  end
+end

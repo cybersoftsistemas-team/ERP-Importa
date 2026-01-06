@@ -1,0 +1,10 @@
+Timestamp=[15/10/2024 10:35:55]
+WS=[StatusServico]
+URL=[]
+ambiente=[2]
+certificado=[]
+erro=[6110 - Erro: O nome do titular do certificado deve ser informado]
+msgDados=[]
+msgRetWS=[]
+
+DLL=[NFe_Util 2G v4.0.17b beta 19-03-2024 - © 2008-2024 - www.flexdocs.com.br - Todos os direitos reservados]

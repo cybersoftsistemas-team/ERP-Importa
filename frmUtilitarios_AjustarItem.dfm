@@ -1,0 +1,640 @@
+object Utilitarios_AjustarItem: TUtilitarios_AjustarItem
+  Left = 480
+  Top = 201
+  BorderStyle = bsDialog
+  Caption = 'Utilitarios_AjustarItem'
+  ClientHeight = 500
+  ClientWidth = 815
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poOwnerFormCenter
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Shape1: TShape
+    Left = 8
+    Top = 8
+    Width = 799
+    Height = 453
+    Brush.Style = bsClear
+  end
+  object bPesqNav: TSpeedButton
+    Left = 362
+    Top = 46
+    Width = 23
+    Height = 24
+    Glyph.Data = {
+      F6000000424DF600000000000000760000002800000010000000100000000100
+      0400000000008000000000000000000000001000000000000000000000000000
+      80000080000000808000800000008000800080800000C0C0C000808080000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00BBBBBBBBBBBB
+      B111BBBBBBBBBBBB19D1BBBBBBBBBBB19D1BBBBBBBBBBB19D1BBBBBBBBBBB89D
+      1BBBBBB0000087F1BBBBBB066666078BBBBBB867E7E6600BBBBB8EFE7E7E660B
+      BBBB8EE7E7E7E60BBBBB8EEEEE7E760BBBBB8EEFEEE7E60BBBBB8EFFEE7E760B
+      BBBBB8EFEEE7E0BBBBBBBB8EEE7E0BBBBBBBBBB88888BBBBBBBB}
+    OnClick = bPesqNavClick
+  end
+  object StaticText9: TStaticText
+    Left = 23
+    Top = 25
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Processo'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 14
+    Transparent = False
+    StyleElements = []
+  end
+  object StaticText2: TStaticText
+    Left = 23
+    Top = 93
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Produto'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 15
+    Transparent = False
+    StyleElements = []
+  end
+  object StaticText4: TStaticText
+    Left = 23
+    Top = 115
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Valor do Invent'#225'rio'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 16
+    Transparent = False
+    StyleElements = []
+  end
+  object StaticText6: TStaticText
+    Left = 23
+    Top = 175
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'CST PIS'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 17
+    Transparent = False
+    StyleElements = []
+  end
+  object StaticText1: TStaticText
+    Left = 23
+    Top = 219
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Valor PIS'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 18
+    Transparent = False
+    StyleElements = []
+  end
+  object StaticText3: TStaticText
+    Left = 23
+    Top = 326
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Valor COFINS'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 19
+    Transparent = False
+    StyleElements = []
+  end
+  object DBCheckBox1: TDBCheckBox
+    Left = 24
+    Top = 366
+    Width = 125
+    Height = 17
+    Caption = 'Movimenta Invent'#225'rio'
+    Color = 14024703
+    DataField = 'Movimenta_Inventario'
+    DataSource = dmFiscal.dsNotasItens
+    ParentColor = False
+    TabOrder = 11
+  end
+  object DBCheckBox2: TDBCheckBox
+    Left = 24
+    Top = 390
+    Width = 118
+    Height = 17
+    Caption = 'Movimenta Estoque'
+    Color = 14024703
+    DataField = 'Movimenta_Estoque'
+    DataSource = dmFiscal.dsNotasItens
+    ParentColor = False
+    TabOrder = 12
+  end
+  object DBCheckBox3: TDBCheckBox
+    Left = 24
+    Top = 414
+    Width = 135
+    Height = 17
+    Caption = 'Apura'#231#227'o PIS/COFINS'
+    Color = 14024703
+    DataField = 'Apuracao_PISCOFINS'
+    DataSource = dmFiscal.dsNotasItens
+    ParentColor = False
+    TabOrder = 13
+  end
+  object StaticText5: TStaticText
+    Left = 23
+    Top = 281
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'CST COFINS'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 20
+    Transparent = False
+    StyleElements = []
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 467
+    Width = 815
+    Height = 33
+    Align = alBottom
+    BevelOuter = bvLowered
+    TabOrder = 21
+    DesignSize = (
+      815
+      33)
+    object bSair: TButton
+      Left = 739
+      Top = 1
+      Width = 75
+      Height = 32
+      Hint = 'Fecha a janela atual e cancela os processos pendentes.'
+      Anchors = [akTop, akRight]
+      Caption = '&Sair'
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      OnClick = bSairClick
+    end
+    object bAplicar: TButton
+      Left = 1
+      Top = 1
+      Width = 112
+      Height = 32
+      Hint = 'Fecha a janela atual e cancela os processos pendentes.'
+      Caption = 'Aplicar Altera'#231#227'oes'
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+      OnClick = bAplicarClick
+    end
+  end
+  object RxDBLookupCombo1: TRxDBLookupCombo
+    Left = 128
+    Top = 93
+    Width = 665
+    Height = 21
+    DropDownCount = 15
+    DisplayAllFields = True
+    DataField = 'Codigo_Mercadoria'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    LookupField = 'Codigo'
+    LookupDisplay = 'Codigo;Descricao_Reduzida'
+    LookupDisplayIndex = 1
+    LookupSource = Dados.dsProdutos
+    ParentFont = False
+    TabOrder = 1
+  end
+  object RxDBLookupCombo2: TRxDBLookupCombo
+    Left = 128
+    Top = 175
+    Width = 665
+    Height = 21
+    DropDownCount = 15
+    DisplayAllFields = True
+    DataField = 'CSTPIS'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    LookupField = 'Codigo'
+    LookupDisplay = 'Codigo;Descricao'
+    LookupDisplayIndex = 1
+    LookupSource = Dados.dsCSTPIS
+    ParentFont = False
+    TabOrder = 4
+  end
+  object RxDBLookupCombo3: TRxDBLookupCombo
+    Left = 128
+    Top = 281
+    Width = 665
+    Height = 21
+    DropDownCount = 15
+    DisplayAllFields = True
+    DataField = 'CSTCOFINS'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    LookupField = 'Codigo'
+    LookupDisplay = 'Codigo;Descricao'
+    LookupDisplayIndex = 1
+    LookupSource = Dados.dsCSTCONFINS
+    ParentFont = False
+    TabOrder = 8
+  end
+  object DBEdit2: TDBEdit
+    Left = 128
+    Top = 115
+    Width = 153
+    Height = 21
+    DataField = 'Valor_Inventario'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 2
+  end
+  object DBEdit3: TDBEdit
+    Left = 128
+    Top = 219
+    Width = 153
+    Height = 21
+    DataField = 'Valor_PIS'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 6
+  end
+  object DBEdit4: TDBEdit
+    Left = 128
+    Top = 326
+    Width = 153
+    Height = 21
+    DataField = 'Valor_COFINS'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 10
+  end
+  object RxDBLookupCombo4: TRxDBLookupCombo
+    Left = 128
+    Top = 25
+    Width = 233
+    Height = 21
+    DropDownCount = 15
+    DisplayAllFields = True
+    DataField = 'Processo'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    LookupField = 'Processo'
+    LookupDisplay = 'Processo'
+    LookupSource = Dados.dsProcessosDOC
+    ParentFont = False
+    TabOrder = 0
+  end
+  object StaticText7: TStaticText
+    Left = 23
+    Top = 197
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Al'#237'quota do PIS'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 22
+    Transparent = False
+    StyleElements = []
+  end
+  object DBEdit1: TDBEdit
+    Left = 128
+    Top = 197
+    Width = 57
+    Height = 21
+    DataField = 'Aliquota_PIS'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 5
+  end
+  object StaticText8: TStaticText
+    Left = 23
+    Top = 303
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Al'#237'quota do COFINS'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 23
+    Transparent = False
+    StyleElements = []
+  end
+  object DBEdit5: TDBEdit
+    Left = 128
+    Top = 303
+    Width = 57
+    Height = 21
+    DataField = 'Aliquota_COFINS'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 9
+  end
+  object StaticText10: TStaticText
+    Left = 23
+    Top = 153
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Valor BC PIS'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 24
+    Transparent = False
+    StyleElements = []
+  end
+  object DBEdit6: TDBEdit
+    Left = 128
+    Top = 153
+    Width = 153
+    Height = 21
+    DataField = 'Valor_BCPIS'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 3
+  end
+  object StaticText11: TStaticText
+    Left = 23
+    Top = 259
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Valor BC COFINS'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 25
+    Transparent = False
+    StyleElements = []
+  end
+  object DBEdit7: TDBEdit
+    Left = 128
+    Top = 259
+    Width = 153
+    Height = 21
+    DataField = 'Valor_BCPIS'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 7
+  end
+  object StaticText12: TStaticText
+    Left = 23
+    Top = 47
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Navio'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 26
+    Transparent = False
+    StyleElements = []
+  end
+  object cNavio: TDBLookupComboBox
+    Left = 128
+    Top = 47
+    Width = 233
+    Height = 21
+    Color = clWhite
+    DataField = 'Navio'
+    DataSource = dmFiscal.dsNotasItens
+    DropDownRows = 30
+    DropDownWidth = 320
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Pitch = fpFixed
+    Font.Style = [fsBold]
+    KeyField = 'Ordem'
+    ListField = 'Navio;Ordem'
+    ListSource = Dados.dsControleNavios
+    ParentFont = False
+    TabOrder = 27
+  end
+  object StaticText13: TStaticText
+    Left = 23
+    Top = 70
+    Width = 103
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'DI N'#186
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 28
+    Transparent = False
+    StyleElements = []
+  end
+  object DBEdit8: TDBEdit
+    Left = 128
+    Top = 70
+    Width = 153
+    Height = 21
+    DataField = 'DI'
+    DataSource = dmFiscal.dsNotasItens
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 29
+  end
+end

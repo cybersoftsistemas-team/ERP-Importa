@@ -1,0 +1,182 @@
+object Pedido_ItensOutrosRateioValor: TPedido_ItensOutrosRateioValor
+  Left = 599
+  Top = 253
+  BorderStyle = bsDialog
+  Caption = 'Pedido_ItensOutrosRateioValor'
+  ClientHeight = 212
+  ClientWidth = 304
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poOwnerFormCenter
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object GroupBox1: TGroupBox
+    Left = 7
+    Top = 2
+    Width = 290
+    Height = 151
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 34
+      Top = 26
+      Width = 222
+      Height = 16
+      Caption = 'Informe valor total para o rateio.'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object StaticText1: TStaticText
+      Left = 35
+      Top = 80
+      Width = 97
+      Height = 21
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Lucro a Ratear'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 0
+      Transparent = False
+      StyleElements = []
+    end
+    object cRateio: TCurrencyEdit
+      Left = 134
+      Top = 80
+      Width = 121
+      Height = 21
+      AutoSize = False
+      DecimalPlaces = 4
+      DisplayFormat = ',##0.00'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 1
+    end
+    object StaticText2: TStaticText
+      Left = 35
+      Top = 57
+      Width = 97
+      Height = 21
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Total dos Produtos'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 2
+      Transparent = False
+      StyleElements = []
+    end
+    object cTotal: TCurrencyEdit
+      Left = 134
+      Top = 57
+      Width = 121
+      Height = 21
+      AutoSize = False
+      DecimalPlaces = 4
+      DisplayFormat = '#,##0.00'
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 3
+    end
+    object StaticText3: TStaticText
+      Left = 35
+      Top = 103
+      Width = 97
+      Height = 21
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Adi'#231#227'o'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 4
+      Transparent = False
+      StyleElements = []
+    end
+    object cAdicao: TCurrencyEdit
+      Left = 134
+      Top = 103
+      Width = 51
+      Height = 21
+      AutoSize = False
+      DecimalPlaces = 0
+      DisplayFormat = '0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 5
+    end
+  end
+  object bOK: TButton
+    Left = 75
+    Top = 170
+    Width = 75
+    Height = 25
+    Caption = '&OK'
+    TabOrder = 1
+    OnClick = bOKClick
+  end
+  object bCancela: TButton
+    Left = 154
+    Top = 170
+    Width = 75
+    Height = 25
+    Caption = '&Cancelar'
+    TabOrder = 2
+    OnClick = bCancelaClick
+  end
+  object tTotal: TMSQuery
+    Connection = Dados.Banco_Empresas
+    FetchRows = 1
+    Left = 32
+    Top = 166
+  end
+end

@@ -1,0 +1,10 @@
+Timestamp=[20/03/2024 19:42:46]
+WS=[EnviaEPEC]
+URL=[]
+ambiente=[2]
+certificado=[CN=ECB TRADE COMERCIO INTERNACIONAL LTDA:08947074000141, OU=videoconferencia, OU=20613496000186, OU=RFB e-CNPJ A1, OU=Secretaria da Receita Federal do Brasil - RFB, L=Vila Velha, S=ES, O=ICP-Brasil, C=BR]
+erro=[8613 - Erro: A sigla do WS [SVC-AN] informado é inválido]
+msgDados=[]
+msgRetWS=[]
+
+DLL=[NFe_Util 2G v4.0.16 beta 13-12-2023 - © 2008-2023 - www.flexdocs.com.br - Todos os direitos reservados]

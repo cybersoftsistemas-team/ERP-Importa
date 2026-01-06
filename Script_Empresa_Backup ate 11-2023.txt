@@ -1,0 +1,1103 @@
+--[10/01/2022 09:28:00]ALTER TABLE PedidoCompra ADD Referencia_Cliente varchar(15)
+GO
+
+--[20/01/2022 10:15:00]
+ALTER TABLE Produtos ALTER COLUMN Codigo_SKU varchar(20)
+GO
+
+--[11/02/2022 10:29:00]
+ALTER TABLE SimulaProdutos ADD Aliquota_PISSai float
+                              ,Aliquota_COFINSSai float
+                              ,Valor_PISSai money,Valor_COFINSSai money
+GO
+--[12/02/2022 15:30:00]
+ALTER TABLE SimulaProdutos ADD Valor_UnitarioSaida money
+GO
+ALTER TABLE SimulaImportacao ADD Tipo_NotaSai smallint
+GO
+ALTER TABLE SimulaProdutos ADD Valor_BCICMS money
+GO
+ALTER TABLE SimulaProdutos ADD Valor_BCPIS money
+GO
+ALTER TABLE SimulaProdutos ADD Valor_BCIPI money
+GOALTER TABLE SimulaImportacao ADD Valor_IPISai money
+GO
+ALTER TABLE SimulaImportacao ADD Valor_IPISai moneyGOALTER TABLE SimulaProdutos ADD Valor_IPISai money
+GO
+ALTER TABLE SimulaImportacao ADD Valor_PISSai money
+                                ,Valor_COFINSSai Money 
+GO
+ALTER TABLE SimulaImportacao ADD Total_NFSaida money
+GO
+ALTER TABLE SimulaImportacao ADD Total_Produtos money
+GO
+ALTER TABLE SimulaImportacao ADD Valor_Despesas money
+GO
+ALTER TABLE SimulaProdutos ADD Valor_UnitarioReal money
+GO
+
+--[14/02/2022 19:08:00]
+ALTER TABLE SimulaProdutos ADD Valor_CIFReal money
+GO
+
+--[19/02/2022 09:54:00]
+ALTER TABLE SimulaDespesas ADD Classificacao varchar(15)
+GO
+UPDATE SimulaDespesas SET Classificacao = (SELECT MAX(Codigo) FROM ClassificacaoFinanceira CF WHERE CF.Descricao = SimulaDespesas.Despesa AND Desativada <> 1)
+GO
+
+--[19/02/2022 11:12:00]
+ALTER TABLE SimulaDespesas ADD Custo bit
+GO
+UPDATE SimulaDespesas SET Custo = (SELECT Custo FROM ClassificacaoFinanceira WHERE Codigo = Classificacao)
+GO
+
+--[21/02/2022 07:55:00]
+ALTER TABLE SimulaImportacao ADD BCIPI_Entrada money
+                                ,BCIPI_Saida money       
+GO
+
+--[25/02/2022 10:23:00]
+CREATE TABLE ProcessosDocumentosDocs ( Processo varchar(15)
+                                      ,Documento varchar(120)
+                                      )
+GO
+
+--[26/02/2022 11:02:00]
+ALTER TABLE SimulaProdutos ADD BCII_Entrada money
+GO
+ALTER TABLE SimulaImportacao ADD BCII_Entrada money
+GO
+exec sp_RENAME 'SimulaProdutos.Aliquota_IpI', 'Aliquota_IPI', 'COLUMN'
+GO
+
+--[26/02/2022 13:35:00]
+UPDATE TipoNota SET Codigo = (SELECT ISNULL(MAX(Codigo), 0) +1 FROM TipoNota) WHERE Codigo = 0
+GO
+
+--[02/03/2022 09:45:00]
+exec sp_RENAME 'SimulaProdutos.Valor_BCPIS', 'Valor_BCPISEnt', 'COLUMN'
+GO
+ALTER TABLE SimulaProdutos ADD Valor_BCPISSai money
+GO
+
+--[02/03/2022 15:41:00]
+ALTER TABLE SimulaProdutos ADD Fator float
+GO
+
+
+--[03/03/2022 11:51:00]
+ALTER TABLE SimulaImportacao ADD BCICMSST money
+                                ,Valor_ICMSST money
+GO
+ALTER TABLE SimulaProdutos ADD Aliquota_ICMSRed float
+                              ,Aliquota_ICMSST float
+                              ,BCICMSST money
+                              ,Valor_ICMSST money
+GO
+
+--[03/03/2022 11:51:00]
+UPDATE NotasFiscais SET Envio_Armazem = 1 WHERE Saida_Entrada = 1
+GO
+
+--[04/03/2022 18:24:00]
+ALTER TABLE SimulaProdutos ADD Aliquota_ICMS float
+GO          
+
+--[08/03/2022 09:59:00]
+ALTER TABLE SimulaProdutos ADD Valor_UnitarioME money
+GO
+
+--[15/03/2022 09:07:00]
+DELETE FROM SimulaProdutos WHERE Item is null or Simulacao is null
+GO
+
+--[18/03/2022 16:19:00]
+ALTER TABLE Clientes ADD Conta_Propria bit
+                        ,Conta_Ordem bit
+                        ,Encomenda bit
+                        ,Outros bit
+GO
+UPDATE Clientes set Conta_Propria = 0
+                   ,Conta_Ordem = 0
+                   ,Encomenda = 0
+                   ,Outros = 0
+GO
+UPDATE Clientes set Conta_Propria = 1 where Modalidade_Importacao = 1
+GO
+UPDATE Clientes set Conta_Ordem = 1 where Modalidade_Importacao = 2
+GO
+UPDATE Clientes set Encomenda = 1 where Modalidade_Importacao = 3
+GO
+UPDATE Clientes set Outros = 1 where Conta_Propria <> 1 and Conta_Ordem <> 1 and Encomenda <> 1
+GO
+ALTER TABLE Fornecedores ADD Conta_Propria bit
+                            ,Conta_Ordem bit
+                            ,Encomenda bit
+                            ,Outros bit
+GO
+UPDATE Fornecedores set Conta_Propria = 0
+                       ,Conta_Ordem = 0
+                       ,Encomenda = 0
+                       ,Outros = 0
+GO
+UPDATE Fornecedores set Conta_Propria = 1 where Modalidade_Importacao = 1
+GO
+UPDATE Fornecedores set Conta_Ordem = 1 where Modalidade_Importacao = 2
+GO
+UPDATE Fornecedores set Encomenda = 1 where Modalidade_Importacao = 3
+GO
+UPDATE Fornecedores set Outros = 1 where Conta_Propria <> 1 and Conta_Ordem <> 1 and Encomenda <> 1
+GO
+
+
+--[22/03/2022 12:36:00]
+CREATE TABLE ClientesModalidades (Cliente int
+                                 ,Codigo smallint
+                                 )
+GO
+
+--[22/03/2022 13:24:00]
+ALTER TABLE ClientesModalidades DROP COLUMN Descricao
+GO
+CREATE TABLE FornecedoresModalidades (Fornecedor int
+                                     ,Codigo smallint
+                                     )
+GO
+ALTER TABLE Clientes DROP COLUMN Conta_Ordem, Conta_Propria, Encomenda, Outros
+GO
+ALTER TABLE Fornecedores DROP COLUMN Conta_Ordem, Conta_Propria, Encomenda, Outros
+GO
+TRUNCATE TABLE ClientesModalidades
+go
+TRUNCATE TABLE FornecedoresModalidades
+go
+INSERT INTO ClientesModalidades SELECT Codigo, Modalidade_Importacao FROM Clientes WHERE Modalidade_Importacao is not null
+GO
+INSERT INTO FornecedoresModalidades SELECT Codigo, Modalidade_Importacao FROM Fornecedores WHERE Modalidade_Importacao is not null
+GO
+
+--[23/03/2022 15:22:00]
+ALTER TABLE ClientesModalidades ADD Conta_Ativo varchar(15)
+                                   ,Conta_Adiantamento varchar(15)
+                                   ,Conta_Devolucao varchar(15)
+GO
+
+
+--[23/03/2022 16:29:00]
+ALTER TABLE Clientes ADD Conta_Propria bit
+                        ,Conta_Ordem bit
+                        ,Encomenda bit
+                        ,Outros bit
+GO
+UPDATE Clientes set Conta_Propria = 0
+                   ,Conta_Ordem = 0
+                   ,Encomenda = 0
+                   ,Outros = 0
+GO
+UPDATE Clientes set Conta_Propria = 1 where Modalidade_Importacao = 1
+GO
+UPDATE Clientes set Conta_Ordem = 1 where Modalidade_Importacao = 2
+GO
+UPDATE Clientes set Encomenda = 1 where Modalidade_Importacao = 3
+GO
+UPDATE Clientes set Outros = 1 where Conta_Propria <> 1 and Conta_Ordem <> 1 and Encomenda <> 1
+GO
+ALTER TABLE Fornecedores ADD Conta_Propria bit
+                            ,Conta_Ordem bit
+                            ,Encomenda bit
+                            ,Outros bit
+GO
+UPDATE Fornecedores set Conta_Propria = 0
+                       ,Conta_Ordem = 0
+                       ,Encomenda = 0
+                       ,Outros = 0
+GO
+UPDATE Fornecedores set Conta_Propria = 1 where Modalidade_Importacao = 1
+GO
+UPDATE Fornecedores set Conta_Ordem = 1 where Modalidade_Importacao = 2
+GO
+UPDATE Fornecedores set Encomenda = 1 where Modalidade_Importacao = 3
+GO
+UPDATE Fornecedores set Outros = 1 where Conta_Propria <> 1 and Conta_Ordem <> 1 and Encomenda <> 1
+GO
+
+--[24/03/2022 10:24:00]
+ALTER TABLE Clientes DROP COLUMN Conta_Ordem, Conta_Propria, Encomenda, Outros
+GO
+ALTER TABLE Fornecedores DROP COLUMN Conta_Ordem, Conta_Propria, Encomenda, Outros
+GO
+ALTER TABLE FornecedoresModalidades ADD Conta_Passivo varchar(15)
+                                       ,Conta_Adiantamento varchar(15)
+                                       ,Conta_Devolucao varchar(15)
+GO
+TRUNCATE TABLE ClientesModalidades
+GO
+TRUNCATE TABLE FornecedoresModalidades
+GO
+INSERT INTO ClientesModalidades     SELECT Codigo, Modalidade_Importacao, Conta_Ativo, Conta_Adiantamento, Conta_Devolucao FROM Clientes     WHERE Modalidade_Importacao is not null
+GO
+INSERT INTO FornecedoresModalidades SELECT Codigo, Modalidade_Importacao, Conta      , Conta_Adiantamento, Conta_Devolucao FROM Fornecedores WHERE Modalidade_Importacao is not null
+GO
+
+--[05/04/2022 10:10:00]
+ALTER TABLE TiposProcesso ADD Processo bit
+GO
+ALTER TABLE TiposProcesso ADD Exportacao bit
+GO
+UPDATE TiposProcesso SET Exportacao = CASE WHEN Descricao LIKE '%EXPORTA%' THEN 1 ELSE 0 END
+GO
+UPDATE TiposProcesso SET Processo = 1
+GO
+UPDATE TiposProcesso SET Processo = 0 WHERE Descricao LIKE '%OUTROS%' OR Descricao LIKE '%NENHUM%'
+GO
+
+--[17/05/2022 11:06:00]
+ALTER TABLE PedidosDespesas ALTER COLUMN Valor_Total float
+GO
+ALTER TABLE PedidosDespesas ALTER COLUMN Valor_Nota float
+GO
+
+--[25/05/2022 09:43:00]
+ALTER TABLE PagarReceber ADD Permuta_Recebimento bit
+GO
+UPDATE PagarReceber SET Permuta_Recebimento = 0 where Permuta_Recebimento is null
+GO
+UPDATE PagarReceber SET Recuperavel = 0 where Permuta_Recebimento is null
+GO
+
+--[26/05/2022 10:51:00]
+ALTER TABLE TiposProcesso ADD Conta_FornecedorExt varchar(15)
+GO
+
+--[26/05/2022 14:34:00]
+ALTER TABLE ClassificacaoFinanceira ADD Tributo bit
+GO
+UPDATE ClassificacaoFinanceira set Tributo = isnull((select Tributo from cybersoft_Cadastros.dbo.TiposDocumentos where Codigo = Tipo_Documento), 0)
+GO
+
+--[30/05/2022 16:52:00]
+ALTER TABLE Bancos ADD Historico smallint
+GO
+
+--[31/05/2022 08:06:00]
+ALTER TABLE TipoNota ADD Formula_DIFAL text
+                        ,Calculo_DIFAL text
+GO
+
+--[31/05/2022 10:20:00]
+UPDATE TipoNota SET Formula_DIFAL = 'Valor da base de cálculo do ICMS Operacional * (Aliquota do ICMS do estado destino/100)  -  Valor do ICMS Operacional do Item'
+                   ,Calculo_DIFAL = 'PedidosItens_[Valor_BCICMSOper] * (PedidosItens_[Aliquota_ICMSDest]/100)  -  PedidosItens_[Valor_ICMSOper]'
+WHERE isnull(Visiveis_DIFAL, 0) = 1
+GO
+
+--[03/06/2022 14:33:00]
+ALTER TABLE NotasFiscais ADD Cancelada_ForaPrazo bit
+GO
+
+--[08/06/2022 09:52:00]
+CREATE TABLE TempReg450 (Codigo varchar(6)
+                        ,Descricao varchar(60)
+                        ,Ordem varchar(6)
+			)
+GO
+
+--[10/06/2022 11:55:00]
+UPDATE TipoNota SET Formula_DIFAL = 'Valor da base de cálculo do ICMS Operacional * (Aliquota do ICMS do estado destino/100)  -  Valor do ICMS Operacional do Item'
+                   ,Calculo_DIFAL = 'PedidosItens_[Valor_BCICMSOper] * (PedidosItens_[Aliquota_ICMSDest]/100)  -  PedidosItens_[Valor_ICMSOper]'
+WHERE isnull(Visiveis_DIFAL, 0) = 1 
+AND  Formula_DIFAL LIKE 'Valor da base de cálculo do ICMS Operacional * (Aliquota do ICMS do estado destino/100)  -  Valor do ICMS Operacional do Item'
+GO
+
+--[20/06/2022 15:12:00]
+ALTER TABLE ECommerce ADD Servico varchar(25)
+GO
+ALTER TABLE ECommerce ADD Token text
+GO
+
+--[27/06/2022 10:57:00]
+UPDATE PagarReceber SET Documento = (Select Codigo from Cybersoft_Cadastros.dbo.TiposDocumentos where Descricao = Forma_Tipo) 
+WHERE Documento is null
+GO
+
+--[27/06/2022 16:51:00]
+ALTER TABLE PagarReceberBaixas ADD Lote int
+GO
+ALTER TABLE PagarReceber ADD Lote int
+GO
+
+--[05/07/2022 09:31:00]
+ALTER TABLE TipoNota ADD Formula_BCDIFAL text
+                        ,Calculo_BCDIFAL text
+GO
+ALTER TABLE PedidosItens ADD Valor_BCDIFAL money
+GO
+ALTER TABLE NotasItens ADD Valor_BCDIFAL money
+GO
+ALTER TABLE Pedidos ADD Valor_BCDIFAL money
+GO
+ALTER TABLE NotasFiscais ADD Valor_BCDIFAL money
+GO
+UPDATE TipoNota SET Formula_BCDIFAL = '(Valor da base de cálculo do ICMS Operacional - Valor do ICMS Operacional do Item)/((100 - Aliquota do ICMS do estado destino)/100)'
+                   ,Calculo_BCDIFAL = '(PedidosItens_[Valor_BCICMSOper] - PedidosItens_[Valor_ICMSOper])/((100 - PedidosItens_[Aliquota_ICMSDest])/100)'
+WHERE isnull(Visiveis_DIFAL, 0) = 1 
+AND  Formula_DIFAL LIKE '((((Valor da base de cálculo do ICMS Operacional - Valor do ICMS Operacional do Item) / ((100 - Aliquota do ICMS do estado destino)/100))) * (Aliquota do ICMS do estado destino/100)) - Valor do ICMS Operacional do Item'
+GO
+UPDATE TipoNota SET Formula_DIFAL = '(Valor da BASE Calculo do DIFAL * (Aliquota do ICMS do estado destino/100)) - Valor do ICMS Operacional do Item'
+                   ,Calculo_DIFAL = '(PedidosItens_[Valor_BCDIFAL] * (PedidosItens_[Aliquota_ICMSDest]/100)) - PedidosItens_[Valor_ICMSOper]'
+WHERE isnull(Visiveis_DIFAL, 0) = 1 
+AND  Formula_DIFAL LIKE '((((Valor da base de cálculo do ICMS Operacional - Valor do ICMS Operacional do Item) / ((100 - Aliquota do ICMS do estado destino)/100))) * (Aliquota do ICMS do estado destino/100)) - Valor do ICMS Operacional do Item'
+GO
+UPDATE TipoNota SET Formula_BCDIFAL = 'Valor da base de cálculo do ICMS Operacional'
+                   ,Calculo_BCDIFAL = 'PedidosItens_[Valor_BCICMSOper]'
+WHERE isnull(Visiveis_DIFAL, 0) = 1 
+AND  Formula_DIFAL LIKE 'Valor da base de cálculo do ICMS Operacional * (Aliquota do ICMS do estado destino/100)  -  Valor do ICMS Operacional do Item'
+GO
+UPDATE TipoNota SET Formula_DIFAL = '(Valor da BASE Calculo do DIFAL * (Aliquota do ICMS do estado destino/100)) - Valor do ICMS Operacional do Item'
+                   ,Calculo_DIFAL = '(PedidosItens_[Valor_BCDIFAL] * (PedidosItens_[Aliquota_ICMSDest]/100)) - PedidosItens_[Valor_ICMSOper]'
+WHERE isnull(Visiveis_DIFAL, 0) = 1 
+AND  Formula_DIFAL LIKE 'Valor da base de cálculo do ICMS Operacional * (Aliquota do ICMS do estado destino/100)  -  Valor do ICMS Operacional do Item'
+GO
+UPDATE TipoNota SET Formula_BCDIFAL = 'Valor da base de cálculo do ICMS Operacional / (1-(Aliquota do ICMS do estado destino/100))'
+                   ,Calculo_BCDIFAL = 'PedidosItens_[Valor_BCICMSOper] / (1-(PedidosItens_[Aliquota_ICMSDest] /100))'
+WHERE isnull(Visiveis_DIFAL, 0) = 1 
+AND  Formula_DIFAL LIKE '(Valor da base de cálculo do ICMS Operacional / (1-(Aliquota do ICMS do estado destino /100))) * ((Aliquota do ICMS do estado destino - Aliquota do ICMS Operacional) /100)'
+GO
+UPDATE TipoNota SET Formula_DIFAL = '(Valor da BASE Calculo do DIFAL * (Aliquota do ICMS do estado destino/100)) - Valor do ICMS Operacional do Item'
+                   ,Calculo_DIFAL = 'PedidosItens_[Valor_BCDIFAL] * ((PedidosItens_[Aliquota_ICMSDest] - PedidosItens_[Aliquota_ICMSOper])/100)'
+WHERE isnull(Visiveis_DIFAL, 0) = 1 
+AND  Formula_DIFAL LIKE '(Valor da base de cálculo do ICMS Operacional / (1-(Aliquota do ICMS do estado destino /100))) * ((Aliquota do ICMS do estado destino - Aliquota do ICMS Operacional) /100)'
+GO
+
+--[15/09/2022 16:46:00]
+ALTER TABLE Invoice ADD DI varchar(10)
+GO
+CREATE TABLE DIAcrescimo (Registro int
+                         ,DI varchar(10)
+                         ,Codigo smallint
+                         ,Valor money
+			 ,Moeda int
+			 )
+GO
+
+--[16/09/2022 17:03:00]
+ALTER TABLE DIAdicoes ADD Item smallint
+GO
+ALTER TABLE DIAdicoes DROP COLUMN Item
+GO
+
+--[20/09/2022 15:40:00]
+ALTER TABLE Fornecedores ADD Vinculo_CompVend smallint
+GO
+UPDATE Fornecedores SET Vinculo_CompVend = 2 WHERE Estado = 'EX'
+GO
+ALTER TABLE Fornecedores ADD Relacao_ExpFab smallint
+GO
+UPDATE Fornecedores SET Relacao_ExpFab = 2 WHERE Estado = 'EX'
+GO
+ALTER TABLE DIAdicoes ADD Relacao_ExpFab smallint
+GO
+ALTER TABLE DIAdicoes add Peso_Bruto float
+GO
+ALTER TABLE DIAdicoes ADD Aliquota_COFINS float
+                         ,Aliquota_PIS float
+GO
+
+--[21/09/2022 11:23:00]
+ALTER TABLE DI ADD Total_MercadoriaReal money
+GO
+
+--[21/09/2022 15:23:00]
+ALTER TABLE DIAdicoes ADD Valor_MercadoriaReal money
+GO
+
+--[22/09/2022 10:15:00]
+ALTER TABLE DIAdicoes ADD Aliquota_RedCOFINS float
+GO
+
+--[22/09/2022 17:27:00]
+ALTER TABLE Invoice ADD Local_Condicao varchar(30)
+                       ,Metodo_Valoracao smallint
+GO
+ALTER TABLE DIAdicoes ADD Local_Condicao varchar(30)
+                         ,Metodo_Valoracao smallint
+GO
+
+--[23/09/2022 11:15:00]
+EXEC sp_rename 'dbo.Invoice.Cotacao', 'Taxa_Cambio', 'COLUMN'
+GO
+
+--[23/09/2022 17:55:00]
+ALTER TABLE Invoice add Cobertura_Cambial smallint
+GO
+
+--[25/09/2022 07:34:00]
+ALTER TABLE Invoice ADD Financiadora smallint
+GO
+ALTER TABLE DIAdicoes ADD Financiadora smallint
+GO
+
+--[26/09/2022 15:38:00]
+ALTER TABLE Invoice ADD Motivo_SemCobertura smallint
+GO
+
+--[27/09/2022 10:24:00]
+ALTER TABLE Invoice ADD Aplicacao varchar(7)
+GO
+UPDATE Invoice SET Aplicacao = 'REVENDA'
+GO
+ALTER TABLE DIAdicoes ALTER COLUMN Aplicacao varchar(7)
+GO
+UPDATE DIAdicoes SET Aplicacao = 'REVENDA'
+GO
+ALTER TABLE NCM ADD NALADI_NCCA varchar(7)
+GO
+EXEC sp_rename 'dbo.DIAdicoes.NALADI_NCC', 'NALADI_NCCA', 'COLUMN'
+GO
+ALTER TABLE Invoice ADD Condicao_Mercadoria varchar(5)
+GO
+UPDATE Invoice SET Condicao_Mercadoria = 'NOVA'
+GO
+ALTER TABLE DIAdicoes ADD Condicao_Mercadoria varchar(5)
+GO
+ALTER TABLE DIAdicoes ADD Unidade varchar(10)
+GO
+UPDATE DIAdicoes set Unidade = (Select MIN(Descricao) FROM Cybersoft_Cadastros.dbo.UnidadeMedida WHERE Codigo = (select Unidade from NCM where NCM.NCM = DIAdicoes.NCM))
+GO
+
+--[28/09/2022 09:57:00]
+ALTER TABLE InvoiceItens ADD Fabricante smallint
+GO
+UPDATE InvoiceItens SET Fabricante = (select Fabricante from Produtos where Codigo = Codigo_Mercadoria)
+GO
+
+--[28/09/2022 16:40:00]
+EXEC sp_rename 'dbo.DIAdicoes.Acordo_Tarifario', 'Acordo_TarifarioII', 'COLUMN'
+GO
+ALTER TABLE DIAdicoes ADD Acordo_TarifarioIICod smallint
+GO
+ALTER TABLE NCM ADD Acordo_TarifarioIICod smallint
+GO
+ALTER TABLE DIAdicoes ADD Aliquota_II float
+GO
+ALTER TABLE DIAdicoes ADD Aliquota_ReducaoII float
+GO
+ALTER TABLE DI ADD Regime_Tributario smallint
+GO
+
+--[29/09/2022 14:44:00]
+ALTER TABLE NCM ADD II_Reduzida float
+GO
+ALTER TABLE DIAdicoes ADD II_Reduzida float
+GO
+ALTER TABLE Invoice ADD Seguro float
+                       ,Moeda_Seguro smallint
+GO
+
+--[03/10/2022 11:37:00]
+EXEC sp_rename 'dbo.DIAcrescimo.Valor', 'Valor_ME', 'COLUMN'
+GO
+ALTER TABLE DIACrescimo ADD Valor_Real money
+GO
+CREATE TABLE AdicoesAcrescimo ( Registro int
+                               ,DI varchar(10)
+                               ,Adicao int
+                               ,Codigo smallint
+                               ,Moeda smallint
+                               ,Valor_ME money
+                               ,Valor_Real money
+                              )
+GO
+ALTER TABLE DI ADD Total_AcrescimoReal money
+GO
+
+--[04/10/2022 10:55:00]
+ALTER TABLE DI ADD Fundamento_Legal smallint
+GO
+ALTER TABLE DI ADD Motivo_AdmissaoTemp smallint
+GO
+
+--[05/10/2022 09:13:00]
+ALTER TABLE DIAdicoes ADD Valor_BCII money
+                         ,Aliquota_IPI float
+                         ,Valor_BCIPI money
+                         ,Valor_IPI money
+                         ,Valor_BCPIS money
+                         ,Valor_PIS money
+			 ,Valor_BCCOFINS money
+			 ,Valor_COFINS money
+			 ,Valor_BCICMS money
+			 ,Valor_ICMS money
+                         ,Aliquota_RedPIS float
+GO
+
+--[06/10/2022 09:37:00]
+EXEC sp_rename 'dbo.DI.Regime_Tributario', 'Regime_TributacaoII', 'COLUMN'
+GO
+ALTER TABLE NCM ADD IPI_AliqEspRecip float
+                   ,IPI_AliqEspUnid float
+                   ,Aliquota_RedIPI float
+GO
+ALTER TABLE DIAdicoes ADD Aliquota_IPIEspRec float
+                         ,Aliquota_IPIEspUnid float
+GO
+
+--[07/10/2022 08:19:00]
+ALTER TABLE Invoice ADD Pais_Aquisicao smallint
+GO
+
+--[08/10/2022 10:45:00]
+ALTER TABLE NCM ADD ICMS_Importacao float
+GO
+
+--[10/10/2022 08:56:00]
+ALTER TABLE NCM ADD Regime_TribPISCOFINS smallint
+GO
+ALTER TABLE DIAdicoes ADD Reducao_BCPISCOFINS float
+GO
+ALTER TABLE NCM ADD Fundamento_RedPISCOFINS smallint
+GO
+
+--[11/10/2022 12:12:00]
+ALTER TABLE DI ADD Recinto_AduaneiroSetor smallint
+GO
+
+--[14/10/2022 11:45:00]
+ALTER TABLE SimulaProdutos ADD Aliquota_MVA float
+GO
+
+--[17/10/2022 09:59:00]
+ALTER TABLE SimulaProdutos ADD Valor_BCMVA money
+                              ,Valor_MVA money
+GO
+
+--[17/10/2022 16:18:00]
+ALTER TABLE DI ADD Tipo_Conhecimento smallint
+GO
+
+--[17/10/2022 18:18:00]
+ALTER TABLE DI ADD Documento_Chegada varchar(15)
+GO
+
+--[18/10/2022 17:46:00]
+ALTER TABLE Clientes ADD Importador bit
+GO
+ALTER TABLE Invoice ADD Modalidade_Importacao smallint
+                       ,Transportador smallint
+GO
+ALTER TABLE DIAdicoes ALTER COLUMN Unidade varchar(25)
+GO
+
+--[20/10/2022 09:43:00]
+ALTER TABLE DI DROP COLUMN Transportador
+GO
+ALTER TABLE DI ALTER COLUMN Agente_Transportador varchar(50)
+GO
+
+--[21/10/2022 13:38:00]
+ALTER TABLE POItens ALTER COLUMN Valor float
+GO
+
+--[21/10/2022 15:14:00]
+ALTER TABLE Fabricantes ADD Estado_Nome varchar(30)
+GO
+ALTER TABLE Fornecedores ADD Estado_Nome varchar(30)
+GO
+UPDATE Fornecedores SET Estado_Nome = (SELECT Nome FROM Cybersoft_Cadastros.dbo.Estados where Codigo = Estado)
+GO
+
+--[24/10/2022 10:07:00]
+ALTER TABLE NCM ADD Regime_TribII smallint
+GO
+ALTER TABLE DI DROP COLUMN Regime_TributacaoII
+GO
+ALTER TABLE DIAdicoes ADD Regime_TribII smallint
+GO
+ALTER TABLE DI ADD Agente_Numero varchar(20)
+GO
+
+--[25/10/2022 09:54:00]
+CREATE TABLE DIDocumentos (DI varchar(10)
+                          ,Codigo smallint
+                          ,Numero varchar(20)
+                          )
+GO
+
+--[25/10/2022 11:46:00]
+ALTER TABLE DI ADD Tipo_Embalagem smallint
+GO
+ALTER TABLE DI ADD Volumes_Embalagem smallint
+GO
+ALTER TABLE DI ADD Frete_TerritorioNac money
+GO
+exec sp_RENAME 'Invoice.Frete_Inter', 'Frete_PrePaid', 'COLUMN'
+GO
+ALTER TABLE Invoice ADD Frete_Collect money
+GO
+
+--[27/10/2022 11:19:00]
+ALTER TABLE InvoiceItens ADD PO varchar(15)
+GO
+
+--[28/10/2022 18:36:00]
+ALTER TABLE SimulaDespesas ADD Custo_Saida bit
+GO
+
+--[31/10/2022 09:31:00]
+ALTER TABLE SimulaProdutos ADD Valor_BCIPISai money
+GO
+
+--[31/10/2022 17:50:00]
+ALTER TABLE SimulaImportacao ADD Total_NFEntrada money
+GO
+
+--[01/11/2022 09:33:00]
+ALTER TABLE SimulaImportacao ADD Valor_DespesasSai money
+GO
+
+--[03/11/2022 09:16:00]
+ALTER TABLE SimulaProdutos ADD Valor_UnitarioImpSai money
+                              ,Valor_UnitarioimpEnt money
+GO
+
+--[17/11/2022 11:54:00]
+ALTER TABLE Configuracao ADD Tela_LiberaPedidos bit
+GO
+UPDATE Configuracao SET Tela_LiberaPedidos = 1
+GO
+ALTER TABLE PedidosRepresentantes ADD Sel bit
+GO
+
+--[18/11/2022 14:44:00]
+ALTER TABLE Configuracao DROP COLUMN Pasta_BackupLocal
+GO
+
+--[18/11/2022 17:25:00]
+ALTER TABLE PedidosRepresentantes ADD Aguardando_Conferencia bit
+                                     ,Aguardando_Cliente bit
+GO
+
+--[26/11/2022 16:04:00]
+ALTER TABLE PedidosRepresentantes ADD Local smallint
+GO
+UPDATE PedidosRepresentantes SET Local = 0
+GO
+
+--[27/11/2022 14:24:00]
+ALTER TABLE PedidosRepresentantes ALTER COLUMN Situacao varchar(20)
+GO
+
+--[28/11/2022 13:58:00]
+ALTER TABLE ProcessosDocumentos ADD Recinto_AlfandegarioCod int
+GO
+
+--[30/11/2022 13:37:00]
+ALTER TABLE PedidosRepresentantes ADD Alterado bit
+GO
+
+--[13/12/2022 10:08:00]
+ALTER TABLE PedidosRepresentantesItens ADD Codigo_SKU varchar(15)
+GO
+
+--[13/12/2022 17:30:00]
+ALTER TABLE ProdutosLinhas ADD Comissao float
+GO
+
+--[14/12/2022 10:26:00]
+ALTER TABLE TabelaComissoes ADD Percentual_Venda float
+GO
+ALTER TABLE PedidosRepresentantes ADD Ordem_Compra varchar(20)
+GO
+
+--[03/01/2023 09:25:00]
+ALTER TABLE Produtos ADD Quantidade_CaixaMaster float
+GO
+
+--[11/01/2023 10:54:00]
+ALTER TABLE ReferenciasFiscais ADD Sinal_BCIPI char(1)
+                                  ,Sinal_BCICMSOper char(1)
+                                  ,Sinal_BCICMSST char(1)
+                                  ,Sinal_BCFrete char(1)
+GO
+
+--[11/01/2023 14:48:00]
+UPDATE ReferenciasFiscais SET Sinal_BCIPI = '+'
+GO
+
+--[26/01/2023 09:44:00]
+ALTER TABLE PedidosRepresentantes ADD Data_Despacho datetime
+GO
+ALTER TABLE PedidosRepresentantesItens add Tabela_Comissao smallint
+GO
+
+--[26/01/2023 16:26:00]
+ALTER TABLE Configuracao ADD ECommerce_Valor bit
+GO
+UPDATE Configuracao SET ECommerce_Valor = 0
+GO
+
+--[27/01/2023 10:20:00]
+ALTER TABLE PedidosRepresentantes ADD Novo bit
+GO
+UPDATE PedidosRepresentantes set novo = 0
+GO
+
+--[30/01/2023 09:39:00]
+ALTER TABLE Configuracao add Classificacao_PagamentoPF varchar(15)
+GO
+
+--[31/01/2023 16:21:00]
+ALTER TABLE PedidosRepresentantes ADD Data_Planilha datetime
+GO
+
+--[01/02/2023 14:15:00]
+ALTER TABLE PedidosRepresentantes ADD Planilha varchar(80)
+GO
+
+--[03/02/2023 11:38:00]
+ALTER TABLE PedidosRepresentantes ADD Gera_Boleto bit
+                                     ,Local_Entrega text
+GO
+UPDATE PedidosRepresentantes SET Gera_Boleto = 1
+GO
+
+--[06/02/2023 11:31:00]
+ALTER TABLE Configuracao ADD Classificacao_RecebimentoComBol varchar(15)
+                            ,Classificacao_RecebimentoSemBol varchar(15)
+                            ,Tempo_Verificacao int
+GO
+
+--[06/02/2023 08:50:00]
+ALTER TABLE PedidosRepresentantes ALTER COLUMN Cliente_Telefone varchar(15)
+GO
+
+--[09/02/2023 10:55:00]
+ALTER TABLE PedidosRepresentantes ALTER COLUMN Vendedor varchar(80)
+GO
+
+--[09/02/2023 15:21:00]
+UPDATE PedidosRepresentantes set Inf_Complementares2 = null where Origem_Pedido = 'E-COMMERCE' and Data < '02/09/2023'
+GO
+
+--[10/02/2023 15:58:00]
+UPDATE ProcessosDocumentos set Modalidade_Importacao = (SELECT Codigo FROM TiposProcesso WHERE isnull(Exportacao, 0) = 1) WHERE RTRIM(Tipo) = 'EXPORTAÇÃO'
+GO
+
+--[13/02/2023 09:00:00]
+ALTER TABLE Boletos ADD Pedido varchar(15)
+GO
+update Boletos set Pedido = (select Fiscal from PagarReceber where Numero = Financeiro_Numero)
+GO
+
+--[16/02/2023 09:38:00]
+ALTER TABLE PedidosRepresentantes add Data_Liberacao datetime
+                                     ,Data_Conferencia datetime
+                                     ,Data_Faturamento datetime
+GO
+
+--[23/02/2023 16:09:00]
+ALTER TABLE TabelaComissoes ADD Desativada bit
+GO
+UPDATE TabelaComissoes SET Desativada = 0
+GO
+
+--[27/02/2023 11:02:00]
+ALTER TABLE Log ALTER COLUMN Funcao varchar(12)
+GO
+
+--[02/03/2023 10:47:00]
+ALTER TABLE NotasTerceiros ADD Tipo_Pagamento smallint
+GO
+UPDATE NotasTerceiros set Tipo_Pagamento = 2 where Tipo_Pagamento is null
+GO
+
+--[07/03/2023 14:46:00]
+UPDATE NotasFiscais set Tipo_Pagamento = 2 where Tipo_Pagamento is null
+GO
+ALTER TABLE NotasTerceiros ADD Complementar bit
+GO
+UPDATE NotasTerceiros set Complementar = 0 WHERE Complementar is NULL
+GO
+
+--[08/03/2023 16:16:00]
+ALTER TABLE PedidosRepresentantes ADD Usuario varchar(15)
+GO
+UPDATE PedidosRepresentantes SET Usuario = 'ADM01'
+GO
+
+--[13/03/2023 15:00:00]
+UPDATE PedidosRepresentantes SET Total_Pedido = (select SUM(Valor_Unitario * Quantidade) from PedidosRepresentantesItens Pri where Pri.Pedido = 'E1852') WHERE Pedido = 'E1852'
+GO
+
+--[16/03/2023 15:34:00]
+ALTER TABLE Boletos ADD Pedido varchar(15)
+GO
+UPDATE Boletos SET Pedido = (SELECT Fiscal FROM PagarReceber WHERE Numero = Financeiro_Numero)
+GO
+
+--[30/03/2023 16:01:00]
+ALTER TABLE ContratoCambio ADD Pago_Cliente bit
+GO
+UPDATE ContratoCambio SET Pago_Cliente = 0
+GO
+
+--[05/04/2023 14:23:00]
+ALTER TABLE PedidosRepresentantes ADD Data_Separacao datetime
+GO
+UPDATE PedidosRepresentantes SET Data_Separacao = Data_Despacho
+GO
+UPDATE PedidosRepresentantes SET Local = (Local+1) WHERE Local > 2 AND (select COUNT(*) from PedidosRepresentantes where Local = 5) = 0
+GO
+UPDATE PedidosRepresentantes SET Local = 0 WHERE Local IS NULL
+GO
+
+--[06/04/2023 08:38:00]
+ALTER TABLE PedidosRepresentantesItens ADD Quantidade_Devol float
+GO
+ALTER TABLE ProdutosTransferencia ADD Pedido varchar(15)
+GO
+
+--[06/04/2023 15:05:00]
+ALTER TABLE Configuracao ADD Classificacao_DevolucaoPedido varchar(15)
+GO
+ALTER TABLE PedidosRepresentantes ADD Numero_Financeiro int
+GO
+
+--[06/04/2023 17:41:00]
+UPDATE Configuracao SET Aparencia = 'Cyber001C' WHERE ISNULL(Aparencia, '') = ''
+GO
+
+--[12/04/2023 15:32:00]
+ALTER TABLE Bancos ADD Lancamento_Contabil bit
+GO
+UPDATE Bancos SET Lancamento_Contabil = 1
+GO
+
+--[13/04/2023 11:53:00]
+ALTER TABLE Configuracao ADD Tempo_RefreshRep smallint
+GO
+
+--[25/04/2023 16:45:00]
+EXEC sp_rename 'dbo.Produtos.Beneficio_Fiscal', 'Beneficio_FiscalEnt', 'COLUMN';
+GO
+ALTER TABLE Produtos ALTER COLUMN Beneficio_FiscalEnt varchar(8)
+GO
+ALTER TABLE Produtos ADD Beneficio_FiscalSai varchar(8)
+GO
+ALTER TABLE PedidosItens ADD Beneficio_Fiscal varchar(8)
+GO
+ALTER TABLE NotasItens ADD Beneficio_Fiscal varchar(8)
+GO
+ALTER TABLE TipoNota ADD Beneficio_Fiscal varchar(8)
+GO
+
+--[27/04/2023 11:57:00]
+ALTER TABLE TipoNota ADD Diferido_ICMS bit
+GO
+UPDATE TipoNota SET Diferido_ICMS = 0 WHERE Diferido_ICMS IS NULL
+GO
+
+--[04/05/2023 16:14:00]
+ALTER TABLE Pedidos ADD Valor_ICMSDif money
+                       ,Aliquota_ICMSDif float
+GO
+ALTER TABLE PedidosItens ADD Valor_ICMSDif money
+                            ,Aliquota_ICMSDif float
+GO
+ALTER TABLE NotasFiscais ADD Valor_ICMSDif money
+                            ,Aliquota_ICMSDif float
+GO
+ALTER TABLE NotasItens ADD Valor_ICMSDif money
+                          ,Aliquota_ICMSDif float
+GO
+
+--[05/05/2023 13:46:00]
+ALTER TABLE Pedidos DROP COLUMN Aliquota_ICMSDif
+GO
+ALTER TABLE NotasFiscais DROP COLUMN Aliquota_ICMSDif
+GO
+
+--[08/05/2023 14:12:00]
+ALTER TABLE DI ADD Indicativo_Conhec smallint
+GO
+
+--[08/05/2023 14:17:00]
+EXEC sp_rename 'dbo.DI.Regime_Tributario', 'Regime_TributacaoII', 'COLUMN'
+GO
+
+--[12/05/2023 14:33:00]
+ALTER TABLE Boletos ADD Valor_Multa money
+GO
+
+--[31/05/2023 11:21:00]
+ALTER TABLE SimulaProdutos ADD Valor_BCICMSEnt money
+GO
+
+--[13/06/2023 09:03:00]
+update ProdutosSeriaisNotas Set Numero = ltrim(rtrim(Numero))
+go
+update ProdutosSeriaisNotas Set Numero = 'CXG00955C001H0214' where numero = '  CXG00955C001H0214  '
+go
+update ProdutosSeriaisNotas Set Numero = 'CXG00955J001H0218' where numero = '  CXG00955J001H0218 '
+go
+update ProdutosSeriaisNotas Set Numero = 'CXG00935CJ0H00149' where numero = 'CXG00935CJ0H00149 /'
+go
+
+--[28/06/2023 10:51:00]
+ALTER TABLE ProcessosFechamento ADD Transferencia_Efetuada money
+                                   ,Transferencia_Recebida money
+                                   ,Devolucoes money
+GO
+
+--[03/07/2023 09:21:00]
+ALTER TABLE TipoNota ADD TTD bit
+GO
+UPDATE TipoNota SET TTD = 0
+GO
+
+--[23/08/2023 09:07:00]
+ALTER TABLE PedidosItens ADD Aliquota_ICMSReducao2 float
+                            ,Percentual_Beneficio float
+GO
+
+--[23/08/2023 10:36:00]
+ALTER TABLE NotasItens ADD Aliquota_ICMSReducao2 float
+                          ,Percentual_Beneficio float
+GO
+
+--[23/08/2023 15:55:00]
+ALTER TABLE NCM ADD 
+ AC_Reducao2 float
+,AL_Reducao2 float
+,AM_Reducao2 float
+,AP_Reducao2 float
+,BA_Reducao2 float
+,CE_Reducao2 float
+,DF_Reducao2 float
+,ES_Reducao2 float
+,GO_Reducao2 float
+,MA_Reducao2 float
+,MG_Reducao2 float
+,MS_Reducao2 float
+,MT_Reducao2 float
+,PA_Reducao2 float
+,PB_Reducao2 float
+,PE_Reducao2 float
+,PI_Reducao2 float
+,PR_Reducao2 float
+,RJ_Reducao2 float
+,RN_Reducao2 float
+,RO_Reducao2 float
+,RR_Reducao2 float
+,RS_Reducao2 float
+,SC_Reducao2 float
+,SE_Reducao2 float
+,SP_Reducao2 float
+,TO_Reducao2 float
+,EX_Reducao2 float
+GO
+
+--[12/09/2023 16:22:00]
+ALTER TABLE SimulaDespesas ADD Valor_ME money
+                              ,Taxa float
+GO
+
+CREATE TABLE REINF (Registro int
+                   ,Registro_REINF varchar(10)
+                   ,Data date
+                   ,Recibo varchar(20)
+                   ,Protocolo varchar(20)
+                   )
+GO
+
+--[13/09/2023 11:30:00]
+ALTER TABLE Configuracao ADD Percentual_Seguro float
+                            ,Minimo_Seguro money
+GO
+
+--[13/09/2023 15:42:00]
+ALTER TABLE Configuracao ADD Percentual_Marinha float
+                            ,Tarifa_Marinha money
+GO
+
+--[14/09/2023 08:51:00]
+UPDATE SimulaDespesas SET Taxa = (SELECT Taxa_FOB FROM SimulaImportacao si WHERE si.Numero = Simulacao)
+                         ,Valor_ME = Valor / (SELECT Taxa_FOB FROM SimulaImportacao si WHERE si.Numero = Simulacao)
+WHERE isnull(Taxa, 0) = 0
+GO
+ALTER TABLE SimulaDespesas ALTER COLUMN Registro bigint null
+GO
+UPDATE SimulaDespesas SET Classificacao = (SELECT MAX(Codigo) FROM ClassificacaoFinanceira WHERE Descricao = Despesa)
+GO
+
+--[18/09/2023 10:18:00]
+ALTER TABLE REINF ADD Arquivo varchar(160)
+GO
+exec sp_RENAME 'REINF.Registro_REINF', 'Evento', 'COLUMN'
+GO
+ALTER TABLE REINF Add Evento_ID varchar(40)
+GO
+ALTER TABLE REINF ADD Protocolo_Data date
+GO
+exec sp_RENAME 'REINF.Data', 'Data_Envio', 'COLUMN'
+GO
+
+--[19/09/2023 14:31:00]
+ALTER TABLE PropostaExp ADD Condicao_Frete varchar(60)
+GO
+ALTER TABLE Invoice ADD Condicao_Frete varchar(60)
+GO
+ALTER TABLE SimulaProdutos ADD Aliquota_ICMSRed2 float
+GO
+
+--[20/09/2023 09:14:00]
+ALTER TABLE DI ADD Regime_TributacaoII smallint
+GO
+
+--[21/09/2023 09:53:00]
+ALTER TABLE TipoNota ADD Formula_VlrICMSDeson text
+                       , Calculo_VlrICMSDeson text
+GO
+ALTER TABLE Produtos ADD ICMS_Desonerado bit
+GO
+UPDATE Produtos SET ICMS_Desonerado = 0
+GO
+
+--[29/09/2023 16:47:00]
+ALTER TABLE Boletos ADD Numero_Envio int
+GO
+
+--[09/10/2023 14:19:00]
+ALTER TABLE REINF ADD Contribuinte_CNPJ varchar(14)
+                     ,Contribuinte_Nome varchar(60)
+GO
+
+--[24/10/2023 16:57:00]
+UPDATE PedidosRepresentantes set Local = Local+1 where Local > 3
+GO
+
+--[30/10/2023 09:13:00]
+ALTER TABLE Produtos ADD Valor_II money
+                        ,Valor_PIS money
+                        ,Valor_COFINS money
+GO
+
+--[10/11/2023 08:12:00]
+ALTER TABLE Configuracao ADD Modelo_Simulacao bit
+GO
+UPDATE Configuracao SET Modelo_Simulacao = 0
+GO
+
+--[17/11/2023 09:42:00]
+ALTER TABLE SimulaImportacao ADD Produto_Destinado varchar(50)
+GO
+
+--[20/11/2023 11:01:00]
+ALTER TABLE ClassificacaoFinanceira ADD Despesa_AgMaritima bit
+GO
+UPDATE ClassificacaoFinanceira SET Despesa_Agmaritima = 0
+GO
+
+--[24/11/2023 10:02:00]
+ALTER TABLE PedidosRepresentantes ADD Autorizado bit
+GO

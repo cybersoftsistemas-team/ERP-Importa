@@ -1,0 +1,1520 @@
+object NotaFiscal_ServicoXML: TNotaFiscal_ServicoXML
+  Left = 0
+  Top = 0
+  BorderStyle = bsDialog
+  Caption = 'NotaFiscal_ServicoXML'
+  ClientHeight = 678
+  ClientWidth = 1033
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poOwnerFormCenter
+  OnClose = FormClose
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 14
+  object Panel1: TPanel
+    Left = 0
+    Top = 648
+    Width = 1033
+    Height = 30
+    Align = alBottom
+    BevelOuter = bvLowered
+    TabOrder = 0
+    object bSair: TButton
+      Left = 956
+      Top = 1
+      Width = 76
+      Height = 28
+      Cursor = crHandPoint
+      Hint = 'Fecha a janela atual e cancela os processos pendentes.'
+      Align = alRight
+      Caption = '&Sair'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      OnClick = bSairClick
+    end
+    object bImportar: TButton
+      Left = 881
+      Top = 1
+      Width = 75
+      Height = 28
+      Align = alRight
+      Caption = '&Importar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      OnClick = bImportarClick
+    end
+  end
+  object Panel2: TPanel
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 1027
+    Height = 111
+    Align = alTop
+    BevelOuter = bvLowered
+    TabOrder = 1
+    object bCarregar: TSpeedButton
+      Left = 457
+      Top = 8
+      Width = 86
+      Height = 72
+      AllowAllUp = True
+      Caption = 'Abrir'
+      Glyph.Data = {
+        36100000424D3610000000000000360000002800000020000000200000000100
+        2000000000000010000000000000000000000000000000000000FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00406060000000000000000000000000004020
+        2000402020004040200080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF008080800000000000000000004040400040606000404040000000
+        00000000000000000000404020004020200040404000FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00406060000000000080A0C000F0FBFF00F0FBFF00F0FBFF00F0FBFF00F0FB
+        FF0080C0C0004020400000000000000000004020200040404000404020008080
+        8000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF0000000000F0FBFF0080E0E00040A0E0004080E0000080E0000080E0004080
+        E00080C0E000F0FBFF00F0FBFF00808080000000000000000000000000004040
+        40004020200040404000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF004020
+        200080A0A000F0FBFF004080C0000080E0000080E0000080E0000080E0000080
+        E0000080E0004080C00080A0E000F0FBFF00F0FBFF0080A0C000002040000000
+        00000000000040202000404040004020200080808000FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF000000
+        0000F0FBFF004080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0004080E00080C0E000F0FBFF00F0FB
+        FF0040608000000000000000000040202000404040004020200040606000FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF000000
+        0000F0FBFF004080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0004080E0004080C00080A0
+        E000F0FBFF00F0FBFF0080A0C000002040000000000000000000402040004040
+        40004020200080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF000000
+        000080E0E0004080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0004080E00040A0E00080C0E000F0FBFF00C0DCC00040606000000000000000
+        0000402020004040200040404000FF00FF00FF00FF00FF00FF00FF00FF000020
+        400080E0E0004080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0004080E0004080C00080C0E000F0FBFF00F0FBFF0080A0
+        A00000000000000000004020200040202000FF00FF00FF00FF00FF00FF000020
+        400080C0E0004080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0000080E00040A0E00080E0
+        E000F0FBFF0080A0A000000000000000000040404000FF00FF00FF00FF004040
+        400080C0E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0000080E0000080E0004080
+        E0004080C000F0FBFF00F0FBFF000000000000000000FF00FF00FF00FF004040
+        600080C0E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0004080E0004080C000F0FBFF00C0C0C0000000000040606000FF00FF004060
+        800080A0E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E00040A0E00080C0E00040A0E0000080E0000080E0000080E0000080
+        E0000080E0000080E0004080C000F0FBFF004040400000000000FF00FF004080
+        800040A0E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E0000080E0000080E0004080E00040A0E00080C0
+        E000F0FBFF0080E0E00080C0E00040A0E0000080E0000080E0000080E0000080
+        E0000080E0000080E0004080E00080C0E00080C0C00000000000FF00FF008080
+        A00040A0E0000080E0000080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0004080E0004080E00080E0E00080A0E0004080C000F0FB
+        FF0080A0E0004080C0004080E0000080E0000080E0000080E0000080E0000080
+        E0000080E0000080E0000080E00080A0E000F0FBFF0000000000FF00FF0080A0
+        A00040A0E0000080E0000080E0000080E0000080E0000080E0000080E0004080
+        E00080C0E0004080C000F0FBFF0080C0E00080A0C000F0FBFF004080C00080C0
+        E00080E0E0004080C0004080E00040A0E00040A0E00040A0E00040A0E00000A0
+        E0000080E0000080E0004080E00040A0E000F0FBFF0000000000FF00FF0080A0
+        C00040A0E0000080E0000080E0000080E0000080E0000080E00080E0E00040A0
+        E00080E0E00080C0E00080C0E000F0FBFF0080C0E00080E0E00080C0E0004080
+        C000F0FBFF0080C0E00040C0E00040A0E00040A0E00040A0E00040A0E00000A0
+        E0000080E0004080E0004080E00080C0E000C0C0C00000000000FF00FF0080A0
+        C0004080E0000080E0000080E00040C0E00080E0E00040A0E00080E0E00080A0
+        E0004080C00080E0E00080C0E00080E0E00080E0E00080C0E000F0FBFF0080A0
+        C00080E0E000F0FBFF0040A0E00040A0E00040A0E00040A0E00040A0E00040A0
+        E00040A0E0004080E0004080C000F0FBFF000020400080606000FF00FF004060
+        800040A0E0000080E0000080E0000080E0004080E00080E0E000F0FBFF0080A0
+        E0004080C00080A0E00080E0E000F0FBFF004080A00080E0E000F0FBFF00F0FB
+        FF0080C0E000F0FBFF0080C0E00040A0E00040A0E00040A0E00040A0E00040A0
+        E00040A0E00040A0E00080E0E00080A0C00000000000FF00FF00FF00FF004060
+        800080C0E0004080E0000080E0000080E0000080E0000080C00080E0E000F0FB
+        FF0080C0E0004080C00080E0E000F0FBFF0080A0E00080C0E00080E0E00080E0
+        E00080C0E00080C0E00040C0E00040A0E00040A0E00040A0E00040A0E00040A0
+        E00040A0E00080C0E000F0FBFF0000000000FF00FF00FF00FF00FF00FF00FF00
+        FF004040600080C0E0004080E0000080E0000080E0000080E00080E0E00080A0
+        E00080C0E00080C0E0004080C00080A0E00080E0E00080E0E00080C0E00080C0
+        E00080C0E00080C0E00040C0E00040C0E00040C0E00040A0E00040A0E00040A0
+        E00080A0E000F0FBFF0000000000FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF004040600080C0E0004080E0000080E0000080E00040A0E0004080
+        E0000080E0000080E0004080C00080C0E00080E0E00080E0E00080E0E00080C0
+        E00080C0E00080C0E00080C0E00040C0E00040C0E00040C0E00040C0E00040A0
+        E000F0FBFF000020400080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF004060800080A0C00040A0E0004080E0004080E0000080
+        E0000080E0000080E00040A0E00080E0E00080E0E00080E0E00080E0E00080E0
+        E00080E0E00080C0E00080C0E00040C0E00080C0E00080C0E00080A0E000F0FB
+        FF004060800040404000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00406080004080A00080C0E0004080
+        E0000080E0004080E00080E0E000F0FBFF0080E0E00080E0E00080E0E00080E0
+        E00080C0E00080C0E00080C0E00080C0E00080C0E00080C0E00080E0E00080C0
+        C00000000000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00408080004060
+        A00080C0E00080C0E000F0FBFF00F0FBFF00F0FBFF0080E0E00080E0E00080E0
+        E00080E0E00080C0E00080C0E00080C0E00080C0E00080C0E000F0FBFF000000
+        0000FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF008080800040608000C0C0C000F0FBFF00F0FBFF00F0FBFF0080E0E00080E0
+        E00080E0E00080E0E00080E0E00080C0E00080C0E000F0FBFF0000000000FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF0080A0A0004060600080A0C000F0FBFF00F0FBFF00F0FB
+        FF0080E0E00080E0E00080E0E00080E0E000F0FBFF0000204000FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF004060600080808000C0C0
+        C000F0FBFF00F0FBFF00F0FBFF00FF00FF000020400080A0A000FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF008080A0008080800080808000FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00
+        FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00FF00}
+      Layout = blGlyphTop
+      OnClick = bCarregarClick
+    end
+    object cMuni: TDBLookupComboBox
+      Left = 89
+      Top = 8
+      Width = 362
+      Height = 21
+      DropDownRows = 15
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      KeyField = 'Codigo'
+      ListField = 'Nome;UF'
+      ListSource = Dados.dsMunicipios
+      ParentFont = False
+      TabOrder = 0
+      OnClick = cMuniClick
+    end
+    object StaticText2: TStaticText
+      Left = 10
+      Top = 8
+      Width = 77
+      Height = 22
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Munic'#237'pio'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 1
+      Transparent = False
+      StyleElements = []
+    end
+    object StaticText1: TStaticText
+      Left = 10
+      Top = 32
+      Width = 77
+      Height = 22
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Processo'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 2
+      Transparent = False
+      StyleElements = []
+    end
+    object cProc: TDBLookupComboBox
+      Left = 89
+      Top = 32
+      Width = 362
+      Height = 21
+      DropDownRows = 15
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      KeyField = 'Processo'
+      ListField = 'Processo;Numero_Declaracao'
+      ListSource = Dados.dsProcessosDOC
+      ParentFont = False
+      TabOrder = 3
+      OnClick = cProcClick
+    end
+    object StaticText3: TStaticText
+      Left = 10
+      Top = 56
+      Width = 77
+      Height = 22
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Navio'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 4
+      Transparent = False
+      StyleElements = []
+    end
+    object cNavio: TDBLookupComboBox
+      Left = 89
+      Top = 56
+      Width = 362
+      Height = 21
+      DropDownRows = 15
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      KeyField = 'Ordem'
+      ListField = 'Navio;Ordem'
+      ListSource = Dados.dsControleNavios
+      ParentFont = False
+      TabOrder = 5
+    end
+    object StaticText13: TStaticText
+      Left = 10
+      Top = 80
+      Width = 77
+      Height = 21
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Data Entrada'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 6
+      Transparent = False
+      StyleElements = []
+    end
+    object cDataEnt: TDateEdit
+      Left = 89
+      Top = 80
+      Width = 122
+      Height = 21
+      CheckOnExit = True
+      DialogTitle = 'Data'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      GlyphKind = gkCustom
+      Glyph.Data = {
+        D2080000424DD208000000000000360000002800000026000000130000000100
+        1800000000009C08000000000000000000000000000000000000171717151515
+        1515151515151515151515151515151515151515151515151515151515151515
+        1515151515151515151515151515151516161617171715151515151515151515
+        1515151515151515151515151515151515151515151515151515151515151515
+        15151515151515151516161600005A5A5A555555565656555555555555565656
+        5656565757575858585858585757575757575555555555555555555555555555
+        555555555959595A5A5A55555556565655555555555556565656565657575758
+        5858585858575757575757555555555555555555555555555555555555595959
+        0000767676B9B9B9AEAEAEABABABAAAAAAA9A9A9A7A7A7A6A6A6A3A3A3A3A3A3
+        A6A6A6ABABABB3B3B3B6B6B6B2B2B2AEAEAEACACACB0B0B0B7B7B7767676B9B9
+        B9AEAEAEABABABAAAAAAA9A9A9A7A7A7A6A6A6A3A3A3A3A3A3A6A6A6ABABABB3
+        B3B3B6B6B6B2B2B2AEAEAEACACACB0B0B0B7B7B700009E9E9EFEFEFEFEFEFEFE
+        FEFEFEFEFEFEFEFEFEFEFEFBFBFBF6F6F6F2F2F2E6E6E6CFCFCFBEBEBEC5C5C5
+        E1E1E1FDFDFDFEFEFEFEFEFEFCFCFC9E9E9EFEFEFEFEFEFEFEFEFEFEFEFEFEFE
+        FEFEFEFEFBFBFBF6F6F6FFFFFFFFFFFFCFCFCFBEBEBEC5C5C5E1E1E1FDFDFDFE
+        FEFEFEFEFEFCFCFC0000818181FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFE
+        FEFEE7E7E7BCBCBCC6C6C6EDEDEDE9E9E9B9B9B98D8D8D8D8D8DCCCCCCFEFEFE
+        F0F0F0818181FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFFFFFFFFFFFFFFFF
+        FFFFFFFFEDEDEDE9E9E9B9B9B98D8D8D8D8D8DCCCCCCFEFEFEF0F0F000006A6A
+        6AFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFECFCFCF565656515151D0
+        D0D0FEFEFEFEFEFEF3F3F3AFAFAF7D7D7DBCBCBCE3E3E36A6A6AFEFEFEFEFEFE
+        FEFEFEFEFEFEFEFEFEFEFEFEFFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFEFEFEFEFE
+        FEF3F3F3AFAFAF7D7D7DBCBCBCE3E3E30000565656F8F8F8FEFEFEFEFEFEFEFE
+        FEFEFEFEFEFEFEFEFEFED3D3D33636362D2D2DCCCCCCFEFEFEFEFEFEFEFEFEFE
+        FEFECFCFCFABABABB5B5B5565656F8F8F8FEFEFEFEFEFEFEFEFEFEFEFEFEFEFE
+        FFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFEFEFEFEFEFEFEFEFEFEFEFECFCFCFABAB
+        ABB5B5B50000424242F0F0F0FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEDDDD
+        DD2121210F0F0FC2C2C2FEFEFEFEFEFEFEFEFEFEFEFEFDFDFDFEFEFEAEAEAE42
+        4242F0F0F0FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFFFFFFC0C0C0C0C0C0FFFFFF
+        FFFFFFFEFEFEFEFEFEFEFEFEFEFEFEFDFDFDFEFEFEAEAEAE0000333333E7E7E7
+        FEFEFEFBFBFBFBFBFBFCFCFCF3F3F3C8C8C8D3D3D31A1A1A030303B3B3B3FEFE
+        FEFDFDFDFDFDFDFDFDFDFEFEFEFEFEFEA7A7A7333333E7E7E7FEFEFEFBFBFBFB
+        FBFBFFFFFFFFFFFFFFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFEFEFEFDFDFDFDFDFD
+        FDFDFDFEFEFEFEFEFEA7A7A70000252525D6D6D6FEFEFEF6F6F6F6F6F6FCFCFC
+        EEEEEE1919191010100D0D0D0D0D0DB3B3B3FEFEFEF8F8F8F8F8F8F8F8F8F9F9
+        F9FEFEFE8E8E8E252525D6D6D6FEFEFEF6F6F6F6F6F6FFFFFFC0C0C0C0C0C0C0
+        C0C0C0C0C0FFFFFFFFFFFFFEFEFEF8F8F8F8F8F8F8F8F8F9F9F9FEFEFE8E8E8E
+        00001A1A1AC4C4C4FDFEFDF2F3F2F3F5F2F4F5F3FAFBF99B9C9A313231151614
+        282928BCBDBCFEFEFEF5F6F5F6F7F5F6F7F5F7F9F6FEFEFE7C7C7B1A1A1AC4C4
+        C4FDFDFDF2F2F2F3F3F3F4F4F4FAFAFAC0C0C0C0C0C0C0C0C0FFFFFFFFFFFFFE
+        FEFEF5F5F5F6F6F6F6F6F6F7F7F7FEFEFE7B7B7B0000131313B3B6B2FDFEFCEE
+        F0ECEFF2EDF0F5EEF4F9F1FEFEFEE6EBE4787D75686C66CED1CCFCFEFBF7FEF2
+        F5FBF2F4F8F2F6FBF3FEFEFE696A69131313B4B4B4FDFDFDEEEEEEF0F0F0F2F2
+        F2F6F6F6FFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFCFCFCF9F9F9F7F7F7F5F5F5F8
+        F8F8FEFEFE696969000020231EAA7D7CE1C1A2E6CAB0E4C59DE7C99BE3C184E5
+        C27EEACA83EFD697EED497EBCC85EBCC85E8C67CEBCE93EACB95E5C485E4C289
+        4A4739212121818181BABABAC5C5C5BCBCBCBEBEBEB2B2B2B1B1B1B7B7B7C5C5
+        C5C4C4C4B9B9B9B9B9B9B3B3B3BFBFBFBDBDBDB4B4B4B4B4B443434300002E35
+        2A7D5545D1A475DEBB97E0BE8DDEB877CE963FC1852FC7892FD7A53DE9C876E8
+        C46CE1B756CA8B2FD9A849E2BB71DEB36CC9954935321F3131315454549A9A9A
+        B3B3B3B2B2B2A8A8A88181817171717474748A8A8AB2B2B2ADADAD9E9E9E7575
+        75909090A8A8A8A2A2A28383832C2C2C000022271F7E5858A0693FA9703EB47D
+        43BA823FBC8538BA7F2FC0832FC89236D9AA58DBAD5BD8A957C1852FCC9743D2
+        A15BD2A35FBF8A532C2B222424245B5B5B616161666666717171737373737373
+        6C6C6C6F6F6F7B7B7B9696969999999595957171718383839090909393937E7E
+        7E28282800001318107C58617E532F85562F935E2FAB775BAE7748AE732FB075
+        2FB47A2FB6782FB6782FC0873DBA8970B27833AA712FA2692F9E683F23232215
+        15155E5E5E4C4C4C4F4F4F5555557373736E6E6E646464656565696969686868
+        6868687676768686866969696262625D5D5D61616122222200000C10093F391D
+        473A0050410045380068655D4946394F4000776300705D007360007D67004F45
+        11757A72342C066754006856004C3E011C1B1B0D0D0D3131312929292F2F2F28
+        28286262624242422E2E2E4747474343434545454A4A4A363636777777212121
+        3C3C3C3E3E3E2D2D2D1B1B1B00000D110A3E3719463900534400292203686C64
+        464B422A22007F69006E5C007A66005A4A00191710888F842926196A57006957
+        00483B001B1B1B0E0E0E2E2E2E2929293131311919196969694747471818184B
+        4B4B4242424949493535351515158B8B8B2222223E3E3E3E3E3E2A2A2A1B1B1B
+        00000D110A3E371A493B003A310B1A1D186A6A6A3C3D3B0000004035007F6A00
+        594A0003020010110F818181161A14302A0E695700493C001B1B1B0E0E0E2F2F
+        2F2A2A2A2626261B1B1B6A6A6A3C3C3C0000002626264C4C4C35353501010110
+        10108181811717172222223E3E3E2B2B2B1B1B1B0000}
+      NumGlyphs = 2
+      ParentFont = False
+      PopupAlign = epaLeft
+      YearDigits = dyFour
+      TabOrder = 7
+    end
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 117
+    Width = 1033
+    Height = 531
+    ActivePage = TabSheet1
+    Align = alClient
+    TabHeight = 25
+    TabOrder = 2
+    TabWidth = 100
+    object TabSheet1: TTabSheet
+      Caption = 'Notas Fiscais'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object Label1: TLabel
+        Left = 320
+        Top = 48
+        Width = 35
+        Height = 14
+        Caption = 'Label1'
+      end
+      object cArquivos: TListBox
+        AlignWithMargins = True
+        Left = 3
+        Top = 25
+        Width = 1019
+        Height = 152
+        Margins.Top = 1
+        Margins.Bottom = 1
+        Align = alClient
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Arial'
+        Font.Style = []
+        ItemHeight = 14
+        ParentFont = False
+        Sorted = True
+        TabOrder = 0
+      end
+      object DBGrid1: TDBGrid
+        AlignWithMargins = True
+        Left = 3
+        Top = 179
+        Width = 1019
+        Height = 135
+        Margins.Top = 1
+        Align = alBottom
+        DataSource = dstNotas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = []
+        Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -9
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = [fsBold]
+      end
+      object DBGrid2: TDBGrid
+        AlignWithMargins = True
+        Left = 3
+        Top = 339
+        Width = 1019
+        Height = 154
+        Margins.Top = 0
+        Align = alBottom
+        DataSource = dstForn
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = []
+        Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 2
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -9
+        TitleFont.Name = 'Tahoma'
+        TitleFont.Style = [fsBold]
+      end
+      object Panel3: TPanel
+        AlignWithMargins = True
+        Left = 3
+        Top = 317
+        Width = 1019
+        Height = 21
+        Margins.Top = 0
+        Margins.Bottom = 1
+        Align = alBottom
+        BevelOuter = bvLowered
+        Caption = 'Fornecedores'
+        Color = clNavy
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 3
+        StyleElements = [seBorder]
+      end
+      object Panel4: TPanel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 1019
+        Height = 21
+        Margins.Bottom = 0
+        Align = alTop
+        BevelOuter = bvLowered
+        Caption = 'Arquivos XML'
+        Color = clNavy
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentBackground = False
+        ParentFont = False
+        TabOrder = 4
+        StyleElements = [seBorder]
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Log'
+      ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
+      object cLog: TMemo
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 1019
+        Height = 483
+        Margins.Bottom = 10
+        Align = alClient
+        Color = 5190912
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clSilver
+        Font.Height = -13
+        Font.Name = 'JetBrains Mono'
+        Font.Pitch = fpFixed
+        Font.Style = []
+        Font.Quality = fqClearType
+        ParentFont = False
+        ScrollBars = ssBoth
+        TabOrder = 0
+        WantReturns = False
+        WordWrap = False
+        StyleElements = [seBorder]
+        ExplicitHeight = 484
+      end
+    end
+  end
+  object XMLDocument1: TXMLDocument
+    Left = 111
+    Top = 222
+  end
+  object tTmp: TMSQuery
+    Connection = Dados.Banco_Empresas
+    SQL.Strings = (
+      'select isnull(max(Codigo), 0)+1 as Cod from Fornecedores')
+    Left = 51
+    Top = 222
+  end
+  object cArqXML: TOpenDialog
+    DefaultExt = 'xml'
+    FileName = '*.xml'
+    Filter = 'Arquivo de NF-e (xml)|*.xml'
+    Options = [ofHideReadOnly, ofNoChangeDir, ofAllowMultiSelect, ofEnableSizing]
+    Left = 178
+    Top = 222
+  end
+  object XMLDoc: TXMLDocument
+    Left = 229
+    Top = 222
+    DOMVendorDesc = 'MSXML'
+  end
+  object LayOut: TMSQuery
+    Connection = Dados.Banco
+    Left = 273
+    Top = 222
+  end
+  object tNotas: TVirtualTable
+    FieldDefs = <
+      item
+        Name = 'Processo'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'FUNDAP'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Nota'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Referencia_Fiscal'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Data_Emissao'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'Nota_Referencia'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Data_Referencia'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'Centro_Custo'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Fornecedor'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Estado'
+        DataType = ftString
+        Size = 2
+      end
+      item
+        Name = 'Data_Entrada'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'Tipo'
+        DataType = ftString
+        Size = 3
+      end
+      item
+        Name = 'Modelo'
+        DataType = ftString
+        Size = 2
+      end
+      item
+        Name = 'Serie'
+        DataType = ftString
+        Size = 2
+      end
+      item
+        Name = 'SubSerie'
+        DataType = ftString
+        Size = 2
+      end
+      item
+        Name = 'Natureza_Codigo'
+        DataType = ftString
+        Size = 4
+      end
+      item
+        Name = 'Servico'
+        DataType = ftString
+        Size = 5
+      end
+      item
+        Name = 'Quantidade'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_BCICMSOper'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Aliquota_ICMSOper'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_ICMSOper'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_IsentasICMS'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_OutrasICMS'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_TotalProdutos'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_TotalDescontos'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_TotalNota'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_TotalLiquido'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_BCICMSSub'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_ICMSSub'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Aliquota_ICMSSub'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_IsentasICMSSub'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_OutrasICMSSub'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_TotalBCIPI'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_TotalIPI'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_IsentasIPI'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_OutrasIPI'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Observacoes'
+        DataType = ftMemo
+      end
+      item
+        Name = 'Volume_PesoLiquido'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Volume_PesoBruto'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Aliquota_PIS'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_PIS'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Aliquota_COFINS'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_COFINS'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Classificacao'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'Codigo_Adicional01'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Aliquota_Adicional01'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_Adicional01'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Codigo_Adicional02'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Aliquota_Adicional02'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_Adicional02'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Codigo_Adicional03'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Aliquota_Adicional03'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_Adicional03'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Codigo_Adicional04'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Aliquota_Adicional04'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_Adicional04'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Codigo_Adicional05'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Aliquota_Adicional05'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_Adicional05'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Codigo_Adicional06'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Aliquota_Adicional06'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_Adicional06'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Lancamento_Nota'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Lancamento_Adicional01'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Lancamento_Adicional02'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Lancamento_Adicional03'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Lancamento_Adicional04'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Lancamento_Adicional05'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Lancamento_Adicional06'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Modalidade_Pgto'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Aliquota_ISS'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Valor_ISS'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'NFe_cNF'
+        DataType = ftString
+        Size = 44
+      end
+      item
+        Name = 'NFe_Protocolo'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'Incentivo_Fiscal'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'Provisoria'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Origem_Mercadoria'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Valor_TotalProdutosOrig'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_TotalLiquidoOrig'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Desdobramento'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Modalidade_Frete'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Manifesto_Protocolo'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'Manifesto_DataProtocolo'
+        DataType = ftDateTime
+      end
+      item
+        Name = 'Manifesto_Motivo'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Manifesto_Justificativa'
+        DataType = ftMemo
+      end
+      item
+        Name = 'Natureza_Frete'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Transportador_Codigo'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Valor_TotalFrete'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Municipio_Origem'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Municipio_Destino'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Manifestada'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Classificacao_Servico'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Total_Despesas'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Tipo_Pagamento'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Complementar'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Valor_IR'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_CSLL'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_INSS'
+        DataType = ftCurrency
+      end>
+    Left = 326
+    Top = 222
+    Data = {
+      04006200080050726F636573736F01000F0000000000060046554E4441500500
+      00000000000004004E6F7461030000000000000011005265666572656E636961
+      5F46697363616C02000000000000000C00446174615F456D697373616F0B0000
+      00000000000F004E6F74615F5265666572656E63696103000000000000000F00
+      446174615F5265666572656E6369610B000000000000000C0043656E74726F5F
+      437573746F01000A00000000000A00466F726E656365646F7202000000000000
+      00060045737461646F01000200000000000C00446174615F456E74726164610B
+      0000000000000004005469706F010003000000000006004D6F64656C6F010002
+      0000000000050053657269650100020000000000080053756253657269650100
+      0200000000000F004E61747572657A615F436F6469676F010004000000000007
+      005365727669636F01000500000000000A005175616E74696461646506000000
+      00000000100056616C6F725F424349434D534F70657207000000000000001100
+      416C6971756F74615F49434D534F70657206000000000000000E0056616C6F72
+      5F49434D534F7065720700000000000000110056616C6F725F4973656E746173
+      49434D530700000000000000100056616C6F725F4F757472617349434D530700
+      000000000000130056616C6F725F546F74616C50726F6475746F730700000000
+      000000140056616C6F725F546F74616C446573636F6E746F7307000000000000
+      000F0056616C6F725F546F74616C4E6F74610700000000000000120056616C6F
+      725F546F74616C4C69717569646F07000000000000000F0056616C6F725F4243
+      49434D5353756207000000000000000D0056616C6F725F49434D535375620700
+      0000000000001000416C6971756F74615F49434D535375620600000000000000
+      140056616C6F725F4973656E74617349434D5353756207000000000000001300
+      56616C6F725F4F757472617349434D535375620700000000000000100056616C
+      6F725F546F74616C424349504907000000000000000E0056616C6F725F546F74
+      616C4950490700000000000000100056616C6F725F4973656E74617349504907
+      000000000000000F0056616C6F725F4F75747261734950490700000000000000
+      0B004F627365727661636F657310000000000000001200566F6C756D655F5065
+      736F4C69717569646F06000000000000001000566F6C756D655F5065736F4272
+      75746F06000000000000000C00416C6971756F74615F50495306000000000000
+      00090056616C6F725F50495307000000000000000F00416C6971756F74615F43
+      4F46494E5306000000000000000C0056616C6F725F434F46494E530700000000
+      0000000D00436C617373696669636163616F01000F00000000001200436F6469
+      676F5F41646963696F6E616C303101000A00000000001400416C6971756F7461
+      5F41646963696F6E616C30310600000000000000110056616C6F725F41646963
+      696F6E616C303107000000000000001200436F6469676F5F41646963696F6E61
+      6C303201000A00000000001400416C6971756F74615F41646963696F6E616C30
+      320600000000000000110056616C6F725F41646963696F6E616C303207000000
+      000000001200436F6469676F5F41646963696F6E616C303301000A0000000000
+      1400416C6971756F74615F41646963696F6E616C303306000000000000001100
+      56616C6F725F41646963696F6E616C303307000000000000001200436F646967
+      6F5F41646963696F6E616C303401000A00000000001400416C6971756F74615F
+      41646963696F6E616C30340600000000000000110056616C6F725F4164696369
+      6F6E616C303407000000000000001200436F6469676F5F41646963696F6E616C
+      303501000A00000000001400416C6971756F74615F41646963696F6E616C3035
+      0600000000000000110056616C6F725F41646963696F6E616C30350700000000
+      0000001200436F6469676F5F41646963696F6E616C303601000A000000000014
+      00416C6971756F74615F41646963696F6E616C30360600000000000000110056
+      616C6F725F41646963696F6E616C303607000000000000000F004C616E63616D
+      656E746F5F4E6F7461020000000000000016004C616E63616D656E746F5F4164
+      6963696F6E616C3031020000000000000016004C616E63616D656E746F5F4164
+      6963696F6E616C3032020000000000000016004C616E63616D656E746F5F4164
+      6963696F6E616C3033020000000000000016004C616E63616D656E746F5F4164
+      6963696F6E616C3034020000000000000016004C616E63616D656E746F5F4164
+      6963696F6E616C3035020000000000000016004C616E63616D656E746F5F4164
+      6963696F6E616C303602000000000000000F004D6F64616C69646164655F5067
+      746F02000000000000000C00416C6971756F74615F4953530600000000000000
+      090056616C6F725F495353070000000000000007004E46655F634E4601002C00
+      000000000D004E46655F50726F746F636F6C6F01000F00000000001000496E63
+      656E7469766F5F46697363616C01000F00000000000A0050726F7669736F7269
+      61050000000000000011004F726967656D5F4D65726361646F72696102000000
+      00000000170056616C6F725F546F74616C50726F6475746F734F726967070000
+      0000000000160056616C6F725F546F74616C4C69717569646F4F726967070000
+      00000000000D00446573646F6272616D656E746F050000000000000010004D6F
+      64616C69646164655F4672657465020000000000000013004D616E6966657374
+      6F5F50726F746F636F6C6F01000F000000000017004D616E69666573746F5F44
+      61746150726F746F636F6C6F0B0000000000000010004D616E69666573746F5F
+      4D6F7469766F020000000000000017004D616E69666573746F5F4A7573746966
+      6963617469766110000000000000000E004E61747572657A615F467265746502
+      0000000000000014005472616E73706F727461646F725F436F6469676F020000
+      0000000000100056616C6F725F546F74616C4672657465070000000000000010
+      004D756E69636970696F5F4F726967656D030000000000000011004D756E6963
+      6970696F5F44657374696E6F03000000000000000B004D616E69666573746164
+      6105000000000000001500436C617373696669636163616F5F5365727669636F
+      03000000000000000E00546F74616C5F44657370657361730700000000000000
+      0E005469706F5F506167616D656E746F02000000000000000C00436F6D706C65
+      6D656E7461720500000000000000080056616C6F725F49520700000000000000
+      0A0056616C6F725F43534C4C07000000000000000A0056616C6F725F494E5353
+      0700000000000000000000000000}
+  end
+  object dstNotas: TDataSource
+    DataSet = tNotas
+    Left = 326
+    Top = 271
+  end
+  object tForn: TVirtualTable
+    FieldDefs = <
+      item
+        Name = 'Codigo'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Nome'
+        DataType = ftString
+        Size = 60
+      end
+      item
+        Name = 'Nome_Fantasia'
+        DataType = ftString
+        Size = 60
+      end
+      item
+        Name = 'Tipo_Servico'
+        DataType = ftString
+        Size = 30
+      end
+      item
+        Name = 'Rua'
+        DataType = ftString
+        Size = 40
+      end
+      item
+        Name = 'Rua_Numero'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Bairro'
+        DataType = ftString
+        Size = 40
+      end
+      item
+        Name = 'Municipio'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Estado'
+        DataType = ftString
+        Size = 2
+      end
+      item
+        Name = 'CEP'
+        DataType = ftString
+        Size = 8
+      end
+      item
+        Name = 'Email'
+        DataType = ftString
+        Size = 60
+      end
+      item
+        Name = 'CNPJ'
+        DataType = ftString
+        Size = 14
+      end
+      item
+        Name = 'Site'
+        DataType = ftString
+        Size = 60
+      end
+      item
+        Name = 'Tipo_Produto'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Inscricao_Estadual'
+        DataType = ftString
+        Size = 14
+      end
+      item
+        Name = 'Isento'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Inscricao_Municipal'
+        DataType = ftString
+        Size = 14
+      end
+      item
+        Name = 'Registro_Alfandega'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'CPF'
+        DataType = ftString
+        Size = 14
+      end
+      item
+        Name = 'RG'
+        DataType = ftString
+        Size = 14
+      end
+      item
+        Name = 'Matriz'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Banco_Nome'
+        DataType = ftString
+        Size = 30
+      end
+      item
+        Name = 'Banco_Conta'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Banco_Agencia'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Alterado'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'SUFRAMA'
+        DataType = ftString
+        Size = 9
+      end
+      item
+        Name = 'Ramo_Atividade'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Modalidade_Importacao'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Complemento'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Comissao'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Regiao'
+        DataType = ftString
+        Size = 2
+      end
+      item
+        Name = 'Observacao'
+        DataType = ftMemo
+      end
+      item
+        Name = 'Ativo'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Enviar_Email'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Pais'
+        DataType = ftString
+        Size = 4
+      end
+      item
+        Name = 'Conta'
+        DataType = ftString
+        Size = 8
+      end
+      item
+        Name = 'Conta_Devolucao'
+        DataType = ftString
+        Size = 8
+      end
+      item
+        Name = 'Conta_Adiantamento'
+        DataType = ftString
+        Size = 8
+      end
+      item
+        Name = 'Representante_Codigo'
+        DataType = ftString
+        Size = 10
+      end
+      item
+        Name = 'Representante_Senha'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'Telefone1'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'Telefone2'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'FAX'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'Municipio_Codigo'
+        DataType = ftInteger
+      end
+      item
+        Name = 'Passaporte'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'Indicador_IE'
+        DataType = ftString
+        Size = 1
+      end
+      item
+        Name = 'LayoutLote_Numero'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'LayoutLote_Fabricacao'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'LayoutLote_Validade'
+        DataType = ftString
+        Size = 20
+      end
+      item
+        Name = 'FTP_Usuario'
+        DataType = ftString
+        Size = 60
+      end
+      item
+        Name = 'FTP_Senha'
+        DataType = ftString
+        Size = 30
+      end
+      item
+        Name = 'FTP_Passive'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Comissao_Gerencia'
+        DataType = ftFloat
+      end
+      item
+        Name = 'Simples'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'MEI'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Zona_Franca'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Swift_Code'
+        DataType = ftString
+        Size = 11
+      end
+      item
+        Name = 'IBAN'
+        DataType = ftString
+        Size = 30
+      end
+      item
+        Name = 'Valor_Servico'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Lote'
+        DataType = ftString
+        Size = 15
+      end
+      item
+        Name = 'Contato'
+        DataType = ftString
+        Size = 60
+      end
+      item
+        Name = 'Micro_Empresa'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'FTP_IP'
+        DataType = ftString
+        Size = 120
+      end
+      item
+        Name = 'Vinculo_CompVend'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Relacao_ExpFab'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Estado_Nome'
+        DataType = ftString
+        Size = 30
+      end>
+    Left = 382
+    Top = 222
+    Data = {
+      040042000600436F6469676F030000000000000004004E6F6D6501003C000000
+      00000D004E6F6D655F46616E746173696101003C00000000000C005469706F5F
+      5365727669636F01001E0000000000030052756101002800000000000A005275
+      615F4E756D65726F01000A0000000000060042616972726F0100280000000000
+      09004D756E69636970696F0100140000000000060045737461646F0100020000
+      000000030043455001000800000000000500456D61696C01003C000000000004
+      00434E504A01000E000000000004005369746501003C00000000000C00546970
+      6F5F50726F6475746F03000000000000001200496E7363726963616F5F457374
+      616475616C01000E000000000006004973656E746F0500000000000000130049
+      6E7363726963616F5F4D756E69636970616C01000E0000000000120052656769
+      7374726F5F416C66616E6465676101000F0000000000030043504601000E0000
+      0000000200524701000E000000000006004D617472697A05000000000000000A
+      0042616E636F5F4E6F6D6501001E00000000000B0042616E636F5F436F6E7461
+      01000A00000000000D0042616E636F5F4167656E63696101000A000000000008
+      00416C74657261646F0500000000000000070053554652414D41010009000000
+      00000E0052616D6F5F417469766964616465030000000000000015004D6F6461
+      6C69646164655F496D706F72746163616F02000000000000000B00436F6D706C
+      656D656E746F01001400000000000800436F6D697373616F0600000000000000
+      060052656769616F01000200000000000A004F62736572766163616F10000000
+      000000000500417469766F05000000000000000C00456E766961725F456D6169
+      6C050000000000000004005061697301000400000000000500436F6E74610100
+      0800000000000F00436F6E74615F4465766F6C7563616F010008000000000012
+      00436F6E74615F416469616E74616D656E746F01000800000000001400526570
+      726573656E74616E74655F436F6469676F01000A000000000013005265707265
+      73656E74616E74655F53656E686101000F0000000000090054656C65666F6E65
+      3101000F0000000000090054656C65666F6E653201000F000000000003004641
+      5801000F000000000010004D756E69636970696F5F436F6469676F0300000000
+      0000000A005061737361706F72746501001400000000000C00496E6469636164
+      6F725F4945010001000000000011004C61796F75744C6F74655F4E756D65726F
+      010014000000000015004C61796F75744C6F74655F4661627269636163616F01
+      0014000000000013004C61796F75744C6F74655F56616C696461646501001400
+      000000000B004654505F5573756172696F01003C000000000009004654505F53
+      656E686101001E00000000000B004654505F5061737369766505000000000000
+      001100436F6D697373616F5F476572656E636961060000000000000007005369
+      6D706C6573050000000000000003004D454905000000000000000B005A6F6E61
+      5F4672616E636105000000000000000A0053776966745F436F646501000B0000
+      00000004004942414E01001E00000000000D0056616C6F725F5365727669636F
+      070000000000000004004C6F746501000F00000000000700436F6E7461746F01
+      003C00000000000D004D6963726F5F456D707265736105000000000000000600
+      4654505F49500100780000000000100056696E63756C6F5F436F6D7056656E64
+      02000000000000000E0052656C6163616F5F4578704661620200000000000000
+      0B0045737461646F5F4E6F6D6501001E0000000000000000000000}
+  end
+  object dstForn: TDataSource
+    DataSet = tForn
+    Left = 382
+    Top = 271
+  end
+  object oCNPJ: TACBrConsultaCNPJ
+    ProxyPort = '8080'
+    PesquisarIBGE = False
+    IniServicos = 
+      'C:\Program Files (x86)\Embarcadero\Studio\20.0\bin\ACBrConsultaC' +
+      'NPJServicos.ini'
+    Left = 432
+    Top = 223
+  end
+end

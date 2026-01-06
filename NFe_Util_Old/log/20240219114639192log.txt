@@ -1,0 +1,10 @@
+Timestamp=[19/02/2024 11:46:39]
+WS=[distNSU]
+URL=[]
+ambiente=[0]
+certificado=[]
+erro=[6124 - Erro: O parâmetro tipoAmbiente [0] deve ser 1 ou 2]
+msgDados=[]
+msgRetWS=[]
+
+DLL=[NFe_Util 2G v4.0.16 beta 13-12-2023 - © 2008-2023 - www.flexdocs.com.br - Todos os direitos reservados]

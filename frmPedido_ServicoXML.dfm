@@ -1,0 +1,286 @@
+object Pedido_ServicoXML: TPedido_ServicoXML
+  Left = 0
+  Top = 0
+  BorderStyle = bsDialog
+  Caption = 'Pedido_ServicoXML'
+  ClientHeight = 624
+  ClientWidth = 1170
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poOwnerFormCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = 0
+    Top = 594
+    Width = 1170
+    Height = 30
+    Align = alBottom
+    BevelOuter = bvLowered
+    TabOrder = 0
+    object bSair: TButton
+      Left = 1102
+      Top = 1
+      Width = 67
+      Height = 28
+      Hint = 'Fecha a janela atual e cancela os processos pendentes.'
+      Align = alRight
+      Caption = '&Sair'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      OnClick = bSairClick
+    end
+    object bImportar: TButton
+      Left = 1029
+      Top = 1
+      Width = 73
+      Height = 28
+      Hint = 'Fecha a janela atual e cancela os processos pendentes.'
+      Align = alRight
+      Caption = '&Importar'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 1
+      OnClick = bImportarClick
+    end
+  end
+  object Panel2: TPanel
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 533
+    Height = 588
+    Align = alClient
+    BevelOuter = bvLowered
+    Caption = 'Panel2'
+    TabOrder = 1
+    object GroupBox4: TGroupBox
+      AlignWithMargins = True
+      Left = 11
+      Top = 11
+      Width = 511
+      Height = 90
+      Margins.Left = 10
+      Margins.Top = 10
+      Margins.Right = 10
+      Align = alTop
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+      object StaticText57: TStaticText
+        Left = 12
+        Top = 11
+        Width = 104
+        Height = 21
+        Cursor = crHandPoint
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Refer'#234'ncia'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 2
+        Transparent = False
+        StyleElements = []
+      end
+      object cReferencia: TDBLookupComboBox
+        Left = 118
+        Top = 12
+        Width = 381
+        Height = 21
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Pitch = fpFixed
+        Font.Style = [fsBold]
+        KeyField = 'Codigo'
+        ListField = 'Codigo;Descricao'
+        ListFieldIndex = 1
+        ListSource = Dados.dsReferenciasFiscais
+        ParentFont = False
+        TabOrder = 0
+      end
+      object cCentroCusto: TDBLookupComboBox
+        Left = 118
+        Top = 34
+        Width = 381
+        Height = 21
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Pitch = fpFixed
+        Font.Style = [fsBold]
+        KeyField = 'Codigo'
+        ListField = 'Codigo;Descricao'
+        ListFieldIndex = 1
+        ListSource = Dados.dsCentroCusto
+        ParentFont = False
+        TabOrder = 1
+      end
+      object StaticText60: TStaticText
+        Left = 12
+        Top = 34
+        Width = 104
+        Height = 21
+        Cursor = crHandPoint
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Centro Custo'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 3
+        Transparent = False
+        StyleElements = []
+      end
+      object StaticText61: TStaticText
+        Left = 12
+        Top = 57
+        Width = 104
+        Height = 21
+        Cursor = crHandPoint
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Processo'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 4
+        Transparent = False
+        StyleElements = []
+      end
+      object cProcesso: TDBLookupComboBox
+        Left = 118
+        Top = 57
+        Width = 183
+        Height = 21
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Pitch = fpFixed
+        Font.Style = [fsBold]
+        KeyField = 'Processo'
+        ListField = 'Processo;Numero_Declaracao'
+        ListSource = Dados.dsProcessosDOC
+        ParentFont = False
+        TabOrder = 5
+      end
+    end
+    object cNotas: TListBox
+      AlignWithMargins = True
+      Left = 11
+      Top = 104
+      Width = 511
+      Height = 473
+      Margins.Left = 10
+      Margins.Top = 0
+      Margins.Right = 10
+      Margins.Bottom = 10
+      Align = alClient
+      ExtendedSelect = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = []
+      ItemHeight = 13
+      ParentFont = False
+      TabOrder = 1
+    end
+  end
+  object Panel3: TPanel
+    AlignWithMargins = True
+    Left = 539
+    Top = 3
+    Width = 628
+    Height = 588
+    Margins.Left = 0
+    Align = alRight
+    BevelOuter = bvLowered
+    Caption = 'Panel3'
+    TabOrder = 2
+    object cDados: TMemo
+      Left = 1
+      Top = 1
+      Width = 626
+      Height = 586
+      Align = alClient
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -11
+      Font.Name = 'JetBrains Mono'
+      Font.Style = []
+      Lines.Strings = (
+        'cDados')
+      ParentFont = False
+      ScrollBars = ssVertical
+      TabOrder = 0
+      WantReturns = False
+      WordWrap = False
+      StyleElements = [seClient, seBorder]
+    end
+  end
+  object XMLDoc: TXMLDocument
+    Left = 32
+    Top = 192
+    DOMVendorDesc = 'MSXML'
+  end
+  object tmp: TMSQuery
+    Connection = Dados.Banco_Empresas
+    FetchRows = 1
+    RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
+    Left = 125
+    Top = 187
+  end
+end

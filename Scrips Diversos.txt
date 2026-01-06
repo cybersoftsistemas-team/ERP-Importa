@@ -1,0 +1,90 @@
+--[ APENDAS PARTS MATRIZ] / APURA플O PIS COFINS
+--UPDATE NotasTerceirosItens SET Aliquota_PIS = 1.65, Aliquota_COFINS = 7.6 WHERE Apuracao_PISCOFINS = 1 AND ISNULL(Aliquota_PIS, 0) = 0
+--GO
+--UPDATE NotasTerceirosItens SET Aliquota_PIS = 1.65, Aliquota_COFINS = 7.6 WHERE Apuracao_PISCOFINS = 1 AND ISNULL(Aliquota_COFINS, 0) = 0
+--GO
+
+
+
+
+--[ APENDAS GPF] / APURA플O PIS COFINS
+--UPDATE Notasitens SET Aliquota_PIS = 1.65, Aliquota_COFINS = 7.6
+--WHERE Apuracao_PISCOFINS = 1 AND INSULL(Aliquota_PIS, 0) = 0
+--GO
+--UPDATE Notasitens SET Valor_PIS = (Valor_Total * (Aliquota_PIS/100))/Quantidade, Valor_COFINS = (Valor_Total * (Aliquota_COFINS /100))/Quantidade
+--WHERE Apuracao_PISCOFINS = 1 AND INSULL(Valor_PIS, 0) = 0
+--GO
+--UPDATE NotasFiscais SET Destinatario_Complemento = NULL WHERE LTRIM(RTRIM(Destinatario_Complemento)) = ''
+--GO
+--UPDATE NotasItens SET CSTPIS = '98', CSTCOFINS = '98' WHERE nota = 641
+--GO
+--UPDATE NotasItens SET CSTPIS = (SELECT CST_PIS FROM TipoNota WHERE(Codigo = (SELECT Tipo_Nota FROM NotasFiscais WHERE(Numero = Nota) AND (Data_Emissao = Data) AND (Year(Data)=2012) AND (MONTH(Data)=1)) ))
+--WHERE YEAR(Data) = 2012 AND MONTH(Data) = 1
+--GO
+--UPDATE NotasItens SET CSTCOFINS = (SELECT CST_COFINS FROM TipoNota WHERE(Codigo = (SELECT Tipo_Nota FROM NotasFiscais WHERE(Numero = Nota) AND (Data_Emissao = Data) AND (Year(Data)=2012) AND (MONTH(Data)=1)) ))
+--WHERE YEAR(Data) = 2012 AND MONTH(Data) = 1
+--GO
+
+
+
+
+
+--[ APENAS JAHWIN] / APURA플O PIS/COFINS
+--UPDATE NotasItens SET Aliquota_COFINS = 7.6 WHERE Aliquota_PIS = 1.65
+--GO
+
+
+
+
+-- -- ATEN플O...AGUARDANDO TESTE PRELIMINARES.
+-- -- Tabela de itens.
+-- SELECT * INTO ContratoCambio2 FROM ContratoCambio
+-- GO
+-- 
+-- DROP TABLE ContratoCambioItens
+-- GO
+-- SELECT DISTINCT Numero AS Contrato,
+--        Data,
+--        Processo,
+--        Total_ME AS Valor_ME,
+--        DI,
+--        CAST(null AS varchar(40)) AS Fatura,
+--        CAST(0 AS money) AS Valor_Fatura
+-- INTO ContratoCambioItens
+-- FROM ContratoCambio2
+-- GO
+-- 
+-- -- Tabela de contratos.
+-- SELECT Linha = IDENTITY(int, 1, 1), ContratoCambio2.* 
+-- INTO   #Temp 
+-- FROM   ContratoCambio2 
+-- ORDER  BY Numero, Processo
+-- 
+-- SELECT CASE WHEN (SELECT MIN(Linha) FROM #Temp CC2 WHERE(CC2.Numero = #Temp.Numero)) = Linha THEN
+--                  1
+--             ELSE
+--                  (SELECT COUNT(*) FROM #Temp CC2 WHERE(CC2.Numero = #Temp.Numero))
+--             END AS Rep,
+--         #Temp.* 
+-- INTO #Temp2
+-- FROM #Temp
+-- 
+-- DELETE FROM #Temp2 WHERE Rep > 1
+-- GO
+-- ALTER TABLE #Temp2 DROP COLUMN Linha, Rep
+-- GO
+-- SELECT * FROM #Temp2 ORDER BY Numero, Processo
+-- GO
+-- 
+-- TRUNCATE TABLE ContratoCambio
+-- GO
+-- INSERT INTO ContratoCambio SELECT * FROM #Temp2
+-- GO
+-- DROP TABLE #Temp, #Temp2, ContratoCambio2
+-- GO
+-- 
+-- UPDATE ContratoCambioItens SET Fatura       = (SELECT DISTINCT Numero FROM Invoice WHERE(Invoice.Processo = ContratoCambioItens.Processo)),
+--                                Valor_Fatura = (SELECT DISTINCT Total_FaturaME FROM Invoice WHERE(Invoice.Processo = ContratoCambioItens.Processo))
+-- GO
+-- UPDATE ContratoCambio SET Total_ME = (SELECT SUM(Valor_ME) FROM ContratoCambioItens WHERE(Contrato = Numero))
+-- GO
