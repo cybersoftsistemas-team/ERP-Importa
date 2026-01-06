@@ -4520,8 +4520,6 @@ type
     IndustrialQuantidade: TFloatField;
     IndustrialDescricao: TStringField;
     IndustrialData: TDateTimeField;
-    IndustrialNota: TIntegerField;
-    IndustrialData_Nota: TDateTimeField;
     IndustrialValor_Unitario: TCurrencyField;
     IndustrialProcesso: TStringField;
     IndustrialMovimenta_Estoque: TBooleanField;
@@ -4529,6 +4527,7 @@ type
     IndustrialRegistro: TIntegerField;
     ConfiguracaoAliquota_CBS: TFloatField;
     ProdutosMateriaPrimaSaldo: TFloatField;
+    IndustrialNota: TStringField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);

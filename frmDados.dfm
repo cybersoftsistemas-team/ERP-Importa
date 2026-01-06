@@ -11511,11 +11511,11 @@ object Dados: TDados
     end
     object ConfiguracaoBoleto_PercentualMulta: TFloatField
       FieldName = 'Boleto_PercentualMulta'
-      DisplayFormat = '##0.00%'
+      DisplayFormat = '##0.0000%'
     end
     object ConfiguracaoBoleto_PercentualJuros: TFloatField
       FieldName = 'Boleto_PercentualJuros'
-      DisplayFormat = '##0.00%'
+      DisplayFormat = '##0.0000%'
     end
     object ConfiguracaoSISCOMEX_ClassificacaoII: TStringField
       FieldName = 'SISCOMEX_ClassificacaoII'
@@ -31022,14 +31022,12 @@ object Dados: TDados
       Size = 250
       Lookup = True
     end
+    object IndustrialNota: TStringField
+      FieldName = 'Nota'
+      Size = 60
+    end
     object IndustrialData: TDateTimeField
       FieldName = 'Data'
-    end
-    object IndustrialNota: TIntegerField
-      FieldName = 'Nota'
-    end
-    object IndustrialData_Nota: TDateTimeField
-      FieldName = 'Data_Nota'
     end
     object IndustrialValor_Unitario: TCurrencyField
       FieldName = 'Valor_Unitario'

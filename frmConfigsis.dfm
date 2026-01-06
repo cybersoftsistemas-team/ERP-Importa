@@ -111,7 +111,7 @@ object ConfigSis: TConfigSis
     Top = 41
     Width = 847
     Height = 601
-    ActivePage = TabSheet3
+    ActivePage = TabSheet13
     TabHeight = 28
     TabOrder = 1
     object TabSheet1: TTabSheet
@@ -5386,7 +5386,7 @@ object ConfigSis: TConfigSis
         Top = 3
         Width = 833
         Height = 557
-        ActivePage = TabSheet6
+        ActivePage = TabSheet15
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText

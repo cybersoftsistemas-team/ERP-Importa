@@ -222,7 +222,6 @@ type
     bPesquisar: TSpeedButton;
     bEmail: TButton;
     Panel2: TPanel;
-
     StaticText12: TStaticText;
     cEmail: TEdit;
     Progresso: TProgressBar;

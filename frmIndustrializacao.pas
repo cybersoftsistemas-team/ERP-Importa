@@ -30,8 +30,6 @@ type
     cData: TDBDateEdit;
     ttmp: TMSQuery;
     tSaldo: TMSQuery;
-    StaticText3: TStaticText;
-    cDataNota: TDBDateEdit;
     StaticText4: TStaticText;
     tNotas: TMSQuery;
     dstNotas: TDataSource;

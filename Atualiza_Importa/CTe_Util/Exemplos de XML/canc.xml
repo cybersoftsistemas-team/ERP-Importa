@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+   <cancNFe xmlns="http://www.portalfiscal.inf.br/nfe" versao="1.07">
+     <infCanc Id="ID01234567890123456789012345678901234567890123">
+       <tpAmb>2</tpAmb>
+       <xServ>CANCELAR</xServ>
+       <chNFe>01234567890123456789012345678901234567890123</chNFe>
+       <nProt>protocolo</nProt>
+       <xJust>Não fui eu</xJust>
+     </infCanc>
+</cancNFe>

@@ -1,12 +1,0 @@
-Timestamp=[09/04/2024 14:37:26]
-WS=[distNSU]
-URL=[]
-ambiente=[1]
-certificado=[CN=NIMOFAST BRASIL S A:77696235001247, OU=RFB e-CNPJ A1, OU=Secretaria da Receita Federal do Brasil - RFB, OU=07722878000180, OU=VideoConferencia, L=Recife, S=PE, O=ICP-Brasil, C=BR]
-erro=[7002 - Erro: A licença informada: [4ed813ea62839e9df04a7ed9effcb72d22bf51e3cd42e83a3d131d1f9e2aaac6a5d1e9d06f0f132ff73dd79f5cd4b453261cab05a08b6b0dc421be906f49a308
-] tem tamanho:[130] diferente de 128 - NFe_Util 2G v4.0.17b beta 19-03-2024 - © 2008-2024 - www.flexdocs.com.br - Todos os direitos reservados]
-msgDados=[]
-msgRetWS=[]
-CNPJ=[77696235000194]licenca=[4ed813ea62839e9df04a7ed9effcb72d22bf51e3cd42e83a3d131d1f9e2aaac6a5d1e9d06f0f132ff73dd79f5cd4b453261cab05a08b6b0dc421be906f49a308
-]
-DLL=[NFe_Util 2G v4.0.17b beta 19-03-2024 - © 2008-2024 - www.flexdocs.com.br - Todos os direitos reservados]

@@ -194,6 +194,10 @@ object Financeiro_BoletosGerar: TFinanceiro_BoletosGerar
     OnChange = PageControl1Change
     object TabSheet1: TTabSheet
       Caption = '&T'#237'tulos'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Grade: TDBGrid
         Left = 0
         Top = 93

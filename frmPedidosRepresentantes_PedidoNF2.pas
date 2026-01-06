@@ -396,12 +396,16 @@ begin
                                                 PedidosItensValor_BCICMSOper.Value := Roundto(CalculaMacro('Calculo_BCICMS'), -2);
                                                 PedidosItensValor_ICMSOper.Value   := Roundto(CalculaMacro('Calculo_VlrICMS'), -2);
                                              end;
-                                             if Trim(TipoNotaCalculo_BCPIS.AsString) <> '' then
-                                                PedidosItensValor_BCPIS.Value := RoundTo(CalculaMacro('Calculo_BCPIS'), -2);
-                                             if Trim(TipoNotaCalculo_PIS.AsString) <> '' then
-                                                PedidosItensValor_PIS.Value := RoundTo(CalculaMacro('Calculo_PIS'), -2);
-                                             if Trim(TipoNotaCalculo_COFINS.AsString) <> '' then
-                                                PedidosItensValor_COFINS.Value := RoundTo(CalculaMacro('Calculo_COFINS'), -2);
+                                             if Trim(TipoNotaCalculo_BCPIS.AsString)  <> '' then PedidosItensValor_BCPIS.Value  := RoundTo(CalculaMacro('Calculo_BCPIS'), -2);
+                                             if Trim(TipoNotaCalculo_PIS.AsString)    <> '' then PedidosItensValor_PIS.Value    := RoundTo(CalculaMacro('Calculo_PIS'), -2);
+                                             if Trim(TipoNotaCalculo_COFINS.AsString) <> '' then PedidosItensValor_COFINS.Value := RoundTo(CalculaMacro('Calculo_COFINS'), -2);
+                                                
+                                             if trim(TipoNotaCalculo_BCIS.AsString)   <> '' then PedidosItensValor_BCIS.Value   := RoundTo(CalculaMacro('Calculo_BCIS'), -4);
+                                             if trim(TipoNotaCalculo_VlrIS.AsString)  <> '' then PedidosItensValor_IS.Value     := RoundTo(CalculaMacro('Calculo_VlrIS'), -4);
+                                             if trim(TipoNotaCalculo_BCCBS.AsString)  <> '' then PedidosItensValor_BCCBS.Value  := RoundTo(CalculaMacro('Calculo_BCCBS'), -4);
+                                             if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then PedidosItensValor_CBS.Value    := RoundTo(CalculaMacro('Calculo_VlrCBS'), -4);
+                                             if trim(TipoNotaCalculo_BCIBS.AsString)  <> '' then PedidosItensValor_BCIBS.Value  := RoundTo(CalculaMacro('Calculo_BCIBS'), -4);
+                                             if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then PedidosItensValor_IBS.Value    := RoundTo(CalculaMacro('Calculo_VlrIBS'), -4);
 
                                              CalculaImpostos;
                                              if PedidosItensValor_ICMSMonoRet.ascurrency = 0 then begin

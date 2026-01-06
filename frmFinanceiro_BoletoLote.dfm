@@ -1398,7 +1398,7 @@ object Financeiro_BoletoLote: TFinanceiro_BoletoLote
     Width = 112
     Height = 21
     AutoSize = False
-    DisplayFormat = ',0.00%'
+    DisplayFormat = ',0.0000%'
     Enabled = False
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -1437,7 +1437,7 @@ object Financeiro_BoletoLote: TFinanceiro_BoletoLote
     Width = 112
     Height = 21
     AutoSize = False
-    DisplayFormat = ',0.00%'
+    DisplayFormat = ',0.0000%'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -1475,7 +1475,7 @@ object Financeiro_BoletoLote: TFinanceiro_BoletoLote
     Width = 112
     Height = 21
     AutoSize = False
-    DisplayFormat = ',0.00%'
+    DisplayFormat = ',0.0000%'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11

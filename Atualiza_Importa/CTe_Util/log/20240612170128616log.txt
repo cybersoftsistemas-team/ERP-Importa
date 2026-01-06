@@ -1,0 +1,10 @@
+Timestamp=[12/06/2024 17:01:28]
+WS=[EnviaCancPrestDesacordo]
+URL=[]
+ambiente=[0]
+certificado=[]
+erro=[6141 - Erro: O parâmetro siglaWS deve ser informado]
+msgDados=[]
+msgRetWS=[]
+
+DLL=[CTe_Util v4.01i beta [4.0.1.9] 13-12-2023 - © 2009-2023 - www.flexdocs.com.br - Todos os direitos reservados]
