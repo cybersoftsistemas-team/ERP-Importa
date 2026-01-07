@@ -3109,12 +3109,18 @@ begin
                  PedidosItensValor_COFINS.Value    := 0;
               End;
 
-              if trim(TipoNotaCalculo_BCIS.AsString)   <> '' then PedidosItensValor_BCIS.Value  := RoundTo(CalculaMacro('Calculo_BCIS'), -4);
-              if trim(TipoNotaCalculo_VlrIS.AsString)  <> '' then PedidosItensValor_IS.Value    := RoundTo(CalculaMacro('Calculo_VlrIS'), -4);
-              if trim(TipoNotaCalculo_BCCBS.AsString)  <> '' then PedidosItensValor_BCCBS.Value := RoundTo(CalculaMacro('Calculo_BCCBS'), -4);
-              if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then PedidosItensValor_CBS.Value   := RoundTo(CalculaMacro('Calculo_VlrCBS'), -4);
-              if trim(TipoNotaCalculo_BCIBS.AsString)  <> '' then PedidosItensValor_BCIBS.Value := RoundTo(CalculaMacro('Calculo_BCIBS'), -4);
-              if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then PedidosItensValor_IBS.Value   := RoundTo(CalculaMacro('Calculo_VlrIBS'), -4);
+              if trim(TipoNotaCalculo_BCIS.AsString)   <> '' then PedidosItensValor_BCIS.Value  := RoundTo(CalculaMacro('Calculo_BCIS'), -2);
+              if trim(TipoNotaCalculo_VlrIS.AsString)  <> '' then PedidosItensValor_IS.Value    := RoundTo(CalculaMacro('Calculo_VlrIS'), -2);
+              if trim(TipoNotaCalculo_BCCBS.AsString)  <> '' then PedidosItensValor_BCCBS.Value := RoundTo(CalculaMacro('Calculo_BCCBS'), -2);
+              if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then begin 
+                 PedidosItensValor_CBS.Value := RoundTo(CalculaMacro('Calculo_VlrCBS'), -2);
+                 if PedidosItensValor_CBS.Value < 0.005 then PedidosItensValor_CBS.Value := 0.005;
+              end;
+              if trim(TipoNotaCalculo_BCIBS.AsString)  <> '' then PedidosItensValor_BCIBS.Value := RoundTo(CalculaMacro('Calculo_BCIBS'), -2);
+              if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then begin
+                 PedidosItensValor_IBS.Value := RoundTo(CalculaMacro('Calculo_VlrIBS'), -2);
+                 if PedidosItensValor_IBS.Value < 0.005 then PedidosItensValor_IBS.Value := 0.005;
+              end;
 
               If Trim(TipoNotaCalculo_Inventario.AsString) <> '' then begin
                  PedidosItensValor_Inventario.Value := Roundto(CalculaMacro('Calculo_Inventario'), -2);

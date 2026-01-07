@@ -139,6 +139,15 @@ end;
 procedure TIndustrializacao.cCodigoExit(Sender: TObject);
 begin
      FiltraMateria;
+     with ttmp do begin
+          sql.Clear;
+          sql.Add('select Notas = string_agg(cast(Nota as varchar(10)), ''/'')');
+          sql.Add('from NotasTerceirosItens');
+          sql.Add('where Codigo_Mercadoria in(select Codigo_MateriaPrima from ProdutosMateriaPrima where Codigo_Produto = :pCodigo)');
+          parambyname('pCodigo').value := Dados.Industrial.FieldByName('Codigo_Mercadoria').asinteger;
+          open;
+          Dados.Industrial.fieldbyname('Notas').AsString := fieldbyname('Notas').AsString;
+     end;
 end;
 
 procedure TIndustrializacao.cProdutoExit(Sender: TObject);
@@ -180,14 +189,20 @@ begin
              if Industrial.State = dsEdit then begin
                 DeletaMov;
              end;
+             if Industrial.State = dsInsert then begin
+                with ttmp do begin
+                     sql.clear;
+                     sql.add('select isnull(max(Registro), 0)+1 as Registro from Industrializacao');
+                     open;
+                     Industrial.fieldbyname('Registro').value := FieldByName('Registro').asinteger;
+                end;
+             end;
           end;
           if Button = nbDelete then begin
              if Messagedlg('Deseja realmente remover este item?', mtConfirmation, [mbyes, mbno], 0) = mrno then begin
                 Abort
              end;
-             with ttmp do begin 
-                DeletaMov;
-             end;
+             DeletaMov;
              ProdutosMateriaPrima.Refresh;
           end;
      end;
@@ -199,8 +214,8 @@ begin
           with ttmp do begin 
                sql.clear;
                sql.add('delete from ProdutosTransferencia where Nota = :pNota and Data_Transferencia = :pData and Motivo = ''IND'' ');
-               parambyname('pNota').AsInteger := Industrial.fieldbyname('Nota').asinteger;
-               parambyname('pData').AsDate    := Industrial.fieldbyname('Data_Nota').value;
+               parambyname('pNota').AsInteger := Industrial.fieldbyname('Registro').asinteger;
+               parambyname('pData').AsDate    := Industrial.fieldbyname('Data').value;
                execute;
           end;
      end;
@@ -222,25 +237,26 @@ begin
           if Button = nbInsert then begin
              Industrial.FieldByName('Movimenta_Estoque').Value    := true;
              Industrial.FieldByName('Movimenta_Inventario').Value := true;
+             Industrial.FieldByName('Data').Value                 := date;
           end;
           if Button = nbPost then begin
              with FichaEstoque do begin 
                   sql.clear;
                   sql.add('select * from FichaEstoque where Nota = :pNota and Data = :pData and Destinatario_CNPJ = :pDest');
-                  parambyname('pNota').AsInteger := Industrial.fieldbyname('Nota').asinteger;
-                  parambyname('pData').value     := Industrial.fieldbyname('Data_Nota').value;
+                  parambyname('pNota').AsInteger := Industrial.fieldbyname('Registro').asinteger;
+                  parambyname('pData').value     := Industrial.fieldbyname('Data').value;
                   parambyname('pDest').value     := tEmpresa.fieldbyname('CNPJ').asstring;
                   open;
              end;
              with FichaInventario do begin 
                   sql.clear;
                   sql.add('select * from FichaInventario where Nota = :pNota and Data = :pData and Destinatario_CNPJ = :pDest');
-                  parambyname('pNota').AsInteger := Industrial.fieldbyname('Nota').asinteger;
-                  parambyname('pData').value     := Industrial.fieldbyname('Data_Nota').value;
+                  parambyname('pNota').AsInteger := Industrial.fieldbyname('Registro').asinteger;
+                  parambyname('pData').value     := Industrial.fieldbyname('Data').value;
                   parambyname('pDest').value     := tEmpresa.fieldbyname('CNPJ').asstring;
                   open;
              end;
-             if Industrial.fieldbyname('Movimenta_Estoque').asboolean    then FichaEst;
+             if Industrial.fieldbyname('Movimenta_Estoque').asboolean then FichaEst;
              //if Industrial.fieldbyname('Movimenta_Inventario').asboolean then FichaInv;
           end;
      end;
@@ -319,8 +335,8 @@ begin
                     ProdutosTransferenciaQuantidade_Entrada.Value := Roundto(Industrial.fieldbyname('Quantidade').AsFloat, -3);
                     ProdutosTransferenciaInventario.Value         := Industrial.fieldbyname('Movimenta_Inventario').asboolean;
                     ProdutosTransferenciaData_Transferencia.Value := Industrial.fieldbyname('Data').value;
-                    ProdutosTransferenciaNota.Value               := Industrial.fieldbyname('Nota').value;
-                    ProdutosTransferenciaObservacao.Value         := 'ENTRADA DE MERCADORIA INDUSTRIALIZADA NOTA FISCAL:' + Industrial.fieldbyname('Nota').asstring+ ' DE '+Industrial.fieldbyname('Data_Nota').AsString;
+                    ProdutosTransferenciaNota.Value               := Industrial.fieldbyname('Registro').value;
+                    ProdutosTransferenciaObservacao.Value         := 'ENTRADA DE MERCADORIA INDUSTRIALIZADA REGISTRO FISCAL:' + Industrial.fieldbyname('Registro').asstring+ ' DE '+Industrial.fieldbyname('Data').AsString;
                     ProdutosTransferenciaEstoque.Value            := Industrial.fieldbyname('Movimenta_Estoque').asboolean;
                     ProdutosTransferenciaProcesso_Entrada.Value   := Industrial.fieldbyname('Processo').asstring;
                     ProdutosTransferenciaMotivo.Value             := 'IND';
@@ -339,8 +355,8 @@ begin
                     FichaEstoqueHistorico.Value           := '* ENTRADA DE INDUSTRIALIZAÇÃO *';
                     FichaEstoqueEstoque.Value             := '0-EMPRESA';
                     FichaEstoqueEmissor.Value             := 'P';
-                    FichaEstoqueNota.Value                := Industrial.fieldbyname('Nota').asinteger;
-                    FichaEstoqueData.Value                := Industrial.fieldbyname('Data_Nota').value;
+                    FichaEstoqueNota.Value                := Industrial.fieldbyname('Registro').asinteger;
+                    FichaEstoqueData.Value                := Industrial.fieldbyname('Data').value;
                     FichaEstoqueES.Value                  := 'E';
                     FichaEstoqueDestinatario_Nome.Value   := tEmpresa.FieldByName('Razao_Social').AsString;
                     FichaEstoqueDestinatario_CNPJ.Value   := tEmpresa.FieldByName('CNPJ').AsString;
@@ -407,8 +423,8 @@ begin
                           ProdutosTransferenciaQuantidade_Entrada.Value := 0;
                           ProdutosTransferenciaInventario.Value         := Industrial.FieldByName('Movimenta_Inventario').asboolean;
                           ProdutosTransferenciaData_Transferencia.Value := Industrial.FieldByName('Data').value;
-                          ProdutosTransferenciaNota.Value               := Industrial.FieldByName('Nota').asinteger;
-                          ProdutosTransferenciaObservacao.Value         := 'SAÍDA DE MATERIA PRIMA DE INDUSTRIALIZAÇÃO NOTA FISCAL:' + Industrial.FieldByName('Nota').AsString + ' DE '+Industrial.FieldByName('Data_Nota').AsString;
+                          ProdutosTransferenciaNota.Value               := Industrial.FieldByName('Registro').asinteger;
+                          ProdutosTransferenciaObservacao.Value         := 'SAÍDA DE MATERIA PRIMA DE INDUSTRIALIZAÇÃO REGISTRO FISCAL:' + Industrial.FieldByName('Registro').AsString + ' DE '+Industrial.FieldByName('Data').AsString;
                           ProdutosTransferenciaEstoque.Value            := Industrial.FieldByName('Movimenta_Estoque').asboolean;
                           ProdutosTransferenciaProcesso_Saida.Value     := Industrial.FieldByName('Processo').AsString;
                           ProdutosTransferenciaMotivo.Value             := 'IND';
@@ -438,8 +454,8 @@ begin
                           FichaEstoqueHistorico.Value           := '* SAÍDA DE INDUSTRIALIZAÇÃO *';
                           FichaEstoqueEstoque.Value             := '0-EMPRESA';
                           FichaEstoqueEmissor.Value             := 'P';
-                          FichaEstoqueNota.Value                := Industrial.fieldbyname('Nota').asinteger;
-                          FichaEstoqueData.Value                := Industrial.fieldbyname('Data_Nota').value;
+                          FichaEstoqueNota.Value                := Industrial.fieldbyname('Registro').asinteger;
+                          FichaEstoqueData.Value                := Industrial.fieldbyname('Data').value;
                           FichaEstoqueES.Value                  := 'S';
                           FichaEstoqueDestinatario_Nome.Value   := tEmpresa.FieldByName('Razao_Social').AsString;
                           FichaEstoqueDestinatario_CNPJ.Value   := tEmpresa.FieldByName('CNPJ').AsString;
@@ -537,8 +553,8 @@ begin
                        FichaInventarioHistorico.Value           := '* ENTRADA DE INDUSTRIALIZAÇÃO *';
                        FichaInventarioEstoque.Value             := '0-EMPRESA';
                        FichaInventarioEmissor.Value             := 'P';
-                       FichaInventarioNota.Value                := Industrial.fieldbyname('Nota').asinteger;
-                       FichaInventarioData.Value                := Industrial.fieldbyname('Data_Nota').value;
+                       FichaInventarioNota.Value                := Industrial.fieldbyname('Registro').asinteger;
+                       FichaInventarioData.Value                := Industrial.fieldbyname('Data').value;
                        FichaInventarioES.Value                  := 'E';
                        //FichaInventarioDestinatario_Codigo.Value := null;
                        FichaInventarioDestinatario_Nome.Value   := tEmpresa.FieldByName('Razao_Social').AsString;

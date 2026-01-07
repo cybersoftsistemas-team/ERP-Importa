@@ -517,7 +517,7 @@ type
     SSLSocket: TIdSSLIOHandlerSocketOpenSSL;
     EmailMSg: TIdMessage;
     TabSheet4: TTabSheet;
-    Memo1: TMemo;
+    mAnalise: TMemo;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -5238,7 +5238,11 @@ begin
               end;
            end;
                           
-           Memo1.Lines.Add(floattostr(Roundto(PedidosItensValor_Despesa.asfloat * PedidosItensQuantidade.asfloat, -4)));
+           //mAnalise.Lines.Add(floattostr(Roundto(PedidosItensValor_Despesa.asfloat * PedidosItensQuantidade.asfloat, -4)));
+           //mAnalise.Lines.Add(floattostr(Roundto(PedidosItensValor_BCIBS.asfloat, -4)));
+           mAnalise.Lines.Add(floattostr(Roundto(PedidosItensValor_IBS.asfloat, -4)));
+           //mAnalise.Lines.Add(floattostr(Roundto(PedidosItensValor_CBS.asfloat, -4)));
+           //mAnalise.Lines.Add(floattostr(Roundto(PedidosItensValor_BCCBS.asfloat, -4)));
            
            // IBS.              
            _gIBSUF := '';
@@ -5265,12 +5269,12 @@ begin
            _gCBS := '';
            //if PedidosItensValor_CBS.ascurrency > 0 then begin
               _gCBS := util.gCBS(PedidosItensAliquota_CBS.AsFloat              // Informar a alíquota do CBS.
+                                ,0                                             // informaro o grupo de informações do Diferimento para CST=510-Diferimento ou CST=515-Diferimento com redução de alíquota.
                                 ,0                                             // 
                                 ,0                                             // 
                                 ,0                                             // 
                                 ,0                                             // 
-                                ,0                                             // 
-                                ,PedidosItensValor_CBS.ascurrency              // 
+                                ,PedidosItensValor_CBS.ascurrency              // Informar o Valor do CBS Valor do CBS (vCBS) deverá ser resultante de: vCBS = (gIBSCBS/vBC x (pCBS / 100)) - vDif - vDevTrib.
                                 );                                       
                                                                     
            //end;

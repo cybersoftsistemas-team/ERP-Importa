@@ -439,7 +439,7 @@ object Industrializacao: TIndustrializacao
       Top = 76
       Width = 686
       Height = 21
-      DataField = 'Nota'
+      DataField = 'Notas'
       DataSource = Dados.dsIndustrial
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText

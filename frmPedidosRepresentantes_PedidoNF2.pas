@@ -346,6 +346,7 @@ begin
                                                   sql.Add('      ,COFINS_NotaSaida');
                                                   sql.Add('      ,Descricao');
                                                   sql.Add('      ,Beneficio_FiscalSai');
+                                                  sql.Add('      ,Aliquota_CBS');
                                                   sql.Add('from Produtos');
                                                   sql.Add('where Codigo = '+tPedidosNFitens.FieldByName('Codigo_Mercadoria').AsString);
                                                   open;
@@ -387,6 +388,9 @@ begin
                                              PedidosItensValor_IPI.Value             := 0;
                                              PedidosItensTotal_IPI.Value             := 0;
                                              PedidosItensAliquota_ICMSReducao.Value  := 0;
+                                             PedidosItensAliquota_CBS.Value          := tTemp.fieldbyname('Aliquota_CBS').AsFloat;
+                                             PedidosItensAliquota_IBS.Value          := ICMSAliquota_IBS.AsFloat;
+                                             
                                              if (Trim(TipoNotaCalculo_BCIPI.AsString) <> '') and (tTemp.fieldbyname('Aliquota_IPI').AsFloat > 0) then begin
                                                 PedidosItensValor_BCIPI.Value := CalculaMacro('Calculo_BCIPI');
                                                 PedidosItensValor_IPI.Value   := Roundto(Percentual(PedidosItensValor_BCIPI.Value, PedidosItensAliquota_IPI.Value)/PedidosItensQuantidade.AsFloat, -2);
@@ -403,9 +407,15 @@ begin
                                              if trim(TipoNotaCalculo_BCIS.AsString)   <> '' then PedidosItensValor_BCIS.Value   := RoundTo(CalculaMacro('Calculo_BCIS'), -4);
                                              if trim(TipoNotaCalculo_VlrIS.AsString)  <> '' then PedidosItensValor_IS.Value     := RoundTo(CalculaMacro('Calculo_VlrIS'), -4);
                                              if trim(TipoNotaCalculo_BCCBS.AsString)  <> '' then PedidosItensValor_BCCBS.Value  := RoundTo(CalculaMacro('Calculo_BCCBS'), -4);
-                                             if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then PedidosItensValor_CBS.Value    := RoundTo(CalculaMacro('Calculo_VlrCBS'), -4);
+                                             if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then begin 
+                                                PedidosItensValor_CBS.Value := RoundTo(CalculaMacro('Calculo_VlrCBS'), -4);
+                                                if PedidosItensValor_CBS.Value < 0.005 then PedidosItensValor_CBS.Value := 0.005;
+                                             end;
                                              if trim(TipoNotaCalculo_BCIBS.AsString)  <> '' then PedidosItensValor_BCIBS.Value  := RoundTo(CalculaMacro('Calculo_BCIBS'), -4);
-                                             if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then PedidosItensValor_IBS.Value    := RoundTo(CalculaMacro('Calculo_VlrIBS'), -4);
+                                             if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then begin 
+                                                PedidosItensValor_IBS.Value := RoundTo(CalculaMacro('Calculo_VlrIBS'), -4);
+                                                if PedidosItensValor_IBS.Value < 0.005 then PedidosItensValor_IBS.Value := 0.005;
+                                             end;
 
                                              CalculaImpostos;
                                              if PedidosItensValor_ICMSMonoRet.ascurrency = 0 then begin
@@ -422,7 +432,7 @@ begin
                      Pedidos.Edit;
                              PedidosInf_Complementares.Clear;
                              if Trim(TipoNotaInf_Complementares.AsString) <> '' then begin
-                                PedidosInf_Complementares.Clear;
+                                //PedidosInf_Complementares.Clear;
                                 PedidosInf_Complementares.Value := MontaComplemento(TipoNotaInf_Complementares.Value, 1);
                                 if trim(TipoNotaInf_Complementares2.asstring) <> '' then begin
                                    PedidosInf_Complementares2.Clear;
@@ -579,18 +589,17 @@ end;
 
 Function TPedidosRepresentantes_PedidoNF2.MontaComplemento(Texto: String; pCampo:integer):String;
 Var
-    mTexto,
-    mBusca,
-    mTroca,
-    mCampo,
-    mTabela: wideString;
-    mAchou : Boolean;
+   mTexto,
+   mBusca,
+   mTroca,
+   mCampo,
+   mTabela: String;
+   mAchou: Boolean;
 begin
        Screen.Cursor := crAppStart;
        cRich.Width   := 1200;
        if pCampo = 1 then mTexto := cRich.Text;
        if pCampo = 2 then mTexto := cRich2.Text;
-
        ActiveControl := nil;
 
        with Dados, dmFiscal, dmContab do Begin
@@ -614,7 +623,6 @@ begin
                         Tab_Origem.Connection := Banco;
                      If UpperCase(CamposBanco_Dados.Value) = 'CONTABILIDADE' then
                         Tab_Origem.Connection := Banco_Contabilidade;
-
                      Tab_Origem.TableName := CamposTabela.Value;
                      Tab_Origem.Open;
 
@@ -622,40 +630,43 @@ begin
                      mAchou  := False;
 
                      while (CamposTabela.Value = mTabela) and (not Campos.Eof) do begin
-                           if Trim(CamposComando_SQL.Value) <> '' then Begin
+                           if (Trim(CamposComando_SQL.Value) <> '') and (CamposTipo.AsString <> 'Lista') then Begin
                               Tab_Origem.Close;
                               Tab_Origem.SQL.Clear;
                               if Trim(CamposTabela_LookUpOrigem.AsString) = '' then begin
-                                  Tab_Origem.SQL.Add('SELECT * FROM '+CamposTabela.Value+' '+CamposComando_SQL.AsString);
-                                  if Pos('pProcesso', CamposComando_SQL.Value) <> 0 then
-                                     Tab_Origem.ParamByName('pProcesso').AsString := ProcessosDOCProcesso.Value;
-                                  if Pos('pCliente', CamposComando_SQL.Value) <> 0 then
-                                     Tab_Origem.ParamByName('pCliente').AsString := ClientesCodigo.AsString;
-                                  if Pos('pPedido', CamposComando_SQL.Value) <> 0 then
-                                     Tab_Origem.ParamByName('pPedido').AsInteger := PedidosNumero.AsInteger;
-                                  if Pos('pLocalDesembaraco', CamposComando_SQL.Value) <> 0 then
-                                     Tab_Origem.ParamByName('pLocalDesembaraco').AsString := ProcessosDOCLocal_DesembaracoCodigo.AsString;
-                                  //Tab_Origem.sql.SaveToFile('c:\temp\Tabela_Origem'+CamposTabela.Value+'.sql');
-                                  Tab_Origem.Open;
+                                 Tab_Origem.SQL.Add('SELECT * FROM '+CamposTabela.Value+' '+CamposComando_SQL.AsString);
+                                 if Pos('pProcesso', CamposComando_SQL.Value) <> 0 then
+                                    Tab_Origem.ParamByName('pProcesso').AsString := ProcessosDOCProcesso.Value;
+                                 if Pos('pCliente', CamposComando_SQL.Value) <> 0 then
+                                    Tab_Origem.ParamByName('pCliente').AsString := ClientesCodigo.AsString;
+                                 If Pos('pArmazem', CamposComando_SQL.Value) <> 0 then
+                                    Tab_Origem.ParamByName('pArmazem').Asinteger := PedidosArmazem.asinteger;
+                                 if Pos('pPedido', CamposComando_SQL.Value) <> 0 then
+                                    Tab_Origem.ParamByName('pPedido').AsInteger := PedidosNumero.AsInteger;
+                                 if Pos('pLocalDesembaraco', CamposComando_SQL.Value) <> 0 then
+                                    Tab_Origem.ParamByName('pLocalDesembaraco').AsString := ProcessosDOCLocal_DesembaracoCodigo.AsString;
+                                 if Pos('pItemPedido', CamposComando_SQL.Value) <> 0 then
+                                    Tab_Origem.ParamByName('pItemPedido').Asinteger := PedidosNumero.AsInteger;
+                                 Tab_Origem.Open;
 
-                                  if (trim(CamposPesquisa.Value) <> '') and (trim(CamposCampo_Chave.Value) <> '') then
-                                     mAchou := Tab_Origem.Locate(CamposCampo_Chave.Value, CamposPesquisa.Value, [loCaseInsensitive])
-                                  else
-                                     mAchou := true;
+                                 if (trim(CamposPesquisa.Value) <> '') and (trim(CamposCampo_Chave.Value) <> '') then
+                                    mAchou := Tab_Origem.Locate(CamposCampo_Chave.Value, CamposPesquisa.Value, [loCaseInsensitive])
+                                 else
+                                    mAchou := true;
                               end else begin
-                                  Tab_Origem.SQL.Add('SELECT * FROM '+CamposTabela.AsString+' '+CamposComando_SQL.AsString);
-                                  If UpperCase(CamposTabela_LookUpOrigem.AsString) = 'PROCESSOSDOCUMENTOS' then
-                                     Tab_Origem.ParamByName('pCodigo').AsString := ProcessosDOC.FieldByName(CamposCampo_LookUpPesquisa.AsString).AsString;
+                                 Tab_Origem.SQL.Add('SELECT * FROM '+CamposTabela.AsString+' '+CamposComando_SQL.AsString);
+                                 If UpperCase(CamposTabela_LookUpOrigem.AsString) = 'PROCESSOSDOCUMENTOS' then
+                                    Tab_Origem.ParamByName('pCodigo').AsString := ProcessosDOC.FieldByName(CamposCampo_LookUpPesquisa.AsString).AsString;
 
-                                  Tab_Origem.Open;
+                                 Tab_Origem.Open;
 
-                                  If UpperCase(CamposTabela_LookUpOrigem.AsString) = 'PROCESSOSDOCUMENTOS' then
-                                     mAChou := Tab_Origem.Locate(CamposCampo_LookUpChave.Value, ProcessosDOC.FieldBYName(CamposCampo_LookUpPesquisa.VAlue).Value, [loCaseInsensitive]);
+                                 If UpperCase(CamposTabela_LookUpOrigem.AsString) = 'PROCESSOSDOCUMENTOS' then
+                                    mAChou := Tab_Origem.Locate(CamposCampo_LookUpChave.Value, ProcessosDOC.FieldBYName(CamposCampo_LookUpPesquisa.VAlue).Value, [loCaseInsensitive]);
                               end;
+                           end else begin
+                              mAchou := true;
                            end;
-
                            mBusca := CamposCampo.Value;
-
                            If Trim(CamposPesquisa.Value) <> '' then Begin
                               mCampo := Copy(mBusca, Pos('[',mBusca)+1, Pos(']',mBusca) - (Pos('[',mBusca)+1) );
                            end else begin
@@ -1669,7 +1680,13 @@ Var
     mValor_BCICMSMonoRet,
     mValor_ICMSMono,
     mValor_ICMSMonoRet,
-    mValorICMSDeson: Currency;
+    mValorICMSDeson,
+    mValor_BCCBS,
+    mValor_CBS,
+    mValor_BCIBS,
+    mValor_IBS,
+    mValor_BCIS,
+    mValor_IS: Currency;
 begin
      Application.ShowHint := false;
 
@@ -1732,6 +1749,12 @@ begin
      mValor_BCICMSMonoRet    := 0;
      mValor_ICMSMono         := 0;
      mValor_ICMSMonoRet      := 0;
+     mValor_BCCBS            := 0;
+     mValor_CBS              := 0;
+     mValor_BCIBS            := 0;
+     mValor_IBS              := 0;
+     mValor_BCIS             := 0;
+     mValor_IS               := 0;
 
      // Calula todos os campos de valores totais do pedido.
      With Dados do Begin
@@ -1796,6 +1819,12 @@ begin
                   PedidosValor_ICMSMono.Value         := 0;
                   PedidosValor_BCICMSMonoRet.Value    := 0;
                   PedidosValor_ICMSMonoRet.Value      := 0;
+                  PedidosValor_BCCBS.Value            := 0;
+                  PedidosValor_CBS.Value              := 0;
+                  PedidosValor_BCIBS.Value            := 0;
+                  PedidosValor_IBS.Value              := 0;
+                  PedidosValor_BCIS.Value             := 0;
+                  PedidosValor_IS.Value               := 0;
           Pedidos.Post;
 
           If PedidosItens.RecordCount <> 0 then begin
@@ -1821,6 +1850,12 @@ begin
                    mValor_ICMSMonoRet   := mValor_ICMSMonoRet   + PedidosItensValor_ICMSMonoRet.AsCurrency;
                    mValor_BCICMSMono    := mValor_BCICMSMono    + PedidosItensValor_BCICMSMono.AsCurrency;
                    mValor_BCICMSMonoRet := mValor_BCICMSMonoRet + PedidosItensValor_BCICMSMonoRet.AsCurrency;
+                   mValor_BCCBS         := mValor_BCCBS         + PedidosItensValor_BCCBS.ascurrency;
+                   mValor_CBS           := mValor_CBS           + PedidosItensValor_CBS.AsCurrency;
+                   mValor_BCIBS         := mValor_BCIBS         + PedidosItensValor_BCIBS.AsCurrency;
+                   mValor_IBS           := mValor_IBS           + PedidosItensValor_IBS.AsCurrency;
+                   mValor_BCIS          := mValor_BCIS          + PedidosItensValor_BCIS.AsCurrency;
+                   mValor_IS            := mValor_IS            + PedidosItensValor_IS.AsCurrency;
 
                    PedidosItens.Edit;
                                 mValor_TotalProdutos := Roundto(mValor_TotalProdutos + PedidosItensValor_Total.Value, -4);
@@ -2034,6 +2069,12 @@ begin
                      PedidosValor_ICMSMonoRet.Value   := mValor_ICMSMonoRet;
                      PedidosValor_BCICMSMono.Value    := mValor_BCICMSMono;
                      PedidosValor_BCICMSMonoRet.Value := mValor_BCICMSMonoRet;
+                     PedidosValor_BCCBS.value         := mValor_BCCBS;
+                     PedidosValor_CBS.value           := mValor_CBS;
+                     PedidosValor_BCIBS.Value         := mValor_BCIBS;
+                     PedidosValor_IBS.value           := mValor_IBS;
+                     PedidosValor_BCIS.value          := mValor_BCIS;
+                     PedidosValor_IS.value            := mValor_IS;
              Pedidos.Post;
 
              If Trim(TipoNotaCalculo_OutrasDespesas.AsString) <> '' then begin

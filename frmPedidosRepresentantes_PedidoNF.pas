@@ -424,6 +424,7 @@ begin
                                                   sql.Add('      ,COFINS_NotaSaida');
                                                   sql.Add('      ,Descricao');
                                                   sql.Add('      ,Beneficio_FiscalSai');
+                                                  sql.Add('      ,Aliquota_CBS');
                                                   sql.Add('from Produtos');
                                                   sql.Add('where Codigo = '+tPedidosNFitens.FieldByName('Codigo_Mercadoria').AsString);
                                                   open;
@@ -465,6 +466,9 @@ begin
                                              PedidosItensValor_IPI.Value             := 0;
                                              PedidosItensTotal_IPI.Value             := 0;
                                              PedidosItensAliquota_ICMSReducao.Value  := 0;
+                                             PedidosItensAliquota_CBS.Value          := tTemp.fieldbyname('Aliquota_CBS').AsFloat;
+                                             PedidosItensAliquota_IBS.Value          := ICMSAliquota_IBS.AsFloat;
+                                             
                                              if (Trim(TipoNotaCalculo_BCIPI.AsString) <> '') and (tTemp.fieldbyname('Aliquota_IPI').AsFloat > 0) then begin
                                                 PedidosItensValor_BCIPI.Value := CalculaMacro('Calculo_BCIPI');
                                                 PedidosItensValor_IPI.Value   := Roundto(Percentual(PedidosItensValor_BCIPI.Value, PedidosItensAliquota_IPI.Value)/PedidosItensQuantidade.AsFloat, -2);
@@ -1875,7 +1879,13 @@ Var
     mValor_BCICMSMonoRet,
     mValor_ICMSMono,
     mValor_ICMSMonoRet,
-    mValorICMSDeson: Currency;
+    mValorICMSDeson,
+    mValor_BCCBS,
+    mValor_CBS,
+    mValor_BCIBS,
+    mValor_IBS,
+    mValor_BCIS,
+    mValor_IS: Currency;
 begin
      Application.ShowHint := false;
 
@@ -1938,6 +1948,12 @@ begin
      mValor_BCICMSMonoRet    := 0;
      mValor_ICMSMono         := 0;
      mValor_ICMSMonoRet      := 0;
+     mValor_BCCBS            := 0;
+     mValor_CBS              := 0;
+     mValor_BCIBS            := 0;
+     mValor_IBS              := 0;
+     mValor_BCIS             := 0;
+     mValor_IS               := 0;
 
      // Calula todos os campos de valores totais do pedido.
      With Dados do Begin
@@ -2002,6 +2018,12 @@ begin
                   PedidosValor_ICMSMono.Value         := 0;
                   PedidosValor_BCICMSMonoRet.Value    := 0;
                   PedidosValor_ICMSMonoRet.Value      := 0;
+                  PedidosValor_BCCBS.Value            := 0;
+                  PedidosValor_CBS.Value              := 0;
+                  PedidosValor_BCIBS.Value            := 0;
+                  PedidosValor_IBS.Value              := 0;
+                  PedidosValor_BCIS.Value             := 0;
+                  PedidosValor_IS.Value               := 0;
           Pedidos.Post;
 
           If PedidosItens.RecordCount <> 0 then begin
@@ -2027,6 +2049,12 @@ begin
                    mValor_ICMSMonoRet   := mValor_ICMSMonoRet   + PedidosItensValor_ICMSMonoRet.AsCurrency;
                    mValor_BCICMSMono    := mValor_BCICMSMono    + PedidosItensValor_BCICMSMono.AsCurrency;
                    mValor_BCICMSMonoRet := mValor_BCICMSMonoRet + PedidosItensValor_BCICMSMonoRet.AsCurrency;
+                   mValor_BCCBS         := mValor_BCCBS         + PedidosItensValor_BCCBS.ascurrency;
+                   mValor_CBS           := mValor_CBS           + PedidosItensValor_CBS.AsCurrency;
+                   mValor_BCIBS         := mValor_BCIBS         + PedidosItensValor_BCIBS.AsCurrency;
+                   mValor_IBS           := mValor_IBS           + PedidosItensValor_IBS.AsCurrency;
+                   mValor_BCIS          := mValor_BCIS          + PedidosItensValor_BCIS.AsCurrency;
+                   mValor_IS            := mValor_IS            + PedidosItensValor_IS.AsCurrency;
 
                    PedidosItens.Edit;
                                 mValor_TotalProdutos := Roundto(mValor_TotalProdutos + PedidosItensValor_Total.Value, -4);
@@ -2240,6 +2268,12 @@ begin
                      PedidosValor_ICMSMonoRet.Value   := mValor_ICMSMonoRet;
                      PedidosValor_BCICMSMono.Value    := mValor_BCICMSMono;
                      PedidosValor_BCICMSMonoRet.Value := mValor_BCICMSMonoRet;
+                     PedidosValor_BCCBS.value         := mValor_BCCBS;
+                     PedidosValor_CBS.value           := mValor_CBS;
+                     PedidosValor_BCIBS.Value         := mValor_BCIBS;
+                     PedidosValor_IBS.value           := mValor_IBS;
+                     PedidosValor_BCIS.value          := mValor_BCIS;
+                     PedidosValor_IS.value            := mValor_IS;
              Pedidos.Post;
 
              If Trim(TipoNotaCalculo_OutrasDespesas.AsString) <> '' then begin
@@ -2259,7 +2293,7 @@ begin
              end;
           End;
      End;
-
+     
      Screen.Cursor := crDefault;
 End;
 

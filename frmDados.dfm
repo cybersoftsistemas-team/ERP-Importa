@@ -10,6 +10,7 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
+    Connected = True
     LoginPrompt = False
     Left = 17
     Top = 14
@@ -7684,7 +7685,7 @@ object Dados: TDados
     end
     object PedidosItensValor_IBS: TCurrencyField
       FieldName = 'Valor_IBS'
-      DisplayFormat = ',##0.00'
+      DisplayFormat = ',##0.0000'
     end
     object PedidosItensValor_BCCBS: TCurrencyField
       FieldName = 'Valor_BCCBS'
@@ -7696,7 +7697,7 @@ object Dados: TDados
     end
     object PedidosItensValor_CBS: TCurrencyField
       FieldName = 'Valor_CBS'
-      DisplayFormat = ',##0.00'
+      DisplayFormat = ',##0.0000'
     end
     object PedidosItensValor_BCIS: TCurrencyField
       FieldName = 'Valor_BCIS'
@@ -7708,7 +7709,7 @@ object Dados: TDados
     end
     object PedidosItensValor_IS: TCurrencyField
       FieldName = 'Valor_IS'
-      DisplayFormat = ',##0.00'
+      DisplayFormat = ',##0.0000'
     end
     object PedidosItensCSTIBS: TStringField
       FieldName = 'CSTIBS'
@@ -9959,6 +9960,7 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = ModalidadesPgtoBeforePost
     BeforeDelete = ModalidadesPgtoBeforeDelete
+    Active = True
     Left = 169
     Top = 193
     object ModalidadesPgtoCodigo: TSmallintField
@@ -30959,14 +30961,13 @@ object Dados: TDados
     SQLInsert.Strings = (
       'INSERT INTO Industrializacao'
       
-        '  (Codigo_Mercadoria, Quantidade, Valor_Unitario, Data, Nota, Da' +
-        'ta_Nota, Processo, Movimenta_Estoque, Movimenta_Inventario)'
+        '  (Registro, Codigo_Mercadoria, Quantidade, Valor_Unitario, Data' +
+        ', Notas, Processo, Movimenta_Estoque, Movimenta_Inventario)'
       'VALUES'
       
-        '  (:Codigo_Mercadoria, :Quantidade, :Valor_Unitario, :Data, :Not' +
-        'a, :Data_Nota, :Processo, :Movimenta_Estoque, :Movimenta_Inventa' +
-        'rio)'
-      'SET :Registro = SCOPE_IDENTITY()')
+        '  (:Registro, :Codigo_Mercadoria, :Quantidade, :Valor_Unitario, ' +
+        ':Data, :Notas, :Processo, :Movimenta_Estoque, :Movimenta_Inventa' +
+        'rio)')
     SQLDelete.Strings = (
       'DELETE FROM Industrializacao'
       'WHERE'
@@ -30975,17 +30976,17 @@ object Dados: TDados
       'UPDATE Industrializacao'
       'SET'
       
-        '  Codigo_Mercadoria = :Codigo_Mercadoria, Quantidade = :Quantida' +
-        'de, Valor_Unitario = :Valor_Unitario, Data = :Data, Nota = :Nota' +
-        ', Data_Nota = :Data_Nota, Processo = :Processo, Movimenta_Estoqu' +
+        '  Registro = :Registro, Codigo_Mercadoria = :Codigo_Mercadoria, ' +
+        'Quantidade = :Quantidade, Valor_Unitario = :Valor_Unitario, Data' +
+        ' = :Data, Notas = :Notas, Processo = :Processo, Movimenta_Estoqu' +
         'e = :Movimenta_Estoque, Movimenta_Inventario = :Movimenta_Invent' +
         'ario'
       'WHERE'
       '  Registro = :Old_Registro')
     SQLRefresh.Strings = (
       
-        'SELECT Codigo_Mercadoria, Quantidade, Valor_Unitario, Data, Nota' +
-        ', Data_Nota, Processo, Movimenta_Estoque, Movimenta_Inventario F' +
+        'SELECT Registro, Codigo_Mercadoria, Quantidade, Valor_Unitario, ' +
+        'Data, Notas, Processo, Movimenta_Estoque, Movimenta_Inventario F' +
         'ROM Industrializacao'
       'WHERE'
       '  Registro = :Registro')
@@ -31004,34 +31005,24 @@ object Dados: TDados
     Top = 990
     object IndustrialRegistro: TIntegerField
       FieldName = 'Registro'
-      ReadOnly = True
     end
     object IndustrialCodigo_Mercadoria: TIntegerField
       FieldName = 'Codigo_Mercadoria'
     end
     object IndustrialQuantidade: TFloatField
       FieldName = 'Quantidade'
-    end
-    object IndustrialDescricao: TStringField
-      FieldKind = fkLookup
-      FieldName = 'Descricao'
-      LookupDataSet = Produtos
-      LookupKeyFields = 'Codigo'
-      LookupResultField = 'Descricao_Reduzida'
-      KeyFields = 'Codigo_Mercadoria'
-      Size = 250
-      Lookup = True
-    end
-    object IndustrialNota: TStringField
-      FieldName = 'Nota'
-      Size = 60
-    end
-    object IndustrialData: TDateTimeField
-      FieldName = 'Data'
+      DisplayFormat = '##0.000'
     end
     object IndustrialValor_Unitario: TCurrencyField
       FieldName = 'Valor_Unitario'
       DisplayFormat = ',##0.0000'
+    end
+    object IndustrialData: TDateTimeField
+      FieldName = 'Data'
+    end
+    object IndustrialNotas: TStringField
+      FieldName = 'Notas'
+      Size = 60
     end
     object IndustrialProcesso: TStringField
       FieldName = 'Processo'
@@ -31042,6 +31033,16 @@ object Dados: TDados
     end
     object IndustrialMovimenta_Inventario: TBooleanField
       FieldName = 'Movimenta_Inventario'
+    end
+    object IndustrialDescricao: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Descricao'
+      LookupDataSet = Produtos
+      LookupKeyFields = 'Codigo'
+      LookupResultField = 'Descricao_Reduzida'
+      KeyFields = 'Codigo_Mercadoria'
+      Size = 120
+      Lookup = True
     end
   end
 end
