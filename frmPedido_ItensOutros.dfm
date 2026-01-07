@@ -3481,7 +3481,6 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           Height = 21
           DataField = 'Valor_BCCBS'
           DataSource = Dados.dsPedidosItens
-          Enabled = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWindowText
           Font.Height = -11
@@ -3496,10 +3495,6 @@ object Pedido_ItensOutros: TPedido_ItensOutros
     object TabSheet2: TTabSheet
       Caption = 'Produtos'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeProdutos: TDBGrid
         AlignWithMargins = True
         Left = 3
@@ -3660,7 +3655,7 @@ object Pedido_ItensOutros: TPedido_ItensOutros
     WordWrap = False
   end
   object Progresso: TProgressBar
-    Left = 8
+    Left = 6
     Top = 742
     Width = 332
     Height = 16
@@ -3669,7 +3664,7 @@ object Pedido_ItensOutros: TPedido_ItensOutros
   end
   object cVolumes: TCheckBox
     Left = 781
-    Top = 743
+    Top = 742
     Width = 168
     Height = 17
     Caption = 'Calcular qtde.total de volumes.'
