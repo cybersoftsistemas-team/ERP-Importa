@@ -226,7 +226,7 @@ var
   i: integer;
 begin
      Panel2.Enabled := false;
-     with Dados do begin
+with Dados do begin
           if (Button = nbEdit) or (Button = nbInsert) then begin
              for i := 0 to 6 do begin
                  Navega.Controls[i].Enabled := False;
