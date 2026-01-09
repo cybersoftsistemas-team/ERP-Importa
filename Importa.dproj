@@ -121,11 +121,10 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=5.2025.10.277;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=5.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=5.2026.0.1;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=5.0;Comments=;ProgramID=com.embarcadero.$(MSBuildProjectName)</VerInfo_Keys>
         <VerInfo_MajorVer>5</VerInfo_MajorVer>
-        <VerInfo_MinorVer>2025</VerInfo_MinorVer>
-        <VerInfo_Release>10</VerInfo_Release>
-        <VerInfo_Build>277</VerInfo_Build>
+        <VerInfo_MinorVer>2026</VerInfo_MinorVer>
+        <VerInfo_Build>1</VerInfo_Build>
         <VerInfo_AutoIncVersion>true</VerInfo_AutoIncVersion>
         <DCC_IMPLICIT_STRING_CAST>false</DCC_IMPLICIT_STRING_CAST>
         <DCC_IMPLICIT_STRING_CAST_LOSS>false</DCC_IMPLICIT_STRING_CAST_LOSS>

@@ -58,7 +58,6 @@ type
   private
     procedure FiltraMateria;
     procedure FichaEst;
-    procedure FichaInv;
     procedure DeletaMov;
     { Private declarations }
   public
@@ -98,6 +97,7 @@ begin
                sql.clear;
                sql.Add('select * from Industrializacao');
                open;
+               Navega.Controls[6].Enabled := Industrial.RecordCount > 0;
           end;
           with tProdutos do begin
                sql.clear;
@@ -159,12 +159,16 @@ procedure TIndustrializacao.FiltraMateria;
 begin
      with Dados do begin
           with ProdutosMateriaPrima do begin
-               if cCodigo.Text <> '' then begin
+               if (RecordCount > 0) or (Industrial.State = dsInsert) then begin
                   sql.clear;
                   sql.Add('select *');
-                  sql.Add('      ,Saldo = (select Qtde_Saldo from FichaEstoque where Codigo = Codigo_MateriaPrima and Item = (select max(item) from FichaEstoque where Codigo = Codigo_MateriaPrima))');
-                  sql.Add('from ProdutosMateriaPrima');
-                  sql.Add('where Codigo_Produto = ' + Industrial.FieldByName('Codigo_Mercadoria').AsString);
+                  sql.add('      ,Saldo = ((select isnull(sum(Quantidade), 0) from NotasTerceirosItens nti where nti.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Movimenta_Estoque = 1) + ');
+                  sql.add('                (select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 0 and Movimenta_Estoque = 1) +');
+                  sql.add('                (select isnull(sum(Quantidade_Entrada), 0) from ProdutosTransferencia prt where prt.Produto_Entrada = pmp.Codigo_MateriaPrima and Estoque = 1)) -');
+                  sql.add('               ((select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 1 and Movimenta_Estoque = 1) +');
+                  sql.add('                (select isnull(sum(Quantidade), 0) from ProdutosTransferencia prt where prt.Produto_Saida = pmp.Codigo_MateriaPrima and Estoque = 1))');
+                  sql.Add('from ProdutosMateriaPrima pmp');
+                  sql.Add('where Codigo_Produto = ' + iif(Industrial.FieldByName('Codigo_Mercadoria').AsString <> '', Industrial.FieldByName('Codigo_Mercadoria').AsString, '0'));
                   open;
                end;
           end;
@@ -172,6 +176,8 @@ begin
 end;
 
 procedure TIndustrializacao.NavegaBeforeAction(Sender: TObject; Button: TNavigateBtn);
+var
+   mProd: widestring;
 begin
      with Dados do begin
           if Button = nbPost then begin
@@ -181,10 +187,40 @@ begin
                 cCodigo.SetFocus;
                 Abort;
              end;
-             if strtofloat(cQtde.text) <= 0 then begin
+             if Industrial.FieldByName('Quantidade').asfloat <= 0 then begin
                 MessageDlg('Quantidade informada inválida!', mtError, [mbOK], 0);
                 cQtde.SetFocus;
                 Abort;
+             end;
+             // Verifica se há materia prima suficiente para a quantidade de produtos no estoque.
+             with tSaldo do begin
+                  sql.Clear;
+                  sql.add('select Codigo_MateriaPrima');
+                  sql.Add('      ,Descricao = (select Descricao_Reduzida from Produtos prd where prd.Codigo = pmp.Codigo_MateriaPrima)');
+                  sql.Add('      ,Quantidade_Utilizada');
+                  sql.add('      ,Saldo = ((select isnull(sum(Quantidade), 0) from NotasTerceirosItens nti where nti.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Movimenta_Estoque = 1) + ');
+                  sql.add('                (select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 0 and Movimenta_Estoque = 1) +');
+                  sql.add('                (select isnull(sum(Quantidade_Entrada), 0) from ProdutosTransferencia prt where prt.Produto_Entrada = pmp.Codigo_MateriaPrima and Estoque = 1)) -');
+                  sql.add('               ((select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 1 and Movimenta_Estoque = 1) +');
+                  sql.add('                (select isnull(sum(Quantidade), 0) from ProdutosTransferencia prt where prt.Produto_Saida = pmp.Codigo_MateriaPrima and Estoque = 1))');
+                  sql.add('into #temp');
+                  sql.add('from ProdutosMateriaPrima pmp');
+                  sql.add('where Codigo_Produto = :pCodigo');
+                  sql.add('select * from #temp where Saldo < (Quantidade_Utilizada * :pQtde)');
+                  sql.add('drop table #temp');
+                  parambyname('pCodigo').asinteger := Industrial.FieldByName('Codigo_Mercadoria').AsInteger;
+                  parambyname('pQtde').asfloat     := Industrial.FieldByName('Quantidade').asfloat;
+                  open;
+                  if recordcount > 0 then begin
+                     mProd := 'Materias primas sem estoque disponivel: '+#13+#13;
+                     while not eof do begin
+                           mProd := concat(mProd, fieldbyname('Codigo_MateriaPrima').AsString, ' - ', fieldbyname('Descricao').AsString, ' :', formatfloat(',##0.000', fieldbyname('Saldo').asfloat), #13);
+                           next;
+                     end;
+                     mProd := concat(mProd, #13, 'Industrialização não pode ser efetuada com a quantidade solicitada!');
+                     showmessage(mProd);
+                     abort;
+                  end;
              end;
              if Industrial.State = dsEdit then begin
                 DeletaMov;
@@ -203,7 +239,6 @@ begin
                 Abort
              end;
              DeletaMov;
-             ProdutosMateriaPrima.Refresh;
           end;
      end;
 end;
@@ -259,15 +294,22 @@ begin
              if Industrial.fieldbyname('Movimenta_Estoque').asboolean then FichaEst;
              //if Industrial.fieldbyname('Movimenta_Inventario').asboolean then FichaInv;
           end;
+          if Button in[nbPost, nbDelete] then begin
+             FiltraMateria;
+          end;
+          Navega.Controls[6].Enabled := Industrial.RecordCount > 0;
      end;
 end;
 
 // Ficha de estoque - "ENTRADA" (Efetua a baixa da matéria prima de industrialização).
 procedure TIndustrializacao.FichaEst;
-var 
-   mReg
-  ,mItem: integer;
-   mVlrUni: real;
+var       
+   mRegEst
+  ,mRegInv
+  ,mItemEst
+  ,mItemInv: integer;
+   mVlrUniEst
+  ,mVlrUniInv: real;
 begin
      with Dados, dmFiscal do begin
           with ProdutosTransferencia do begin
@@ -284,15 +326,19 @@ begin
           end;
           with ttmp do begin
                sql.clear;
-               sql.Add('select isnull(max(Registro), 0)+1 as Registro from FichaEstoque');
+               sql.Add('select RegEst = (select isnull(max(Registro), 0)+1 from FichaEstoque)');
+               sql.Add('      ,RegInv = (select isnull(max(Registro), 0)+1 from FichaInventario)');
                Open;
-               mReg := fieldbyname('Registro').asinteger;
+               mRegEst := fieldbyname('RegEst').asinteger;
+               mRegInv := fieldbyname('RegInv').asinteger;
                
                sql.Clear;
-               SQL.Add('select isnull(max(Item), 0)+1 as Item from FichaEstoque where Codigo = :pCodigo');
+               SQL.Add('select ItemEst = (select isnull(max(Item), 0)+1 from FichaEstoque where Codigo = :pCodigo)');
+               SQL.Add('      ,ItemInv = (select isnull(max(Item), 0)+1 from FichaInventario where Codigo = :pCodigo)');
                ParamByName('pCodigo').AsInteger := Industrial.FieldByName('Codigo_Mercadoria').asinteger;
                Open;
-               mItem := fieldbyname('Item').asinteger;
+               mItemEst := fieldbyname('ItemEst').asinteger;
+               mItemInv := fieldbyname('ItemInv').asinteger;
           end;
           with ProdutosMateriaPrima do begin
                sql.clear;
@@ -302,10 +348,14 @@ begin
                sql.add('      ,Conversao_M2M3');
                sql.add('      ,Quantidade_Utilizada');
                sql.add('      ,Descricao = (select Descricao from Produtos where Codigo = Codigo_MateriaPrima)');
-               sql.add('      ,Unidade   = (select Unidade   from Produtos where Codigo = Codigo_MateriaPrima)');
-               sql.add('      ,Altura    = (select Altura    from Produtos where Codigo = Codigo_Produto)');
-               sql.Add('      ,Saldo = (select Qtde_Saldo from FichaEstoque where Codigo = Codigo_MateriaPrima and Item = (select max(item) from FichaEstoque where Codigo = Codigo_MateriaPrima))');
-               sql.add('from  ProdutosMateriaPrima');
+               sql.add('      ,Unidade = (select Unidade   from Produtos where Codigo = Codigo_MateriaPrima)');
+               sql.add('      ,Altura = (select Altura    from Produtos where Codigo = Codigo_Produto)');
+               sql.add('      ,Saldo = ((select isnull(sum(Quantidade), 0) from NotasTerceirosItens nti where nti.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Movimenta_Estoque = 1) + ');
+               sql.add('                (select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 0 and Movimenta_Estoque = 1) +');
+               sql.add('                (select isnull(sum(Quantidade_Entrada), 0) from ProdutosTransferencia prt where prt.Produto_Entrada = pmp.Codigo_MateriaPrima and Estoque = 1)) -');
+               sql.add('               ((select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 1 and Movimenta_Estoque = 1) +');
+               sql.add('                (select isnull(sum(Quantidade), 0) from ProdutosTransferencia prt where prt.Produto_Saida = pmp.Codigo_MateriaPrima and Estoque = 1))');
+               sql.add('from  ProdutosMateriaPrima pmp');
                sql.add('where Codigo_Produto = :pCodigo');
                parambyName('pCodigo').AsInteger := Industrial.fieldbyname('Codigo_Mercadoria').asinteger;
                open;
@@ -321,7 +371,7 @@ begin
                parambyName('pCodigo').AsInteger := Industrial.FieldByName('Codigo_Mercadoria').asinteger;
                open;
           end;
-          // Adiciona "ENTRADA" na tabela de transferência com tipo 'IN' de industrialização.
+          // Adiciona "ENTRADA" do produto industrializado na tabela de transferência com tipo '"IND: industrialização".
           with ttmp do begin
                sql.clear;
                sql.Add('select isnull(max(Registro), 0)+1 as Registro from ProdutosTransferencia');
@@ -329,64 +379,108 @@ begin
           end;
           with ProdutosTransferencia do begin
                Append;
-                    ProdutosTransferenciaRegistro.Value           := ttmp.FieldByName('Registro').AsInteger;
-                    ProdutosTransferenciaProduto_Entrada.Value    := Industrial.FieldByName('Codigo_Mercadoria').AsInteger;
-                    ProdutosTransferenciaQuantidade.Value         := Roundto(Industrial.fieldbyname('Quantidade').AsFloat, -3);
-                    ProdutosTransferenciaQuantidade_Entrada.Value := Roundto(Industrial.fieldbyname('Quantidade').AsFloat, -3);
-                    ProdutosTransferenciaInventario.Value         := Industrial.fieldbyname('Movimenta_Inventario').asboolean;
-                    ProdutosTransferenciaData_Transferencia.Value := Industrial.fieldbyname('Data').value;
-                    ProdutosTransferenciaNota.Value               := Industrial.fieldbyname('Registro').value;
-                    ProdutosTransferenciaObservacao.Value         := 'ENTRADA DE MERCADORIA INDUSTRIALIZADA REGISTRO FISCAL:' + Industrial.fieldbyname('Registro').asstring+ ' DE '+Industrial.fieldbyname('Data').AsString;
-                    ProdutosTransferenciaEstoque.Value            := Industrial.fieldbyname('Movimenta_Estoque').asboolean;
-                    ProdutosTransferenciaProcesso_Entrada.Value   := Industrial.fieldbyname('Processo').asstring;
-                    ProdutosTransferenciaMotivo.Value             := 'IND';
-                    ProdutosTransferenciaValor_Unitario.Value     := Industrial.fieldbyname('Valor_Unitario').ascurrency;
+                    fieldbyname('Registro').value           := ttmp.FieldByName('Registro').AsInteger;
+                    fieldbyname('Produto_Entrada').value    := Industrial.FieldByName('Codigo_Mercadoria').AsInteger;
+                    fieldbyname('Quantidade').value         := Roundto(Industrial.fieldbyname('Quantidade').AsFloat, -3);
+                    fieldbyname('Quantidade_Entrada').value := Roundto(Industrial.fieldbyname('Quantidade').AsFloat, -3);
+                    fieldbyname('Inventario').value         := Industrial.fieldbyname('Movimenta_Inventario').asboolean;
+                    fieldbyname('Data_Transferencia').value := Industrial.fieldbyname('Data').value;
+                    fieldbyname('Nota').value               := Industrial.fieldbyname('Registro').value;
+                    fieldbyname('Observacao').value         := 'ENTRADA DE MERCADORIA INDUSTRIALIZADA REGISTRO FISCAL:' + Industrial.fieldbyname('Registro').asstring+ ' DE '+Industrial.fieldbyname('Data').AsString;
+                    fieldbyname('Estoque').value            := Industrial.fieldbyname('Movimenta_Estoque').asboolean;
+                    fieldbyname('Processo_Entrada').value   := Industrial.fieldbyname('Processo').asstring;
+                    fieldbyname('Motivo').value             := 'IND';
+                    fieldbyname('Valor_Unitario').value     := Industrial.fieldbyname('Valor_Unitario').ascurrency;
                 Post;
           end;
+          {===============================================================================[ PRODUTO INDUSTRIALIZADO ]=========================================================================================}
           // Entrada do produto industrializado na ficha de estoque.
-          with FichaEstoque do begin
-               Append;                           
-                    FichaEstoqueRegistro.Value            := mReg;
-                    FichaEstoqueItem.Value                := mItem;
-                    FichaEstoqueCodigo.Value              := Industrial.fieldbyname('Codigo_Mercadoria').asinteger;
-                    FichaEstoqueDescricao.Value           := Industrial.FieldByName('Descricao').AsString;
-                    FichaEstoqueUM.Value                  := Produtos.FieldByName('Unidade').AsString;
-                    FichaEstoqueNCM.Value                 := Produtos.FieldByName('NCM').AsString;
-                    FichaEstoqueHistorico.Value           := '* ENTRADA DE INDUSTRIALIZAÇÃO *';
-                    FichaEstoqueEstoque.Value             := '0-EMPRESA';
-                    FichaEstoqueEmissor.Value             := 'P';
-                    FichaEstoqueNota.Value                := Industrial.fieldbyname('Registro').asinteger;
-                    FichaEstoqueData.Value                := Industrial.fieldbyname('Data').value;
-                    FichaEstoqueES.Value                  := 'E';
-                    FichaEstoqueDestinatario_Nome.Value   := tEmpresa.FieldByName('Razao_Social').AsString;
-                    FichaEstoqueDestinatario_CNPJ.Value   := tEmpresa.FieldByName('CNPJ').AsString;
-                    FichaEstoqueFinalidade.Value          := 0;
-                    FichaEstoqueQtde_Saida.Value          := 0;
-                    FichaEstoqueUnitario_Saida.Value      := 0;
-                    FichaEstoqueTotal_Saida.Value         := 0;
-                    FichaEstoqueQtde_Entrada.Value        := Industrial.fieldbyname('Quantidade').AsFloat;
-                    FichaEstoqueUnitario_Entrada.Value    := Industrial.fieldbyname('Valor_Unitario').AsFloat;
-                    FichaEstoqueTotal_Entrada.Value       := Industrial.fieldbyname('Valor_Unitario').AsFloat * Industrial.fieldbyname('Quantidade').AsFloat;
-                    if tSaldo.RecordCount > 0 then begin
-                       FichaEstoqueQtde_Saldo.Value  := tSaldo.FieldByName('Qtde_Saldo').AsFloat  + FichaEstoqueQtde_Entrada.AsFloat;
-                       FichaEstoqueTotal_Saldo.Value := tSaldo.FieldByName('Total_Saldo').AsFloat + FichaEstoqueTotal_Entrada.AsFloat;
-                    end else begin
-                       FichaEstoqueQtde_Saldo.Value  := FichaEstoqueQtde_Entrada.Value;
-                       FichaEstoqueTotal_Saldo.Value := FichaEstoqueTotal_Entrada.AsFloat;
-                    end;
-                    if FichaEstoqueQtde_Saldo.AsFloat > 0 then begin
-                       FichaEstoqueUnitario_Saldo.Value := FichaEstoqueTotal_Saldo.AsFloat / FichaEstoqueQtde_Saldo.AsFloat;
-                    end;
-                    FichaEstoqueOrigem.Value         := 'IND';
-                    FichaEstoqueProcesso.Value       := Industrial.fieldbyname('Processo').asstring;
-                    FichaEstoqueTipo_Processo.Value  := tProcesso.fieldbyname('Modalidade_Importacao').asinteger;
-               Post;
+          if Industrial.fieldbyname('Movimenta_Estoque').asboolean then begin
+             with FichaEstoque do begin
+                  Append;                           
+                       fieldbyname('Registro').value          := mRegEst;
+                       fieldbyname('Item').value              := mItemEst;
+                       fieldbyname('Codigo').value            := Industrial.fieldbyname('Codigo_Mercadoria').asinteger;
+                       fieldbyname('Descricao').value         := Industrial.FieldByName('Descricao').AsString;
+                       fieldbyname('UM').value                := Produtos.FieldByName('Unidade').AsString;
+                       fieldbyname('NCM').value               := Produtos.FieldByName('NCM').AsString;
+                       fieldbyname('Historico').value         := '* ENTRADA DE INDUSTRIALIZAÇÃO *';
+                       fieldbyname('Estoque').value           := '0-EMPRESA';
+                       fieldbyname('Emissor').value           := 'P';
+                       fieldbyname('Nota').value              := Industrial.fieldbyname('Registro').asinteger;
+                       fieldbyname('Data').value              := Industrial.fieldbyname('Data').value;
+                       fieldbyname('ES').value                := 'E';
+                       fieldbyname('Destinatario_Nome').value := tEmpresa.FieldByName('Razao_Social').AsString;
+                       fieldbyname('Destinatario_CNPJ').value := tEmpresa.FieldByName('CNPJ').AsString;
+                       fieldbyname('Finalidade').value        := 0;
+                       fieldbyname('Qtde_Saida').value        := 0;
+                       fieldbyname('Unitario_Saida').value    := 0;
+                       fieldbyname('Total_Saida').value       := 0;
+                       fieldbyname('Qtde_Entrada').value      := Industrial.fieldbyname('Quantidade').AsFloat;
+                       fieldbyname('Unitario_Entrada').value  := Industrial.fieldbyname('Valor_Unitario').AsFloat;
+                       fieldbyname('Total_Entrada').value     := Industrial.fieldbyname('Valor_Unitario').AsFloat * Industrial.fieldbyname('Quantidade').AsFloat;
+                       if tSaldo.RecordCount > 0 then begin
+                          fieldbyname('Qtde_Saldo').value  := tSaldo.FieldByName('Qtde_Saldo').AsFloat  + fieldbyname('Qtde_Entrada').AsFloat;
+                          fieldbyname('Total_Saldo').value := tSaldo.FieldByName('Total_Saldo').AsFloat + fieldbyname('Total_Entrada').AsFloat;
+                       end else begin
+                          fieldbyname('Qtde_Saldo').value  := fieldbyname('Qtde_Entrada').Value;
+                          fieldbyname('Total_Saldo').value := fieldbyname('Total_Entrada').AsFloat;
+                       end;
+                       if fieldbyname('Qtde_Saldo').AsFloat > 0 then begin
+                          fieldbyname('Unitario_Saldo').value := fieldbyname('Total_Saldo').AsFloat / fieldbyname('Qtde_Saldo').AsFloat;
+                       end;
+                       fieldbyname('Origem').value        := 'IND';
+                       fieldbyname('Processo').value      := Industrial.fieldbyname('Processo').asstring;
+                       fieldbyname('Tipo_Processo').value := tProcesso.fieldbyname('Modalidade_Importacao').asinteger;
+                  Post;
+             end;
           end;
-
+          // Entrada do produto industrializado na ficha de inventario.
+          if Industrial.fieldbyname('Movimenta_Inventario').asboolean then begin
+             with FichaInventario do begin
+                  Append;                           
+                       fieldbyname('Registro').value          := mRegInv;
+                       fieldbyname('Item').value              := mItemInv;
+                       fieldbyname('Codigo').value            := Industrial.fieldbyname('Codigo_Mercadoria').asinteger;
+                       fieldbyname('Descricao').value         := Industrial.FieldByName('Descricao').AsString;
+                       fieldbyname('UM').value                := Produtos.FieldByName('Unidade').AsString;
+                       fieldbyname('NCM').value               := Produtos.FieldByName('NCM').AsString;
+                       fieldbyname('Historico').value         := '* ENTRADA DE INDUSTRIALIZAÇÃO *';
+                       fieldbyname('Estoque').value           := '0-EMPRESA';
+                       fieldbyname('Emissor').value           := 'P';
+                       fieldbyname('Nota').value              := Industrial.fieldbyname('Registro').asinteger;
+                       fieldbyname('Data').value              := Industrial.fieldbyname('Data').value;
+                       fieldbyname('ES').value                := 'E';
+                       fieldbyname('Destinatario_Nome').value := tEmpresa.FieldByName('Razao_Social').AsString;
+                       fieldbyname('Destinatario_CNPJ').value := tEmpresa.FieldByName('CNPJ').AsString;
+                       fieldbyname('Finalidade').value        := 0;
+                       fieldbyname('Qtde_Saida').value        := 0;
+                       fieldbyname('Unitario_Saida').value    := 0;
+                       fieldbyname('Total_Saida').value       := 0;
+                       fieldbyname('Qtde_Entrada').value      := Industrial.fieldbyname('Quantidade').AsFloat;
+                       fieldbyname('Unitario_Entrada').value  := Industrial.fieldbyname('Valor_Unitario').AsFloat;
+                       fieldbyname('Total_Entrada').value     := Industrial.fieldbyname('Valor_Unitario').AsFloat * Industrial.fieldbyname('Quantidade').AsFloat;
+                       if tSaldo.RecordCount > 0 then begin
+                          fieldbyname('Qtde_Saldo').value  := tSaldo.FieldByName('Qtde_Saldo').AsFloat  + fieldbyname('Qtde_Entrada').AsFloat;
+                          fieldbyname('Total_Saldo').value := tSaldo.FieldByName('Total_Saldo').AsFloat + fieldbyname('Total_Entrada').AsFloat;
+                       end else begin
+                          fieldbyname('Qtde_Saldo').value  := fieldbyname('Qtde_Entrada').Value;
+                          fieldbyname('Total_Saldo').value := fieldbyname('Total_Entrada').AsFloat;
+                       end;
+                       if fieldbyname('Qtde_Saldo').AsFloat > 0 then begin
+                          fieldbyname('Unitario_Saldo').value := fieldbyname('Total_Saldo').AsFloat / fieldbyname('Qtde_Saldo').AsFloat;
+                       end;
+                       fieldbyname('Origem').value        := 'IND';
+                       fieldbyname('Processo').value      := Industrial.fieldbyname('Processo').asstring;
+                       fieldbyname('Tipo_Processo').value := tProcesso.fieldbyname('Modalidade_Importacao').asinteger;
+                  Post;
+             end;
+          end;
+          {===============================================================================[ MATERIA PRIMA ]================================================================================================}
           // Materias primas do produto principal.
           ProdutosMateriaPrima.First;
           while not ProdutosMateriaPrima.Eof do begin
-                // Pegando o valor de entrada da ficha de estoque.
+                // Pegando o valor de entrada da ficha de estoque/Inventario
                 with ttmp do begin
                      sql.clear;
                      sql.add('select isnull(Unitario_Saida, 0) as Unitario');
@@ -395,40 +489,53 @@ begin
                      parambyName('pCodigo').AsInteger := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').AsInteger;
                      parambyName('pNota').AsInteger   := Industrial.fieldbyname('Registro').asinteger;
                      open;
-                     mVlrUni := fieldbyname('Unitario').ascurrency;
+                     mVlrUniEst := fieldbyname('Unitario').ascurrency;
+                     
+                     sql.clear;
+                     sql.add('select isnull(Unitario_Saida, 0) as Unitario');
+                     sql.add('from FichaInventario');
+                     sql.add('where Codigo = :pCodigo and Nota <> :pNota and Item = (select max(Item) from FichaInventario where Codigo = :pCodigo and Nota <> :pNota) ');
+                     parambyName('pCodigo').AsInteger := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').AsInteger;
+                     parambyName('pNota').AsInteger   := Industrial.fieldbyname('Registro').asinteger;
+                     open;
+                     mVlrUniInv := fieldbyname('Unitario').ascurrency;
                 end;
                 with ttmp do begin
                      sql.Clear;
-                     SQL.Add('select isnull(max(Item), 0)+1 as Item from FichaEstoque where Codigo = :pCodigo');
+                     SQL.Add('select ItemEst = (select isnull(max(Item), 0)+1 from FichaEstoque where Codigo = :pCodigo)');
+                     SQL.Add('      ,ItemInv = (select isnull(max(Item), 0)+1 from FichaInventario where Codigo = :pCodigo)');
                      ParamByName('pCodigo').AsInteger := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').asinteger;
                      Open;
-                     mItem := fieldbyname('Item').asinteger;
+                     mItemEst := fieldbyname('ItemEst').asinteger;
+                     mItemInv := fieldbyname('ItemInv').asinteger;
                 end;
                 with ttmp do begin
                      sql.clear;
-                     sql.Add('select isnull(max(Registro), 0)+1 as Registro from FichaEstoque');
+                     sql.Add('select RegEst = (select isnull(max(Registro), 0)+1 from FichaEstoque)');
+                     sql.Add('      ,RegInv = (select isnull(max(Registro), 0)+1 from FichaEstoque)');
                      Open;
-                     mReg := fieldbyname('Registro').asinteger;
+                     mRegEst := fieldbyname('RegEst').asinteger;
+                     mRegInv := fieldbyname('RegInv').asinteger;
                      
                      sql.clear;
                      sql.Add('select isnull(max(Registro), 0)+1 as Registro from ProdutosTransferencia');
                      Open;
                 end;
-                // Adiciona "SAÍDA" na tabela de transferência com tipo 'IN' de industrialização.
+                // Adiciona "SAÍDA" na tabela de transferência com tipo "IND: de industrialização".
                 with ProdutosTransferencia do begin 
                      Append;
-                          ProdutosTransferenciaRegistro.Value           := ttmp.FieldByName('Registro').AsInteger;
-                          ProdutosTransferenciaProduto_Saida.Value      := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').AsInteger;
-                          ProdutosTransferenciaQuantidade.Value         := Roundto(Industrial.FieldByName('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat, -3);
-                          ProdutosTransferenciaQuantidade_Entrada.Value := 0;
-                          ProdutosTransferenciaInventario.Value         := Industrial.FieldByName('Movimenta_Inventario').asboolean;
-                          ProdutosTransferenciaData_Transferencia.Value := Industrial.FieldByName('Data').value;
-                          ProdutosTransferenciaNota.Value               := Industrial.FieldByName('Registro').asinteger;
-                          ProdutosTransferenciaObservacao.Value         := 'SAÍDA DE MATERIA PRIMA DE INDUSTRIALIZAÇÃO REGISTRO FISCAL:' + Industrial.FieldByName('Registro').AsString + ' DE '+Industrial.FieldByName('Data').AsString;
-                          ProdutosTransferenciaEstoque.Value            := Industrial.FieldByName('Movimenta_Estoque').asboolean;
-                          ProdutosTransferenciaProcesso_Saida.Value     := Industrial.FieldByName('Processo').AsString;
-                          ProdutosTransferenciaMotivo.Value             := 'IND';
-                          ProdutosTransferenciaValor_Unitario.Value     := Industrial.FieldByName('Valor_Unitario').ascurrency;
+                          fieldbyname('Registro').value           := ttmp.FieldByName('Registro').AsInteger;
+                          fieldbyname('Produto_Saida').value      := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').AsInteger;
+                          fieldbyname('Quantidade').value         := Roundto(Industrial.FieldByName('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat, -3);
+                          fieldbyname('Quantidade_Entrada').value := 0;
+                          fieldbyname('Inventario').value         := Industrial.FieldByName('Movimenta_Inventario').asboolean;
+                          fieldbyname('Data_Transferencia').value := Industrial.FieldByName('Data').value;
+                          fieldbyname('Nota').value               := Industrial.FieldByName('Registro').asinteger;
+                          fieldbyname('Observacao').value         := 'SAÍDA DE MATERIA PRIMA DE INDUSTRIALIZAÇÃO REGISTRO FISCAL:' + Industrial.FieldByName('Registro').AsString + ' DE '+Industrial.FieldByName('Data').AsString;
+                          fieldbyname('Estoque').value            := Industrial.FieldByName('Movimenta_Estoque').asboolean;
+                          fieldbyname('Processo_Saida').value     := Industrial.FieldByName('Processo').AsString;
+                          fieldbyname('Motivo').value             := 'IND';
+                          fieldbyname('Valor_Unitario').value     := Industrial.FieldByName('Valor_Unitario').ascurrency;
                      Post;
                 end;
                 // Registros de "SAÍDA" da matéria prima na ficha de estoque.
@@ -445,36 +552,82 @@ begin
                 end;
                 with FichaEstoque do begin 
                      Append;                           
-                          FichaEstoqueRegistro.Value            := mReg;
-                          FichaEstoqueItem.Value                := mItem;
-                          FichaEstoqueCodigo.Value              := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').AsInteger;
-                          FichaEstoqueDescricao.Value           := ProdutosMateriaPrima.FieldByName('Descricao').AsString;
-                          FichaEstoqueUM.Value                  := Produtos.FieldByName('Unidade').AsString;
-                          FichaEstoqueNCM.Value                 := Produtos.FieldByName('NCM').AsString;
-                          FichaEstoqueHistorico.Value           := '* SAÍDA DE INDUSTRIALIZAÇÃO *';
-                          FichaEstoqueEstoque.Value             := '0-EMPRESA';
-                          FichaEstoqueEmissor.Value             := 'P';
-                          FichaEstoqueNota.Value                := Industrial.fieldbyname('Registro').asinteger;
-                          FichaEstoqueData.Value                := Industrial.fieldbyname('Data').value;
-                          FichaEstoqueES.Value                  := 'S';
-                          FichaEstoqueDestinatario_Nome.Value   := tEmpresa.FieldByName('Razao_Social').AsString;
-                          FichaEstoqueDestinatario_CNPJ.Value   := tEmpresa.FieldByName('CNPJ').AsString;
-                          FichaEstoqueFinalidade.Value          := 0;
-                          FichaEstoqueQtde_Entrada.Value        := 0;
-                          FichaEstoqueUnitario_Entrada.Value    := 0;
-                          FichaEstoqueTotal_Entrada.Value       := 0;
-                          FichaEstoqueQtde_Saida.Value          := Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat;
-                          FichaEstoqueUnitario_Saida.Value      := mVlrUni;
-                          FichaEstoqueTotal_Saida.Value         := mVlrUni * (Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat);
-                          FichaEstoqueQtde_Saldo.Value          := tSaldo.FieldByName('Qtde_Saldo').AsFloat - (Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat);
-                          FichaEstoqueTotal_Saldo.Value         := tSaldo.FieldByName('Total_Saldo').AsFloat - FichaEstoqueTotal_Saida.AsFloat;
-                          If (FichaEstoqueTotal_Saldo.AsCurrency > 0) then
-                             FichaEstoqueUnitario_Saldo.Value := FichaEstoqueTotal_Saldo.AsCurrency / FichaEstoqueQtde_Saldo.AsFloat
+                          fieldbyname('Registro').Value            := mRegEst;
+                          fieldbyname('Item').value                := mItemEst;
+                          fieldbyname('Codigo').value              := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').AsInteger;
+                          fieldbyname('Descricao').value           := ProdutosMateriaPrima.FieldByName('Descricao').AsString;
+                          fieldbyname('UM').value                  := Produtos.FieldByName('Unidade').AsString;
+                          fieldbyname('NCM').value                 := Produtos.FieldByName('NCM').AsString;
+                          fieldbyname('Historico').value           := '* SAÍDA DE INDUSTRIALIZAÇÃO *';
+                          fieldbyname('Estoque').value             := '0-EMPRESA';
+                          fieldbyname('Emissor').value             := 'P';
+                          fieldbyname('Nota').value                := Industrial.fieldbyname('Registro').asinteger;
+                          fieldbyname('Data').value                := Industrial.fieldbyname('Data').value;
+                          fieldbyname('ES').value                  := 'S';
+                          fieldbyname('Destinatario_Nome').value   := tEmpresa.FieldByName('Razao_Social').AsString;
+                          fieldbyname('Destinatario_CNPJ').value   := tEmpresa.FieldByName('CNPJ').AsString;
+                          fieldbyname('Finalidade').value          := 0;
+                          fieldbyname('Qtde_Entrada').value        := 0;
+                          fieldbyname('Unitario_Entrada').value    := 0;
+                          fieldbyname('Total_Entrada').value       := 0;
+                          fieldbyname('Qtde_Saida').value          := Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat;
+                          fieldbyname('Unitario_Saida').value      := mVlrUniEst;
+                          fieldbyname('Total_Saida').value         := mVlrUniEst * (Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat);
+                          fieldbyname('Qtde_Saldo').value          := tSaldo.FieldByName('Qtde_Saldo').AsFloat - (Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat);
+                          fieldbyname('Total_Saldo').value         := tSaldo.FieldByName('Total_Saldo').AsFloat - fieldbyname('Total_Saida').AsFloat;
+                          if (fieldbyname('Total_Saldo').AsCurrency > 0) then
+                             fieldbyname('Unitario_Saldo').value := fieldbyname('Total_Saldo').AsCurrency / fieldbyname('Qtde_Saldo').AsFloat
                           else
-                             FichaEstoqueUnitario_Saldo.Value := 0;
-                          FichaEstoqueOrigem.Value         := 'IND';
-                          FichaEstoqueProcesso.Value       := Industrial.fieldbyname('Processo').asstring;
-                          FichaEstoqueTipo_Processo.Value  := tProcesso.fieldbyname('Modalidade_Importacao').asinteger;
+                             fieldbyname('Unitario_Saldo').value := 0;
+                          fieldbyname('Origem').value         := 'IND';
+                          fieldbyname('Processo').value       := Industrial.fieldbyname('Processo').asstring;
+                          fieldbyname('Tipo_Processo').value  := tProcesso.fieldbyname('Modalidade_Importacao').asinteger;
+                     Post;
+                end;
+                // Registros de "SAÍDA" da matéria prima na ficha de inventario.
+                with tSaldo do begin
+                     sql.clear;
+                     sql.add('select Qtde_Saldo');
+                     sql.add('      ,Unitario_Saldo');
+                     sql.add('      ,Total_Saldo');
+                     sql.add('from FichaInventario');
+                     sql.add('where Codigo = :pCodigo');
+                     sql.add('and Registro = (select max(Registro) from FichaInventario where Codigo = :pCodigo)');
+                     parambyName('pCodigo').AsInteger := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').AsInteger;
+                     open;
+                end;
+                with FichaInventario do begin 
+                     Append;                           
+                          fieldbyname('Registro').Value            := mRegInv;
+                          fieldbyname('Item').value                := mItemInv;
+                          fieldbyname('Codigo').value              := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').AsInteger;
+                          fieldbyname('Descricao').value           := ProdutosMateriaPrima.FieldByName('Descricao').AsString;
+                          fieldbyname('UM').value                  := Produtos.FieldByName('Unidade').AsString;
+                          fieldbyname('NCM').value                 := Produtos.FieldByName('NCM').AsString;
+                          fieldbyname('Historico').value           := '* SAÍDA DE INDUSTRIALIZAÇÃO *';
+                          fieldbyname('Estoque').value             := '0-EMPRESA';
+                          fieldbyname('Emissor').value             := 'P';
+                          fieldbyname('Nota').value                := Industrial.fieldbyname('Registro').asinteger;
+                          fieldbyname('Data').value                := Industrial.fieldbyname('Data').value;
+                          fieldbyname('ES').value                  := 'S';
+                          fieldbyname('Destinatario_Nome').value   := tEmpresa.FieldByName('Razao_Social').AsString;
+                          fieldbyname('Destinatario_CNPJ').value   := tEmpresa.FieldByName('CNPJ').AsString;
+                          fieldbyname('Finalidade').value          := 0;
+                          fieldbyname('Qtde_Entrada').value        := 0;
+                          fieldbyname('Unitario_Entrada').value    := 0;
+                          fieldbyname('Total_Entrada').value       := 0;
+                          fieldbyname('Qtde_Saida').value          := Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat;
+                          fieldbyname('Unitario_Saida').value      := mVlrUniInv;
+                          fieldbyname('Total_Saida').value         := mVlrUniInv * (Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat);
+                          fieldbyname('Qtde_Saldo').value          := tSaldo.FieldByName('Qtde_Saldo').AsFloat - (Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat);
+                          fieldbyname('Total_Saldo').value         := tSaldo.FieldByName('Total_Saldo').AsFloat - fieldbyname('Total_Saida').AsFloat;
+                          if (fieldbyname('Total_Saldo').ascurrency > 0) then
+                             fieldbyname('Unitario_Saldo').value := fieldbyname('Total_Saldo').AsCurrency / fieldbyname('Qtde_Saldo').AsFloat
+                          else
+                             fieldbyname('Unitario_Saldo').value := 0;
+                          fieldbyname('Origem').value         := 'IND';
+                          fieldbyname('Processo').value       := Industrial.fieldbyname('Processo').asstring;
+                          fieldbyname('Tipo_Processo').value  := tProcesso.fieldbyname('Modalidade_Importacao').asinteger;
                      Post;
                 end;
                 
@@ -482,108 +635,6 @@ begin
           end;
      end;
 end;
-
-// Ficha de Inventario - "ENTRADA".
-procedure TIndustrializacao.FichaInv;
-var 
-   mReg
-  ,mItem: integer;
-   mVlrUni: real;
-begin
-     // Exclui os itens criados na tabela de transferencias anteriormente para a nota fiscal.
-     with Dados, dmFiscal do begin
-          with ProdutosTransferencia do begin
-//               sql.clear;
-//               sql.add('delete from ProdutosTransferencia where Nota = :pNota and Data_Transferencia = :pData');
-//               parambyname('pNota').value := Industrial.fieldbyname('Registro').asinteger;
-//               parambyname('pData').value := Industrial.FieldByName('Data').value;
-//               execute;
-               sql.clear;
-               sql.add('select * from ProdutosTransferencia where Produto_Entrada = :pProduto');
-               parambyname('pProduto').asinteger := Industrial.fieldbyname('Codigo_Mercadoria').asinteger;
-               Open;
-          end;
-          with ttmp do begin
-               sql.clear;
-               sql.Add('select isnull(max(Registro), 0)+1 as Registro');
-               sql.Add('from FichaInventario');
-               Open;
-               mReg := fieldbyname('Registro').asinteger;
-               
-               sql.Clear;
-               SQL.Add('select isnull(max(Item), 0)+1 as Item from FichaInventario where Codigo = :pCodigo');
-               ParamByName('pCodigo').AsInteger := Industrial.FieldByName('Codigo_Mercadoria').asinteger;
-               Open;
-               mItem := fieldbyname('Item').asinteger;
-          end;
-          with ProdutosMateriaPrima do begin
-               sql.clear;
-               sql.add('select Registro');
-               sql.add('      ,Codigo_Produto');
-               sql.add('      ,Codigo_MateriaPrima');
-               sql.add('      ,Conversao_M2M3');
-               sql.add('      ,Quantidade_Utilizada');
-               sql.add('      ,Descricao = (select Descricao from Produtos where Codigo = Codigo_MateriaPrima)');
-               sql.add('      ,Unidade   = (select Unidade   from Produtos where Codigo = Codigo_MateriaPrima)');
-               sql.add('      ,Altura    = (select Altura    from Produtos where Codigo = Codigo_Produto)');
-               sql.add('from  ProdutosMateriaPrima');
-               sql.add('where Codigo_Produto = :pCodigo');
-               parambyName('pCodigo').AsInteger := Industrial.fieldbyname('Codigo_Mercadoria').asinteger;
-               open;
-          end;
-          with tSaldo do begin 
-               sql.clear;
-               sql.add('select Qtde_Saldo');
-               sql.add('      ,Unitario_Saldo');
-               sql.add('      ,Total_Saldo');
-               sql.add('from FichaInventario');
-               sql.add('where Codigo = :pCodigo');
-               sql.add('and  Registro = (select max(Registro) from FichaInventario where Codigo = :pCodigo)');
-               parambyName('pCodigo').AsInteger := Industrial.FieldByName('Codigo_Mercadoria').asinteger;
-               open;
-          end;
-          // Entrada do produto industrializado na ficha de estoque.
-          FichaInventario.Append;                           
-                       FichaInventarioRegistro.Value            := mReg;
-                       FichaInventarioItem.Value                := mItem;
-                       FichaInventarioCodigo.Value              := Industrial.fieldbyname('Codigo_Mercadoria').asinteger;
-                       FichaInventarioDescricao.Value           := Industrial.FieldByName('Descricao').AsString;
-                       FichaInventarioUM.Value                  := Produtos.FieldByName('Unidade').AsString;
-                       FichaInventarioNCM.Value                 := Produtos.FieldByName('NCM').AsString;
-                       FichaInventarioHistorico.Value           := '* ENTRADA DE INDUSTRIALIZAÇÃO *';
-                       FichaInventarioEstoque.Value             := '0-EMPRESA';
-                       FichaInventarioEmissor.Value             := 'P';
-                       FichaInventarioNota.Value                := Industrial.fieldbyname('Registro').asinteger;
-                       FichaInventarioData.Value                := Industrial.fieldbyname('Data').value;
-                       FichaInventarioES.Value                  := 'E';
-                       //FichaInventarioDestinatario_Codigo.Value := null;
-                       FichaInventarioDestinatario_Nome.Value   := tEmpresa.FieldByName('Razao_Social').AsString;
-                       FichaInventarioDestinatario_CNPJ.Value   := tEmpresa.FieldByName('CNPJ').AsString;
-                       FichaInventarioFinalidade.Value          := ReferenciasFiscaisFinalidade_Mercadoria.AsInteger;
-                       FichaInventarioQtde_Saida.Value          := 0;
-                       FichaInventarioUnitario_Saida.Value      := 0;
-                       FichaInventarioTotal_Saida.Value         := 0;
-                       FichaInventarioQtde_Entrada.Value        := Industrial.fieldbyname('Quantidade').AsFloat;
-                       FichaInventarioUnitario_Entrada.Value    := Industrial.fieldbyname('Valor_Unitario').AsFloat;
-                       FichaInventarioTotal_Entrada.Value       := Industrial.fieldbyname('Valor_Unitario').AsFloat * Industrial.fieldbyname('Quantidade').AsFloat;
-                       if tSaldo.RecordCount > 0 then begin
-                          FichaInventarioQtde_Saldo.Value  := tSaldo.FieldByName('Qtde_Saldo').AsFloat  + FichaInventarioQtde_Entrada.AsFloat;
-                          FichaInventarioTotal_Saldo.Value := tSaldo.FieldByName('Total_Saldo').AsFloat + FichaInventarioTotal_Entrada.AsFloat;
-                       end else begin
-                          FichaInventarioQtde_Saldo.Value  := FichaInventarioQtde_Entrada.Value;
-                          FichaInventarioTotal_Saldo.Value := FichaInventarioTotal_Entrada.AsFloat;
-                       end;
-                       if FichaInventarioQtde_Saldo.AsFloat > 0 then begin
-                          FichaInventarioUnitario_Saldo.Value := FichaInventarioTotal_Saldo.AsFloat / FichaInventarioQtde_Saldo.AsFloat;
-                       end;
-                       FichaInventarioOrigem.Value         := 'IND';
-                       FichaInventarioProcesso.Value       := Industrial.fieldbyname('Processo').asstring;
-                       FichaInventarioTipo_Processo.Value  := tProcesso.fieldbyname('Modalidade_Importacao').asinteger;
-          FichaInventario.Post;
-     end;
-end;
-
-              
 
 
 

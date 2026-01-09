@@ -494,6 +494,10 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     OnChange = PageControl1Change
     object TabSheet1: TTabSheet
       Caption = 'Pedidos prontos para envio'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Grade: TRxDBGrid
         AlignWithMargins = True
         Left = 3
@@ -783,6 +787,10 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     object TabSheet2: TTabSheet
       Caption = 'Pedidos com pend'#234'ncias de container'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object RxDBGrid1: TRxDBGrid
         AlignWithMargins = True
         Left = 3
@@ -937,6 +945,10 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     object TabSheet3: TTabSheet
       Caption = 'Enviando'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cMensagens: TMemo
         AlignWithMargins = True
         Left = 3
@@ -3683,7 +3695,7 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     RTFSettings.DefaultFont.Style = []
     ShowCancelDialog = False
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'

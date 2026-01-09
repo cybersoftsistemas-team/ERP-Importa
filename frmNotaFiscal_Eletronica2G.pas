@@ -4309,7 +4309,7 @@ begin
                                     ,PedidosValor_IBS.AsCurrency              // informar o valor total da IBS da UF.
                                     ,0                                        // informar o valor total do diferimento do Município.
                                     ,0                                        // informar o valor total de devolução de tributos do Município.
-                                    ,0 //PedidosValor_IBS.ascurrency              // informar o valor total da IBS do Município.
+                                    ,0                                        // informar o valor total da IBS do Município.
                                     ,PedidosValor_IBS.AsCurrency              // informar o valor total da IBS.
                                     ,0                                        // informar o valor total do crédito presumido.
                                     ,0                                        // informar o valor total do crédito presumido em condição suspensiva.
@@ -4337,27 +4337,28 @@ begin
                                                ,0                             // Informar o Valor do CBS a ser estornado
                                                );
              *)
-             _IBSCBSTotv130 := '';
-             //if PedidosValor_CBS.AsCurrency > 0 then begin
-                _IBSCBSTotv130 := util.IBSCBSTotv130(PedidosValor_BCCBS.AsCurrency   // informar o Valor total da BC do IBS e da CBS.
-                                                    ,_gIBSTot                        // informar o XML do grupo de totalização do gIBS se existirem valores.
-                                                    ,_gCBSTot                        // informar o XML do grupo de totalização do gCBS se existirem valores.
-                                                    ,_gMonoTot                       // informar o XML do grupo de totalização do gMono se existirem valores.
-                                                    ,_gEstornoCred                   // informar o XML do grupo de totalização do gEstornoCred se existirem valores.
-                                                    );
-             //end;
-
-            if PedidosValor_CBS.AsCurrency > 0 then begin
-               total := util.totalRTC(totICMS                                    // informar o XML do grupo ICMSTot.
-                                     ,''                                         // informar o XML do grupo ISSQNTot.
-                                     ,''                                         // informar o XML do grupo retTrib.
-                                     ,PedidosValor_IS.AsCurrency                 // informar o Valor Total do IS.
-                                     ,_IBSCBSTotv130                             // informar o XML do grupo IBSCBSTot.
-                                     ,PedidosValor_TotalNota.AsCurrency          // informar o Valor total da NF-e com IBS/CBS/IS.
-                                     );
+            _IBSCBSTotv130 := '';
+            if PedidosValor_BCCBS.AsCurrency > 0 then begin
+               _IBSCBSTotv130 := util.IBSCBSTotv130(PedidosValor_BCCBS.AsCurrency   // informar o Valor total da BC do IBS e da CBS.
+                                                   ,_gIBSTot                        // informar o XML do grupo de totalização do gIBS se existirem valores.
+                                                   ,_gCBSTot                        // informar o XML do grupo de totalização do gCBS se existirem valores.
+                                                   ,_gMonoTot                       // informar o XML do grupo de totalização do gMono se existirem valores.
+                                                   ,_gEstornoCred);                 // informar o XML do grupo de totalização do gEstornoCred se existirem valores.
             end else begin
-               total := Util.Total(totICMS,'','');
+               _IBSCBSTotv130 := util.IBSCBSTotv130(0     
+                                                   ,''    
+                                                   ,''    
+                                                   ,''    
+                                                   ,'');  
             end;
+
+            total := util.totalRTC(totICMS                                    // informar o XML do grupo ICMSTot.
+                                  ,''                                         // informar o XML do grupo ISSQNTot.
+                                  ,''                                         // informar o XML do grupo retTrib.
+                                  ,PedidosValor_IS.AsCurrency                 // informar o Valor Total do IS.
+                                  ,_IBSCBSTotv130                             // informar o XML do grupo IBSCBSTot.
+                                  ,PedidosValor_TotalNota.AsCurrency          // informar o Valor total da NF-e com IBS/CBS/IS.
+                                  );
 
             TranspModFrete := PedidosModalidade_Frete.AsString;
 
@@ -4675,6 +4676,7 @@ var
    _gCBS,
    _gTribReg,
    _gTribCompraGov,
+   _gIBSCBSMono,
    _IBSCBS,
   _gIBSCBS,
    mGTIN,
@@ -5210,12 +5212,6 @@ begin
 
            // II.
            if PedidosSaida_Entrada.Value = 0 then begin 
-              {
-              _II := Util.II(PedidosItensValor_Total.Value,
-                             mDespesa,
-                             Roundto(PedidosItensValor_II.asfloat * (mQuantidade / ProdutosQuantidade_Unidade.AsFloat), -2),
-                             0);
-                             }
               _II := Util.II(PedidosItensValor_BCII.Value,
                              mDespesa,
                              Roundto(PedidosItensValor_II.asfloat * (mQuantidade / ProdutosQuantidade_Unidade.AsFloat), -2),
@@ -5224,12 +5220,6 @@ begin
               if not TipoNotaDevolucao_Importacao.AsBoolean then begin
                  _II := Util.II(0, 0, 0, 0);
               end else begin
-                 {
-                 _II := Util.II(PedidosItensValor_Total.Value,
-                                mDespesa,
-                                roundto(PedidosItensValor_II.asfloat, -2),
-                                0);
-                 }               
                  _II := Util.II(PedidosItensValor_BCII.Value * PedidosItensQuantidade.AsFloat,
                                 mDespesa,
                                 roundto(PedidosItensValor_II.asfloat, -2),
@@ -5246,79 +5236,120 @@ begin
            
            // IBS.              
            _gIBSUF := '';
-           if PedidosItensValor_IBS.ascurrency > 0 then begin
-              _gIBSUF := util.gIBSUF(PedidosItensAliquota_IBS.AsFloat          // Informar a alíquota do IBS de competência das UF.
-                                    ,0                                         // 
-                                    ,0                                         // 
-                                    ,0                                         // 
-                                    ,0                                         // 
-                                    ,0                                         // 
-                                    ,PedidosItensValor_IBS.ascurrency          // 
-                                    );
-                                 
-              _gIBSMun := util.gIBSMun(0    //PedidosItensAliquota_IBS.AsFloat        // Informar a alíquota do IBS de competência das UF.
-                                      ,0                                       // 
-                                      ,0                                       // 
-                                      ,0                                       // 
-                                      ,0                                       // 
-                                      ,0                                       // 
-                                      ,0  // PedidosItensValor_IBS.ascurrency        // Informar o Valor do IBS de competência do Município.
-                                      );
-           end;
+           _gIBSUF := util.gIBSUF(PedidosItensAliquota_IBS.AsFloat          // Informar a alíquota do IBS de competência das UF.
+                                 ,0                                         // 
+                                 ,0                                         // 
+                                 ,0                                         // 
+                                 ,0                                         // 
+                                 ,0                                         // 
+                                 ,PedidosItensValor_IBS.ascurrency          // 
+                                 );
+
+           _gIBSMun := '';
+           _gIBSMun := util.gIBSMun(0                                       // Informar a alíquota do IBS de competência das UF.
+                                   ,0                                       // 
+                                   ,0                                       // 
+                                   ,0                                       // 
+                                   ,0                                       // 
+                                   ,0                                       // 
+                                   ,0                                       // Informar o Valor do IBS de competência do Município.
+                                   );
 
            _gCBS := '';
-           //if PedidosItensValor_CBS.ascurrency > 0 then begin
-              _gCBS := util.gCBS(PedidosItensAliquota_CBS.AsFloat              // Informar a alíquota do CBS.
-                                ,0                                             // informaro o grupo de informações do Diferimento para CST=510-Diferimento ou CST=515-Diferimento com redução de alíquota.
-                                ,0                                             // 
-                                ,0                                             // 
-                                ,0                                             // 
-                                ,0                                             // 
-                                ,PedidosItensValor_CBS.ascurrency              // Informar o Valor do CBS Valor do CBS (vCBS) deverá ser resultante de: vCBS = (gIBSCBS/vBC x (pCBS / 100)) - vDif - vDevTrib.
-                                );                                       
-                                                                    
-           //end;
+           _gCBS := util.gCBS(PedidosItensAliquota_CBS.AsFloat              // Informar a alíquota do CBS.
+                             ,0                                             // informaro o grupo de informações do Diferimento para CST=510-Diferimento ou CST=515-Diferimento com redução de alíquota.
+                             ,0                                             // 
+                             ,0                                             // 
+                             ,0                                             // 
+                             ,0                                             // 
+                             ,PedidosItensValor_CBS.ascurrency              // Informar o Valor do CBS Valor do CBS (vCBS) deverá ser resultante de: vCBS = (gIBSCBS/vBC x (pCBS / 100)) - vDif - vDevTrib.
+                             );                                       
+                                                                 
            _gTribReg       := '';
            _gTribCompraGov := '';
-           {
-           _gTribReg := util.gTribRegular(PedidosItensCSTCBS.asstring,'000',0,0,0,0,0,0);
-            _gTribCompraGov := util.gTribCompraGov(0,0,0,0,0,0);
-           }                                      
+           //_gTribReg       := util.gTribRegular(PedidosItensCSTCBS.asstring,'000',0,0,0,0,0,0);
+           //_gTribCompraGov := util.gTribCompraGov(0,0,0,0,0,0);
+
+          _gIBSCBSMono := '';
+          {
+          _gIBSCBSMono := util.gIBSCBSMono(0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0
+                                          ,0);
+           }
            _gIBSCBS := '';
+           _gIBSCBS := util.gIBSCBSv130(PedidosItensValor_BCCBS.AsCurrency            // Informar a Base de cálculo do IBS e CBS.
+                                       ,_gIBSUF                                       // Informar o grupo gIBSUF - informações da tributação do IBS da UF.
+                                       ,_gIBSMun                                      // Informar o grupo gIBSMun - informações da tributação do IBS do Município.
+                                       ,PedidosItensValor_IBS.AsCurrency              // Informar o valor do IBS (soma do vIBSUF + vIBSMun) 
+                                       ,_gCBS                                         // Informar o grupo gCBS - informações da tributação do CBS.
+                                       ,_gTribReg                                     // Informar o grupo gTribRegular nas operações com benefício fiscal condicional.
+                                       ,_gTribCompraGov                               // Informar o grupo gTribCompraGov quando informado o grupo gCompraGov - Compra Governamental.
+                                       );
+
            _IBSCBS  := '';
-           //if PedidosItensValor_BCCBS.AsCurrency > 0 then begin
-              _gIBSCBS := util.gIBSCBSv130(PedidosItensValor_BCCBS.AsCurrency            // Informar a Base de cálculo do IBS e CBS.
-                                          ,_gIBSUF                                       // Informar o grupo gIBSUF - informações da tributação do IBS da UF.
-                                          ,_gIBSMun                                      // Informar o grupo gIBSMun - informações da tributação do IBS do Município.
-                                          ,PedidosItensValor_IBS.AsCurrency              // Informar o valor do IBS (soma do vIBSUF + vIBSMun) 
-                                          ,_gCBS                                         // Informar o grupo gCBS - informações da tributação do CBS.
-                                          ,_gTribReg                                     // Informar o grupo gTribRegular nas operações com benefício fiscal condicional.
-                                          ,_gTribCompraGov                               // Informar o grupo gTribCompraGov quando informado o grupo gCompraGov - Compra Governamental.
-                                          );
-                                                                                        
-              _IBSCBS := util.IBSCBSv130(PedidosItensCSTCBS.AsString                     // Informar o Código de Situação Tributária do IBS/CBS Tabela - CST.              
+           if (PedidosItensCSTCBS.value = '000') or (PedidosItensCSTCBS.value = '200') or (PedidosItensCSTCBS.value = '510') or (PedidosItensCSTCBS.value = '515') or (PedidosItensCSTCBS.value = '550') then begin
+              _IBSCBS := util.IBSCBSv130(PedidosItensCSTCBS.AsString                     // Informar o Código de Situação Tributária do IBS/CBS Tabela - CST.
                                         ,TipoNotaClassificacao_Tributaria.asstring       // Informar o Código de Classificação Tributária Tabela - cClassTrib.
                                         ,''                                              // Indica a natureza da operação de doação, orientando a apuração e a geração de débitos ou estornos conforme o cenário.
                                         ,_gIBSCBS                                        // O grupo de tributo a ser informado depende do CST da operação.
                                         ,''                                              // Informar o grupo gEstornoCred (Estorno de Crédito) quando houver estorno de crédito.
                                         ,''                                              // Informar o grupo gCredPresOper ou gCredPresIBSZFM (CST=810-Ajuste IBS ZFM) quando houver crédito presumido.
                                         );
-           //end;
-
-           (*
-           // Monta as TAGS de impostos dos produtos "Antes da Reforma Tributária".
-           _Imposto := Util.impostoNT2015003(PedidosItensTotal_Impostos.AsCurrency
-                                            ,_ICMS
-                                            , _IPI
-                                            , _II
-                                            , _PIS
-                                            , _PISST
-                                            , _COFINS
-                                            , _COFINSST
-                                            , ''
-                                            , _ICMSUFDest
-                                            );
-           *)
+           end;
+           if (PedidosItensCSTCBS.value = '410') or (PedidosItensCSTCBS.value = '810') or (PedidosItensCSTCBS.value = '830') then begin
+              _IBSCBS := util.IBSCBSv130(PedidosItensCSTCBS.AsString                     // Informar o Código de Situação Tributária do IBS/CBS Tabela - CST.
+                                        ,TipoNotaClassificacao_Tributaria.asstring       // Informar o Código de Classificação Tributária Tabela - cClassTrib.
+                                        ,''                                              // Indica a natureza da operação de doação, orientando a apuração e a geração de débitos ou estornos conforme o cenário.
+                                        ,''                                              // O grupo de tributo a ser informado depende do CST da operação.
+                                        ,''                                              // Informar o grupo gEstornoCred (Estorno de Crédito) quando houver estorno de crédito.
+                                        ,''                                              // Informar o grupo gCredPresOper ou gCredPresIBSZFM (CST=810-Ajuste IBS ZFM) quando houver crédito presumido.
+                                        );
+           end;
+           if (PedidosItensCSTCBS.value = '620') then begin
+              _IBSCBS := util.IBSCBSv130(PedidosItensCSTCBS.AsString                     // Informar o Código de Situação Tributária do IBS/CBS Tabela - CST.
+                                        ,TipoNotaClassificacao_Tributaria.asstring       // Informar o Código de Classificação Tributária Tabela - cClassTrib.
+                                        ,''                                              // Indica a natureza da operação de doação, orientando a apuração e a geração de débitos ou estornos conforme o cenário.
+                                        ,_gIBSCBSMono                                    // O grupo de tributo a ser informado depende do CST da operação.
+                                        ,''                                              // Informar o grupo gEstornoCred (Estorno de Crédito) quando houver estorno de crédito.
+                                        ,''                                              // Informar o grupo gCredPresOper ou gCredPresIBSZFM (CST=810-Ajuste IBS ZFM) quando houver crédito presumido.
+                                        );
+           end;
+           if (PedidosItensCSTCBS.value = '800') then begin
+              _IBSCBS := util.IBSCBSv130(PedidosItensCSTCBS.AsString                     // Informar o Código de Situação Tributária do IBS/CBS Tabela - CST.
+                                        ,TipoNotaClassificacao_Tributaria.asstring       // Informar o Código de Classificação Tributária Tabela - cClassTrib.
+                                        ,''                                              // Indica a natureza da operação de doação, orientando a apuração e a geração de débitos ou estornos conforme o cenário.
+                                        ,''                                              // O grupo de tributo a ser informado depende do CST da operação.
+                                        ,''                                              // Informar o grupo gEstornoCred (Estorno de Crédito) quando houver estorno de crédito.
+                                        ,''                                              // Informar o grupo gCredPresOper ou gCredPresIBSZFM (CST=810-Ajuste IBS ZFM) quando houver crédito presumido.
+                                        );
+           end;
+           if (PedidosItensCSTCBS.value = '811') then begin
+              _IBSCBS := util.IBSCBSv130(PedidosItensCSTCBS.AsString                     // Informar o Código de Situação Tributária do IBS/CBS Tabela - CST.
+                                        ,TipoNotaClassificacao_Tributaria.asstring       // Informar o Código de Classificação Tributária Tabela - cClassTrib.
+                                        ,''                                              // Indica a natureza da operação de doação, orientando a apuração e a geração de débitos ou estornos conforme o cenário.
+                                        ,''                                              // O grupo de tributo a ser informado depende do CST da operação.
+                                        ,''                                              // Informar o grupo gEstornoCred (Estorno de Crédito) quando houver estorno de crédito.
+                                        ,''                                              // Informar o grupo gCredPresOper ou gCredPresIBSZFM (CST=810-Ajuste IBS ZFM) quando houver crédito presumido.
+                                        );
+           end;
                       
            // Monta as TAGS de impostos dos produtos "Reforma tributária".
            _Imposto := Util.impostoRTC(PedidosItensTotal_Impostos.AsCurrency

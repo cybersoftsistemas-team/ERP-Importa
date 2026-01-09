@@ -2462,7 +2462,8 @@ begin
            // Pegando a aliquota do ICMS Operacional.
            ICMS.Locate('UF', ClientesEstado.AsString, [loCaseInsensitive]);
            PedidosItensAliquota_IBS.Value := ICMS.FieldbyName('Aliquota_IBS').AsFloat;
-           
+//           PedidosItensAliquota_IBS.Value := iif(trim(TipoNotaCalculo_VlrIBS.asstring) <> '', ICMS.FieldbyName('Aliquota_IBS').AsFloat, 0);
+
            if (PedidosItens.State = dsInsert) then begin
               // Pegando a aliquota do ICMS Operacional.
               //ICMS.Locate('UF', ClientesEstado.AsString, [loCaseInsensitive]);
@@ -2826,6 +2827,7 @@ begin
                  PedidosItensValor_Total.Value := Roundto(PedidosItensQuantidade.Value * (PedidosItensValor_Unitario.Value), -2);
               End;
               PedidosItensAliquota_IPI.Value := ProdutosAliquota_IPI.Value;
+//              PedidosItensAliquota_CBS.Value := iif(trim(TipoNotaCalculo_VlrCBS.asstring) <> '', ProdutosAliquota_CBS.Value, 0);
               PedidosItensAliquota_CBS.Value := ProdutosAliquota_CBS.Value;
 
               if ProdutosReducao_IPI.AsFloat         > 0 then PedidosItensAliquota_IPI.Value := ProdutosReducao_IPI.Value;
@@ -3109,6 +3111,13 @@ begin
                  PedidosItensValor_COFINS.Value    := 0;
               End;
 
+              PedidosItensValor_BCIS.Value  := 0;
+              PedidosItensValor_IS.Value    := 0;
+              PedidosItensValor_BCCBS.Value := 0;
+              PedidosItensValor_CBS.Value   := 0;
+              PedidosItensValor_BCIBS.Value := 0;
+              PedidosItensValor_IBS.Value   := 0;
+             
               if trim(TipoNotaCalculo_BCIS.AsString)   <> '' then PedidosItensValor_BCIS.Value  := RoundTo(CalculaMacro('Calculo_BCIS'), -2);
               if trim(TipoNotaCalculo_VlrIS.AsString)  <> '' then PedidosItensValor_IS.Value    := RoundTo(CalculaMacro('Calculo_VlrIS'), -2);
               if trim(TipoNotaCalculo_BCCBS.AsString)  <> '' then PedidosItensValor_BCCBS.Value := RoundTo(CalculaMacro('Calculo_BCCBS'), -2);

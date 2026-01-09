@@ -127,8 +127,6 @@ object Industrializacao: TIndustrializacao
     BevelOuter = bvLowered
     Enabled = False
     TabOrder = 1
-    ExplicitLeft = 103
-    ExplicitTop = 55
     object StaticText2: TStaticText
       Left = 7
       Top = 7
