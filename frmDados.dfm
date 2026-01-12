@@ -10,7 +10,6 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
-    Connected = True
     LoginPrompt = False
     Left = 17
     Top = 14
@@ -9960,7 +9959,6 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = ModalidadesPgtoBeforePost
     BeforeDelete = ModalidadesPgtoBeforeDelete
-    Active = True
     Left = 169
     Top = 193
     object ModalidadesPgtoCodigo: TSmallintField
@@ -15406,7 +15404,6 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
-    Connected = True
     LoginPrompt = False
     Left = 87
     Top = 14

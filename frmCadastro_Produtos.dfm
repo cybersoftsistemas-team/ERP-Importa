@@ -204,7 +204,7 @@ object Cadastro_Produtos: TCadastro_Produtos
     Margins.Top = 8
     Margins.Right = 8
     Margins.Bottom = 8
-    ActivePage = TabValores
+    ActivePage = TabCST
     Align = alClient
     ParentShowHint = False
     ShowHint = True
@@ -1500,10 +1500,6 @@ object Cadastro_Produtos: TCadastro_Produtos
       Caption = '&CST'
       Enabled = False
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cCSTPIS: TStaticText
         Left = 2
         Top = 2

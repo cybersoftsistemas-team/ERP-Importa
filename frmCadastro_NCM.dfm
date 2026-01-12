@@ -216,7 +216,7 @@ object Cadastro_NCM: TCadastro_NCM
     Top = 42
     Width = 1035
     Height = 594
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     TabHeight = 25
     TabOrder = 1
     TabWidth = 120
@@ -5956,6 +5956,10 @@ object Cadastro_NCM: TCadastro_NCM
     object TabSheet6: TTabSheet
       Caption = 'Atributos'
       ImageIndex = -1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBGrid1: TDBGrid
         AlignWithMargins = True
         Left = 305
@@ -6076,6 +6080,10 @@ object Cadastro_NCM: TCadastro_NCM
     object TabSheet3: TTabSheet
       Caption = '&Atualiza'#231#227'o'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GradeConsulta: TStringGrid
         Left = 0
         Top = 0
@@ -6108,6 +6116,10 @@ object Cadastro_NCM: TCadastro_NCM
     object TabSheet4: TTabSheet
       Caption = 'Browser'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cBrowser: TWebBrowser
         Left = 0
         Top = 0
