@@ -761,7 +761,7 @@ object Pedido: TPedido
     Top = 51
     Width = 774
     Height = 467
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     TabHeight = 28
     TabOrder = 4
     object TabSheet1: TTabSheet

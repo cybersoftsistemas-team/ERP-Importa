@@ -66,12 +66,12 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     Top = 40
     Width = 809
     Height = 587
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     TabHeight = 28
     TabOrder = 0
     object TabSheet1: TTabSheet
-      Caption = '&Dados da Nota Fiscal'
+      Caption = 'Dados da Nota Fiscal'
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -81,6 +81,7 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
         BevelOuter = bvLowered
         Enabled = False
         TabOrder = 0
+        ExplicitTop = 4
         object cNota: TDBEdit
           Left = 127
           Top = 5
@@ -2185,7 +2186,7 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
       end
     end
     object TabSheet3: TTabSheet
-      Caption = '&Seriais/Chassis'
+      Caption = 'Seriais/Chassis'
       object GradeSerial: TDBGrid
         Left = 0
         Top = 1
@@ -2301,7 +2302,7 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
       end
     end
     object TabSheet4: TTabSheet
-      Caption = '&Lotes'
+      Caption = 'Lotes'
       object GradeLote: TDBGrid
         AlignWithMargins = True
         Left = 3
@@ -2820,7 +2821,7 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
       end
     end
     object TabSheet2: TTabSheet
-      Caption = '&Filtros'
+      Caption = 'Filtros'
       object bFiltrar: TSpeedButton
         Left = 291
         Top = 342
@@ -3726,7 +3727,7 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
       AlignWithMargins = True
       Left = 3
       Top = 2
-      Width = 58
+      Width = 77
       Height = 28
       Cursor = crHandPoint
       Hint = '   Mostrar os itens da nota fiscal.'
@@ -3743,9 +3744,9 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     end
     object bDuplicatas: TButton
       AlignWithMargins = True
-      Left = 62
+      Left = 81
       Top = 2
-      Width = 95
+      Width = 108
       Height = 28
       Cursor = crHandPoint
       Hint = '   Gerar contas a pagar da nota fiscal.   '
@@ -3762,9 +3763,9 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     end
     object bImportaXMLNFe: TButton
       AlignWithMargins = True
-      Left = 353
+      Left = 411
       Top = 2
-      Width = 83
+      Width = 98
       Height = 28
       Cursor = crHandPoint
       Hint = '   Importar XML de Nota Fiscal   '
@@ -3778,12 +3779,13 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
       ShowHint = True
       TabOrder = 2
       OnClick = bImportaXMLNFeClick
+      ExplicitLeft = 385
     end
     object bEfetivar: TButton
       AlignWithMargins = True
-      Left = 524
+      Left = 600
       Top = 2
-      Width = 77
+      Width = 87
       Height = 28
       Cursor = crHandPoint
       Hint = '   Efetivar nota fiscal lan'#231'ada provis'#243'riamente.    '
@@ -3797,12 +3799,13 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
       ShowHint = True
       TabOrder = 3
       OnClick = bEfetivarClick
+      ExplicitLeft = 556
     end
     object bImportaXMLCTe: TButton
       AlignWithMargins = True
-      Left = 437
+      Left = 510
       Top = 2
-      Width = 86
+      Width = 89
       Height = 28
       Cursor = crHandPoint
       Hint = '   Importar XML de CT-e    '
@@ -3819,9 +3822,9 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     end
     object bCredito: TButton
       AlignWithMargins = True
-      Left = 268
+      Left = 316
       Top = 2
-      Width = 84
+      Width = 94
       Height = 28
       Cursor = crHandPoint
       Hint = '   Gerar cr'#233'dito dedevolu'#231#227'o de mercadorias.  '
@@ -3835,12 +3838,13 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
       ShowHint = True
       TabOrder = 5
       OnClick = bCreditoClick
+      ExplicitLeft = 300
     end
     object bVincular: TButton
       AlignWithMargins = True
-      Left = 158
+      Left = 190
       Top = 2
-      Width = 109
+      Width = 125
       Height = 28
       Cursor = crHandPoint
       Hint = '   Vincula lan'#231'amentos financeiros as nota fiscal   '

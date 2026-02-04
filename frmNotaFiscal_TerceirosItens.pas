@@ -147,6 +147,24 @@ type
     bPesqNav: TSpeedButton;
     cNavio: TDBLookupComboBox;
     ttmp: TMSQuery;
+    GroupBox6: TGroupBox;
+    StaticText53: TStaticText;
+    DBEdit33: TDBEdit;
+    StaticText54: TStaticText;
+    DBEdit34: TDBEdit;
+    StaticText55: TStaticText;
+    DBEdit35: TDBEdit;
+    GroupBox7: TGroupBox;
+    StaticText57: TStaticText;
+    DBEdit36: TDBEdit;
+    StaticText58: TStaticText;
+    DBEdit37: TDBEdit;
+    StaticText59: TStaticText;
+    DBEdit38: TDBEdit;
+    StaticText56: TStaticText;
+    DBLookupComboBox1: TDBLookupComboBox;
+    DBLookupComboBox2: TDBLookupComboBox;
+    StaticText60: TStaticText;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -262,6 +280,16 @@ begin
                sql.Add('where  Status <> ''ENCERRADO''');
                sql.Add('order  by Navio');
                open;
+          end;
+          with CSTIBS do begin
+               sql.clear;
+               sql.add('select * from CSTIBS order by Codigo');
+               Open;
+          end;
+          with CSTCBS do begin
+               sql.clear;
+               sql.add('select * from CSTCBS order by Codigo');
+               Open;
           end;
 
           cAliquotaICMS.Enabled := NotasTerceirosAliquota_ICMSOper.AsFloat = 0;

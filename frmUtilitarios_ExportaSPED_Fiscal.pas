@@ -2188,7 +2188,7 @@ begin
                 sql.add('drop table #temp');
                 parambyName('pAno').AsInteger := cAno.AsInteger;
                 parambyName('pMes').AsInteger := cMes.ItemIndex+1;
-                sql.savetoFile('c:\temp\SPED_FISCAL_REGISTRO0200.SQL');
+                //sql.savetoFile('c:\temp\SPED_FISCAL_REGISTRO0200.SQL');
                 open;
            end;
            Janela_ProcessamentoSPED.Progresso2.Position := 0;

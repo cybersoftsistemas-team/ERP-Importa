@@ -327,6 +327,19 @@ begin
                               PedidosItensValor_IPIDevol.Value      := PedidosItensTotal_IPI.Value;
                               PedidosItensPercentual_IPIDevol.Value := roundto((PedidosItensQuantidade.Value / NotasItensQuantidade.value)*100, -2);
                            end;
+                           
+                           // CBS / IBS.
+                           PedidosItensAliquota_CBS.Value := iif(NotasItens.FieldByName('Aliquota_CBS').asfloat > 0, NotasItens.FieldByName('Aliquota_CBS').asfloat, 0.9);
+                           PedidosItensValor_BCCBS.Value  := NotasItens.FieldByName('Valor_BCCBS').ascurrency;
+                           PedidosItensValor_CBS.Value    := NotasItens.FieldByName('Valor_CBS').ascurrency;
+                           PedidosItensAliquota_IBS.Value := iif(NotasItens.FieldByName('Aliquota_IBS').asfloat > 0, NotasItens.FieldByName('Aliquota_IBS').asfloat, 0.1);
+                           PedidosItensValor_BCIBS.Value  := NotasItens.FieldByName('Valor_BCIBS').ascurrency;
+                           PedidosItensValor_IBS.Value    := NotasItens.FieldByName('Valor_IBS').ascurrency;
+                           PedidosItensAliquota_IS.Value  := NotasItens.FieldByName('Aliquota_IS').asfloat;
+                           PedidosItensValor_BCIS.Value   := NotasItens.FieldByName('Valor_BCIS').ascurrency;
+                           PedidosItensValor_IS.Value     := NotasItens.FieldByName('Valor_IS').ascurrency;
+                           PedidosItensCSTCBS.Value       := iif(NotasItens.FieldByName('CSTCBS').asstring <> '', NotasItens.FieldByName('CSTCBS').asstring,'410');                           
+                           PedidosItensCSTIBS.Value       := iif(NotasItens.FieldByName('CSTIBS').asstring <> '', NotasItens.FieldByName('CSTIBS').asstring,'410');                           
               PedidosItens.Post;
            end else begin
               PedidosItens.Append;
@@ -474,6 +487,18 @@ begin
                               PedidosItensValor_IPIDevol.Value      := PedidosItensTotal_IPI.Value;
                               PedidosItensPercentual_IPIDevol.Value := roundto((PedidosItensQuantidade.Value / NotasItensQuantidade.value)*100, -2);
                            end;
+                           // CBS / IBS.
+                           PedidosItensAliquota_CBS.Value := iif(NotasItens.FieldByName('Aliquota_CBS').asfloat > 0, NotasItens.FieldByName('Aliquota_CBS').asfloat, 0.9);
+                           PedidosItensValor_BCCBS.Value  := NotasItens.FieldByName('Valor_BCCBS').ascurrency;
+                           PedidosItensValor_CBS.Value    := NotasItens.FieldByName('Valor_CBS').ascurrency;
+                           PedidosItensAliquota_IBS.Value := iif(NotasItens.FieldByName('Aliquota_IBS').asfloat > 0, NotasItens.FieldByName('Aliquota_IBS').asfloat, 0.1);
+                           PedidosItensValor_BCIBS.Value  := NotasItens.FieldByName('Valor_BCIBS').ascurrency;
+                           PedidosItensValor_IBS.Value    := NotasItens.FieldByName('Valor_IBS').ascurrency;
+                           PedidosItensAliquota_IS.Value  := NotasItens.FieldByName('Aliquota_IS').asfloat;
+                           PedidosItensValor_BCIS.Value   := NotasItens.FieldByName('Valor_BCIS').ascurrency;
+                           PedidosItensValor_IS.Value     := NotasItens.FieldByName('Valor_IS').ascurrency;
+                           PedidosItensCSTCBS.Value       := iif(NotasItens.FieldByName('CSTCBS').asstring <> '', NotasItens.FieldByName('CSTCBS').asstring,'410');                           
+                           PedidosItensCSTIBS.Value       := iif(NotasItens.FieldByName('CSTIBS').asstring <> '', NotasItens.FieldByName('CSTIBS').asstring,'410');                           
               PedidosItens.Post;
            end;
 
@@ -740,6 +765,13 @@ begin
                             else
                                PedidosValor_AFRMM.Value := PedidosValor_AFRMM.Value + (PedidosItensValor_AFRMM.Value / (PedidosItensQuantidade.Value * ProdutosQuantidade_Unidade.Value));
                             PedidosValor_IPIDevol.Value := PedidosValor_IPIDevol.Value + PedidosItensValor_IPIDevol.Value;
+
+                            PedidosValor_BCCBS.value := PedidosItensValor_BCCBS.value + PedidosValor_BCCBS.value;
+                            PedidosValor_CBS.value   := PedidosItensValor_CBS.value + PedidosValor_CBS.value;
+                            PedidosValor_BCIBS.Value := PedidosItensValor_BCIBS.value + PedidosValor_BCIBS.value;
+                            PedidosValor_IBS.value   := PedidosItensValor_IBS.value + PedidosValor_IBS.value;
+                            PedidosValor_BCIS.value  := PedidosItensValor_BCIS.value + PedidosValor_BCIS.value;
+                            PedidosValor_IS.value    := PedidosItensValor_IS.value + PedidosValor_IS.value;
                     Pedidos.Post;
                     Janela_Processamento.Progresso.Position := Janela_Processamento.Progresso.Position +1;
                     PedidosItens.Next;

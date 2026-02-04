@@ -521,6 +521,8 @@ type
     mnCadastro_LPCO: TMenuItem;
     N68: TMenuItem;
     mnFaturamento_Industrial: TMenuItem;
+    ServiosPrestadosNFSew1: TMenuItem;
+    bNFS: TSpeedButton;
     procedure mnCadastro_EmpresasClick(Sender: TObject);
     procedure mnCadastro_ClientesClick(Sender: TObject);
     procedure mnCadastro_FornecedoresClick(Sender: TObject);
@@ -864,6 +866,8 @@ type
     procedure EnviarDUIMPparaSISCOMEX1Click(Sender: TObject);
     procedure mnCadastro_LPCOClick(Sender: TObject);
     procedure mnFaturamento_IndustrialClick(Sender: TObject);
+    procedure ServiosPrestadosNFSew1Click(Sender: TObject);
+    procedure bNFSClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -1270,7 +1274,7 @@ uses
 
      // Controle de Embarques.
      frmProcesso_ControleNavios,
-     frmUtilitarios_AjustarEstoqueNavio, frmNFE50, frmImpressao_FinanceirosOP_PagarReceberSimp, frmImpressao_FinanceirosOP_ControleAbertos, frmProcesso_DUIMP, frmCadastro_LPCO, frmIndustrializacao;
+     frmUtilitarios_AjustarEstoqueNavio, frmNFE50, frmImpressao_FinanceirosOP_PagarReceberSimp, frmImpressao_FinanceirosOP_ControleAbertos, frmProcesso_DUIMP, frmCadastro_LPCO, frmIndustrializacao, frmPedido_NFS;
      
 
 {$R *.dfm}
@@ -2740,7 +2744,7 @@ begin
       Pedido_Outros.Caption         := Caption;
       Pedido_Outros.mSai_Entra      := 1;
       Pedido_Outros.lTitulo.Caption := 'Saída (Outras).';
-      Pedido_Outros.ShowModal;
+     Pedido_Outros.ShowModal;
 end;
 
 procedure TMenu_Principal.mnImpressao_Faturamento_DetalhamentoClick(Sender: TObject);
@@ -4068,6 +4072,13 @@ begin
       Fiscal_SaldoICMSIPI.ShowModal;
 end;
 
+procedure TMenu_Principal.ServiosPrestadosNFSew1Click(Sender: TObject);
+begin
+     Pedido_NFS := TPedido_NFS.Create(Self);
+     Pedido_NFS.Caption := Caption;
+     Pedido_NFS.ShowModal;
+end;
+
 procedure TMenu_Principal.SituaodosChassisSeriais1Click(Sender: TObject);
 begin
      Impressao_Estoque_SeriaisSit := TImpressao_Estoque_SeriaisSit.Create(Self);
@@ -4490,6 +4501,13 @@ begin
       Pedido_CTE := TPedido_CTE.Create(Self);
       Pedido_CTE.Caption := Caption;
       Pedido_CTE.ShowModal;
+end;
+
+procedure TMenu_Principal.bNFSClick(Sender: TObject);
+begin
+      Pedido_NFS := TPedido_NFS.Create(Self);
+      Pedido_NFS.Caption := Caption;
+      Pedido_NFS.ShowModal;
 end;
 
 procedure TMenu_Principal.mnCadastro_TaxaSISCOMEXClick(Sender: TObject);

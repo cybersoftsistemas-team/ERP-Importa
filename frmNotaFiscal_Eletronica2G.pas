@@ -1852,8 +1852,13 @@ begin
                  NotasRemessa.Value                    := PedidosRemessa.Value;
                  NotasValor_BCICMSPresumido.value      := PedidosValor_BCICMSPresumido.value;
                  NotasValor_ICMSPresumido.value        := PedidosValor_ICMSPresumido.value;
-                 NotasValor_ICMSPresumido.value        := PedidosValor_ICMSPresumido.value;
                  NotasIncentivo_Codigo.value           := PedidosIncentivo_Codigo.value;
+                 NotasValor_BCCBS.Value                := PedidosValor_BCCBS.ascurrency;
+                 NotasValor_CBS.Value                  := PedidosValor_CBS.ascurrency;
+                 NotasValor_BCIBS.Value                := PedidosValor_BCIBS.ascurrency;
+                 NotasValor_IBS.Value                  := PedidosValor_IBS.ascurrency;
+                 NotasValor_BCIS.Value                 := PedidosValor_BCIS.ascurrency;
+                 NotasValor_IS.Value                   := PedidosValor_IS.ascurrency;
            Notas.Post;
 
            // Capa da nota salva.
@@ -2181,7 +2186,19 @@ begin
                             NotasItensBeneficio_Fiscal.value       := PedidosItensBeneficio_Fiscal.AsString;
                             NotasItensCodigo_CredPres.value        := PedidosItensCodigo_CredPres.AsString;
                             NotasItensValor_COFINSDiferenca.Value  := PedidosItensValor_COFINSDiferenca.Value;
-                 NotasItens.Post;
+
+                            NotasItensAliquota_CBS.Value           := PedidosItensAliquota_CBS.asfloat;
+                            NotasItensValor_BCCBS.Value            := PedidosItensValor_BCCBS.ascurrency;
+                            NotasItensValor_CBS.Value              := PedidosItensValor_CBS.ascurrency;
+                            NotasItensAliquota_IBS.Value           := PedidosItensAliquota_IBS.asfloat;
+                            NotasItensValor_BCIBS.Value            := PedidosItensValor_BCIBS.ascurrency;
+                            NotasItensValor_IBS.Value              := PedidosItensValor_IBS.ascurrency;
+                            NotasItensAliquota_IS.Value            := PedidosItensAliquota_IS.asfloat;
+                            NotasItensValor_BCIS.Value             := PedidosItensValor_BCIS.ascurrency;
+                            NotasItensValor_IS.Value               := PedidosItensValor_IS.ascurrency;
+                            NotasItensCSTCBS.Value                 := PedidosItensCSTCBS.asstring;
+                            NotasItensCSTIBS.Value                 := PedidosItensCSTIBS.asstring;
+                 NotasItens.Post;                                     
 
                  // Adiciona o item a ficha de Estoque.
                  if not NotasNFe_Denegada.AsBoolean then begin
@@ -4093,6 +4110,7 @@ begin
             end;
 
             // Identificação da NFE.
+            {
             ide := Util.identificador202006(ide_cUF
                                            ,ide_cNF
                                            ,ide_NatOP
@@ -4117,7 +4135,38 @@ begin
                                            ,''
                                            ,''
                                            ,ide_Interm);
-                                           
+            }
+            ide := Util.identificadorRTCv130(ide_cUF
+                                            ,ide_cNF
+                                            ,ide_NatOP
+                                            ,ide_Mode
+                                            ,ide_Serie
+                                            ,ide_nNF
+                                            ,ide_dEmi310
+                                            ,ide_dSaiEnt310
+                                            ,ide_tpNF
+                                            ,ide_Dest
+                                            ,ide_cMunFG
+                                            ,ide_NFRef
+                                            ,ide_tpImp
+                                            ,iif(not PedidosDPEC.asboolean, InttoStr(ide_tpEmis), 4)
+                                            ,ide_cDV
+                                            ,ide_tpAmb
+                                            ,ide_finNFe
+                                            ,ide_Final
+                                            ,ide_Pres
+                                            ,ide_procEmi
+                                            ,ide_verProc
+                                            ,''
+                                            ,''
+                                            ,ide_Interm
+                                            ,''
+                                            ,''
+                                            ,''
+                                            ,''
+                                            ,''
+                                            ,'');
+                                            
             // Dados do emitente.
             emi         := '';
             emi_CNPJ    := Trim(EmpresasCNPJ.Value);
@@ -4967,6 +5016,7 @@ begin
            end;
 
            // Monta a TAG dos produtos.
+           {
            _produto := Util.produtoNT2019001(mCodigoProd                                                           // 01.informar o código do produto ou servi o.
                                             ,mGTIN                                                                 // 02.informar o GTIN (Global Trade Item Number) do produto, antigo c digo EAN ou c digo de barras.
                                             ,mDescricao                                                            // 03.informar a descrição do produto ou servi o.
@@ -5000,7 +5050,43 @@ begin
                                             ,_lote                                                                 // 31.N mero de controle da FCI - Ficha de Conte do de Importa  o.
                                             ,_CredPresumido                                                        // 32.Informar o grupo de Informa  es do Cr dito Presumido.
                                             );
-                                   
+          }
+
+           _produto := Util.produtoRTCv130(mCodigoProd                                                           // 01.informar o código do produto ou servi o.
+                                          ,mGTIN                                                                 // 02.informar o GTIN (Global Trade Item Number) do produto, antigo c digo EAN ou c digo de barras.
+                                          ,mDescricao                                                            // 03.informar a descrição do produto ou servi o.
+                                          ,PedidosItensNCM.Value                                                 // 04.nformar o Codigo NCM com 8 d gitos.
+                                          ,''                                                                    // 05.Codifica o NVE-Nomenclatura Valor Aduaneiro e Estat stica, Codifica  o opcional que detalha alguns NCM.
+                                          ,PedidosItensCEST.Value                                                // 06.informar Código Especificador da Substitui  o Tribut ria - CEST.
+                                          ,mEscala                                                               // 07.Indicador de Produção em escala relevante.
+                                          ,ProdutosCNPJ_Fabricante.AsString                                      // 08.CNPJ do Fabricante da Mercadoria, obrigat rio para produto em escala N O relevante.
+                                          ,PedidosItensBeneficio_Fiscal.AsString                                 // 09.Código de Benef cio Fiscal utilizado pela UF, aplicado ao item.
+                                          ,Trim(NCMCodigo_EXTIPI.AsString)                                       // 10.EXTIPI.
+                                          ,PedidosItensNatureza_Codigo.AsInteger                                 // 11.C digo da CFOP.
+                                          ,RemoveCaracterXML(PedidosItensUnidade_Medida.AsString)                // 12.informar a unidade de comercialização do produto.
+                                          ,FormatFloat('0.0000', mQuantidade)                                    // 13.nformar a quantidade de comercialização do do produto.
+                                          ,FormatFloat('0.0000000000', PedidosItensValor_Unitario.Value)         // 14.Informar o valor unitario de comercializa o do produto.
+                                          ,PedidosItensValor_Total.AsCurrency                                    // 15.informar o valor total bruto do produto ou servi os.
+                                          ,RemoveCaracterXML(mGTINUnidade)                                       // 16.informar o GTIN (Global Trade Item Number) da unidade de tributa  o do produto.
+                                          ,RemoveCaracterXML(ProdutosUnidade_Origem.Value)                       // 17.informar a unidade de tributação do produto.
+                                          ,FormatFloat('0.0000', Roundto(mQtdeTrib, -4))                         // 18.Qtde Tributa  o.
+                                          ,FormatFloat('0.0000000000', mValTrib)                                 // 19.Valor Unitario de tributação.
+                                          ,mValorFrete                                                           // 20.Valor Frete.
+                                          ,0                                                                     // 21.Valor Seguro.
+                                          ,mDesconto                                                             // 22.Valor Desconto.
+                                          ,mDespesa                                                              // 23.Valor Outros.
+                                          ,1                                                                     // 24.Este campo dever  ser preenchido com: 0 - o valor do item (vProd) n o comp e o valor total da NF-e (vProd).
+                                          ,_DI                                                                   // 25.informar o XML do grupo DI - dados da importa  o nas opera  es de importa  o.
+                                          ,_Exporta                                                              // 26.Detalhamento da exportação.
+                                          ,_Especifico                                                           // 27.informar o XML do grupo - detalhamento de espec fico.
+                                          ,PedidosItensPO.AsString                                               // 28.informar o n mero do pedido de compra, o campo   de livre uso do emissor.
+                                          ,PedidosItensOrdem.AsString                                            // 29.informar o n mero do item do pedido de compra, o campo   de livre uso do emissor.
+                                          ,''                                                                    // 30.informar o N mero de controle da FCI - Ficha de Conte do de Importa  o com formata  o.
+                                          ,_lote                                                                 // 31.N mero de controle da FCI - Ficha de Conte do de Importa  o.
+                                          ,_CredPresumido                                                        // 32.Informar o grupo de Informa  es do Cr dito Presumido.
+                                          ,0                                                                     // 33.Informar o Indicador de fornecimento de bem móvel usado.
+                                          ,'');                                                                  // 35.informar a Classificação para subapuração do IBS na ZFM.
+
            mDesoneracao := 0;
            if (PedidosItensSaida_Entrada.Value = 1) and (ClientesDesoneracao.AsInteger > 0) then begin
               mDesoneracao := ClientesDesoneracao.AsInteger;

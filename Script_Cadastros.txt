@@ -2944,3 +2944,14 @@ go
 --[05/01/2026 12:46:00]
 update Campos set Mascara = '###,###,##0.00;0; ' where Mascara = '#0.00;0;'
 go
+update Natureza set Servico = 1 where Descricao_NF like '%prestação%' and isnull(Servico, 0) = 0
+go
+
+--[04/02/2026 10:11:00]
+update Campos set Comando_SQL = 'WHERE (Numero = :pPedido)'
+                 ,Mascara = '###,###,##0.00;0; '
+where Tabela = 'Pedidos'
+and CHARINDEX('Aliquota', Campo) = 0
+and Tipo in('Float', 'Currency')
+and Percentual = 0
+go

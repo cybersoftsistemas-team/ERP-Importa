@@ -5,7 +5,7 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
   BorderStyle = bsDialog
   Caption = 'Utilitarios_Importar_NFe_Terceiros'
   ClientHeight = 741
-  ClientWidth = 725
+  ClientWidth = 887
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,13 +23,13 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
   object Panel1: TPanel
     Left = 0
     Top = 711
-    Width = 725
+    Width = 887
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
     object bSair: TButton
-      Left = 663
+      Left = 825
       Top = 1
       Width = 61
       Height = 28
@@ -42,7 +42,7 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
       OnClick = bSairClick
     end
     object bImportar: TButton
-      Left = 601
+      Left = 763
       Top = 1
       Width = 62
       Height = 28
@@ -56,7 +56,7 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
       OnClick = Sel
     end
     object bSeriais: TButton
-      Left = 473
+      Left = 635
       Top = 1
       Width = 64
       Height = 28
@@ -69,7 +69,7 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
       OnClick = bSeriaisClick
     end
     object bLotes: TButton
-      Left = 537
+      Left = 699
       Top = 1
       Width = 64
       Height = 28
@@ -82,7 +82,7 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
       OnClick = bLotesClick
     end
     object cUnidade: TButton
-      Left = 372
+      Left = 534
       Top = 1
       Width = 101
       Height = 28
@@ -99,9 +99,9 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     AlignWithMargins = True
     Left = 3
     Top = 310
-    Width = 719
+    Width = 881
     Height = 303
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -113,11 +113,17 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = 'Dados da &NF-e'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 711
+      ExplicitHeight = 0
       object cDadosNfe: TGroupBox
-        Left = 1
-        Top = 1
-        Width = 707
-        Height = 222
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
+        Height = 259
+        Align = alClient
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -126,6 +132,10 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitLeft = 1
+        ExplicitTop = 1
+        ExplicitWidth = 707
+        ExplicitHeight = 222
         object StaticText3: TStaticText
           Left = 6
           Top = 29
@@ -797,11 +807,17 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     object TabSheet2: TTabSheet
       Caption = '&Emitente'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 711
+      ExplicitHeight = 0
       object GroupBox1: TGroupBox
-        Left = 0
-        Top = 1
-        Width = 708
-        Height = 175
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
+        Height = 166
+        Align = alClient
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -810,6 +826,10 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitLeft = 0
+        ExplicitTop = 1
+        ExplicitWidth = 708
+        ExplicitHeight = 175
         object lFornecedor: TLabel
           Left = 186
           Top = 10
@@ -1378,10 +1398,12 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         end
       end
       object GroupBox6: TGroupBox
-        Left = 1
-        Top = 177
-        Width = 366
+        AlignWithMargins = True
+        Left = 3
+        Top = 175
+        Width = 867
         Height = 87
+        Align = alBottom
         Caption = 'Layout de captura dos dados do lote da NF-E'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -1390,6 +1412,9 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 1
+        ExplicitLeft = 1
+        ExplicitTop = 177
+        ExplicitWidth = 366
         object StaticText79: TStaticText
           Left = 5
           Top = 15
@@ -1506,11 +1531,17 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     object TabSheet3: TTabSheet
       Caption = '&Destinat'#225'rio'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 711
+      ExplicitHeight = 0
       object GroupBox2: TGroupBox
-        Left = 0
-        Top = 2
-        Width = 709
-        Height = 154
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
+        Height = 259
+        Align = alClient
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -1519,6 +1550,10 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitLeft = 0
+        ExplicitTop = 2
+        ExplicitWidth = 709
+        ExplicitHeight = 154
         object StaticText5: TStaticText
           Left = 6
           Top = 11
@@ -1888,10 +1923,12 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
       Caption = '&Totais'
       ImageIndex = 4
       object GroupBox3: TGroupBox
-        Left = 0
-        Top = 2
-        Width = 708
-        Height = 263
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
+        Height = 259
+        Align = alClient
         Enabled = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2777,16 +2814,250 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
           ParentFont = False
           TabOrder = 45
         end
+        object StaticText85: TStaticText
+          Left = 436
+          Top = 6
+          Width = 95
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'B.C.IBS'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 46
+          Transparent = False
+          StyleElements = []
+        end
+        object StaticText89: TStaticText
+          Left = 650
+          Top = 6
+          Width = 95
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'IBS'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 47
+          Transparent = False
+          StyleElements = []
+        end
+        object cBCIBS: TCurrencyEdit
+          Left = 533
+          Top = 6
+          Width = 114
+          Height = 21
+          AutoSize = False
+          DisplayFormat = ',0.00;-,0.00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 48
+        end
+        object cValorIBS: TCurrencyEdit
+          Left = 747
+          Top = 6
+          Width = 114
+          Height = 21
+          AutoSize = False
+          DisplayFormat = ',0.00;-,0.00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 49
+        end
+        object StaticText87: TStaticText
+          Left = 436
+          Top = 52
+          Width = 95
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'B.C.IS'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 50
+          Transparent = False
+          StyleElements = []
+        end
+        object StaticText88: TStaticText
+          Left = 650
+          Top = 52
+          Width = 95
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'IS'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 51
+          Transparent = False
+          StyleElements = []
+        end
+        object cBCIS: TCurrencyEdit
+          Left = 533
+          Top = 52
+          Width = 114
+          Height = 21
+          AutoSize = False
+          DisplayFormat = ',0.00;-,0.00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 52
+        end
+        object cValorIS: TCurrencyEdit
+          Left = 747
+          Top = 52
+          Width = 114
+          Height = 21
+          AutoSize = False
+          DisplayFormat = ',0.00;-,0.00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 53
+        end
+        object StaticText86: TStaticText
+          Left = 436
+          Top = 29
+          Width = 95
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'B.C.CBS'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 54
+          Transparent = False
+          StyleElements = []
+        end
+        object StaticText90: TStaticText
+          Left = 650
+          Top = 29
+          Width = 95
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'CBS'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 55
+          Transparent = False
+          StyleElements = []
+        end
+        object cBCCBS: TCurrencyEdit
+          Left = 533
+          Top = 29
+          Width = 114
+          Height = 21
+          AutoSize = False
+          DisplayFormat = ',0.00;-,0.00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 56
+        end
+        object cValorCBS: TCurrencyEdit
+          Left = 747
+          Top = 29
+          Width = 114
+          Height = 21
+          AutoSize = False
+          DisplayFormat = ',0.00;-,0.00'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 57
+        end
       end
     end
     object TabSheet4: TTabSheet
       Caption = '&Itens'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 711
+      ExplicitHeight = 0
       object GradeItens: TStringGrid
-        Left = 1
-        Top = 2
-        Width = 708
-        Height = 260
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
+        Height = 259
+        Align = alClient
         ColCount = 2
         DefaultColWidth = 70
         DefaultRowHeight = 18
@@ -2800,6 +3071,10 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing]
         ParentFont = False
         TabOrder = 0
+        ExplicitLeft = 1
+        ExplicitTop = 2
+        ExplicitWidth = 708
+        ExplicitHeight = 260
         ColWidths = (
           70
           70)
@@ -2808,11 +3083,17 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     object TabSheet6: TTabSheet
       Caption = '&Cadastro'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 711
+      ExplicitHeight = 0
       object GradeCadastro: TStringGrid
-        Left = 1
-        Top = 2
-        Width = 708
-        Height = 260
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
+        Height = 259
+        Align = alClient
         ColCount = 9
         DefaultColWidth = 70
         DefaultRowHeight = 18
@@ -2829,6 +3110,10 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         TabOrder = 0
         OnClick = GradeCadastroClick
         OnDrawCell = GradeCadastroDrawCell
+        ExplicitLeft = 1
+        ExplicitTop = 2
+        ExplicitWidth = 708
+        ExplicitHeight = 260
         ColWidths = (
           70
           70
@@ -2844,11 +3129,17 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     object TabSheet7: TTabSheet
       Caption = '&Adi'#231#245'es'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 711
+      ExplicitHeight = 0
       object GradeAdicoes: TStringGrid
-        Left = 1
-        Top = 2
-        Width = 708
-        Height = 260
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
+        Height = 259
+        Align = alClient
         ColCount = 6
         DefaultColWidth = 70
         DefaultRowHeight = 18
@@ -2865,6 +3156,10 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         TabOrder = 0
         OnClick = GradeCadastroClick
         OnDrawCell = GradeCadastroDrawCell
+        ExplicitLeft = 1
+        ExplicitTop = 2
+        ExplicitWidth = 708
+        ExplicitHeight = 260
         ColWidths = (
           70
           70
@@ -2877,11 +3172,17 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     object TabSheet8: TTabSheet
       Caption = 'Pre'#231'o Venda'
       ImageIndex = 7
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 711
+      ExplicitHeight = 0
       object cPrecoVenda: TListBox
-        Left = 0
-        Top = 2
-        Width = 709
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
         Height = 259
+        Align = alClient
         ExtendedSelect = False
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2897,11 +3198,17 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     object TabSheet9: TTabSheet
       Caption = 'NF Ref.'
       ImageIndex = 8
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 711
+      ExplicitHeight = 0
       object GradeReferencia: TStringGrid
-        Left = 1
-        Top = 2
-        Width = 708
-        Height = 260
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
+        Height = 259
+        Align = alClient
         ColCount = 9
         DefaultColWidth = 70
         DefaultRowHeight = 18
@@ -2918,6 +3225,10 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         TabOrder = 0
         OnClick = GradeCadastroClick
         OnDrawCell = GradeCadastroDrawCell
+        ExplicitLeft = 1
+        ExplicitTop = 2
+        ExplicitWidth = 708
+        ExplicitHeight = 260
         ColWidths = (
           70
           70
@@ -2933,11 +3244,17 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     object TabSheet10: TTabSheet
       Caption = 'Lote'
       ImageIndex = 9
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 711
+      ExplicitHeight = 0
       object GradeLote: TStringGrid
-        Left = 1
-        Top = 2
-        Width = 708
-        Height = 260
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
+        Height = 259
+        Align = alClient
         ColCount = 2
         DefaultColWidth = 70
         DefaultRowHeight = 18
@@ -2952,6 +3269,10 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         ParentFont = False
         TabOrder = 0
         OnDrawCell = GradeLoteDrawCell
+        ExplicitLeft = 1
+        ExplicitTop = 2
+        ExplicitWidth = 708
+        ExplicitHeight = 260
         ColWidths = (
           70
           70)
@@ -2960,11 +3281,16 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     object TabSheet11: TTabSheet
       Caption = 'Erros'
       ImageIndex = 10
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 711
+      ExplicitHeight = 0
       object cErros: TMemo
-        Left = 0
-        Top = 0
-        Width = 711
-        Height = 265
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 867
+        Height = 259
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -2973,6 +3299,10 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
         Font.Style = []
         ParentFont = False
         TabOrder = 0
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 711
+        ExplicitHeight = 265
       end
     end
   end
@@ -2980,7 +3310,7 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     AlignWithMargins = True
     Left = 3
     Top = 619
-    Width = 719
+    Width = 881
     Height = 82
     Margins.Bottom = 10
     Align = alBottom
@@ -2993,7 +3323,7 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 719
+    Width = 881
     Height = 301
     Align = alTop
     Font.Charset = DEFAULT_CHARSET
@@ -3253,8 +3583,8 @@ object Utilitarios_Importar_NFe_Terceiros: TUtilitarios_Importar_NFe_Terceiros
       OnKeyDown = cReferenciaKeyDown
     end
     object cCIAP: TGroupBox
-      Left = 506
-      Top = 26
+      Left = 602
+      Top = 13
       Width = 200
       Height = 113
       Caption = '(CIAP) ICMS'

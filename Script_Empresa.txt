@@ -2903,3 +2903,118 @@ create table Industrializacao (Registro int
                               ,Movimenta_Estoque bit
                               ,Movimenta_Inventario bit)
 go
+
+--[14/01/2026 12:23:00]
+alter table PedidosServico add Retencao_ISS bit
+go
+update PedidosServico set Retencao_ISS = 0 where Retencao_ISS is null
+go
+
+--[15/01/2026 12:27:00]
+create table PedidosServicoItens (Pedido int
+                                 ,Item smallint
+                                 ,Codigo_Mercadoria int
+                                 ,Processo varchar(15)
+                                 ,Quantidade float
+                                 ,Valor_Unitario money
+                                 ,Valor_Total money)
+go
+
+--[15/01/2026 15:36:00]
+alter table NotasTerceiros drop column Valor_BCIBS 
+                              ,Valor_IBS 
+                              ,Valor_BCCBS 
+                              ,Valor_CBS 
+                              ,Valor_BCIS 
+                              ,Valor_IS 
+go
+alter table NotasTerceirosItens drop column Valor_BCIBS 
+                                   ,Aliquota_IBS 
+                                   ,Valor_IBS 
+                                   ,Valor_BCCBS 
+                                   ,Aliquota_CBS 
+                                   ,Valor_CBS 
+                                   ,Valor_BCIS 
+                                   ,Aliquota_IS 
+                                   ,Valor_IS 
+go
+alter table NotasTerceiros add Valor_BCIBS money
+                              ,Valor_IBSUF money
+                              ,Valor_IBSMun money
+                              ,Valor_BCCBS money
+                              ,Valor_CBS money
+                              ,Valor_BCIS money
+                              ,Valor_IS money
+go
+alter table NotasTerceirosItens add Valor_BCIBS money
+                                   ,Percentual_IBSUF float
+                                   ,Valor_IBSUF money
+                                   ,Percentual_IBSMun float
+                                   ,Valor_IBSMun money
+                                   ,Valor_BCCBS money
+                                   ,Percentual_CBS float
+                                   ,Valor_CBS money
+                                   ,Valor_BCIS money
+                                   ,Percentual_IS float
+                                   ,Valor_IS money
+                                   ,Classificacao_Tributaria varchar(6)
+go
+
+--[16/01/2026 09:36:00]
+alter table PedidosServicoItens add Aliquota_INSS float
+                                   ,Valor_INSS money
+                                   ,Aliquota_PIS float
+                                   ,Valor_PIS money
+                                   ,Aliquota_COFINS float
+                                   ,Valor_COFINS money
+                                   ,Aliquota_CSLL float
+                                   ,Valor_CSLL money
+                                   ,Aliquota_IRPJ float
+                                   ,Valor_IRPJ money
+                                   ,Aliquota_CPP float
+                                   ,Valor_CPP money
+                                   ,Aliquota_IPI float
+                                   ,Valor_IPI money
+go
+alter table Produtos add AliquotaISS_Serv float
+                        ,AliquotaPIS_Serv float
+                        ,AliquotaCOFINS_Serv float
+                        ,AliquotaCSLL_Serv float
+                        ,AliquotaIRPJ_Serv float
+                        ,AliquotaCPP_Serv float
+                        ,AliquotaIPI_Serv float
+                        ,AliquotaINSS_Serv float
+go
+alter table Produtos add Servico_Vinculado char(5)
+go
+
+--[19/01/2026 10:32:00]
+alter table Produtos drop column AliquotaISS_Serv
+go
+alter table Produtos add AliquotaINSS_Serv float
+go
+
+--[20/01/2026 10:36:00]
+create table NotasServicoItens (Nota int
+                               ,Data datetime
+                               ,Item smallint
+                               ,Codigo_Mercadoria int
+                               ,Processo varchar(15)
+                               ,Quantidade float
+                               ,Valor_Unitario money
+                               ,Valor_Total money
+                               ,Aliquota_INSS float
+                               ,Valor_INSS money
+                               ,Aliquota_PIS float
+                               ,Valor_PIS money
+                               ,Aliquota_COFINS float
+                               ,Valor_COFINS money
+                               ,Aliquota_CSLL float
+                               ,Valor_CSLL money
+                               ,Aliquota_IRPJ float
+                               ,Valor_IRPJ money
+                               ,Aliquota_CPP float
+                               ,Valor_CPP money
+                               ,Aliquota_IPI float
+                               ,Valor_IPI money)
+go

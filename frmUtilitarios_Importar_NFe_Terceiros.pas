@@ -249,6 +249,18 @@ type
     StaticText83: TStaticText;
     StaticText84: TStaticText;
     cDataEnt: TDateEdit;
+    StaticText85: TStaticText;
+    StaticText89: TStaticText;
+    cBCIBS: TCurrencyEdit;
+    cValorIBS: TCurrencyEdit;
+    StaticText87: TStaticText;
+    StaticText88: TStaticText;
+    cBCIS: TCurrencyEdit;
+    cValorIS: TCurrencyEdit;
+    StaticText86: TStaticText;
+    StaticText90: TStaticText;
+    cBCCBS: TCurrencyEdit;
+    cValorCBS: TCurrencyEdit;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -549,7 +561,7 @@ begin
                          'Nota Fiscal não será importada.', mtError,[mbOK], 0);
               Abort;
            end;
-
+           
            // Obriga a parametrização de todos os produtos se marcado na referência fiscal.
            mErro := False;
            If ReferenciasFiscaisRelaciona_Produtos.AsBoolean = true then begin
@@ -1126,6 +1138,7 @@ begin
                                    ProdutosCOFINS_NotaSaida.Value := MajoracaoSaida.AsFloat;
                                 end;
                              end;
+                             if Trim(GradeItens.Cells[67,mQtdeItem]) <> '' then ProdutosAliquota_CBS.Value := StrtoFloat(GradeItens.Cells[67, mQtdeItem]);
                     Produtos.Post;
 
                     // Cadastrando dados dos lotes se houverem.
@@ -1476,6 +1489,16 @@ begin
                                                 end;
                                            end;
                                         end;
+
+                                        NotasTerceirosItensCSTIBS.Value := GradeItens.Cells[59, mQtdeItem];
+                                        NotasTerceirosItensCSTCBS.Value := GradeItens.Cells[65, mQtdeItem];
+                                        if Trim(GradeItens.Cells[60,mQtdeItem]) <> '' then NotasTerceirosItensValor_BCIBS.Value      := StrtoFloat(GradeItens.Cells[60,mQtdeItem]);
+                                        if Trim(GradeItens.Cells[61,mQtdeItem]) <> '' then NotasTerceirosItensPercentual_IBSUF.Value := StrtoFloat(GradeItens.Cells[61,mQtdeItem]);
+                                        if Trim(GradeItens.Cells[62,mQtdeItem]) <> '' then NotasTerceirosItensValor_IBSUF.Value      := StrtoFloat(GradeItens.Cells[62,mQtdeItem]);
+
+                                        if Trim(GradeItens.Cells[66,mQtdeItem]) <> '' then NotasTerceirosItensValor_BCCBS.Value      := StrtoFloat(GradeItens.Cells[66,mQtdeItem]);
+                                        if Trim(GradeItens.Cells[67,mQtdeItem]) <> '' then NotasTerceirosItensPercentual_CBS.Value   := StrtoFloat(GradeItens.Cells[67,mQtdeItem]);
+                                        if Trim(GradeItens.Cells[68,mQtdeItem]) <> '' then NotasTerceirosItensValor_CBS.Value        := StrtoFloat(GradeItens.Cells[68,mQtdeItem]);
                     NotasTerceirosItens.Post;
 
                     // Ajusta o tipo de entrada do produto para cálculo de ISENTAS E OUTRAS DE ICMS na saída.
@@ -2028,7 +2051,11 @@ var
    mNodeDetImpostoCOFAliq,
    mNodeTotal,
    mNodeIdeRef,
-   mNodeTotalICMSTot: IXMLNode;
+   mNodeTotalICMSTot,
+   mNodeTotalCBSTot,
+   mNodeDetImpostoCBS,
+   mNodeDetImpostoIBS,
+   mNodeDetImpostoGIBSCBS: IXMLNode;
 
    mdEmi,
    mdSaiEnt,
@@ -2122,6 +2149,7 @@ begin
                mNodeTranspVol    := mNodeTransp.ChildNodes.FindNode('vol');
                mNodeTotal        := mNodeinfNFe.ChildNodes.FindNode('total');
                mNodeTotalICMSTot := mNodeTotal.ChildNodes.FindNode('ICMSTot');
+               mNodeTotalCBSTot  := mNodeTotal.ChildNodes.FindNode('IBSCBSTot');
                mNodeProtNFe      := mXML.DocumentElement.ChildNodes.FindNode('protNFe');
                mNodeProtNFeInf   := mNodeProtNFe.ChildNodes.FindNode('infProt');
                cProtocolo.Text   := mNodeProtNFeInf.ChildNodes.FindNode('nProt').Text;
@@ -2141,6 +2169,7 @@ begin
                mNodeTranspVol    := mNodeTransp.ChildNodes.FindNode('vol');
                mNodeTotal        := mNodeinfNFe.ChildNodes.FindNode('total');
                mNodeTotalICMSTot := mNodeTotal.ChildNodes.FindNode('ICMSTot');
+               mNodeTotalCBSTot  := mNodeTotal.ChildNodes.FindNode('IBSCBSTot');
                mChave            := mNodeInfNFe.AttributeNodes.Nodes[1].Text;
                cChave.Text       := ApenasNumeros(mChave);
                mEstado           := mNodeIde.ChildNodes['cUF'].NodeValue;
@@ -2264,7 +2293,7 @@ begin
                 RowCount               := 2;
                 GradeCadastro.RowCount := 2;
                 FixedRows              := 1;
-                ColCount               := 59;
+                ColCount               := 74;
                 GradeAdicoes.RowCount  := 2;
                 GradeLote.RowCount     := 2;
                 GradeLote.ColCount     := 7;
@@ -2344,6 +2373,25 @@ begin
                 Cells[56,0] := 'Peso Liquido';
                 Cells[57,0] := 'Peso Bruto';
                 Cells[58,0] := 'BC ICMS ST (NF)';
+
+                Cells[59,0] := 'CST IBS';
+                Cells[60,0] := 'BC IBS';
+                Cells[61,0] := 'Perc.IBS UF';
+                Cells[62,0] := 'Vlr.IBS UF';
+
+                Cells[63,0] := 'Perc.IBS Mun';
+                Cells[64,0] := 'Vlr.IBS Mun';
+
+                Cells[65,0] := 'CST CBS';
+                Cells[66,0] := 'BC CBS';
+                Cells[67,0] := 'Perc.CBS';
+                Cells[68,0] := 'Vlr.CBS';
+                
+                Cells[69,0] := 'CST IS';
+                Cells[70,0] := 'BC IS';
+                Cells[71,0] := 'Perc.IS';
+                Cells[72,0] := 'Vlr.IS';
+                Cells[73,0] := 'Class.Trib';
 
                 GradeCadastro.Cells[00,0]  := 'Item';
                 GradeCadastro.ColWidths[0] := 30;
@@ -2493,12 +2541,20 @@ begin
                          If mNodeDetImpostoPIS.ChildNodes.FindNode('PISOutr') <> nil then
                             mNodeDetImpostoPISAliq := mNodeDetImpostoPIS.ChildNodes.FindNode('PISOutr');
 
-                         mNodeDetImpostoCOF     := mNodeDetImposto.ChildNodes.FindNode('COFINS');
+                         mNodeDetImpostoCOF := mNodeDetImposto.ChildNodes.FindNode('COFINS');
                          If mNodeDetImpostoCOF.ChildNodes.FindNode('COFINSAliq') <> nil then
                             mNodeDetImpostoCOFAliq := mNodeDetImpostoCOF.ChildNodes.FindNode('COFINSAliq');
                          If mNodeDetImpostoCOF.ChildNodes.FindNode('COFINSOutr') <> nil then
                             mNodeDetImpostoCOFAliq := mNodeDetImpostoCOF.ChildNodes.FindNode('COFINSOutr');
 
+
+                         if mNodeDetImposto.ChildNodes.FindNode('IBSCBS') <> nil then begin
+                            mNodeDetImpostoCBS := mNodeDetImposto.ChildNodes.FindNode('IBSCBS');
+                            if mNodeDetImpostoCBS.ChildNodes.FindNode('gIBSCBS') <> nil then
+                               mNodeDetImpostoGIBSCBS := mNodeDetImpostoCBS.ChildNodes.FindNode('gIBSCBS');
+                         end;
+
+                      
                          // Procurando o campo de ICMS.
                          mAchouICMS := false;
 
@@ -2881,6 +2937,27 @@ begin
                             Cells[52, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoICMSCST.ChildNodes['pMVAST'].Text);
                          end;
 
+                         // Impostos CBS / IBS/ IS.
+                         if mNodeDetImpostoCBS <> nil then begin
+                            Cells[59, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoCBS.ChildNodes['CST'].Text);
+                            Cells[65, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoCBS.ChildNodes['CST'].Text);
+                            if mNodeDetImpostoGIBSCBS <> nil then begin
+                               Cells[60, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoGIBSCBS.ChildNodes.FindNode('vBC').Text);
+                               Cells[66, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoGIBSCBS.ChildNodes.FindNode('vBC').Text);
+                               Cells[61, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoGIBSCBS.ChildNodes.FindNode('gIBSUF').ChildNodes.FindNode('pIBSUF').Text);
+                               Cells[62, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoGIBSCBS.ChildNodes.FindNode('gIBSUF').ChildNodes.FindNode('vIBSUF').Text);
+                               Cells[63, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoGIBSCBS.ChildNodes.FindNode('gIBSMun').ChildNodes.FindNode('pIBSMun').Text);
+                               Cells[64, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoGIBSCBS.ChildNodes.FindNode('gIBSMun').ChildNodes.FindNode('vIBSMun').Text);
+                               Cells[67, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoGIBSCBS.ChildNodes.FindNode('gCBS').ChildNodes.FindNode('pCBS').Text);
+                               Cells[68, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoGIBSCBS.ChildNodes.FindNode('gCBS').ChildNodes.FindNode('vCBS').Text);
+                            end;
+                            if trim(Cells[67, RowCount-1]) = '' then begin
+                               Cells[67, RowCount-1] := Dados.ConfiguracaoAliquota_CBS.asstring;
+                            end;
+
+                            Cells[73, RowCount-1] := RemoveCaracter('.', ',', mNodeDetImpostoCBS.ChildNodes['cClassTrib'].Text);
+                         end;
+
                          (*---------------------------------------------------------( DADOS DE LOTE )----------------------------------------------------------*)
                          If mNodeDet.ChildNodes.FindNode('infAdProd') <> nil then begin
                             Cells[53, RowCount-1] := RemoveCaracter('.', ',', mNodeDet.ChildNodes.FindNode('infAdProd').Text);
@@ -2938,6 +3015,7 @@ begin
                                End;
                             End;
                          End;
+                         
                          (*----------------------------------------------------( FIM DOS DADOS DO LOTE )-----------------------------------------------------*)
                          RowCount               := RowCount + 1;
                          GradeCadastro.RowCount := GradeCadastro.RowCount + 1;
@@ -2966,6 +3044,13 @@ begin
            cTotalNota.Text    := RemoveCaracter('.',',',mNodeTotalICMSTot.ChildNodes['vNF'].Text);
            cLiquido.Value     := cTotalNota.Value;
 
+           if (mNodeTotalCBSTot <> nil) and (mNodeTotalCBSTot.ChildNodes.FindNode('gIBS') <> nil) then begin
+              cBCIBS.Text    := RemoveCaracter('.',',',mNodeTotalCBSTot.ChildNodes['vBCIBSCBS'].Text);
+              cBCCBS.Text    := RemoveCaracter('.',',',mNodeTotalCBSTot.ChildNodes['vBCIBSCBS'].Text);
+              cValorIBS.Text := RemoveCaracter('.',',',mNodeTotalCBSTot.ChildNodes.FindNode('gIBS').ChildNodes.FindNode('vIBS').Text);
+              cValorCBS.Text := RemoveCaracter('.',',',mNodeTotalCBSTot.ChildNodes.FindNode('gCBS').ChildNodes.FindNode('vCBS').Text);
+           end;
+           
            mXML.Free;
 
            // Verifica se a nota fiscal já existe, se existe pega a referência fiscal.

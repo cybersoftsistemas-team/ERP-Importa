@@ -2333,9 +2333,10 @@ object dmFiscal: TdmFiscal
         ', Valor_IPIOrig, Valor_Inventario, Valor_BCPIS, Valor_BCCOFINS, ' +
         'CEST, Aliquota_PISOrig, Aliquota_COFINSOrig, Movimenta_EstoqueRe' +
         'p, Valor_Frete, Valor_BCICMSSubOrig, Trava_ValorInv, Valor_Despe' +
-        'sa, Navio, Valor_IR, Valor_CSLL, Valor_INSS, Valor_BCIBS, Aliquo' +
-        'ta_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Valor_CBS, Valor_B' +
-        'CIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS)'
+        'sa, Navio, Valor_IR, Valor_CSLL, Valor_INSS, CSTIBS, CSTCBS, Val' +
+        'or_BCIBS, Percentual_IBSUF, Valor_IBSUF, Percentual_IBSMun, Valo' +
+        'r_IBSMun, Valor_BCCBS, Percentual_CBS, Valor_CBS, Valor_BCIS, Pe' +
+        'rcentual_IS, Valor_IS, Classificacao_Tributaria)'
       'VALUES'
       
         '  (:Nota, :Item, :Data_Emissao, :Data_Entrada, :Processo, :Forne' +
@@ -2359,9 +2360,10 @@ object dmFiscal: TdmFiscal
         'COFINS, :CEST, :Aliquota_PISOrig, :Aliquota_COFINSOrig, :Movimen' +
         'ta_EstoqueRep, :Valor_Frete, :Valor_BCICMSSubOrig, :Trava_ValorI' +
         'nv, :Valor_Despesa, :Navio, :Valor_IR, :Valor_CSLL, :Valor_INSS,' +
-        ' :Valor_BCIBS, :Aliquota_IBS, :Valor_IBS, :Valor_BCCBS, :Aliquot' +
-        'a_CBS, :Valor_CBS, :Valor_BCIS, :Aliquota_IS, :Valor_IS, :CSTIBS' +
-        ', :CSTCBS)')
+        ' :CSTIBS, :CSTCBS, :Valor_BCIBS, :Percentual_IBSUF, :Valor_IBSUF' +
+        ', :Percentual_IBSMun, :Valor_IBSMun, :Valor_BCCBS, :Percentual_C' +
+        'BS, :Valor_CBS, :Valor_BCIS, :Percentual_IS, :Valor_IS, :Classif' +
+        'icacao_Tributaria)')
     SQLDelete.Strings = (
       'DELETE FROM NotasTerceirosItens'
       'WHERE'
@@ -2415,12 +2417,14 @@ object dmFiscal: TdmFiscal
         ' = :Movimenta_EstoqueRep, Valor_Frete = :Valor_Frete, Valor_BCIC' +
         'MSSubOrig = :Valor_BCICMSSubOrig, Trava_ValorInv = :Trava_ValorI' +
         'nv, Valor_Despesa = :Valor_Despesa, Navio = :Navio, Valor_IR = :' +
-        'Valor_IR, Valor_CSLL = :Valor_CSLL, Valor_INSS = :Valor_INSS, Va' +
-        'lor_BCIBS = :Valor_BCIBS, Aliquota_IBS = :Aliquota_IBS, Valor_IB' +
-        'S = :Valor_IBS, Valor_BCCBS = :Valor_BCCBS, Aliquota_CBS = :Aliq' +
-        'uota_CBS, Valor_CBS = :Valor_CBS, Valor_BCIS = :Valor_BCIS, Aliq' +
-        'uota_IS = :Aliquota_IS, Valor_IS = :Valor_IS, CSTIBS = :CSTIBS, ' +
-        'CSTCBS = :CSTCBS'
+        'Valor_IR, Valor_CSLL = :Valor_CSLL, Valor_INSS = :Valor_INSS, CS' +
+        'TIBS = :CSTIBS, CSTCBS = :CSTCBS, Valor_BCIBS = :Valor_BCIBS, Pe' +
+        'rcentual_IBSUF = :Percentual_IBSUF, Valor_IBSUF = :Valor_IBSUF, ' +
+        'Percentual_IBSMun = :Percentual_IBSMun, Valor_IBSMun = :Valor_IB' +
+        'SMun, Valor_BCCBS = :Valor_BCCBS, Percentual_CBS = :Percentual_C' +
+        'BS, Valor_CBS = :Valor_CBS, Valor_BCIS = :Valor_BCIS, Percentual' +
+        '_IS = :Percentual_IS, Valor_IS = :Valor_IS, Classificacao_Tribut' +
+        'aria = :Classificacao_Tributaria'
       'WHERE'
       
         '  Nota = :Old_Nota AND Item = :Old_Item AND Data_Emissao = :Old_' +
@@ -2448,10 +2452,11 @@ object dmFiscal: TdmFiscal
         'Orig, Valor_IPIOrig, Valor_Inventario, Valor_BCPIS, Valor_BCCOFI' +
         'NS, CEST, Aliquota_PISOrig, Aliquota_COFINSOrig, Movimenta_Estoq' +
         'ueRep, Valor_Frete, Valor_BCICMSSubOrig, Trava_ValorInv, Valor_D' +
-        'espesa, Navio, Valor_IR, Valor_CSLL, Valor_INSS, Valor_BCIBS, Al' +
-        'iquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Valor_CBS, Val' +
-        'or_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS FROM NotasTerceir' +
-        'osItens'
+        'espesa, Navio, Valor_IR, Valor_CSLL, Valor_INSS, CSTIBS, CSTCBS,' +
+        ' Valor_BCIBS, Percentual_IBSUF, Valor_IBSUF, Percentual_IBSMun, ' +
+        'Valor_IBSMun, Valor_BCCBS, Percentual_CBS, Valor_CBS, Valor_BCIS' +
+        ', Percentual_IS, Valor_IS, Classificacao_Tributaria FROM NotasTe' +
+        'rceirosItens'
       'WHERE'
       
         '  Nota = :Nota AND Item = :Item AND Data_Emissao = :Data_Emissao' +
@@ -2798,33 +2803,6 @@ object dmFiscal: TdmFiscal
     object NotasTerceirosItensValor_INSS: TCurrencyField
       FieldName = 'Valor_INSS'
     end
-    object NotasTerceirosItensValor_BCIBS: TCurrencyField
-      FieldName = 'Valor_BCIBS'
-    end
-    object NotasTerceirosItensAliquota_IBS: TFloatField
-      FieldName = 'Aliquota_IBS'
-    end
-    object NotasTerceirosItensValor_IBS: TCurrencyField
-      FieldName = 'Valor_IBS'
-    end
-    object NotasTerceirosItensValor_BCCBS: TCurrencyField
-      FieldName = 'Valor_BCCBS'
-    end
-    object NotasTerceirosItensAliquota_CBS: TFloatField
-      FieldName = 'Aliquota_CBS'
-    end
-    object NotasTerceirosItensValor_CBS: TCurrencyField
-      FieldName = 'Valor_CBS'
-    end
-    object NotasTerceirosItensValor_BCIS: TCurrencyField
-      FieldName = 'Valor_BCIS'
-    end
-    object NotasTerceirosItensAliquota_IS: TFloatField
-      FieldName = 'Aliquota_IS'
-    end
-    object NotasTerceirosItensValor_IS: TCurrencyField
-      FieldName = 'Valor_IS'
-    end
     object NotasTerceirosItensCSTIBS: TStringField
       FieldName = 'CSTIBS'
       Size = 3
@@ -2832,6 +2810,54 @@ object dmFiscal: TdmFiscal
     object NotasTerceirosItensCSTCBS: TStringField
       FieldName = 'CSTCBS'
       Size = 3
+    end
+    object NotasTerceirosItensValor_BCIBS: TCurrencyField
+      FieldName = 'Valor_BCIBS'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensPercentual_IBSUF: TFloatField
+      FieldName = 'Percentual_IBSUF'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensValor_IBSUF: TCurrencyField
+      FieldName = 'Valor_IBSUF'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensPercentual_IBSMun: TFloatField
+      FieldName = 'Percentual_IBSMun'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensValor_IBSMun: TCurrencyField
+      FieldName = 'Valor_IBSMun'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensValor_BCCBS: TCurrencyField
+      FieldName = 'Valor_BCCBS'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensPercentual_CBS: TFloatField
+      FieldName = 'Percentual_CBS'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensValor_CBS: TCurrencyField
+      FieldName = 'Valor_CBS'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensValor_BCIS: TCurrencyField
+      FieldName = 'Valor_BCIS'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensPercentual_IS: TFloatField
+      FieldName = 'Percentual_IS'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensValor_IS: TCurrencyField
+      FieldName = 'Valor_IS'
+      DisplayFormat = ',##0.00'
+    end
+    object NotasTerceirosItensClassificacao_Tributaria: TStringField
+      FieldName = 'Classificacao_Tributaria'
+      Size = 6
     end
   end
   object NotasServico: TMSQuery
@@ -6988,7 +7014,8 @@ object dmFiscal: TdmFiscal
         'nicipio_Origem, Municipio_Destino, Manifestada, Classificacao_Se' +
         'rvico, Total_Despesas, Tipo_Pagamento, Complementar, Valor_IR, V' +
         'alor_CSLL, Valor_INSS, Armazem, Retencao_ISS, Valor_BCIBS, Valor' +
-        '_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_IS)'
+        '_IBSUF, Valor_IBSMun, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_' +
+        'IS)'
       'VALUES'
       
         '  (:Processo, :FUNDAP, :Nota, :Referencia_Fiscal, :Data_Emissao,' +
@@ -7019,8 +7046,8 @@ object dmFiscal: TdmFiscal
         'o, :Valor_TotalFrete, :Municipio_Origem, :Municipio_Destino, :Ma' +
         'nifestada, :Classificacao_Servico, :Total_Despesas, :Tipo_Pagame' +
         'nto, :Complementar, :Valor_IR, :Valor_CSLL, :Valor_INSS, :Armaze' +
-        'm, :Retencao_ISS, :Valor_BCIBS, :Valor_IBS, :Valor_BCCBS, :Valor' +
-        '_CBS, :Valor_BCIS, :Valor_IS)')
+        'm, :Retencao_ISS, :Valor_BCIBS, :Valor_IBSUF, :Valor_IBSMun, :Va' +
+        'lor_BCCBS, :Valor_CBS, :Valor_BCIS, :Valor_IS)')
     SQLDelete.Strings = (
       'DELETE FROM NotasTerceiros'
       'WHERE'
@@ -7089,8 +7116,9 @@ object dmFiscal: TdmFiscal
         'ento, Complementar = :Complementar, Valor_IR = :Valor_IR, Valor_' +
         'CSLL = :Valor_CSLL, Valor_INSS = :Valor_INSS, Armazem = :Armazem' +
         ', Retencao_ISS = :Retencao_ISS, Valor_BCIBS = :Valor_BCIBS, Valo' +
-        'r_IBS = :Valor_IBS, Valor_BCCBS = :Valor_BCCBS, Valor_CBS = :Val' +
-        'or_CBS, Valor_BCIS = :Valor_BCIS, Valor_IS = :Valor_IS'
+        'r_IBSUF = :Valor_IBSUF, Valor_IBSMun = :Valor_IBSMun, Valor_BCCB' +
+        'S = :Valor_BCCBS, Valor_CBS = :Valor_CBS, Valor_BCIS = :Valor_BC' +
+        'IS, Valor_IS = :Valor_IS'
       'WHERE'
       
         '  Nota = :Old_Nota AND Referencia_Fiscal = :Old_Referencia_Fisca' +
@@ -7125,8 +7153,8 @@ object dmFiscal: TdmFiscal
         ', Municipio_Origem, Municipio_Destino, Manifestada, Classificaca' +
         'o_Servico, Total_Despesas, Tipo_Pagamento, Complementar, Valor_I' +
         'R, Valor_CSLL, Valor_INSS, Armazem, Retencao_ISS, Valor_BCIBS, V' +
-        'alor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_IS FROM Nota' +
-        'sTerceiros'
+        'alor_IBSUF, Valor_IBSMun, Valor_BCCBS, Valor_CBS, Valor_BCIS, Va' +
+        'lor_IS FROM NotasTerceiros'
       'WHERE'
       
         '  Nota = :Nota AND Referencia_Fiscal = :Referencia_Fiscal AND Da' +
@@ -7623,8 +7651,11 @@ object dmFiscal: TdmFiscal
     object NotasTerceirosValor_BCIBS: TCurrencyField
       FieldName = 'Valor_BCIBS'
     end
-    object NotasTerceirosValor_IBS: TCurrencyField
-      FieldName = 'Valor_IBS'
+    object NotasTerceirosValor_IBSUF: TCurrencyField
+      FieldName = 'Valor_IBSUF'
+    end
+    object NotasTerceirosValor_IBSMun: TCurrencyField
+      FieldName = 'Valor_IBSMun'
     end
     object NotasTerceirosValor_BCCBS: TCurrencyField
       FieldName = 'Valor_BCCBS'

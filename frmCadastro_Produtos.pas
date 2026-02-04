@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.UITypes, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DB, DBAccess, MSAccess, Vcl.ComCtrls, Vcl.StdCtrls, Mask, DBCtrls, Vcl.ExtCtrls, RxDBComb,
-  RxLookup, RXCtrls, funcoes, RXDBCtrl, Grids, DBGrids, Buttons, MemDS, RxCurrEdit, RxToolEdit;
+  RxLookup, RXCtrls, funcoes, RXDBCtrl, Grids, DBGrids, Buttons, MemDS, RxCurrEdit, RxToolEdit, ClipBrd;
 
 type
   TDBGridDescendant = class(TDBGrid);
@@ -412,6 +412,24 @@ type
     GroupBox9: TGroupBox;
     DBEdit19: TDBEdit;
     StaticText25: TStaticText;
+    GroupBox11: TGroupBox;
+    DBEdit20: TDBEdit;
+    StaticText26: TStaticText;
+    DBEdit21: TDBEdit;
+    StaticText27: TStaticText;
+    StaticText30: TStaticText;
+    DBEdit23: TDBEdit;
+    DBEdit24: TDBEdit;
+    StaticText31: TStaticText;
+    DBEdit29: TDBEdit;
+    StaticText39: TStaticText;
+    StaticText43: TStaticText;
+    DBEdit30: TDBEdit;
+    DBEdit34: TDBEdit;
+    StaticText44: TStaticText;
+    StaticText45: TStaticText;
+    DBLookupComboBox11: TDBLookupComboBox;
+    bPesq: TSpeedButton;
     procedure bSairClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure NavegaClick(Sender: TObject; Button: TNavigateBtn);
@@ -450,6 +468,7 @@ type
     procedure Button3Click(Sender: TObject);
     procedure GradeProdutosTitleClick(Column: TColumn);
     procedure bFiliaisClick(Sender: TObject);
+    procedure bPesqClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -466,7 +485,7 @@ implementation
 
 Uses frmDados, frmCadastro_TipoProduto, frmCadastro_NCM, frmDMFiscal, frmCadastro_UnidadeMedida, frmCadastro_ProdutosSeriais, frmDMComercial,
      frmCadastro_Fornecedores, frmCadastro_TabelaComissoes, frmCadastro_ProdutosDetalhes, frmCadastro_ProdutosMateriaPrima, frmJanela_Imagem,
-     frmDMDespacho, frmCadastro_ProdutosAtributos, frmCadastro_ProdutosFiliais, frmCadastro_Fabricantes;
+     frmDMDespacho, frmCadastro_ProdutosAtributos, frmCadastro_ProdutosFiliais, frmCadastro_Fabricantes, frmPesquisaGerais;
 {$R *.dfm}
 
 procedure TCadastro_Produtos.bSairClick(Sender: TObject);
@@ -570,6 +589,12 @@ begin
           AnuenteExp.SQL.Clear;
           AnuenteExp.SQL.Add('SELECT * FROM OrgaoAnuenteExp ORDER BY Nome');
           AnuenteExp.Open;
+
+          with Servicos do begin
+               sql.Clear;
+               sql.Add('select * from Servicos order by Codigo');
+               open;
+          end;
 
           PageControl1.Pages[4].TabVisible := false;
           PageControl1.ActivePageIndex     := 0;
@@ -784,6 +809,17 @@ begin
       cQtdeVol.Enabled       := tPesquisa.FieldByName('Qtde').AsInteger = 0;
       cQtdeUM.Enabled        := cQtdeVol.Enabled;
       cTipoConversao.Enabled := cQtdeVol.Enabled;
+end;
+
+procedure TCadastro_Produtos.bPesqClick(Sender: TObject);
+begin
+      PesquisaGerais         := TPesquisaGerais.Create(Self);
+      PesquisaGerais.mTab    := 'Servicos';
+      PesquisaGerais.mCampo  := 'Codigo';
+      PesquisaGerais.mCampo2 := 'Descricao';
+      PesquisaGerais.mBanco  := 'Dados';
+      PesquisaGerais.Showmodal;
+      Dados.ProdutosServico_Vinculado.Value := Clipboard.AsText;
 end;
 
 procedure TCadastro_Produtos.bPesquisaClick(Sender: TObject);

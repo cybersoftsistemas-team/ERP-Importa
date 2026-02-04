@@ -1148,6 +1148,14 @@ object Impressao_FinanceirosOP_PagarReceber: TImpressao_FinanceirosOP_PagarReceb
     TabOrder = 44
     OnClick = cAgruparBenefClick
   end
+  object cDataBaixa: TCheckBox
+    Left = 432
+    Top = 149
+    Width = 234
+    Height = 17
+    Caption = 'Data da Baixa acompanha  data do per'#237'odo.'
+    TabOrder = 45
+  end
   object pPagarReceber: TppDBPipeline
     DataSource = dstTitulos
     UserName = 'pPagarReceber'
@@ -1157,271 +1165,206 @@ object Impressao_FinanceirosOP_PagarReceber: TImpressao_FinanceirosOP_PagarReceb
       FieldAlias = 'Numero'
       FieldName = 'Numero'
       FieldLength = 0
-      DataType = dtNotKnown
+      DataType = dtLargeInt
       DisplayWidth = 0
       Position = 0
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField2: TppField
       FieldAlias = 'Registro'
       FieldName = 'Registro'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtLargeInt
+      DisplayWidth = 15
       Position = 1
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField3: TppField
       FieldAlias = 'Data_Documento'
       FieldName = 'Data_Documento'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
       Position = 2
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField4: TppField
       FieldAlias = 'Data_Vencimento'
       FieldName = 'Data_Vencimento'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
       Position = 3
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField5: TppField
       FieldAlias = 'Valor_Baixado'
       FieldName = 'Valor_Baixado'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
       Position = 4
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField6: TppField
       FieldAlias = 'Data_Baixado'
       FieldName = 'Data_Baixado'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
       Position = 5
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField7: TppField
       FieldAlias = 'Conta_Banco'
       FieldName = 'Conta_Banco'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 15
+      DisplayWidth = 15
       Position = 6
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField8: TppField
       FieldAlias = 'Numero_Documento'
       FieldName = 'Numero_Documento'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 15
+      DisplayWidth = 15
       Position = 7
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField9: TppField
       FieldAlias = 'Processo'
       FieldName = 'Processo'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 15
+      DisplayWidth = 15
       Position = 8
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField10: TppField
       FieldAlias = 'Adiantamento_Numero'
       FieldName = 'Adiantamento_Numero'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtLargeInt
+      DisplayWidth = 15
       Position = 9
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField11: TppField
       FieldAlias = 'Numero_FormaTipo'
       FieldName = 'Numero_FormaTipo'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 15
+      DisplayWidth = 15
       Position = 10
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField12: TppField
       FieldAlias = 'Valor_Total'
       FieldName = 'Valor_Total'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
       Position = 11
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField13: TppField
       FieldAlias = 'Valor_Operacao'
       FieldName = 'Valor_Operacao'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
       Position = 12
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField14: TppField
       FieldAlias = 'Valor_Parcela'
       FieldName = 'Valor_Parcela'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
       Position = 13
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField15: TppField
       FieldAlias = 'Desconto'
       FieldName = 'Desconto'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
       Position = 14
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField16: TppField
       FieldAlias = 'Juros'
       FieldName = 'Juros'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
       Position = 15
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField17: TppField
       FieldAlias = 'Multa'
       FieldName = 'Multa'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
       Position = 16
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField18: TppField
       FieldAlias = 'Tipo'
       FieldName = 'Tipo'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 1
+      DisplayWidth = 1
       Position = 17
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField19: TppField
       FieldAlias = 'Valor_Baixa'
       FieldName = 'Valor_Baixa'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
       Position = 18
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField20: TppField
       FieldAlias = 'Nome_Beneficiario'
       FieldName = 'Nome_Beneficiario'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 60
+      DisplayWidth = 60
       Position = 19
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField21: TppField
       FieldAlias = 'CNPJ_Beneficiario'
       FieldName = 'CNPJ_Beneficiario'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 14
+      DisplayWidth = 14
       Position = 20
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField22: TppField
       FieldAlias = 'CentroCusto_Nome'
       FieldName = 'CentroCusto_Nome'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 30
+      DisplayWidth = 30
       Position = 21
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField23: TppField
       FieldAlias = 'Classificacao'
       FieldName = 'Classificacao'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 15
+      DisplayWidth = 15
       Position = 22
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField24: TppField
       FieldAlias = 'Classificacao_Nome'
       FieldName = 'Classificacao_Nome'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 60
+      DisplayWidth = 60
       Position = 23
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField25: TppField
       FieldAlias = 'MesAno'
       FieldName = 'MesAno'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 6
+      DisplayWidth = 6
       Position = 24
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField26: TppField
+      Alignment = taRightJustify
       FieldAlias = 'Empresa'
       FieldName = 'Empresa'
       FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      DataType = dtInteger
+      DisplayWidth = 10
       Position = 25
-      Searchable = False
-      Sortable = False
     end
     object pPagarReceberppField27: TppField
       FieldAlias = 'CNPJ'
       FieldName = 'CNPJ'
-      FieldLength = 0
-      DataType = dtNotKnown
-      DisplayWidth = 0
+      FieldLength = 14
+      DisplayWidth = 14
       Position = 26
-      Searchable = False
-      Sortable = False
     end
   end
   object pEmpresas: TppDBPipeline

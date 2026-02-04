@@ -195,6 +195,7 @@ type
     ppVariable1: TppVariable;
     ppDBCalc10: TppDBCalc;
     ppDBCalc11: TppDBCalc;
+    cDataBaixa: TCheckBox;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -312,6 +313,7 @@ begin
       aINI.WriteBool   ('IMPRESSAO_FINANCEIROS_F01', 'AgruparBenef' , cAgruparBenef.Checked );
       aINI.WriteBool   ('IMPRESSAO_FINANCEIROS_F01', 'ConsolBenef'  , cConsolBenef.Checked );
       aINI.WriteBool   ('IMPRESSAO_FINANCEIROS_F01', 'Adiantamento' , cAdianta.Checked );
+      aINI.WriteBool   ('IMPRESSAO_FINANCEIROS_F01', 'DataBaixa'    , cDataBaixa.Checked );
       aINI.Free;
 
       tTitulos.sql.Clear;
@@ -468,8 +470,9 @@ begin
       cDiferenciado.Checked   := aINI.ReadBool   ('IMPRESSAO_FINANCEIROS_F01', 'Diferenciado' , false );
       cAgruparClass.Checked   := aINI.ReadBool   ('IMPRESSAO_FINANCEIROS_F01', 'AgruparClass' , false );
       cAgruparBenef.Checked   := aINI.ReadBool   ('IMPRESSAO_FINANCEIROS_F01', 'AgruparBenef' , false );
-      cConsolBenef.Checked    := aINI.ReadBool   ('IMPRESSAO_FINANCEIROS_F01', 'ConsolBenef', false );
+      cConsolBenef.Checked    := aINI.ReadBool   ('IMPRESSAO_FINANCEIROS_F01', 'ConsolBenef'  , false );
       cAdianta.Checked        := aINI.ReadBool   ('IMPRESSAO_FINANCEIROS_F01', 'Adiantamento' , true);
+      cDataBaixa.Checked      := aINI.ReadBool   ('IMPRESSAO_FINANCEIROS_F01', 'DataBaixa'    , true);
       aINI.Free;
 end;
 
@@ -563,7 +566,7 @@ procedure TImpressao_FinanceirosOP_PagarReceber.bDetalheBeforePrint(Sender: TObj
 begin
       With Dados do begin
            If cZebrado.Checked then begin
-              ppDetailBand1.Background1.Brush.Color := iif(ppDetailBand1.Background1.Brush.Color = clWhite, $00FFF8EA, clWhite);
+              ppDetailBand1.Background1.Brush.Color := iif(ppDetailBand1.Background1.Brush.Color = clWhite, $00FFEBC1, clWhite);
            End;   
            // Calcula a quantidade de dias em atraso.
            lDias.Caption := '';
@@ -692,10 +695,14 @@ begin
           sql.Add('       PR.Juros,');
           sql.Add('       PR.Multa,');
           sql.Add('       PR.Tipo,');
-          If not DataLimpa(cDataIni.Text) then begin
-             sql.Add('       ISNULL((SELECT SUM(Valor) FROM PagarReceberBaixas AS PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataFim),0) AS Valor_Baixa,');
+          if cDataBaixa.Checked then begin
+             If not DataLimpa(cDataIni.Text) then begin
+                sql.Add('       ISNULL((SELECT SUM(Valor) FROM PagarReceberBaixas AS PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataFim),0) AS Valor_Baixa,');
+              end else begin
+                sql.Add('       ISNULL((SELECT SUM(Valor) FROM PagarReceberBaixas AS PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataDOCFim),0) AS Valor_Baixa,');
+              end;
           end else begin
-             sql.Add('       ISNULL((SELECT SUM(Valor) FROM PagarReceberBaixas AS PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataDOCFim),0) AS Valor_Baixa,');
+              sql.Add('       ISNULL((SELECT SUM(Valor) FROM PagarReceberBaixas AS PRB WHERE PR.Numero = PRB.Numero), 0) AS Valor_Baixa,');
           end;
           sql.Add('       (SELECT MAX(Data) FROM PagarReceberBaixas AS PRB WHERE(PR.Numero = PRB.Numero) ) AS Data_Baixado,');
           sql.Add('       CASE WHEN Banco <> 0 THEN');
@@ -708,6 +715,10 @@ begin
           sql.Add('           WHEN Cliente    <> 0    THEN (SELECT Nome FROM Clientes     AS CLI WHERE(PR.Cliente = CLI.Codigo))');
           sql.Add('           WHEN Orgao      <> '''' THEN (SELECT Nome FROM Cybersoft_Cadastros.dbo.OrgaosPublicos AS OP WHERE(PR.Orgao = OP.Codigo))');
           sql.Add('       END AS Nome_Beneficiario, ');
+          sql.Add('       CASE ');
+          sql.Add('           WHEN Fornecedor <> 0    THEN (SELECT Estado FROM Fornecedores AS FRN WHERE(PR.Fornecedor = FRN.Codigo))');
+          sql.Add('           WHEN Cliente    <> 0    THEN (SELECT Estado FROM Clientes     AS CLI WHERE(PR.Cliente = CLI.Codigo))');
+          sql.Add('       END AS UF, ');
           sql.Add('       CASE ');
           sql.Add('           WHEN Fornecedor <> 0    THEN (SELECT CNPJ FROM Fornecedores AS FRN WHERE(PR.Fornecedor = FRN.Codigo))');
           sql.Add('           WHEN Cliente    <> 0    THEN (SELECT CNPJ FROM Clientes     AS CLI WHERE(PR.Cliente = CLI.Codigo))');
@@ -746,7 +757,6 @@ begin
           if cAdianta.Checked then begin
              sql.Add('and isnull((select Adiantamento from '+mCompClass+' as cf where pr.Classificacao = cf.Codigo), 0) = 0');
           End;
-          //sql.Add('AND PR.Tipo = '+iif(cLancamentos.ItemIndex = 0, QuotedStr('P'), quotedstr('R')));
           if cLancamentos.ItemIndex = 0 then begin
              sql.Add('AND PR.Tipo = ''P'' ');
           end;
@@ -901,9 +911,6 @@ begin
           If Trim(cCentroCusto.Text) <> '' then begin
              ParamByName('pCentroCusto').AsString := Dados.CentroCustoCodigo.AsString;
           End;
-//          If (Trim(cBanco.Text) <> '') and (cMovimento.ItemIndex = 1) then begin
-//             ParamByName('pConta').Asstring := Dados.BancosConta.Asstring;
-//          End;
           If Trim(cCondicao.Text) <> '' then begin
              ParamByName('pModalidade').AsInteger := Dados.ModalidadesPgtoCodigo.AsInteger;
           End;
@@ -1102,40 +1109,39 @@ begin
       mPlanilha.WorkBooks.add(1);
       mPlanilha.Visible := false;
       
-      mPlanilha.Range['A3','T3'].Interior.Color    := RGB(255, 255, 140);
-      mPlanilha.Range['A3','T3'].Interior.Pattern  := 1;
-      mPlanilha.Range['A3','T3'].Font.Bold         := true;
-      mPlanilha.Range['A3','T3'].Font.Color        := clBlack;
-      mPlanilha.Range['A3','T3'].Borders.LineStyle := 1; //xlContinuous;
-      mPlanilha.Range['A3','T3'].Borders.Weight    := 2; //xlThin;
-      mPlanilha.Range['A3','T3'].Borders.Color     := RGB(0,0,0);
+      mPlanilha.Range['A3','U3'].Interior.Color    := RGB(255, 255, 140);
+      mPlanilha.Range['A3','U3'].Interior.Pattern  := 1;
+      mPlanilha.Range['A3','U3'].Font.Bold         := true;
+      mPlanilha.Range['A3','U3'].Font.Color        := clBlack;
+      mPlanilha.Range['A3','U3'].Borders.LineStyle := 1; //xlContinuous;
+      mPlanilha.Range['A3','U3'].Borders.Weight    := 2; //xlThin;
+      mPlanilha.Range['A3','U3'].Borders.Color     := RGB(0,0,0);
 
-      mPlanilha.Cells[3,01] := 'DATA DOC.';
-      mPlanilha.Cells[3,02] := 'DATA VECTO.';
+      mPlanilha.Cells[3,01] := 'DATA DOC';
+      mPlanilha.Cells[3,02] := 'DATA VECTO';
       mPlanilha.Cells[3,03] := 'DATA BAIXA';
       mPlanilha.Cells[3,04] := 'DIAS';
       mPlanilha.Cells[3,05] := 'BENEFICIÁRIO';
-      mPlanilha.Cells[3,06] := 'Nº DOCUMENTO';
-      mPlanilha.Cells[3,07] := 'CENTRO CUSTO';
-      mPlanilha.Cells[3,08] := 'PROCESSO';
-      mPlanilha.Cells[3,09] := 'CLASSIFICAÇÃO';
-      mPlanilha.Cells[3,10] := 'ADIANT.';
-      mPlanilha.Cells[3,11] := 'CONTA';
-      mPlanilha.Cells[3,12] := 'CHEQUE';
+      mPlanilha.Cells[3,06] := 'UF';
+      mPlanilha.Cells[3,07] := 'Nº DOCUMENTO';
+      mPlanilha.Cells[3,08] := 'CENTRO CUSTO';
+      mPlanilha.Cells[3,09] := 'PROCESSO';
+      mPlanilha.Cells[3,10] := 'CLASSIFICAÇÃO';
+      mPlanilha.Cells[3,11] := 'ADIANT';
+      mPlanilha.Cells[3,12] := 'CONTA';
+      mPlanilha.Cells[3,13] := 'CHEQUE';
+      mPlanilha.Cells[3,14] := 'VLR PARCELA';
+      mPlanilha.Cells[3,15] := 'VLR DESCONTOS';
+      mPlanilha.Cells[3,16] := 'VLR JUROS';
+      mPlanilha.Cells[3,17] := 'VLR MULTA';
+      mPlanilha.Cells[3,18] := 'VLR OPERAÇÃO';
+      mPlanilha.Cells[3,19] := 'VLR BAIXADO';
+      mPlanilha.Cells[3,20] := 'VLR SALDO';
+      mPlanilha.Cells[3,21] := 'P/R';
 
-      mPlanilha.Cells[3,13] := 'VLR PARCELA';
-      mPlanilha.Cells[3,14] := 'VLR DESCONTOS';
-      mPlanilha.Cells[3,15] := 'VLR JUROS';
-      mPlanilha.Cells[3,16] := 'VLR MULTA';
-
-      mPlanilha.Cells[3,17] := 'VLR OPERAÇÃO';
-      mPlanilha.Cells[3,18] := 'VLR BAIXA';
-      mPlanilha.Cells[3,19] := 'SALDO';
-      mPlanilha.Cells[3,20] := 'P/R';
-
-      mPlanilha.Range['A3','T3'].HorizontalAlignment := 3;
-      mPlanilha.Range['A3','T3'].VerticalAlignment   := 2;
-      mPlanilha.Range['A3','T3'].Font.Size           := 8;
+      mPlanilha.Range['A3','U3'].HorizontalAlignment := 3;
+      mPlanilha.Range['A3','U3'].VerticalAlignment   := 2;
+      mPlanilha.Range['A3','U3'].Font.Size           := 8;
 
       mZebra               := false;
       mLinha               := 4;
@@ -1151,8 +1157,8 @@ begin
       While (not tTitulos.Eof) and (not Funcoes.Cancelado) do Begin
             mSaldo := mSaldo + tTitulos.FieldByName('Valor_Total').AsCurrency - tTitulos.FieldByName('Valor_Baixa').AsCurrency;
 
-            mPlanilha.Range['A'+InttoStr(mLinha),'T'+InttoStr(mLinha)].Font.Size := 8;
-            mPlanilha.Range['T'+InttoStr(mLinha),'T'+InttoStr(mLinha)].HorizontalAlignment := 3;
+            mPlanilha.Range['A'+InttoStr(mLinha),'U'+InttoStr(mLinha)].Font.Size           := 8;
+            mPlanilha.Range['U'+InttoStr(mLinha),'U'+InttoStr(mLinha)].HorizontalAlignment := 3;
 
             mPlanilha.Cells[mLinha,01] := tTitulos.FieldByName('Data_Documento').Value;
             mPlanilha.Cells[mLinha,02] := tTitulos.FieldByName('Data_Vencimento').Value;
@@ -1161,30 +1167,31 @@ begin
                mPlanilha.Cells[mLinha,04] := DifDias(tTitulos.FieldByName('Data_Vencimento').Value, tTitulos.FieldByName('Data_Baixado').AsCurrency);
 
             mPlanilha.Cells[mLinha,05] := tTitulos.FieldByName('Nome_Beneficiario').AsString;
-            mPlanilha.Cells[mLinha,06] := ''''+tTitulos.FieldByName('Numero_Documento').AsString;
-            mPlanilha.Cells[mLinha,07] := tTitulos.FieldByName('CentroCusto_Nome').AsString;
-            mPlanilha.Cells[mLinha,08] := tTitulos.FieldByName('Processo').AsString;
-            mPlanilha.Cells[mLinha,09] := tTitulos.FieldByName('Classificacao_Nome').AsString;
-            mPlanilha.Cells[mLinha,10] := tTitulos.FieldByName('Adiantamento_Numero').AsString;
-            mPlanilha.Cells[mLinha,11] := tTitulos.FieldByName('Conta_Banco').AsString;
-            mPlanilha.Cells[mLinha,12] := ''''+tTitulos.FieldByName('Numero_FormaTipo').AsString;
+            mPlanilha.Cells[mLinha,06] := tTitulos.FieldByName('UF').AsString;
+            mPlanilha.Cells[mLinha,07] := ''''+tTitulos.FieldByName('Numero_Documento').AsString;
+            mPlanilha.Cells[mLinha,08] := tTitulos.FieldByName('CentroCusto_Nome').AsString;
+            mPlanilha.Cells[mLinha,09] := tTitulos.FieldByName('Processo').AsString;
+            mPlanilha.Cells[mLinha,10] := tTitulos.FieldByName('Classificacao_Nome').AsString;
+            mPlanilha.Cells[mLinha,11] := tTitulos.FieldByName('Adiantamento_Numero').AsString;
+            mPlanilha.Cells[mLinha,12] := tTitulos.FieldByName('Conta_Banco').AsString;
+            mPlanilha.Cells[mLinha,13] := ''''+tTitulos.FieldByName('Numero_FormaTipo').AsString;
 
-            mPlanilha.Cells[mLinha,13] := tTitulos.FieldByName('Valor_Parcela').AsFloat;
-            mPlanilha.Cells[mLinha,14] := tTitulos.FieldByName('Desconto').AsFloat;
-            mPlanilha.Cells[mLinha,15] := tTitulos.FieldByName('Juros').AsFloat;
-            mPlanilha.Cells[mLinha,16] := tTitulos.FieldByName('Multa').AsFloat;
-            mPlanilha.Cells[mLinha,17] := tTitulos.FieldByName('Valor_Total').AsFloat;
-            mPlanilha.Cells[mLinha,18] := tTitulos.FieldByName('Valor_Baixa').AsFloat;
-            mPlanilha.Cells[mLinha,19] := mSaldo;
-            mPlanilha.Cells[mLinha,20] := tTitulos.FieldByName('Tipo').AsString;
+            mPlanilha.Cells[mLinha,14] := tTitulos.FieldByName('Valor_Parcela').AsFloat;
+            mPlanilha.Cells[mLinha,15] := tTitulos.FieldByName('Desconto').AsFloat;
+            mPlanilha.Cells[mLinha,16] := tTitulos.FieldByName('Juros').AsFloat;
+            mPlanilha.Cells[mLinha,17] := tTitulos.FieldByName('Multa').AsFloat;
+            mPlanilha.Cells[mLinha,18] := tTitulos.FieldByName('Valor_Total').AsFloat;
+            mPlanilha.Cells[mLinha,19] := tTitulos.FieldByName('Valor_Baixa').AsFloat;
+            mPlanilha.Cells[mLinha,20] := mSaldo;
+            mPlanilha.Cells[mLinha,21] := tTitulos.FieldByName('Tipo').AsString;
 
-            mPlanilha.Cells[mLinha,13].NumberFormat := '#.##0,00_);(#.##0,00)';
             mPlanilha.Cells[mLinha,14].NumberFormat := '#.##0,00_);(#.##0,00)';
             mPlanilha.Cells[mLinha,15].NumberFormat := '#.##0,00_);(#.##0,00)';
             mPlanilha.Cells[mLinha,16].NumberFormat := '#.##0,00_);(#.##0,00)';
             mPlanilha.Cells[mLinha,17].NumberFormat := '#.##0,00_);(#.##0,00)';
             mPlanilha.Cells[mLinha,18].NumberFormat := '#.##0,00_);(#.##0,00)';
             mPlanilha.Cells[mLinha,19].NumberFormat := '#.##0,00_);(#.##0,00)';
+            mPlanilha.Cells[mLinha,20].NumberFormat := '#.##0,00_);(#.##0,00)';
 
             // Pagamentos.
             If tTitulos.FieldByName('Tipo').Value = 'P' then begin
@@ -1225,49 +1232,49 @@ begin
 
             tTitulos.Next;
 
-            if tTitulos.FieldByName('Data_Vencimento').Value <> mData then begin
+            if (tTitulos.FieldByName('Data_Vencimento').Value <> mData) and cTotalDiario.Checked then begin
                Inc(mLinha);
 
-               mPlanilha.Range['I'+InttoStr(mLinha),'T'+InttoStr(mLinha+1)].Interior.Color    := RGB(255, 255, 140);
-               mPlanilha.Range['I'+InttoStr(mLinha),'T'+InttoStr(mLinha+1)].Interior.Pattern  := 1;
-               mPlanilha.Range['I'+InttoStr(mLinha),'T'+InttoStr(mLinha+1)].Font.Bold         := true;
-               mPlanilha.Range['I'+InttoStr(mLinha),'T'+InttoStr(mLinha+1)].Font.Color        := clBlack;
-               mPlanilha.Range['I'+InttoStr(mLinha),'T'+InttoStr(mLinha+1)].Borders.LineStyle := 1; //xlContinuous;
-               mPlanilha.Range['I'+InttoStr(mLinha),'T'+InttoStr(mLinha+1)].Borders.Weight    := 2; //xlThin;
-               mPlanilha.Range['I'+InttoStr(mLinha),'T'+InttoStr(mLinha+1)].Borders.Color     := RGB(0,0,0);
-               mPlanilha.Range['I'+InttoStr(mLinha),'T'+InttoStr(mLinha+1)].Font.Size         := 8;
+               mPlanilha.Range['J'+InttoStr(mLinha),'U'+InttoStr(mLinha+1)].Interior.Color    := RGB(255, 255, 140);
+               mPlanilha.Range['J'+InttoStr(mLinha),'U'+InttoStr(mLinha+1)].Interior.Pattern  := 1;
+               mPlanilha.Range['J'+InttoStr(mLinha),'U'+InttoStr(mLinha+1)].Font.Bold         := true;
+               mPlanilha.Range['J'+InttoStr(mLinha),'U'+InttoStr(mLinha+1)].Font.Color        := clBlack;
+               mPlanilha.Range['J'+InttoStr(mLinha),'U'+InttoStr(mLinha+1)].Borders.LineStyle := 1; //xlContinuous;
+               mPlanilha.Range['J'+InttoStr(mLinha),'U'+InttoStr(mLinha+1)].Borders.Weight    := 2; //xlThin;
+               mPlanilha.Range['J'+InttoStr(mLinha),'U'+InttoStr(mLinha+1)].Borders.Color     := RGB(0,0,0);
+               mPlanilha.Range['J'+InttoStr(mLinha),'U'+InttoStr(mLinha+1)].Font.Size         := 8;
 
-               mPlanilha.Cells[mLinha,09] := 'TOTAL DE PAGAMENTOS DO DIA';
-               mPlanilha.Cells[mLinha,13] := mParcelaDiaP;
-               mPlanilha.Cells[mLinha,14] := mDescontoDiaP;
-               mPlanilha.Cells[mLinha,15] := mJurosDiaP;
-               mPlanilha.Cells[mLinha,16] := mMultaDiaP;
-               mPlanilha.Cells[mLinha,17] := mValorDiaP;
-               mPlanilha.Cells[mLinha,18] := mBaixaDiaP;
-               mPlanilha.Cells[mLinha,19] := mSaldoDiaP;
-               mPlanilha.Cells[mLinha,13].NumberFormat := '#.##0,00_);(#.##0,00)';
+               mPlanilha.Cells[mLinha,10] := 'TOTAL DE PAGAMENTOS DO DIA';
+               mPlanilha.Cells[mLinha,14] := mParcelaDiaP;
+               mPlanilha.Cells[mLinha,15] := mDescontoDiaP;
+               mPlanilha.Cells[mLinha,16] := mJurosDiaP;
+               mPlanilha.Cells[mLinha,17] := mMultaDiaP;
+               mPlanilha.Cells[mLinha,18] := mValorDiaP;
+               mPlanilha.Cells[mLinha,19] := mBaixaDiaP;
+               mPlanilha.Cells[mLinha,20] := mSaldoDiaP;
                mPlanilha.Cells[mLinha,14].NumberFormat := '#.##0,00_);(#.##0,00)';
                mPlanilha.Cells[mLinha,15].NumberFormat := '#.##0,00_);(#.##0,00)';
                mPlanilha.Cells[mLinha,16].NumberFormat := '#.##0,00_);(#.##0,00)';
                mPlanilha.Cells[mLinha,17].NumberFormat := '#.##0,00_);(#.##0,00)';
                mPlanilha.Cells[mLinha,18].NumberFormat := '#.##0,00_);(#.##0,00)';
                mPlanilha.Cells[mLinha,19].NumberFormat := '#.##0,00_);(#.##0,00)';
+               mPlanilha.Cells[mLinha,20].NumberFormat := '#.##0,00_);(#.##0,00)';
                Inc(mLinha);
-               mPlanilha.Cells[mLinha,09] := 'TOTAL DE RECEBIMENTOS DO DIA';
-               mPlanilha.Cells[mLinha,13] := mParcelaDiaR;
-               mPlanilha.Cells[mLinha,14] := mDescontoDiaR;
-               mPlanilha.Cells[mLinha,15] := mJurosDiaR;
-               mPlanilha.Cells[mLinha,16] := mMultaDiaR;
-               mPlanilha.Cells[mLinha,17] := mValorDiaR;
-               mPlanilha.Cells[mLinha,18] := mBaixaDiaR;
-               mPlanilha.Cells[mLinha,19] := mSaldoDiaR;
+               mPlanilha.Cells[mLinha,10] := 'TOTAL DE RECEBIMENTOS DO DIA';
+               mPlanilha.Cells[mLinha,14] := mParcelaDiaR;
+               mPlanilha.Cells[mLinha,15] := mDescontoDiaR;
+               mPlanilha.Cells[mLinha,16] := mJurosDiaR;
+               mPlanilha.Cells[mLinha,17] := mMultaDiaR;
+               mPlanilha.Cells[mLinha,18] := mValorDiaR;
+               mPlanilha.Cells[mLinha,19] := mBaixaDiaR;
+               mPlanilha.Cells[mLinha,20] := mSaldoDiaR;
 
-               mPlanilha.Cells[mLinha,13].NumberFormat := '#.##0,00_);(#.##0,00)';
                mPlanilha.Cells[mLinha,14].NumberFormat := '#.##0,00_);(#.##0,00)';
                mPlanilha.Cells[mLinha,15].NumberFormat := '#.##0,00_);(#.##0,00)';
                mPlanilha.Cells[mLinha,16].NumberFormat := '#.##0,00_);(#.##0,00)';
                mPlanilha.Cells[mLinha,17].NumberFormat := '#.##0,00_);(#.##0,00)';
                mPlanilha.Cells[mLinha,18].NumberFormat := '#.##0,00_);(#.##0,00)';
+               mPlanilha.Cells[mLinha,19].NumberFormat := '#.##0,00_);(#.##0,00)';
 
                mData         := tTitulos.FieldByName('Data_Vencimento').Value;
                mValorDiaP    := 0;
@@ -1286,9 +1293,9 @@ begin
 
             if cZebrado.Checked then begin
                If mZebra = true then
-                  mPlanilha.Range['A'+InttoStr(mLinha),'T'+InttoStr(mLinha)].Interior.Color := clWhite
+                  mPlanilha.Range['A'+InttoStr(mLinha),'U'+InttoStr(mLinha)].Interior.Color := clWhite
                else
-                  mPlanilha.Range['A'+InttoStr(mLinha),'T'+InttoStr(mLinha)].Interior.Color := RGB(232, 232, 255);
+                  mPlanilha.Range['A'+InttoStr(mLinha),'U'+InttoStr(mLinha)].Interior.Color := RGB(232, 232, 255);
 
                mZebra := not mZebra;
             end;
@@ -1349,19 +1356,24 @@ begin
       mPlanilha.Cells[1,01]                          := Dados.EmpresasRazao_Social.AsString + '('+Dados.EmpresasEstado.AsString+')';
       mPlanilha.Range['A1','A1'].Font.Size           := 14;
       mPlanilha.Range['A1','A1'].Font.Bold           := true;
-      mPlanilha.Range['A1','P1'].Mergecells          := True;
-      mPlanilha.Range['A1','P1'].HorizontalAlignment := 3;
+      mPlanilha.Range['A1','U1'].Mergecells          := True;
+      mPlanilha.Range['A1','U1'].HorizontalAlignment := 3;
 
       var mPeriodo:String;
       mPeriodo := 'Contas a Pagar / Receber ';
       if cCondicao.text <> '' then begin
          mPeriodo := mPeriodo + '    | Condição de pagamento: '+Dados.ModalidadesPgtoDescricao.asstring+'  |  ';
       end;
-      mPeriodo := mPeriodo + '   Período de '+cDataIni.Text + ' ás ' + cDataFim.Text;
+      if not DataLimpa(cDataIni.Text) then begin
+         mPeriodo := mPeriodo + '   Período de '+cDataIni.Text + ' ás ' + cDataFim.Text;
+      end;
+      if not DataLimpa(cDataDocIni.Text) then begin
+         mPeriodo := mPeriodo + '   Período de '+cDataDocIni.Text + ' ás ' + cDataDocFim.Text;
+      end;
       mPlanilha.Cells[2,01]                          := mPeriodo;
       mPlanilha.Range['A2','A2'].Font.Size           := 10;
-      mPlanilha.Range['A2','P2'].Mergecells          := True;
-      mPlanilha.Range['A2','P2'].HorizontalAlignment := 3;
+      mPlanilha.Range['A2','U2'].Mergecells          := True;
+      mPlanilha.Range['A2','U2'].HorizontalAlignment := 3;
 
       Janela_Processamento.Close;
       mPlanilha.Visible := true;

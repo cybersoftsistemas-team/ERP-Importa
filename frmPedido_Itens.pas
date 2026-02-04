@@ -285,11 +285,13 @@ begin
            tDumping.Open;
 
            // Totalizando todas as DI's do mesmo processo.
-           tFOB_DI.SQL.Clear;
-           tFOB_DI.SQL.Add('SELECT ISNULL(SUM(FOB), 0) AS Total_FOB FROM ProcessosDocumentos WHERE (Processo = :pProcesso)');
-           tFOB_DI.ParamByName('pProcesso').AsString := ProcessosDOCProcesso.Value;
-           tFOB_DI.Open;
-           mTotalFOB := tFOB_DI.FieldByName('Total_FOB').AsCurrency;
+           with tFOB_DI do begin 
+                sql.clear;
+                sql.add('select isnull(sum(FOB), 0) as Total_FOB from ProcessosDocumentos where Processo = :pProcesso');
+                ParamByName('pProcesso').AsString := ProcessosDOCProcesso.Value;
+                Open;
+                mTotalFOB := FieldByName('Total_FOB').AsCurrency;
+           end;
 
            // Pegando o valor do "AFRMM - Marinha Mercante" no financeiro.
            if (PedidosSaida_Entrada.asInteger = 0) and (Trim(PedidosProcesso.AsString) <> '') then begin
@@ -588,7 +590,7 @@ end;
 
 procedure TPedido_Itens.FormCreate(Sender: TObject);
 begin
-      Application.ShowHint   := True;
+     Application.ShowHint   := True;
       Application.OnShowHint := AppShowHint;
      with Dados.Pedidos do begin
           if (fieldbyname('Saida_Entrada').asinteger = 0) and (FileExists('fundo_barra_Vermelha.bmp')) then begin
@@ -1215,7 +1217,7 @@ begin
                               end;
                            end;
                         end;
-
+                        
                         // Adicionando o valor do AFRMM na descrição do item "Exigência do estado de RONDÔNIA".
                         if (TipoNotaVisiveis_AFRMM.AsBoolean) and (PedidosItensValor_AFRMM.AsFloat > 0) then begin
                            if ProdutosTipo_Conversao.Value <> 'M' then
@@ -1343,7 +1345,7 @@ begin
                               PedidosItensValor_Unitario.Value := (PedidosItensValor_Unitario.Value - (Percentual(PedidosItensValor_Unitario.Value, PedidosItensDesconto.Value))) / ProdutosQuantidade_Unidade.Value;
                            End;
                         End;
-
+                       
                         // Applicando o desconto no valor unitario(Valor).
                         If PedidosItensDesconto_Valor.Value > 0 then begin
                            If ProdutosTipo_Conversao.Value <> 'M' then
@@ -1514,7 +1516,7 @@ begin
                                  end;
                               end;
                            end;
-
+                           
                            mUF                              := Trim(ClientesEstado.Value)+'_ReducaoST';
                            PedidosItensReducao_ICMSST.Value := NCM.FieldbyName(mUF).AsFloat;
 
@@ -1613,7 +1615,7 @@ begin
                               If (Trim(TipoNotaCalculo_BCICMSSub.AsString) <> '') and (mBCICMSSubInformado = 0) then mErro := 1;
                            End;
                         End;
-
+                       
                         if ProdutosFCP.AsBoolean then begin
                            // Cliente é de fora do estado.
                            if PedidosDestinatario_Estado.Value <> EmpresasEstado.Value then begin
@@ -1689,7 +1691,7 @@ begin
                            cFormula.Lines.Add(' RESULTADO: '+FormatFloat('###,###,###,##0.00000000000000', PedidosItensValor_COFINS.Value));
                            cFormula.Lines.Add('');
                         end;
-
+                        
                         // Recalcula o valor unitario do produto com base no segundo campo de formula.
                         // Calculo_MercadoriaImp = Valores extras calculados sobre o valor do produto.
                         if Trim(TipoNotaCalculo_MercadoriaImp.AsString) <> '' then begin
@@ -1740,18 +1742,18 @@ begin
                            PedidosItensValor_IPI.Value := 0;
                            PedidosItensTotal_IPI.Value := 0;
                         end;
-
+                        
                         if trim(TipoNotaCalculo_BCIS.AsString)   <> '' then PedidosItensValor_BCIS.Value  := RoundTo(CalculaMacro('Calculo_BCIS'), -2);
                         if trim(TipoNotaCalculo_VlrIS.AsString)  <> '' then PedidosItensValor_IS.Value    := RoundTo(CalculaMacro('Calculo_VlrIS'), -2);
                         if trim(TipoNotaCalculo_BCCBS.AsString)  <> '' then PedidosItensValor_BCCBS.Value := RoundTo(CalculaMacro('Calculo_BCCBS'), -2);
                         if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then begin 
                            PedidosItensValor_CBS.Value := RoundTo(CalculaMacro('Calculo_VlrCBS'), -2);
-                           if PedidosItensValor_CBS.Value < 0.005 then PedidosItensValor_CBS.Value := 0.005;
+//                           if PedidosItensValor_CBS.Value < 0.005 then PedidosItensValor_CBS.Value := 0.005;
                         end;
                         if trim(TipoNotaCalculo_BCIBS.AsString)  <> '' then PedidosItensValor_BCIBS.Value := RoundTo(CalculaMacro('Calculo_BCIBS'), -2);
                         if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then begin 
                            PedidosItensValor_IBS.Value := RoundTo(CalculaMacro('Calculo_VlrIBS'), -2);
-                           if PedidosItensValor_IBS.Value < 0.005 then PedidosItensValor_IBS.Value := 0.005;
+//                           if PedidosItensValor_IBS.Value < 0.005 then PedidosItensValor_IBS.Value := 0.005;
                         end;
 
                         // Código de situação tributaria do ICMS e apuração de "Isentas e Outras" de ICMS.
@@ -1777,7 +1779,7 @@ begin
                               else
                                  mCST := mCST + '-S';  // ICMS ST na Saida.
                            End;
-                           If (TipoNotaIsencao_ICMS.AsBoolean   = true)   or  (NCMICMS_Isento.AsBoolean = true)  then mCST := '+I';
+                           If (TipoNotaIsencao_ICMS.AsBoolean   = true) or (NCMICMS_Isento.AsBoolean = true)     then mCST := '+I';
                            If TipoNotaNao_Tributada_ICMS.Value  = true                                           then mCST := '+NT';
                            If (TipoNotaSuspensao_ICMS.AsBoolean = true) or  (NCMICMS_Suspensao.AsBoolean = true) then mCST := '+SUS';
                            If (ProcessosDOCICMS_Diferido.Value  = true) and (TipoNotaSaida_Entrada.Value = 0)    then mCST := '+D';
@@ -1963,7 +1965,7 @@ begin
                         PedidosItensValor_OutrasIPI.Value  := 0;
                         PedidosItensValor_IsentasIPI.Value := 0;
                         mApuracao1                         := 0;
-
+                       
                         // Desmembrando a formula do total da nota fiscal para saber os valores que o compõe.
                         If Pos('Pedidos_[Valor_OutrasDespesas]', TipoNotaCalculo_TotalPedido.AsString ) > 0 then
                            mApuracao1 := mApuracao1 + (PedidosItensValor_Despesa.Value * PedidosItensQuantidade.Value);
@@ -2079,7 +2081,7 @@ begin
                         cFormula.Lines.Add('   VALORES: '+floattostr(PedidosItensValor_Despesa.asfloat-mDespesaMestre-mDespesaSeletivo)+'+'+CurrtoStr(mDespesaMestre)+'+'+CurrtoStr(mDespesaSeletivo));
                         cFormula.Lines.Add(' RESULTADO: '+FormatFloat('###,###,###,##0.00000000000000', (PedidosItensValor_Despesa.asfloat-mDespesaMestre-mDespesaSeletivo) + mDespesaMestre + mDespesaSeletivo));
                         cFormula.Lines.Add('');
-
+                        
                         // Valor do inventario.
                         mValorFrete  := 0;
                         mValorSeguro := 0;
@@ -2118,7 +2120,7 @@ begin
                            PedidosItensValor_Frete.Value  := mValorFrete;
                            PedidosItensValor_Seguro.Value := mValorSeguro;
                         end;
-
+                        
                         //PedidosItensNatureza_Codigo.Value := PedidosNatureza_Codigo.Value;
                         PedidosItensNatureza_Codigo.Value := cNatureza.KeyValue;
                         PedidosItensValor_CIF.Value       := (AdicoesValor_UnitarioReal.Value+PedidosItensValor_Frete.Value+PedidosItensValor_Seguro.Value);
@@ -2135,18 +2137,23 @@ begin
                         end;
 
                         // Calculo do ICMS diferido pelo beneficio fiscal.
-                        PedidosItensValor_ICMSDif.Value    := 0;
-                        PedidosItensAliquota_ICMSDif.Value := 0;
-                        with IncentivosFiscais do begin
-                             if recordcount > 0 then begin
-                                mAliqDif := iif(PedidosSaida_Entrada.AsInteger = 0, fieldbyname('ICMS_DiferidoEnt').AsFloat, fieldbyname('ICMS_DiferidoSai').AsFloat);
-                                if mAliqDif > 0 then begin
-                                   PedidosItensAliquota_ICMSDif.Value := mAliqDif;
-                                   PedidosItensValor_ICMSDif.Value    := PedidosItensValor_ICMSOper.AsCurrency - Percentual(PedidosItensValor_ICMSOper.AsCurrency, mAliqDif);
+                        if PedidosSaida_Entrada.AsInteger = 0 then begin
+                           PedidosItensValor_ICMSDif.Value    := 0;
+                           PedidosItensAliquota_ICMSDif.Value := 0;
+                           with IncentivosFiscais do begin
+                                if recordcount > 0 then begin
+                                   mAliqDif := iif(PedidosSaida_Entrada.AsInteger = 0, fieldbyname('ICMS_DiferidoEnt').AsFloat, fieldbyname('ICMS_DiferidoSai').AsFloat);
+                                   if mAliqDif > 0 then begin
+                                      PedidosItensAliquota_ICMSDif.Value := mAliqDif;
+                                      PedidosItensValor_ICMSDif.Value := Percentual(PedidosItensValor_ICMSOper.AsCurrency, mAliqDif);
+                                      if PedidosItensValor_ICMSDif.Value > 0 then begin
+                                         PedidosItensValor_ICMSOper.Value := 0;
+                                      end;
+                                   end;
                                 end;
-                             end;
+                           end;
                         end;
-
+                        
                         // Calculo do ICMS monofasico.
                         PedidosItensValor_ICMSMono.Value      := 0;
                         PedidosItensValor_ICMSMonoRet.Value   := 0;
@@ -2173,7 +2180,8 @@ begin
                         PedidosItensAliquota_ICMSPresumido.Value := 0;
                         PedidosItensValor_BCICMSPresumido.value  := 0;
                         PedidosItensValor_ICMSPresumido.value    := 0;
-
+                        
+                        
                         if Dados.PedidosSaida_Entrada.asinteger = 1 then begin
                            if (PedidosItensCodigoTrib_TabA.value = '1') or (PedidosItensCodigoTrib_TabA.value = '6')  then begin
                               Estados.Locate('Codigo', PedidosDestinatario_Estado.Value, [loCaseInsensitive]);
@@ -3079,7 +3087,7 @@ begin
                sql.Add('      ,FOB_Mestre      = isnull((select round(sum(Valor_SemAdValorem * Quantidade), 2) from Adicoes where DI = :pDIMestre), 0)');
                sql.Add('      ,CIF_Total       = isnull((select sum(FOB + Frete + Seguro + II) from ProcessosDocumentos where Numero_Declaracao = :pDI), 0)');
                sql.Add('      ,CIF_Mestre      = nullif(0,(select sum(FOB + Frete + Seguro + II) from ProcessosDocumentos where Processo = :pProcessoMestre))');
-               sql.Add('      ,FOBPISCOFINS_ME = isnull((select sum(ad.Valor_Unitario * ad.Quantidade) from Adicoes ad where ad.DI = :pDI and Valor_PIS <> 0), 0)');
+               sql.Add('      ,FOBPISCOFINS_ME = isnull((select sum(ad.Valor_Unitario * ad.Quantidade) from Adicoes ad where ad.DI = :pDI and Valor_PIS <> 0), 1)');
                paramByName('pDI').AsString             := ProcessosDOCNumero_Declaracao.AsString;
                paramByName('pDIMestre').AsString       := tProcessoMestre.FieldByName('Numero_Declaracao').AsString;
                paramByName('pProcessoMestre').AsString := ProcessosDOCProcesso_Mestre.AsString;

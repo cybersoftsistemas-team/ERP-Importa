@@ -134,7 +134,8 @@ begin
            end;
            with ProcessosDOC do begin
                 SQL.Clear;
-                SQL.Add('select * from ProcessosDocumentos where Processo in(select distinct Processo from FichaInventario where isnull(Processo, '''') <> '''') order by Processo');
+//                SQL.Add('select * from ProcessosDocumentos where Processo in(select distinct Processo from FichaInventario where isnull(Processo, '''') <> '''') order by Processo');
+                SQL.Add('select * from ProcessosDocumentos order by Processo');
                 Open;
            end;
       End;

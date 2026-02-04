@@ -11,8 +11,8 @@ type
     Panel4: TPanel;
     bLimpar: TButton;
     bAdicionar: TButton;
-    bCancelar: TButton;
-    bOK: TButton;
+    bSair: TButton;
+    bTestar: TButton;
     lCampo: TLabel;
     Grade: TDBGrid;
     Label2: TLabel;
@@ -35,9 +35,11 @@ type
     tTotaliza: TMSQuery;
     msg: TPanel;
     Label1: TLabel;
+    TabSheet3: TTabSheet;
+    cLog: TMemo;
     procedure bConfirmarClick(Sender: TObject);
-    procedure bCancelarClick(Sender: TObject);
-    procedure bOKClick(Sender: TObject);
+    procedure bSairClick(Sender: TObject);
+    procedure bTestarClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure GradeDblClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -74,17 +76,16 @@ begin
       Close;
 end;
 
-procedure TConfig_TipoNotaFormula.bCancelarClick(Sender: TObject);
+procedure TConfig_TipoNotaFormula.bSairClick(Sender: TObject);
 begin
       Close;
 end;
 
-procedure TConfig_TipoNotaFormula.bOKClick(Sender: TObject);
+procedure TConfig_TipoNotaFormula.bTestarClick(Sender: TObject);
 begin
-      if ConverteCalculo then 
-         Close
-      else   
+      if not ConverteCalculo then begin
          ShowMessage('Erro desconhecido na formula do campo');
+      end;
 end;
 
 function TConfig_TipoNotaFormula.ConverteCalculo: boolean;
@@ -161,7 +162,9 @@ begin
                  TipoNota.FieldByName(mNomeCalculo).Value := Trim(mNovo);
                  cCalculo.Text := Trim(mNovo);
               End;
-
+              
+              cLog.Lines.Clear;
+              cLog.Lines.Add(mTesta);
               mMacro.Formula := Trim(mTesta);
               If mMacro.Tag <> 0 then begin 
                  Campos.EnableControls;

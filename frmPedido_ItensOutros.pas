@@ -208,6 +208,10 @@ type
     DBLookupComboBox6: TDBLookupComboBox;
     cBCIBS: TDBEdit;
     cBCCBS: TDBEdit;
+    TabSheet3: TTabSheet;
+    DBMemo1: TDBMemo;
+    cCopiaDesc: TMemo;
+    bCopiar: TBitBtn;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -255,8 +259,13 @@ type
     procedure cTabBExit(Sender: TObject);
     procedure cValorCBSChange(Sender: TObject);
     procedure cValorIBSChange(Sender: TObject);
+    procedure cValorPISChange(Sender: TObject);
+    procedure cValorCOFINSChange(Sender: TObject);
+    procedure bCopiarClick(Sender: TObject);
   private
     procedure CalculaFCP(pAliquotaDIFAL: real);
+    procedure CalculoIBSCBS;
+    procedure CalculoDIFAL;
     { Private declarations }
   public
     { Public declarations }
@@ -842,7 +851,11 @@ begin
                                    mBCPISST  := mBCPISST  + RoundTo(PedidosItensValor_BCPISST.Value, -2);
                                    mMediaBCR := mMediaBCR + PedidosItensMedia_BCR.Value;
 
-                                   PedidosItensTotal_Impostos.Value   := 0;
+//                                   PedidosItensTotal_Impostos.Value := 0;
+                                   PedidosItensTotal_Impostos.Value := RoundTo(PedidosItensTotal_IPI.AsCurrency+(PedidosItensValor_II.AsCurrency*PedidosItensQuantidade.AsFloat)+PedidosItensValor_ICMSOper.AsCurrency+PedidosItensValor_PIS.AsCurrency+PedidosItensValor_COFINS.AsCurrency, -2);
+                                   mTotalImpostos                   := mTotalImpostos + PedidosItensTotal_Impostos.AsCurrency;
+
+                                   {
                                    PedidosItensValor_BCICMSDest.Value := 0;
                                    PedidosItensValor_ICMSDest.Value   := 0;
                                    PedidosItensValor_BCDIFAL.Value    := 0;
@@ -941,7 +954,7 @@ begin
                                          end;
                                       end;
                                    end;
-                                   
+                                   }
                                    PedidosItensDevolucao.Value := PedidosDevolucao.Value;
                       PedidosItens.Post;
 
@@ -1213,7 +1226,8 @@ begin
                   Navega.Controls[i].Enabled := False;
               End;
               PageControl1.ActivePageIndex := 0;
-              PageControl1.Enabled         := true;
+              //PageControl1.Enabled         := true;
+              cCopiaDesc.Text              := PedidosItensDescricao_Mercadoria.Value;
               mQuantidade                  := PedidosItensQuantidade.Value;
               PedidosItenstipo_Nota.Value  := PedidosTipo_Nota.Value;
               cMinimo.Value                := 0;
@@ -1257,7 +1271,7 @@ begin
                  cQuantidade.Enabled := not ProdutosSerial_Obrigatorio.AsBoolean;
               End;
            end else begin
-              PageControl1.Enabled := false;
+              //PageControl1.Enabled := false;
               GradeItens.Enabled   := true;
            end;
 
@@ -1940,8 +1954,8 @@ begin
      mResultado := 0;
      
      Try
-        mMacro.Formula := mFormula;
-        mResultado     := mMacro.Calc([0]);
+        mMacro.Formula   := mFormula;
+        mResultado       := mMacro.Calc([0]);
         If mResultado <= 0 then mResultado := 0;
      Except
           showmessage('Erro na formula do campo '+Campo);
@@ -2426,28 +2440,35 @@ begin
                   if PedidosItensFCP_ICMSDest.Value > 0 then begin
                      PedidosItensValor_ICMSDesonerado.Value := 0;
                   end;
-                  
+                  }
                   
                   // Calculo do ICMS diferimento.
                   PedidosItensValor_ICMSDif.Value    := 0;
                   PedidosItensAliquota_ICMSDif.Value := 0;
-                  with IncentivosFiscais do begin
-                       sql.Clear;
-                       sql.Add('select * from IncentivosFiscais where Nome = '+Quotedstr(PedidosIncentivo_Fiscal.asstring));
-                       open;
-                       if recordcount > 0 then begin
-                          mAliqDif := iif(PedidosSaida_Entrada.AsInteger = 0, fieldbyname('ICMS_DiferidoEnt').AsFloat, fieldbyname('ICMS_DiferidoSai').AsFloat);
-                          if mAliqDif > 0 then begin
-                             PedidosItensAliquota_ICMSDif.Value := mAliqDif;
-                             PedidosItensValor_ICMSDif.Value    := PedidosItensValor_ICMSOper.AsCurrency - Percentual(PedidosItensValor_ICMSOper.AsCurrency, mAliqDif);
+                  if PedidosSaida_Entrada.AsInteger = 0 then begin
+                     with IncentivosFiscais do begin
+                          sql.Clear;
+                          sql.Add('select * from IncentivosFiscais where Nome = '+Quotedstr(PedidosIncentivo_Fiscal.asstring));
+                          open;
+                          if recordcount > 0 then begin
+                             mAliqDif := iif(PedidosSaida_Entrada.AsInteger = 0, fieldbyname('ICMS_DiferidoEnt').AsFloat, fieldbyname('ICMS_DiferidoSai').AsFloat);
+                             if mAliqDif > 0 then begin
+                                PedidosItensAliquota_ICMSDif.Value := mAliqDif;
+                                PedidosItensValor_ICMSDif.Value    := Percentual(PedidosItensValor_ICMSOper.AsCurrency, mAliqDif);
+                                if PedidosItensValor_ICMSDif.Value > 0 then begin
+                                   PedidosItensValor_ICMSOper.Value := 0;
+                                end;
+                             end;
                           end;
-                       end;
+                     end;
                   end;
-                  }
               end;
          end;
+         
+//         CalculoIBSCBS;
+
       end;
- end;
+end;
 
 procedure TPedido_ItensOutros.cProdutoExit(Sender: TObject);
 var
@@ -2827,7 +2848,6 @@ begin
                  PedidosItensValor_Total.Value := Roundto(PedidosItensQuantidade.Value * (PedidosItensValor_Unitario.Value), -2);
               End;
               PedidosItensAliquota_IPI.Value := ProdutosAliquota_IPI.Value;
-//              PedidosItensAliquota_CBS.Value := iif(trim(TipoNotaCalculo_VlrCBS.asstring) <> '', ProdutosAliquota_CBS.Value, 0);
               PedidosItensAliquota_CBS.Value := ProdutosAliquota_CBS.Value;
 
               if ProdutosReducao_IPI.AsFloat         > 0 then PedidosItensAliquota_IPI.Value := ProdutosReducao_IPI.Value;
@@ -2904,6 +2924,9 @@ begin
                  End;
               End;
 
+              // CAlculo do DIFAL.
+              CalculoDIFAL;
+              
               // Calculo do DIFAL ST.
               if TipoNotaFinalidade_Mercadoria.asinteger in[1, 6] then Begin
                  if trim(TipoNotaCalculo_BCDIFALST.asstring) <> '' then begin
@@ -2915,8 +2938,9 @@ begin
               if Trim(TipoNotaCalculo_BCICMS.AsString) <> '' then
                  PedidosItensValor_BCICMSOper.Value := Roundto(CalculaMacro('Calculo_BCICMS'), -2);
 
-              PedidosItensValor_ICMSOper.Value := Roundto(Percentual(PedidosItensValor_BCICMSOper.AsCurrency, PedidosItensAliquota_ICMSOper.AsFloat), -2);
-              // Ajusta o valor do ICMS para um centavo quando o valor do ICMS e menor que um centavo.
+//              PedidosItensValor_ICMSOper.Value := Roundto(Percentual(PedidosItensValor_BCICMSOper.AsCurrency, PedidosItensAliquota_ICMSOper.AsFloat), -2);
+              PedidosItensValor_ICMSOper.Value := Roundto(CalculaMacro('Calculo_VlrICMS'), -2);
+             // Ajusta o valor do ICMS para um centavo quando o valor do ICMS e menor que um centavo.
               if (PedidosItensValor_ICMSOper.Value < 0.01) and (PedidosItensValor_BCICMSOper.Value > 0) then begin
                  PedidosItensValor_ICMSOper.Value := 0.01;
               end;
@@ -3088,9 +3112,9 @@ begin
               End;
 
               // Calculo dos valores de PIS e COFINS.
-              If Trim(TipoNotaCalculo_BCPIS.AsString)    <> '' then PedidosItensValor_BCPIS.Value    := RoundTo(CalculaMacro('Calculo_BCPIS'), -4);
-              If Trim(TipoNotaCalculo_PIS.AsString)      <> '' then PedidosItensValor_PIS.Value      := RoundTo(CalculaMacro('Calculo_PIS'), -2);
-              If Trim(TipoNotaCalculo_COFINS.AsString)   <> '' then PedidosItensValor_COFINS.Value   := RoundTo(CalculaMacro('Calculo_COFINS'), -2);
+              If Trim(TipoNotaCalculo_BCPIS.AsString)  <> '' then PedidosItensValor_BCPIS.Value  := RoundTo(CalculaMacro('Calculo_BCPIS'), -4);
+              If Trim(TipoNotaCalculo_PIS.AsString)    <> '' then PedidosItensValor_PIS.Value    := RoundTo(CalculaMacro('Calculo_PIS'), -2);
+              If Trim(TipoNotaCalculo_COFINS.AsString) <> '' then PedidosItensValor_COFINS.Value := RoundTo(CalculaMacro('Calculo_COFINS'), -2);
 
               PedidosItensValor_BCPISST.Value    := 0;
               PedidosItensValor_BCCOFINSST.Value := 0;
@@ -3111,26 +3135,29 @@ begin
                  PedidosItensValor_COFINS.Value    := 0;
               End;
 
-              PedidosItensValor_BCIS.Value  := 0;
-              PedidosItensValor_IS.Value    := 0;
-              PedidosItensValor_BCCBS.Value := 0;
-              PedidosItensValor_CBS.Value   := 0;
-              PedidosItensValor_BCIBS.Value := 0;
-              PedidosItensValor_IBS.Value   := 0;
-             
-              if trim(TipoNotaCalculo_BCIS.AsString)   <> '' then PedidosItensValor_BCIS.Value  := RoundTo(CalculaMacro('Calculo_BCIS'), -2);
-              if trim(TipoNotaCalculo_VlrIS.AsString)  <> '' then PedidosItensValor_IS.Value    := RoundTo(CalculaMacro('Calculo_VlrIS'), -2);
-              if trim(TipoNotaCalculo_BCCBS.AsString)  <> '' then PedidosItensValor_BCCBS.Value := RoundTo(CalculaMacro('Calculo_BCCBS'), -2);
-              if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then begin 
-                 PedidosItensValor_CBS.Value := RoundTo(CalculaMacro('Calculo_VlrCBS'), -2);
-                 if PedidosItensValor_CBS.Value < 0.005 then PedidosItensValor_CBS.Value := 0.005;
-              end;
-              if trim(TipoNotaCalculo_BCIBS.AsString)  <> '' then PedidosItensValor_BCIBS.Value := RoundTo(CalculaMacro('Calculo_BCIBS'), -2);
-              if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then begin
-                 PedidosItensValor_IBS.Value := RoundTo(CalculaMacro('Calculo_VlrIBS'), -2);
-                 if PedidosItensValor_IBS.Value < 0.005 then PedidosItensValor_IBS.Value := 0.005;
-              end;
+              // Efetua os calculos de IBS/CBS.
+//              CalculoIBSCBS;
+              PedidosItens.fieldbyname('Valor_BCIS').Value  := 0;
+              PedidosItens.fieldbyname('Valor_IS').Value    := 0;
+              PedidosItens.fieldbyname('Valor_BCCBS').Value := 0;
+              PedidosItens.fieldbyname('Valor_CBS').Value   := 0;
+              PedidosItens.fieldbyname('Valor_BCIBS').Value := 0;
+              PedidosItens.fieldbyname('Valor_IBS').Value   := 0;
+           
+              if trim(TipoNotaCalculo_BCIS.AsString) <> '' then 
+                 PedidosItens.fieldbyname('Valor_BCIS').Value := RoundTo(CalculaMacro('Calculo_BCIS'), -2);
+              if trim(TipoNotaCalculo_VlrIS.AsString) <> '' then 
+                 PedidosItens.fieldbyname('Valor_IS').Value := RoundTo(CalculaMacro('Calculo_VlrIS'), -2);
+              if trim(TipoNotaCalculo_BCCBS.AsString) <> '' then 
+                 PedidosItens.fieldbyname('Valor_BCCBS').Value := RoundTo(CalculaMacro('Calculo_BCCBS'), -2);
+              if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then 
+                 PedidosItens.fieldbyname('Valor_CBS').Value := RoundTo(CalculaMacro('Calculo_VlrCBS'), -2);
+              if trim(TipoNotaCalculo_BCIBS.AsString) <> '' then 
+                 PedidosItens.fieldbyname('Valor_BCIBS').Value := RoundTo(CalculaMacro('Calculo_BCIBS'), -2);
+              if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then 
+                 PedidosItens.fieldbyname('Valor_IBS').Value := RoundTo(CalculaMacro('Calculo_VlrIBS'), -2);
 
+              
               If Trim(TipoNotaCalculo_Inventario.AsString) <> '' then begin
                  PedidosItensValor_Inventario.Value := Roundto(CalculaMacro('Calculo_Inventario'), -2);
               End;
@@ -3221,7 +3248,15 @@ begin
                     PedidosItensValor_IsentasIPI.Value := mApuracao1;
               End;
          End;
+         
+//        CalculoIBSCBS;
+
       end;
+end;
+
+procedure TPedido_ItensOutros.cValorPISChange(Sender: TObject);
+begin
+//     CalculoIBSCBS;
 end;
 
 procedure TPedido_ItensOutros.cCodigoChange(Sender: TObject);
@@ -3322,6 +3357,11 @@ begin
               PedidosItensCSTIBS.Value := CSTIBSCodigo.Value;
            end;
       end;
+end;
+
+procedure TPedido_ItensOutros.cValorCOFINSChange(Sender: TObject);
+begin
+//     CalculoIBSCBS;
 end;
 
 procedure TPedido_ItensOutros.CalculoBCR;
@@ -3452,6 +3492,11 @@ End;
 procedure TPedido_ItensOutros.cProdutoClick(Sender: TObject);
 begin
       cCodigoExit(Self);
+end;
+
+procedure TPedido_ItensOutros.bCopiarClick(Sender: TObject);
+begin
+     Dados.PedidosItensDescricao_Mercadoria.Value := cCopiaDesc.Text;
 end;
 
 procedure TPedido_ItensOutros.bDetalheClick(Sender: TObject);
@@ -3761,6 +3806,141 @@ begin
       PedidosOutra_ProprioReferenciaItens := TPedidosOutra_ProprioReferenciaItens.Create(Self);
       PedidosOutra_ProprioReferenciaItens.Caption := Caption;
       PedidosOutra_ProprioReferenciaItens.Showmodal;
+end;
+
+procedure TPedido_ItensOutros.CalculoIBSCBS;
+begin
+      with Dados do begin
+           with PedidosItens do begin
+                if State in[dsInsert, dsEdit] then begin
+                   fieldbyname('Valor_BCIS').Value  := 0;
+                   fieldbyname('Valor_IS').Value    := 0;
+                   fieldbyname('Valor_BCCBS').Value := 0;
+                   fieldbyname('Valor_CBS').Value   := 0;
+                   fieldbyname('Valor_BCIBS').Value := 0;
+                   fieldbyname('Valor_IBS').Value   := 0;
+           
+                   if trim(TipoNotaCalculo_BCIS.AsString) <> '' then 
+                      fieldbyname('Valor_BCIS').Value := RoundTo(CalculaMacro('Calculo_BCIS'), -2);
+                   if trim(TipoNotaCalculo_VlrIS.AsString) <> '' then 
+                      fieldbyname('Valor_IS').Value := RoundTo(CalculaMacro('Calculo_VlrIS'), -2);
+                   if trim(TipoNotaCalculo_BCCBS.AsString) <> '' then 
+                      fieldbyname('Valor_BCCBS').Value := RoundTo(CalculaMacro('Calculo_BCCBS'), -2);
+                   if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then 
+                      fieldbyname('Valor_CBS').Value := RoundTo(CalculaMacro('Calculo_VlrCBS'), -2);
+                   if trim(TipoNotaCalculo_BCIBS.AsString) <> '' then 
+                      fieldbyname('Valor_BCIBS').Value := RoundTo(CalculaMacro('Calculo_BCIBS'), -2);
+                   if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then 
+                      fieldbyname('Valor_IBS').Value := RoundTo(CalculaMacro('Calculo_VlrIBS'), -2);
+                end;
+           end;
+      end;
+end;
+
+procedure TPedido_ItensOutros.CalculoDIFAL;
+var
+  mUF: string;
+begin
+     with Dados, dmFiscal do begin
+          PedidosItensValor_BCICMSDest.Value := 0;
+          PedidosItensValor_ICMSDest.Value   := 0;
+          PedidosItensValor_BCDIFAL.Value    := 0;
+          PedidosItensDIFAL_Valor.Value      := 0;
+          PedidosItensDIFAL_PercOrig.Value   := 0;
+          PedidosItensDIFAL_ValorOrig.Value  := 0;
+          PedidosItensDIFAL_PercDest.Value   := 0;
+          PedidosItensDIFAL_ValorDest.Value  := 0;
+          PedidosItensFCP_Aliquota.Value     := 0;
+          PedidosItensFCP_ValorDest.Value    := 0;
+          PedidosItensFCP_ICMSDest.Value     := 0;
+          PedidosItensFCP_ICMSOrig.Value     := 0;
+          PedidosItensValor_BCFCP.Value      := 0;
+          PedidosItensValor_FCP.Value        := 0;
+          PedidosItensValor_BCFCPST.Value    := 0;
+          PedidosItensValor_FCPST.Value      := 0;
+          mAliquotaDIFAL                     := 0;
+          
+          if TipoNotaVisiveis_DIFAL.AsBoolean then begin
+             // DIFAL.
+             mAliquotaDIFAL := ICMSICMS_Interno.AsFloat;
+             mUF            := Trim(ClientesEstado.Value)+'_ICMS';
+             
+             NCM.Locate('NCM', PedidosItensNCM.AsString, [loCaseInsensitive]);;
+             if NCM.FieldbyName(mUF).AsFloat > 0 then begin
+                mAliquotaDIFAL := NCM.FieldbyName(mUF).AsFloat;
+             end;   
+
+             PedidosItensValor_BCICMSDest.Value  := PedidosItensValor_BCICMSOper.Value;
+             PedidosItensValor_ICMSDest.Value    := Roundto(Percentual(PedidosItensValor_BCICMSOper.Value, mAliquotaDIFAL), -2);
+             PedidosItensAliquota_ICMSDest.Value := mAliquotaDIFAL;
+
+             if (Clientes.FieldByName('Consumidor_Final').AsBoolean) and (not Clientes.FieldByName('MEI').AsBoolean) then begin  // Cliente é consumidor final.
+                if PedidosItensSaida_Entrada.AsInteger = 1 then begin
+                   PedidosItensTotal_Impostos.Value := RoundTo(PedidosItensTotal_IPI.AsCurrency+(PedidosItensValor_II.AsCurrency*PedidosItensQuantidade.AsFloat)+PedidosItensValor_ICMSOper.AsCurrency+PedidosItensValor_PIS.AsCurrency+PedidosItensValor_COFINS.AsCurrency, -2);
+                   //mTotalImpostos                   := mTotalImpostos + PedidosItensTotal_Impostos.AsCurrency;
+                end;
+
+                // Diferencial de alíquota do ICMS (DIFAL) p/consumidor final.
+                if (TipoNotaSaida_Entrada.Value = 1) and (TipoNotaVisiveis_DIFAL.AsBoolean) then Begin                   // Nota Fiscal de saída.
+                   if PedidosItensAliquota_ICMSOper.Value <> mAliquotaDIFAL then begin                                   // Aliquota de icms dos estados diferente.
+                      if (PedidosDestinatario_Estado.Value <> EmpresasEstado.Value) then begin                           // Cliente é de fora do estado.
+                         if TipoNotaFinalidade_Mercadoria.Value = 0 then begin
+                            PedidosItensValor_BCDIFAL.Value   := CalculaMacro('Calculo_BCDIFAL');
+                            PedidosItensDIFAL_Valor.Value     := CalculaMacro('Calculo_DIFAL');
+                            PedidosItensDIFAL_PercOrig.Value  := 100 - ConfiguracaoDIFAL_ICMSPart.Value;
+                            PedidosItensDIFAL_ValorOrig.Value := Roundto(Percentual(PedidosItensDIFAL_Valor.Value, (100-ConfiguracaoDIFAL_ICMSPart.Value)), -2);
+                            PedidosItensDIFAL_PercDest.Value  := ConfiguracaoDIFAL_ICMSPart.Value;
+                            PedidosItensDIFAL_ValorDest.Value := Roundto(Percentual(PedidosItensDIFAL_Valor.Value, ConfiguracaoDIFAL_ICMSPart.Value), -2);
+                         end;
+                      end;
+                   end;
+                end;
+             end;
+             
+             if ProdutosFCP.AsBoolean then begin
+                // Cliente é de fora do estado.
+                if PedidosDestinatario_Estado.Value <> EmpresasEstado.Value then begin
+                   // Cliente é consumidor final.
+                   if (Clientes.FieldByName('Consumidor_Final').AsBoolean) and (not Clientes.FieldByName('MEI').AsBoolean) then begin
+                      if TipoNotaFinalidade_Mercadoria.Value = 0 then begin
+                         PedidosItensFCP_Aliquota.Value  := ICMSFCP.Value;
+                         PedidosItensFCP_ValorDest.Value := Roundto(Percentual(PedidosItensValor_BCICMSOper.Value, ICMSFCP.Value), -2);
+                         PedidosItensFCP_ICMSDest.Value  := Roundto(Percentual(PedidosItensValor_BCICMSOper.Value, mAliquotaDIFAL) - PedidosItensValor_ICMSOper.Value, -2);
+                         PedidosItensFCP_ICMSDest.Value  := Roundto(Percentual(PedidosItensFCP_ICMSDest.Value, ConfiguracaoDIFAL_ICMSPart.Value), -2);
+                         PedidosItensFCP_ICMSOrig.Value  := Roundto(Percentual(PedidosItensValor_BCICMSOper.Value, mAliquotaDIFAL) - PedidosItensValor_ICMSOper.Value, -2);
+                         PedidosItensFCP_ICMSOrig.Value  := Roundto(Percentual(PedidosItensFCP_ICMSOrig.Value, (100-ConfiguracaoDIFAL_ICMSPart.Value)), -2);
+
+                         // Calculo do FCP pela CST ICMS.
+                         case AnsiIndexStr((PedidosItensCodigoTrib_TabB.Value), ['10','20','51','70','90']) of
+                              0..4: PedidosItensValor_BCFCP.Value := PedidosItensValor_BCICMSOper.Value;
+                         end;
+                         case AnsiIndexStr((PedidosItensCodigoTrib_TabB.Value), ['00','10','20','51','70','90']) of
+                              0..5: begin
+                                         PedidosItensValor_BCFCP.Value := PedidosItensValor_BCICMSOper.Value;
+                                         PedidosItensValor_FCP.Value   := roundto(Percentual(PedidosItensValor_BCICMSOper.Value, ICMSFCP.Value), -2);
+                                    end;
+                         end;
+
+                         // Calculo do FCP ST pela CST ICMS.
+                         case AnsiIndexStr((PedidosItensCodigoTrib_TabB.Value), ['10','30','70','90','201','202','203','900']) of
+                              0..7: begin
+                                         PedidosItensValor_BCFCPST.Value := PedidosItensValor_BCICMSSub.Value;
+                                         PedidosItensValor_FCPST.Value   := Roundto(Percentual(PedidosItensValor_BCICMSSub.Value, ICMSFCP.Value)-PedidosItensValor_FCP.Value, -2);
+                                    end;
+                         end;
+                         if PedidosItensValor_FCP.Value > 0 then begin
+                            PedidosItensFCP_ValorDest.Value := 0;
+                            PedidosItensFCP_ICMSDest.Value  := 0;
+                            PedidosItensFCP_ICMSDest.Value  := 0;
+                            PedidosItensFCP_ICMSOrig.Value  := 0;
+                            PedidosItensFCP_ICMSOrig.Value  := 0;
+                         end;
+                      end;
+                   end;
+                end;
+             end;
+          end;
+     end;
 end;
 
 

@@ -130,7 +130,7 @@ object Industrializacao: TIndustrializacao
     object StaticText2: TStaticText
       Left = 7
       Top = 7
-      Width = 70
+      Width = 78
       Height = 21
       AutoSize = False
       BevelInner = bvNone
@@ -171,9 +171,9 @@ object Industrializacao: TIndustrializacao
       OnExit = cProdutoExit
     end
     object cCodigo: TDBEdit
-      Left = 79
+      Left = 87
       Top = 7
-      Width = 100
+      Width = 92
       Height = 21
       DataField = 'Codigo_Mercadoria'
       DataSource = Dados.dsIndustrial
@@ -189,7 +189,7 @@ object Industrializacao: TIndustrializacao
     object StaticText1: TStaticText
       Left = 7
       Top = 99
-      Width = 70
+      Width = 78
       Height = 21
       AutoSize = False
       BevelInner = bvNone
@@ -210,9 +210,9 @@ object Industrializacao: TIndustrializacao
       StyleElements = []
     end
     object cQtde: TDBEdit
-      Left = 79
+      Left = 87
       Top = 99
-      Width = 120
+      Width = 112
       Height = 21
       DataField = 'Quantidade'
       DataSource = Dados.dsIndustrial
@@ -296,7 +296,7 @@ object Industrializacao: TIndustrializacao
     object StaticText7: TStaticText
       Left = 7
       Top = 30
-      Width = 70
+      Width = 78
       Height = 21
       Cursor = crHandPoint
       AutoSize = False
@@ -318,9 +318,9 @@ object Industrializacao: TIndustrializacao
       StyleElements = []
     end
     object cData: TDBDateEdit
-      Left = 79
+      Left = 87
       Top = 30
-      Width = 120
+      Width = 112
       Height = 21
       DataField = 'Data'
       DataSource = Dados.dsIndustrial
@@ -412,7 +412,7 @@ object Industrializacao: TIndustrializacao
     object StaticText4: TStaticText
       Left = 7
       Top = 76
-      Width = 70
+      Width = 78
       Height = 21
       AutoSize = False
       BevelInner = bvNone
@@ -433,9 +433,9 @@ object Industrializacao: TIndustrializacao
       StyleElements = []
     end
     object cNota: TDBEdit
-      Left = 79
+      Left = 87
       Top = 76
-      Width = 686
+      Width = 678
       Height = 21
       DataField = 'Notas'
       DataSource = Dados.dsIndustrial
@@ -450,7 +450,7 @@ object Industrializacao: TIndustrializacao
     object StaticText5: TStaticText
       Left = 7
       Top = 122
-      Width = 70
+      Width = 78
       Height = 21
       AutoSize = False
       BevelInner = bvNone
@@ -471,9 +471,9 @@ object Industrializacao: TIndustrializacao
       StyleElements = []
     end
     object DBEdit1: TDBEdit
-      Left = 79
+      Left = 87
       Top = 122
-      Width = 120
+      Width = 112
       Height = 21
       DataField = 'Valor_Unitario'
       DataSource = Dados.dsIndustrial
@@ -488,7 +488,7 @@ object Industrializacao: TIndustrializacao
     object StaticText6: TStaticText
       Left = 7
       Top = 53
-      Width = 70
+      Width = 78
       Height = 21
       Cursor = crHandPoint
       AutoSize = False
@@ -510,9 +510,9 @@ object Industrializacao: TIndustrializacao
       StyleElements = []
     end
     object cProcessoOrigem: TRxDBLookupCombo
-      Left = 79
+      Left = 87
       Top = 53
-      Width = 189
+      Width = 181
       Height = 21
       DropDownCount = 10
       DataField = 'Processo'
@@ -530,8 +530,8 @@ object Industrializacao: TIndustrializacao
       TabOrder = 4
     end
     object DBCheckBox1: TDBCheckBox
-      Left = 592
-      Top = 34
+      Left = 623
+      Top = 124
       Width = 130
       Height = 17
       Alignment = taLeftJustify
@@ -541,8 +541,8 @@ object Industrializacao: TIndustrializacao
       TabOrder = 14
     end
     object DBCheckBox2: TDBCheckBox
-      Left = 429
-      Top = 34
+      Left = 460
+      Top = 124
       Width = 130
       Height = 17
       Alignment = taLeftJustify
@@ -550,6 +550,49 @@ object Industrializacao: TIndustrializacao
       DataField = 'Movimenta_Estoque'
       DataSource = Dados.dsIndustrial
       TabOrder = 15
+    end
+    object StaticText3: TStaticText
+      Left = 206
+      Top = 99
+      Width = 50
+      Height = 21
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Estoque'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 16
+      Transparent = False
+      StyleElements = []
+    end
+    object cEstoque: TEdit
+      Left = 258
+      Top = 99
+      Width = 121
+      Height = 21
+      TabStop = False
+      Alignment = taRightJustify
+      Color = 16759739
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      ReadOnly = True
+      TabOrder = 17
+      Text = 'cEstoque'
+      StyleElements = [seBorder]
     end
   end
   object DBGrid1: TDBGrid

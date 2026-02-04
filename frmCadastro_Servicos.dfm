@@ -5,7 +5,7 @@ object Cadastro_Servicos: TCadastro_Servicos
   BorderStyle = bsDialog
   Caption = 'Cadastro_Servicos'
   ClientHeight = 629
-  ClientWidth = 597
+  ClientWidth = 600
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -23,10 +23,11 @@ object Cadastro_Servicos: TCadastro_Servicos
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 597
+    Width = 600
     Height = 37
     Align = alTop
     Stretch = True
+    ExplicitWidth = 597
   end
   object RxLabel3: TRxLabel
     Left = 4
@@ -64,31 +65,35 @@ object Cadastro_Servicos: TCadastro_Servicos
   object Panel1: TPanel
     Left = 0
     Top = 599
-    Width = 597
+    Width = 600
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitWidth = 597
     object bSair: TButton
-      Left = 521
+      Left = 524
       Top = 1
       Width = 75
       Height = 28
       Hint = 'Fecha a janela atual e cancela os processos pendentes.'
+      Align = alRight
       Caption = '&Sair'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
+      ExplicitLeft = 521
     end
     object Navega: TDBNavigator
       Left = 1
       Top = 1
-      Width = 288
+      Width = 374
       Height = 28
       Cursor = crHandPoint
       DataSource = Dados.dsServicos
       VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbInsert, nbDelete, nbEdit, nbPost, nbCancel]
+      Align = alLeft
       Ctl3D = True
       Hints.Strings = (
         'Vai para o primeiro registro.'
@@ -109,16 +114,18 @@ object Cadastro_Servicos: TCadastro_Servicos
       OnClick = NavegaClick
     end
     object bPesquisa: TButton
-      Left = 289
+      Left = 375
       Top = 1
       Width = 75
       Height = 28
       Hint = 'Procurar no banco de dados pelo registro informado.'
+      Align = alLeft
       Caption = '&Pesquisa'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
       OnClick = bPesquisaClick
+      ExplicitLeft = 289
     end
   end
   object Panel2: TPanel

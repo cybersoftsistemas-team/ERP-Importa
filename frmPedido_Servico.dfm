@@ -165,16 +165,12 @@ object Pedido_Servico: TPedido_Servico
     Margins.Top = 5
     Margins.Right = 5
     Margins.Bottom = 5
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
     TabHeight = 24
     TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = '&Pedidos'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel2: TPanel
         AlignWithMargins = True
         Left = 3
@@ -1406,10 +1402,6 @@ object Pedido_Servico: TPedido_Servico
     object TabSheet2: TTabSheet
       Caption = '&Notas Fiscais'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Grade: TDBGrid
         AlignWithMargins = True
         Left = 3

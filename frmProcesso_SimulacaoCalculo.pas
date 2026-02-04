@@ -2782,13 +2782,13 @@ begin
 
                 Edit;
                    // Valor do produto.
-                   mMacro.Formula := ConvFormula(TipoNota.FieldByName('Calculo_Mercadoria').asstring, 'PRODUTO - ENTRADA');
-                   mValor         := roundto(mMacro.Calc([0]), -4);
+                   mMacro.Formula   := ConvFormula(TipoNota.FieldByName('Calculo_Mercadoria').asstring, 'PRODUTO - ENTRADA');
+                   mValor           := roundto(mMacro.Calc([0]), -4);
                    FieldByName('Valor_UnitarioReal').AsCurrency := mValor;
                    FieldByName('Valor_CIFReal').AsCurrency      := mValor * SimulaProdutos.FieldByName('Quantidade').asfloat;
 
                    // Valor da BC II
-                   mMacro.Formula := ConvFormula(TipoNota.FieldByName('Calculo_BCII').asstring, 'B.C.II - ENTRADA');
+                   mMacro.Formula   := ConvFormula(TipoNota.FieldByName('Calculo_BCII').asstring, 'B.C.II - ENTRADA');
                    FieldByName('BCII_Entrada').value := iif(mMacro.Calc([0]) > 0, mMacro.Calc([0]), 0);
 
                    // Valor do II.
@@ -2798,36 +2798,36 @@ begin
                    memo1.lines.add('');
 
                    // Valor da BC IPI
-                   mMacro.Formula := ConvFormula(TipoNota.FieldByName('Calculo_BCIPI').asstring, 'B.C.IPI - ENTRADA');
+                   mMacro.Formula   := ConvFormula(TipoNota.FieldByName('Calculo_BCIPI').asstring, 'B.C.IPI - ENTRADA');
                    FieldByName('Valor_BCIPI').value := iif(mMacro.Calc([0]) > 0, mMacro.Calc([0])/FieldByName('Quantidade').asfloat, 0);
 
                    // Valor do IPI
                    FieldByName('Valor_IPI').value := FieldByName('Valor_BCIPI').value * (FieldByName('Aliquota_IPI').asfloat/100);
 
                    // Valor da BC PIS/COFINS.
-                   mMacro.Formula := ConvFormula(TipoNota.FieldByName('Calculo_BCPIS').asstring, 'B.C. PIS / COFINS - ENTRADA');
+                   mMacro.Formula   := ConvFormula(TipoNota.FieldByName('Calculo_BCPIS').asstring, 'B.C. PIS / COFINS - ENTRADA');
                    FieldByName('Valor_BCPISEnt').value := iif(mMacro.Calc([0]) > 0, mMacro.Calc([0]), 0);
 
                    // Valor do PIS.
-                   mMacro.Formula := ConvFormula(TipoNota.FieldByName('Calculo_PIS').asstring, 'VALOR DO PIS - ENTRADA');
+                   mMacro.Formula   := ConvFormula(TipoNota.FieldByName('Calculo_PIS').asstring, 'VALOR DO PIS - ENTRADA');
                    FieldByName('Valor_PIS').value := iif(mMacro.Calc([0]) > 0, mMacro.Calc([0]), 0);
 
                    // Valor do COFINS.
-                   mMacro.Formula := ConvFormula(TipoNota.FieldByName('Calculo_COFINS').asstring, 'VALOR DA COFINS - ENTRADA');
+                   mMacro.Formula   := ConvFormula(TipoNota.FieldByName('Calculo_COFINS').asstring, 'VALOR DA COFINS - ENTRADA');
                    FieldByName('Valor_COFINS').value := iif(mMacro.Calc([0]) > 0, mMacro.Calc([0]), 0);
 
                    // Valor do produto.
-                   mMacro.Formula := ConvFormula(TipoNota.FieldByName('Calculo_Mercadoria').asstring, 'PRODUTO - ENTRADA');
+                   mMacro.Formula   := ConvFormula(TipoNota.FieldByName('Calculo_Mercadoria').asstring, 'PRODUTO - ENTRADA');
                    mValor         := roundto(mMacro.Calc([0]), -4);
                    FieldByName('Valor_UnitarioReal').AsCurrency := mValor;
                    FieldByName('Valor_CIFReal').AsCurrency      := mValor * SimulaProdutos.FieldByName('Quantidade').asfloat;
-
+                   
                    // Valor da B.C. ICMS Oper.
-                   mMacro.Formula := ConvFormula(TipoNota.FieldByName('Calculo_BCICMS').asstring, 'B.C.ICMS OPERACIONAL - ENTRADA');
+                   mMacro.Formula   := ConvFormula(TipoNota.FieldByName('Calculo_BCICMS').asstring, 'B.C.ICMS OPERACIONAL - ENTRADA');
                    FieldByName('Valor_BCICMSEnt').value := iif(mMacro.Calc([0]) > 0, mMacro.Calc([0]) / FieldByName('Quantidade').asfloat, 0);
 
                    // Valor do ICMS Oper.
-                   mMacro.Formula := ConvFormula(TipoNota.FieldByName('Calculo_VlrICMS').asstring, 'VALOR DO ICMS OPERACIONAL - ENTRADA');
+                   mMacro.Formula   := ConvFormula(TipoNota.FieldByName('Calculo_VlrICMS').asstring, 'VALOR DO ICMS OPERACIONAL - ENTRADA');
                    FieldByName('Valor_ICMSEntrada').value := iif(mMacro.Calc([0]) > 0, mMacro.Calc([0]), 0);
 
                    // Valor do Produto com Impostos - Entrada.
@@ -2919,8 +2919,8 @@ begin
                    FieldByName('Valor_ICMSEntrada').Value  := tSomaProdutos.FieldByName('Total_ICMSEntrada').ascurrency;
                    FieldByName('BCICMS_Entrada').Value     := tSomaProdutos.FieldByName('Total_BCICMSEnt').ascurrency;
 
-                   mMacro.Formula                          := ConvFormula(TipoNota.FieldByName('Calculo_TotalPedido').asstring, 'TOTAL DO PEDIDO - ENTRADA');
-                   FieldByName('Total_NFEntrada').value    := iif(mMacro.Calc([0]) > 0, mMacro.Calc([0]), 0);
+                   mMacro.Formula   := ConvFormula(TipoNota.FieldByName('Calculo_TotalPedido').asstring, 'TOTAL DO PEDIDO - ENTRADA');
+                   FieldByName('Total_NFEntrada').value  := iif(mMacro.Calc([0]) > 0, mMacro.Calc([0]), 0);
                Post;
           end;
      end;
@@ -3275,6 +3275,7 @@ begin
      mProdutos    := 0;
      mTotalIPI    := 0;
      mTotalBCICMS := 0;
+     
      with Dados, SimulaProdutos do begin
           // Totaliza as despesas.
           TipoNota.locate('Codigo', SimulaImportacaoTipo_NotaSai.asinteger, [loCaseInsensitive]);
@@ -3479,6 +3480,7 @@ begin
                  lista[i] := StringReplace(lista[i], 'Adicoes_[Valor_SemAdValorem]', formatfloat('##0.0000', FieldByName('Valor_UnitarioME').ascurrency * SimulaImportacaoTaxa_FOB.Asfloat), [rfReplaceAll, rfIgnoreCase]);
                  lista[i] := StringReplace(lista[i], 'Adicoes_[Valor_UnitarioReal]', formatfloat('##0.0000', FieldByName('Valor_UnitarioME').ascurrency * SimulaImportacaoTaxa_FOB.Asfloat), [rfReplaceAll, rfIgnoreCase]);
 
+                 lista[i] := StringReplace(lista[i], 'PedidosItens_[Valor_Unitario]'       ,  formatfloat('##0.0000', FieldByName('Valor_UnitarioME').ascurrency * SimulaImportacaoTaxa_FOB.Asfloat), [rfReplaceAll, rfIgnoreCase]);
                  lista[i] := StringReplace(lista[i], 'PedidosItens_[Fator_Cambio]'         , '1'                                                                                     , [rfReplaceAll, rfIgnoreCase]);
                  lista[i] := StringReplace(lista[i], 'PedidosItens_[Valor_Frete]'          , formatfloat('##0.00000000', mFatorFrete * FieldByName('Peso_Liquido').ascurrency)       , [rfReplaceAll, rfIgnoreCase]);
                  lista[i] := StringReplace(lista[i], 'PedidosItens_[Rateio_FreteTerrNac]'  , formatfloat('##0.00000000', 0)                                                          , [rfReplaceAll, rfIgnoreCase]);
@@ -3487,6 +3489,10 @@ begin
                  lista[i] := StringReplace(lista[i], 'PedidosItens_[Valor_II]'             , formatfloat('##0.00000000', mII)                                                        , [rfReplaceAll, rfIgnoreCase]);
                  lista[i] := StringReplace(lista[i], 'PedidosItens_[Aliquota_ICMSOper]'    , formatfloat('##0.00', FieldByName('Aliquota_ICMS').asfloat)                             , [rfReplaceAll, rfIgnoreCase]);
                  lista[i] := StringReplace(lista[i], 'ProcessosDocumentos_[Aliquota_ICMS]' , formatfloat('##0.00', FieldByName('Aliquota_ICMS').asfloat)                             , [rfReplaceAll, rfIgnoreCase]);
+
+                 lista[i] := StringReplace(lista[i], 'PedidosItens_[Valor_IPI]'            , formatfloat('##0.000000', FieldByName('Valor_IPI').ascurrency)                          , [rfReplaceAll, rfIgnoreCase]);
+                 lista[i] := StringReplace(lista[i], 'PedidosItens_[Valor_PIS]'            , formatfloat('##0.000000', FieldByName('Valor_PIS').ascurrency)                          , [rfReplaceAll, rfIgnoreCase]);
+                 lista[i] := StringReplace(lista[i], 'PedidosItens_[Valor_COFINS]'         , formatfloat('##0.000000', FieldByName('Valor_COFINS').ascurrency)                       , [rfReplaceAll, rfIgnoreCase]);
 
                  lista[i] := StringReplace(lista[i], 'PedidosItens_[Aliquota_PISRed]'      , '0'                                                                                     , [rfReplaceAll, rfIgnoreCase]);
                  lista[i] := StringReplace(lista[i], 'PedidosItens_[Aliquota_COFINSRed]'   , '0'                                                                                     , [rfReplaceAll, rfIgnoreCase]);
@@ -3603,7 +3609,8 @@ begin
              for i := 0 to pred(lista.Count) do begin
                  s := s + trim(lista[i]);
              end;
-             s := stringreplace(s, ' ','', [rfReplaceAll, rfIgnoreCase]);
+             s := stringreplace(s, chr(32) , '', [rfReplaceAll, rfIgnoreCase]);
+             s := stringreplace(s, chr(160), '', [rfReplaceAll, rfIgnoreCase]);
         end;
 
         result := s;

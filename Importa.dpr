@@ -467,7 +467,10 @@ uses
   frmProcesso_RegistroDI in 'frmProcesso_RegistroDI.pas' {Processo_RegistroDI},
   frmCadastro_LPCO in 'frmCadastro_LPCO.pas' {Cadastro_LPCO},
   frmProcesso_InvoiceLPCO in 'frmProcesso_InvoiceLPCO.pas' {Processo_InvoiceLPCO},
-  frmIndustrializacao in 'frmIndustrializacao.pas' {Industrializacao};
+  frmIndustrializacao in 'frmIndustrializacao.pas' {Industrializacao},
+  frmPedido_NFS in 'frmPedido_NFS.pas' {Pedido_NFS},
+  frmPedido_NFSItens in 'frmPedido_NFSItens.pas' {Pedido_NFSItens},
+  frmPedido_NFSVinculo in 'frmPedido_NFSVinculo.pas' {Pedido_NFSVinculo};
 
 {$R *.res}
 

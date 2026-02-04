@@ -278,12 +278,11 @@ object Pedido_ItensOutros: TPedido_ItensOutros
     Width = 976
     Height = 558
     ParentCustomHint = False
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alTop
-    Enabled = False
     TabHeight = 24
     TabOrder = 2
-    TabWidth = 90
+    TabWidth = 120
     object TabSheet1: TTabSheet
       Caption = '&Item da Nota'
       DesignSize = (
@@ -917,6 +916,7 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 45
+          OnChange = cValorPISChange
         end
         object StaticText14: TStaticText
           Left = 5
@@ -971,6 +971,7 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 50
+          OnChange = cValorCOFINSChange
         end
         object cValorTotal: TDBEdit
           Left = 757
@@ -1884,7 +1885,7 @@ object Pedido_ItensOutros: TPedido_ItensOutros
         object lTotalNota: TStaticText
           Left = 738
           Top = 464
-          Width = 33
+          Width = 52
           Height = 21
           AutoSize = False
           BevelInner = bvNone
@@ -1905,7 +1906,7 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           StyleElements = []
         end
         object cTotalNota: TDBEdit
-          Left = 773
+          Left = 792
           Top = 464
           Width = 98
           Height = 21
@@ -3632,6 +3633,62 @@ object Pedido_ItensOutros: TPedido_ItensOutros
         Caption = 'Pesquisa'
         TabOrder = 3
         OnClick = bPesquisaClick
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'Descri'#231#227'o do Poduto'
+      ImageIndex = 2
+      object DBMemo1: TDBMemo
+        Left = 0
+        Top = 0
+        Width = 968
+        Height = 239
+        Align = alTop
+        DataField = 'Descricao_Mercadoria'
+        DataSource = Dados.dsPedidosItens
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+      end
+      object cCopiaDesc: TMemo
+        Left = 0
+        Top = 285
+        Width = 968
+        Height = 239
+        Align = alBottom
+        Color = clSilver
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        Lines.Strings = (
+          'cCopiaDesc')
+        ParentFont = False
+        TabOrder = 1
+        StyleElements = [seFont, seBorder]
+      end
+      object bCopiar: TBitBtn
+        Left = 424
+        Top = 242
+        Width = 125
+        Height = 36
+        Caption = 'Copiar Descri'#231#227'o'
+        Glyph.Data = {
+          EE000000424DEE0000000000000076000000280000000F0000000F0000000100
+          04000000000078000000CE0E0000C40E00001000000000000000000000000000
+          8000008000000080800080000000800080008080000080808000C0C0C0000000
+          FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00800000000000
+          008080FFFFFFFFFFF08080FFFFF2FFFFF08080FFFF22FFFFF08080FFF22222FF
+          F08080FFFF22FF2FF08080FFFFF2FF2FF08080FF2FFFFF2FF08080FF2FF2FFFF
+          F08080FF2FF22FFFF08080FFF22222FFF08080FFFFF22F00008080FFFFF2FF0F
+          088080FFFFFFFF0088808000000000088880}
+        TabOrder = 2
+        OnClick = bCopiarClick
       end
     end
   end

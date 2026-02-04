@@ -1560,7 +1560,6 @@ begin
                       Tab_Origem.Connection := Banco;
                    If UpperCase(CamposBanco_Dados.Value) = 'CONTABILIDADE' then
                       Tab_Origem.Connection := Banco_Contabilidade;
-
                    Tab_Origem.TableName := CamposTabela.Value;
                    Tab_Origem.Open;
 
@@ -1587,7 +1586,7 @@ begin
                                    Tab_Origem.ParamByName('pItemPedido').Asinteger := PedidosNumero.AsInteger;
                                 Tab_Origem.Open;
 
-                                if (trim(CamposPesquisa.Value) <> '') and (trim(CamposCampo_Chave.Value) <> '') then
+                                if (trim(CamposPesquisa.asstring) <> '') and (trim(CamposCampo_Chave.asstring) <> '') then
                                    mAchou := Tab_Origem.Locate(CamposCampo_Chave.Value, CamposPesquisa.Value, [loCaseInsensitive])
                                 else
                                    mAchou := true;
@@ -1605,14 +1604,13 @@ begin
                             mAchou := true;
                          end;
                          mBusca := CamposCampo.Value;
-
                          If Trim(CamposPesquisa.Value) <> '' then Begin
                             mCampo := Copy(mBusca, Pos('[',mBusca)+1, Pos(']',mBusca) - (Pos('[',mBusca)+1) );
                          end else begin
-                            If Trim(CamposCampo_Chave.Value) = '' then begin
+                            If Trim(CamposCampo_Chave.asstring) = '' then begin
                                mCampo := Copy(mBusca, Pos('[',mBusca)+1, Pos(']',mBusca) - (Pos('[',mBusca)+1) );
                             end else
-                               mCampo := CamposCampo_Chave.Value;
+                               mCampo := CamposCampo_Chave.asstring;
                          End;
 
                          If (UpperCase(CamposTipo.Value) = 'CURRENCY') or (UpperCase(CamposTipo.Value) = 'FLOAT') then begin

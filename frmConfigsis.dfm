@@ -111,7 +111,7 @@ object ConfigSis: TConfigSis
     Top = 41
     Width = 847
     Height = 601
-    ActivePage = TabSheet13
+    ActivePage = TabSheet3
     TabHeight = 28
     TabOrder = 1
     object TabSheet1: TTabSheet
@@ -8455,7 +8455,7 @@ object ConfigSis: TConfigSis
         Top = 3
         Width = 833
         Height = 557
-        ActivePage = TabSheet19
+        ActivePage = TabSheet17
         Align = alClient
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
@@ -9242,7 +9242,7 @@ object ConfigSis: TConfigSis
               BevelKind = bkSoft
               BevelOuter = bvSpace
               BorderStyle = sbsSunken
-              Caption = 'Percentuakl do CBS'
+              Caption = 'Percentual do CBS'
               Color = 7293440
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clWhite

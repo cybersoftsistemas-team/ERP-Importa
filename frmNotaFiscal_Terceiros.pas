@@ -303,7 +303,7 @@ begin
                Open;
           end;
 
-          TabSheet1.Caption := '&Dados da Nota Fiscal ['+ InttoStr(NotasTerceiros.RecordCount)+']';
+          TabSheet1.Caption := 'Dados da Nota Fiscal ['+ InttoStr(NotasTerceiros.RecordCount)+']';
 
           bItens.Enabled := NotasTerceiros.RecordCount > 0;
 
@@ -1468,7 +1468,7 @@ begin
 
            NotasTerceiros.Open;
 
-           TabSheet1.Caption := '&Dados da Nota Fiscal ['+ InttoStr(NotasTerceiros.RecordCount)+']';
+           TabSheet1.Caption := 'Dados da Nota Fiscal ['+ InttoStr(NotasTerceiros.RecordCount)+']';
       End;
 end;
 
@@ -1526,7 +1526,7 @@ begin
            ProdutosSeriais.ParamByName('pData').AsDate    := NotasTerceirosData_Emissao.Value;
            ProdutosSeriais.Open;
 
-           TabSheet3.Caption := '&Seriais/Chassis ['+ InttoStr(ProdutosSeriais.RecordCount)+']';
+           TabSheet3.Caption := 'Seriais/Chassis ['+ InttoStr(ProdutosSeriais.RecordCount)+']';
            ProdutosDetalhe.SQL.Clear;
            ProdutosDetalhe.SQL.Add('SELECT *');
            ProdutosDetalhe.SQL.Add('FROM  ProdutosDetalhe');
@@ -1535,7 +1535,7 @@ begin
            ProdutosDetalhe.ParamByName('pNota').AsInteger := NotasTerceirosNota.Value;
            ProdutosDetalhe.ParamByName('pData').AsDate    := NotasTerceirosData_Emissao.Value;
            ProdutosDetalhe.Open;
-           TabSheet4.Caption := '&Lotes ['+ InttoStr(ProdutosDetalhe.RecordCount)+']';
+           TabSheet4.Caption := 'Lotes ['+ InttoStr(ProdutosDetalhe.RecordCount)+']';
       end;
 end;
 

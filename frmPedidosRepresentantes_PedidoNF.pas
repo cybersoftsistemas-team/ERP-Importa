@@ -225,6 +225,16 @@ begin
                sql.Add('select * from CSTCOFINS');
                Open;
           end;
+          with CSTIBS do begin
+               sql.clear;
+               sql.add('select * from CSTIBS order by Codigo');
+               Open;
+          end;
+          with CSTCBS do begin
+               sql.clear;
+               sql.add('select * from CSTCBS order by Codigo');
+               Open;
+          end;
           
           with tPedidosNF do begin
                // Caso haja fracionamento gera os pedidos de representantes antes de gerar os pedidos de nota fiscal.
@@ -489,6 +499,19 @@ begin
                                              if trim(TipoNotaCalculo_BCIBS.AsString)  <> '' then PedidosItensValor_BCIBS.Value  := RoundTo(CalculaMacro('Calculo_BCIBS'), -4);
                                              if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then PedidosItensValor_IBS.Value    := RoundTo(CalculaMacro('Calculo_VlrIBS'), -4);
 
+                                             if trim(TipoNotaCalculo_BCIS.AsString)   <> '' then PedidosItensValor_BCIS.Value   := RoundTo(CalculaMacro('Calculo_BCIS'), -4);
+                                             if trim(TipoNotaCalculo_VlrIS.AsString)  <> '' then PedidosItensValor_IS.Value     := RoundTo(CalculaMacro('Calculo_VlrIS'), -4);
+                                             if trim(TipoNotaCalculo_BCCBS.AsString)  <> '' then PedidosItensValor_BCCBS.Value  := RoundTo(CalculaMacro('Calculo_BCCBS'), -4);
+                                             if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then begin 
+                                                PedidosItensValor_CBS.Value := RoundTo(CalculaMacro('Calculo_VlrCBS'), -4);
+                                                if PedidosItensValor_CBS.Value < 0.005 then PedidosItensValor_CBS.Value := 0.005;
+                                             end;
+                                             if trim(TipoNotaCalculo_BCIBS.AsString)  <> '' then PedidosItensValor_BCIBS.Value  := RoundTo(CalculaMacro('Calculo_BCIBS'), -4);
+                                             if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then begin 
+                                                PedidosItensValor_IBS.Value := RoundTo(CalculaMacro('Calculo_VlrIBS'), -4);
+                                                if PedidosItensValor_IBS.Value < 0.005 then PedidosItensValor_IBS.Value := 0.005;
+                                             end;
+                                             
                                              CalculaImpostos;
                                              if PedidosItensValor_ICMSMonoRet.ascurrency = 0 then begin
                                                 PedidosItensPercentual_ICMSMonoRet.value := 0;
@@ -1777,6 +1800,46 @@ begin
               PedidosItensPercentual_ICMSMonoRet.value := 0;
               PedidosItensValor_BCICMSMonoRet.value    := 0;
            end;
+
+           if trim(TipoNotaCalculo_BCIS.AsString)   <> '' then PedidosItensValor_BCIS.Value   := RoundTo(CalculaMacro('Calculo_BCIS'), -4);
+           if trim(TipoNotaCalculo_VlrIS.AsString)  <> '' then PedidosItensValor_IS.Value     := RoundTo(CalculaMacro('Calculo_VlrIS'), -4);
+           if trim(TipoNotaCalculo_BCCBS.AsString)  <> '' then PedidosItensValor_BCCBS.Value  := RoundTo(CalculaMacro('Calculo_BCCBS'), -4);
+           if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then begin 
+              PedidosItensValor_CBS.Value := RoundTo(CalculaMacro('Calculo_VlrCBS'), -4);
+              if PedidosItensValor_CBS.Value < 0.005 then PedidosItensValor_CBS.Value := 0.005;
+           end;
+           if trim(TipoNotaCalculo_BCIBS.AsString)  <> '' then PedidosItensValor_BCIBS.Value  := RoundTo(CalculaMacro('Calculo_BCIBS'), -4);
+           if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then begin 
+              PedidosItensValor_IBS.Value := RoundTo(CalculaMacro('Calculo_VlrIBS'), -4);
+              if PedidosItensValor_IBS.Value < 0.005 then PedidosItensValor_IBS.Value := 0.005;
+           end;
+           
+           // CST DO CBS.
+           mCST := 'T+I';
+           if PedidosItensValor_CBS.Value > 0 then mCST := 'T+I';
+           if NCMCBS_Isencao.AsBoolean        then mCST := 'IS';
+           if TipoNotaCBS_Isencao.AsBoolean   then mCST := 'IS';
+           if NCMCBS_Imunidade.AsBoolean      then mCST := 'I+N+I';
+           if TipoNotaCBS_Imunidade.asboolean then mCST := 'I+N+I';
+           if NCMCBS_Suspensao.asboolean      then mCST := 'S';
+           if TipoNotaCBS_Suspensao.asboolean then mCST := 'S';
+           if NCMCBS_Diferido.AsBoolean       then mCST := 'D';
+           if TipoNotaCBS_Diferido.AsBoolean  then mCST := 'D';
+           CSTCBS.Locate('Classificacao', mCST, [loCaseInsensitive]) ;
+           PedidosItensCSTCBS.Value := CSTCBSCodigo.Value;
+           // CST DO IBS
+           mCST := 'T+I';
+           if PedidosItensValor_IBS.Value > 0 then mCST := 'T+I';
+           if NCMIBS_Isencao.AsBoolean        then mCST := 'IS';
+           if TipoNotaIBS_Isencao.AsBoolean   then mCST := 'IS';
+           if NCMIBS_Imunidade.AsBoolean      then mCST := 'I+N+I';
+           if TipoNotaIBS_Imunidade.asboolean then mCST := 'I+N+I';
+           if NCMIBS_Suspensao.asboolean      then mCST := 'S';
+           if TipoNotaIBS_Suspensao.asboolean then mCST := 'S';
+           if NCMIBS_Diferido.AsBoolean       then mCST := 'D';
+           if TipoNotaIBS_Diferido.AsBoolean  then mCST := 'D';
+           CSTIBS.Locate('Classificacao', mCST, [loCaseInsensitive]) ;
+           PedidosItensCSTIBS.Value := CSTIBSCodigo.Value;
       End;
 end;
 

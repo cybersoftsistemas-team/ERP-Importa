@@ -99,29 +99,32 @@ object Config_TipoNotaFormula: TConfig_TipoNotaFormula
       TabOrder = 1
       OnClick = bAdicionarClick
     end
-    object bCancelar: TButton
-      Left = 691
+    object bSair: TButton
+      Left = 692
       Top = 1
       Width = 72
       Height = 28
       Hint = 'Cancela as modifica'#231#245'es da nova f'#243'rmula e sai.'
-      Caption = '&Cancelar'
+      Align = alRight
+      Caption = '&Sair'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
-      OnClick = bCancelarClick
+      OnClick = bSairClick
+      ExplicitLeft = 691
     end
-    object bOK: TButton
-      Left = 619
+    object bTestar: TButton
+      Left = 615
       Top = 1
-      Width = 72
+      Width = 77
       Height = 28
       Hint = 'Confirma a nova f'#243'rmula e sai.'
-      Caption = '&OK'
+      Align = alRight
+      Caption = '&Testar'
       ParentShowHint = False
       ShowHint = True
       TabOrder = 3
-      OnClick = bOKClick
+      OnClick = bTestarClick
     end
     object bInventario: TButton
       Left = 147
@@ -289,6 +292,32 @@ object Config_TipoNotaFormula: TConfig_TipoNotaFormula
         BevelInner = bvLowered
         BevelOuter = bvRaised
         Color = 8645372
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ReadOnly = True
+        TabOrder = 0
+        StyleElements = [seBorder]
+        OnDragDrop = cFormulaDragDrop
+        OnDragOver = cFormulaDragOver
+        OnEnter = cFormulaEnter
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'LOG'
+      ImageIndex = 2
+      object cLog: TMemo
+        Left = 0
+        Top = 0
+        Width = 750
+        Height = 169
+        Align = alClient
+        BevelInner = bvLowered
+        BevelOuter = bvRaised
+        Color = 16766894
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11

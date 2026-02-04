@@ -144,26 +144,27 @@ begin
            sql.Clear;
            sql.add('select Data_Documento');
            sql.add('      ,Data_Vencimento');
-           sql.add('      ,Cliente = (select Nome from Clientes where Codigo = Cliente)');
-           sql.add('      ,CNPJ = (select isnull(CNPJ,'''')+isnull(CPF,'''') from Clientes where Codigo = Cliente)');
-           sql.add('      ,Duplicata = Numero_Documento');
+           sql.add('      ,Cliente = (select Nome from Clientes where Codigo = pr.Cliente)');
+           sql.add('      ,CNPJ = (select isnull(CNPJ,'''')+isnull(CPF,'''') from Clientes where Codigo = pr.Cliente)');
+           sql.add('      ,Duplicata = pr.Numero_Documento');
            sql.add('      ,Centro_Custo');
            sql.add('      ,Centro_CustoNome = (select Descricao from CentroCusto where Codigo =  Centro_Custo)');
-           sql.add('      ,Valor_Parcela');
-           sql.add('from PagarReceber');
+           sql.add('      ,Valor_Parcela = iif(Valor_Total - isnull((select isnull(sum(Valor), 0) from PagarReceberBaixas prb where prb.Numero = Pr.Numero), 0) = 0, Valor_Parcela,');
+           sql.Add('                           Valor_Total - isnull((select isnull(sum(Valor), 0) from PagarReceberBaixas prb where prb.Numero = pr.Numero), 0))');
+           sql.add('from PagarReceber pr');
            sql.add('where Tipo = ''R'' ');
            sql.add('and Data_Vencimento between :pDataIni and :pDataFim');
            sql.add('and Documento in(''DUPL'', ''NF'')');
-           sql.add('and (isnull((select Count(*) from EmprestimosDuplicatas where Duplicata = Numero_Documento), 1) = 0 ');
-           sql.Add('     and isnull((select sum(Valor) from PagarReceberBaixas prb where prb.Numero = PagarReceber.Numero), 0)+isnull(Desconto, 0)+isnull(Desconto_Liquidacao, 0) = 0');
-           sql.add('     or  isnull((select Count(*) from EmprestimosDuplicatas where Duplicata = Numero_Documento), 1) > 0');
-           sql.Add('     and isnull((select Liquidar from EmprestimosDuplicatas where Duplicata = Numero_Documento), 0) = 0)');
+           sql.add('and (isnull((select Count(*) from EmprestimosDuplicatas ed where ed.Duplicata = pr.Numero_Documento), 1) = 0 ');
+           sql.Add('     and pr.Valor_Total - isnull((select sum(Valor) from PagarReceberBaixas prb where prb.Numero = pr.Numero), 0) > 0');
+           sql.add('     or  isnull((select Count(*) from EmprestimosDuplicatas ed where ed.Duplicata = pr.Numero_Documento), 1) > 0');
+           sql.Add('     and isnull((select Liquidar from EmprestimosDuplicatas ed where ed.Duplicata = pr.Numero_Documento), 0) = 0)');
            if cCliente.DisplayValue <> '' then begin
-              sql.add('and Cliente = :pCliente');
+              sql.add('and pr.Cliente = :pCliente');
               parambyname('pCliente').AsInteger := Dados.ClientesCodigo.AsInteger;
            end;
            if cCentroCusto.DisplayValue <> '' then begin
-              sql.add('and Centro_Custo = :pCentro');
+              sql.add('and pr.Centro_Custo = :pCentro');
               parambyname('pCentro').Asstring := Dados.CentroCustoCodigo.asstring;
            end;
            sql.add('order by Cliente, Data_Vencimento, Duplicata');

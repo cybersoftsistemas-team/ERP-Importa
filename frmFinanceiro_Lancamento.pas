@@ -745,6 +745,9 @@ begin
            PagarReceberNivel.Value          := ClassificacaoFinanceiraNivel.Value;
            PagarReceberValor_Baixado.Value  := cTotalBaixas.Value;
            PagarReceberEmprestimo.Value     := false;
+           if DataLimpa(PagarReceberData_Previsao.asstring) then begin
+              PagarReceberData_Previsao.Value := PagarReceberData_Vencimento.Value;
+           end;
 
            If cProcesso.Text = '' then PagarReceberProcesso.Value := '';
 

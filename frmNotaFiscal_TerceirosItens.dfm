@@ -21,10 +21,10 @@ object NotaFiscal_TerceirosItens: TNotaFiscal_TerceirosItens
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
-    Left = 4
+    Left = 8
     Top = 1
     Width = 832
-    Height = 479
+    Height = 507
     Caption = '[ Itens da Nota Fiscal de Terceiros ]'
     Enabled = False
     Font.Charset = DEFAULT_CHARSET
@@ -234,7 +234,7 @@ object NotaFiscal_TerceirosItens: TNotaFiscal_TerceirosItens
       Left = 5
       Top = 178
       Width = 201
-      Height = 295
+      Height = 206
       Caption = 'ICMS Operacional'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
@@ -582,7 +582,7 @@ object NotaFiscal_TerceirosItens: TNotaFiscal_TerceirosItens
       Left = 209
       Top = 178
       Width = 200
-      Height = 159
+      Height = 206
       Caption = 'ICMS Substitutivo'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
@@ -841,7 +841,7 @@ object NotaFiscal_TerceirosItens: TNotaFiscal_TerceirosItens
       Left = 412
       Top = 178
       Width = 197
-      Height = 295
+      Height = 206
       Caption = 'IPI'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
@@ -1363,7 +1363,7 @@ object NotaFiscal_TerceirosItens: TNotaFiscal_TerceirosItens
       Left = 612
       Top = 178
       Width = 214
-      Height = 295
+      Height = 324
       Caption = 'PIS/COFINS'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
@@ -1877,10 +1877,10 @@ object NotaFiscal_TerceirosItens: TNotaFiscal_TerceirosItens
       end
     end
     object cCIAP: TGroupBox
-      Left = 209
-      Top = 344
-      Width = 200
-      Height = 129
+      Left = 5
+      Top = 389
+      Width = 201
+      Height = 113
       Caption = '(CIAP) ICMS'
       Enabled = False
       Font.Charset = DEFAULT_CHARSET
@@ -2437,6 +2437,374 @@ object NotaFiscal_TerceirosItens: TNotaFiscal_TerceirosItens
       ParentFont = False
       TabOrder = 8
     end
+    object GroupBox6: TGroupBox
+      Left = 209
+      Top = 389
+      Width = 200
+      Height = 113
+      Caption = 'IBS'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 42
+      object StaticText53: TStaticText
+        Left = 6
+        Top = 39
+        Width = 83
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Base de C'#225'lculo'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 4
+        Transparent = False
+        StyleElements = []
+      end
+      object DBEdit33: TDBEdit
+        Left = 91
+        Top = 39
+        Width = 103
+        Height = 21
+        CharCase = ecUpperCase
+        DataField = 'Valor_BCIBS'
+        DataSource = dmFiscal.dsNotasTerceirosItens
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Pitch = fpFixed
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 1
+        OnExit = cBaseCIAPExit
+      end
+      object StaticText54: TStaticText
+        Left = 6
+        Top = 85
+        Width = 83
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Valor'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 5
+        Transparent = False
+        StyleElements = []
+      end
+      object DBEdit34: TDBEdit
+        Left = 91
+        Top = 85
+        Width = 103
+        Height = 21
+        CharCase = ecUpperCase
+        DataField = 'Valor_IBSUF'
+        DataSource = dmFiscal.dsNotasTerceirosItens
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Pitch = fpFixed
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 3
+      end
+      object StaticText55: TStaticText
+        Left = 6
+        Top = 62
+        Width = 83
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Percentual'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 6
+        Transparent = False
+        StyleElements = []
+      end
+      object DBEdit35: TDBEdit
+        Left = 91
+        Top = 62
+        Width = 103
+        Height = 21
+        CharCase = ecUpperCase
+        DataField = 'Percentual_IBSUF'
+        DataSource = dmFiscal.dsNotasTerceirosItens
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Pitch = fpFixed
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 2
+        OnChange = DBEdit18Change
+        OnExit = DBEdit18Exit
+      end
+      object StaticText56: TStaticText
+        Left = 7
+        Top = 16
+        Width = 82
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'CST'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 7
+        Transparent = False
+        StyleElements = []
+      end
+      object DBLookupComboBox1: TDBLookupComboBox
+        Left = 91
+        Top = 16
+        Width = 103
+        Height = 21
+        BiDiMode = bdLeftToRight
+        DataField = 'CSTIBS'
+        DataSource = dmFiscal.dsNotasTerceirosItens
+        DropDownAlign = daRight
+        DropDownWidth = 450
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        KeyField = 'Codigo'
+        ListField = 'Codigo; Descricao'
+        ListFieldIndex = 2
+        ListSource = Dados.dsCSTIBS
+        NullValueKey = 46
+        ParentBiDiMode = False
+        ParentFont = False
+        TabOrder = 0
+      end
+    end
+    object GroupBox7: TGroupBox
+      Left = 412
+      Top = 389
+      Width = 197
+      Height = 113
+      Caption = 'CBS'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlue
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 43
+      object StaticText57: TStaticText
+        Left = 6
+        Top = 39
+        Width = 89
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Base de C'#225'lculo'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 4
+        Transparent = False
+        StyleElements = []
+      end
+      object DBEdit36: TDBEdit
+        Left = 96
+        Top = 39
+        Width = 95
+        Height = 21
+        CharCase = ecUpperCase
+        DataField = 'Valor_BCCBS'
+        DataSource = dmFiscal.dsNotasTerceirosItens
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Pitch = fpFixed
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 1
+        OnExit = cBaseCIAPExit
+      end
+      object StaticText58: TStaticText
+        Left = 6
+        Top = 85
+        Width = 89
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Valor'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 5
+        Transparent = False
+        StyleElements = []
+      end
+      object DBEdit37: TDBEdit
+        Left = 96
+        Top = 85
+        Width = 95
+        Height = 21
+        CharCase = ecUpperCase
+        DataField = 'Valor_CBS'
+        DataSource = dmFiscal.dsNotasTerceirosItens
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Pitch = fpFixed
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 3
+      end
+      object StaticText59: TStaticText
+        Left = 6
+        Top = 62
+        Width = 89
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Percentual'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 6
+        Transparent = False
+        StyleElements = []
+      end
+      object DBEdit38: TDBEdit
+        Left = 96
+        Top = 62
+        Width = 95
+        Height = 21
+        CharCase = ecUpperCase
+        DataField = 'Percentual_CBS'
+        DataSource = dmFiscal.dsNotasTerceirosItens
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Pitch = fpFixed
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 2
+        OnChange = DBEdit18Change
+        OnExit = DBEdit18Exit
+      end
+      object DBLookupComboBox2: TDBLookupComboBox
+        Left = 93
+        Top = 16
+        Width = 98
+        Height = 21
+        BiDiMode = bdLeftToRight
+        DataField = 'CSTCBS'
+        DataSource = dmFiscal.dsNotasTerceirosItens
+        DropDownAlign = daRight
+        DropDownWidth = 450
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        KeyField = 'Codigo'
+        ListField = 'Codigo; Descricao'
+        ListFieldIndex = 2
+        ListSource = Dados.dsCSTCBS
+        NullValueKey = 46
+        ParentBiDiMode = False
+        ParentFont = False
+        TabOrder = 0
+      end
+      object StaticText60: TStaticText
+        Left = 6
+        Top = 16
+        Width = 89
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'CST'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 7
+        Transparent = False
+        StyleElements = []
+      end
+    end
   end
   object Panel1: TPanel
     Left = 0
@@ -2502,9 +2870,9 @@ object NotaFiscal_TerceirosItens: TNotaFiscal_TerceirosItens
   end
   object GradeItens: TDBGrid
     Left = 4
-    Top = 483
+    Top = 514
     Width = 832
-    Height = 167
+    Height = 136
     DataSource = dmFiscal.dsNotasTerceirosItens
     Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
     ParentShowHint = False
@@ -2597,7 +2965,7 @@ object NotaFiscal_TerceirosItens: TNotaFiscal_TerceirosItens
   end
   object lBaixada: TPanel
     Left = 132
-    Top = 520
+    Top = 547
     Width = 577
     Height = 73
     Font.Charset = DEFAULT_CHARSET
@@ -2614,6 +2982,7 @@ object NotaFiscal_TerceirosItens: TNotaFiscal_TerceirosItens
       Height = 71
       Align = alClient
       Brush.Color = clRed
+      ExplicitTop = -7
     end
     object Label1: TLabel
       Left = 29

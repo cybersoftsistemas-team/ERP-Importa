@@ -204,7 +204,7 @@ object Cadastro_Produtos: TCadastro_Produtos
     Margins.Top = 8
     Margins.Right = 8
     Margins.Bottom = 8
-    ActivePage = TabCST
+    ActivePage = TabValores
     Align = alClient
     ParentShowHint = False
     ShowHint = True
@@ -213,10 +213,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object tabProduto: TTabSheet
       Caption = '&Dados do Produto'
       Enabled = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cCodigo: TDBEdit
         Left = 126
         Top = 2
@@ -2101,7 +2097,7 @@ object Cadastro_Produtos: TCadastro_Produtos
       ImageIndex = 1
       object GroupBox15: TGroupBox
         Left = 5
-        Top = 98
+        Top = 90
         Width = 214
         Height = 138
         Caption = ' II - Imposto de Importa'#231#227'o '
@@ -2265,7 +2261,7 @@ object Cadastro_Produtos: TCadastro_Produtos
       end
       object GroupBox14: TGroupBox
         Left = 231
-        Top = 98
+        Top = 90
         Width = 214
         Height = 138
         Caption = ' IPI '
@@ -2472,7 +2468,7 @@ object Cadastro_Produtos: TCadastro_Produtos
       end
       object GroupBox16: TGroupBox
         Left = 5
-        Top = 247
+        Top = 234
         Width = 214
         Height = 138
         Caption = ' PIS '
@@ -2675,7 +2671,7 @@ object Cadastro_Produtos: TCadastro_Produtos
       end
       object GroupBox17: TGroupBox
         Left = 231
-        Top = 247
+        Top = 234
         Width = 214
         Height = 138
         Caption = ' COFINS '
@@ -2877,8 +2873,8 @@ object Cadastro_Produtos: TCadastro_Produtos
         end
       end
       object GroupBox18: TGroupBox
-        Left = 5
-        Top = 394
+        Left = 474
+        Top = 11
         Width = 217
         Height = 160
         Caption = ' ICMS '
@@ -3210,9 +3206,9 @@ object Cadastro_Produtos: TCadastro_Produtos
       end
       object GroupBox9: TGroupBox
         Left = 231
-        Top = 394
+        Top = 11
         Width = 214
-        Height = 61
+        Height = 72
         Caption = 'Contribui'#231#227'o s/Bens Servi'#231'os - CBS'
         TabOrder = 6
         object DBEdit19: TDBEdit
@@ -3255,14 +3251,350 @@ object Cadastro_Produtos: TCadastro_Produtos
           StyleElements = []
         end
       end
+      object GroupBox11: TGroupBox
+        Left = 5
+        Top = 378
+        Width = 737
+        Height = 211
+        Caption = 'Servi'#231'o'
+        TabOrder = 7
+        object bPesq: TSpeedButton
+          Left = 703
+          Top = 16
+          Width = 23
+          Height = 23
+          Glyph.Data = {
+            F6000000424DF600000000000000760000002800000010000000100000000100
+            0400000000008000000000000000000000001000000000000000000000000000
+            80000080000000808000800000008000800080800000C0C0C000808080000000
+            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00BBBBBBBBBBBB
+            B111BBBBBBBBBBBB19D1BBBBBBBBBBB19D1BBBBBBBBBBB19D1BBBBBBBBBBB89D
+            1BBBBBB0000087F1BBBBBB066666078BBBBBB867E7E6600BBBBB8EFE7E7E660B
+            BBBB8EE7E7E7E60BBBBB8EEEEE7E760BBBBB8EEFEEE7E60BBBBB8EFFEE7E760B
+            BBBBB8EFEEE7E0BBBBBBBB8EEE7E0BBBBBBBBBB88888BBBBBBBB}
+          OnClick = bPesqClick
+        end
+        object DBEdit20: TDBEdit
+          Left = 112
+          Top = 41
+          Width = 90
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'AliquotaINSS_Serv'
+          DataSource = Dados.dsProdutos
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 0
+        end
+        object StaticText26: TStaticText
+          Left = 10
+          Top = 41
+          Width = 100
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'INSS'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 1
+          Transparent = False
+          StyleElements = []
+        end
+        object DBEdit21: TDBEdit
+          Left = 112
+          Top = 110
+          Width = 90
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'AliquotaCSLL_Serv'
+          DataSource = Dados.dsProdutos
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 2
+        end
+        object StaticText27: TStaticText
+          Left = 10
+          Top = 110
+          Width = 100
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'CSLL'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 3
+          Transparent = False
+          StyleElements = []
+        end
+        object StaticText30: TStaticText
+          Left = 10
+          Top = 133
+          Width = 100
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'IRPJ'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 4
+          Transparent = False
+          StyleElements = []
+        end
+        object DBEdit23: TDBEdit
+          Left = 112
+          Top = 133
+          Width = 90
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'AliquotaIRPJ_Serv'
+          DataSource = Dados.dsProdutos
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 5
+        end
+        object DBEdit24: TDBEdit
+          Left = 112
+          Top = 156
+          Width = 90
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'AliquotaCPP_Serv'
+          DataSource = Dados.dsProdutos
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 6
+        end
+        object StaticText31: TStaticText
+          Left = 10
+          Top = 156
+          Width = 100
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'CPP'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 7
+          Transparent = False
+          StyleElements = []
+        end
+        object DBEdit29: TDBEdit
+          Left = 112
+          Top = 64
+          Width = 90
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'AliquotaPIS_Serv'
+          DataSource = Dados.dsProdutos
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 8
+        end
+        object StaticText39: TStaticText
+          Left = 10
+          Top = 64
+          Width = 100
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'PIS'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 9
+          Transparent = False
+          StyleElements = []
+        end
+        object StaticText43: TStaticText
+          Left = 10
+          Top = 87
+          Width = 100
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'COFINS'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 10
+          Transparent = False
+          StyleElements = []
+        end
+        object DBEdit30: TDBEdit
+          Left = 112
+          Top = 87
+          Width = 90
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'AliquotaCOFINS_Serv'
+          DataSource = Dados.dsProdutos
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 11
+        end
+        object DBEdit34: TDBEdit
+          Left = 112
+          Top = 179
+          Width = 90
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'AliquotaIPI_Serv'
+          DataSource = Dados.dsProdutos
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 12
+        end
+        object StaticText44: TStaticText
+          Left = 10
+          Top = 179
+          Width = 100
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'IPI'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 13
+          Transparent = False
+          StyleElements = []
+        end
+        object StaticText45: TStaticText
+          Left = 10
+          Top = 18
+          Width = 100
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'Servi'#231'o'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 14
+          Transparent = False
+          StyleElements = []
+        end
+        object DBLookupComboBox11: TDBLookupComboBox
+          Left = 112
+          Top = 18
+          Width = 590
+          Height = 21
+          DataField = 'Servico_Vinculado'
+          DataSource = Dados.dsProdutos
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          KeyField = 'Codigo'
+          ListField = 'Codigo;Descricao'
+          ListFieldIndex = 1
+          ListSource = Dados.dsServicos
+          NullValueKey = 46
+          ParentFont = False
+          TabOrder = 15
+        end
+      end
     end
     object TabSheet8: TTabSheet
       Caption = 'Estoque'
       ImageIndex = 10
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox19: TGroupBox
         Left = 7
         Top = 92
@@ -3980,10 +4312,6 @@ object Cadastro_Produtos: TCadastro_Produtos
       Caption = '&Comiss'#227'o/Desconto'
       Enabled = False
       ImageIndex = 7
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox7: TGroupBox
         Left = 8
         Top = 8
@@ -4613,10 +4941,6 @@ object Cadastro_Produtos: TCadastro_Produtos
       Caption = '&Par'#226'mentros'
       Enabled = False
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cDetalhe: TDBRadioGroup
         Left = 8
         Top = 359
@@ -5034,10 +5358,6 @@ object Cadastro_Produtos: TCadastro_Produtos
         TabOrder = 1
         object TabSheet2: TTabSheet
           Caption = 'Ve'#237'culo Autom'#243'vel Novo'
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object DBEdit43: TDBEdit
             Left = 124
             Top = 1
@@ -5572,18 +5892,10 @@ object Cadastro_Produtos: TCadastro_Produtos
         object TabSheet3: TTabSheet
           Caption = 'Armamento'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TabSheet4: TTabSheet
           Caption = 'Medicamento'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object StaticText93: TStaticText
             Left = 2
             Top = 1
@@ -5626,10 +5938,6 @@ object Cadastro_Produtos: TCadastro_Produtos
         object TabSheet5: TTabSheet
           Caption = 'Combust'#237'vel'
           ImageIndex = 3
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object StaticText41: TStaticText
             Left = 1
             Top = 2
@@ -6482,10 +6790,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet10: TTabSheet
       Caption = 'Atributos'
       ImageIndex = 11
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object RxDBGrid2: TDBGrid
         Left = 0
         Top = 0
@@ -6563,10 +6867,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet6: TTabSheet
       Caption = '&Seriais'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeSeriais: TDBGrid
         Left = 0
         Top = 0
@@ -6712,10 +7012,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet7: TTabSheet
       Caption = 'Detal&hes/Lotes'
       ImageIndex = 6
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeDetalhes: TDBGrid
         Left = 0
         Top = 0
@@ -6846,10 +7142,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet9: TTabSheet
       Caption = '&Mat'#233'ria Prima'
       ImageIndex = 8
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeMateria: TDBGrid
         Left = 0
         Top = 0
@@ -6916,10 +7208,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet1: TTabSheet
       Caption = 'Tabela &ICMS'
       ImageIndex = 9
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object RxDBGrid1: TDBGrid
         Left = 0
         Top = 0
@@ -6988,10 +7276,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabLista: TTabSheet
       Caption = '&Lista'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeProdutos: TDBGrid
         Left = 0
         Top = 0

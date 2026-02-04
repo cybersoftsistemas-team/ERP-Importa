@@ -179,6 +179,7 @@ type
     ppDesignLayers1: TppDesignLayers;
     ppDesignLayer1: TppDesignLayer;
     cExcel: TCheckBox;
+    cDataRef: TRadioGroup;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure bImprimirClick(Sender: TObject);
@@ -257,9 +258,10 @@ Var
 begin
       // Salvando as ultimas opções utilizadas no relatório como default.
       aIni := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
-      aINI.WriteDate ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataIni', cDataIni.Date);
-      aINI.WriteDate ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim', cDataFim.Date);
-      aINI.WriteBool ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel', cExcel.Checked);
+      aINI.WriteDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataIni', cDataIni.Date);
+      aINI.WriteDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim', cDataFim.Date);
+      aINI.WriteBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel'  , cExcel.Checked);
+      aINI.WriteInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataRef', cDataRef.ItemIndex);
       aINI.Free;
 
       FecharTabelas(Dados, nil, nil, nil);
@@ -280,7 +282,7 @@ begin
      with tFluxo do begin
           sql.clear;
           sql.add('-- Abertos');
-          sql.add('select Data = pr.Data_Vencimento');
+          sql.add('select Data = iif(:pData = 0, pr.Data_Vencimento, pr.Data_Previsao)');
           sql.add('      ,pr.Forma_Tipo');
           sql.add('      ,Numero_Doc = pr.Numero_Documento');
           sql.add('      ,Beneficiario = case pr.Tipo');
@@ -296,7 +298,7 @@ begin
           sql.add('      ,pr.Processo');
           sql.add('      ,pr.Tipo');
           sql.add('from PagarReceber pr');
-          sql.Add('where Data_Vencimento between :pDataIni AND :pDataFim');
+          sql.Add('where iif(:pData = 0, Data_Vencimento, pr.Data_Previsao) between :pDataIni AND :pDataFim');
           sql.add('and isnull(Adiantamento_Numero, 0) = 0');
           sql.add('and isnull(pr.Banco, 0) = 0');
           if mCCusto <> '' then begin
@@ -332,9 +334,9 @@ begin
           sql.Add('order by Data, Tipo desc, Numero_Doc');
           parambyname('pDataIni').AsDate := cDataIni.Date;
           parambyname('pDataFim').AsDate := cDataFim.Date;
+          parambyname('pData').value     := cDataRef.ItemIndex;
           //sql.SaveToFile('c:\temp\Fluxo_Caixa_Itens.sql');
           open;
-          
      end;
      with tBancosSaldos do begin
           sql.clear;
@@ -348,8 +350,8 @@ begin
      end;
      Screen.Cursor := crDefault;
      
-     lPeriodo.Caption         := '| Período ' + cDataIni.Text + ' à ' + cDataFim.Text+ ' |';
-     lPeriodoSint.Caption     := '| Período ' + cDataIni.Text + ' à ' + cDataFim.Text+ ' |';
+     lPeriodo.Caption         := '| Período ' + cDataIni.Text + ' à ' + cDataFim.Text+ ' | '+cDataRef.Items[cDataRef.ItemIndex]+' |';
+     lPeriodoSint.Caption     := '| Período ' + cDataIni.Text + ' à ' + cDataFim.Text+ ' | '+cDataRef.Items[cDataRef.ItemIndex]+' |';
      lSaldoBancos.Caption     := 'SALDO EM '+cDataFim.Text;
      lSaldoBancosSint.Caption := 'SALDO EM '+cDataFim.Text;
      if fileExists(Dados.EmpresasLogo.Value) then begin 
@@ -362,12 +364,12 @@ begin
      if not cExcel.Checked then begin
         if not cSint.Checked then begin
            with rFluxo do begin
-                DeviceType                := 'Screen';
-                AllowPrintToArchive       := false;
-                AllowPrintToFile          := false;
+                DeviceType            := 'Screen';
+                AllowPrintToArchive   := false;
+                AllowPrintToFile      := false;
                 ppDetailBand1.Background2.Brush.Style := bsSolid;
-                ShowPrintDialog           := true;
-                DefaultFileDeviceType     := 'PDF';
+                ShowPrintDialog       := true;
+                DefaultFileDeviceType := 'PDF';
                 Print;
                 Reset;
            end;
@@ -391,10 +393,11 @@ var
   aINI: TIniFile;
 begin
       // Carregando as ultimas opções utilizadas no relatório como default.
-      aINI           := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
-      cDataIni.Date  := aINI.ReadDate('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataIni', Date);
-      cDataFim.Date  := aINI.ReadDate('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim', Date);
-      cExcel.Checked := aINI.ReadBool('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel', false);
+      aINI               := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
+      cDataIni.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataIni', Date);
+      cDataFim.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim', Date);
+      cExcel.Checked     := aINI.ReadBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel'  , false);
+      cDataRef.ItemIndex := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataRef', 0);
       aINI.Free;
 
       mSel := false;
@@ -586,179 +589,188 @@ var
    mTotalDeb
   ,mTotalCred: real; 
 begin
-       Screen.Cursor := crSQLWait;
-       mPlanilha := CreateOleObject('Excel.Application');
-       mPlanilha.WorkBooks.add(1);
-       ExcelWorksheet      := mPlanilha.Sheets[1];
-       ExcelWorksheet.Name := 'FLUXO DE CAIXA DETALHADO';
-       mPlanilha.Visible   := false;
-       mTotalDeb           := 0;
-       mTotalCred          := 0;
+     Screen.Cursor := crSQLWait;
+     Janela_Processamento := TJanela_Processamento.Create(Self);
+     Janela_Processamento.Progresso.Position := 0;
+     Janela_Processamento.Progresso.Max      := tFluxo.RecordCount;
+     Janela_Processamento.lProcesso.Caption  := 'Enviando dados para o EXCEL...';
+     Janela_Processamento.Show;
 
-       with Dados do begin
-            // Titulo.
-            mFilial := iif(Empresas.fieldbyname('Numero_Filial').AsInteger = 0, ' - (MATRIZ)', ' - (FILIAL'+Empresas.fieldbyname('Numero_Filial').asstring+')');
-            mPlanilha.Cells[1, 1].cells                    := Empresas.fieldbyname('Razao_Social').asstring;
-            mPlanilha.Range['A1','G1'].RowHeight           := 30;
-            mPlanilha.Range['A1','G1'].Font.Size           := 20;
-            mPlanilha.Range['A1','G1'].Font.Color          := clWhite;
-            mPlanilha.Range['A1','G1'].Font.Bold           := true;
-            mPlanilha.Range['A1','G1'].VerticalAlignment   := 2;
-            mPlanilha.Range['A1','G1'].HorizontalAlignment := 3;
-            mPlanilha.Range['A1','G1'].Mergecells          := True;
-            mPlanilha.Range['A1','G3'].Interior.Pattern    := 1;
-            mPlanilha.Range['A1','G3'].Interior.Color      := RGB(0, 140, 140);
+     mPlanilha := CreateOleObject('Excel.Application');
+     mPlanilha.WorkBooks.add(1);
+     ExcelWorksheet      := mPlanilha.Sheets[1];
+     ExcelWorksheet.Name := 'FLUXO DE CAIXA DETALHADO';
+     mPlanilha.Visible   := false;
+     mTotalDeb           := 0;
+     mTotalCred          := 0;
 
-            mPlanilha.Cells[2, 1].cells                    := 'FLUXO DE CAIXA DETALHADO' + mFilial;
-            mPlanilha.Range['A2','G2'].RowHeight           := 19;
-            mPlanilha.Range['A2','G2'].Font.Size           := 16;
-            mPlanilha.Range['A2','G2'].Font.Bold           := true;
-            mPlanilha.Range['A2','G2'].VerticalAlignment   := 2;
-            mPlanilha.Range['A2','G2'].HorizontalAlignment := 3;
-            mPlanilha.Range['A2','G2'].Mergecells          := True;
+     with Dados do begin
+          // Titulo.
+          mFilial := iif(Empresas.fieldbyname('Numero_Filial').AsInteger = 0, ' - (MATRIZ)', ' - (FILIAL'+Empresas.fieldbyname('Numero_Filial').asstring+')');
+          mPlanilha.Cells[1, 1].cells                    := Empresas.fieldbyname('Razao_Social').asstring;
+          mPlanilha.Range['A1','G1'].RowHeight           := 30;
+          mPlanilha.Range['A1','G1'].Font.Size           := 20;
+          mPlanilha.Range['A1','G1'].Font.Color          := clWhite;
+          mPlanilha.Range['A1','G1'].Font.Bold           := true;
+          mPlanilha.Range['A1','G1'].VerticalAlignment   := 2;
+          mPlanilha.Range['A1','G1'].HorizontalAlignment := 3;
+          mPlanilha.Range['A1','G1'].Mergecells          := True;
+          mPlanilha.Range['A1','G3'].Interior.Pattern    := 1;
+          mPlanilha.Range['A1','G3'].Interior.Color      := RGB(0, 140, 140);
 
-            mPlanilha.Cells[3, 1].cells                    := 'PERÍODO :'+ cDataini.Text + ' á '+ cDataFim.Text;
-            mPlanilha.Range['A3','G3'].RowHeight           := 14;
-            mPlanilha.Range['A3','G3'].Font.Size           := 9;
-            mPlanilha.Range['A3','G3'].Font.Color          := clWhite;
-            mPlanilha.Range['A3','G3'].Font.italic         := true;
-            mPlanilha.Range['A3','G3'].font .Color         := RGB(255, 192, 0);
-            mPlanilha.Range['A3','G3'].VerticalAlignment   := 2;
-            mPlanilha.Range['A3','G3'].HorizontalAlignment := 4;
-            mPlanilha.Range['A3','G3'].Mergecells          := True;
-            
-            // Logo
-            if FileExists(Empresas.FieldByName('Logo').AsString) then begin
-               Img                            := mPlanilha.Worksheets[1].Pictures.Insert(Empresas.FieldByName('Logo').AsString);
-               Img.ShapeRange.LockAspectRatio := false;
-               Img.Left                       := 4;     // Posição horizontal da imagem
-               Img.Top                        := 4;     // Posição vertical da imagem
-               Img.Width                      := 100;   // Largura da imagem
-               Img.Height                     := 54;    // Altura da imagem
-            end;
+          mPlanilha.Cells[2, 1].cells                    := 'FLUXO DE CAIXA DETALHADO' + mFilial;
+          mPlanilha.Range['A2','G2'].RowHeight           := 19;
+          mPlanilha.Range['A2','G2'].Font.Size           := 16;
+          mPlanilha.Range['A2','G2'].Font.Bold           := true;
+          mPlanilha.Range['A2','G2'].VerticalAlignment   := 2;
+          mPlanilha.Range['A2','G2'].HorizontalAlignment := 3;
+          mPlanilha.Range['A2','G2'].Mergecells          := True;
 
-            // Nomes dos campos
-            mCol := 1;
-            mLin := 4;
-            mPlanilha.Cells[mLin, mCol].cells       := 'DATA';
-            mPlanilha.Cells[mLin, mCol].ColumnWidth := 10;
-            inc(mCol);
-            mPlanilha.Cells[mLin, mCol].cells       := 'PROCESSO';
-            mPlanilha.Cells[mLin, mCol].ColumnWidth := 30;
-            inc(mCol);
-            mPlanilha.Cells[mLin, mCol].cells       := 'DOCUMENTO';
-            mPlanilha.Cells[mLin, mCol].ColumnWidth := 25;
-            inc(mCol);
-            mPlanilha.Cells[mLin, mCol].cells       := 'BENEFICIARIO';
-            mPlanilha.Cells[mLin, mCol].ColumnWidth := 60;
-            inc(mCol);
-            mPlanilha.Cells[mLin, mCol].cells       := 'DEBITO';
-            mPlanilha.Cells[mLin, mCol].ColumnWidth := 14;
-            inc(mCol);
-            mPlanilha.Cells[mLin, mCol].cells       := 'CREDITO';
-            mPlanilha.Cells[mLin, mCol].ColumnWidth := 14;
-            inc(mCol);
-            mPlanilha.Cells[mLin, mCol].cells       := 'SALDO';
-            mPlanilha.Cells[mLin, mCol].ColumnWidth := 14;
-            
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Interior.Color      := RGB(0, 102, 102);
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Interior.Pattern    := 1;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Bold           := true;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Color          := clAqua;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Borders.LineStyle   := 1; //xlContinuous;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Borders.Weight      := 2; //xlThin;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Borders.Color       := clSilver;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Size           := 8;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Bold           := true;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].VerticalAlignment   := 2;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].HorizontalAlignment := 3;
+          mPlanilha.Cells[3, 1].cells                    := 'PERÍODO :'+ cDataini.Text + ' á '+ cDataFim.Text + '    ('+cDataRef.Items[cDataRef.ItemIndex]+')';
+          mPlanilha.Range['A3','G3'].RowHeight           := 14;
+          mPlanilha.Range['A3','G3'].Font.Size           := 9;
+          mPlanilha.Range['A3','G3'].Font.Color          := clWhite;
+          mPlanilha.Range['A3','G3'].Font.italic         := true;
+          mPlanilha.Range['A3','G3'].font .Color         := RGB(255, 192, 0);
+          mPlanilha.Range['A3','G3'].VerticalAlignment   := 2;
+          mPlanilha.Range['A3','G3'].HorizontalAlignment := 4;
+          mPlanilha.Range['A3','G3'].Mergecells          := True;
+          
+          // Logo
+          if FileExists(Empresas.FieldByName('Logo').AsString) then begin
+             Img                            := mPlanilha.Worksheets[1].Pictures.Insert(Empresas.FieldByName('Logo').AsString);
+             Img.ShapeRange.LockAspectRatio := false;
+             Img.Left                       := 4;     // Posição horizontal da imagem
+             Img.Top                        := 4;     // Posição vertical da imagem
+             Img.Width                      := 100;   // Largura da imagem
+             Img.Height                     := 54;    // Altura da imagem
+          end;
 
-            inc(mLin);
-            mCol := 4;
-            mPlanilha.Cells[mLin, mCol].cells := 'SALDO ANTERIOR'+stringofChar('.', 183);
-            mPlanilha.Range['D'+inttostr(mlin), 'F'+inttostr(mLin)].Mergecells := True;
-            inc(mCol,3);
-            mPlanilha.Cells[mLin, mCol].cells        := mSaldoIniExcel;
-            mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
-            mPlanilha.Cells[mLin, mCol].ColumnWidth  := 14;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Bold         := true;
-            mPlanilha.Range['D'+inttostr(mLin),'G'+inttostr(mLin)].Interior.Color    := RGB(0, 140, 140);
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Size         := 8;
-            mPlanilha.Range['D'+inttostr(mLin),'G'+inttostr(mLin)].Font.Color        := clWhite;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Borders.Color     := clSilver;
-            mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].VerticalAlignment := 2;
-           
-            inc(mLin);
-            mCol := 1;
-            with tFluxo do begin
-                 first;
-                 while not eof do begin
-                       mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Size           := 8;
-                       mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].VerticalAlignment   := 2;
-                       mPlanilha.Range['A'+inttostr(mLin),'A'+inttostr(mLin)].HorizontalAlignment := 3;
-                       mPlanilha.Range['B'+inttostr(mLin),'B'+inttostr(mLin)].HorizontalAlignment := 2;
-                       mPlanilha.Range['C'+inttostr(mLin),'C'+inttostr(mLin)].HorizontalAlignment := 2;
+          // Nomes dos campos
+          mCol := 1;
+          mLin := 4;
+          mPlanilha.Cells[mLin, mCol].cells       := 'DATA';
+          mPlanilha.Cells[mLin, mCol].ColumnWidth := 10;
+          inc(mCol);
+          mPlanilha.Cells[mLin, mCol].cells       := 'PROCESSO';
+          mPlanilha.Cells[mLin, mCol].ColumnWidth := 30;
+          inc(mCol);
+          mPlanilha.Cells[mLin, mCol].cells       := 'DOCUMENTO';
+          mPlanilha.Cells[mLin, mCol].ColumnWidth := 25;
+          inc(mCol);
+          mPlanilha.Cells[mLin, mCol].cells       := 'BENEFICIARIO';
+          mPlanilha.Cells[mLin, mCol].ColumnWidth := 60;
+          inc(mCol);
+          mPlanilha.Cells[mLin, mCol].cells       := 'DEBITO';
+          mPlanilha.Cells[mLin, mCol].ColumnWidth := 14;
+          inc(mCol);
+          mPlanilha.Cells[mLin, mCol].cells       := 'CREDITO';
+          mPlanilha.Cells[mLin, mCol].ColumnWidth := 14;
+          inc(mCol);
+          mPlanilha.Cells[mLin, mCol].cells       := 'SALDO';
+          mPlanilha.Cells[mLin, mCol].ColumnWidth := 14;
+          
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Interior.Color      := RGB(0, 102, 102);
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Interior.Pattern    := 1;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Bold           := true;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Color          := clAqua;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Borders.LineStyle   := 1; //xlContinuous;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Borders.Weight      := 2; //xlThin;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Borders.Color       := clSilver;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Size           := 8;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Bold           := true;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].VerticalAlignment   := 2;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].HorizontalAlignment := 3;
 
-                       mPlanilha.Cells[mLin, mCol].cells := fieldbyname('Data').value;
-                       mPlanilha.Cells[mLin, mCol].NumberFormat := 'dd/mm/aaaa';
-                       inc(mCol);
-                       mPlanilha.Cells[mLin, mCol].cells := ' '+fieldbyname('Processo').asstring;
-                       mPlanilha.Cells[mLin, mCol].NumberFormat := '#';
-                       inc(mCol);
-                       mPlanilha.Cells[mLin, mCol].cells := fieldbyname('Numero_Doc').Asstring;
-                       mPlanilha.Cells[mLin, mCol].NumberFormat := '#';
-                       inc(mCol);
-                       mPlanilha.Cells[mLin, mCol].cells := fieldbyname('Beneficiario').asstring;
-                       inc(mCol);
-                       mPlanilha.Cells[mLin, mCol].cells := fieldbyname('Debito').AsCurrency;
-                       mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
-                       inc(mCol);
-                       mPlanilha.Cells[mLin, mCol].cells := fieldbyname('Credito').AsCurrency;
-                       mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
-                       inc(mCol);
-                       
-                       mSaldoExcel := mSaldoExcel + tFluxo.FieldByName('Credito').AsCurrency - tFluxo.FieldByName('Debito').AsCurrency;
-                       mPlanilha.Cells[mLin, mCol].cells := mSaldoExcel;
-                       mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
-                       
-                       inc(mCol);
-                       inc(mLin);
-                       mCol := 1;
-                       mTotalDeb  := mTotalDeb  + fieldbyname('Debito').AsCurrency;
-                       mTotalCred := mTotalCred + fieldbyname('Credito').AsCurrency;
+          inc(mLin);
+          mCol := 4;
+          mPlanilha.Cells[mLin, mCol].cells := 'SALDO ANTERIOR'+stringofChar('.', 183);
+          mPlanilha.Range['D'+inttostr(mlin), 'F'+inttostr(mLin)].Mergecells := True;
+          inc(mCol,3);
+          mPlanilha.Cells[mLin, mCol].cells        := mSaldoIniExcel;
+          mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
+          mPlanilha.Cells[mLin, mCol].ColumnWidth  := 14;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Bold         := true;
+          mPlanilha.Range['D'+inttostr(mLin),'G'+inttostr(mLin)].Interior.Color    := RGB(0, 140, 140);
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Size         := 8;
+          mPlanilha.Range['D'+inttostr(mLin),'G'+inttostr(mLin)].Font.Color        := clWhite;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Borders.Color     := clSilver;
+          mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].VerticalAlignment := 2;
+         
+          inc(mLin);
+          mCol := 1;
+          with tFluxo do begin
+               first;
+               while not eof do begin
+                     mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Size           := 8;
+                     mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].VerticalAlignment   := 2;
+                     mPlanilha.Range['A'+inttostr(mLin),'A'+inttostr(mLin)].HorizontalAlignment := 3;
+                     mPlanilha.Range['B'+inttostr(mLin),'B'+inttostr(mLin)].HorizontalAlignment := 2;
+                     mPlanilha.Range['C'+inttostr(mLin),'C'+inttostr(mLin)].HorizontalAlignment := 2;
 
-                       next;
-                 end;
-                 mCol := 4;
-                 mPlanilha.Cells[mLin, mCol].cells       := 'TOTAL GERAL'+stringofchar('.', 120);
-                 inc(mCol);
-                 mPlanilha.Cells[mLin, mCol].cells        := mTotalDeb;
-                 mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
-                 mPlanilha.Cells[mLin, mCol].ColumnWidth  := 14;
-                 inc(mCol);
-                 mPlanilha.Cells[mLin, mCol].cells        := mTotalCred;
-                 mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
-                 mPlanilha.Cells[mLin, mCol].ColumnWidth  := 14;
-                 inc(mCol);
-                 mPlanilha.Cells[mLin, mCol].cells        := mSaldoExcel;
-                 mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
-                 mPlanilha.Cells[mLin, mCol].ColumnWidth  := 14;
-                 mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Bold         := true;
-                 mPlanilha.Range['D'+inttostr(mLin),'G'+inttostr(mLin)].Interior.Color    := RGB(0, 140, 140);
-                 mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Size         := 8;
-                 mPlanilha.Range['D'+inttostr(mLin),'G'+inttostr(mLin)].Font.Color        := clWhite;
-                 mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Borders.Color     := clSilver;
-                 mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].VerticalAlignment := 2;
-            end;
-       end;
+                     mPlanilha.Cells[mLin, mCol].cells := fieldbyname('Data').value;
+                     mPlanilha.Cells[mLin, mCol].NumberFormat := 'dd/mm/aaaa';
+                     inc(mCol);
+                     mPlanilha.Cells[mLin, mCol].cells := ' '+fieldbyname('Processo').asstring;
+                     mPlanilha.Cells[mLin, mCol].NumberFormat := '#';
+                     inc(mCol);
+                     mPlanilha.Cells[mLin, mCol].cells := fieldbyname('Numero_Doc').Asstring;
+                     mPlanilha.Cells[mLin, mCol].NumberFormat := '#';
+                     inc(mCol);
+                     mPlanilha.Cells[mLin, mCol].cells := fieldbyname('Beneficiario').asstring;
+                     inc(mCol);
+                     mPlanilha.Cells[mLin, mCol].cells := fieldbyname('Debito').AsCurrency;
+                     mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
+                     inc(mCol);
+                     mPlanilha.Cells[mLin, mCol].cells := fieldbyname('Credito').AsCurrency;
+                     mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
+                     inc(mCol);
+                     
+                     mSaldoExcel := mSaldoExcel + tFluxo.FieldByName('Credito').AsCurrency - tFluxo.FieldByName('Debito').AsCurrency;
+                     mPlanilha.Cells[mLin, mCol].cells := mSaldoExcel;
+                     mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
+                     
+                     inc(mCol);
+                     inc(mLin);
+                     mCol := 1;
+                     mTotalDeb  := mTotalDeb  + fieldbyname('Debito').AsCurrency;
+                     mTotalCred := mTotalCred + fieldbyname('Credito').AsCurrency;
 
-       mPlanilha.Visible := true;
+                     next;
+                     Janela_Processamento.Progresso.Position := Janela_Processamento.Progresso.Position + 1;
+                     Application.ProcessMessages;
+               end;
+               mCol := 4;
+               mPlanilha.Cells[mLin, mCol].cells       := 'TOTAL GERAL'+stringofchar('.', 120);
+               inc(mCol);
+               mPlanilha.Cells[mLin, mCol].cells        := mTotalDeb;
+               mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
+               mPlanilha.Cells[mLin, mCol].ColumnWidth  := 14;
+               inc(mCol);
+               mPlanilha.Cells[mLin, mCol].cells        := mTotalCred;
+               mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
+               mPlanilha.Cells[mLin, mCol].ColumnWidth  := 14;
+               inc(mCol);
+               mPlanilha.Cells[mLin, mCol].cells        := mSaldoExcel;
+               mPlanilha.Cells[mLin, mCol].NumberFormat := '#.##0,00_);-#.##0,00';
+               mPlanilha.Cells[mLin, mCol].ColumnWidth  := 14;
+               mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Bold         := true;
+               mPlanilha.Range['D'+inttostr(mLin),'G'+inttostr(mLin)].Interior.Color    := RGB(0, 140, 140);
+               mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Font.Size         := 8;
+               mPlanilha.Range['D'+inttostr(mLin),'G'+inttostr(mLin)].Font.Color        := clWhite;
+               mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].Borders.Color     := clSilver;
+               mPlanilha.Range['A'+inttostr(mLin),'G'+inttostr(mLin)].VerticalAlignment := 2;
+          end;
+     end;
 
-       // Congela as linhas do cabeçalho (Obs: só funcionou depois do visible = true).
-       mPlanilha.Rows[5].Select;
-       mPlanilha.ActiveWindow.FreezePanes := True;
+     Janela_Processamento.Close;
+     mPlanilha.Visible := true;
 
-       Screen.Cursor := crDefault;
+     // Congela as linhas do cabeçalho (Obs: só funcionou depois do visible = true).
+     mPlanilha.Rows[5].Select;
+     mPlanilha.ActiveWindow.FreezePanes := True;
+
+     Screen.Cursor := crDefault;
 end;
 
 

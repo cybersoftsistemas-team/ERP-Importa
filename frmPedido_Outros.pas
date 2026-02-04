@@ -1459,6 +1459,18 @@ begin
                                    PedidosItensValor_BCICMSPresumido.Value  := tItensReferencia.FieldByName('Valor_BCICMSPresumido').Value;
                                    PedidosItensAliquota_ICMSPresumido.Value := tItensReferencia.FieldByName('Aliquota_ICMSPresumido').Value;
                                    PedidosItensValor_ICMSPresumido.Value    := tItensReferencia.FieldByName('Valor_ICMSPresumido').Value;
+
+                                   PedidosItensAliquota_CBS.Value := tItensReferencia.FieldByName('Aliquota_CBS').asfloat;
+                                   PedidosItensValor_BCCBS.Value  := tItensReferencia.FieldByName('Valor_BCCBS').ascurrency;
+                                   PedidosItensValor_CBS.Value    := tItensReferencia.FieldByName('Valor_CBS').ascurrency;
+                                   PedidosItensAliquota_IBS.Value := tItensReferencia.FieldByName('Aliquota_IBS').asfloat;
+                                   PedidosItensValor_BCIBS.Value  := tItensReferencia.FieldByName('Valor_BCIBS').ascurrency;
+                                   PedidosItensValor_IBS.Value    := tItensReferencia.FieldByName('Valor_IBS').ascurrency;
+                                   PedidosItensAliquota_IS.Value  := tItensReferencia.FieldByName('Aliquota_IS').asfloat;
+                                   PedidosItensValor_BCIS.Value   := tItensReferencia.FieldByName('Valor_BCIS').ascurrency;
+                                   PedidosItensValor_IS.Value     := tItensReferencia.FieldByName('Valor_IS').ascurrency;
+                                   PedidosItensCSTCBS.Value       := tItensReferencia.FieldByName('CSTCBS').asstring;
+                                   PedidosItensCSTIBS.Value       := tItensReferencia.FieldByName('CSTIBS').asstring;
                       PedidosItens.Post;
                       tItensReferencia.Next;
 
@@ -2452,7 +2464,6 @@ begin
           if Obj <> nil then (Obj as TppLabel).Caption := '';
       end;
 end;
-
 
 procedure TPedido_Outros.cTransportadorExit(Sender: TObject);
 begin

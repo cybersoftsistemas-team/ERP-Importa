@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,Dialogs, DB, DBAccess, MSAccess, RXCtrls, Vcl.ExtCtrls, RXDBCtrl, Vcl.StdCtrls, 
-  DBCtrls, FUNCOES, ClipBrd, Grids, DBGrids, Mask, Vcl.Buttons;
+  DBCtrls, FUNCOES, ClipBrd, Grids, DBGrids, Mask, Vcl.Buttons, uniGUIBaseClasses, uniGUIClasses, uniPanel;
 
 type
   TCadastro_Servicos = class(TForm)
@@ -93,14 +93,16 @@ procedure TCadastro_Servicos.FormShow(Sender: TObject);
 begin
       Screen.Cursor := crSQLWait;
       With Dados do begin
-           Servicos.SQL.Clear;
-           Servicos.SQL.Add('SELECT * FROM Servicos');
-           Servicos.Open;
-
-           Impostos.SQL.Clear;
-           Impostos.SQL.Add('SELECT * FROM Impostos ORDER BY Descricao');
-           Impostos.Open;
-           
+           with Servicos do begin
+                sql.Clear;
+                sql.Add('select * from Servicos order by Codigo');
+                open;
+           end;
+           with Impostos do begin
+                sql.Clear;
+                sql.Add('select * from Impostos order by Descricao');
+                open;
+           end;
            with NaturezaRend do begin
                 sql.Clear;
                 sql.Add('select Codigo');

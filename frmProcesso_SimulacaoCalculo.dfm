@@ -70,15 +70,13 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     Width = 801
     Height = 629
     Margins.Bottom = 6
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     HotTrack = True
     MultiLine = True
     TabHeight = 25
     TabOrder = 0
     TabWidth = 120
-    ExplicitLeft = 8
-    ExplicitTop = 47
     object TabSheet1: TTabSheet
       Caption = 'Dados da &Importa'#231#227'o'
       object Panel5: TPanel
@@ -3503,6 +3501,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'Tahoma'
             Title.Font.Style = [fsBold]
+            Width = 64
             Visible = True
           end>
       end
@@ -4058,6 +4057,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'MS Sans Serif'
             Title.Font.Style = [fsBold]
+            Width = 64
             Visible = True
           end
           item
@@ -4092,12 +4092,13 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'MS Sans Serif'
             Title.Font.Style = [fsBold]
+            Width = 64
             Visible = True
           end>
       end
     end
     object TabSheet4: TTabSheet
-      Caption = 'Formulas da Sa'#237'da'
+      Caption = 'Formulas dos C'#225'lculos'
       ImageIndex = 3
       object Memo1: TMemo
         Left = 0
@@ -4152,7 +4153,8 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
       ShowHint = True
       Spacing = 5
       OnClick = bCalcularClick
-      ExplicitHeight = 28
+      ExplicitLeft = 301
+      ExplicitTop = 3
     end
     object bSair: TButton
       Left = 735
@@ -15861,7 +15863,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
       'where Simulacao = 20')
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
-    Active = True
     Left = 306
     Top = 6
   end

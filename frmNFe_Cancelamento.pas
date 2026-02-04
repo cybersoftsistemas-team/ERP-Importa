@@ -1334,9 +1334,11 @@ begin
                               PedidosItensBeneficio_Fiscal.Value       := NotasItensBeneficio_Fiscal.Value;
                               PedidosItensValor_BCCBS.Value            := NotasItensValor_BCCBS.Value;
                               PedidosItensAliquota_CBS.Value           := NotasItensAliquota_CBS.Value;
+                              PedidosItensValor_CBS.Value              := NotasItensValor_CBS.Value;
                               PedidosItensCSTCBS.Value                 := NotasItensCSTCBS.Value;
                               PedidosItensValor_BCIBS.Value            := NotasItensValor_BCIBS.Value;
                               PedidosItensAliquota_IBS.Value           := NotasItensAliquota_IBS.Value;
+                              PedidosItensValor_IBS.Value              := NotasItensValor_IBS.Value;
                               PedidosItensCSTIBS.Value                 := NotasItensCSTIBS.Value;
                               PedidosItensValor_COFINSDiferenca.Value  := NotasItensValor_COFINSDiferenca.Value;
                  PedidosItens.Post;

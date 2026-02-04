@@ -70,7 +70,6 @@ object Config_TipoNota: TConfig_TipoNota
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitTop = 690
     object bFiliais: TButton
       Left = 535
       Top = 1
@@ -182,17 +181,15 @@ object Config_TipoNota: TConfig_TipoNota
     Top = 45
     Width = 750
     Height = 656
-    ActivePage = TabSheet5
+    ActivePage = TabSheet3
     Align = alClient
     TabHeight = 28
     TabOrder = 1
     TabWidth = 90
     OnChange = PastaChange
-    ExplicitHeight = 642
     object TabSheet1: TTabSheet
       Caption = '&Diversos'
       Enabled = False
-      ExplicitHeight = 604
       object cEntrada_Saida: TDBRadioGroup
         Left = 3
         Top = 106
@@ -980,7 +977,6 @@ object Config_TipoNota: TConfig_TipoNota
       Caption = '&Fiscais'
       Enabled = False
       ImageIndex = 4
-      ExplicitHeight = 604
       object cCST: TGroupBox
         Left = 5
         Top = 22
@@ -2113,7 +2109,6 @@ object Config_TipoNota: TConfig_TipoNota
       Caption = '&Inf Compl'
       Enabled = False
       ImageIndex = 3
-      ExplicitHeight = 604
       object StaticText67: TStaticText
         Left = 1
         Top = 21
@@ -2513,7 +2508,6 @@ object Config_TipoNota: TConfig_TipoNota
       Caption = 'F'#243'rr&mulas'
       Enabled = False
       ImageIndex = 2
-      ExplicitHeight = 604
       object pFormulas: TPageControl
         Left = 2
         Top = 22
@@ -4405,7 +4399,6 @@ object Config_TipoNota: TConfig_TipoNota
     object TabSheet11: TTabSheet
       Caption = 'Fi&nanceiro'
       ImageIndex = 6
-      ExplicitHeight = 604
       object GroupBox5: TGroupBox
         Left = 3
         Top = 3
@@ -4868,7 +4861,6 @@ object Config_TipoNota: TConfig_TipoNota
       Caption = '&Cont'#225'bil'
       Enabled = False
       ImageIndex = 3
-      ExplicitHeight = 604
       object SpeedButton2: TSpeedButton
         Left = 393
         Top = 525
@@ -7861,7 +7853,6 @@ object Config_TipoNota: TConfig_TipoNota
     object TabSheet8: TTabSheet
       Caption = '&Lista'
       ImageIndex = 5
-      ExplicitHeight = 604
       object Grade: TDBGrid
         AlignWithMargins = True
         Left = 3
@@ -7954,7 +7945,6 @@ object Config_TipoNota: TConfig_TipoNota
           'Desativados')
         TabOrder = 1
         OnClick = cFiltroClick
-        ExplicitTop = 560
       end
     end
   end

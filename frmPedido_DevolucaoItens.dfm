@@ -324,7 +324,6 @@ object Pedido_DevolucaoItens: TPedido_DevolucaoItens
     Font.Style = [fsBold]
     ParentFont = False
     TabOrder = 2
-    Value = 14329.000000000000000000
   end
   object cDataRef: TDateEdit
     Left = 481
@@ -490,10 +489,6 @@ object Pedido_DevolucaoItens: TPedido_DevolucaoItens
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = 'Itens da Nota'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object GradeRef: TDBGrid
           Left = 0
           Top = 0
@@ -616,10 +611,6 @@ object Pedido_DevolucaoItens: TPedido_DevolucaoItens
       object TabSheet2: TTabSheet
         Caption = 'Lotes/Detalhes'
         ImageIndex = 1
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object RxDBGrid1: TRxDBGrid
           Left = 0
           Top = 0
@@ -706,10 +697,6 @@ object Pedido_DevolucaoItens: TPedido_DevolucaoItens
       object TabSheet3: TTabSheet
         Caption = 'Seriais'
         ImageIndex = 2
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object RxDBGrid2: TRxDBGrid
           Left = 0
           Top = 0

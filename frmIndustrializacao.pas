@@ -47,6 +47,8 @@ type
     IntegerField1: TIntegerField;
     StringField1: TStringField;
     dstMatPrima: TDataSource;
+    StaticText3: TStaticText;
+    cEstoque: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -57,7 +59,7 @@ type
     procedure NavegaBeforeAction(Sender: TObject; Button: TNavigateBtn);
   private
     procedure FiltraMateria;
-    procedure FichaEst;
+    procedure SalvaMov;
     procedure DeletaMov;
     { Private declarations }
   public
@@ -123,15 +125,7 @@ begin
                ParamByName('pCod').Value := Menu_Principal.mEmpresa;
                open;
           end;
-          with tProcesso do begin
-               sql.clear;
-               sql.add('select Processo');
-               sql.Add('      ,Modalidade_Importacao');
-               sql.Add('from ProcessosDocumentos');
-               sql.Add('where Desativado <> 1');
-               sql.Add('order by Processo');
-               open; 
-          end;
+          
           FiltraMateria;
      end;
 end;
@@ -139,14 +133,32 @@ end;
 procedure TIndustrializacao.cCodigoExit(Sender: TObject);
 begin
      FiltraMateria;
+     
      with ttmp do begin
           sql.Clear;
           sql.Add('select Notas = string_agg(cast(Nota as varchar(10)), ''/'')');
           sql.Add('from NotasTerceirosItens');
           sql.Add('where Codigo_Mercadoria in(select Codigo_MateriaPrima from ProdutosMateriaPrima where Codigo_Produto = :pCodigo)');
           parambyname('pCodigo').value := Dados.Industrial.FieldByName('Codigo_Mercadoria').asinteger;
+          //sql.SaveToFile('c:\temp\Industrialização_NotasTerceirosItens.sql');
           open;
           Dados.Industrial.fieldbyname('Notas').AsString := fieldbyname('Notas').AsString;
+     end;
+     with tSaldo do begin 
+          // Pega o valor unitario do produto industrializa na ficha de estoque.
+          sql.clear;
+          sql.add('select Unitario_Saldo');
+          sql.add('from FichaEstoque');
+          sql.add('where Codigo = :pCodigo');
+          sql.add('and Registro = (select max(Registro) from FichaEstoque where Codigo = :pCodigo and Unitario_Saldo > 0)');
+          parambyName('pCodigo').AsInteger := Dados.Industrial.FieldByName('Codigo_Mercadoria').asinteger;
+          open;
+          if Dados.Industrial.State = dsInsert then begin
+             Dados.Industrial.FieldByName('Valor_Unitario').Value := fieldbyname('Unitario_Saldo').asfloat;
+          end;
+
+          // Estoque do produto industrializado
+          cEstoque.Text := formatfloat(',##0.000', EstoqueProduto(Dados.Industrial.fieldbyname('Codigo_Mercadoria').AsInteger));
      end;
 end;
 
@@ -158,6 +170,18 @@ end;
 procedure TIndustrializacao.FiltraMateria;
 begin
      with Dados do begin
+          with tProcesso do begin
+               sql.clear;
+               sql.add('select Processo');
+               sql.Add('      ,Modalidade_Importacao');
+               sql.Add('from ProcessosDocumentos');
+               sql.Add('where Numero_Declaracao in(select DI from Adicoes where Codigo_Mercadoria = :pCod)');
+               sql.Add('and isnull(Desativado, 0) = 0');
+               sql.Add('order by Processo');
+               parambyname('pCod').Value := Industrial.FieldByName('Codigo_Mercadoria').AsInteger;
+               open; 
+               cProcessoOrigem.Enabled := recordcount > 0;
+          end;
           with ProdutosMateriaPrima do begin
                if (RecordCount > 0) or (Industrial.State = dsInsert) then begin
                   sql.clear;
@@ -179,6 +203,7 @@ procedure TIndustrializacao.NavegaBeforeAction(Sender: TObject; Button: TNavigat
 var
    mProd: widestring;
 begin
+     ActiveControl  := nil;
      with Dados do begin
           if Button = nbPost then begin
              // Verifica todos os campos obrigatórios.
@@ -259,7 +284,7 @@ end;
 procedure TIndustrializacao.NavegaClick(Sender: TObject; Button: TNavigateBtn);
 var
   i: integer;
-begin
+begin 
      Panel2.Enabled := false;
      with Dados do begin
           if (Button = nbEdit) or (Button = nbInsert) then begin
@@ -291,8 +316,7 @@ begin
                   parambyname('pDest').value     := tEmpresa.fieldbyname('CNPJ').asstring;
                   open;
              end;
-             if Industrial.fieldbyname('Movimenta_Estoque').asboolean then FichaEst;
-             //if Industrial.fieldbyname('Movimenta_Inventario').asboolean then FichaInv;
+             if Industrial.fieldbyname('Movimenta_Estoque').asboolean then SalvaMov;
           end;
           if Button in[nbPost, nbDelete] then begin
              FiltraMateria;
@@ -302,7 +326,7 @@ begin
 end;
 
 // Ficha de estoque - "ENTRADA" (Efetua a baixa da matéria prima de industrialização).
-procedure TIndustrializacao.FichaEst;
+procedure TIndustrializacao.SalvaMov;
 var       
    mRegEst
   ,mRegInv
@@ -348,8 +372,8 @@ begin
                sql.add('      ,Conversao_M2M3');
                sql.add('      ,Quantidade_Utilizada');
                sql.add('      ,Descricao = (select Descricao from Produtos where Codigo = Codigo_MateriaPrima)');
-               sql.add('      ,Unidade = (select Unidade   from Produtos where Codigo = Codigo_MateriaPrima)');
-               sql.add('      ,Altura = (select Altura    from Produtos where Codigo = Codigo_Produto)');
+               sql.add('      ,Unidade = (select Unidade from Produtos where Codigo = Codigo_MateriaPrima)');
+               sql.add('      ,Altura = (select Altura from Produtos where Codigo = Codigo_Produto)');
                sql.add('      ,Saldo = ((select isnull(sum(Quantidade), 0) from NotasTerceirosItens nti where nti.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Movimenta_Estoque = 1) + ');
                sql.add('                (select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 0 and Movimenta_Estoque = 1) +');
                sql.add('                (select isnull(sum(Quantidade_Entrada), 0) from ProdutosTransferencia prt where prt.Produto_Entrada = pmp.Codigo_MateriaPrima and Estoque = 1)) -');
@@ -535,7 +559,7 @@ begin
                           fieldbyname('Estoque').value            := Industrial.FieldByName('Movimenta_Estoque').asboolean;
                           fieldbyname('Processo_Saida').value     := Industrial.FieldByName('Processo').AsString;
                           fieldbyname('Motivo').value             := 'IND';
-                          fieldbyname('Valor_Unitario').value     := Industrial.FieldByName('Valor_Unitario').ascurrency;
+                          fieldbyname('Valor_Unitario').value     := mVlrUniEst;
                      Post;
                 end;
                 // Registros de "SAÍDA" da matéria prima na ficha de estoque.
@@ -552,29 +576,29 @@ begin
                 end;
                 with FichaEstoque do begin 
                      Append;                           
-                          fieldbyname('Registro').Value            := mRegEst;
-                          fieldbyname('Item').value                := mItemEst;
-                          fieldbyname('Codigo').value              := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').AsInteger;
-                          fieldbyname('Descricao').value           := ProdutosMateriaPrima.FieldByName('Descricao').AsString;
-                          fieldbyname('UM').value                  := Produtos.FieldByName('Unidade').AsString;
-                          fieldbyname('NCM').value                 := Produtos.FieldByName('NCM').AsString;
-                          fieldbyname('Historico').value           := '* SAÍDA DE INDUSTRIALIZAÇÃO *';
-                          fieldbyname('Estoque').value             := '0-EMPRESA';
-                          fieldbyname('Emissor').value             := 'P';
-                          fieldbyname('Nota').value                := Industrial.fieldbyname('Registro').asinteger;
-                          fieldbyname('Data').value                := Industrial.fieldbyname('Data').value;
-                          fieldbyname('ES').value                  := 'S';
-                          fieldbyname('Destinatario_Nome').value   := tEmpresa.FieldByName('Razao_Social').AsString;
-                          fieldbyname('Destinatario_CNPJ').value   := tEmpresa.FieldByName('CNPJ').AsString;
-                          fieldbyname('Finalidade').value          := 0;
-                          fieldbyname('Qtde_Entrada').value        := 0;
-                          fieldbyname('Unitario_Entrada').value    := 0;
-                          fieldbyname('Total_Entrada').value       := 0;
-                          fieldbyname('Qtde_Saida').value          := Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat;
-                          fieldbyname('Unitario_Saida').value      := mVlrUniEst;
-                          fieldbyname('Total_Saida').value         := mVlrUniEst * (Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat);
-                          fieldbyname('Qtde_Saldo').value          := tSaldo.FieldByName('Qtde_Saldo').AsFloat - (Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat);
-                          fieldbyname('Total_Saldo').value         := tSaldo.FieldByName('Total_Saldo').AsFloat - fieldbyname('Total_Saida').AsFloat;
+                          fieldbyname('Registro').Value          := mRegEst;
+                          fieldbyname('Item').value              := mItemEst;
+                          fieldbyname('Codigo').value            := ProdutosMateriaPrima.FieldByName('Codigo_MateriaPrima').AsInteger;
+                          fieldbyname('Descricao').value         := ProdutosMateriaPrima.FieldByName('Descricao').AsString;
+                          fieldbyname('UM').value                := Produtos.FieldByName('Unidade').AsString;
+                          fieldbyname('NCM').value               := Produtos.FieldByName('NCM').AsString;
+                          fieldbyname('Historico').value         := '* SAÍDA DE INDUSTRIALIZAÇÃO *';
+                          fieldbyname('Estoque').value           := '0-EMPRESA';
+                          fieldbyname('Emissor').value           := 'P';
+                          fieldbyname('Nota').value              := Industrial.fieldbyname('Registro').asinteger;
+                          fieldbyname('Data').value              := Industrial.fieldbyname('Data').value;
+                          fieldbyname('ES').value                := 'S';
+                          fieldbyname('Destinatario_Nome').value := tEmpresa.FieldByName('Razao_Social').AsString;
+                          fieldbyname('Destinatario_CNPJ').value := tEmpresa.FieldByName('CNPJ').AsString;
+                          fieldbyname('Finalidade').value        := 0;
+                          fieldbyname('Qtde_Entrada').value      := 0;
+                          fieldbyname('Unitario_Entrada').value  := 0;
+                          fieldbyname('Total_Entrada').value     := 0;
+                          fieldbyname('Qtde_Saida').value        := Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat;
+                          fieldbyname('Unitario_Saida').value    := mVlrUniEst;
+                          fieldbyname('Total_Saida').value       := mVlrUniEst * (Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat);
+                          fieldbyname('Qtde_Saldo').value        := tSaldo.FieldByName('Qtde_Saldo').AsFloat - (Industrial.fieldbyname('Quantidade').AsFloat * ProdutosMateriaPrima.FieldByName('Quantidade_Utilizada').AsFloat);
+                          fieldbyname('Total_Saldo').value       := tSaldo.FieldByName('Total_Saldo').AsFloat - fieldbyname('Total_Saida').AsFloat;
                           if (fieldbyname('Total_Saldo').AsCurrency > 0) then
                              fieldbyname('Unitario_Saldo').value := fieldbyname('Total_Saldo').AsCurrency / fieldbyname('Qtde_Saldo').AsFloat
                           else

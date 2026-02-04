@@ -720,11 +720,11 @@ end;
 
 procedure TNotaFiscal_Servico.lNomeClick(Sender: TObject);
 begin
-        Cadastro_Fornecedores := TCadastro_Fornecedores.Create(Self);
-        Cadastro_Fornecedores.Caption := Caption;
-        Cadastro_Fornecedores.ShowModal;
-        Dados.Fornecedores.Open;
-        dmFiscal.NotasTerceirosFornecedor.AsString := Clipboard.AsText;
+     Cadastro_Fornecedores := TCadastro_Fornecedores.Create(Self);
+     Cadastro_Fornecedores.Caption := Caption;
+     Cadastro_Fornecedores.ShowModal;
+     Dados.Fornecedores.Open;
+     dmFiscal.NotasTerceirosFornecedor.AsString := Clipboard.AsText;
 end;
 
 procedure TNotaFiscal_Servico.StaticText3Click(Sender: TObject);

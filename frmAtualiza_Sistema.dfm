@@ -377,7 +377,7 @@ object Atualiza_Sistema: TAtualiza_Sistema
     Options.TrimFixedChar = False
     Options.RemoveOnRefresh = False
     CursorType = ctStatic
-    Left = 229
+    Left = 208
     Top = 185
   end
   object ServerCyber: TMSConnection
@@ -387,8 +387,8 @@ object Atualiza_Sistema: TAtualiza_Sistema
     Username = 'sa'
     Server = '187.64.130.9'
     LoginPrompt = False
-    Left = 169
-    Top = 185
+    Left = 123
+    Top = 184
     EncryptedPassword = '9CFF86FF9DFF9AFF8DFF8CFF90FF99FF8BFFBFFFCEFFCDFFCCFF'
   end
   object TabLocal: TMSQuery
@@ -399,8 +399,8 @@ object Atualiza_Sistema: TAtualiza_Sistema
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     Options.UniqueRecords = False
     Options.UpdateAllFields = True
-    Left = 227
-    Top = 237
+    Left = 250
+    Top = 251
   end
   object Temp: TMSQuery
     Connection = ServerCyber

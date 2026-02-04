@@ -3743,7 +3743,9 @@ object Dados: TDados
         'ercentual_ICMSMono, Percentual_ICMSMonoRet, Percentual_BioDiesel' +
         ', Percentual_Antecipacao, Preco_Minimo, Estoque_Navio, Percentua' +
         'l_ICMSMonoSai, Percentual_FECEP, Codigo_DUIMP, Tributa_PISCOFINS' +
-        'ST, Aliquota_CBS)'
+        'ST, Aliquota_CBS, AliquotaPIS_Serv, AliquotaCOFINS_Serv, Aliquot' +
+        'aCSLL_Serv, AliquotaIRPJ_Serv, AliquotaCPP_Serv, AliquotaIPI_Ser' +
+        'v, Servico_Vinculado, AliquotaINSS_Serv)'
       'VALUES'
       
         '  (:Codigo, :Codigo_Fabricante, :Tipo, :Tipo_Item, :Unidade, :Qu' +
@@ -3795,7 +3797,9 @@ object Dados: TDados
         'o, :Percentual_ICMSMonoRet, :Percentual_BioDiesel, :Percentual_A' +
         'ntecipacao, :Preco_Minimo, :Estoque_Navio, :Percentual_ICMSMonoS' +
         'ai, :Percentual_FECEP, :Codigo_DUIMP, :Tributa_PISCOFINSST, :Ali' +
-        'quota_CBS)')
+        'quota_CBS, :AliquotaPIS_Serv, :AliquotaCOFINS_Serv, :AliquotaCSL' +
+        'L_Serv, :AliquotaIRPJ_Serv, :AliquotaCPP_Serv, :AliquotaIPI_Serv' +
+        ', :Servico_Vinculado, :AliquotaINSS_Serv)')
     SQLDelete.Strings = (
       'DELETE FROM Produtos'
       'WHERE'
@@ -3902,7 +3906,12 @@ object Dados: TDados
         '= :Estoque_Navio, Percentual_ICMSMonoSai = :Percentual_ICMSMonoS' +
         'ai, Percentual_FECEP = :Percentual_FECEP, Codigo_DUIMP = :Codigo' +
         '_DUIMP, Tributa_PISCOFINSST = :Tributa_PISCOFINSST, Aliquota_CBS' +
-        ' = :Aliquota_CBS'
+        ' = :Aliquota_CBS, AliquotaPIS_Serv = :AliquotaPIS_Serv, Aliquota' +
+        'COFINS_Serv = :AliquotaCOFINS_Serv, AliquotaCSLL_Serv = :Aliquot' +
+        'aCSLL_Serv, AliquotaIRPJ_Serv = :AliquotaIRPJ_Serv, AliquotaCPP_' +
+        'Serv = :AliquotaCPP_Serv, AliquotaIPI_Serv = :AliquotaIPI_Serv, ' +
+        'Servico_Vinculado = :Servico_Vinculado, AliquotaINSS_Serv = :Ali' +
+        'quotaINSS_Serv'
       'WHERE'
       '  Codigo = :Old_Codigo')
     SQLRefresh.Strings = (
@@ -3953,7 +3962,9 @@ object Dados: TDados
         'a, Percentual_ICMSMono, Percentual_ICMSMonoRet, Percentual_BioDi' +
         'esel, Percentual_Antecipacao, Preco_Minimo, Estoque_Navio, Perce' +
         'ntual_ICMSMonoSai, Percentual_FECEP, Codigo_DUIMP, Tributa_PISCO' +
-        'FINSST, Aliquota_CBS FROM Produtos'
+        'FINSST, Aliquota_CBS, AliquotaPIS_Serv, AliquotaCOFINS_Serv, Ali' +
+        'quotaCSLL_Serv, AliquotaIRPJ_Serv, AliquotaCPP_Serv, AliquotaIPI' +
+        '_Serv, Servico_Vinculado, AliquotaINSS_Serv FROM Produtos'
       'WHERE'
       '  Codigo = :Codigo')
     SQLLock.Strings = (
@@ -4829,6 +4840,39 @@ object Dados: TDados
       FieldName = 'Aliquota_CBS'
       DisplayFormat = ',##0.00%'
       EditFormat = ',##0.00%'
+    end
+    object ProdutosAliquotaPIS_Serv: TFloatField
+      FieldName = 'AliquotaPIS_Serv'
+      DisplayFormat = ',##0.00%'
+    end
+    object ProdutosAliquotaCOFINS_Serv: TFloatField
+      FieldName = 'AliquotaCOFINS_Serv'
+      DisplayFormat = ',##0.00%'
+    end
+    object ProdutosAliquotaCSLL_Serv: TFloatField
+      FieldName = 'AliquotaCSLL_Serv'
+      DisplayFormat = ',##0.00%'
+    end
+    object ProdutosAliquotaIRPJ_Serv: TFloatField
+      FieldName = 'AliquotaIRPJ_Serv'
+      DisplayFormat = ',##0.00%'
+    end
+    object ProdutosAliquotaCPP_Serv: TFloatField
+      FieldName = 'AliquotaCPP_Serv'
+      DisplayFormat = ',##0.00%'
+    end
+    object ProdutosAliquotaIPI_Serv: TFloatField
+      FieldName = 'AliquotaIPI_Serv'
+      DisplayFormat = ',##0.00%'
+    end
+    object ProdutosServico_Vinculado: TStringField
+      FieldName = 'Servico_Vinculado'
+      FixedChar = True
+      Size = 5
+    end
+    object ProdutosAliquotaINSS_Serv: TFloatField
+      FieldName = 'AliquotaINSS_Serv'
+      DisplayFormat = ',##0.00%'
     end
   end
   object dsProdutos: TDataSource
@@ -13874,7 +13918,7 @@ object Dados: TDados
         '5, Codigo_Adicional06, Aliquota_Adicional06, Valor_Adicional06, ' +
         'Aliquota_PIS, Aliquota_COFINS, Referencia_Fiscal, Modalidade_Pgt' +
         'o, Centro_Custo, Total_Dedutiveis, Total_Servicos, Observacao, N' +
-        'ota, Classificacao_Servico, Adiantamento)'
+        'ota, Classificacao_Servico, Adiantamento, Retencao_ISS)'
       'VALUES'
       
         '  (:Numero, :Data_Emissao, :Processo, :Fatura_Numero, :Desconto_' +
@@ -13889,7 +13933,7 @@ object Dados: TDados
         'Adicional06, :Valor_Adicional06, :Aliquota_PIS, :Aliquota_COFINS' +
         ', :Referencia_Fiscal, :Modalidade_Pgto, :Centro_Custo, :Total_De' +
         'dutiveis, :Total_Servicos, :Observacao, :Nota, :Classificacao_Se' +
-        'rvico, :Adiantamento)')
+        'rvico, :Adiantamento, :Retencao_ISS)')
     SQLDelete.Strings = (
       'DELETE FROM PedidosServico'
       'WHERE'
@@ -13922,7 +13966,8 @@ object Dados: TDados
         'idade_Pgto, Centro_Custo = :Centro_Custo, Total_Dedutiveis = :To' +
         'tal_Dedutiveis, Total_Servicos = :Total_Servicos, Observacao = :' +
         'Observacao, Nota = :Nota, Classificacao_Servico = :Classificacao' +
-        '_Servico, Adiantamento = :Adiantamento'
+        '_Servico, Adiantamento = :Adiantamento, Retencao_ISS = :Retencao' +
+        '_ISS'
       'WHERE'
       '  Numero = :Old_Numero')
     SQLRefresh.Strings = (
@@ -13938,7 +13983,8 @@ object Dados: TDados
         'nal05, Codigo_Adicional06, Aliquota_Adicional06, Valor_Adicional' +
         '06, Aliquota_PIS, Aliquota_COFINS, Referencia_Fiscal, Modalidade' +
         '_Pgto, Centro_Custo, Total_Dedutiveis, Total_Servicos, Observaca' +
-        'o, Nota, Classificacao_Servico, Adiantamento FROM PedidosServico'
+        'o, Nota, Classificacao_Servico, Adiantamento, Retencao_ISS FROM ' +
+        'PedidosServico'
       'WHERE'
       '  Numero = :Numero')
     SQLLock.Strings = (
@@ -14143,6 +14189,9 @@ object Dados: TDados
     end
     object PedidoServicoAdiantamento: TBooleanField
       FieldName = 'Adiantamento'
+    end
+    object PedidoServicoRetencao_ISS: TBooleanField
+      FieldName = 'Retencao_ISS'
     end
   end
   object dsPedidoServico: TDataSource
@@ -15397,7 +15446,7 @@ object Dados: TDados
     Top = 340
   end
   object Banco_Empresas: TMSConnection
-    Database = 'Cybersoft_Evo_Filial1'
+    Database = 'Cybersoft_Ecotrading'
     Options.PersistSecurityInfo = True
     Options.ApplicationName = 'Cybersoft ERP Importa'
     Options.Provider = prSQL
@@ -31041,5 +31090,170 @@ object Dados: TDados
       Size = 120
       Lookup = True
     end
+  end
+  object PedidoServicoItens: TMSQuery
+    SQLInsert.Strings = (
+      'INSERT INTO PedidosServicoItens'
+      
+        '  (Pedido, Item, Codigo_Mercadoria, Processo, Quantidade, Valor_' +
+        'Unitario, Valor_Total, Aliquota_INSS, Valor_INSS, Aliquota_PIS, ' +
+        'Valor_PIS, Aliquota_COFINS, Valor_COFINS, Aliquota_CSLL, Valor_C' +
+        'SLL, Aliquota_IRPJ, Valor_IRPJ, Aliquota_CPP, Valor_CPP, Aliquot' +
+        'a_IPI, Valor_IPI)'
+      'VALUES'
+      
+        '  (:Pedido, :Item, :Codigo_Mercadoria, :Processo, :Quantidade, :' +
+        'Valor_Unitario, :Valor_Total, :Aliquota_INSS, :Valor_INSS, :Aliq' +
+        'uota_PIS, :Valor_PIS, :Aliquota_COFINS, :Valor_COFINS, :Aliquota' +
+        '_CSLL, :Valor_CSLL, :Aliquota_IRPJ, :Valor_IRPJ, :Aliquota_CPP, ' +
+        ':Valor_CPP, :Aliquota_IPI, :Valor_IPI)')
+    SQLDelete.Strings = (
+      'DELETE FROM PedidosServicoItens'
+      'WHERE'
+      
+        '  Pedido = :Old_Pedido AND Item = :Old_Item AND Codigo_Mercadori' +
+        'a = :Old_Codigo_Mercadoria')
+    SQLUpdate.Strings = (
+      'UPDATE PedidosServicoItens'
+      'SET'
+      
+        '  Pedido = :Pedido, Item = :Item, Codigo_Mercadoria = :Codigo_Me' +
+        'rcadoria, Processo = :Processo, Quantidade = :Quantidade, Valor_' +
+        'Unitario = :Valor_Unitario, Valor_Total = :Valor_Total, Aliquota' +
+        '_INSS = :Aliquota_INSS, Valor_INSS = :Valor_INSS, Aliquota_PIS =' +
+        ' :Aliquota_PIS, Valor_PIS = :Valor_PIS, Aliquota_COFINS = :Aliqu' +
+        'ota_COFINS, Valor_COFINS = :Valor_COFINS, Aliquota_CSLL = :Aliqu' +
+        'ota_CSLL, Valor_CSLL = :Valor_CSLL, Aliquota_IRPJ = :Aliquota_IR' +
+        'PJ, Valor_IRPJ = :Valor_IRPJ, Aliquota_CPP = :Aliquota_CPP, Valo' +
+        'r_CPP = :Valor_CPP, Aliquota_IPI = :Aliquota_IPI, Valor_IPI = :V' +
+        'alor_IPI'
+      'WHERE'
+      
+        '  Pedido = :Old_Pedido AND Item = :Old_Item AND Codigo_Mercadori' +
+        'a = :Old_Codigo_Mercadoria')
+    SQLRefresh.Strings = (
+      
+        'SELECT Pedido, Item, Codigo_Mercadoria, Processo, Quantidade, Va' +
+        'lor_Unitario, Valor_Total, Aliquota_INSS, Valor_INSS, Aliquota_P' +
+        'IS, Valor_PIS, Aliquota_COFINS, Valor_COFINS, Aliquota_CSLL, Val' +
+        'or_CSLL, Aliquota_IRPJ, Valor_IRPJ, Aliquota_CPP, Valor_CPP, Ali' +
+        'quota_IPI, Valor_IPI FROM PedidosServicoItens'
+      'WHERE'
+      
+        '  Pedido = :Pedido AND Item = :Item AND Codigo_Mercadoria = :Cod' +
+        'igo_Mercadoria')
+    SQLLock.Strings = (
+      'SELECT * FROM PedidosServicoItens'
+      'WITH (UPDLOCK, ROWLOCK, HOLDLOCK)'
+      'WHERE'
+      
+        '  Pedido = :Old_Pedido AND Item = :Old_Item AND Codigo_Mercadori' +
+        'a = :Old_Codigo_Mercadoria')
+    SQLRecCount.Strings = (
+      'SET :PCOUNT = (SELECT COUNT(*) FROM PedidosServicoItens'
+      ')')
+    Connection = Banco_Empresas
+    SQL.Strings = (
+      'SELECT * FROM PedidosServicoItens')
+    FetchRows = 1
+    RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
+    Left = 721
+    Top = 990
+    object PedidoServicoItensPedido: TIntegerField
+      FieldName = 'Pedido'
+    end
+    object PedidoServicoItensItem: TSmallintField
+      FieldName = 'Item'
+    end
+    object PedidoServicoItensCodigo_Mercadoria: TIntegerField
+      FieldName = 'Codigo_Mercadoria'
+    end
+    object PedidoServicoItensProcesso: TStringField
+      FieldName = 'Processo'
+      Size = 15
+    end
+    object PedidoServicoItensQuantidade: TFloatField
+      FieldName = 'Quantidade'
+      DisplayFormat = ',##0'
+    end
+    object PedidoServicoItensValor_Unitario: TCurrencyField
+      FieldName = 'Valor_Unitario'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensValor_Total: TCurrencyField
+      FieldName = 'Valor_Total'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensAliquota_PIS: TFloatField
+      FieldName = 'Aliquota_PIS'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensValor_PIS: TCurrencyField
+      FieldName = 'Valor_PIS'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensAliquota_COFINS: TFloatField
+      FieldName = 'Aliquota_COFINS'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensValor_COFINS: TCurrencyField
+      FieldName = 'Valor_COFINS'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensAliquota_CSLL: TFloatField
+      FieldName = 'Aliquota_CSLL'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensValor_CSLL: TCurrencyField
+      FieldName = 'Valor_CSLL'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensAliquota_IRPJ: TFloatField
+      FieldName = 'Aliquota_IRPJ'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensValor_IRPJ: TCurrencyField
+      FieldName = 'Valor_IRPJ'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensAliquota_CPP: TFloatField
+      FieldName = 'Aliquota_CPP'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensValor_CPP: TCurrencyField
+      FieldName = 'Valor_CPP'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensAliquota_IPI: TFloatField
+      FieldName = 'Aliquota_IPI'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensValor_IPI: TCurrencyField
+      FieldName = 'Valor_IPI'
+      DisplayFormat = ',##0.00'
+    end
+    object PedidoServicoItensDescricao_Mercadoria: TStringField
+      FieldKind = fkLookup
+      FieldName = 'Descricao_Mercadoria'
+      LookupDataSet = Produtos
+      LookupKeyFields = 'Codigo'
+      LookupResultField = 'Descricao_Reduzida'
+      KeyFields = 'Codigo_Mercadoria'
+      Size = 80
+      Lookup = True
+    end
+    object PedidoServicoItensAliquota_INSS: TFloatField
+      FieldName = 'Aliquota_INSS'
+      DisplayFormat = '##0.00'
+    end
+    object PedidoServicoItensValor_INSS: TCurrencyField
+      FieldName = 'Valor_INSS'
+      DisplayFormat = ',##0.00'
+    end
+  end
+  object dsPedidoServicoItens: TDataSource
+    DataSet = PedidoServicoItens
+    Left = 721
+    Top = 1038
   end
 end
