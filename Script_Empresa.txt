@@ -3018,3 +3018,7 @@ create table NotasServicoItens (Nota int
                                ,Aliquota_IPI float
                                ,Valor_IPI money)
 go
+
+--[04/02/2026 16:04:00]
+delete from Industrializacao where Registro is null
+go

@@ -3,8 +3,8 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
   Top = 251
   BorderStyle = bsDialog
   Caption = 'Impressao_FiscaisOP_LivroServicoPrestados'
-  ClientHeight = 193
-  ClientWidth = 310
+  ClientHeight = 164
+  ClientWidth = 526
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,10 +22,11 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 310
+    Width = 526
     Height = 37
     Align = alTop
     Stretch = True
+    ExplicitWidth = 310
   end
   object RxLabel1: TRxLabel
     Left = 5
@@ -62,17 +63,19 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
   end
   object Panel1: TPanel
     Left = 0
-    Top = 164
-    Width = 310
+    Top = 135
+    Width = 526
     Height = 29
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitTop = 164
+    ExplicitWidth = 310
     DesignSize = (
-      310
+      526
       29)
     object bSair: TButton
-      Left = 244
+      Left = 460
       Top = 1
       Width = 66
       Height = 28
@@ -84,9 +87,10 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
+      ExplicitLeft = 244
     end
     object bImprimir: TButton
-      Left = 178
+      Left = 394
       Top = 1
       Width = 66
       Height = 28
@@ -98,6 +102,7 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
       ShowHint = True
       TabOrder = 1
       OnClick = bImprimirClick
+      ExplicitLeft = 178
     end
   end
   object cDataIni: TDateEdit
@@ -179,10 +184,10 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
     StyleElements = []
   end
   object cImpressora: TRadioGroup
-    Left = 13
-    Top = 101
+    Left = 212
+    Top = 43
     Width = 284
-    Height = 50
+    Height = 40
     Caption = 'Impressora'
     Columns = 2
     ItemIndex = 0
@@ -190,6 +195,49 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
       'Matricial'
       'Jato deTinta')
     TabOrder = 5
+    Visible = False
+  end
+  object StaticText3: TStaticText
+    Left = 13
+    Top = 96
+    Width = 72
+    Height = 21
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Cliente'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 6
+    Transparent = False
+    StyleElements = []
+  end
+  object cCliente: TRxDBLookupCombo
+    Left = 86
+    Top = 96
+    Width = 429
+    Height = 21
+    DropDownCount = 10
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Pitch = fpFixed
+    Font.Style = [fsBold]
+    LookupField = 'Codigo'
+    LookupDisplay = 'Codigo;CNPJ;NOME'
+    LookupDisplayIndex = 2
+    LookupSource = dstClientes
+    ParentFont = False
+    TabOrder = 7
   end
   object tNotas: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -202,13 +250,13 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
       'ORDER BY Data_Emissao ASC')
     FetchRows = 1
     Active = True
-    Left = 196
-    Top = 66
+    Left = 374
+    Top = 20
   end
   object dstNotas: TDataSource
     DataSet = tNotas
-    Left = 228
-    Top = 66
+    Left = 375
+    Top = 71
   end
   object rServico: TppReport
     AutoStop = False
@@ -268,15 +316,15 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     XLSSettings.WorksheetName = 'Report'
-    Left = 224
-    Top = 5
+    Left = 220
+    Top = 51
     Version = '19.04'
     mmColumnWidth = 0
     DataPipelineName = 'pNotas'
@@ -1400,8 +1448,8 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
   object pNotas: TppDBPipeline
     DataSource = dstNotas
     UserName = 'pNotas'
-    Left = 192
-    Top = 5
+    Left = 161
+    Top = 51
     object pNotasppField1: TppField
       FieldAlias = 'Data_Emissao'
       FieldName = 'Data_Emissao'
@@ -1475,5 +1523,48 @@ object Impressao_FiscaisOP_LivroServicoPrestados: TImpressao_FiscaisOP_LivroServ
       DisplayWidth = 10
       Position = 8
     end
+  end
+  object tClientes: TMSQuery
+    Connection = Dados.Banco_Empresas
+    SQL.Strings = (
+      'select Codigo'
+      '      ,Nome = ltrim(rtrim(Nome))'
+      '      ,CNPJ = case when isnull(CNPJ, '#39#39') <> '#39#39' then'
+      
+        '                   substring(CNPJ, 1, 2)+'#39'.'#39'+substring(CNPJ, 3, ' +
+        '3)+'#39'.'#39'+substring(CNPJ, 6, 3)+'#39'/'#39'+substring(CNPJ, 9, 4)+'#39'-'#39'+subst' +
+        'ring(CNPJ, 13, 2)'
+      '              else'
+      
+        '                   substring(CPF, 1, 3)+'#39'.'#39'+substring(CPF, 4, 3)' +
+        '+'#39'.'#39'+substring(CPF, 7, 3)+'#39'-'#39'+substring(CPF, 10, 2)'
+      '              end'
+      'from Clientes'
+      
+        'where Codigo in(select distinct Cliente from pedidosRepresentant' +
+        'es)'
+      'order by Nome')
+    Left = 313
+    Top = 18
+    object tClientesCodigo: TIntegerField
+      DisplayWidth = 5
+      FieldName = 'Codigo'
+    end
+    object tClientesNome: TStringField
+      FieldName = 'Nome'
+      ReadOnly = True
+      Size = 50
+    end
+    object tClientesCNPJ: TStringField
+      DisplayWidth = 12
+      FieldName = 'CNPJ'
+      ReadOnly = True
+      Size = 18
+    end
+  end
+  object dstClientes: TDataSource
+    DataSet = tClientes
+    Left = 312
+    Top = 66
   end
 end

@@ -278,7 +278,7 @@ object Pedido_ItensOutros: TPedido_ItensOutros
     Width = 976
     Height = 558
     ParentCustomHint = False
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alTop
     TabHeight = 24
     TabOrder = 2
@@ -3496,6 +3496,10 @@ object Pedido_ItensOutros: TPedido_ItensOutros
     object TabSheet2: TTabSheet
       Caption = 'Produtos'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GradeProdutos: TDBGrid
         AlignWithMargins = True
         Left = 3

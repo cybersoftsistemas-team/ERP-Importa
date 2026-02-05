@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, RXCtrls, DB, DBAccess, MSAccess, MaskUtils, Vcl.StdCtrls, Mask,
    INIFiles, Funcoes, ppDBPipe, ppCtrls, ppPrnabl, ppBands, ppParameter, ppReport, ppVar,
-  MemDS, RxToolEdit, ppDesignLayer, ppDB, ppClass, ppCache, ppComm, ppRelatv, ppProd;
+  MemDS, RxToolEdit, ppDesignLayer, ppDB, ppClass, ppCache, ppComm, ppRelatv, ppProd, RxLookup;
 
 type
   TImpressao_FiscaisOP_LivroServicoPrestados = class(TForm)
@@ -89,6 +89,13 @@ type
     RxLabel2: TRxLabel;
     Image1: TImage;
     lMovimento: TppLabel;
+    StaticText3: TStaticText;
+    cCliente: TRxDBLookupCombo;
+    tClientes: TMSQuery;
+    tClientesCodigo: TIntegerField;
+    tClientesNome: TStringField;
+    tClientesCNPJ: TStringField;
+    dstClientes: TDataSource;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -160,6 +167,23 @@ begin
       cDataIni.Date         := aINI.ReadDate   ('IMPRESSAO_SERVICOS_PRESTADOS', 'DataIni'       , Date );
       cDataFim.Date         := aINI.ReadDate   ('IMPRESSAO_SERVICOS_PRESTADOS', 'DataFim'       , Date );
       aINI.Free;
+
+      with tClientes do begin
+           sql.clear;
+           sql.add('select Codigo');
+           sql.Add('      ,Nome = ltrim(rtrim(Nome))');
+           sql.Add('      ,CNPJ = case when isnull(CNPJ, '''') <> '''' then');
+           sql.Add('                   substring(CNPJ, 1, 2)+''.''+substring(CNPJ, 3, 3)+''.''+substring(CNPJ, 6, 3)+''/''+substring(CNPJ, 9, 4)+''-''+substring(CNPJ, 13, 2)');
+           sql.Add('              else');
+           sql.Add('                   substring(CPF, 1, 3)+''.''+substring(CPF, 4, 3)+''.''+substring(CPF, 7, 3)+''-''+substring(CPF, 10, 2)');
+           sql.Add('              end');
+           sql.Add('from Clientes');
+           sql.add('where Codigo in(select distinct Cliente from NotasServico)');
+           sql.add('order by Nome');
+           //sql.SaveToFile('c:\temp\Relação_NF_Servico_Prestado.sql');
+           open;
+      end;
+      
 end;
 
 procedure TImpressao_FiscaisOP_LivroServicoPrestados.Filtra;
@@ -175,31 +199,42 @@ Begin
 
       Screen.Cursor := crSQLWait;
       With dmFiscal, Dados do begin
-           tNotas.SQL.Clear;
-           tNotas.SQL.Add('SELECT Data_Emissao, DAY(Data_Emissao) AS Dia, Numero, Modelo, Serie, Valor_Servico as Total_Nota, 0 AS Nao_Tributado, Valor_Servico AS Base_Calculo, Valor_ISS');
-           tNotas.SQL.Add('FROM NotasServico');
-           tNotas.SQL.Add('WHERE (Data_Emissao BETWEEN :pDataIni AND :pDataFim)' );
-           tNotas.SQL.Add('ORDER BY Data_Emissao ASC' );
-           tNotas.ParamByName('pDataIni').AsDate := cDataIni.Date;
-           tNotas.ParamByName('pDataFim').AsDate := cDataFim.Date;
-           tNotas.Open;
-           {
-           If tNotas.RecordCount = 0 then begin
-              Screen.Cursor := crDefault;
-              ShowMessage('Nenhum registro encontrado com o período informado!');
-              Abort;
-           End;
-           }
-           Empresas.SQL.Clear;
-           Empresas.SQL.Add('SELECT * FROM Empresas WHERE (Codigo = :pEmpresa)');
-           Empresas.ParamByName('pEmpresa').AsInteger := Menu_Principal.mEmpresa;
-           Empresas.Open;
-           
-           Estados.Open;
-           Estados.Locate('Codigo', EmpresasEstado.Value, [loCaseInsensitive]);
-           Clientes.Open;
-           Impostos.Open;
-           Impostos.Locate('Codigo', 'ISS', [loCaseInsensitive]);
+           with tNotas do begin
+                sql.clear;
+                sql.add('select Data_Emissao');
+                sql.Add('      ,Dia = day(Data_Emissao)');
+                sql.Add('      ,Numero');
+                sql.Add('      ,Modelo');
+                sql.Add('      ,Serie');
+                sql.Add('      ,Total_Nota = Valor_Servico');
+                sql.Add('      ,Nao_Tributado = 0');
+                sql.Add('      ,Base_Calculo = Valor_Servico');
+                sql.Add('      ,Valor_ISS');
+                sql.add('from NotasServico');
+                sql.add('where Data_Emissao between :pDataIni and :pDataFim' );
+                if cCliente.Text <> '' then begin
+                   sql.add('and Cliente = :pCliente');
+                   parambyName('pCliente').value := tClientes.FieldByName('Codigo').AsInteger;
+                end;
+                sql.add('order by Data_Emissao ASC' );
+                parambyName('pDataIni').AsDate := cDataIni.Date;
+                parambyName('pDataFim').AsDate := cDataFim.Date;
+                //sql.SaveToFile('c:\temp\Relacao_NF_Servico_Prestado_Notas.sql');
+                open;
+           end;
+           with Empresas do begin 
+                sql.clear;
+                sql.add('select * from Empresas where Codigo = :pEmpresa');
+                paramByName('pEmpresa').AsInteger := Menu_Principal.mEmpresa;
+                open;
+           end;
+//           with Estados do begin
+//                Open;
+//                Locate('Codigo', EmpresasEstado.Value, [loCaseInsensitive]);
+//           end;
+//           Clientes.Open;
+//           Impostos.Open;
+//           Impostos.Locate('Codigo', 'ISS', [loCaseInsensitive]);
       End;
 
       lMovimento.Visible := tNotas.RecordCount = 0;
@@ -217,7 +252,6 @@ end;
 
 procedure TImpressao_FiscaisOP_LivroServicoPrestados.Servico;
 begin
-
       Janela_Processamento := TJanela_Processamento.Create(Self);
       Janela_Processamento.Progresso.Max      := tNotas.RecordCount;
       Janela_Processamento.Progresso.Position := 0;

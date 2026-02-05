@@ -1954,8 +1954,8 @@ begin
      mResultado := 0;
      
      Try
-        mMacro.Formula   := mFormula;
-        mResultado       := mMacro.Calc([0]);
+        mMacro.Formula := mFormula;
+        mResultado     := mMacro.Calc([0]);
         If mResultado <= 0 then mResultado := 0;
      Except
           showmessage('Erro na formula do campo '+Campo);
@@ -3156,7 +3156,6 @@ begin
                  PedidosItens.fieldbyname('Valor_BCIBS').Value := RoundTo(CalculaMacro('Calculo_BCIBS'), -2);
               if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then 
                  PedidosItens.fieldbyname('Valor_IBS').Value := RoundTo(CalculaMacro('Calculo_VlrIBS'), -2);
-
               
               If Trim(TipoNotaCalculo_Inventario.AsString) <> '' then begin
                  PedidosItensValor_Inventario.Value := Roundto(CalculaMacro('Calculo_Inventario'), -2);

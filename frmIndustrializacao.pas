@@ -82,14 +82,14 @@ end;
 
 procedure TIndustrializacao.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-      LimpaMemoria; 
-      Industrializacao.Release;
-      INdustrializacao := nil;
+     LimpaMemoria; 
+     Industrializacao.Release;
+     INdustrializacao := nil;
 end;
 
 procedure TIndustrializacao.FormCreate(Sender: TObject);
 begin
-      If FileExists('fundo_barra.bmp') then Image1.Picture.LoadFromFile('fundo_barra.bmp');
+     if FileExists('fundo_barra.bmp') then Image1.Picture.LoadFromFile('fundo_barra.bmp');
 end;
 
 procedure TIndustrializacao.FormShow(Sender: TObject);
@@ -135,10 +135,12 @@ begin
      FiltraMateria;
      
      with ttmp do begin
+          // Retorna uma lista de notas em uma string.
           sql.Clear;
-          sql.Add('select Notas = string_agg(cast(Nota as varchar(10)), ''/'')');
+          sql.Add('select Notas = stuff((select ''/'' + cast(Nota as varchar(9))');
           sql.Add('from NotasTerceirosItens');
           sql.Add('where Codigo_Mercadoria in(select Codigo_MateriaPrima from ProdutosMateriaPrima where Codigo_Produto = :pCodigo)');
+          sql.Add('for xml path(''''), type).value(''.'', ''nvarchar(max)''), 1, 2, '''')');
           parambyname('pCodigo').value := Dados.Industrial.FieldByName('Codigo_Mercadoria').asinteger;
           //sql.SaveToFile('c:\temp\Industrialização_NotasTerceirosItens.sql');
           open;

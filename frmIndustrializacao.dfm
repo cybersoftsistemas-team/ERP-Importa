@@ -25,8 +25,8 @@ object Industrializacao: TIndustrializacao
     Height = 49
     Align = alTop
     Stretch = True
-    ExplicitLeft = -238
-    ExplicitWidth = 883
+    ExplicitLeft = 26
+    ExplicitTop = 32
   end
   object RxLabel4: TRxLabel
     Left = 8
