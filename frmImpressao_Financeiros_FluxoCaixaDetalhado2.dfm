@@ -3,7 +3,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   Top = 222
   BorderStyle = bsDialog
   Caption = 'Impressao_Financeiros_FluxoCaixaDetalhado'
-  ClientHeight = 623
+  ClientHeight = 649
   ClientWidth = 699
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -63,7 +63,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   end
   object Panel1: TPanel
     Left = 0
-    Top = 593
+    Top = 619
     Width = 699
     Height = 30
     Align = alBottom
@@ -101,7 +101,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     end
   end
   object cDataIni: TDateEdit
-    Left = 96
+    Left = 127
     Top = 64
     Width = 116
     Height = 21
@@ -198,7 +198,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   object StaticText1: TStaticText
     Left = 10
     Top = 64
-    Width = 84
+    Width = 115
     Height = 21
     AutoSize = False
     BevelInner = bvNone
@@ -219,7 +219,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     StyleElements = []
   end
   object cDataFim: TDateEdit
-    Left = 277
+    Left = 308
     Top = 64
     Width = 117
     Height = 21
@@ -309,7 +309,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     Text = '31/12/2013'
   end
   object StaticText2: TStaticText
-    Left = 213
+    Left = 244
     Top = 64
     Width = 62
     Height = 21
@@ -333,7 +333,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   end
   object gBancos: TDBGrid
     Left = 10
-    Top = 99
+    Top = 123
     Width = 680
     Height = 224
     DataSource = dstBancos
@@ -448,7 +448,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   end
   object cSaldo: TCheckBox
     Left = 15
-    Top = 526
+    Top = 550
     Width = 188
     Height = 17
     Caption = 'Mostrar Saldo dos Bancos no final'
@@ -456,7 +456,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   end
   object cSint: TCheckBox
     Left = 15
-    Top = 543
+    Top = 567
     Width = 65
     Height = 17
     Caption = 'Sint'#233'tico'
@@ -464,7 +464,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   end
   object DBGrid1: TDBGrid
     Left = 10
-    Top = 327
+    Top = 351
     Width = 680
     Height = 188
     DataSource = dstCCusto
@@ -533,23 +533,63 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   end
   object cExcel: TCheckBox
     Left = 15
-    Top = 560
+    Top = 584
     Width = 79
     Height = 17
     Caption = 'Gerar Excel'
     TabOrder = 9
   end
   object cDataRef: TRadioGroup
-    Left = 402
-    Top = 51
-    Width = 210
-    Height = 45
+    Left = 456
+    Top = 57
+    Width = 234
+    Height = 57
     Caption = 'Data de Refer'#234'ncia'
     Columns = 2
     Items.Strings = (
       'Vencimento'
       'Previs'#227'o')
     TabOrder = 10
+  end
+  object StaticText3: TStaticText
+    Left = 10
+    Top = 87
+    Width = 115
+    Height = 22
+    AutoSize = False
+    BevelInner = bvNone
+    BevelKind = bkSoft
+    BevelOuter = bvSpace
+    BorderStyle = sbsSunken
+    Caption = 'Incrementar data (Dias)'
+    Color = 7293440
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWhite
+    Font.Height = -11
+    Font.Name = 'Calibri'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 11
+    Transparent = False
+    StyleElements = []
+  end
+  object cDias: TSpinEdit
+    Left = 127
+    Top = 87
+    Width = 68
+    Height = 22
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    MaxLength = 3
+    MaxValue = 0
+    MinValue = 0
+    ParentFont = False
+    TabOrder = 12
+    Value = 0
   end
   object tFluxo: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -731,7 +771,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -3731,7 +3771,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'

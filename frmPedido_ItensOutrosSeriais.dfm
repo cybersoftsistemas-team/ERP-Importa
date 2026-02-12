@@ -440,24 +440,24 @@ object Pedido_ItensOutrosSeriais: TPedido_ItensOutrosSeriais
   end
   object tSeriais: TMSQuery
     Connection = Dados.Banco_Empresas
-    Left = 448
-    Top = 216
+    Left = 432
+    Top = 155
   end
   object tPedido: TMSQuery
     Connection = Dados.Banco_Empresas
-    Left = 496
-    Top = 216
+    Left = 509
+    Top = 154
   end
   object dstPedido: TDataSource
     DataSet = tPedido
-    Left = 527
-    Top = 216
+    Left = 508
+    Top = 206
   end
   object tPesquisa: TMSQuery
     Connection = Dados.Banco_Empresas
     SQL.Strings = (
       'SELECT * FROM ProdutosSeriais')
-    Left = 408
-    Top = 216
+    Left = 432
+    Top = 209
   end
 end

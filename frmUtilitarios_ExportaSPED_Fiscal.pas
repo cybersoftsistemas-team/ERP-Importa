@@ -1798,201 +1798,6 @@ Var
    mCodigo: Integer;
 begin
       With Dados, dmFiscal do begin
-           (*
-           tItens.SQL.Clear;
-           tItens.SQL.Add('SELECT Codigo_Mercadoria AS Codigo,');
-           tItens.SQL.Add('       Produtos.Codigo_Fabricante,');
-           tItens.SQL.Add('       Produtos.Descricao_Reduzida,');
-           tItens.SQL.Add('       CAST(Descricao_Mercadoria AS VARCHAR(5000)) COLLATE SQL_Latin1_General_CP1_CI_AS AS Descricao,');
-           tItens.SQL.Add('       Unidade_Medida COLLATE SQL_Latin1_General_CP1_CI_AS AS Unidade,');
-           tItens.SQL.Add('       CASE WHEN ISNULL(NotasTerceirosItens.NCM, '''') = '''' THEN ''99999999'' ELSE NotasTerceirosItens.NCM END COLLATE SQL_Latin1_General_CP1_CI_AS AS NCM,');
-           tItens.SQL.Add('       0 AS ICMS,');
-           tItens.SQL.Add('       Produtos.Tipo_Item,');
-           tItens.SQL.Add('       QTDE = 1');
-           tItens.SQL.Add('INTO   #Temp');
-           tItens.SQL.Add('FROM   NotasTerceirosItens, Produtos, NotasTerceiros');
-           tItens.SQL.Add('WHERE (YEAR(NotasTerceirosItens.Data_Entrada) = :pAno AND MONTH(NotasTerceirosItens.Data_Entrada) = :pMes) AND (NotasTerceiros.Nota = NotasTerceirosItens.Nota) AND (NotasTerceiros.Data_Emissao = NotasTerceirosItens.Data_Emissao)');
-           tItens.SQL.Add('  AND (Provisoria <> 1) AND (Produtos.Codigo = NotasTerceirosItens.Codigo_Mercadoria)');
-           tItens.SQL.Add('  AND NotasTerceiros.Modelo IN(''01'', ''1B'', ''04'', ''55'')');
-
-           if not EmpresasMenu_Inventario.AsBoolean then begin
-              if cInventario.ItemIndex <> 3 then begin
-                 tItens.SQL.Add('UNION  ALL');
-                 tItens.SQL.Add('SELECT Inventario.Codigo,');
-                 tItens.SQL.Add('       Produtos.Codigo_Fabricante,');
-                 tItens.SQL.Add('       '''',');
-                 tItens.SQL.Add('       CAST(Inventario.Descricao AS VARCHAR(5000)) AS Descricao,');
-                 tItens.SQL.Add('       Inventario.Unidade,');
-                 tItens.SQL.Add('       Inventario.NCM,');
-                 tItens.SQL.Add('       0 AS ICMS,');
-                 tItens.SQL.Add('       (SELECT Tipo_Item FROM Produtos WHERE(Produtos.Codigo = Inventario.Codigo)) AS Tipo_Item,');
-                 tItens.SQL.Add('       QTDE = 1');
-                 tItens.SQL.Add('FROM   Inventario, Produtos');
-                 tItens.SQL.Add('WHERE  (Produtos.Codigo = Inventario.Codigo)');
-              end;
-              if cEstoque.ItemIndex <> 3 then begin
-                 tItens.SQL.Add('UNION  ALL');
-                 tItens.SQL.Add('SELECT Estoque.Codigo,');
-                 tItens.SQL.Add('       Produtos.Codigo_Fabricante,');
-                 tItens.SQL.Add('       '''',');
-                 tItens.SQL.Add('       CAST(Estoque.Descricao AS VARCHAR(5000)) AS Descricao,');
-                 tItens.SQL.Add('       Estoque.Unidade,');
-                 tItens.SQL.Add('       Estoque.NCM,');
-                 tItens.SQL.Add('       0 AS ICMS,');
-                 tItens.SQL.Add('       (SELECT Tipo_Item FROM Produtos WHERE(Produtos.Codigo = Estoque.Codigo)) AS Tipo_Item,');
-                 tItens.SQL.Add('       QTDE = 1');
-                 tItens.SQL.Add('FROM   Estoque, Produtos');
-                 tItens.SQL.Add('WHERE  (Produtos.Codigo = Estoque.Codigo)');
-              end;
-           end else begin
-              if cInventario.ItemIndex <> 3 then begin
-                 // Ficha de inventario.
-                 tItens.SQL.Add('UNION  ALL');
-                 tItens.SQL.Add('SELECT FI1.Codigo,');
-                 tItens.SQL.Add('       Codigo_Fabricante = (SELECT Codigo_Fabricante FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('       '''',');
-                 tItens.SQL.Add('       CAST(FI1.Descricao AS VARCHAR(5000)) AS Descricao,');
-                 tItens.SQL.Add('       FI1.UM,');
-                 tItens.SQL.Add('       FI1.NCM,');
-                 tItens.SQL.Add('       0 AS ICMS,');
-                 tItens.SQL.Add('       Tipo_Item = (SELECT Tipo_Item FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('       QTDE = ISNULL(Qtde_Saldo, 0)');
-                 tItens.SQL.Add('FROM   FichaInventario FI1');
-                 tItens.SQL.Add('WHERE  Data IN(SELECT MAX(FI2.Data) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pDataI GROUP BY Codigo)');
-                 tItens.SQL.Add('AND  Item IN(SELECT MAX(FI2.Item) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pDataI GROUP BY Codigo)');
-                 tItens.SQL.Add('AND (SELECT Tipo_Item FROM Produtos PRD WHERE PRD.Codigo = FI1.Codigo) IN(0,1,2,3,4,5,6,10)');
-//                 tItens.SQL.Add('where Estoque = ''1-ARMAZEM'' ');
-//                 tItens.SQL.Add('and Item IN(SELECT MAX(FI2.Item) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pDataI and Estoque = ''1-ARMAZEM'' GROUP BY Codigo)');
-//                 tItens.SQL.Add('and (select sum(Qtde_Saida-Qtde_Entrada) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pDataI and Estoque = ''1-ARMAZEM'' GROUP BY Codigo) > 0');
-//                 tItens.SQL.Add('AND (SELECT Tipo_Item FROM Produtos PRD WHERE PRD.Codigo = FI1.Codigo) IN(0,1,2,3,4,5,6,10)');
-
-                 //==========================================================================================================================================================================\\
-                 tItens.SQL.Add('UNION ALL');
-                 tItens.SQL.Add('select FI1.Codigo,');
-                 tItens.SQL.Add('        Codigo_Fabricante = (SELECT Codigo_Fabricante FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('        Historico = '''',');
-                 tItens.SQL.Add('        CAST(FI1.Descricao AS VARCHAR(5000)) AS Descricao,');
-                 tItens.SQL.Add('        FI1.UM,');
-                 tItens.SQL.Add('        NCM = (SELECT NCM FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('        0 AS ICMS,');
-                 tItens.SQL.Add('        Tipo_Item = (SELECT Tipo_Item FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('        QTDE = (select sum(Qtde_Saida-Qtde_Entrada) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pDataI and Estoque = ''1-ARMAZEM'' GROUP BY Codigo)');
-                 tItens.SQL.Add('from FichaInventario FI1');
-                 tItens.SQL.Add('where Estoque = ''1-ARMAZEM'' ');
-                 tItens.SQL.Add('and Item IN(SELECT MAX(FI2.Item) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pDataI and Estoque = ''1-ARMAZEM'' GROUP BY Codigo)');
-                 tItens.SQL.Add('and (select sum(Qtde_Saida-Qtde_Entrada) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pDataI and Estoque = ''1-ARMAZEM'' GROUP BY Codigo) > 0');
-                 tItens.SQL.Add('AND (SELECT Tipo_Item FROM Produtos PRD WHERE PRD.Codigo = FI1.Codigo) IN(0,1,2,3,4,5,6,10)');
-                 tItens.ParamByName('pDataI').AsDate := mDataInventF;
-              end;
-              // Ficha de estoque.
-              if cEstoque.ItemIndex <> 3 then begin
-                 tItens.SQL.Add('UNION  ALL');
-                 tItens.SQL.Add('SELECT FI1.Codigo,');
-                 tItens.SQL.Add('       Codigo_Fabricante = (SELECT Codigo_Fabricante FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('       '''',');
-                 tItens.SQL.Add('       CAST(FI1.Descricao AS VARCHAR(5000)) AS Descricao,');
-                 tItens.SQL.Add('       FI1.UM,');
-                 tItens.SQL.Add('       NCM = (SELECT NCM FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('       0 AS ICMS,');
-                 tItens.SQL.Add('       Tipo_Item = (SELECT Tipo_Item FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('       QTDE = ISNULL(Qtde_Saldo, 0)');
-                 tItens.SQL.Add('FROM   FichaEstoque FI1');
-                 tItens.SQL.Add('WHERE  Data IN(SELECT MAX(FI2.Data) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pData GROUP BY Codigo)');
-                 tItens.SQL.Add('  AND  Item IN(SELECT MAX(FI2.Item) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pData GROUP BY Codigo)');
-                 tItens.SQL.Add('  AND (SELECT Tipo_Item FROM Produtos PRD WHERE PRD.Codigo = FI1.Codigo) IN(0,1,2,3,4,5,6,10)');
-                 //==========================================================================================================================================================================\\
-                 tItens.SQL.Add('UNION ALL');
-                 tItens.SQL.Add('SELECT FI1.Codigo,');
-                 tItens.SQL.Add('       Codigo_Fabricante = (SELECT Codigo_Fabricante FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('       Historico = '''',');
-                 tItens.SQL.Add('       CAST(FI1.Descricao AS VARCHAR(5000)) AS Descricao,');
-                 tItens.SQL.Add('       FI1.UM,');
-                 tItens.SQL.Add('       NCM = (SELECT NCM FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('       0 AS ICMS,');
-                 tItens.SQL.Add('       Tipo_Item = (SELECT Tipo_Item FROM Produtos WHERE Produtos.Codigo = FI1.Codigo),');
-                 tItens.SQL.Add('       QTDE = (select sum(Qtde_Saida-Qtde_Entrada) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pDataI and Estoque = ''1-ARMAZEM'' GROUP BY Codigo)');
-                 tItens.SQL.Add('FROM FichaEstoque FI1');
-                 tItens.SQL.Add('where Estoque = ''1-ARMAZEM'' ');
-                 tItens.SQL.Add('and Item IN(SELECT MAX(FI2.Item) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pDataI and Estoque = ''1-ARMAZEM'' GROUP BY Codigo)');
-                 tItens.SQL.Add('and (select sum(Qtde_Saida-Qtde_Entrada) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pDataI and Estoque = ''1-ARMAZEM'' GROUP BY Codigo) > 0');
-                 tItens.ParamByName('pData').AsDate  := mDataEstoqueF;
-                 tItens.ParamByName('pDataI').AsDate := mDataEstoqueI;
-              end;
-           end;
-
-           if cBloco1.ItemIndex = 0 then begin
-              tItens.SQL.Add('UNION ALL');
-              tItens.SQL.Add('SELECT Codigo = Codigo_Mercadoria');
-              tItens.SQL.Add('      ,Codigo_Fabricante');
-              tItens.SQL.Add('      ,'''' ');
-               tItens.SQL.Add('     ,Descricao = CAST(Descricao_Mercadoria AS VARCHAR(5000)) COLLATE SQL_Latin1_General_CP1_CI_AS');
-              tItens.SQL.Add('      ,Unidade   = Unidade_Medida');
-              tItens.SQL.Add('      ,NCM');
-              tItens.SQL.Add('      ,0 AS ICMS');
-              tItens.SQL.Add('      ,Tipo_Item = (SELECT Tipo_Item FROM Produtos WHERE Codigo = NI.Codigo_Mercadoria)');
-              tItens.SQL.Add('      ,QTDE = 1');
-              tItens.SQL.Add('FROM  NotasItens NI');
-              tItens.SQL.Add('WHERE Processo IN( SELECT Processo FROM MemorandoExportacao ME WHERE MONTH(ME.Data_Emissao) = :pMes AND YEAR(ME.Data_Emissao) = :pAno');
-              tItens.SQL.Add('                   AND (SELECT Natureza_Exportacao FROM ProcessosDocumentos PD WHERE PD.Processo = ME.Processo) = 0)');
-              tItens.SQL.Add('AND   Saida_Entrada = 1');
-              tItens.SQL.Add('AND   ISNULL(Cancelada, 0) = 0');
-              tItens.SQL.Add('AND   ISNULL(NI.Nfe_Denegada, 0) = 0');
-              tItens.SQL.Add('AND   ISNULL(Movimenta_Estoque, 0) = 1');
-           end;
-
-           tItens.SQL.Add('UNION ALL');
-           tItens.SQL.Add('SELECT Codigo_Sistema,');
-           tItens.SQL.Add('      (SELECT Codigo_Fabricante FROM Produtos WHERE(Produtos.Codigo = Imobilizado.Codigo_Sistema)),');
-           tItens.SQL.Add('      '''',');
-           tItens.SQL.Add('      (SELECT Descricao FROM Produtos WHERE(Produtos.Codigo = Imobilizado.Codigo_Sistema)),');
-           tItens.SQL.Add('      (SELECT Unidade   FROM Produtos WHERE(Produtos.Codigo = Imobilizado.Codigo_Sistema)),');
-           tItens.SQL.Add('      (SELECT NCM       FROM Produtos WHERE(Produtos.Codigo = Imobilizado.Codigo_Sistema)),');
-           tItens.SQL.Add('      0,');
-           tItens.SQL.Add('      (SELECT Tipo_Item FROM Produtos WHERE(Produtos.Codigo = Imobilizado.Codigo_Sistema)),');
-           tItens.SQL.Add('      QTDE = 1');
-           tItens.SQL.Add('FROM  Imobilizado');
-           tItens.sql.Add('where isnull(Fim_Apropriacao, '''') = '''' ');
-           tItens.sql.Add('or (substring(Fim_Apropriacao, 1, 2) >= :pMes and substring(Fim_Apropriacao, 3, 4) >= :pAno)');
-           tItens.paramByName('pMes').AsString := poezero(2, cMes.ItemIndex+1);
-           tItens.paramByName('pAno').AsString := cAno.Text;
-
-           // UTRAS OBRIGAÇÕES TRIBUTÁRIAS, AJUSTES E INFORMAÇÕES DE VALORES PROVENIENTES DE DOCUMENTO FISCAL}         
-           tItens.SQL.add('----------------[OUTRAS OBRIGAÇÕES TRIBUTÁRIAS, AJUSTES E INFORMAÇÕES DE VALORES PROVENIENTES DE DOCUMENTO FISCAL]----------------');         
-           tItens.SQL.add('union all');
-           tItens.SQL.Add('select Codigo = Codigo_Mercadoria');
-           tItens.SQL.Add('      ,Codigo_Fabricante');
-           tItens.SQL.Add('      ,'''' ');
-           tItens.SQL.Add('      ,Descricao = CAST(Descricao_Mercadoria AS VARCHAR(5000)) COLLATE SQL_Latin1_General_CP1_CI_AS');
-           tItens.SQL.Add('      ,Unidade   = Unidade_Medida');
-           tItens.SQL.Add('      ,NCM');
-           tItens.SQL.Add('      ,0 AS ICMS');
-           tItens.SQL.Add('      ,Tipo_Item = (select Tipo_Item from Produtos where Codigo = ni.Codigo_Mercadoria)');
-           tItens.SQL.Add('      ,QTDE = 1');
-           tItens.SQL.Add('from NotasItens ni');
-           tItens.SQL.add('where year(Data) = :pAno and Month(Data) = :pMes');
-           tItens.SQL.add('and Valor_ICMSOper > 0');
-           tItens.SQL.add('union all');
-           tItens.SQL.Add('select Codigo = Codigo_Mercadoria');
-           tItens.SQL.Add('      ,Codigo_Fabricante = cast(Codigo_Mercadoria as varchar(10))');
-           tItens.SQL.Add('      ,'''' ');
-           tItens.SQL.Add('      ,Descricao = CAST(Descricao_Mercadoria AS VARCHAR(5000)) COLLATE SQL_Latin1_General_CP1_CI_AS');
-           tItens.SQL.Add('      ,Unidade   = Unidade_Medida');
-           tItens.SQL.Add('      ,NCM');
-           tItens.SQL.Add('      ,0 AS ICMS');
-           tItens.SQL.Add('      ,Tipo_Item = (select Tipo_Item from Produtos where Codigo = nti.Codigo_Mercadoria)');
-           tItens.SQL.Add('      ,QTDE = 1');
-           tItens.SQL.Add('from NotasTerceirosItens nti');
-           tItens.SQL.add('where year(Data_Entrada) = :pAno and Month(Data_Entrada) = :pMes');
-           tItens.SQL.add('and Valor_ICMSOper > 0');
-
-           tItens.SQL.Add('update #Temp set unidade = (select Unidade_Origem from Produtos where Codigo = #Temp.Codigo) where isnull(Unidade, '''') = '''' ');
-           tItens.SQL.Add('select * from #Temp where QTDE > 0 order by Codigo');
-           tItens.SQL.Add('drop table #temp');
-           tItens.ParamByName('pAno').AsInteger := cAno.AsInteger;
-           tItens.ParamByName('pMes').AsInteger := cMes.ItemIndex+1;
-           //tItens.sql.SavetoFile('c:\temp\SPED_FISCAL_REGISTRO0200.SQL');
-           tItens.Open;
-           *)
            with tItens do begin
                 sql.clear;
                 sql.add('select Codigo_Mercadoria AS Codigo,');
@@ -2061,6 +1866,7 @@ begin
                    sql.add('and  fi1.Item in(select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pDataI and Estoque = ''2-TERCEIROS'' group by Codigo)');
                    sql.add('and (select Tipo_Item from Produtos prd where prd.Codigo = fi1.Codigo) in(0,1,2,3,4,5,6,10)');
                    sql.add('and (select sum(fi2.Qtde_Entrada-fi2.Qtde_Saida) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''2-TERCEIROS'' and fi2.Data <= :pDataI) > 0');
+                   sql.add('and isnull(Qtde_Saldo, 0) > 0');
                    paramByName('pDataI').AsDate := mDataInventF;
                 end;
                 // ficha de estoque.
@@ -2115,6 +1921,7 @@ begin
                    sql.add('and fi1.item in(select max(fi2.item) from fichaestoque fi2 where fi2.codigo = fi1.codigo and fi2.data <= :pData and estoque = ''2-terceiros'' group by codigo)');
                    sql.add('and (select tipo_item from produtos prd where prd.codigo = fi1.codigo) in(0,1,2,3,4,5,6,10)');
                    sql.add('and (select sum(fi2.qtde_entrada -fi2.qtde_saida) from fichaestoque fi2 where fi2.codigo = fi1.codigo and fi2.estoque = ''2-terceiros'' and fi2.data <= :pData) > 0');
+                   sql.add('and isnull(Qtde_Saldo, 0) > 0');
                    parambyName('pData').AsDate := mDataEstoqueF;
                 end;
                 if cbloco1.ItemIndex = 0 then begin

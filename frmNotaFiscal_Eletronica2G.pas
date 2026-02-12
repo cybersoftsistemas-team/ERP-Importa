@@ -2688,6 +2688,7 @@ begin
                                  PagarReceberClassificacao.Value    := ICMSGNRE_Classificacao.AsString;
                                  PagarReceberCentro_Custo.Value     := ICMSGNRE_CentroCusto.AsString;
                                  PagarReceberData_Documento.Value   := GNREData_Nota.Value;
+                                 PagarReceberData_Previsao.Value    := GNREData_Vencimento.Value;
                                  PagarReceberData_Vencimento.Value  := GNREData_Vencimento.Value;
                                  PagarReceberValor_Documento.Value  := GNREValor.Value;
                                  PagarReceberValor_Parcela.Value    := GNREValor.Value;
@@ -3131,6 +3132,7 @@ begin
                                           PagarReceberClassificacao.Value       := TipoNotaClassificacao_Saida.AsString;
                                           PagarReceberCentro_Custo.Value        := PedidosFaturaCentro_Custo.Value;
                                           PagarReceberData_Documento.Value      := NotasData_Emissao.Value;
+                                          PagarReceberData_Previsao.Value       := PedidosDuplicataData_Vencimento.Value;
                                           PagarReceberData_Vencimento.Value     := PedidosDuplicataData_Vencimento.Value;
                                           PagarReceberValor_Documento.Value     := RoundTo(NotasValor_TotalNota.Value, -2);
                                           PagarReceberValor_Parcela.Value       := RoundTo(PedidosDuplicataValor.Value, -2);
@@ -3181,6 +3183,7 @@ begin
                                              PagarReceberClassificacao.Value    := ConfiguracaoClassificacao_Pagamento.AsString;
                                              PagarReceberCentro_Custo.Value     := ConfiguracaoCentro_CustoPagamento.Value;
                                              PagarReceberData_Documento.Value   := NotasData_Emissao.Value;
+                                             PagarReceberData_Previsao.Value    := PedidosDuplicataData_Vencimento.Value;
                                              PagarReceberData_Vencimento.Value  := PedidosDuplicataData_Vencimento.Value;
                                              If ConfiguracaoCalculo_Comissao.AsString = 'PRODUTO' then begin
                                                 PagarReceberValor_Documento.Value := RoundTo(Percentual(PedidosDuplicataValor_Produto.Value, NotasRepresentante_Comissao.AsFloat), -2);
@@ -3235,6 +3238,7 @@ begin
                                              PagarReceberClassificacao.Value   := ConfiguracaoClassificacao_PagamentoOutros.AsString;
                                              PagarReceberCentro_Custo.Value    := ConfiguracaoCentro_CustoPagamentoOutros.Value;
                                              PagarReceberData_Documento.Value  := NotasData_Emissao.Value;
+                                             PagarReceberData_Previsao.Value   := PedidosDuplicataData_Vencimento.Value;
                                              PagarReceberData_Vencimento.Value := PedidosDuplicataData_Vencimento.Value;
 
                                              If ConfiguracaoCalculo_Comissao.AsString = 'PRODUTO' then begin
@@ -3290,6 +3294,7 @@ begin
                                              PagarReceberClassificacao.Value   := ConfiguracaoClassificacao_PagamentoTelevendas.AsString;
                                              PagarReceberCentro_Custo.Value    := ConfiguracaoCentro_CustoPagamentoTelevendas.Value;
                                              PagarReceberData_Documento.Value  := NotasData_Emissao.Value;
+                                             PagarReceberData_Previsao.Value   := PedidosDuplicataData_Vencimento.Value;
                                              PagarReceberData_Vencimento.Value := PedidosDuplicataData_Vencimento.Value;
 
                                              If ConfiguracaoCalculo_Comissao.AsString = 'PRODUTO' then begin
@@ -3429,6 +3434,7 @@ begin
                                                  PagarReceberClassificacao.Value    := TipoNotaClassificacao_Saida.AsString;
                                                  PagarReceberCentro_Custo.Value     := TipoNotaCentro_Custo.Value;
                                                  PagarReceberData_Documento.Value   := NotasData_Emissao.Value;
+                                                 PagarReceberData_Previsao.Value    := mDataDupl;
                                                  PagarReceberData_Vencimento.Value  := mDataDupl;
                                                  PagarReceberValor_Documento.Value  := RoundTo(NotasValor_TotalNota.Value, -2);
                                                  PagarReceberValor_Parcela.Value    := RoundTo((NotasValor_TotalNota.Value / mParcelas), -2);
@@ -3541,6 +3547,7 @@ begin
                               FieldByName('Classificacao').Value    := TipoNotaClassificacao_ICMSMono.AsString;
                               FieldByName('Centro_Custo').Value     := TipoNotaCentro_CustoICMSMono.Value;
                               FieldByName('Data_Documento').Value   := NotasData_Emissao.Value;
+                              FieldByName('Data_Previsao').Value    := NotasData_DI.value;
                               FieldByName('Data_Vencimento').Value  := NotasData_DI.value;
                               FieldByName('Valor_Documento').Value  := RoundTo((NotasValor_ICMSMono.AsCurrency + NotasValor_ICMSMonoRet.AsCurrency), -2);
                               FieldByName('Valor_Parcela').Value    := PagarReceberValor_Documento.ascurrency;
@@ -3596,6 +3603,7 @@ begin
                                  PagarReceberClassificacao.Value    := TipoNotaClassificacao_Saida.AsString;
                                  PagarReceberCentro_Custo.Value     := TipoNotaCentro_Custo.Value;
                                  PagarReceberData_Documento.Value   := NotasData_Emissao.Value;
+                                 PagarReceberData_Previsao.Value    := NotasData_Emissao.Value;
                                  PagarReceberData_Vencimento.Value  := NotasData_Emissao.Value;
                                  PagarReceberValor_Documento.Value  := RoundTo(NotasValor_TotalNota.Value, -2);
                                  PagarReceberValor_Parcela.Value    := RoundTo(NotasValor_TotalNota.Value, -2);
@@ -3650,6 +3658,7 @@ begin
                                  PagarReceberClassificacao.Value    := TipoNotaClassificacao_Saida.AsString;
                                  PagarReceberCentro_Custo.Value     := TipoNotaCentro_Custo.Value;
                                  PagarReceberData_Documento.Value   := NotasData_Emissao.Value;
+                                 PagarReceberData_Previsao.Value    := NotasData_Emissao.Value;
                                  PagarReceberData_Vencimento.Value  := NotasData_Emissao.Value;
                                  PagarReceberValor_Documento.Value  := RoundTo(NotasValor_TotalNota.Value, -2);
                                  PagarReceberValor_Parcela.Value    := RoundTo(NotasValor_TotalNota.Value, -2);
@@ -4361,15 +4370,13 @@ begin
                                     ,0                                        // informar o valor total da IBS do Município.
                                     ,PedidosValor_IBS.AsCurrency              // informar o valor total da IBS.
                                     ,0                                        // informar o valor total do crédito presumido.
-                                    ,0                                        // informar o valor total do crédito presumido em condição suspensiva.
-                                    );
+                                    ,0);                                      // informar o valor total do crédito presumido em condição suspensiva.
             
             _gCBSTot := util.gCBSTot(0                                        // informar o valor total do diferimento.
                                     ,0                                        // informar o valor total de devolução de tributos.
                                     ,PedidosValor_CBS.ascurrency              // informar o valor total da CBS.
                                     ,0                                        // informar o valor total do crédito presumido.
-                                    ,0                                        // informar o valor total do crédito presumido em condição suspensiva.
-                                    );
+                                    ,0);                                      // informar o valor total do crédito presumido em condição suspensiva.
                                     
             _gMonoTot     := '';
             _gEstornoCred := '';
@@ -4406,8 +4413,7 @@ begin
                                   ,''                                         // informar o XML do grupo retTrib.
                                   ,PedidosValor_IS.AsCurrency                 // informar o Valor Total do IS.
                                   ,_IBSCBSTotv130                             // informar o XML do grupo IBSCBSTot.
-                                  ,PedidosValor_TotalNota.AsCurrency          // informar o Valor total da NF-e com IBS/CBS/IS.
-                                  );
+                                  ,PedidosValor_TotalNota.AsCurrency);        // informar o Valor total da NF-e com IBS/CBS/IS.
 
             TranspModFrete := PedidosModalidade_Frete.AsString;
 
@@ -4479,8 +4485,7 @@ begin
                                                    ,LimpaXML(PaisesNome.AsString)
                                                    ,ClientesTelefone_Entrega.AsString
                                                    ,LimpaXML(ClientesEmail_Entrega.AsString)
-                                                   ,ClientesIE_Entrega.AsString
-                                                   );
+                                                   ,ClientesIE_Entrega.AsString);
             end;
 
             // Dados do Local de Retirada.
@@ -4513,8 +4518,7 @@ begin
                               ,PedidosVolume_Numero.AsString
                               ,PedidosVolume_PesoLiquido.AsFloat
                               ,PedidosVolume_PesoBruto.AsFloat
-                              ,''
-                              );
+                              ,'');
 
             Transp := Util.Transportador2G(TranspModFrete
                                           ,Transportador
@@ -4523,16 +4527,14 @@ begin
                                           ,Reboque
                                           ,Vagao
                                           ,Balsa
-                                          ,_Vol
-                                          );
+                                          ,_Vol);
 
             // Dados do intermediador.
             Intermediador := '';
             if (PedidosSaida_Entrada.Asinteger = 1) and (PedidosIntermediador.Asinteger > 0) then begin
                Intermediadores.locate('Codigo', PedidosIntermediador.Asinteger, [loCaseInsensitive]);
                Intermediador := Util.infIntermed(Intermediadores.fieldByName('CNPJ').asstring
-                                                ,Intermediadores.fieldByName('Nome').asstring
-                                                );
+                                                ,Intermediadores.fieldByName('Nome').asstring);
             end;
 
             // Dados de exportação.
@@ -4568,8 +4570,7 @@ begin
                                      ,InfAdic_infCpl         // informar as informações complementares de interesse do contrib.
                                      ,''                     // informar o XML com o obsCont.
                                      ,''                     // informar o XML com o obsFisco.
-                                     ,''                     // informar o XML com o procRef.
-                                     );
+                                     ,'');                   // informar o XML com o procRef.);
 
             // Grupo de informações do contador.
             mAutCNPJ         := TMemo.Create(NotaFiscal_Eletronica2G);
@@ -6545,6 +6546,7 @@ begin
                            PagarReceberClassificacao.Value    := Classificacao;
                            PagarReceberCentro_Custo.Value     := TipoNotaCentro_Custo.Value;
                            PagarReceberData_Documento.Value   := FaturaData_Emissao.AsDateTime;
+                           PagarReceberData_Previsao.Value    := mDataVenc; 
                            PagarReceberData_Vencimento.Value  := mDataVenc; 
                            PagarReceberValor_Documento.Value  := RoundTo(mValor, -2);
                            PagarReceberValor_Parcela.Value    := RoundTo(mValor, -2);

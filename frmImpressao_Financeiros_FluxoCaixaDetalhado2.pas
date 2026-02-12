@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DB, ppParameter, ppCtrls, ppBands, ppVar,
   ppReport, ppDBPipe, DBAccess, MSAccess, Vcl.StdCtrls, Mask, Vcl.ExtCtrls, RXCtrls, IniFiles, Funcoes, ComObj, RxToolEdit, ppDesignLayer, ppPrnabl, ppClass, ppCache, ppProd, ppDB, 
-  ppComm, ppRelatv, MemDS, Vcl.Grids, Vcl.DBGrids, ppModule, raCodMod, ppStrtch, ppSubRpt, Vcl.DBCtrls, RxLookup;
+  ppComm, ppRelatv, MemDS, Vcl.Grids, Vcl.DBGrids, ppModule, raCodMod, ppStrtch, ppSubRpt, Vcl.DBCtrls, RxLookup, uniGUIBaseClasses, uniGUIClasses, uniSpinEdit, Vcl.Samples.Spin;
 
 type
   TImpressao_Financeiros_FluxoCaixaDetalhado2 = class(TForm)
@@ -180,6 +180,8 @@ type
     ppDesignLayer1: TppDesignLayer;
     cExcel: TCheckBox;
     cDataRef: TRadioGroup;
+    StaticText3: TStaticText;
+    cDias: TSpinEdit;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure bImprimirClick(Sender: TObject);
@@ -262,6 +264,7 @@ begin
       aINI.WriteDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim', cDataFim.Date);
       aINI.WriteBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel'  , cExcel.Checked);
       aINI.WriteInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataRef', cDataRef.ItemIndex);
+      aINI.WriteInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Dias'   , cDias.value);
       aINI.Free;
 
       FecharTabelas(Dados, nil, nil, nil);
@@ -282,7 +285,7 @@ begin
      with tFluxo do begin
           sql.clear;
           sql.add('-- Abertos');
-          sql.add('select Data = iif(:pData = 0, pr.Data_Vencimento, pr.Data_Previsao)');
+          sql.add('select Data = iif(:pData = 0, pr.Data_Vencimento + :pDias, pr.Data_Previsao + :pDias)');
           sql.add('      ,pr.Forma_Tipo');
           sql.add('      ,Numero_Doc = pr.Numero_Documento');
           sql.add('      ,Beneficiario = case pr.Tipo');
@@ -335,6 +338,7 @@ begin
           parambyname('pDataIni').AsDate := cDataIni.Date;
           parambyname('pDataFim').AsDate := cDataFim.Date;
           parambyname('pData').value     := cDataRef.ItemIndex;
+          parambyname('pDias').value     := cDias.Value;
           //sql.SaveToFile('c:\temp\Fluxo_Caixa_Itens.sql');
           open;
      end;
@@ -398,6 +402,7 @@ begin
       cDataFim.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim', Date);
       cExcel.Checked     := aINI.ReadBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel'  , false);
       cDataRef.ItemIndex := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataRef', 0);
+      cDias.value        := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Dias'   , 0);
       aINI.Free;
 
       mSel := false;

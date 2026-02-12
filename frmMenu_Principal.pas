@@ -2744,7 +2744,7 @@ begin
       Pedido_Outros.Caption         := Caption;
       Pedido_Outros.mSai_Entra      := 1;
       Pedido_Outros.lTitulo.Caption := 'Saída (Outras).';
-     Pedido_Outros.ShowModal;
+      Pedido_Outros.ShowModal;
 end;
 
 procedure TMenu_Principal.mnImpressao_Faturamento_DetalhamentoClick(Sender: TObject);

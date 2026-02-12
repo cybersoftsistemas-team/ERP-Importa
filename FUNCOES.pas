@@ -1743,7 +1743,6 @@ begin
       Result := Trim(Result);
 end;
 
-
 // Deixa apenas caracteres não especiais no texto informado.
 Function AchaCaracterXML(Arquivo: String):WideString;
 var
@@ -1769,7 +1768,6 @@ begin
          ShowMessage('Arquivo não encontrado...'+Arquivo);
       end;
 end;
-
 
 Procedure Altera_Reg_Win(Path, Param, Valor, Tipo : String);
 {

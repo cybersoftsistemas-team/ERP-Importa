@@ -851,9 +851,16 @@ begin
                                    mBCPISST  := mBCPISST  + RoundTo(PedidosItensValor_BCPISST.Value, -2);
                                    mMediaBCR := mMediaBCR + PedidosItensMedia_BCR.Value;
 
-//                                   PedidosItensTotal_Impostos.Value := 0;
-                                   PedidosItensTotal_Impostos.Value := RoundTo(PedidosItensTotal_IPI.AsCurrency+(PedidosItensValor_II.AsCurrency*PedidosItensQuantidade.AsFloat)+PedidosItensValor_ICMSOper.AsCurrency+PedidosItensValor_PIS.AsCurrency+PedidosItensValor_COFINS.AsCurrency, -2);
-                                   mTotalImpostos                   := mTotalImpostos + PedidosItensTotal_Impostos.AsCurrency;
+                                   PedidosItensTotal_Impostos.Value := 0;
+                                   if TipoNotaVisiveis_DIFAL.AsBoolean then begin
+                                      if (Clientes.FieldByName('Consumidor_Final').AsBoolean) and (not Clientes.FieldByName('MEI').AsBoolean) then begin  // Cliente é consumidor final.
+                                         if PedidosItensSaida_Entrada.AsInteger = 1 then begin
+                                            PedidosItensTotal_Impostos.Value := RoundTo(PedidosItensTotal_IPI.AsCurrency+(PedidosItensValor_II.AsCurrency*PedidosItensQuantidade.AsFloat)+PedidosItensValor_ICMSOper.AsCurrency+PedidosItensValor_PIS.AsCurrency+PedidosItensValor_COFINS.AsCurrency, -2);
+                                            mTotalImpostos                   := mTotalImpostos + PedidosItensTotal_Impostos.AsCurrency;
+                                         end;
+                                      end;
+                                   end;
+                                   
 
                                    {
                                    PedidosItensValor_BCICMSDest.Value := 0;
@@ -2939,7 +2946,8 @@ begin
                  PedidosItensValor_BCICMSOper.Value := Roundto(CalculaMacro('Calculo_BCICMS'), -2);
 
 //              PedidosItensValor_ICMSOper.Value := Roundto(Percentual(PedidosItensValor_BCICMSOper.AsCurrency, PedidosItensAliquota_ICMSOper.AsFloat), -2);
-              PedidosItensValor_ICMSOper.Value := Roundto(CalculaMacro('Calculo_VlrICMS'), -2);
+              if Trim(TipoNotaCalculo_VlrICMS.Value) <> '' then
+                 PedidosItensValor_ICMSOper.Value := Roundto(CalculaMacro('Calculo_VlrICMS'), -2);
              // Ajusta o valor do ICMS para um centavo quando o valor do ICMS e menor que um centavo.
               if (PedidosItensValor_ICMSOper.Value < 0.01) and (PedidosItensValor_BCICMSOper.Value > 0) then begin
                  PedidosItensValor_ICMSOper.Value := 0.01;
@@ -2970,7 +2978,7 @@ begin
               
               // Casa não tenho valor do ICMS Monofasico calculado zero bases e aliquotas.
               if PedidosItensValor_ICMSMono.ascurrency = 0 then begin                 
-                 PedidosItensValor_BCICMSMono.value    := 0;
+                 PedidosItensValor_BCICMSMono.value := 0;
               end;
               if PedidosItensValor_ICMSMonoRet.ascurrency = 0 then begin                 
                  PedidosItensValor_BCICMSMonoRet.value    := 0;
@@ -3874,10 +3882,10 @@ begin
              PedidosItensAliquota_ICMSDest.Value := mAliquotaDIFAL;
 
              if (Clientes.FieldByName('Consumidor_Final').AsBoolean) and (not Clientes.FieldByName('MEI').AsBoolean) then begin  // Cliente é consumidor final.
-                if PedidosItensSaida_Entrada.AsInteger = 1 then begin
-                   PedidosItensTotal_Impostos.Value := RoundTo(PedidosItensTotal_IPI.AsCurrency+(PedidosItensValor_II.AsCurrency*PedidosItensQuantidade.AsFloat)+PedidosItensValor_ICMSOper.AsCurrency+PedidosItensValor_PIS.AsCurrency+PedidosItensValor_COFINS.AsCurrency, -2);
-                   //mTotalImpostos                   := mTotalImpostos + PedidosItensTotal_Impostos.AsCurrency;
-                end;
+//                if PedidosItensSaida_Entrada.AsInteger = 1 then begin
+//                   PedidosItensTotal_Impostos.Value := RoundTo(PedidosItensTotal_IPI.AsCurrency+(PedidosItensValor_II.AsCurrency*PedidosItensQuantidade.AsFloat)+PedidosItensValor_ICMSOper.AsCurrency+PedidosItensValor_PIS.AsCurrency+PedidosItensValor_COFINS.AsCurrency, -2);
+//                   mTotalImpostos                   := mTotalImpostos + PedidosItensTotal_Impostos.AsCurrency;
+//                end;
 
                 // Diferencial de alíquota do ICMS (DIFAL) p/consumidor final.
                 if (TipoNotaSaida_Entrada.Value = 1) and (TipoNotaVisiveis_DIFAL.AsBoolean) then Begin                   // Nota Fiscal de saída.

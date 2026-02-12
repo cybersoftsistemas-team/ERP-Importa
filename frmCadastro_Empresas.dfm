@@ -119,7 +119,7 @@ object Cadastro_Empresas: TCadastro_Empresas
     Top = 50
     Width = 629
     Height = 618
-    ActivePage = pSPEDFiscal
+    ActivePage = pParametros
     TabHeight = 24
     TabOrder = 1
     object pCadastrais: TTabSheet
