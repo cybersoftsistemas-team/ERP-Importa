@@ -502,6 +502,9 @@ begin
                            Grade.Cells[i, mLin] := '0';
                         end;   
                      end;
+                     if (FichaEstoque.Fields[i].FieldName = 'Codigo') and (FichaEstoque.Fields[i].IsNull) then begin
+                        Grade.Cells[i, mLin] := '0';
+                     end;
                  end;
 
                  //===============================================================[ CALCULANDO SALDOS ]===========================================================//

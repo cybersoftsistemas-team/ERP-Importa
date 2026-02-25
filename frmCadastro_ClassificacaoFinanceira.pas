@@ -128,6 +128,7 @@ type
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     DBCheckBox15: TDBCheckBox;
+    DBCheckBox16: TDBCheckBox;
     procedure FormShow(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure NavegaClick(Sender: TObject; Button: TNavigateBtn);

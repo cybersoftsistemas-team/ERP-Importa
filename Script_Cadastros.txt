@@ -2955,3 +2955,14 @@ and CHARINDEX('Aliquota', Campo) = 0
 and Tipo in('Float', 'Currency')
 and Percentual = 0
 go
+
+--[24/02/2026 10:09:00]
+create table TabelaNBS (Codigo varchar(10)
+                       ,Descricao varchar(200))
+go
+
+--[24/02/2026 12:43:00]
+alter table ClassificacaoFinanceira add Juros_SPEDPISCOFINS bit
+go
+update ClassificacaoFinanceira set Juros_SPEDPISCOFINS = 0 where Juros_SPEDPISCOFINS is null
+go

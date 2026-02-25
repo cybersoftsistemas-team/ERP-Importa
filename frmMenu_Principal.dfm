@@ -2744,7 +2744,6 @@ object Menu_Principal: TMenu_Principal
         end
         object ServiosPrestadosNFSew1: TMenuItem
           Caption = 'Servi'#231'os Prestados (&NFS-e)'
-          Enabled = False
           OnClick = ServiosPrestadosNFSew1Click
         end
         object N51: TMenuItem

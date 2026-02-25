@@ -9,14 +9,14 @@ uses
 type
   TPedidosOutra_TerceirosReferenciaItens = class(TForm)
     GroupBox2: TGroupBox;
-    Grade2: TRxDBGrid;
+    Grade2: TDBGrid;
     Panel1: TPanel;
     bSair: TButton;
     Navega: TDBNavigator;
     bInclui_Item: TButton;
     bInclui_Todos: TButton;
     GroupBox1: TGroupBox;
-    Grade1: TRxDBGrid;
+    Grade1: TDBGrid;
     Panel2: TPanel;
     StaticText3: TStaticText;
     StaticText17: TStaticText;
@@ -125,7 +125,7 @@ begin
            NotasTerceirosItens.DisableControls;
            PedidosItens.DisableControls;
 
-           While (not NotasTerceirosItens.Eof) and (Funcoes.Cancelado = false) do begin
+           While not NotasTerceirosItens.Eof and not Funcoes.Cancelado do begin
                  mQtde := NotasTerceirosItensQuantidade.Value;
                  if cPercentualQtde.Value > 0 then begin
                     mQtde := Roundto(Percentual(NotasTerceirosItensQuantidade.Value, cPercentualQtde.Value), -3)
@@ -153,7 +153,7 @@ var
 begin
       With Dados, dmFiscal do begin
            mEst := EstoqueProduto(NotasTerceirosItensCodigo_Mercadoria.AsInteger);
-           if (PedidosSaida_Entrada.AsInteger = 1) and (TipoNotaMovimenta_Estoque.asboolean) then begin
+           if (PedidosSaida_Entrada.AsInteger = 1) and TipoNotaMovimenta_Estoque.asboolean then begin
               if Roundto(pQtde, -4) > Roundto(mEst, -4) then begin
                  MessageDlg('Quantidade de produtos maior que o estoque existente!'+#13+#13+'Produto:'+
                              NotasTerceirosItensCodigo_Mercadoria.AsString+#13+
@@ -244,12 +244,13 @@ begin
                                 Pedido_ItensOutros.PegaValorUni;
                                 PedidosItensCodigo_Mercadoria.Value := NotasTerceirosItensCodigo_Mercadoria.Value;
                                 PedidosItensValor_BCICMSOper.Value  := Pedido_ItensOutros.CalculaMacro('Calculo_BCICMS');
-                                PedidosItensValor_ICMSOper.Value    := Pedido_ItensOutros.CalculaMacro('Calculo_ValorICMS');
+                                PedidosItensValor_ICMSOper.Value    := Pedido_ItensOutros.CalculaMacro('Calculo_VlrICMS');
                              end;
 
                              PedidosItensValor_Total.Value := Roundto(PedidosItensValor_Unitario.Value * PedidosItensQuantidade.Value, -2);
                              }
                      Pedido_ItensOutros.Recalcula;
+                     Pedido_ItensOutros.cValorCBSChange(nil);
       {
                        // Calculo do ICMS Desonerado.
                        PedidosItensValor_ICMSDesonerado.Value := 0;

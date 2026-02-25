@@ -375,6 +375,9 @@ type
     mSQLMatriz : Widestring;
     mSQLMatriz2: Widestring;
     mSQLFilial : Widestring;
+
+    mCompBanco
+   ,mCompClass: string;
   end;
 
 var
@@ -400,9 +403,13 @@ begin
            cAno.Value     := YearOf(Date);
            cMes.ItemIndex := MonthOf(Date)-2;
            cPagina.ActivePageIndex := 0;
+           mCompBanco := 'Bancos';
+           if Configuracao.fieldbyname('Compartilhar_Bancos').asboolean then mCompBanco := 'Cybersoft_Cadastros.dbo.Bancos';
+           mCompClass := 'ClassificacaoFinanceira';
+           if Configuracao.fieldbyname('Compartilhar_Classificacao').asboolean then mCompClass:= 'Cybersoft_Cadastros.dbo.ClassificacaoFinanceira';
       End;
 
-      // Carregando as ultimas opções utilizadas no relatório como default.
+      // Carregando as ultimas op  es utilizadas no relat rio como default.
       aINI                    := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
       cNomeArquivo.Text       := aINI.ReadString ('SPED_PISCOFINS_'+InttoStr(Menu_Principal.mEmpresa), 'Arquivo'     , 'CYBERSOFT_EFD_PISCOFINS' );
       cVersao.Text            := aINI.ReadString ('SPED_PISCOFINS_'+InttoStr(Menu_Principal.mEmpresa), 'Versao'      , '' );
@@ -432,7 +439,7 @@ Var
    aINI : TIniFile;
    i : Integer;
 begin
-      // Carregando as ultimas opções utilizadas no relatório como default.
+      // Carregando as ultimas op  es utilizadas no relat rio como default.
       aIni := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
       aINI.WriteString ('SPED_PISCOFINS_'+InttoStr(Menu_Principal.mEmpresa), 'Arquivo'     , cNomeArquivo.Text);
       aINI.WriteInteger('SPED_PISCOFINS_'+InttoStr(Menu_Principal.mEmpresa), 'Mes'         , cMes.ItemIndex);
@@ -476,17 +483,17 @@ Var
     mTipo: String;
 begin
      if trim(cVersao.text) = '' then begin
-        MessageDlg('Campo "Versão" é obrogatório.', mtError, [mbOK], 0);
+        MessageDlg('Campo "Vers o"   obrogat rio.', mtError, [mbOK], 0);
         cVersao.SetFocus;
         Abort;
      end;
      If (Trim(cRecibo.Text) = '') and (cTipo.ItemIndex = 1) then begin
-        MessageDlg('Para escrituração retificadora e obrigatório o número do recibo de entrega anterior!'+#13+#13+'Informe o número do recibo para gerar o arquivo.', mtInformation, [mbOK], 0);
+        MessageDlg('Para escritura  o retificadora e obrigat rio o n mero do recibo de entrega anterior!'+#13+#13+'Informe o n mero do recibo para gerar o arquivo.', mtInformation, [mbOK], 0);
         cRecibo.SetFocus;
         Abort;
      End;
      If (cMetodo.ItemIndex = -1) and (cIncidencia.ItemIndex <> 1) then begin
-        MessageDlg('Informe o "Método de apropriação de créditos comuns" para gerar o arquivo.', mtInformation, [mbOK], 0);
+        MessageDlg('Informe o "M todo de apropria  o de cr ditos comuns" para gerar o arquivo.', mtInformation, [mbOK], 0);
         cmetodo.SetFocus;
         Abort;
      End;
@@ -508,9 +515,9 @@ begin
           tEmpresas.ParamByName('pCNPJ').AsString     := Copy(EmpresasCNPJ.AsString, 1, 8);
           tEmpresas.Open;
 
-          // Verifica se a empresa atual é a "MATRIZ".
+          // Verifica se a empresa atual   a "MATRIZ".
           If EmpresasMatriz_Filial.AsBoolean = false then begin
-             If MessageDlg('Atenção!'+#13+#13+'A Empresa atual não é "MATRIZ", o arquivo deve ser gerado pela Matriz'+#13+#13+'Deseja gerar o arquivo mesmo assim?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then Abort;
+             If MessageDlg('Aten  o!'+#13+#13+'A Empresa atual n o   "MATRIZ", o arquivo deve se-r gerado pela Matriz'+#13+#13+'Deseja gerar o arquivo mesmo assim?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then Abort;
           End;
 
           cPagina.ActivePageIndex := 0;
@@ -534,51 +541,51 @@ begin
           //tItens.SQL.SaveToFile('c:\temp\SCRIPT_PIS_COFINS.SQL');
           tItens.Execute;
 
-          // Verifica se as alíquota básicas de PIS/COFINS Estão informadas em "Configuraçãoes".
+          // Verifica se as al quota b sicas de PIS/COFINS Est o informadas em "Configura  oes".
           If ConfiguracaoPIS_AliquotaBasica.AsFloat <= 0 then begin
              Inc(mErros);
-             cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': Informar a alíquota básica do PIS nas configurações do sistema.');
+             cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': Informar a al quota b sica do PIS nas configura  es do sistema.');
           End;
           If ConfiguracaoCOFINS_AliquotaBasica.AsFloat <= 0 then begin
              Inc(mErros);
-             cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': Informar a alíquota básica da COFINS nas configurações do sistema.');
+             cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': Informar a al quota b sica da COFINS nas configura  es do sistema.');
           End;
 
-          // Verifica se os dados das contas contabeis estão informados. (PIS).
+          // Verifica se os dados das contas contabeis est o informados. (PIS).
           If Trim(ConfiguracaoPIS_ContaCodigo.AsString) = '' then begin
-             cMsg.Lines.Add('Aviso: Informar o "Código da conta contábil" do PIS em configurações.');
+             cMsg.Lines.Add('Aviso: Informar o "C digo da conta cont bil" do PIS em configura  es.');
           End;
           If Trim(ConfiguracaoPIS_ContaNivel.AsString) = '' then begin
-             cMsg.Lines.Add('Aviso: Informar o "Nível da conta contábil" do PIS em configurações.');
+             cMsg.Lines.Add('Aviso: Informar o "N vel da conta cont bil" do PIS em configura  es.');
           End;
           If Trim(ConfiguracaoPIS_ContaNome.AsString) = '' then begin
-             cMsg.Lines.Add('Aviso: Informar o "Nome da conta contábil" do PIS em configurações.');
+             cMsg.Lines.Add('Aviso: Informar o "Nome da conta cont bil" do PIS em configura  es.');
           End;
           If Trim(ConfiguracaoPIS_ContaIndicador.AsString) = '' then begin
-             cMsg.Lines.Add('Aviso: Informar o "Nome da conta contábil" do PIS em configurações.');
+             cMsg.Lines.Add('Aviso: Informar o "Nome da conta cont bil" do PIS em configura  es.');
           End;
           If Trim(ConfiguracaoPIS_ContaNatureza.AsString) = '' then begin
-             cMsg.Lines.Add('AViso: Informar a "Natureza da conta contábil" do PIS em configurações.');
+             cMsg.Lines.Add('AViso: Informar a "Natureza da conta cont bil" do PIS em configura  es.');
           End;
 
-          // Verifica se os dados das contas contabeis estão informados. (COFINS).
+          // Verifica se os dados das contas contabeis est o informados. (COFINS).
           If Trim(ConfiguracaoCOFINS_ContaCodigo.AsString) = '' then begin
-             cMsg.Lines.Add('Aviso: Informar o "Código da conta contábil" do COFINS em configurações.');
+             cMsg.Lines.Add('Aviso: Informar o "C digo da conta cont bil" do COFINS em configura  es.');
           End;
           If Trim(ConfiguracaoCOFINS_ContaNivel.AsString) = '' then begin
-             cMsg.Lines.Add('Aviso: Informar o "Nível da conta contábil" do COFINS em configurações.');
+             cMsg.Lines.Add('Aviso: Informar o "N vel da conta cont bil" do COFINS em configura  es.');
           End;
           If Trim(ConfiguracaoCOFINS_ContaNome.AsString) = '' then begin
-             cMsg.Lines.Add('Aviso: Informar o "Nome da conta contábil" do COFINS em configurações.');
+             cMsg.Lines.Add('Aviso: Informar o "Nome da conta cont bil" do COFINS em configura  es.');
           End;
           If Trim(ConfiguracaoCOFINS_ContaIndicador.AsString) = '' then begin
-             cMsg.Lines.Add('Aviso: Informar o "Nome da conta contábil" do COFINS em configurações.');
+             cMsg.Lines.Add('Aviso: Informar o "Nome da conta cont bil" do COFINS em configura  es.');
           End;
           If Trim(ConfiguracaoCOFINS_ContaNatureza.AsString) = '' then begin
-             cMsg.Lines.Add('Aviso: Informar a "Natureza da conta contábil" do COFINS em configurações.');
+             cMsg.Lines.Add('Aviso: Informar a "Natureza da conta cont bil" do COFINS em configura  es.');
           End;
 
-          // Verifica se as unidades de medida das notas estão cadastradas - "MATRIZ".
+          // Verifica se as unidades de medida das notas est o cadastradas - "MATRIZ".
           tItens.SQL.Clear;
           tItens.SQL.Add('USE ' + Dados.Empresas.FieldByName('Banco_Dados').AsString);
           tItens.SQL.Add('SELECT DISTINCT Unidade_Medida, Nota, Data_Entrada AS Data, ''TERCEIROS'' AS Emissao');
@@ -586,7 +593,7 @@ begin
           tItens.SQL.Add('WHERE  (YEAR(Data_Entrada) = :pAno) AND (MONTH(Data_Entrada) = :pMes) AND (Apuracao_PISCOFINS = 1)');
           tItens.SQL.Add('       AND (SELECT COUNT(*) FROM Cybersoft_Cadastros.dbo.UnidadeMedida UM WHERE(UM.Codigo = NTI.Unidade_Medida)) = 0' );
           tItens.SQL.Add('UNION ALL');
-          tItens.SQL.Add('SELECT DISTINCT Unidade_Medida, Nota, Data, ''PRÓPRIA'' AS Emissao');
+          tItens.SQL.Add('SELECT DISTINCT Unidade_Medida, Nota, Data, ''PR PRIA'' AS Emissao');
           tItens.SQL.Add('FROM   NotasItens NI');
           tItens.SQL.Add('WHERE  (YEAR(Data) = :pAno) AND (MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1)');
           tItens.SQL.Add('       AND (SELECT COUNT(*) FROM Cybersoft_Cadastros.dbo.UnidadeMedida UM WHERE(UM.Codigo = NI.Unidade_Medida)) = 0');
@@ -604,12 +611,12 @@ begin
              While not tItens.Eof do begin
                    Inc(mErros);
                    cMsg.Lines.Add('            Erro '+PoeZero(3, mErros)+': Unidade de Medida ( '+tItens.FieldByName('Unidade_Medida').AsString +')'+
-                                   '  da nota fiscal de emissão ('+tItens.FieldByName('Emissao').AsString+') '+tItens.FieldByName('Nota').AsString+ ' de '+tItens.FieldByName('Data').AsString+' não cadastrada.');
+                                   '  da nota fiscal de emiss o ('+tItens.FieldByName('Emissao').AsString+') '+tItens.FieldByName('Nota').AsString+ ' de '+tItens.FieldByName('Data').AsString+' n o cadastrada.');
                    tItens.Next;
              End;
           End;
 
-          // Verifica se as unidades de medida das notas estão cadastradas - "FILIAIS".
+          // Verifica se as unidades de medida das notas est o cadastradas - "FILIAIS".
           tEmpresas.First;
           While not tEmpresas.Eof do begin
                 tItens.SQL.Clear;
@@ -635,7 +642,7 @@ begin
                    tItens.First;
                    While not tItens.Eof do begin
                          Inc(mErros);
-                         cMsg.Lines.Add('            Erro '+PoeZero(3, mErros)+': Unidade de Medida ( '+tItens.FieldByName('Unidade_Medida').AsString+ ' ) não cadastrada.');
+                         cMsg.Lines.Add('            Erro '+PoeZero(3, mErros)+': Unidade de Medida ( '+tItens.FieldByName('Unidade_Medida').AsString+ ' ) n o cadastrada.');
                          tItens.Next;
                    End;
                 End;
@@ -750,7 +757,7 @@ begin
                 tEmpresas.Next;
           End;
 
-          // Verifica se os tipos de nota fiscal estão com o campo de "Tipo_Credito /CST PIS /CST COFINS" informados.
+          // Verifica se os tipos de nota fiscal est o com o campo de "Tipo_Credito /CST PIS /CST COFINS" informados.
           // MATRIZ.
           tNotas.SQL.Clear;
           tNotas.SQL.Add('USE ' + Empresas.FieldByName('Banco_Dados').AsString);
@@ -769,7 +776,7 @@ begin
              While not tNotas.Eof do begin
                    If tNotas.FieldByName('Tipo_Credito').AsInteger = 0  then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Crédito" no Tipo de Nota :('+tNotas.FieldByName('Tipo_Nota').AsString+')')
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Cr dito" no Tipo de Nota :('+tNotas.FieldByName('Tipo_Nota').AsString+')')
                    End;
                    If Trim(tNotas.FieldByName('CST_PIS').AsString) = '' then begin
                       Inc(mErros);
@@ -804,7 +811,7 @@ begin
                    While not tNotas.Eof do begin
                          If tNotas.FieldByName('Tipo_Credito').AsInteger = 0  then begin
                             Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Crédito" no Tipo de Nota :('+tNotas.FieldByName('Tipo_Nota').AsString+')')
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Cr dito" no Tipo de Nota :('+tNotas.FieldByName('Tipo_Nota').AsString+')')
                          End;
                          If Trim(tNotas.FieldByName('CST_PIS').AsString) = '' then begin
                             Inc(mErros);
@@ -821,7 +828,7 @@ begin
                 tEmpresas.Next
           End;
 
-          // Verifica se as classificações financeiras estão com o campo de "Tipo_Credito /CST PIS /CST COFINS" informados.
+          // Verifica se as classifica  es financeiras est o com o campo de "Tipo_Credito /CST PIS /CST COFINS" informados.
           // MATRIZ.
           tClassificacao.SQL.Clear;
           tClassificacao.SQL.Add('USE ' + Empresas.FieldByName('Banco_Dados').AsString);
@@ -860,15 +867,15 @@ begin
              While not tClassificacao.Eof do begin
                    If tClassificacao.FieldByName('Tipo_Credito').AsInteger = 0  then begin
                       //Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Crédito" na Classificação Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Cr dito" na Classifica  o Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
                    End;
                    If Trim(tClassificacao.FieldByName('CST_COFINS').AsString) = '' then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Classificação Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Classifica  o Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
                    End;
                    If Trim(tClassificacao.FieldByName('Natureza_Receita').AsString) = '' then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Código da Natureza da Receita" na Classificação Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "C digo da Natureza da Receita" na Classifica  o Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
                    End;
                    tClassificacao.Next;
              End;
@@ -913,11 +920,11 @@ begin
                    While not tClassificacao.Eof do begin
                          If tClassificacao.FieldByName('Tipo_Credito').AsInteger = 0  then begin
                             //Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Crédito" na Classificação Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Cr dito" na Classifica  o Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
                          End;
                          If Trim(tClassificacao.FieldByName('CST_COFINS').AsString) = '' then begin
                             Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Classificação Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Classifica  o Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
                          End;
                          tClassificacao.Next;
                    End;
@@ -926,7 +933,7 @@ begin
                 tEmpresas.Next
           End;
 
-          // Verifica se as referências fiscais estão com o campo de "Tipo_Credito /CST PIS /CST COFINS" informados.
+          // Verifica se as refer ncias fiscais est o com o campo de "Tipo_Credito /CST PIS /CST COFINS" informados.
           // MATRIZ.
           tNotas.SQL.Clear;
           tNotas.SQL.Add('USE ' + Empresas.FieldByName('Banco_Dados').AsString);
@@ -952,15 +959,15 @@ begin
              While not tNotas.Eof do begin
                    If tNotas.FieldByName('Tipo_Credito').AsInteger = 0  then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Crédito" na Referência Fiscal')
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Cr dito" na Refer ncia Fiscal')
                    End;
                    If Trim(tNotas.FieldByName('CSTPIS').AsString) = '' then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST do PIS" na Referência Fiscal')
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST do PIS" na Refer ncia Fiscal')
                    End;
                    If Trim(tNotas.FieldByName('CSTCOFINS').AsString) = '' then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Referência Fiscal')
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Refer ncia Fiscal')
                    End;
                    cMsg.Lines.Add('                '+tNotas.FieldByName('Tipo_Nota').AsString + ' - '+tNotas.FieldByName('Descricao').AsString + '    ('+mTipo+': '+EmpresasNumero_Filial.AsString+' ' +EmpresasRazao_Social.AsString+' ('+EmpresasEstado.AsString+')   CNPJ:'+EmpresasCNPJ.AsString+')');
                    tNotas.Next;
@@ -992,15 +999,15 @@ begin
                    While not tNotas.Eof do begin
                          If tNotas.FieldByName('Tipo_Credito').AsInteger = 0  then begin
                             Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Crédito" na Referência Fiscal')
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Cr dito" na Refer ncia Fiscal')
                          End;
                          If Trim(tNotas.FieldByName('CSTPIS').AsString) = '' then begin
                             Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST do PIS" na Referência Fiscal')
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST do PIS" na Refer ncia Fiscal')
                          End;
                          If Trim(tNotas.FieldByName('CSTCOFINS').AsString) = '' then begin
                             Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Referência Fiscal')
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Refer ncia Fiscal')
                          End;
                          cMsg.Lines.Add('                '+tNotas.FieldByName('Tipo_Nota').AsString + ' - '+tNotas.FieldByName('Descricao').AsString + '    '+mTipo+': '+tEmpresas.FieldByName('Numero_Filial').AsString+' ' +tEmpresas.FieldByName('Razao_Social').AsString+'('+ tEmpresas.FieldByName('Estado').AsString+ ')  CNPJ:'+tEmpresas.FieldByName('CNPJ').AsString+')');
                          tNotas.Next;
@@ -1009,7 +1016,7 @@ begin
                 tEmpresas.Next
           End;
 
-          // Verifica se os itens da nota fiscal de terceiros tem Alíquotas e CST de PISCOFINS.
+          // Verifica se os itens da nota fiscal de terceiros tem Al quotas e CST de PISCOFINS.
           // MATRIZ.
           tNotas.SQL.Clear;
           tNotas.SQL.Add('USE ' + Empresas.FieldByName('Banco_Dados').AsString);
@@ -1033,19 +1040,19 @@ begin
              While not tNotas.Eof do begin
                    If Trim(tNotas.FieldByName('CST_PIS').AsString) = ''  then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a CST do PIS na Nota Fiscal de Terceiros Nº '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a CST do PIS na Nota Fiscal de Terceiros N  '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
                    End;
                    If (tNotas.FieldByName('Aliquota_PIS').AsFloat <= 0) and (tNotas.FieldByName('CST_PIS').AsString <> '98') then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a Alíquota do PIS na Nota Fiscal de Terceiros Nº '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a Al quota do PIS na Nota Fiscal de Terceiros N  '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
                    End;
                    If Trim(tNotas.FieldByName('CST_COFINS').AsString) = ''  then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a CST da COFINS na Nota Fiscal de Terceiros Nº '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a CST da COFINS na Nota Fiscal de Terceiros N  '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
                    End;
                    If (tNotas.FieldByName('Aliquota_COFINS').AsFloat <= 0) and (tNotas.FieldByName('CST_COFINS').AsString <> '98') then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a Alíquota da COFINS na Nota Fiscal de Terceiros Nº '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a Al quota da COFINS na Nota Fiscal de Terceiros N  '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
                    End;
 
                    cMsg.Lines.Add('                '+mTipo+': '+EmpresasNumero_Filial.AsString+' ' +EmpresasRazao_Social.AsString+ '  CNPJ:'+EmpresasCNPJ.AsString+')');
@@ -1077,19 +1084,19 @@ begin
                    While not tNotas.Eof do begin
                          If Trim(tNotas.FieldByName('CST_PIS').AsString) = ''  then begin
                             Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a CST do PIS na Nota Fiscal de Terceiros Nº '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a CST do PIS na Nota Fiscal de Terceiros N  '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
                          End;
                          If tNotas.FieldByName('Aliquota_PIS').AsFloat <= 0  then begin
                             Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a Alíquota do PIS na Nota Fiscal de Terceiros Nº '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a Al quota do PIS na Nota Fiscal de Terceiros N  '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
                          End;
                          If Trim(tNotas.FieldByName('CST_COFINS').AsString) = ''  then begin
                             Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a CST da COFINS na Nota Fiscal de TerceirosNº '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a CST da COFINS na Nota Fiscal de TerceirosN  '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
                          End;
                          If tNotas.FieldByName('Aliquota_COFINS').AsFloat <= 0  then begin
                             Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a Alíquota da COFINS na Nota Fiscal de TerceirosNº '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar a Al quota da COFINS na Nota Fiscal de TerceirosN  '+tNotas.FieldByName('Nota').AsString+ ' de '+tNotas.FieldByName('Data_Entrada').AsString);
                          End;
 
                          cMsg.Lines.Add('                '+mTipo+': '+EmpresasNumero_Filial.AsString+' ' +EmpresasRazao_Social.AsString+ '  CNPJ:'+EmpresasCNPJ.AsString+')');
@@ -1117,7 +1124,7 @@ begin
              tItens.First;
              While not tItens.Eof do begin
                    Inc(mErros);
-                   cMsg.Lines.Add('                Erro '+PoeZero(3, mErros)+': '+'Nota Fiscal nº '+tItens.FieldByName('Nota').AsString+ ' de '+tItens.FieldByName('Data').AsString+'     Item:'+tItens.FieldByName('Item').AsString+ '     Codigo:'+tItens.FieldByName('Nota').AsString+ '   Tipo Nota:'+tItens.FieldByName('Tipo_Nota').AsString);
+                   cMsg.Lines.Add('                Erro '+PoeZero(3, mErros)+': '+'Nota Fiscal n  '+tItens.FieldByName('Nota').AsString+ ' de '+tItens.FieldByName('Data').AsString+'     Item:'+tItens.FieldByName('Item').AsString+ '     Codigo:'+tItens.FieldByName('Nota').AsString+ '   Tipo Nota:'+tItens.FieldByName('Tipo_Nota').AsString);
                    tItens.Next;
              End;
              cMsg.Lines.Add('                '+mTipo+': '+EmpresasNumero_Filial.AsString+' ' +EmpresasRazao_Social.AsString+ '  CNPJ:'+EmpresasCNPJ.AsString+')');
@@ -1144,7 +1151,7 @@ begin
                    tItens.First;
                    While not tItens.Eof do begin
                          Inc(mErros);
-                         cMsg.Lines.Add('                Erro '+PoeZero(3, mErros)+': '+'Nota Fiscal nº '+tItens.FieldByName('Nota').AsString+ ' de '+tItens.FieldByName('Data').AsString+'     Item:'+tItens.FieldByName('Item').AsString+ '     Codigo:'+tItens.FieldByName('Nota').AsString);
+                         cMsg.Lines.Add('                Erro '+PoeZero(3, mErros)+': '+'Nota Fiscal n  '+tItens.FieldByName('Nota').AsString+ ' de '+tItens.FieldByName('Data').AsString+'     Item:'+tItens.FieldByName('Item').AsString+ '     Codigo:'+tItens.FieldByName('Nota').AsString);
                          tItens.Next;
                    End;
                    cMsg.Lines.Add('                '+mTipo+': '+tEmpresas.FieldByName('Numero_Filial').AsString+' ' +tEmpresas.FieldByName('Razao_Social').AsString+ '  CNPJ:'+tEmpresas.FieldByName('CNPJ').AsString+')');
@@ -1152,7 +1159,7 @@ begin
                 tEmpresas.Next;
           End;
           
-          // Verifica se as NCM'S tem o campo gênero informado.
+          // Verifica se as NCM'S tem o campo g nero informado.
           // MATRIZ.
           tNCM.SQL.Clear;
           tNCM.SQL.Add('USE ' + Empresas.FieldByName('Banco_Dados').AsString);
@@ -1182,7 +1189,7 @@ begin
              tNCM.First;
              While not tNCM.Eof do begin
                    Inc(mErros);
-                   cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar o gênero do produto no cadastro da NCM Nº '+tNCM.FieldByName('NCM').AsString);
+                   cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar o g nero do produto no cadastro da NCM N  '+tNCM.FieldByName('NCM').AsString);
                    tNCM.Next;
              End;
              cMsg.Lines.Add('                '+mTipo+': '+EmpresasNumero_Filial.AsString+' ' +EmpresasRazao_Social.AsString+ '  CNPJ:'+EmpresasCNPJ.AsString+')');
@@ -1217,7 +1224,7 @@ begin
                    tNCM.First;
                    While not tNCM.Eof do begin
                          Inc(mErros);
-                         cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar o gênero do produto no cadastro da NCM Nº '+tNCM.FieldByName('NCM').AsString);
+                         cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar o g nero do produto no cadastro da NCM N  '+tNCM.FieldByName('NCM').AsString);
                          tNCM.Next;
                    End;
                    cMsg.Lines.Add('                '+mTipo+': '+tEmpresas.FieldByName('Numero_Filial').AsString+' ' +tEmpresas.FieldByName('Razao_Social').AsString+ '  CNPJ:'+tEmpresas.FieldByName('CNPJ').AsString+')');
@@ -1226,7 +1233,7 @@ begin
                 tEmpresas.Next;
           End;
 
-          // Verifica se as NCM'S dos itens estão iguais ao cadastro do produto.
+          // Verifica se as NCM'S dos itens est o iguais ao cadastro do produto.
           // MATRIZ.
           tNCM.SQL.Clear;
           tNCM.SQL.Add('USE ' + Empresas.FieldByName('Banco_Dados').AsString);
@@ -1246,7 +1253,7 @@ begin
           tNCM.SQL.Add('       Codigo_Mercadoria,');
           tNCM.SQL.Add('       NCM AS NCM_Nota,');
           tNCM.SQL.Add('       (SELECT NCM FROM Produtos WHERE(Codigo = NTI.Codigo_Mercadoria)) AS NCM_Produto,');
-          tNCM.SQL.Add('       ''Própria''');
+          tNCM.SQL.Add('       ''Pr pria''');
           tNCM.SQL.Add('FROM NotasItens NTI');
           tNCM.SQL.Add('WHERE NTI.NCM <> (SELECT NCM FROM Produtos WHERE(Codigo = NTI.Codigo_Mercadoria)) AND (MONTH(Data) = :pMes AND YEAR(Data) = :pAno) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1)');
           tNCM.SQL.Add('ORDER BY Nota');
@@ -1289,7 +1296,7 @@ begin
                 tNCM.SQL.Add('       Codigo_Mercadoria,');
                 tNCM.SQL.Add('       NCM AS NCM_Nota,');
                 tNCM.SQL.Add('       (SELECT NCM FROM Produtos WHERE(Codigo = NTI.Codigo_Mercadoria)) AS NCM_Produto,');
-                tNCM.SQL.Add('       ''Própria''');
+                tNCM.SQL.Add('       ''Pr pria''');
                 tNCM.SQL.Add('FROM NotasItens NTI');
                 tNCM.SQL.Add('WHERE NTI.NCM <> (SELECT NCM FROM Produtos WHERE(Codigo = NTI.Codigo_Mercadoria)) AND (MONTH(Data) = :pMes AND YEAR(Data) = :pAno) AND (Apuracao_PISCOFINS = 1)  AND (Cancelada <> 1)');
                 tNCM.SQL.Add('ORDER BY Nota');
@@ -1360,7 +1367,7 @@ begin
           Janela_ProcessamentoSPED.lProcesso.Caption  := 'Gerando...'+cNomeArquivo.Text;
           Janela_ProcessamentoSPED.Show;
 
-          // BLOCO 0: (Abertura, Identificação e Referências).
+          // BLOCO 0: (Abertura, Identifica  o e Refer ncias).
           If Funcoes.Cancelado = false then Registro0000;
                       If Funcoes.Cancelado = false then Registro0001;
                                   If Funcoes.Cancelado = false then Registro0100;
@@ -1377,7 +1384,7 @@ begin
                                   if cTipo.ItemIndex = 1 then Registro0900;
                       If Funcoes.Cancelado = false then Registro0990;
 
-          // BLOCO A: (Documentos Fiscais - Serviços "Não Sujeitos ao ICMS").
+          // BLOCO A: (Documentos Fiscais - Servi os "N o Sujeitos ao ICMS").
                       If Funcoes.Cancelado = false then RegistroA001;
                                   //RegistroA010;
                                   //RegistroA100;
@@ -1466,7 +1473,7 @@ begin
           Screen.Cursor := crDefault;
 
           If Funcoes.Cancelado then begin
-             ShowMessage('Operação cancelada pelo usuário, Arquivo incompleto.');
+             ShowMessage('Opera  o cancelada pelo usu rio, Arquivo incompleto.');
              Abort;
           End;
 
@@ -1497,8 +1504,8 @@ begin
            mRegistro := '|0000' +                                                                 // 01 - REG.
                         '|'+ cVersao.text +                                                       // 02 - Codigo Versao Layout.
                         '|'+ InttoStr(cTipo.ItemIndex) +                                          // 03 - Codigo da finalidade do arquivo.
-                        '|'+ mSituacao +                                                          // 04 - Indicador de situação especial.
-                        '|'+ Trim(cRecibo.Text) +                                                 // 05 - Número do recibo anterior.
+                        '|'+ mSituacao +                                                          // 04 - Indicador de situa  o especial.
+                        '|'+ Trim(cRecibo.Text) +                                                 // 05 - N mero do recibo anterior.
                         '|'+ RemoveCaracter('/','',mDataIni) +                                    // 06 - Data inicial dos dados.
                         '|'+ RemoveCaracter('/','',mDataFim) +                                    // 07 - Data final dos dados.
                         '|'+ Trim(EmpresasRazao_Social.Value) +                                   // 08 - Nome empresarial da entidade.
@@ -1550,12 +1557,12 @@ begin
                         '|'+ Trim(EmpresasContador_CEP.Value) +                      // 06 - CEP.
                         '|'+ Copy(EmpresasContador_Rua.Value, 1, 60) +               // 07 - Rua.
                         '|'+ Trim(EmpresasContador_Numero.Value) +                   // 08 - Numero do imovel.
-                        '|'+ Trim(EmpresasContador_Complemento.Value) +              // 09 - Complemento do endereço.
+                        '|'+ Trim(EmpresasContador_Complemento.Value) +              // 09 - Complemento do endere o.
                         '|'+ Trim(EmpresasContador_Bairro.Value) +                   // 10 - Bairro.
                         '|'+ Trim(EmpresasContador_Telefone.Value) +                 // 11 - Telefone.
                         '|'+ Trim(EmpresasContador_FAX.Value) +                      // 12 - FAX.
                         '|'+ Trim(EmpresasContador_Email.Value) +                    // 13 - FAX.
-                        '|'+ Poezero(7,EmpresasContador_Municipio.AsInteger)+'|';    // 14 - Codigo do município.
+                        '|'+ Poezero(7,EmpresasContador_Municipio.AsInteger)+'|';    // 14 - Codigo do munic pio.
            Say( mLinha, 000, Arquivo, mRegistro );
 
            Inc(mQtdeReg0100);
@@ -1596,12 +1603,12 @@ begin
                                '|'+ Trim(tEmpresas.FieldByName('Contador_CEP').AsString) +                      // 06 - CEP.
                                '|'+ Copy(tEmpresas.FieldByName('Contador_Rua').AsString, 1, 60) +               // 07 - Rua.
                                '|'+ Trim(tEmpresas.FieldByName('Contador_Numero').AsString) +                   // 08 - Numero do imovel.
-                               '|'+ Trim(tEmpresas.FieldByName('Contador_Complemento').AsString) +              // 09 - Complemento do endereço.
+                               '|'+ Trim(tEmpresas.FieldByName('Contador_Complemento').AsString) +              // 09 - Complemento do endere o.
                                '|'+ Trim(tEmpresas.FieldByName('Contador_Bairro').AsString) +                   // 10 - Bairro.
                                '|'+ Trim(tEmpresas.FieldByName('Contador_Telefone').AsString) +                 // 11 - Telefone.
                                '|'+ Trim(tEmpresas.FieldByName('Contador_FAX').AsString) +                      // 12 - FAX.
                                '|'+ Trim(tEmpresas.FieldByName('Contador_Email').AsString) +                    // 13 - FAX.
-                               '|'+ Poezero(7,tEmpresas.FieldByName('Contador_Municipio').AsInteger)+'|';       // 14 - Codigo do município.
+                               '|'+ Poezero(7,tEmpresas.FieldByName('Contador_Municipio').AsInteger)+'|';       // 14 - Codigo do munic pio.
                   Say( mLinha, 000, Arquivo, mRegistro );
 
                   Inc(mQtdeReg0100);
@@ -1615,23 +1622,23 @@ begin
       End;
 end;
 
-{* REGISTRO 0110 - REGIMES DE APURAÇÃO DA CONTRIBUIÇÃO SOCIAL E DE APROPRIAÇÃO DE CRÉDITO *}
+{* REGISTRO 0110 - REGIMES DE APURA  O DA CONTRIBUI  O SOCIAL E DE APROPRIA  O DE CR DITO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.Registro0110;
 begin
-      Progresso1('Regimes de Apuração da Contribuição', 1);
+      Progresso1('Regimes de Apura  o da Contribui  o', 1);
 
       Inc(mLinha);
       mRegistro := '|0110' +                                                              // 01 - REG.
                    '|'+ InttoStr(cIncidencia.ItemIndex+1);                                // 02 - Codigo de incidencia tribbutaria.
                    If cMetodo.ItemIndex <> -1 then begin
-                      mRegistro := mRegistro + '|'+ InttoStr(cMetodo.ItemIndex+1);        // 03 - Código indicador de método de apropriação de créditos comuns, no caso de incidência no regime não-cumulativo.
+                      mRegistro := mRegistro + '|'+ InttoStr(cMetodo.ItemIndex+1);        // 03 - C digo indicador de m todo de apropria  o de cr ditos comuns, no caso de incid ncia no regime n o-cumulativo.
                    end else begin
                       mRegistro := mRegistro + '|';
                    End;
-                   mRegistro := mRegistro + '|'+ InttoStr(cContribuicao.ItemIndex+1);     // 04 - Código indicador do Tipo de Contribuição Apurada no Período.
+                   mRegistro := mRegistro + '|'+ InttoStr(cContribuicao.ItemIndex+1);     // 04 - C digo indicador do Tipo de Contribui  o Apurada no Per odo.
 
                    If cIncidencia.ItemIndex = 1 then begin
-                      If cCriterio.ItemIndex = 0 then begin                               // 05 - Código indicador do critério de escrituração e apuração adotado,
+                      If cCriterio.ItemIndex = 0 then begin                               // 05 - C digo indicador do crit rio de escritura  o e apura  o adotado,
                          mRegistro := mRegistro + '|1|';
                       End;
                       If cCriterio.ItemIndex = 1 then begin
@@ -1653,7 +1660,7 @@ begin
       If (cMetodo.ItemIndex + 1) = 2 then If Funcoes.Cancelado = false then Registro0111;
 end;
 
-{* REGISTRO 0111: TABELA DE RECEITA BRUTA MENSAL PARA FINS DE RATEIO DE CRÉDITOS COMUNS *}
+{* REGISTRO 0111: TABELA DE RECEITA BRUTA MENSAL PARA FINS DE RATEIO DE CR DITOS COMUNS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.Registro0111;
 var
    mTotalBruto: Real;
@@ -1697,9 +1704,9 @@ begin
 
       Inc(mLinha);
       mRegistro := '|0111' +                                                                     // 01 - REG.
-                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_Trib').AsCurrency) +      // 02 - Receita Bruta Não-Cumulativa - Tributada no Mercado Interno.
-                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_NTrib').AsCurrency) +     // 03 - Receita Bruta Não-Cumulativa - Não Tributada no Mercado Interno (Vendas com suspensão, alíquota zero, isenção e sem incidência das contribuições).
-                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_Export').AsCurrency) +    // 04 - Receita Bruta Não-Cumulativa - Exportação.
+                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_Trib').AsCurrency) +      // 02 - Receita Bruta N o-Cumulativa - Tributada no Mercado Interno.
+                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_NTrib').AsCurrency) +     // 03 - Receita Bruta N o-Cumulativa - N o Tributada no Mercado Interno (Vendas com suspens o, al quota zero, isen  o e sem incid ncia das contribui  es).
+                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_Export').AsCurrency) +    // 04 - Receita Bruta N o-Cumulativa - Exporta  o.
                    '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_Cumul').AsCurrency) +     // 05 - Receita Bruta Cumulativa.
                    '|'+ FormatFloat('#0.00', mTotalBruto) +                                      // 06 - Receita Bruta total.
                    '|';
@@ -1711,7 +1718,7 @@ begin
       Progresso3('Registro: 0111...', 0);
 end;
 
-{* REGISTRO 0120:  IDENTIFICAÇÃO DE EFD-CONTRIBUIÇÕES SEM DADOS A ESCRITURAR *}
+{* REGISTRO 0120:  IDENTIFICA  O DE EFD-CONTRIBUI  ES SEM DADOS A ESCRITURAR *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.Registro0120;
 begin
      Progresso1('Cadastro de Estabelecimentos', tEmpresas.RecordCount+1);
@@ -1720,8 +1727,8 @@ begin
           // Matriz.
           Inc(mLinha);
           mRegistro := '|0120' +                                                         // 01 - REG.
-                       '|'+ Empresas.FieldByName('Codigo').AsString +                    // 02 - Mês de referência do ano-calendário da escrituração sem dados, dispensada da entrega.
-                       '|'+ Trim(Empresas.FieldByName('Razao_Social').AsString)+         // 03 - Informação complementar do registro.
+                       '|'+ Empresas.FieldByName('Codigo').AsString +                    // 02 - M s de refer ncia do ano-calend rio da escritura  o sem dados, dispensada da entrega.
+                       '|'+ Trim(Empresas.FieldByName('Razao_Social').AsString)+         // 03 - Informa  o complementar do registro.
                        '|';
           Say( mLinha, 000, Arquivo, mRegistro );
           Inc(mQtdeReg0120);
@@ -1738,14 +1745,14 @@ begin
           // Matriz.
           Inc(mLinha);
           mRegistro := '|0140' +                                                         // 01 - REG.
-                       '|'+ Empresas.FieldByName('Codigo').AsString +                    // 02 - Código de identificação do estabelecimento.
+                       '|'+ Empresas.FieldByName('Codigo').AsString +                    // 02 - C digo de identifica  o do estabelecimento.
                        '|'+ Trim(Empresas.FieldByName('Razao_Social').AsString)+         // 03 - Nome empresarial do estabelecimento
-                       '|'+ Trim(Empresas.FieldByName('CNPJ').AsString)+                 // 04 - Número de inscrição do estabelecimento no CNPJ.
+                       '|'+ Trim(Empresas.FieldByName('CNPJ').AsString)+                 // 04 - N mero de inscri  o do estabelecimento no CNPJ.
                        '|'+ Trim(Empresas.FieldByName('Estado').AsString)+               // 05 - Estado.
-                       '|'+ Trim(Empresas.FieldByName('IE').AsString)+                   // 06 - Incrição estadual.
-                       '|'+ Trim(Empresas.FieldByName('Municipio_Codigo').AsString)+     // 07 - Código do Municipio.
-                       '|'+ Trim(Empresas.FieldByName('IM').AsString)+                   // 08 - Inscrição Municipal.
-                       '|'+ Trim(Empresas.FieldByName('Inscricao_SUFRAMA').AsString)+    // 09 - Inscrição SUFRAMA.
+                       '|'+ Trim(Empresas.FieldByName('IE').AsString)+                   // 06 - Incri  o estadual.
+                       '|'+ Trim(Empresas.FieldByName('Municipio_Codigo').AsString)+     // 07 - C digo do Municipio.
+                       '|'+ Trim(Empresas.FieldByName('IM').AsString)+                   // 08 - Inscri  o Municipal.
+                       '|'+ Trim(Empresas.FieldByName('Inscricao_SUFRAMA').AsString)+    // 09 - Inscri  o SUFRAMA.
                        '|';
           Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -1781,14 +1788,14 @@ begin
                 If tNotas.FieldByName('Movimento').AsInteger > 0 then begin
                    Inc(mLinha);
                    mRegistro := '|0140' +                                                          // 01 - REG.
-                                '|'+ tEmpresas.FieldByName('Codigo').AsString +                    // 02 - Código de identificação do estabelecimento.
+                                '|'+ tEmpresas.FieldByName('Codigo').AsString +                    // 02 - C digo de identifica  o do estabelecimento.
                                 '|'+ Trim(tEmpresas.FieldByName('Razao_Social').AsString)+         // 03 - Nome empresarial do estabelecimento
-                                '|'+ Trim(tEmpresas.FieldByName('CNPJ').AsString)+                 // 04 - Número de inscrição do estabelecimento no CNPJ.
+                                '|'+ Trim(tEmpresas.FieldByName('CNPJ').AsString)+                 // 04 - N mero de inscri  o do estabelecimento no CNPJ.
                                 '|'+ Trim(tEmpresas.FieldByName('Estado').AsString)+               // 05 - Estado.
-                                '|'+ Trim(tEmpresas.FieldByName('IE').AsString)+                   // 06 - Incrição estadual.
-                                '|'+ Trim(tEmpresas.FieldByName('Municipio_Codigo').AsString)+     // 07 - Código do Municipio.
-                                '|'+ Trim(tEmpresas.FieldByName('IM').AsString)+                   // 08 - Inscrição Municipal.
-                                '|'+ Trim(tEmpresas.FieldByName('Inscricao_SUFRAMA').AsString)+    // 09 - Inscrição SUFRAMA.
+                                '|'+ Trim(tEmpresas.FieldByName('IE').AsString)+                   // 06 - Incri  o estadual.
+                                '|'+ Trim(tEmpresas.FieldByName('Municipio_Codigo').AsString)+     // 07 - C digo do Municipio.
+                                '|'+ Trim(tEmpresas.FieldByName('IM').AsString)+                   // 08 - Inscri  o Municipal.
+                                '|'+ Trim(tEmpresas.FieldByName('Inscricao_SUFRAMA').AsString)+    // 09 - Inscri  o SUFRAMA.
                                 '|';
                    Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -1971,17 +1978,17 @@ begin
             If mCNPJ = '00000000000000' then mCNPJ := '';
 
             mRegistro := '|0150' +                                                       // 01 - REG.
-                         '|'+ Trim(tNotas.FieldByName('Codigo').AsString)+               // 02 - Código de identificação do estabelecimento.
+                         '|'+ Trim(tNotas.FieldByName('Codigo').AsString)+               // 02 - C digo de identifica  o do estabelecimento.
                          '|'+ Trim(tNotas.FieldByName('Nome').AsString)+                 // 03 - Nome empresarial do estabelecimento.
                          '|'+ Trim(tNotas.FieldByName('Pais').AsString)+                 // 04 - Nome empresarial do estabelecimento.
-                         '|'+ mCNPJ +                                                    // 05 - Número de inscrição do estabelecimento no CNPJ.
-                         '|'+ Trim(tNotas.FieldByName('CPF').AsString)+                  // 06 - Número de inscrição do CPF.
-                         '|'+ mIE +                                                      // 07 - Incrição estadual.
-                         '|'+ Trim(tNotas.FieldByName('Municipio_Codigo').AsString)+     // 08 - Código do Municipio.
-                         '|'+ Trim(tNotas.FieldByName('SUFRAMA').AsString)+              // 09 - Inscrição SUFRAMA.
-                         '|'+ Trim(tNotas.FieldByName('Rua').AsString)+                  // 10 - Endereço.
-                         '|'+ Trim(tNotas.FieldByName('Rua_Numero').AsString)+           // 11 - Número na rua.
-                         '|'+ Trim(tNotas.FieldByName('Complemento').AsString)+          // 12 - Complemento do endereço.
+                         '|'+ mCNPJ +                                                    // 05 - N mero de inscri  o do estabelecimento no CNPJ.
+                         '|'+ Trim(tNotas.FieldByName('CPF').AsString)+                  // 06 - N mero de inscri  o do CPF.
+                         '|'+ mIE +                                                      // 07 - Incri  o estadual.
+                         '|'+ Trim(tNotas.FieldByName('Municipio_Codigo').AsString)+     // 08 - C digo do Municipio.
+                         '|'+ Trim(tNotas.FieldByName('SUFRAMA').AsString)+              // 09 - Inscri  o SUFRAMA.
+                         '|'+ Trim(tNotas.FieldByName('Rua').AsString)+                  // 10 - Endere o.
+                         '|'+ Trim(tNotas.FieldByName('Rua_Numero').AsString)+           // 11 - N mero na rua.
+                         '|'+ Trim(tNotas.FieldByName('Complemento').AsString)+          // 12 - Complemento do endere o.
                          '|'+ Trim(tNotas.FieldByName('Bairro').AsString)+               // 13 - Bairro.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
@@ -1994,7 +2001,7 @@ begin
       End;
 end;
 
-{* REGISTRO 0190: IDENTIFICAÇÃO DAS UNIDADES DE MEDIDA *}
+{* REGISTRO 0190: IDENTIFICA  O DAS UNIDADES DE MEDIDA *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.Registro0190(Empresa: Integer);
 begin
       With Dados do begin
@@ -2043,8 +2050,8 @@ begin
            While not tUnidades.Eof do begin
                  Inc(mLinha);
                  mRegistro := '|0190' +                                                                  // 01 - REG.
-                              '|'+ Trim(tUnidades.FieldByName('Unidade_Medida').AsString)+               // 02 - Código da unidades.
-                              '|'+ Trim(tUnidades.FieldByName('Descricao').AsString)+'|';                // 03 - Descrição.
+                              '|'+ Trim(tUnidades.FieldByName('Unidade_Medida').AsString)+               // 02 - C digo da unidades.
+                              '|'+ Trim(tUnidades.FieldByName('Descricao').AsString)+'|';                // 03 - Descri  o.
 
                  Say( mLinha, 000, Arquivo, mRegistro );
                  Inc(mQtdeReg0190);
@@ -2057,7 +2064,7 @@ begin
       End;
 end;
 
-{* REGISTRO 0200: TABELA DE IDENTIFICAÇÃO DO ITEM (PRODUTOS E SERVIÇOS *}
+{* REGISTRO 0200: TABELA DE IDENTIFICA  O DO ITEM (PRODUTOS E SERVI OS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.Registro0200(Empresa: Integer);
 Var
     mDescricao: WideString;
@@ -2172,10 +2179,10 @@ begin
      //tItens.SQL.SaveToFile('c:\temp\SPED_PISCOFINS_REG0200_Empresa'+tEmpresas.FieldByName('Banco_Dados').AsString+'_'+InttoStr(Empresa)+'.SQL');
      tItens.Open;
      
-     Progresso3('Produtos/Serviços', tItens.RecordCount);
+     Progresso3('Produtos/Servi os', tItens.RecordCount);
 
      While (not tItens.Eof) and (not Funcoes.Cancelado) do begin
-           // Limpando codigos de controle da descrição do item.
+           // Limpando codigos de controle da descri  o do item.
            mDescricao := Trim(tItens.FieldByName('Descricao_Mercadoria').AsString);
            mDescricao := RemoveCaracter(#13, '', mDescricao);
            mDescricao := RemoveCaracter(#12, '', mDescricao);
@@ -2186,17 +2193,17 @@ begin
 
            Inc(mLinha);
            mRegistro := '|0200' +                                                                      // 01 - REG.
-                        '|'+ Trim(tItens.FieldByName('Codigo_Mercadoria').AsString)+                   // 02 - Código do produto.
-                        '|'+ mDescricao +                                                              // 03 - Descrição.
-                        '|'+                                                                           // 04 - Código de barras.
-                        '|'+                                                                           // 05 - Código anterior do item.
+                        '|'+ Trim(tItens.FieldByName('Codigo_Mercadoria').AsString)+                   // 02 - C digo do produto.
+                        '|'+ mDescricao +                                                              // 03 - Descri  o.
+                        '|'+                                                                           // 04 - C digo de barras.
+                        '|'+                                                                           // 05 - C digo anterior do item.
                         '|'+ Trim(tItens.FieldByName('Unidade_Medida').AsString)+                      // 06 - Unidade de medida.
                         '|'+ PoeZero(2, tItens.FieldByName('Tipo_Item').AsInteger)+                    // 07 - Tipo do Item.
                         '|'+ Trim(tItens.FieldByName('NCM').AsString)+                                 // 08 - NCM.
-                        '|'+ Trim(tItens.FieldByName('EX_TIPI').AsString)+                             // 09 - Código EX TIPI.
+                        '|'+ Trim(tItens.FieldByName('EX_TIPI').AsString)+                             // 09 - C digo EX TIPI.
                         '|'+ PoeZero(2, tItens.FieldByName('Genero').AsInteger)+                       // 10 - Genero do item.
-                        '|'+                                                                           // 11 - Código do serviço conforme lista do Anexo I da Lei Complementar Federal nº 116/03.
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Aliquota_ICMSOper').AsFloat)+    // 12 - Alíquota de ICMS aplicável ao item nas operações internas.
+                        '|'+                                                                           // 11 - C digo do servi o conforme lista do Anexo I da Lei Complementar Federal n  116/03.
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Aliquota_ICMSOper').AsFloat)+    // 12 - Al quota de ICMS aplic vel ao item nas opera  es internas.
                         '|';
            Say(mLinha, 000, Arquivo, mRegistro);
            
@@ -2209,7 +2216,7 @@ begin
      End;
 end;
 
-{* REGISTRO 0400: TABELA DE NATUREZA DA OPERAÇÃO/PRESTAÇÃO *}
+{* REGISTRO 0400: TABELA DE NATUREZA DA OPERA  O/PRESTA  O *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.Registro0400(Empresa: Integer);
 begin
       With Dados, dmFiscal do begin
@@ -2235,13 +2242,13 @@ begin
            //tNatureza.SQL.SaveToFile('c:\temp\SPED_PISCOFINS_REG0400.SQL');
            tNatureza.Open;
 
-           Progresso3('Natureza da Operação', tNatureza.RecordCount);
+           Progresso3('Natureza da Opera  o', tNatureza.RecordCount);
 
            While not tNatureza.Eof do begin
                  Inc(mLinha);
                  mRegistro := '|0400' +                                                                        // 01 - REG.
-                              '|'+ Copy(tNatureza.FieldByName('Natureza_Codigo').AsString,1,1)+'000'+          // 02 - Código da natureza da operação.
-                              '|'+ Trim(tNatureza.FieldByName('Descricao').AsString)+                          // 03 - Descrição.
+                              '|'+ Copy(tNatureza.FieldByName('Natureza_Codigo').AsString,1,1)+'000'+          // 02 - C digo da natureza da opera  o.
+                              '|'+ Trim(tNatureza.FieldByName('Descricao').AsString)+                          // 03 - Descri  o.
                               '|';
                  Say( mLinha, 000, Arquivo, mRegistro );
                  Inc(mQtdeReg0400);
@@ -2254,7 +2261,7 @@ begin
       End;
 end;
 
-{* REGISTRO 0500: PLANO DE CONTAS CONTÁBEIS *}
+{* REGISTRO 0500: PLANO DE CONTAS CONT BEIS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.Registro0500;
 begin
       tContas.SQL.Clear;
@@ -2344,24 +2351,24 @@ begin
       //tContas.SQL.SaveToFile('c:\temp\SPED_PIS_COFINS_REGISTRO_0500.sql');
       tContas.Open;
 
-      Progresso3('Plano de Contas Contábeis', tContas.RecordCount);
+      Progresso3('Plano de Contas Cont beis', tContas.RecordCount);
       tContas.first;
       while not tContas.Eof do begin
             Inc(mLinha);
             mRegistro := '|0500' +                                                                      // 01 - REG.
-                         '|'+ RemoveCaracter('/','',tContas.FieldByName('Data').AsString) +             // 02 - Data da inclusão alteração.
+                         '|'+ RemoveCaracter('/','',tContas.FieldByName('Data').AsString) +             // 02 - Data da inclus o altera  o.
                          '|'+ tContas.FieldbyName('Grupo').AsString +                                   // 03 - Natureza da conta "Grupo de Contas".
                          '|'+ tContas.FieldbyName('Tipo').AsString+                                     // 04 - Indicador do tipo de conta. (S-Sintetica / A - Analitica.
                          '|'+ tContas.FieldbyName('Nivel').AsString+                                    // 05 - Nivel da conta analitica / grupo de contas.
-                         '|'+ tContas.FieldbyName('Conta').AsString+                                    // 06 - Código da conta analitica / grupo de contas.
+                         '|'+ tContas.FieldbyName('Conta').AsString+                                    // 06 - C digo da conta analitica / grupo de contas.
                          '|'+ tContas.FieldbyName('Nome').AsString +                                    // 07 - Nome da conta analitica / grupo de contas.
-                         '|'+ tContas.FieldbyName('Conta_ECF').AsString +                               // 08 - Código da conta correlacionada no plano de contas referenciado.
+                         '|'+ tContas.FieldbyName('Conta_ECF').AsString +                               // 08 - C digo da conta correlacionada no plano de contas referenciado.
                          '|'+                                                                           // 09 - CNPJ do estabelecimento no caso da conta informada.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
 
             tContas.Next;
-            Progresso3('Plano de Contas Contábeis', 0);
+            Progresso3('Plano de Contas Cont beis', 0);
 
             Inc(mQtdeReg0500);
             Inc(mQtdeBloco0);
@@ -2375,7 +2382,7 @@ begin
 
       Inc(mLinha);
       mRegistro := '|0600' +                                                                      // 01 - REG.
-                   '|'+                                                                           // 02 - Data da inclusão alteração.
+                   '|'+                                                                           // 02 - Data da inclus o altera  o.
                    '|'+                                                                           // 03 - Codigo do centro de custo.
                    '|'+                                                                           // 04 - Nome do centro de custo.
                    '|';
@@ -2387,7 +2394,7 @@ begin
       Progresso2('Registro: 0600...');
 end;
 
-{* REGISTRO 0900: Composição das Receitas do Período – Receita Bruta e Demais Receitas *}
+{* REGISTRO 0900: Composi  o das Receitas do Per odo   Receita Bruta e Demais Receitas *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.Registro0900;
 begin
       Progresso1('Receita Bruta e Demais Receitas', 1);
@@ -2395,19 +2402,19 @@ begin
       Inc(mLinha);
       mRegistro := '|0900' +                // 01 - REG.
                    '|'+                     // 02 - Receita total referente aos registros escriturados no Bloco A.
-                   '|'+                     // 03 - Parcela da receita total escriturada no Bloco A (Campo 02), não classificada como receita bruta.
+                   '|'+                     // 03 - Parcela da receita total escriturada no Bloco A (Campo 02), n o classificada como receita bruta.
                    '|'+                     // 04 - Receita total referente aos registros escriturados no Bloco C.
-                   '|'+                     // 05 - Parcela da receita total escriturada no Bloco C (Campo 04), não classificada como receita bruta.
+                   '|'+                     // 05 - Parcela da receita total escriturada no Bloco C (Campo 04), n o classificada como receita bruta.
                    '|'+                     // 06 - Receita total referente aos registros escriturados no Bloco .
-                   '|'+                     // 07 - Parcela da receita total escriturada no Bloco D (Campo 06), não classificada como receita bruta.
+                   '|'+                     // 07 - Parcela da receita total escriturada no Bloco D (Campo 06), n o classificada como receita bruta.
                    '|'+                     // 08 - Receita total referente aos registros escriturados no Bloco F.
-                   '|'+                     // 09 - Parcela da receita total escriturada no Bloco F (Campo 08), não classificada como receita bruta.
+                   '|'+                     // 09 - Parcela da receita total escriturada no Bloco F (Campo 08), n o classificada como receita bruta.
                    '|'+                     // 10 - Receita total referente aos registros escriturados no Bloco I.
-                   '|'+                     // 11 - Parcela da receita total escriturada no Bloco I (Campo 10) não classificada como receita bruta.
+                   '|'+                     // 11 - Parcela da receita total escriturada no Bloco I (Campo 10) n o classificada como receita bruta.
                    '|'+                     // 12 - Receita total referente aos registros escriturados no Bloco 1 (RET).
-                   '|'+                     // 13 - Parcela da receita total escriturada no Bloco 1 (Campo 12), não classificada como receita bruta.
+                   '|'+                     // 13 - Parcela da receita total escriturada no Bloco 1 (Campo 12), n o classificada como receita bruta.
                    '|'+                     // 14 - Receita bruta total (Soma dos Campos 02, 04, 06, 08, 10 e 12).
-                   '|';                     // 15 - Parcela da receita total escriturada (Campo 14), não classificada como receita bruta (Soma dos Campos 03, 05, 07, 09, 11 e 13).
+                   '|';                     // 15 - Parcela da receita total escriturada (Campo 14), n o classificada como receita bruta (Soma dos Campos 03, 05, 07, 09, 11 e 13).
 
       Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -2495,10 +2502,10 @@ begin
       end;
 end;
 
-{* REGISTRO A010 -  "Identificação do estabelecimento" *}
+{* REGISTRO A010 -  "Identifica  o do estabelecimento" *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroA010;
 begin
-      Progresso1('Identificação do estabelecimento', tEmpresas.RecordCount+1);
+      Progresso1('Identifica  o do estabelecimento', tEmpresas.RecordCount+1);
 
       // Matriz.
       Inc(mLinha);
@@ -2547,7 +2554,7 @@ begin
       End;
 end;
 
-{* REGISTRO A100 - Documento - Nota fiscal de Serviço. *}
+{* REGISTRO A100 - Documento - Nota fiscal de Servi o. *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroA100(Empresa: Integer);
 begin
       // Matriz.
@@ -2672,22 +2679,22 @@ begin
       tNotas.ParamByName('pDataFim').AsDate := StrtoDate(mDataFim);
       //tNotas.SQL.SaveToFile('c:\temp\SPED_PISCOFINS_REGA100.SQL');
       tNotas.Open;
-      Progresso1('Nota Fiscal de Serviço', tNotas.RecordCount+1);
+      Progresso1('Nota Fiscal de Servi o', tNotas.RecordCount+1);
 
       While (not tNotas.Eof) and (Funcoes.Cancelado = false) do begin
             Inc(mLinha);
             mRegistro := '|A100' +                                                                               // 01 - REG.
-                         '|'+ tNotas.FieldByName('Tipo_Operacao').AsString +                                     // 02 - Indicador do tipo de operação.
+                         '|'+ tNotas.FieldByName('Tipo_Operacao').AsString +                                     // 02 - Indicador do tipo de opera  o.
                          '|'+ iif(tNotas.FieldByName('Tipo_Emissao').AsString = 'P', '0', '1') +                 // 03 - Indicador do emitente do documento fiscal.
-                         '|'+ tNotas.FieldByName('Beneficiario').AsString +                                      // 04 - Código do participante.
-                         '|'+ tNotas.FieldByName('Situacao').AsString +                                          // 05 - Código de situação do documentos fiscal.
-                         '|'+ tNotas.FieldByName('Serie').AsString +                                             // 06 - Série do documento fiscal.
-                         '|'+ tNotas.FieldByName('SubSerie').AsString +                                          // 07 - Sub-Série do documento fiscal.
-                         '|'+ tNotas.FieldByName('Nota').AsString +                                              // 08 - Número da nota fiscal.
-                         '|'+ tNotas.FieldByName('Chave_NFSE').AsString +                                        // 09 - Chave da nota eletrônica de serviço.
-                         '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Emissao').AsString) +               // 10 - Data de emissão da nota fiscal.
-                         '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Emissao').AsString) +               // 11 - Data da conclusão do serviço.
-                         '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Total_Nota').AsCurrency) +               // 12 - Receita Bruta Não-Cumulativa - Tributada no Mercado Interno.
+                         '|'+ tNotas.FieldByName('Beneficiario').AsString +                                      // 04 - C digo do participante.
+                         '|'+ tNotas.FieldByName('Situacao').AsString +                                          // 05 - C digo de situa  o do documentos fiscal.
+                         '|'+ tNotas.FieldByName('Serie').AsString +                                             // 06 - S rie do documento fiscal.
+                         '|'+ tNotas.FieldByName('SubSerie').AsString +                                          // 07 - Sub-S rie do documento fiscal.
+                         '|'+ tNotas.FieldByName('Nota').AsString +                                              // 08 - N mero da nota fiscal.
+                         '|'+ tNotas.FieldByName('Chave_NFSE').AsString +                                        // 09 - Chave da nota eletr nica de servi o.
+                         '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Emissao').AsString) +               // 10 - Data de emiss o da nota fiscal.
+                         '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Emissao').AsString) +               // 11 - Data da conclus o do servi o.
+                         '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Total_Nota').AsCurrency) +               // 12 - Receita Bruta N o-Cumulativa - Tributada no Mercado Interno.
                          '|'+ tNotas.FieldByName('Tipo_Pagamento').AsString +                                    // 13 - Indicador do tipo de pagamento.
                          '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Desconto_Valor').AsCurrency)+            // 14 - Valor do desconto.
                          '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('BC_PIS').AsCurrency)+                    // 15 - B.C. PIS.
@@ -2788,23 +2795,23 @@ begin
       while not tItens.eof do begin
             Inc(mLinha);
             mRegistro := '|A170' +                                                                                                                     // 01 - REG.
-                         '|'+ tItens.FieldByName('Item').AsString +                                                                                    // 02 - Número sequencial do item.
+                         '|'+ tItens.FieldByName('Item').AsString +                                                                                    // 02 - N mero sequencial do item.
                          '|'+ tItens.FieldByName('Codigo').AsString +                                                                                  // 03 - Codigo do item.
-                         '|'+ '' +                                                                                                                     // 04 - Descrição complementar do item.
+                         '|'+ '' +                                                                                                                     // 04 - Descri  o complementar do item.
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Total_Item').AsCurrency) +                                                      // 05 - Valor total do item.
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Desconto_Valor').AsCurrency) +                                                  // 06 - Valor do desconto do item.
-                         '|'+ iif(tItens.FieldByName('Tipo_Credito').Asinteger > 0, PoeZero(2, tItens.FieldByName('Tipo_Credito').Asinteger), '') +    // 07 - Código da B.C. Crédito.
-                         '|'+ iif(tItens.FieldByName('Tipo_Operacao').AsInteger = 1, '', '0') +                                                        // 08 - Indicador da origem do crédito.
+                         '|'+ iif(tItens.FieldByName('Tipo_Credito').Asinteger > 0, PoeZero(2, tItens.FieldByName('Tipo_Credito').Asinteger), '') +    // 07 - C digo da B.C. Cr dito.
+                         '|'+ iif(tItens.FieldByName('Tipo_Operacao').AsInteger = 1, '', '0') +                                                        // 08 - Indicador da origem do cr dito.
                          '|'+ tItens.FieldByName('CST_PIS').AsString +                                                                                 // 09 - CST PIS.
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_BCPIS').AsCurrency) +                                                     // 10 - Valor B.C.PIS.
-                         '|'+ FormatFloat('#0.00', tItens.FieldByName('Aliquota_PIS').AsFloat) +                                                       // 11 - Alíquota do PIS.
+                         '|'+ FormatFloat('#0.00', tItens.FieldByName('Aliquota_PIS').AsFloat) +                                                       // 11 - Al quota do PIS.
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_PIS').AsCurrency) +                                                       // 12 - Valor do PIS.
                          '|'+ tItens.FieldByName('CST_COFINS').AsString +                                                                              // 13 - CST COFINS.
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_BCCOFINS').AsCurrency) +                                                  // 14 - Valor B.C.COFINS.
-                         '|'+ FormatFloat('#0.00', tItens.FieldByName('Aliquota_COFINS').AsFloat) +                                                    // 15 - Alíquota do COFINS.
+                         '|'+ FormatFloat('#0.00', tItens.FieldByName('Aliquota_COFINS').AsFloat) +                                                    // 15 - Al quota do COFINS.
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_COFINS').AsCurrency) +                                                    // 16 - Valor do COFINS.
-                         '|'+ tItens.FieldByName('Conta_Contabil').AsString +                                                                          // 17 - Código da conta contabil.
-                         '|'+                                                                                                                          // 18 - Código do centro de custos.
+                         '|'+ tItens.FieldByName('Conta_Contabil').AsString +                                                                          // 17 - C digo da conta contabil.
+                         '|'+                                                                                                                          // 18 - C digo do centro de custos.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -2888,16 +2895,16 @@ begin
       Progresso2('Registro: C001...');
 end;
 
-{* REGISTRO C010 -  "Identificação do estabelecimento" *}
+{* REGISTRO C010 -  "Identifica  o do estabelecimento" *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC010;
 begin
-      Progresso1('Identificação do estabelecimento', tEmpresas.RecordCount+1);
+      Progresso1('Identifica  o do estabelecimento', tEmpresas.RecordCount+1);
 
       // Matriz.
       Inc(mLinha);
       mRegistro := '|C010' +                                            // 01 - REG.
                    '|'+ Dados.Empresas.FieldByName('CNPJ').AsString +   // 02 - CNPJ DO Estabelecimento.
-                   '|'+ InttoStr(cTipoApuracao.ItemIndex+1) +           // 03 - Indicador da apuração das contribuições e crédito.
+                   '|'+ InttoStr(cTipoApuracao.ItemIndex+1) +           // 03 - Indicador da apura  o das contribui  es e cr dito.
                    '|';
       Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -2933,7 +2940,7 @@ begin
                Inc(mLinha);
                mRegistro := '|C010' +                                            // 01 - REG.
                             '|'+ tEmpresas.FieldByName('CNPJ').AsString +        // 02 - CNPJ DO Estabelecimento.
-                            '|'+ InttoStr(cTipoApuracao.ItemIndex+1) +           // 03 - Indicador da apuração das contribuições e crédito.
+                            '|'+ InttoStr(cTipoApuracao.ItemIndex+1) +           // 03 - Indicador da apura  o das contribui  es e cr dito.
                             '|';
                Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -2962,7 +2969,7 @@ begin
            else
               SQL.Add('USE ' + tEmpresas.FieldByName('Banco_Dados').AsString);
 
-           // *********** FORÇA A PASSAR MESMO QUANDO DA ERRO DE DIVISÃO POR ZERO **************
+           // *********** FOR A A PASSAR MESMO QUANDO DA ERRO DE DIVIS O POR ZERO **************
            SQL.Add('SET ARITHABORT OFF');
            SQL.Add('SET ANSI_WARNINGS OFF');
            SQL.Add('SET ARITHIGNORE ON');
@@ -3127,26 +3134,26 @@ begin
             Inc(mLinha);
             If (tNotas.FieldByName('Situacao').AsString = '00') or (tNotas.FieldByName('Situacao').AsString = '06') then begin
                mRegistro := '|C100' +                                                                               // 01 - REG.
-                            '|'+ tNotas.FieldByName('Tipo_Operacao').AsString +                                     // 02 - Indicador do tipo de operação.
+                            '|'+ tNotas.FieldByName('Tipo_Operacao').AsString +                                     // 02 - Indicador do tipo de opera  o.
                             '|'+ tNotas.FieldByName('Tipo_Emissao').AsString +                                      // 03 - Indicador do emitente do documento fiscal.
                             '|'+ tNotas.FieldByName('Beneficiario').AsString +                                      // 04 - Beneficiario.
-                            '|'+ tNotas.FieldByName('Modelo').AsString +                                            // 05 - Código do modelo do documentos fiscal.
-                            '|'+ tNotas.FieldByName('Situacao').AsString +                                          // 06 - Código de situação do documentos fiscal.
-                            '|'+ tNotas.FieldByName('Serie').AsString +                                             // 07 - Série do documento fiscal.
-                            '|'+ tNotas.FieldByName('Nota').AsString +                                              // 08 - Número da nota fiscal.
-                            '|'+ tNotas.FieldByName('Chave_NFe').AsString+                                          // 09 - Chave da nota eletrônica de serviço.
-                            '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Emissao').AsString) +               // 10 - Data de Emissão da nota fiscal.
-                            '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Entrada').AsString) +               // 11 - Data da Entrda / Saída.
+                            '|'+ tNotas.FieldByName('Modelo').AsString +                                            // 05 - C digo do modelo do documentos fiscal.
+                            '|'+ tNotas.FieldByName('Situacao').AsString +                                          // 06 - C digo de situa  o do documentos fiscal.
+                            '|'+ tNotas.FieldByName('Serie').AsString +                                             // 07 - S rie do documento fiscal.
+                            '|'+ tNotas.FieldByName('Nota').AsString +                                              // 08 - N mero da nota fiscal.
+                            '|'+ tNotas.FieldByName('Chave_NFe').AsString+                                          // 09 - Chave da nota eletr nica de servi o.
+                            '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Emissao').AsString) +               // 10 - Data de Emiss o da nota fiscal.
+                            '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Entrada').AsString) +               // 11 - Data da Entrda / Sa da.
                             '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_TotalNota').AsCurrency)+           // 12 - Total da Nota.
                             '|'+ tNotas.FieldByName('Tipo_Pagamento').AsString +                                    // 13 - Indicador do tipo de pagamento.
                             '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Desconto_Valor').AsCurrency)+            // 14 - Valor do desconto.
-                            '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Abatimento').AsCurrency)+                // 15 - Abatimento não tributado e não comercial.
+                            '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Abatimento').AsCurrency)+                // 15 - Abatimento n o tributado e n o comercial.
                             '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_TotalProdutos').AsCurrency)+       // 16 - Total das mercadorias.
                             '|'+ tNotas.FieldByName('Modalidade_Frete').AsString +                                  // 17 - Modalidade de Frete.
                             '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Total_Frete').AsCurrency)+               // 18 - Valor do frete.
                             '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_Seguro').AsCurrency)+              // 19 - Valor do seguro.
-                            '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_OutrasDespesas').AsCurrency)+      // 20 - Valor de outras despesas acessórias.
-                            '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('BCICMS').AsCurrency)+                    // 21 - Valor da base de cálculo do ICMS.
+                            '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_OutrasDespesas').AsCurrency)+      // 20 - Valor de outras despesas acess rias.
+                            '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('BCICMS').AsCurrency)+                    // 21 - Valor da base de c lculo do ICMS.
                             '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_ICMS').AsCurrency)+                // 22 - Valor do ICMS.
                             '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('BCICMS_Substitutivo').AsCurrency)+       // 23 - B.C. ICMS Substitutivo.
                             '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('ValorICMS_Substitutivo').AsCurrency)+    // 24 - Valor Substitutivo.
@@ -3158,26 +3165,26 @@ begin
                             '|';
             end else begin
                mRegistro := '|C100' +                                                                               // 01 - REG.
-                            '|'+ tNotas.FieldByName('Tipo_Operacao').AsString +                                     // 02 - Indicador do tipo de operação.
+                            '|'+ tNotas.FieldByName('Tipo_Operacao').AsString +                                     // 02 - Indicador do tipo de opera  o.
                             '|'+ tNotas.FieldByName('Tipo_Emissao').AsString +                                      // 03 - Indicador do emitente do documento fiscal.
                             '|'+                                                                                    // 04 - Beneficiario.
-                            '|'+ tNotas.FieldByName('Modelo').AsString +                                            // 05 - Código do modelo do documentos fiscal.
-                            '|'+ tNotas.FieldByName('Situacao').AsString +                                          // 06 - Código de situação do documentos fiscal.
-                            '|'+ tNotas.FieldByName('Serie').AsString +                                             // 07 - Série do documento fiscal.
-                            '|'+ tNotas.FieldByName('Nota').AsString+                                               // 08 - Número da nota fiscal.
-                            '|'+ tNotas.FieldByName('Chave_NFe').AsString+                                          // 09 - Chave da nota eletrônica de serviço.
-                            '|'+                                                                                    // 10 - Data de Emissão da nota fiscal.
-                            '|'+                                                                                    // 11 - Data da Entrda / Saída.
+                            '|'+ tNotas.FieldByName('Modelo').AsString +                                            // 05 - C digo do modelo do documentos fiscal.
+                            '|'+ tNotas.FieldByName('Situacao').AsString +                                          // 06 - C digo de situa  o do documentos fiscal.
+                            '|'+ tNotas.FieldByName('Serie').AsString +                                             // 07 - S rie do documento fiscal.
+                            '|'+ tNotas.FieldByName('Nota').AsString+                                               // 08 - N mero da nota fiscal.
+                            '|'+ tNotas.FieldByName('Chave_NFe').AsString+                                          // 09 - Chave da nota eletr nica de servi o.
+                            '|'+                                                                                    // 10 - Data de Emiss o da nota fiscal.
+                            '|'+                                                                                    // 11 - Data da Entrda / Sa da.
                             '|'+                                                                                    // 12 - Total da Nota.
                             '|'+                                                                                    // 13 - Indicador do tipo de pagamento.
                             '|'+                                                                                    // 14 - Valor do desconto.
-                            '|'+                                                                                    // 15 - Abatimento não tributado e não comercial.
+                            '|'+                                                                                    // 15 - Abatimento n o tributado e n o comercial.
                             '|'+                                                                                    // 16 - Total das mercadorias.
                             '|'+                                                                                    // 17 - Modalidade de Frete.
                             '|'+                                                                                    // 18 - Valor do frete.
                             '|'+                                                                                    // 19 - Valor do seguro.
-                            '|'+                                                                                    // 20 - Valor de outras despesas acessórias.
-                            '|'+                                                                                    // 21 - Valor da base de cálculo do ICMS.
+                            '|'+                                                                                    // 20 - Valor de outras despesas acess rias.
+                            '|'+                                                                                    // 21 - Valor da base de c lculo do ICMS.
                             '|'+                                                                                    // 22 - Valor do ICMS.
                             '|'+                                                                                    // 23 - B.C. ICMS Substitutivo.
                             '|'+                                                                                    // 24 - Valor Substitutivo.
@@ -3207,17 +3214,17 @@ begin
       End;
 end;
 
-{* REGISTRO C120 -  Informações de importação *}
+{* REGISTRO C120 -  Informa  es de importação *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC120;
 begin
       Progresso4('Registro: C120', 1);
       Inc(mLinha);
       mRegistro := '|C120' +                                                                          // 01 - REG.
-                   '|0'+                                                                              // 02 - Documento de importação
-                   '|'+ tNotas.FieldByName('DI').AsString +                                           // 03 - Número do documento de importação.
-                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('PIS_Importacao').AsCurrency)+        // 04 - Valor do PIS importação.
-                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('COFINS_Importacao').AsCurrency)+     // 05 - Valor da COFINS Importação.
-                   '|'+                                                                               // 06 - Número do Ato Concessório do regime Drawback.
+                   '|0'+                                                                              // 02 - Documento de importa  o
+                   '|'+ tNotas.FieldByName('DI').AsString +                                           // 03 - N mero do documento de importa  o.
+                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('PIS_Importacao').AsCurrency)+        // 04 - Valor do PIS importa  o.
+                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('COFINS_Importacao').AsCurrency)+     // 05 - Valor da COFINS Importa  o.
+                   '|'+                                                                               // 06 - N mero do Ato Concess rio do regime Drawback.
                    '|';
       Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -3227,7 +3234,7 @@ begin
       Progresso4('Registro: C120', 0);
 end;
 
-{REGISTRO C170: ITENS DO DOCUMENTO (CÓDIGO 01, 1B, 04 e 55).}
+{REGISTRO C170: ITENS DO DOCUMENTO (C DIGO 01, 1B, 04 e 55).}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC170(Nota:Integer; DataEmissao: TDate; Beneficiario: Integer; Emissor: String; Empresa: Integer);
 Var
    mDescricao : WideString;
@@ -3400,7 +3407,7 @@ begin
            while (not tItens.Eof) and (not Funcoes.Cancelado) do begin
                  Inc(mLinha);
 
-                 // Limpando codigos de controle da descrição do item.
+                 // Limpando codigos de controle da descri  o do item.
                  mDescricao := Trim(tItens.FieldByName('Descricao_Mercadoria').AsString);
                  mDescricao := RemoveCaracter(#13, '', mDescricao);
                  mDescricao := RemoveCaracter(#12, '', mDescricao);
@@ -3438,24 +3445,24 @@ begin
                  mRegistro := '|C170' +                                                                                // 01 - REG.
                               '|' + PoeZero(3, mItem) +                                                                // 02 - Numero sequencia do item.
                               '|' + Trim(tItens.FieldByName('Codigo_Mercadoria').AsString) +                           // 03 - Codigo da mercadoria.
-                              '|' +                                                                                    // 04 - Descrição da mercadoria.
+                              '|' +                                                                                    // 04 - Descri  o da mercadoria.
                               '|' + mQuantidade +                                                                      // 05 - Quantidade do item.
                               '|' + Trim(tItens.FieldByName('Unidade_Medida').AsString) +                              // 06 - Unidade de medida.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Valor_Total').AsCurrency) +                // 07 - Valor total do item.
                               '|' + FormatFloat('0.00', 0) +                                                           // 08 - Valor do desconto comercial.
-                              '|0' +                                                                                   // 09 - Movimentação;
+                              '|0' +                                                                                   // 09 - Movimenta  o;
                               '|' + Trim(tItens.FieldByName('CST_ICMS').AsString) +                                    // 10 - CST do ICMS.
-                              '|' + tItens.FieldByName('Natureza_Codigo').AsString +                                   // 11 - CFOP Código Fiscal de Operação e Prestação.
-                              '|' +                                                                                    // 12 - Código da natureza da operação.
+                              '|' + tItens.FieldByName('Natureza_Codigo').AsString +                                   // 11 - CFOP C digo Fiscal de Opera  o e Presta  o.
+                              '|' +                                                                                    // 12 - C digo da natureza da opera  o.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Valor_BCICMSOper').AsCurrency) +           // 13 - Valor da B.C.ICMS Operacional.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Aliquota_ICMSOper').AsFloat) +             // 14 - Aliquota do ICMS Operacional.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Valor_ICMSOper').AsCurrency) +             // 15 - Valor do ICMS Operacional.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Valor_BCICMSSub').AsCurrency) +            // 16 - Valor da B.C.ICMS Substitutivo.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Aliquota_ICMSSub').AsFloat) +              // 17 - Aliquota do ICMS Substitutivo.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Valor_ICMSSub').AsCurrency) +              // 18 - Valor do ICMS Substitutivo.
-                              '|' + Trim(Empresas.FieldByName('Apuracao_IPI').AsString) +                              // 19 - Periodo de apuração do IPI.
+                              '|' + Trim(Empresas.FieldByName('Apuracao_IPI').AsString) +                              // 19 - Periodo de apura  o do IPI.
                               '|' + Trim(tItens.FieldByName('CSTIPI').AsString) +                                      // 20 - CST do IPI.
-                              '|' +                                                                                    // 21 - Código de enquadramento legal do IPI.
+                              '|' +                                                                                    // 21 - C digo de enquadramento legal do IPI.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Valor_Total').Value) +                     // 22 - Valor da B.C. IPI.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Aliquota_IPI').AsFloat) +                  // 23 - Aliquota do IPI.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Total_IPI').AsCurrency) +                  // 24 - Valor do IPI.
@@ -3471,7 +3478,7 @@ begin
                               '|' +                                                                                    // 34 - Quantidade da COFINS
                               '|' +                                                                                    // 35 - Aliquota do COFINS em reais.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Valor_COFINS').Value) +                    // 36 - Valor da COFINS.
-                              '|'+ tItens.FieldByName('Conta_Contabil').AsString +                                     // 37 - Código da conta contabil.
+                              '|'+ tItens.FieldByName('Conta_Contabil').AsString +                                     // 37 - C digo da conta contabil.
                               '|';
                  Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -3485,7 +3492,7 @@ begin
       End;
 end;
 
-{* REGISTRO C180 -  Consolidação dos itens da NF-e (Vendas) *}
+{* REGISTRO C180 -  Consolida  o dos itens da NF-e (Vendas) *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC180(Empresa: Integer);
 begin
       tItens.SQL.Clear;
@@ -3514,12 +3521,12 @@ begin
       While (not tItens.Eof) and (not Funcoes.Cancelado) do begin
             Inc(mLinha);
             mRegistro := '|C180' +                                                                     // 01 - REG.
-                         '|55'+                                                                        // 02 - Código da Nota Fiscal Eletrônica.
-                         '|'+ RemoveCaracter('/', '', mDataIni) +                                      // 03 - Data de Emissão Inicial dos Documentos.
-                         '|'+ RemoveCaracter('/', '', mDataFim) +                                      // 04 - Data de Emissão Final dos Documentos.
-                         '|'+ tItens.FieldByName('Codigo_Mercadoria').AsString+'P' +                   // 05 - Código do Item (campo 02 do Registro 0200).
+                         '|55'+                                                                        // 02 - C digo da Nota Fiscal Eletr nica.
+                         '|'+ RemoveCaracter('/', '', mDataIni) +                                      // 03 - Data de Emiss o Inicial dos Documentos.
+                         '|'+ RemoveCaracter('/', '', mDataFim) +                                      // 04 - Data de Emiss o Final dos Documentos.
+                         '|'+ tItens.FieldByName('Codigo_Mercadoria').AsString+'P' +                   // 05 - C digo do Item (campo 02 do Registro 0200).
                          '|'+ tItens.FieldByName('NCM').AsString+                                      // 06 - NCM.
-                         '|'+ tItens.FieldByName('EXTIPI').AsString+                                   // 07 - Código EX, conforme a TIPI.
+                         '|'+ tItens.FieldByName('EXTIPI').AsString+                                   // 07 - C digo EX, conforme a TIPI.
                          '|'+ FormatFloat('0.00', tItens.FieldByName('Total_Item').AsCurrency) +       // 08 - Valor total do item.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
@@ -3536,7 +3543,7 @@ begin
       End;
 end;
 
-{* REGISTRO C181 - DETALHAMENTO DA CONSOLIDAÇÃO – OPERAÇÕES DE VENDAS – PIS/PASEP }
+{* REGISTRO C181 - DETALHAMENTO DA CONSOLIDA  O   OPERA  ES DE VENDAS   PIS/PASEP }
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC181(Codigo_Item, Empresa: Integer);
 begin
       tItens2.SQL.Clear;
@@ -3573,16 +3580,16 @@ begin
       While (not tItens2.Eof) and (not Funcoes.Cancelado) do begin
             Inc(mLinha);
             mRegistro := '|C181' +                                                                            // 01 - REG.
-                         '|'+ tItens2.FieldByName('CSTPIS').AsString +                                        // 02 - Código da Situação Tributária referente ao PIS/PASEP.
-                         '|'+ tItens2.FieldByName('Natureza_Codigo').AsString+                                // 03 - Código fiscal de operação e prestação.
+                         '|'+ tItens2.FieldByName('CSTPIS').AsString +                                        // 02 - C digo da Situa  o Tribut ria referente ao PIS/PASEP.
+                         '|'+ tItens2.FieldByName('Natureza_Codigo').AsString+                                // 03 - C digo fiscal de opera  o e presta  o.
                          '|'+ FormatFloat('0.00', tItens2.FieldByName('Total_Item').AsCurrency) +             // 04 - Valor total do item.
                          '|'+ FormatFloat('0.00', 0) +                                                        // 05 - Valor total dos descontos.
-                         '|'+ FormatFloat('0.00', 0) +                                                        // 06 - Valor da base de cálculo do PIS/PASEP.
-                         '|'+ FormatFloat('#0.0000', tItens2.FieldByName('Aliquota_PIS').AsFloat) +           // 07 - Alíquota do PIS.
-                         '|'+                                                                                 // 08 - Quantidade – Base de cálculo PIS/PASEP.
-                         '|'+                                                                                 // 09 - Alíquota do PIS/PASEP (em reais).
+                         '|'+ FormatFloat('0.00', 0) +                                                        // 06 - Valor da base de c lculo do PIS/PASEP.
+                         '|'+ FormatFloat('#0.0000', tItens2.FieldByName('Aliquota_PIS').AsFloat) +           // 07 - Al quota do PIS.
+                         '|'+                                                                                 // 08 - Quantidade   Base de c lculo PIS/PASEP.
+                         '|'+                                                                                 // 09 - Al quota do PIS/PASEP (em reais).
                          '|'+ FormatFloat('0.00', 0) +                                                        // 10 - Valor do PIS/PASEP.
-                         '|'+ tItens2.FieldByName('Conta_Contabil').AsString +                                // 11 - Código da conta analítica contábil debitada/creditada.
+                         '|'+ tItens2.FieldByName('Conta_Contabil').AsString +                                // 11 - C digo da conta anal tica cont bil debitada/creditada.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
             tItens2.Next;
@@ -3594,7 +3601,7 @@ begin
       End;
 end;
 
-{* REGISTRO C185 -  Consolidação dos itens da NF-e COFINS *}
+{* REGISTRO C185 -  Consolida  o dos itens da NF-e COFINS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC185(Codigo_Item, Empresa: Integer);
 begin
       tItens2.SQL.Clear;
@@ -3630,16 +3637,16 @@ begin
       While (not tItens2.Eof) and (not Funcoes.Cancelado) do begin
             Inc(mLinha);
             mRegistro := '|C185' +                                                                            // 01 - REG.
-                         '|'+ tItens2.FieldByName('CSTCOFINS').AsString +                                     // 02 - Código da Situação Tributária referente ao COFINS.
-                         '|'+ tItens2.FieldByName('Natureza_Codigo').AsString+                                // 03 - Código fiscal de operação e prestação.
+                         '|'+ tItens2.FieldByName('CSTCOFINS').AsString +                                     // 02 - C digo da Situa  o Tribut ria referente ao COFINS.
+                         '|'+ tItens2.FieldByName('Natureza_Codigo').AsString+                                // 03 - C digo fiscal de opera  o e presta  o.
                          '|'+ FormatFloat('0.00', tItens2.FieldByName('Total_Item').AsCurrency) +             // 04 - Valor total do item.
                          '|'+ FormatFloat('0.00', 0) +                                                        // 05 - Valor total dos descontos.
-                         '|'+ FormatFloat('0.00', 0) +                                                        // 06 - Valor da base de cálculo do COFINS/PASEP.
-                         '|'+ FormatFloat('#0.0000', tItens2.FieldByName('Aliquota_COFINS').AsFloat) +        // 07 - Alíquota do COFINS.
-                         '|'+                                                                                 // 08 - Quantidade – Base de cálculo da COFINS.
-                         '|'+                                                                                 // 09 - Alíquota do COFINS/PASEP (em reais).
+                         '|'+ FormatFloat('0.00', 0) +                                                        // 06 - Valor da base de c lculo do COFINS/PASEP.
+                         '|'+ FormatFloat('#0.0000', tItens2.FieldByName('Aliquota_COFINS').AsFloat) +        // 07 - Al quota do COFINS.
+                         '|'+                                                                                 // 08 - Quantidade   Base de c lculo da COFINS.
+                         '|'+                                                                                 // 09 - Al quota do COFINS/PASEP (em reais).
                          '|'+ FormatFloat('0.00', 0) +                                                        // 10 - Valor do COFINS/PASEP.
-                         '|'+ tItens2.FieldByName('Conta_Contabil').AsString+                                 // 11 - Código da conta analítica contábil debitada/creditada.
+                         '|'+ tItens2.FieldByName('Conta_Contabil').AsString+                                 // 11 - C digo da conta anal tica cont bil debitada/creditada.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -3652,7 +3659,7 @@ begin
       End;
 end;
 
-{* REGISTRO C190: CONSOLIDAÇÃO DE NOTAS FISCAIS ELETRÔNICAS (CÓDIGO 55) – OPERAÇÕES DE AQUISIÇÃO COM DIREITO A CRÉDITO, E OPERAÇÕES DE DEVOLUÇÃO DE COMPRAS E VENDAS.*}
+{* REGISTRO C190: CONSOLIDA  O DE NOTAS FISCAIS ELETR NICAS (C DIGO 55)   OPERA  ES DE AQUISI  O COM DIREITO A CR DITO, E OPERA  ES DE DEVOLU  O DE COMPRAS E VENDAS.*}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC190(Empresa: Integer);
 begin
       tItens.SQL.Clear;
@@ -3695,12 +3702,12 @@ begin
       //tItens.SQL.SaveToFile('c:\temp\SPED_PISCOFINS_REGC190_'+InttoStr(Empresa)+'.SQL');
       tItens.Open;
 
-      Progresso3('Consolidação da NF-e', tItens.RecordCount);
+      Progresso3('Consolida  o da NF-e', tItens.RecordCount);
 
       While (not tItens.Eof) and (not Funcoes.Cancelado) do begin
             Inc(mLinha);
             mRegistro := '|C190' +                                                                          // 01 - REG.
-                         '|55'+                                                                             // 02 - Documento de importação
+                         '|55'+                                                                             // 02 - Documento de importa  o
                          '|'+ RemoveCaracter('/', '',mDataIni) +                                            // 03 - Data inicial.
                          '|'+ RemoveCaracter('/', '',mDataFim) +                                            // 04 - Data Final.
                          '|'+ tItens.FieldByName('Codigo_Mercadoria').AsString+'P'+                         // 05 - Codigo da mercadoria.
@@ -3723,7 +3730,7 @@ begin
       End;
 end;
 
-{* REGISTRO C191 -  Consolidação dos itens da NF-e PIS (Entradas / Devoluções) *}
+{* REGISTRO C191 -  Consolida  o dos itens da NF-e PIS (Entradas / Devolu  es) *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC191(Codigo_Item, Empresa: Integer);
 Var
    mCNPJ_CPF : String;
@@ -3798,15 +3805,15 @@ begin
             mRegistro := '|C191' +                                                                            // 01 - REG.
                          '|'+ mCNPJ_CPF +                                                                     // 02 - CNPJ /CPF.
                          '|'+ tItens2.FieldByName('CSTPIS').AsString+                                         // 03 - CST PIS.
-                         '|'+ tItens2.FieldByName('Natureza_Codigo').AsString+                                // 03 - Código fiscal de operação e prestação.
+                         '|'+ tItens2.FieldByName('Natureza_Codigo').AsString+                                // 03 - C digo fiscal de opera  o e presta  o.
                          '|'+ FormatFloat('0.00', tItens2.FieldByName('Valor_Total').AsCurrency) +            // 05 - Valor do item.
-                         '|'+ FormatFloat('0.00', 0) +                                                        // 06 - Valor do desconto comercial / Exclusão.
-                         '|'+ FormatFloat('0.00', 0) +                                                        // 07 - Valor da base de cálculo do PIS/PASEP.
-                         '|'+ FormatFloat('#0.0000', tItens2.FieldByName('Aliquota_PIS').AsFloat) +           // 08 - Alíquota do PIS/PASEP (em percentual).
-                         '|'+                                                                                 // 09 - Quantidade – Base de cálculo PIS/PASEP.
-                         '|'+                                                                                 // 10 - Alíquota do PIS/PASEP (em reais).
+                         '|'+ FormatFloat('0.00', 0) +                                                        // 06 - Valor do desconto comercial / Exclus o.
+                         '|'+ FormatFloat('0.00', 0) +                                                        // 07 - Valor da base de c lculo do PIS/PASEP.
+                         '|'+ FormatFloat('#0.0000', tItens2.FieldByName('Aliquota_PIS').AsFloat) +           // 08 - Al quota do PIS/PASEP (em percentual).
+                         '|'+                                                                                 // 09 - Quantidade   Base de c lculo PIS/PASEP.
+                         '|'+                                                                                 // 10 - Al quota do PIS/PASEP (em reais).
                          '|'+ FormatFloat('0.00', 0) +                                                        // 11 - Valor do PIS/PASEP.
-                         '|'+ trim(tItens2.FieldByName('Conta_Contabil').AsString)+                           // 12 - Código da conta analítica contábil debitada/creditada.
+                         '|'+ trim(tItens2.FieldByName('Conta_Contabil').AsString)+                           // 12 - C digo da conta anal tica cont bil debitada/creditada.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -3819,7 +3826,7 @@ begin
       End;
 end;
 
-{* REGISTRO C195 -  Consolidação dos itens da NF-e COFINS (Entradas / Devoluções) *}
+{* REGISTRO C195 -  Consolida  o dos itens da NF-e COFINS (Entradas / Devolu  es) *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC195(Codigo_Item, Empresa: Integer);
 Var
    mCNPJ_CPF: String;
@@ -3893,15 +3900,15 @@ begin
             mRegistro := '|C195' +                                                                            // 01 - REG.
                          '|'+ mCNPJ_CPF +                                                                     // 02 - CNPJ /CPF.
                          '|'+ tItens2.FieldByName('CSTCOFINS').AsString+                                      // 03 - CST COFINS.
-                         '|'+ tItens2.FieldByName('Natureza_Codigo').AsString+                                // 03 - Código fiscal de operação e prestação.
+                         '|'+ tItens2.FieldByName('Natureza_Codigo').AsString+                                // 03 - C digo fiscal de opera  o e presta  o.
                          '|'+ FormatFloat('0.00', tItens2.FieldByName('Valor_Total').AsCurrency) +            // 05 - Valor do item.
-                         '|'+ FormatFloat('0.00', 0) +                                                        // 06 - Valor do desconto comercial / Exclusão.
-                         '|'+ FormatFloat('0.00', 0) +                                                        // 07 - Valor da base de cálculo do COFINS.
-                         '|'+ FormatFloat('#0.0000', tItens2.FieldByName('Aliquota_COFINS').AsFloat) +        // 08 - Alíquota do COFINS (em percentual).
-                         '|'+                                                                                 // 09 - Quantidade – Base de cálculo COFINS.
-                         '|'+                                                                                 // 10 - Alíquota do COFINS (em reais).
+                         '|'+ FormatFloat('0.00', 0) +                                                        // 06 - Valor do desconto comercial / Exclus o.
+                         '|'+ FormatFloat('0.00', 0) +                                                        // 07 - Valor da base de c lculo do COFINS.
+                         '|'+ FormatFloat('#0.0000', tItens2.FieldByName('Aliquota_COFINS').AsFloat) +        // 08 - Al quota do COFINS (em percentual).
+                         '|'+                                                                                 // 09 - Quantidade   Base de c lculo COFINS.
+                         '|'+                                                                                 // 10 - Al quota do COFINS (em reais).
                          '|'+ FormatFloat('0.00', 0) +                                                        // 11 - Valor do COFINS
-                         '|'+ trim(tItens2.FieldByName('Conta_Contabil').AsString)+                           // 12 - Código da conta analítica contábil debitada/creditada.
+                         '|'+ trim(tItens2.FieldByName('Conta_Contabil').AsString)+                           // 12 - C digo da conta anal tica cont bil debitada/creditada.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
             tItens2.Next;
@@ -3912,7 +3919,7 @@ begin
       End;
 end;
 
-{* REGISTRO C199 -  Informações de importação *}
+{* REGISTRO C199 -  Informa  es de importa  o *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC199(Codigo_Item, Empresa: Integer);
 begin
       tItens2.SQL.Clear;
@@ -3940,10 +3947,10 @@ begin
           Inc(mLinha);
           mRegistro := '|C199' +                                                                          // 01 - REG.
                        '|0'+                                                                              // 02 - Documento de importação
-                       '|'+ tItens2.FieldByName('DI').AsString +                                          // 03 - Número do documento de importação.
+                       '|'+ tItens2.FieldByName('DI').AsString +                                          // 03 - N mero do documento de importação.
                        '|'+ FormatFloat('#0.00', tItens2.FieldByName('Valor_PIS').AsCurrency)+            // 04 - Valor do PIS importação.
                        '|'+ FormatFloat('#0.00', tItens2.FieldByName('Valor_COFINS').AsCurrency)+         // 05 - Valor da COFINS Importação.
-                       '|'+                                                                               // 06 - Número do Ato Concessório do regime Drawback.
+                       '|'+                                                                               // 06 - N mero do Ato Concess rio do regime Drawback.
                        '|';
           Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -3954,7 +3961,7 @@ begin
       End;    
 end;
 
-{* REGISTRO C500: NOTA FISCAL/CONTA DE ENERGIA ELÉTRICA (CÓDIGO 06) *}
+{* REGISTRO C500: NOTA FISCAL/CONTA DE ENERGIA EL TRICA (C DIGO 06) *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC500(Empresa: Integer);
 begin
       tNotas.SQL.Clear;
@@ -3984,22 +3991,22 @@ begin
       //tNotas.SQL.SaveToFile('c:\temp\SPED_PISCOFINS_REGC500_'+InttoStr(Empresa)+'.SQL');
       tNotas.Open;
 
-      Progresso3('Nota fiscal de Conta de Energia Elétrica', tNotas.RecordCount);
+      Progresso3('Nota fiscal de Conta de Energia El trica', tNotas.RecordCount);
 
       While (not tNotas.Eof) and (Funcoes.Cancelado = false) do begin
             Inc(mLinha);
             mRegistro := '|C500' +                                                                          // 01 - REG.
-                         '|'+ tNotas.FieldByName('Fornecedor').AsString+'F' +                               // 02 - Código do fornecedor.
+                         '|'+ tNotas.FieldByName('Fornecedor').AsString+'F' +                               // 02 - C digo do fornecedor.
                          '|'+ tNotas.FieldByName('Modelo').AsString +                                       // 03 - Modelo da nota fiscal.
-                         '|'+ tNotas.FieldByName('Situacao').AsString +                                     // 04 - Código da situação da nota fiscal.
-                         '|'+ tNotas.FieldByName('Serie').AsString +                                        // 05 - Série da nota fiscal.
-                         '|'+ tNotas.FieldByName('SubSerie').AsString +                                     // 06 - Sub-Série da nota fiscal.
-                         '|'+ tNotas.FieldByName('Nota').AsString +                                         // 07 - Número da nota fiscal.
-                         '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Emissao').AsString) +          // 08 - Data de emissão da nota fiscal.
+                         '|'+ tNotas.FieldByName('Situacao').AsString +                                     // 04 - C digo da situa  o da nota fiscal.
+                         '|'+ tNotas.FieldByName('Serie').AsString +                                        // 05 - S rie da nota fiscal.
+                         '|'+ tNotas.FieldByName('SubSerie').AsString +                                     // 06 - Sub-S rie da nota fiscal.
+                         '|'+ tNotas.FieldByName('Nota').AsString +                                         // 07 - N mero da nota fiscal.
+                         '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Emissao').AsString) +          // 08 - Data de emiss o da nota fiscal.
                          '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Entrada').AsString) +          // 09 - Data de entrada da nota fiscal.
                          '|'+ FormatFloat('#0.00', tNotas.FieldByName('Valor_TotalNota').AsCurrency) +      // 10 - Valor Total da nota fiscal.
                          '|'+ FormatFloat('#0.00', tNotas.FieldByName('ICMS_Acumulado').AsCurrency) +       // 11 - Valor do ICMS acumulado.
-                         '|'+                                                                               // 12 - Código da informação complementar do documento fiscal.
+                         '|'+                                                                               // 12 - C digo da informa  o complementar do documento fiscal.
                          '|'+ FormatFloat('#0.00', tNotas.FieldByName('Valor_PIS').AsCurrency) +            // 13 - Valor do PIS.
                          '|'+ FormatFloat('#0.00', tNotas.FieldByName('Valor_COFINS').AsCurrency) +         // 14 - Valor da COFINS.
                          '|'+ tNotas.FieldByName('NFe_cNF').AsString +                                      // 15 - Chave da NFe.
@@ -4023,7 +4030,7 @@ begin
       Application.ProcessMessages;
 end;
 
-{* REGISTRO C501: COMPLEMENTO DA OPERAÇÃO (CÓDIGOS 06, 28 e 29) – PIS/PASEP *}
+{* REGISTRO C501: COMPLEMENTO DA OPERA  O (C DIGOS 06, 28 e 29)   PIS/PASEP *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC501(Nota:Integer; Fornecedor: Integer; DataEmissao: TDateTime; Empresa:Integer);
 begin
       tItens.SQL.Clear;
@@ -4052,13 +4059,13 @@ begin
       While (not tItens.Eof) and (Funcoes.Cancelado = false) do begin
             Inc(mLinha);
             mRegistro := '|C501' +                                                                          // 01 - REG.
-                         '|'+ tItens.FieldByName('CST_PIS').AsString +                                      // 02 - Código da Situação Tributária referente ao PIS/PASEP.
+                         '|'+ tItens.FieldByName('CST_PIS').AsString +                                      // 02 - C digo da Situa  o Tribut ria referente ao PIS/PASEP.
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_Liquido').AsCurrency) +        // 03 - Valor total dos itens.
-                         '|'+ tItens.FieldByName('Codigo_BC').AsString +                                    // 04 - Código da Base de Cálculo do Crédito.
-                         '|'+ FormatFloat('#0.00', tItens.FieldByName('BCPIS').AsCurrency) +                // 05 - Valor da base de cálculo do PIS/PASEP.
-                         '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_PIS').AsFloat) +          // 06 - Alíquota do PIS/PASEP (em percentual).
+                         '|'+ tItens.FieldByName('Codigo_BC').AsString +                                    // 04 - C digo da Base de C lculo do Cr dito.
+                         '|'+ FormatFloat('#0.00', tItens.FieldByName('BCPIS').AsCurrency) +                // 05 - Valor da base de c lculo do PIS/PASEP.
+                         '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_PIS').AsFloat) +          // 06 - Al quota do PIS/PASEP (em percentual).
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_PIS').AsCurrency) +            // 07 - Valor do PIS/PASEP.
-                         '|'+ tItens.FieldByName('Conta_Contabil').AsString +                               // 08 - Código da conta analítica contábil debitada/creditada.
+                         '|'+ tItens.FieldByName('Conta_Contabil').AsString +                               // 08 - C digo da conta anal tica cont bil debitada/creditada.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -4070,7 +4077,7 @@ begin
       End;
 end;
 
-{* REGISTRO C505: COMPLEMENTO DA OPERAÇÃO (CÓDIGOS 06, 28 e 29) – COFINS *}
+{* REGISTRO C505: COMPLEMENTO DA OPERA  O (C DIGOS 06, 28 e 29)   COFINS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC505(Nota:Integer; Fornecedor: Integer; DataEmissao: TDateTime; Empresa: Integer);
 begin
       tItens.SQL.Clear;
@@ -4099,13 +4106,13 @@ begin
       While (not tItens.Eof) and (Funcoes.Cancelado = false) do begin
             Inc(mLinha);
             mRegistro := '|C505' +                                                                          // 01 - REG.
-                         '|'+ tItens.FieldByName('CST_COFINS').AsString +                                   // 02 - Código da Situação Tributária referente a COFINS.
+                         '|'+ tItens.FieldByName('CST_COFINS').AsString +                                   // 02 - C digo da Situa  o Tribut ria referente a COFINS.
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_Liquido').AsCurrency) +        // 03 - Valor total dos itens.
-                         '|'+ tItens.FieldByName('Codigo_BC').AsString +                                    // 04 - Código da Base de Cálculo do Crédito.
-                         '|'+ FormatFloat('#0.00', tItens.FieldByName('BCCOFINS').AsCurrency) +             // 05 - Valor da base de cálculo da COFINS.
-                         '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_COFINS').AsFloat) +       // 06 - Alíquota da COFINS (em percentual).
+                         '|'+ tItens.FieldByName('Codigo_BC').AsString +                                    // 04 - C digo da Base de C lculo do Cr dito.
+                         '|'+ FormatFloat('#0.00', tItens.FieldByName('BCCOFINS').AsCurrency) +             // 05 - Valor da base de c lculo da COFINS.
+                         '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_COFINS').AsFloat) +       // 06 - Al quota da COFINS (em percentual).
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_COFINS').AsCurrency) +         // 07 - Valor da COFINS.
-                         '|'+ tItens.FieldByName('Conta_Contabil').AsString +                               // 08 - Código da conta analítica contábil debitada/creditada.
+                         '|'+ tItens.FieldByName('Conta_Contabil').AsString +                               // 08 - C digo da conta anal tica cont bil debitada/creditada.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -4186,10 +4193,10 @@ begin
       Progresso2('Registro: D001');
 end;
 
-{* REGISTRO D010: IDENTIFICAÇÃO DO ESTABELECIMENTO *}
+{* REGISTRO D010: IDENTIFICA  O DO ESTABELECIMENTO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroD010;
 begin
-      Progresso3('Identificação do Estabelecimento', tEmpresas.RecordCount+1);
+      Progresso3('Identifica  o do Estabelecimento', tEmpresas.RecordCount+1);
 
       // Matriz.
       Inc(mLinha);
@@ -4277,28 +4284,28 @@ begin
       While (not tNotas.Eof) and (Funcoes.Cancelado = false) do begin
             Inc(mLinha);
             mRegistro := '|D100' +                                                                               // 01 - REG.
-                         '|'+ tNotas.FieldByName('Tipo_Operacao').AsString +                                     // 02 - Indicador do tipo de operação.
+                         '|'+ tNotas.FieldByName('Tipo_Operacao').AsString +                                     // 02 - Indicador do tipo de opera  o.
                          '|'+ tNotas.FieldByName('Tipo_Emissao').AsString +                                      // 03 - Indicador do emitente do documento fiscal.
-                         '|'+ tNotas.FieldByName('Beneficiario').AsString+'F' +                                  // 04 - Código do participante.
-                         '|'+ tNotas.FieldByName('Modelo').AsString +                                            // 05 - Código dO modelo do documentos fiscal.
-                         '|'+ tNotas.FieldByName('Situacao').AsString +                                          // 06 - Código de situação do documentos fiscal.
-                         '|'+ tNotas.FieldByName('Serie').AsString +                                             // 07 - Série do documento fiscal.
-                         '|'+ tNotas.FieldByName('SubSerie').AsString +                                          // 08 - Sub-Série do documento fiscal.
-                         '|'+ tNotas.FieldByName('Nota').AsString +                                              // 09 - Número da nota fiscal.
-                         '|'+ tNotas.FieldByName('Chave_NFe').AsString +                                         // 10 - Chave da nota eletrônica de serviço.
-                         '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Emissao').AsString) +               // 11 - Data de Emissão da nota fiscal.
-                         '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Entrada').AsString) +               // 12 - Data da Entrda / Saída.
-                         '|'+                                                                                    // 13 - Tipo de conhecimento eletônico.
+                         '|'+ tNotas.FieldByName('Beneficiario').AsString+'F' +                                  // 04 - C digo do participante.
+                         '|'+ tNotas.FieldByName('Modelo').AsString +                                            // 05 - C digo dO modelo do documentos fiscal.
+                         '|'+ tNotas.FieldByName('Situacao').AsString +                                          // 06 - C digo de situa  o do documentos fiscal.
+                         '|'+ tNotas.FieldByName('Serie').AsString +                                             // 07 - S rie do documento fiscal.
+                         '|'+ tNotas.FieldByName('SubSerie').AsString +                                          // 08 - Sub-S rie do documento fiscal.
+                         '|'+ tNotas.FieldByName('Nota').AsString +                                              // 09 - N mero da nota fiscal.
+                         '|'+ tNotas.FieldByName('Chave_NFe').AsString +                                         // 10 - Chave da nota eletr nica de servi o.
+                         '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Emissao').AsString) +               // 11 - Data de Emiss o da nota fiscal.
+                         '|'+ RemoveCaracter('/','',tNotas.FieldByName('Data_Entrada').AsString) +               // 12 - Data da Entrda / Sa da.
+                         '|'+                                                                                    // 13 - Tipo de conhecimento elet nico.
                          '|'+                                                                                    // 14 - Chave da CT-e.
                          '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_TotalNota').AsCurrency) +          // 15 - Total da Nota.
                          '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Desconto_Valor').AsCurrency) +           // 16 - Valor do desconto.
                          '|'+ tNotas.FieldByName('Modalidade_Frete').AsString +                                  // 17 - Modalidade de Frete.
                          '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_TotalProdutos').AsCurrency) +      // 18 - Total das mercadorias.
-                         '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_BCICMSOper').AsCurrency)+          // 19 - Valor da base de cálculo do ICMS.
+                         '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_BCICMSOper').AsCurrency)+          // 19 - Valor da base de c lculo do ICMS.
                          '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_ICMSOper').AsCurrency)+            // 20 - Valor do ICMS.
-                         '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_OutrasICMS').AsCurrency)+          // 21 - Valor não tributadas de ICMS.
-                         '|'+                                                                                    // 22 - Código da informação complementar do documento fiscal.
-                         '|'+ tNotas.FieldByName('Conta_Contabil').AsString+                                     // 23 - Código da conta analítica contábil debitada/creditada.
+                         '|'+ FormatFloat('#0.00'  ,tNotas.FieldByName('Valor_OutrasICMS').AsCurrency)+          // 21 - Valor n o tributadas de ICMS.
+                         '|'+                                                                                    // 22 - C digo da informa  o complementar do documento fiscal.
+                         '|'+ tNotas.FieldByName('Conta_Contabil').AsString+                                     // 23 - C digo da conta anal tica cont bil debitada/creditada.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -4347,11 +4354,11 @@ begin
                          '|'+ tItens.FieldByName('Natureza_Frete').AsString +                               // 02 - Indicador da Natureza do Frete Contratado.
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_Liquido').AsCurrency) +        // 03 - Valor total dos itens.
                          '|'+ tItens.FieldByName('CST_PIS').AsString +                                      // 04 - CST PIS.tal dos itens.
-                         '|'+ PoeZero(2, tItens.FieldByName('Natureza_BC').AsInteger)+                      // 05 - Natureza da B.C. créditos.
-                         '|'+ FormatFloat('#0.00', tItens.FieldByName('BCPIS').AsCurrency) +                // 06 - Valor da base de cálculo do PIS.
-                         '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_PIS').AsFloat) +          // 06 - Alíquota do PIS (em percentual).
+                         '|'+ PoeZero(2, tItens.FieldByName('Natureza_BC').AsInteger)+                      // 05 - Natureza da B.C. cr ditos.
+                         '|'+ FormatFloat('#0.00', tItens.FieldByName('BCPIS').AsCurrency) +                // 06 - Valor da base de c lculo do PIS.
+                         '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_PIS').AsFloat) +          // 06 - Al quota do PIS (em percentual).
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_PIS').AsCurrency) +            // 07 - Valor do PIS.
-                         '|'+ tItens.FieldByName('Conta_Contabil').AsString +                               // 08 - Código da conta analítica contábil debitada/creditada.
+                         '|'+ tItens.FieldByName('Conta_Contabil').AsString +                               // 08 - C digo da conta anal tica cont bil debitada/creditada.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -4396,11 +4403,11 @@ begin
                          '|'+ tItens.FieldByName('Natureza_Frete').AsString +                               // 02 - Indicador da Natureza do Frete Contratado.
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_Liquido').AsCurrency) +        // 03 - Valor total dos itens.
                          '|'+ tItens.FieldByName('CST_COFINS').AsString +                                   // 04 - CST COFINS.
-                         '|'+ PoeZero(2, tItens.FieldByName('Natureza_BC').AsInteger) +                     // 05 - Natureza da B.C. créditos.
-                         '|'+ FormatFloat('#0.00', tItens.FieldByName('BCCOFINS').AsCurrency) +             // 06 - Valor da base de cálculo do COFINS.
-                         '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_COFINS').AsFloat) +       // 07 - Alíquota da COFINS (em percentual).
+                         '|'+ PoeZero(2, tItens.FieldByName('Natureza_BC').AsInteger) +                     // 05 - Natureza da B.C. cr ditos.
+                         '|'+ FormatFloat('#0.00', tItens.FieldByName('BCCOFINS').AsCurrency) +             // 06 - Valor da base de c lculo do COFINS.
+                         '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_COFINS').AsFloat) +       // 07 - Al quota da COFINS (em percentual).
                          '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_COFINS').AsCurrency) +         // 08 - Valor da COFINS.
-                         '|'+ tItens.FieldByName('Conta_Contabil').AsString +                               // 09 - Código da conta analítica contábil debitada/creditada.
+                         '|'+ tItens.FieldByName('Conta_Contabil').AsString +                               // 09 - C digo da conta anal tica cont bil debitada/creditada.
                          '|';
             Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -4428,12 +4435,13 @@ begin
       Progresso2('Registro: D990...');
 end;
 
-{* BLOCO F: DEMAIS DOCUMENTOS E OPERAÇÕES - ABERTURA DO BLOCO F *}
+{* BLOCO F: DEMAIS DOCUMENTOS E OPERA  ES - ABERTURA DO BLOCO F *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroF001;
 begin
       Progresso1('Abertura do Bloco F', 1);
       
       // Matriz.
+      {
       tPagarReceber.SQL.Clear;
       tPagarReceber.SQL.Add('USE ' + Dados.Empresas.FieldByName('Banco_Dados').AsString);
       If Dados.ConfiguracaoCompartilhar_Classificacao.AsBoolean = false then begin
@@ -4441,7 +4449,7 @@ begin
          tPagarReceber.SQL.Add('               AND YEAR(Data_Documento) = :pAno AND MONTH(Data_Documento) = :pMes AND Provisorio <> 1 ) ');
          If Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
             tPagarReceber.SQL.Add('              + (SELECT COUNT(*) FROM Adicoes AD WHERE (SELECT Data_RegistroDeclaracao FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI and Apuracao_PISCOFINS = 1) BETWEEN :pDataIni AND :pDataFim');
-            tPagarReceber.SQL.Add('                 AND (SELECT Tipo FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI) = ''IMPORTAÇÃO'' ');
+            tPagarReceber.SQL.Add('                 AND (SELECT Tipo FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI) = ''IMPORTA  O'' ');
             tPagarReceber.SQL.Add('                 AND (SELECT COUNT(*) FROM NotasFiscais NF WHERE NF.DI = AD.DI AND Saida_Entrada = 0 AND MONTH(NF.Data_Emissao) = MONTH(NF.Data_DI)) = 0)');
          End;
       end else begin
@@ -4449,14 +4457,39 @@ begin
          tPagarReceber.SQL.Add('               AND YEAR(Data_Documento) = :pAno AND MONTH(Data_Documento) = :pMes AND Provisorio <> 1 ) ');
          If Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
             tPagarReceber.SQL.Add('            + (SELECT COUNT(*) FROM Adicoes AD WHERE (SELECT Data_RegistroDeclaracao FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI and Apuracao_PISCOFINS = 1) BETWEEN :pDataIni AND :pDataFim');
-            tPagarReceber.SQL.Add('               AND (SELECT Tipo FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI) = ''IMPORTAÇÃO'' ');
+            tPagarReceber.SQL.Add('               AND (SELECT Tipo FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI) = ''IMPORTA  O'' ');
             tPagarReceber.SQL.Add('               AND (SELECT COUNT(*) FROM NotasFiscais NF WHERE NF.DI = AD.DI AND Saida_Entrada = 0 AND MONTH(NF.Data_Emissao) = MONTH(NF.Data_DI)) = 0)');
          End;
       End;
-      tPagarReceber.SQL.Add('INTO #Temp');
+      }
+      with tPagarReceber do begin 
+           sql.clear;
+           sql.add('use ' + Dados.Empresas.FieldByName('Banco_Dados').AsString);
+           sql.add('select Qtde = (select isnull(count(*) , 0)');
+           sql.add('               from PagarReceber pr ');
+           sql.add('               where (select isnull(CST_PIS, '''') from '+mCompClass+' cf where cf.Codigo = pr.Classificacao) <> '''' ');
+           sql.add('               and year(Data_Documento) = :pAno');
+           sql.add('               and month(Data_Documento) = :pMes');
+           sql.add('               and isnull(Provisorio, 0) = 0)');
+           sql.add('           + (select isnull(count(*) , 0)');
+           sql.add('              from PagarReceber pr ');
+           sql.add('              where year(Data_Documento) = :pAno');
+           sql.add('              and month(Data_Documento) = :pMes');
+           sql.add('              and isnull(Provisorio, 0) = 0');
+           sql.add('              and isnull(Juros, 0) > 0');
+           sql.add('              and (select isnull(Juros_SPEDPISCOFINS, 0) from ClassificacaoFinanceira where Codigo = Classificacao) = 1)');
+           if Dados.EmpresasPISCOFINS_F100.AsBoolean then begin 
+              sql.add('           + (select count(*)');
+              sql.add('              from Adicoes ad');
+              sql.add('              where (select Data_RegistroDeclaracao from ProcessosDocumentos pd where pd.Numero_Declaracao = ad.DI and Apuracao_PISCOFINS = 1) between :pDataIni and :pDataFim');
+              sql.add('              and (select Tipo from ProcessosDocumentos pd where pd.Numero_Declaracao = ad.DI) = ''IMPORTAÇÃO'' ');
+              sql.add('              and (select count(*) from NotasFiscais nf where nf.DI = ad.DI and Saida_Entrada = 0 and month(nf.Data_Emissao) = month(nf.Data_DI)) = 0)');
+           end;
+           sql.add('into #Temp');
 
-      // Filiais.
-      mSQLMatriz := tPagarReceber.SQL.Text;
+           // Filiais.
+           mSQLMatriz := sql.Text;
+      end;
 
       tEmpresas.First;
       While not tEmpresas.Eof do begin
@@ -4467,15 +4500,15 @@ begin
             If Dados.ConfiguracaoCompartilhar_Classificacao.AsBoolean = false then begin
                mSQLFilial := RemoveCaracter('ClassificacaoFinanceira', tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.ClassificacaoFinanceira', mSQLFilial);
             End;
-            mSQLFilial := RemoveCaracter('INTO #Temp', '', mSQLFilial);
-            mSQLFilial := RemoveCaracter('USE '+Dados.Empresas.FieldByName('Banco_Dados').AsString, '', mSQLFilial);
+            mSQLFilial := RemoveCaracter('into #Temp', '', mSQLFilial);
+            mSQLFilial := RemoveCaracter('use '+Dados.Empresas.FieldByName('Banco_Dados').AsString, '', mSQLFilial);
 
-            tPagarReceber.SQL.Add('UNION');
+            tPagarReceber.SQL.Add('union');
             tPagarReceber.SQL.Add(mSQLFilial);
             tEmpresas.Next;
       End;
-      tPagarReceber.SQL.Add('SELECT SUM(Qtde) AS Qtde FROM #Temp');
-      tPagarReceber.SQL.Add('DROP TABLE #Temp');
+      tPagarReceber.SQL.Add('select sum(Qtde) as Qtde from #Temp');
+      tPagarReceber.SQL.Add('drop table #Temp');
       If Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
          tPagarReceber.ParamByName('pDataIni').AsDate := StrtoDate(mDataIni);
          tPagarReceber.ParamByName('pDataFim').AsDate := StrtoDate(mDataFim);
@@ -4502,11 +4535,12 @@ begin
       Progresso2('Registro: F001');
 end;
 
-{* REGISTRO F010: IDENTIFICAÇÃO DO ESTABELECIMENTO *}
+{* REGISTRO F010: IDENTIFICA  O DO ESTABELECIMENTO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroF010;
 begin
-      Progresso2('Identificação do Estabelecimento');
+      Progresso2('Identifica  o do Estabelecimento');
 
+      {
       tPagarReceber.SQL.Clear;
       tPagarReceber.SQL.Add('USE '+Dados.EmpresasBanco_Dados.AsString);
       tPagarReceber.SQL.Add('SELECT  Classificacao');
@@ -4600,25 +4634,132 @@ begin
          tPagarReceber.SQL.Add('FROM  Adicoes AD');
          tPagarReceber.SQL.Add('WHERE (SELECT Data_RegistroDeclaracao FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI) BETWEEN :pDataIni AND :pDataFim');
          tPagarReceber.SQL.Add('  AND ISNULL((SELECT Apuracao_PISCOFINS FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI), 0) = 1');
-         tPagarReceber.SQL.Add('  AND (SELECT Tipo FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI) = ''IMPORTAÇÃO'' ');
+         tPagarReceber.SQL.Add('  AND (SELECT Tipo FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI) = ''IMPORTA  O'' ');
          tPagarReceber.SQL.Add('  AND (SELECT COUNT(*) FROM NotasFiscais NF WHERE NF.DI = AD.DI AND Saida_Entrada = 0 AND MONTH(NF.Data_Emissao) = MONTH(NF.Data_DI)) = 0');
       End;
-      tPagarReceber.SQL.Add('ORDER BY Classificacao');
-      tPagarReceber.ParamByName('pAno').AsInteger  := cAno.AsInteger;
-      tPagarReceber.ParamByName('pMes').AsInteger  := cMes.ItemIndex + 1;
+      }
+      with tPagarReceber do begin 
+           sql.clear;
+           sql.add('use '+Dados.EmpresasBanco_Dados.AsString);
+           sql.add('select  Classificacao');
+           sql.add('       ,Valor_Operacao');
+           sql.add('       ,Data_Vencimento');
+           sql.add('       ,Fornecedor');
+           sql.add('       ,(select Aliquota_PIS    from '+mCompClass+' where Codigo = Classificacao) as Aliquota_PIS');
+           sql.add('       ,(select Aliquota_COFINS from '+mCompClass+' where Codigo = Classificacao) as Aliquota_COFINS');
+           sql.add('       ,(select CST_PIS         from '+mCompClass+' where Codigo = Classificacao) as CST_PIS');
+           sql.add('       ,(select CST_COFINS      from '+mCompClass+' where Codigo = Classificacao) as CST_COFINS');
+           sql.add('       ,(select BCCredito       from '+mCompClass+' where Codigo = Classificacao) as Codigo_BC');
+           sql.add('       ,(select Tipo_Operacao   from Cybersoft_Cadastros.dbo.CSTPIS    where(Codigo = (select CST_PIS    from '+mCompClass+' where Codigo = PagarReceber.Classificacao))) as Tipo_OperacaoPIS');
+           sql.add('       ,(select Tipo_Operacao   from Cybersoft_Cadastros.dbo.CSTCOFINS where(Codigo = (select CST_COFINS from '+mCompClass+' where Codigo = PagarReceber.Classificacao))) as Tipo_OperacaoCOFINS');
+           sql.add('       ,case when Fornecedor  >    0 then cast(Fornecedor as varchar(6))+''F'' ');
+           sql.add('             when Cliente     >    0 then cast(Cliente as varchar(6))+''C'' ');
+           sql.add('             when Orgao      <> '''' then Orgao+''O'' ');
+           sql.add('        end as Beneficiario');
+           sql.add('       ,Codigo_Mercadoria = null');
+           sql.add('       ,Indicador_Origem  = 0');
+           sql.add('       ,Conta_Contabil = case when PagarReceber.Tipo = ''R'' then');
+           sql.add('                              case when (select Provisao_ContaC from '+mCompClass+' where Codigo = Classificacao) <> '''' then');
+           sql.add('                                   (select Provisao_ContaC from '+mCompClass+' where Codigo = Classificacao)');
+           sql.add('                              else');
+           sql.add('                                   (select Pagamento_Conta from '+mCompClass+' where Codigo = Classificacao)');
+           sql.add('                              end');
+           sql.add('                         else');
+           sql.add('                              case when (select Provisao_ContaD FROM '+mCompClass+' where Codigo = Classificacao) <> '''' then');
+           sql.add('                                  (select Provisao_ContaD from '+mCompClass+' where Codigo = Classificacao)');
+           sql.add('                              else');
+           sql.add('                                  (select Pagamento_Conta from '+mCompClass+' where Codigo = Classificacao)');
+           sql.add('                              end');
+           sql.add('                         end');
+           sql.add('from PagarReceber');
+           sql.add('where (select isnull(CST_PIS, '''') from '+mCompClass+' where Codigo = PagarReceber.Classificacao) <> '''' ');
+           sql.add('and year(Data_Documento) = :pAno');
+           sql.add('and month(Data_Documento) = :pMes');
+           sql.add('and isnull(Provisorio, 0) = 0');
+           // JUROS RECEBIDOS.
+           sql.add('union all');
+           sql.add('select  Classificacao = (select Classificacao_JurosRC from Configuracao)');
+           sql.add('       ,Valor_Operacao = Juros');
+           sql.add('       ,Data_Vencimento');
+           sql.add('       ,Fornecedor');
+           sql.add('       ,(select Aliquota_PIS    from '+mCompClass+' where Codigo = Classificacao) as Aliquota_PIS');
+           sql.add('       ,(select Aliquota_COFINS from '+mCompClass+' where Codigo = Classificacao) as Aliquota_COFINS');
+           sql.add('       ,(select CST_PIS         from '+mCompClass+' where Codigo = Classificacao) as CST_PIS');
+           sql.add('       ,(select CST_COFINS      from '+mCompClass+' where Codigo = Classificacao) as CST_COFINS');
+           sql.add('       ,(select BCCredito       from '+mCompClass+' where Codigo = Classificacao) as Codigo_BC');
+           sql.add('       ,(select Tipo_Operacao   from Cybersoft_Cadastros.dbo.CSTPIS    where(Codigo = (select CST_PIS    from '+mCompClass+' where Codigo = PagarReceber.Classificacao))) as Tipo_OperacaoPIS');
+           sql.add('       ,(select Tipo_Operacao   from Cybersoft_Cadastros.dbo.CSTCOFINS where(Codigo = (select CST_COFINS from '+mCompClass+' where Codigo = PagarReceber.Classificacao))) as Tipo_OperacaoCOFINS');
+           sql.add('       ,case when Fornecedor  >    0 then cast(Fornecedor as varchar(6))+''F'' ');
+           sql.add('             when Cliente     >    0 then cast(Cliente as varchar(6))+''C'' ');
+           sql.add('             when Orgao      <> '''' then Orgao+''O'' ');
+           sql.add('        end as Beneficiario');
+           sql.add('       ,Codigo_Mercadoria = null');
+           sql.add('       ,Indicador_Origem  = 0');
+           sql.add('       ,Conta_Contabil = case when PagarReceber.Tipo = ''R'' then');
+           sql.add('                              case when (select Provisao_ContaC from '+mCompClass+' where Codigo = Classificacao) <> '''' then');
+           sql.add('                                   (select Provisao_ContaC from '+mCompClass+' where Codigo = Classificacao)');
+           sql.add('                              else');
+           sql.add('                                   (select Pagamento_Conta from '+mCompClass+' where Codigo = Classificacao)');
+           sql.add('                              end');
+           sql.add('                         else');
+           sql.add('                              case when (select Provisao_ContaD FROM '+mCompClass+' where Codigo = Classificacao) <> '''' then');
+           sql.add('                                  (select Provisao_ContaD from '+mCompClass+' where Codigo = Classificacao)');
+           sql.add('                              else');
+           sql.add('                                  (select Pagamento_Conta from '+mCompClass+' where Codigo = Classificacao)');
+           sql.add('                              end');
+           sql.add('                         end');
+           sql.add('from PagarReceber');
+           sql.add('where year(Data_Documento) = :pAno');
+           sql.add('and month(Data_Documento) = :pMes');
+           sql.add('and isnull(Provisorio, 0) = 0');
+           sql.add('and isnull(Juros, 0) > 0');
+           sql.add('and (select isnull(Juros_SPEDPISCOFINS, 0) from '+mCompClass+' where Codigo = Classificacao) = 1');
+
+           if Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
+              sql.add('union all');
+              sql.add('select  Classificacao       = ''D.I, ''+ substring(DI,1,2)+''/''+substring(DI,3,7)+''-''+substring(DI,10,1)');
+              sql.add('       ,Valor_Operacao      = (Valor_UnitarioReal + (case when (select Frete from Cybersoft_Cadastros.dbo.INCOTERMS where Codigo = (select INCOTERMS from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI)) = 1 then');
+              sql.add('                                                         ((select (Frete /Peso_Liquido) from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI) * Peso_Liquido) else 0 end +');
+              sql.add('                                                     case when (select Seguro from Cybersoft_Cadastros.dbo.INCOTERMS where Codigo = (select INCOTERMS from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI)) = 1 then');
+              sql.add('                                                         ((select (Seguro/FOB) from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI) * Valor_SemAdValorem) else 0 end)');
+              sql.add('                               )* Quantidade');
+              sql.add('       ,Data_Vencimento     = (select Data_RegistroDeclaracao from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI)');
+              sql.add('       ,Fornecedor          = Exportador');
+              sql.add('       ,Aliquota_PIS        = (select PIS_Nota         from Produtos where Codigo = Codigo_Mercadoria)');
+              sql.add('       ,Aliquota_COFINS     = (select COFINS_Nota      from Produtos where Codigo = Codigo_Mercadoria)');
+              sql.add('       ,CST_PIS             = (select CST_PIS          from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI)');
+              sql.add('       ,CST_COFINS          = (select CST_COFINS       from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI)');
+              sql.add('       ,Codigo_BC           = (select Codigo_BCCredito from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI)');
+              sql.add('       ,Tipo_OperacaoPIS    = (select Tipo_Operacao    from Cybersoft_Cadastros.dbo.CSTPIS    where Codigo = (select CST_PIS    from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI))');
+              sql.add('       ,Tipo_OperacaoCOFINS = (select Tipo_Operacao    from Cybersoft_Cadastros.dbo.CSTCOFINS where Codigo = (select CST_COFINS from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI))');
+              sql.add('       ,Beneficiario        = cast(Exportador as varchar(6))+''F'' ');
+              sql.add('       ,Codigo_Mercadoria   = cast((select Codigo from Produtos where Codigo = Codigo_Mercadoria) as varchar(15))+''P'' ');
+              sql.add('       ,Indicador_Origem    = 1');
+              sql.add('       ,Conta_Contabil = (select Conta_Despesas from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI)');
+              sql.add('from  Adicoes AD');
+              sql.add('where (select Data_RegistroDeclaracao from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI) between :pDataIni and :pDataFim');
+              sql.add('  and isnull((select Apuracao_PISCOFINS from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI), 0) = 1');
+              sql.add('  and (select Tipo from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI) = ''IMPORTAÇÃO'' ');
+              sql.add('  and (select count(*) from NotasFiscais NF where NF.DI = AD.DI and Saida_Entrada = 0 and month(NF.Data_Emissao) = month(NF.Data_DI)) = 0');
+           end;
       
-      If Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
-         tPagarReceber.ParamByName('pDataIni').AsDate := StrtoDate(mDataIni);
-         tPagarReceber.ParamByName('pDataFim').AsDate := StrtoDate(mDataFim);
-      End;   
-      //tPagarReceber.SQL.SaveToFile('c:\temp\SPED_PISCOFINS_REGF010_Matriz.SQL');
-      tPagarReceber.Open;
+           sql.Add('order by Classificacao');
+           ParamByName('pAno').AsInteger := cAno.AsInteger;
+           ParamByName('pMes').AsInteger := cMes.ItemIndex + 1;
+      
+           if Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
+              ParamByName('pDataIni').AsDate := StrtoDate(mDataIni);
+              ParamByName('pDataFim').AsDate := StrtoDate(mDataFim);
+           end;   
+           //sql.SaveToFile('c:\temp\SPED_PISCOFINS_REGF010_Matriz.SQL');
+           open;
+      end;
 
       // Matriz.
       If tPagarReceber.RecordCount > 0 then begin
          Inc(mLinha);
          mRegistro := '|F010' +                                                   // 01 - REG.
-                      '|'+ Trim(Dados.Empresas.FieldByName('CNPJ').AsString)+     // 02 - Número de inscrição do estabelecimento no CNPJ.
+                      '|'+ Trim(Dados.Empresas.FieldByName('CNPJ').AsString)+     // 02 - N mero de inscri  o do estabelecimento no CNPJ.
                       '|';
          Say( mLinha, 000, Arquivo, mRegistro );
          Inc(mQtdeBlocoF);
@@ -4648,7 +4789,7 @@ begin
             If tPagarReceber.RecordCount > 0 then begin
                Inc(mLinha);
                mRegistro := '|F010' +                                              // 01 - REG.
-                            '|'+ Trim(tEmpresas.FieldByName('CNPJ').AsString)+     // 02 - Número de inscrição do estabelecimento no CNPJ.
+                            '|'+ Trim(tEmpresas.FieldByName('CNPJ').AsString)+     // 02 - N mero de inscri  o do estabelecimento no CNPJ.
                             '|';
                Say( mLinha, 000, Arquivo, mRegistro );
                Inc(mQtdeBlocoF);
@@ -4662,12 +4803,12 @@ begin
       End;
 end;
 
-{* REGISTRO F100: DEMAIS DOCUMENTOS E OPERAÇÕES GERADORAS DE CONTRIBUIÇÃO E CRÉDITOS *}
+{* REGISTRO F100: DEMAIS DOCUMENTOS E OPERA  ES GERADORAS DE CONTRIBUI  O E CR DITOS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroF100;
 Var
    mCodigoBC: String;
 begin
-     Progresso3('Demais documentos e Operações Geradoras de Créditos', tPagarReceber.RecordCount);
+     Progresso3('Demais documentos e Opera  es Geradoras de Cr ditos', tPagarReceber.RecordCount);
 
      While (not tPagarReceber.Eof) and (Funcoes.Cancelado = false) do begin
            mCodigoBC := PoeZero(2, tPagarReceber.FieldByName('Codigo_BC').AsInteger);
@@ -4675,11 +4816,11 @@ begin
 
            Inc(mLinha);
            mRegistro := '|F100'+                                                                                                                                                 // 01 - REG.
-                        '|'+ Trim(tPagarReceber.FieldByName('Tipo_OperacaoCOFINS').AsString) +                                                                                   // 02 - Tipo de operação.
-                        '|'+ tPagarReceber.FieldByName('Beneficiario').AsString +                                                                                                // 03 - Código do participante.
-                        '|'+ tPagarReceber.FieldByName('Codigo_Mercadoria').AsString +                                                                                           // 04 - Código do item.
-                        '|'+ RemoveCaracter('/','',tPagarReceber.FieldByName('Data_Vencimento').AsString) +                                                                      // 05 - Data da Operação.
-                        '|'+ FormatFloat('#0.00', tPagarReceber.FieldByName('Valor_Operacao').AsCurrency) +                                                                      // 06 - Valor Operação / Item.
+                        '|'+ Trim(tPagarReceber.FieldByName('Tipo_OperacaoCOFINS').AsString) +                                                                                   // 02 - Tipo de opera  o.
+                        '|'+ tPagarReceber.FieldByName('Beneficiario').AsString +                                                                                                // 03 - C digo do participante.
+                        '|'+ tPagarReceber.FieldByName('Codigo_Mercadoria').AsString +                                                                                           // 04 - C digo do item.
+                        '|'+ RemoveCaracter('/','',tPagarReceber.FieldByName('Data_Vencimento').AsString) +                                                                      // 05 - Data da Opera  o.
+                        '|'+ FormatFloat('#0.00', tPagarReceber.FieldByName('Valor_Operacao').AsCurrency) +                                                                      // 06 - Valor Opera  o / Item.
                         '|'+ tPagarReceber.FieldByName('CST_PIS').AsString +                                                                                                     // 07 - CST PIS.
                         '|'+ FormatFloat('#0.00', tPagarReceber.FieldByName('Valor_Operacao').AsCurrency) +                                                                      // 08 - Valor B.C. PIS.
                         '|'+ FormatFloat('#0.00', tPagarReceber.FieldByName('Aliquota_PIS').AsFloat) +                                                                           // 09 - Aliquota do PIS.
@@ -4688,11 +4829,11 @@ begin
                         '|'+ FormatFloat('#0.00', tPagarReceber.FieldByName('Valor_Operacao').AsCurrency) +                                                                      // 12 - Valor B.C. COFINS
                         '|'+ FormatFloat('#0.00', tPagarReceber.FieldByName('Aliquota_COFINS').AsFloat) +                                                                        // 13 - Aliquota do COFINS.
                         '|'+ FormatFloat('#0.00', Percentual(tPagarReceber.FieldByName('Valor_Operacao').AsCurrency, tPagarReceber.FieldByName('Aliquota_COFINS').AsFloat)) +    // 14 - Valor da COFINS.
-                        '|'+ mCodigoBC +                                                                                                                                         // 15 - Código da Base de Cálculo dos Créditos.
-                        '|'+ tPagarReceber.FieldByName('Indicador_Origem').AsString +                                                                                            // 16 - Indicador da origem do crédito.
-                        '|'+ tPagarReceber.FieldByName('Conta_Contabil').AsString +                                                                                              // 17 - Código da conta analítica contábil debitada/creditada.
-                        '|'+                                                                                                                                                     // 18 - Código do Centro de Custos.
-                        '|'+ tPagarReceber.FieldByName('Classificacao').AsString +                                                                                               // 19 - Descrição do Documento/Operação.
+                        '|'+ mCodigoBC +                                                                                                                                         // 15 - C digo da Base de C lculo dos Cr ditos.
+                        '|'+ tPagarReceber.FieldByName('Indicador_Origem').AsString +                                                                                            // 16 - Indicador da origem do cr dito.
+                        '|'+ tPagarReceber.FieldByName('Conta_Contabil').AsString +                                                                                              // 17 - C digo da conta anal tica cont bil debitada/creditada.
+                        '|'+                                                                                                                                                     // 18 - C digo do Centro de Custos.
+                        '|'+ tPagarReceber.FieldByName('Classificacao').AsString +                                                                                               // 19 - Descri  o do Documento/Opera  o.
                         '|';
            Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -4705,7 +4846,7 @@ begin
      End;
 end;
 
-{* REGISTRO F700: DEDUÇÕES DIVERSAS *}
+{* REGISTRO F700: DEDU  ES DIVERSAS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroF700(Empresa: Integer);
 begin
      tApuracao.SQL.Clear;
@@ -4725,18 +4866,18 @@ begin
      //tApuracao.SQL.SaveToFile('c:\temp\SPED_PISCOFINS_REGF700_'+tEmpresas.FieldByName('Codigo').AsString+'.SQL');
      tApuracao.Open;
 
-     Progresso3('Demais documentos e Operações Geradoras de Créditos', tPagarReceber.RecordCount);
+     Progresso3('Demais documentos e Opera  es Geradoras de Cr ditos', tPagarReceber.RecordCount);
 
      While (not tApuracao.Eof) and (Funcoes.Cancelado = false) do begin
            Inc(mLinha);
            mRegistro := '|F700'+                                                                                // 01 - REG.
-                        '|99'+                                                                                  // 02 - Indicador de Origem de Deduções Diversas.
-                        '|0'+                                                                                   // 03 - Indicador de Origem de Deduções Diversas.
+                        '|99'+                                                                                  // 02 - Indicador de Origem de Dedu  es Diversas.
+                        '|0'+                                                                                   // 03 - Indicador de Origem de Dedu  es Diversas.
                         '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Outras_DeducoesPIS').AsCurrency) +     // 04 - Valor a Deduzir - PIS/PASEP.
-                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Outras_DeducoesCOFINS').AsCurrency) +  // 05 - Valor a Deduzir – Cofins.
-                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('BC_Deducoes').AsCurrency) +            // 06 - Valor da Base de Cálculo da Operação que ensejou o Valor a Deduzir informado nos Campos 04 e 05.
-                        '|'+ Dados.EmpresasCNPJ.Value +                                                         // 09 - CNPJ da Pessoa Jurídica relacionada à Operação que ensejou o Valor a Deduzir informado nos Campos 04 e 05.
-                        '|'+                                                                                    // 08 - Informações Complementares do Documento/Operação que ensejou o Valor a Deduzir informado nos Campos 04 e 05.
+                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Outras_DeducoesCOFINS').AsCurrency) +  // 05 - Valor a Deduzir   Cofins.
+                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('BC_Deducoes').AsCurrency) +            // 06 - Valor da Base de C lculo da Opera  o que ensejou o Valor a Deduzir informado nos Campos 04 e 05.
+                        '|'+ Dados.EmpresasCNPJ.Value +                                                         // 09 - CNPJ da Pessoa Jur dica relacionada   Opera  o que ensejou o Valor a Deduzir informado nos Campos 04 e 05.
+                        '|'+                                                                                    // 08 - Informa  es Complementares do Documento/Opera  o que ensejou o Valor a Deduzir informado nos Campos 04 e 05.
                         '|';
            Say( mLinha, 000, Arquivo, mRegistro );
            
@@ -4766,7 +4907,7 @@ begin
       Progresso2('F990');
 end;
 
-{* BLOCO I: OPERAÇÕES DAS INSTITUIÇÕES FINANCEIRAS, SEGURADORAS, ENTIDADES DE PREVIDENCIA PRIVADA, OPERADORAS DE PLANOS DE ASSISTÊNCIA À SAÚDE E DEMAIS PESSOAS JURÍDICAS REFERIDAS }
+{* BLOCO I: OPERA  ES DAS INSTITUI  ES FINANCEIRAS, SEGURADORAS, ENTIDADES DE PREVIDENCIA PRIVADA, OPERADORAS DE PLANOS DE ASSIST NCIA   SA DE E DEMAIS PESSOAS JUR DICAS REFERIDAS }
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroI001;
 begin
       Progresso1('Abertura do BLOCO I', 1);
@@ -4860,14 +5001,14 @@ begin
       Progresso2('Registro: M001');
 end;
 
-{* REGISTRO M100: CRÉDITO DE PIS/PASEP RELATIVO AO PERÍODO *}
+{* REGISTRO M100: CR DITO DE PIS/PASEP RELATIVO AO PER ODO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM100;
 Var
     mCampo13: String;
     mCampo14: Real;
     mCampo15: Real;
 begin
-     // Credito vinculado à receita "tributada" no mercado interno.
+     // Credito vinculado   receita "tributada" no mercado interno.
      tApuracao.SQL.Clear;
      tApuracao.SQL.Add('USE ' + Dados.Empresas.FieldByName('Banco_Dados').AsString);
      tApuracao.SQL.Add('SELECT ''101'' AS Tipo_Credito,');
@@ -4910,7 +5051,7 @@ begin
      tApuracao.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_PIS > 0)');
      tApuracao.SQL.Add('GROUP BY Aliquota_PIS');
 
-     // Credito vinculado à receita "não tributada" no mercado interno.
+     // Credito vinculado   receita "n o tributada" no mercado interno.
      tApuracao.SQL.Add('UNION ALL');
      tApuracao.SQL.Add('SELECT ''201'' AS Tipo_Credito,');
      tApuracao.SQL.Add('       Aliquota_PIS,');
@@ -4952,7 +5093,7 @@ begin
      tApuracao.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_PIS > 0)');
      tApuracao.SQL.Add('GROUP BY Aliquota_PIS');
 
-     // Credito vinculado à receita "Exportação".
+     // Credito vinculado   receita "Exporta  o".
      tApuracao.SQL.Add('UNION ALL');
      tApuracao.SQL.Add('SELECT ''301'' AS Tipo_Credito,');
      tApuracao.SQL.Add('       Aliquota_PIS,');
@@ -4961,7 +5102,7 @@ begin
      tApuracao.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_PIS = :pAliquota)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
      tApuracao.SQL.Add('       Vinculado_PIS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasTerceirosItens');
      tApuracao.SQL.Add('WHERE  (YEAR(Data_Entrada) = :pAno AND MONTH(Data_Entrada) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Aliquota_PIS = :pAliquota)');
@@ -4974,7 +5115,7 @@ begin
      tApuracao.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_PIS <> :pAliquota)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
      tApuracao.SQL.Add('       Vinculado_PIS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasTerceirosItens');
      tApuracao.SQL.Add('WHERE  (YEAR(Data_Entrada) = :pAno AND MONTH(Data_Entrada) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Aliquota_PIS <> :pAliquota) AND (Aliquota_PIS > 0)');
@@ -4987,7 +5128,7 @@ begin
      tApuracao.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasItens.Aliquota_PIS)),0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasItens.Aliquota_PIS)),0),');
      tApuracao.SQL.Add('       Vinculado_PIS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasItens');
      tApuracao.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_PIS > 0)');
@@ -5028,7 +5169,7 @@ begin
      tApuracao.ParamByName('pMes').AsInteger    := cMes.ItemIndex + 1;
      tApuracao.ParamByName('pAno').AsInteger    := cAno.AsInteger;
 
-     //Pegando a alíquota base na tabela de majoração de acordo com o regime da empresa.
+     //Pegando a al quota base na tabela de majora  o de acordo com o regime da empresa.
      Dados.Majoracao.SQL.Clear;
      Dados.Majoracao.SQL.Add('SELECT * FROM Majoracao');
      Dados.Majoracao.SQL.Add('WHERE Descricao       = ''PIS'' ');
@@ -5047,7 +5188,7 @@ begin
      tApuracao.Open;
 
      //----------------------------------------------------------------------[ REGISTRO 105 ]-----------------------------------------------------------------------------------
-     // Credito vinculado à receita "tributada" no mercado interno.
+     // Credito vinculado   receita "tributada" no mercado interno.
      tApuracao2.SQL.Clear;
      tApuracao2.SQL.Add('SELECT ''101'' AS Tipo_Credito,');
      tApuracao2.SQL.Add('       Aliquota_PIS,');
@@ -5091,7 +5232,7 @@ begin
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM TipoNota WHERE(Codigo = (SELECT Tipo_Nota FROM NotasFiscais WHERE(Numero = NotasItens.Nota) AND (Data_Emissao = NotasItens.Data)) )) AS Natureza_BC');
      tApuracao2.SQL.Add('FROM   NotasItens');
      tApuracao2.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_PIS > 0)');
-     // Credito vinculado à receita "não tributada" no mercado interno.
+     // Credito vinculado   receita "n o tributada" no mercado interno.
      tApuracao2.SQL.Add('UNION ALL');
      tApuracao2.SQL.Add('SELECT ''201'' AS Tipo_Credito,');
      tApuracao2.SQL.Add('       Aliquota_PIS,');
@@ -5135,7 +5276,7 @@ begin
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM TipoNota WHERE(Codigo = (SELECT Tipo_Nota FROM NotasFiscais WHERE(Numero = NotasItens.Nota) AND (Data_Emissao = NotasItens.Data)) )) AS Natureza_BC');
      tApuracao2.SQL.Add('FROM   NotasItens');
      tApuracao2.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_PIS > 0)');
-     // Credito vinculado à receita "Exportação".
+     // Credito vinculado   receita "Exporta  o".
      tApuracao2.SQL.Add('UNION ALL');
      tApuracao2.SQL.Add('SELECT ''301'' AS Tipo_Credito,');
      tApuracao2.SQL.Add('       Aliquota_PIS,');
@@ -5144,7 +5285,7 @@ begin
      tApuracao2.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_PIS = :pAliquota)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
      tApuracao2.SQL.Add('       Vinculado_PIS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CST_PIS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM ReferenciasFiscais WHERE(Codigo = Referencia_Fiscal)) AS Natureza_BC');
@@ -5158,7 +5299,7 @@ begin
      tApuracao2.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_PIS <> :pAliquota)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
      tApuracao2.SQL.Add('       Vinculado_PIS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CST_PIS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM ReferenciasFiscais WHERE(Codigo = Referencia_Fiscal)) AS Natureza_BC');
@@ -5172,7 +5313,7 @@ begin
      tApuracao2.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasItens.Aliquota_PIS)),0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasItens.Aliquota_PIS)),0),');
      tApuracao2.SQL.Add('       Vinculado_PIS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CSTPIS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM TipoNota WHERE(Codigo = (SELECT Tipo_Nota FROM NotasFiscais WHERE(Numero = NotasItens.Nota) AND (Data_Emissao = NotasItens.Data)) )) AS Natureza_BC');
@@ -5219,7 +5360,7 @@ begin
      mCreditoPIS     := 0;
      mCreditoPISUtil := 0;
 
-     Progresso3('Crédito de PIS relativo ao Período', tApuracao.RecordCount);
+     Progresso3('Cr dito de PIS relativo ao Per odo', tApuracao.RecordCount);
 
      While (not tApuracao.Eof) and (Funcoes.Cancelado = false) do begin
            If tApuracao.FieldByName('Receita_PIS').AsCurrency <= tApuracao.FieldByName('Credito_PIS').AsCurrency  then begin
@@ -5234,20 +5375,20 @@ begin
 
            Inc(mLinha);
            mRegistro := '|M100'+                                                                          // 01 - REG.
-                        '|'+ PoeZero(2, tApuracao.FieldByName('Tipo_Credito').AsInteger) +                // 02 - Tipo de operação.
-                        '|'+ '0' +                                                                        // 03 - Indicador de Crédito Oriundo de:.
-                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('BC_PIS').Value) +                // 04 - Valor da Base de Cálculo do Crédito.
-                        '|'+ FormatFloat('#0.0000', tApuracao.FieldByName('Aliquota_PIS').Value) +        // 05 - Alíquota do PIS.
-                        '|'+                                                                              // 06 - Quantidade – Base de cálculo PIS.
+                        '|'+ PoeZero(2, tApuracao.FieldByName('Tipo_Credito').AsInteger) +                // 02 - Tipo de opera  o.
+                        '|'+ '0' +                                                                        // 03 - Indicador de Cr dito Oriundo de:.
+                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('BC_PIS').Value) +                // 04 - Valor da Base de C lculo do Cr dito.
+                        '|'+ FormatFloat('#0.0000', tApuracao.FieldByName('Aliquota_PIS').Value) +        // 05 - Al quota do PIS.
+                        '|'+                                                                              // 06 - Quantidade   Base de c lculo PIS.
                         '|'+                                                                              // 07 - Aliquota do PIS (Reais).
-                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Credito_PIS').AsCurrency) +      // 08 - Valor total do crédito apurado no período.
-                        '|0,00'+                                                                          // 09 - Valor total dos ajustes de acréscimo.
-                        '|0,00'+                                                                          // 10 - Valor total dos ajustes de redução.
-                        '|0,00'+                                                                          // 11 - Valor total do crédito diferido no período.
-                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Credito_PIS').AsCurrency) +      // 12 - Valor Total do Crédito Disponível relativo ao Período (08+09–10–11).
-                        '|'+ mCampo13 +                                                                   // 13 - Indicador de opção de utilização do crédito disponível no período.
-                        '|'+ FormatFloat('#0.00', mCampo14) +                                             // 14 - Valor do Crédito disponível, descontado da contribuição apurada no próprio período.
-                        '|'+ FormatFloat('#0.00', mCampo15) +                                             // 15 - Saldo de créditos a utilizar em períodos futuros.
+                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Credito_PIS').AsCurrency) +      // 08 - Valor total do cr dito apurado no per odo.
+                        '|0,00'+                                                                          // 09 - Valor total dos ajustes de acr scimo.
+                        '|0,00'+                                                                          // 10 - Valor total dos ajustes de redu  o.
+                        '|0,00'+                                                                          // 11 - Valor total do cr dito diferido no per odo.
+                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Credito_PIS').AsCurrency) +      // 12 - Valor Total do Cr dito Dispon vel relativo ao Per odo (08+09 10 11).
+                        '|'+ mCampo13 +                                                                   // 13 - Indicador de op  o de utiliza  o do cr dito dispon vel no per odo.
+                        '|'+ FormatFloat('#0.00', mCampo14) +                                             // 14 - Valor do Cr dito dispon vel, descontado da contribui  o apurada no pr prio per odo.
+                        '|'+ FormatFloat('#0.00', mCampo15) +                                             // 15 - Saldo de cr ditos a utilizar em per odos futuros.
                         '|';
            Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -5265,7 +5406,7 @@ begin
      End;
 end;
 
-{* DETALHAMENTO DA BASE DE CALCULO DO CRÉDITO APURADO NO PERÍODO – PIS/PASEP *}
+{* DETALHAMENTO DA BASE DE CALCULO DO CR DITO APURADO NO PER ODO   PIS/PASEP *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM105(TipoCredito: String; Aliquota: Real);
 begin
      Progresso4('Registro: M105...', tApuracao2.RecordCount);
@@ -5275,15 +5416,15 @@ begin
            If (tApuracao2.FieldByName('Tipo_Credito').AsString = TipoCredito) and (tApuracao2.FieldByName('Aliquota_PIS').AsFloat = Aliquota) then begin
               Inc(mLinha);
               mRegistro := '|M105'+                                                                       // 01 - REG.
-                           '|' + PoeZero(2, tApuracao2.FieldByName('Natureza_BC').AsInteger) +            // 02 - Código da Base de Cálculo do Crédito apurado no período.
-                           '|' + tApuracao2.FieldByName('CSTPIS').AsString +                              // 03 - Código da Situação Tributária referente ao crédito de PIS/Pasep.
-                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_PIS').Value) +           // 04 - Valor Total da Base de Cálculo escriturada nos documentos e operações.
-                           '|' +                                                                          // 05 - Parcela do Valor Total da Base de Cálculo informada no Campo 04.
-                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_PIS').AsCurrency) +      // 06 - Valor Total da Base de Cálculo do Crédito, vinculada a receitas com incidência não-cumulativa (Campo 04–Campo 05).
-                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_PIS').AsCurrency) +      // 07 - Valor da Base de Cálculo do Crédito, vinculada ao tipo de Crédito escriturado em M100.
-                           '|' +                                                                          // 08 - Quantidade Total da Base de Cálculo do Crédito apurado  em Unidade de Medida.
-                           '|' +                                                                          // 09 - Parcela da base de cálculo do crédito em quantidade (campo 08).
-                           '|' +                                                                          // 10 - Descrição do crédito.
+                           '|' + PoeZero(2, tApuracao2.FieldByName('Natureza_BC').AsInteger) +            // 02 - C digo da Base de C lculo do Cr dito apurado no per odo.
+                           '|' + tApuracao2.FieldByName('CSTPIS').AsString +                              // 03 - C digo da Situa  o Tribut ria referente ao cr dito de PIS/Pasep.
+                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_PIS').Value) +           // 04 - Valor Total da Base de C lculo escriturada nos documentos e opera  es.
+                           '|' +                                                                          // 05 - Parcela do Valor Total da Base de C lculo informada no Campo 04.
+                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_PIS').AsCurrency) +      // 06 - Valor Total da Base de C lculo do Cr dito, vinculada a receitas com incid ncia n o-cumulativa (Campo 04 Campo 05).
+                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_PIS').AsCurrency) +      // 07 - Valor da Base de C lculo do Cr dito, vinculada ao tipo de Cr dito escriturado em M100.
+                           '|' +                                                                          // 08 - Quantidade Total da Base de C lculo do Cr dito apurado  em Unidade de Medida.
+                           '|' +                                                                          // 09 - Parcela da base de c lculo do cr dito em quantidade (campo 08).
+                           '|' +                                                                          // 10 - Descri  o do cr dito.
                            '|';
               Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -5296,7 +5437,7 @@ begin
      End;
 end;
 
-{* REGISTRO M200: CONSOLIDAÇÃO DA CONTRIBUIÇÃO PARA O PIS/PASEP DO PERÍODO *}
+{* REGISTRO M200: CONSOLIDA  O DA CONTRIBUI  O PARA O PIS/PASEP DO PER ODO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM200;
 Var
    mValorContrib: Real;
@@ -5340,22 +5481,22 @@ begin
      If mValorContrib < 0 then mValorContrib := mValorContrib * -1;
      mValorDevido  := mValorContrib;
 
-     Progresso3('Consolidação da Contribuição p/PIS', 1);
+     Progresso3('Consolida  o da Contribui  o p/PIS', 1);
 
      Inc(mLinha);
      mRegistro := '|M200'+                                                                          // 01 - REG.
-                  '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_PIS').AsCurrency) +           // 02 - Valor Total da Contribuição Não Cumulativa do Período.
-                  '|'+ FormatFloat('#0.00', mCreditoPISUtil) +                                      // 03 - Valor do Crédito Descontado, Apurado no Próprio Período da Escrituração.
-                  '|0,00'+                                                                          // 04 - Valor do Crédito Descontado, Apurado em Período de Apuração Anterior.
-                  '|'+ FormatFloat('#0.00', mValorContrib) +                                        // 05 - Valor Total da Contribuição Não Cumulativa Devida (02–03-04).
-                  '|0,00'+                                                                          // 06 - Valor Retido na Fonte Deduzido no Período.
-                  '|0,00'+                                                                          // 07 - Outras Deduções no Período.
-                  '|'+ FormatFloat('#0.00', mValorDevido) +                                         // 08 - Valor da Contribuição Não Cumulativa a Recolher/Pagar (05–06-07).
-                  '|0,00'+                                                                          // 09 - Valor Total da Contribuição Cumulativa do Período.
-                  '|0,00'+                                                                          // 10 - Valor Retido na Fonte Deduzido no Período.
-                  '|0,00'+                                                                          // 11 - Outras Deduções no Período.
-                  '|0,00'+                                                                          // 12 - Valor da Contribuição Cumulativa a Recolher/Pagar (09-10–11).
-                  '|'+ FormatFloat('#0.00', mValorDevido) +                                         // 13 - Valor Total da Contribuição a Recolher/Pagar no Período (08+12).
+                  '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_PIS').AsCurrency) +           // 02 - Valor Total da Contribui  o N o Cumulativa do Per odo.
+                  '|'+ FormatFloat('#0.00', mCreditoPISUtil) +                                      // 03 - Valor do Cr dito Descontado, Apurado no Pr prio Per odo da Escritura  o.
+                  '|0,00'+                                                                          // 04 - Valor do Cr dito Descontado, Apurado em Per odo de Apura  o Anterior.
+                  '|'+ FormatFloat('#0.00', mValorContrib) +                                        // 05 - Valor Total da Contribui  o N o Cumulativa Devida (02 03-04).
+                  '|0,00'+                                                                          // 06 - Valor Retido na Fonte Deduzido no Per odo.
+                  '|0,00'+                                                                          // 07 - Outras Dedu  es no Per odo.
+                  '|'+ FormatFloat('#0.00', mValorDevido) +                                         // 08 - Valor da Contribui  o N o Cumulativa a Recolher/Pagar (05 06-07).
+                  '|0,00'+                                                                          // 09 - Valor Total da Contribui  o Cumulativa do Per odo.
+                  '|0,00'+                                                                          // 10 - Valor Retido na Fonte Deduzido no Per odo.
+                  '|0,00'+                                                                          // 11 - Outras Dedu  es no Per odo.
+                  '|0,00'+                                                                          // 12 - Valor da Contribui  o Cumulativa a Recolher/Pagar (09-10 11).
+                  '|'+ FormatFloat('#0.00', mValorDevido) +                                         // 13 - Valor Total da Contribui  o a Recolher/Pagar no Per odo (08+12).
                   '|';
      Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -5365,19 +5506,19 @@ begin
      If mValorDevido > 0 then If Funcoes.Cancelado = false then RegistroM205;
      If tItens.RecordCount > 0 then If Funcoes.Cancelado = false then RegistroM210;
 
-     Progresso3('Consolidação da Contribuição p/PIS', 0);
+     Progresso3('Consolida  o da Contribui  o p/PIS', 0);
 end;
 
-{* REGISTRO M205: CONTRIBUIÇÃO PARA O PIS/PASEP A RECOLHER – DETALHAMENTO POR CÓDIGO DE RECEITA  *}
+{* REGISTRO M205: CONTRIBUI  O PARA O PIS/PASEP A RECOLHER   DETALHAMENTO POR C DIGO DE RECEITA  *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM205;
 begin
      Progresso4('Registro: M205...', tItens.RecordCount);
 
      Inc(mLinha);
      mRegistro := '|M205'+        // 01 - REG.
-                  '|08' +         // 02 - Número do campo do registro “M200” (Campo 08 (contribuição não cumulativa) ou Campo 12.
-                  '|' +           // 03 - Código da receita referente à contribuição a recolher, detalhada neste registro.
-                  '|0,00'+        // 04 - Valor do Débito correspondente ao código do Campo 03, conforme informação na DCTF.
+                  '|08' +         // 02 - N mero do campo do registro  M200  (Campo 08 (contribui  o n o cumulativa) ou Campo 12.
+                  '|' +           // 03 - C digo da receita referente   contribui  o a recolher, detalhada neste registro.
+                  '|0,00'+        // 04 - Valor do D bito correspondente ao c digo do Campo 03, conforme informa  o na DCTF.
                   '|';
      Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -5385,7 +5526,7 @@ begin
      Inc(mQtdeRegM205);
 end;
 
-{* REGISTRO M210: DETALHAMENTO DA CONTRIBUIÇÃO PARA O PIS/PASEP DO PERÍODO *}
+{* REGISTRO M210: DETALHAMENTO DA CONTRIBUI  O PARA O PIS/PASEP DO PER ODO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM210;
 var
    mVAlor:Real;
@@ -5452,21 +5593,21 @@ begin
            Inc(mLinha);
            mValor := tItens.FieldByName('Valor_PIS').AsCurrency;
            mRegistro := '|M210'+                                                                                // 01 - REG.
-                        '|'+ tItens.FieldByName('Codigo').AsString +                                            // 02 - Código da contribuição social apurada no período.
+                        '|'+ tItens.FieldByName('Codigo').AsString +                                            // 02 - C digo da contribui  o social apurada no per odo.
                         '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_ReceitaBruta').AsCurrency) +        // 03 - Valor da Receita Bruta.
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_BC').AsCurrency) +                  // 04 - Valor da Base de Cálculo da Contribuição.
-                        '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_PIS').AsFloat) +               // 05 - Alíquota do PIS/PASEP (em percentual).
-                        '|'+                                                                                    // 06 - Quantidade – Base de cálculo PIS.
-                        '|'+                                                                                    // 07 - Alíquota do PIS (em reais).
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_PIS').AsCurrency)+                  // 08 - Valor total da contribuição social apurada.
-                        '|0,00'+                                                                                // 09 - Valor total dos ajustes de acréscimo.
-                        '|0,00'+                                                                                // 10 - Valor total dos ajustes de redução.
-                        '|0,00'+                                                                                // 11 - Valor da contribuição a diferir no período.
-                        '|0,00'+                                                                                // 12 - Valor da contribuição diferida em períodos anteriores.
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_PIS').AsCurrency)+                  // 13 - Valor Total da Contribuição do Período (08+09–10–11+12).
-                        '|0.00'+                                                                                // 14 - Valor da contribuição a diferir no período.
-                        '|0.00'+                                                                                // 15 - Valor da contribuição diferida em períodos.
-                        '|'+FormatFloat('#0.00', mValor)+                                                       // 16 - Valor Total da Contribuição do Período (11 + 12 –13 – 14+15).
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_BC').AsCurrency) +                  // 04 - Valor da Base de C lculo da Contribui  o.
+                        '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_PIS').AsFloat) +               // 05 - Al quota do PIS/PASEP (em percentual).
+                        '|'+                                                                                    // 06 - Quantidade   Base de c lculo PIS.
+                        '|'+                                                                                    // 07 - Al quota do PIS (em reais).
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_PIS').AsCurrency)+                  // 08 - Valor total da contribui  o social apurada.
+                        '|0,00'+                                                                                // 09 - Valor total dos ajustes de acr scimo.
+                        '|0,00'+                                                                                // 10 - Valor total dos ajustes de redu  o.
+                        '|0,00'+                                                                                // 11 - Valor da contribui  o a diferir no per odo.
+                        '|0,00'+                                                                                // 12 - Valor da contribui  o diferida em per odos anteriores.
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_PIS').AsCurrency)+                  // 13 - Valor Total da Contribui  o do Per odo (08+09 10 11+12).
+                        '|0.00'+                                                                                // 14 - Valor da contribui  o a diferir no per odo.
+                        '|0.00'+                                                                                // 15 - Valor da contribui  o diferida em per odos.
+                        '|'+FormatFloat('#0.00', mValor)+                                                       // 16 - Valor Total da Contribui  o do Per odo (11 + 12  13   14+15).
                         '|';
            Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -5479,7 +5620,7 @@ begin
      End;
 end;
 
-{* REGISTRO M400: RECEITAS ISENTAS, NÃO ALCANÇADAS PELA INCIDÊNCIA DA CONTRIBUIÇÃO, SUJEITAS A ALÍQUOTA ZERO OU DE VENDAS COM SUSPENSÃO – PIS/PASEP *}
+{* REGISTRO M400: RECEITAS ISENTAS, N O ALCAN ADAS PELA INCID NCIA DA CONTRIBUI  O, SUJEITAS A AL QUOTA ZERO OU DE VENDAS COM SUSPENS O   PIS/PASEP *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM400;
 begin
      tItens.SQL.Clear;
@@ -5533,10 +5674,10 @@ begin
      While (not tItens.Eof) and (Funcoes.Cancelado = false) do begin
            Inc(mLinha);
            mRegistro := '|M400'+                                                                          // 01 - REG.
-                        '|'+ Trim(tItens.FieldByName('CSTPIS').AsString) +                                // 02 - Código da CST do PIS.
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Total_PIS').AsCurrency) +           // 03 - Valor total da receita bruta do período.
-                        '|'+                                                                              // 04 - Código da conta analítica contábil debitada/creditada.
-                        '|'+                                                                              // 05 - Descrição Complementar da Natureza da Receita.
+                        '|'+ Trim(tItens.FieldByName('CSTPIS').AsString) +                                // 02 - C digo da CST do PIS.
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Total_PIS').AsCurrency) +           // 03 - Valor total da receita bruta do per odo.
+                        '|'+                                                                              // 04 - C digo da conta anal tica cont bil debitada/creditada.
+                        '|'+                                                                              // 05 - Descri  o Complementar da Natureza da Receita.
                         '|';
            Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -5551,7 +5692,7 @@ begin
      End;
 end;
 
-{* REGISTRO M410: DETALHAMENTO DAS RECEITAS ISENTAS, NÃO ALCANÇADAS PELA INCIDÊNCIA DA CONTRIBUIÇÃO, SUJEITAS A ALÍQUOTA ZERO OU DE VENDAS COM SUSPENSÃO – PIS/PASEP }
+{* REGISTRO M410: DETALHAMENTO DAS RECEITAS ISENTAS, N O ALCAN ADAS PELA INCID NCIA DA CONTRIBUI  O, SUJEITAS A AL QUOTA ZERO OU DE VENDAS COM SUSPENS O   PIS/PASEP }
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM410(CST: String);
 begin
      tItens.SQL.Clear;
@@ -5617,10 +5758,10 @@ begin
      While (not tItens.Eof) and (Funcoes.Cancelado = false) do begin
            Inc(mLinha);
            mRegistro := '|M410'+                                                                          // 01 - REG.
-                        '|'+ Trim(tItens.FieldByName('Natureza_Receita').AsString) +                      // 02 - Código da Natureza da Receita.
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_Total').AsCurrency) +         // 03 - Valor da receita bruta no período, relativo a natureza da receita.
-                        '|'+                                                                              // 04 - Código da conta analítica contábil debitada/creditada.
-                        '|'+                                                                              // 05 - Descrição Complementar da Natureza da Receita.
+                        '|'+ Trim(tItens.FieldByName('Natureza_Receita').AsString) +                      // 02 - C digo da Natureza da Receita.
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_Total').AsCurrency) +         // 03 - Valor da receita bruta no per odo, relativo a natureza da receita.
+                        '|'+                                                                              // 04 - C digo da conta anal tica cont bil debitada/creditada.
+                        '|'+                                                                              // 05 - Descri  o Complementar da Natureza da Receita.
                         '|';
            Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -5633,7 +5774,7 @@ begin
      End;
 end;
 
-{* REGISTRO M500: CRÉDITO DE COFINS RELATIVO AO PERÍODO *}
+{* REGISTRO M500: CR DITO DE COFINS RELATIVO AO PER ODO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM500;
 Var
     mCampo13: String;
@@ -5682,7 +5823,7 @@ begin
      tApuracao.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_COFINS > 0)');
      tApuracao.SQL.Add('GROUP BY Aliquota_COFINS');
 
-     // Credito vinculado à receita "não tributada" no mercado interno.
+     // Credito vinculado   receita "n o tributada" no mercado interno.
      tApuracao.SQL.Add('UNION ALL');
      tApuracao.SQL.Add('SELECT ''201'' AS Tipo_Credito,');
      tApuracao.SQL.Add('       Aliquota_COFINS,');
@@ -5724,7 +5865,7 @@ begin
      tApuracao.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_COFINS > 0)');
      tApuracao.SQL.Add('GROUP BY Aliquota_COFINS');
 
-     // Credito vinculado à receita "Exportação".
+     // Credito vinculado   receita "Exporta  o".
      tApuracao.SQL.Add('UNION ALL');
      tApuracao.SQL.Add('SELECT ''301'' AS Tipo_Credito,');
      tApuracao.SQL.Add('       Aliquota_COFINS,');
@@ -5733,7 +5874,7 @@ begin
      tApuracao.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_COFINS = :pAliquota)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
      tApuracao.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasTerceirosItens');
      tApuracao.SQL.Add('WHERE  (YEAR(Data_Entrada) = :pAno AND MONTH(Data_Entrada) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Aliquota_COFINS = :pAliquota)');
@@ -5746,7 +5887,7 @@ begin
      tApuracao.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_COFINS <> :pAliquota)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
      tApuracao.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasTerceirosItens');
      tApuracao.SQL.Add('WHERE  (YEAR(Data_Entrada) = :pAno AND MONTH(Data_Entrada) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Aliquota_COFINS <> :pAliquota) AND (Aliquota_COFINS > 0)');
@@ -5759,7 +5900,7 @@ begin
      tApuracao.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasItens.Aliquota_COFINS)),0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasItens.Aliquota_COFINS)),0),');
      tApuracao.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasItens');
      tApuracao.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_COFINS > 0)');
@@ -5800,7 +5941,7 @@ begin
      tApuracao.ParamByName('pMes').AsInteger    := cMes.ItemIndex + 1;
      tApuracao.ParamByName('pAno').AsInteger    := cAno.AsInteger;
 
-     //Pegando a alíquota base na tabela de majoração de acordo com o regime da empresa.
+     //Pegando a al quota base na tabela de majora  o de acordo com o regime da empresa.
      Dados.Majoracao.SQL.Clear;
      Dados.Majoracao.SQL.Add('SELECT * FROM Majoracao');
      Dados.Majoracao.SQL.Add('WHERE Descricao       = ''COFINS'' ');
@@ -5820,7 +5961,7 @@ begin
 
      //--------------------------------------------------------------------------------[ REGISTRO 505 ]------------------------------------------------------------------------------------------
      tApuracao2.SQL.Clear;
-     // Credito vinculado à receita "tributada" no mercado interno.
+     // Credito vinculado   receita "tributada" no mercado interno.
      tApuracao2.SQL.Add('SELECT ''101'' AS Tipo_Credito,');
      tApuracao2.SQL.Add('       Aliquota_COFINS,');
      tApuracao2.SQL.Add('       CAST((Valor_PIS * Quantidade)/CASE WHEN Aliquota_PIS > 0 THEN (Aliquota_PIS/100) ELSE 1 END AS DECIMAL(18,2)) AS BC_COFINS,');
@@ -5864,7 +6005,7 @@ begin
      tApuracao2.SQL.Add('FROM   NotasItens');
      tApuracao2.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_COFINS > 0)');
 
-     // Credito vinculado à receita "não tributada" no mercado interno.
+     // Credito vinculado   receita "n o tributada" no mercado interno.
      tApuracao2.SQL.Add('UNION ALL');
      tApuracao2.SQL.Add('SELECT ''201'' AS Tipo_Credito,');
      tApuracao2.SQL.Add('       Aliquota_COFINS,');
@@ -5909,7 +6050,7 @@ begin
      tApuracao2.SQL.Add('FROM   NotasItens');
      tApuracao2.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_COFINS > 0)');
 
-     // Credito vinculado à receita "Exportação".
+     // Credito vinculado   receita "Exporta  o".
      tApuracao2.SQL.Add('UNION ALL');
      tApuracao2.SQL.Add('SELECT ''301'' AS Tipo_Credito,');
      tApuracao2.SQL.Add('       Aliquota_COFINS,');
@@ -5918,7 +6059,7 @@ begin
      tApuracao2.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_COFINS = :pAliquota)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
      tApuracao2.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CST_COFINS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM ReferenciasFiscais WHERE(Codigo = Referencia_Fiscal)) AS Natureza_BC');
@@ -5932,7 +6073,7 @@ begin
      tApuracao2.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_COFINS <> :pAliquota)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
      tApuracao2.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CST_COFINS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM ReferenciasFiscais WHERE(Codigo = Referencia_Fiscal)) AS Natureza_BC');
@@ -5946,7 +6087,7 @@ begin
      tApuracao2.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasItens.Aliquota_COFINS)),0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasItens.Aliquota_COFINS)),0),');
      tApuracao2.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CSTCOFINS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM TipoNota WHERE(Codigo = (SELECT Tipo_Nota FROM NotasFiscais WHERE(Numero = NotasItens.Nota) AND (Data_Emissao = NotasItens.Data)) )) AS Natureza_BC');
@@ -5993,7 +6134,7 @@ begin
      mCreditoCOFINS     := 0;
      mCreditoCOFINSUtil := 0;
 
-     Progresso3('Crédito de COFINS relativo ao Período', tApuracao.RecordCount);
+     Progresso3('Cr dito de COFINS relativo ao Per odo', tApuracao.RecordCount);
 
      While (not tApuracao.Eof) and (Funcoes.Cancelado = false) do begin
            If tApuracao.FieldByName('Receita_COFINS').AsCurrency <= tApuracao.FieldByName('Credito_COFINS').AsCurrency  then begin
@@ -6008,20 +6149,20 @@ begin
 
            Inc(mLinha);
            mRegistro := '|M500'+                                                                          // 01 - REG.
-                        '|'+ Trim(tApuracao.FieldByName('Tipo_Credito').AsString) +                       // 02 - Tipo de operação.
-                        '|'+ '0' +                                                                        // 03 - Indicador de Crédito Oriundo de:.
-                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('BC_COFINS').AsCurrency) +        // 04 - Valor da Base de Cálculo do Crédito.
-                        '|'+ FormatFloat('#0.0000', tApuracao.FieldByName('Aliquota_COFINS').Value) +     // 05 - Alíquota do COFINS.
-                        '|'+                                                                              // 06 - Quantidade – Base de cálculo COFINS.
+                        '|'+ Trim(tApuracao.FieldByName('Tipo_Credito').AsString) +                       // 02 - Tipo de opera  o.
+                        '|'+ '0' +                                                                        // 03 - Indicador de Cr dito Oriundo de:.
+                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('BC_COFINS').AsCurrency) +        // 04 - Valor da Base de C lculo do Cr dito.
+                        '|'+ FormatFloat('#0.0000', tApuracao.FieldByName('Aliquota_COFINS').Value) +     // 05 - Al quota do COFINS.
+                        '|'+                                                                              // 06 - Quantidade   Base de c lculo COFINS.
                         '|'+                                                                              // 07 - Aliquota do COFINS (Reais).
-                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Credito_COFINS').AsCurrency) +   // 08 - Valor total do crédito apurado no período.
-                        '|0,00'+                                                                          // 09 - Valor total dos ajustes de acréscimo.
-                        '|0,00'+                                                                          // 10 - Valor total dos ajustes de redução.
-                        '|0,00'+                                                                          // 11 - Valor total do crédito diferido no período.
-                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Credito_COFINS').AsCurrency) +   // 12 - Valor Total do Crédito Disponível relativo ao Período (08+09–10–11).
-                        '|'+ mCampo13 +                                                                   // 13 - Indicador de opção de utilização do crédito disponível no período.
-                        '|'+ FormatFloat('#0.00', mCampo14) +                                             // 14 - Valor do Crédito disponível, descontado da contribuição apurada no próprio período.
-                        '|'+ FormatFloat('#0.00', mCampo15) +                                             // 15 - Saldo de créditos a utilizar em períodos futuros.
+                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Credito_COFINS').AsCurrency) +   // 08 - Valor total do cr dito apurado no per odo.
+                        '|0,00'+                                                                          // 09 - Valor total dos ajustes de acr scimo.
+                        '|0,00'+                                                                          // 10 - Valor total dos ajustes de redu  o.
+                        '|0,00'+                                                                          // 11 - Valor total do cr dito diferido no per odo.
+                        '|'+ FormatFloat('#0.00', tApuracao.FieldByName('Credito_COFINS').AsCurrency) +   // 12 - Valor Total do Cr dito Dispon vel relativo ao Per odo (08+09 10 11).
+                        '|'+ mCampo13 +                                                                   // 13 - Indicador de op  o de utiliza  o do cr dito dispon vel no per odo.
+                        '|'+ FormatFloat('#0.00', mCampo14) +                                             // 14 - Valor do Cr dito dispon vel, descontado da contribui  o apurada no pr prio per odo.
+                        '|'+ FormatFloat('#0.00', mCampo15) +                                             // 15 - Saldo de cr ditos a utilizar em per odos futuros.
                         '|';
            Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -6039,7 +6180,7 @@ begin
      End;
 end;
 
-{* DETALHAMENTO DA BASE DE CALCULO DO CRÉDITO APURADO NO PERÍODO – COFINS *}
+{* DETALHAMENTO DA BASE DE CALCULO DO CR DITO APURADO NO PER ODO   COFINS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM505(TipoCredito: String; Aliquota: Real);
 begin
      Progresso4('Registro: M505', tApuracao2.RecordCount);
@@ -6049,15 +6190,15 @@ begin
            If (tApuracao2.FieldByName('Tipo_Credito').AsString = TipoCredito) and (tApuracao2.FieldByName('Aliquota_COFINS').AsFloat = Aliquota) then begin
               Inc(mLinha);
               mRegistro := '|M505'+                                                                       // 01 - REG.
-                           '|' + PoeZero(2, tApuracao2.FieldByName('Natureza_BC').AsInteger) +            // 02 - Código da Base de Cálculo do Crédito apurado no período.
-                           '|' + tApuracao2.FieldByName('CSTCOFINS').AsString +                           // 03 - Código da Situação Tributária referente ao crédito de PIS/Pasep.
-                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_COFINS').AsCurrency) +   // 04 - Valor Total da Base de Cálculo escriturada nos documentos e operações.
-                           '|' +                                                                          // 05 - Parcela do Valor Total da Base de Cálculo informada no Campo 04.
-                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_COFINS').AsCurrency) +   // 06 - Valor Total da Base de Cálculo do Crédito, vinculada a receitas com incidência não-cumulativa (Campo 04–Campo 05).
-                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_COFINS').AsCurrency) +   // 07 - Valor da Base de Cálculo do Crédito, vinculada ao tipo de Crédito escriturado em M100.
-                           '|' +                                                                          // 08 - Quantidade Total da Base de Cálculo do Crédito apurado  em Unidade de Medida.
-                           '|' +                                                                          // 09 - Parcela da base de cálculo do crédito em quantidade (campo 08).
-                           '|' +                                                                          // 10 - Descrição do crédito.
+                           '|' + PoeZero(2, tApuracao2.FieldByName('Natureza_BC').AsInteger) +            // 02 - C digo da Base de C lculo do Cr dito apurado no per odo.
+                           '|' + tApuracao2.FieldByName('CSTCOFINS').AsString +                           // 03 - C digo da Situa  o Tribut ria referente ao cr dito de PIS/Pasep.
+                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_COFINS').AsCurrency) +   // 04 - Valor Total da Base de C lculo escriturada nos documentos e opera  es.
+                           '|' +                                                                          // 05 - Parcela do Valor Total da Base de C lculo informada no Campo 04.
+                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_COFINS').AsCurrency) +   // 06 - Valor Total da Base de C lculo do Cr dito, vinculada a receitas com incid ncia n o-cumulativa (Campo 04 Campo 05).
+                           '|' + FormatFloat('#0.00', tApuracao2.FieldByName('BC_COFINS').AsCurrency) +   // 07 - Valor da Base de C lculo do Cr dito, vinculada ao tipo de Cr dito escriturado em M100.
+                           '|' +                                                                          // 08 - Quantidade Total da Base de C lculo do Cr dito apurado  em Unidade de Medida.
+                           '|' +                                                                          // 09 - Parcela da base de c lculo do cr dito em quantidade (campo 08).
+                           '|' +                                                                          // 10 - Descri  o do cr dito.
                            '|';
               Say( mLinha, 000, Arquivo, mRegistro );
               
@@ -6071,7 +6212,7 @@ begin
      End;
 end;
 
-{* REGISTRO M600: CONSOLIDAÇÃO DA CONTRIBUIÇÃO PARA A SEGURIDADE SOCIAL - COFINS DO PERÍODO *}
+{* REGISTRO M600: CONSOLIDA  O DA CONTRIBUI  O PARA A SEGURIDADE SOCIAL - COFINS DO PER ODO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM600;
 Var
    mValorDevido : Real;
@@ -6118,22 +6259,22 @@ begin
      If mValorContrib < 0 then mValorContrib := mValorContrib * -1;
      mValorDevido  := mValorContrib;
 
-     Progresso3('Consolidação da Contribuição (COFINS)', tItens.RecordCount);
+     Progresso3('Consolida  o da Contribui  o (COFINS)', tItens.RecordCount);
 
      Inc(mLinha);
      mRegistro := '|M600'+                                                                          // 01 - REG.
-                  '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_COFINS').Value) +             // 02 - Valor Total da Contribuição Não Cumulativa do Período.
-                  '|'+ FormatFloat('#0.00', mCreditoCOFINSUtil) +                                   // 03 - Valor do Crédito Descontado, Apurado no Próprio Período da Escrituração.
-                  '|0,00'+                                                                          // 04 - Valor do Crédito Descontado, Apurado em Período de Apuração Anterior.
-                  '|'+ FormatFloat('#0.00', mValorContrib) +                                        // 05 - Valor Total da Contribuição Não Cumulativa Devida (02–03-04).
-                  '|0,00'+                                                                          // 06 - Valor Retido na Fonte Deduzido no Período.
-                  '|0,00'+                                                                          // 07 - Outras Deduções no Período.
-                  '|'+ FormatFloat('#0.00', mValorDevido) +                                         // 08 - Valor da Contribuição Não Cumulativa a Recolher/Pagar (05–06-07).
-                  '|0,00'+                                                                          // 09 - Valor Total da Contribuição Cumulativa do Período.
-                  '|0,00'+                                                                          // 10 - Valor Retido na Fonte Deduzido no Período.
-                  '|0,00'+                                                                          // 11 - Outras Deduções no Período.
-                  '|0,00'+                                                                          // 12 - Valor da Contribuição Cumulativa a Recolher/Pagar (09-10–11).
-                  '|'+FormatFloat('#0.00', mValorDevido ) +                                         // 13 - Valor Total da Contribuição a Recolher/Pagar no Período (08+12).
+                  '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_COFINS').Value) +             // 02 - Valor Total da Contribui  o N o Cumulativa do Per odo.
+                  '|'+ FormatFloat('#0.00', mCreditoCOFINSUtil) +                                   // 03 - Valor do Cr dito Descontado, Apurado no Pr prio Per odo da Escritura  o.
+                  '|0,00'+                                                                          // 04 - Valor do Cr dito Descontado, Apurado em Per odo de Apura  o Anterior.
+                  '|'+ FormatFloat('#0.00', mValorContrib) +                                        // 05 - Valor Total da Contribui  o N o Cumulativa Devida (02 03-04).
+                  '|0,00'+                                                                          // 06 - Valor Retido na Fonte Deduzido no Per odo.
+                  '|0,00'+                                                                          // 07 - Outras Dedu  es no Per odo.
+                  '|'+ FormatFloat('#0.00', mValorDevido) +                                         // 08 - Valor da Contribui  o N o Cumulativa a Recolher/Pagar (05 06-07).
+                  '|0,00'+                                                                          // 09 - Valor Total da Contribui  o Cumulativa do Per odo.
+                  '|0,00'+                                                                          // 10 - Valor Retido na Fonte Deduzido no Per odo.
+                  '|0,00'+                                                                          // 11 - Outras Dedu  es no Per odo.
+                  '|0,00'+                                                                          // 12 - Valor da Contribui  o Cumulativa a Recolher/Pagar (09-10 11).
+                  '|'+FormatFloat('#0.00', mValorDevido ) +                                         // 13 - Valor Total da Contribui  o a Recolher/Pagar no Per odo (08+12).
                   '|';
      Say( mLinha, 000, Arquivo, mRegistro );
      
@@ -6146,16 +6287,16 @@ begin
      Progresso3('Registro: M600...', 0);
 end;
 
-{* REGISTRO M605: CONTRIBUIÇÃO PARA O COFINS A RECOLHER – DETALHAMENTO POR CÓDIGO DE RECEITA  *}
+{* REGISTRO M605: CONTRIBUI  O PARA O COFINS A RECOLHER   DETALHAMENTO POR C DIGO DE RECEITA  *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM605;
 begin
      Progresso4('Registro: M605...', tItens.RecordCount);
 
      Inc(mLinha);
      mRegistro := '|M605'+        // 01 - REG.
-                  '|08' +         // 02 - Número do campo do registro “M200” (Campo 08 (contribuição não cumulativa) ou Campo 12.
-                  '|' +           // 03 - Código da receita referente à contribuição a recolher, detalhada neste registro.
-                  '|0,00'+        // 04 - Valor do Débito correspondente ao código do Campo 03, conforme informação na DCTF.
+                  '|08' +         // 02 - N mero do campo do registro  M200  (Campo 08 (contribui  o n o cumulativa) ou Campo 12.
+                  '|' +           // 03 - C digo da receita referente   contribui  o a recolher, detalhada neste registro.
+                  '|0,00'+        // 04 - Valor do D bito correspondente ao c digo do Campo 03, conforme informa  o na DCTF.
                   '|';
      Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -6163,7 +6304,7 @@ begin
      Inc(mQtdeRegM605);
 end;
 
-{* REGISTRO M610: DETALHAMENTO DA CONTRIBUIÇÃO PARA A SEGURIDADE SOCIAL - COFINS DO PERÍODO *}
+{* REGISTRO M610: DETALHAMENTO DA CONTRIBUI  O PARA A SEGURIDADE SOCIAL - COFINS DO PER ODO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM610;
 begin
      tItens.SQL.Clear;
@@ -6227,18 +6368,18 @@ begin
      While (not tItens.Eof) and (not Funcoes.Cancelado) do begin
            Inc(mLinha);
            mRegistro := '|M610'+                                                                          // 01 - REG.
-                        '|'+ tItens.FieldByName('Codigo').AsString +                                      // 02 - Código da contribuição social apurada no período.
+                        '|'+ tItens.FieldByName('Codigo').AsString +                                      // 02 - C digo da contribui  o social apurada no per odo.
                         '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_ReceitaBruta').AsCurrency) +  // 03 - Valor da Receita Bruta.
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_BC').Value) +                 // 04 - Valor da Base de Cálculo da Contribuição.
-                        '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_COFINS').AsFloat) +      // 05 - Alíquota da COFINS (em percentual).
-                        '|'+                                                                              // 06 - Quantidade – Base de cálculo PIS.
-                        '|'+                                                                              // 07 - Alíquota do PIS (em reais).
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_COFINS').AsCurrency) +        // 08 - Valor total da contribuição social apurada.
-                        '|0,00'+                                                                          // 09 - Valor total dos ajustes de acréscimo.
-                        '|'+ FormatFloat('#0.00', 0)+                                                     // 10 - Valor total dos ajustes de redução.
-                        '|0,00'+                                                                          // 11 - Valor da contribuição a diferir no período.
-                        '|0,00'+                                                                          // 12 - Valor da contribuição diferida em períodos anteriores.
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_COFINS').AsCurrency) +        // 13 - Valor Total da Contribuição do Período (08+09–10–11+12).
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_BC').Value) +                 // 04 - Valor da Base de C lculo da Contribui  o.
+                        '|'+ FormatFloat('#0.0000', tItens.FieldByName('Aliquota_COFINS').AsFloat) +      // 05 - Al quota da COFINS (em percentual).
+                        '|'+                                                                              // 06 - Quantidade   Base de c lculo PIS.
+                        '|'+                                                                              // 07 - Al quota do PIS (em reais).
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_COFINS').AsCurrency) +        // 08 - Valor total da contribui  o social apurada.
+                        '|0,00'+                                                                          // 09 - Valor total dos ajustes de acr scimo.
+                        '|'+ FormatFloat('#0.00', 0)+                                                     // 10 - Valor total dos ajustes de redu  o.
+                        '|0,00'+                                                                          // 11 - Valor da contribui  o a diferir no per odo.
+                        '|0,00'+                                                                          // 12 - Valor da contribui  o diferida em per odos anteriores.
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_COFINS').AsCurrency) +        // 13 - Valor Total da Contribui  o do Per odo (08+09 10 11+12).
                         '|';
            Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -6251,7 +6392,7 @@ begin
      End;
 end;
 
-{* RECEITAS ISENTAS, NÃO ALCANÇADAS PELA INCIDÊNCIA DA CONTRIBUIÇÃO, SUJEITAS A ALÍQUOTA ZERO OU DE VENDAS COM SUSPENSÃO – COFINS *}
+{* RECEITAS ISENTAS, N O ALCAN ADAS PELA INCID NCIA DA CONTRIBUI  O, SUJEITAS A AL QUOTA ZERO OU DE VENDAS COM SUSPENS O   COFINS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM800;
 begin
      tItens.SQL.Clear;
@@ -6306,10 +6447,10 @@ begin
      While (not tItens.Eof) and (Funcoes.Cancelado = false) do begin
            Inc(mLinha);
            mRegistro := '|M800'+                                                                          // 01 - REG.
-                        '|'+ Trim(tItens.FieldByName('CSTCOFINS').AsString) +                             // 02 - Código da CST da COFINS
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Total_COFINS').AsCurrency) +        // 03 - Valor total da receita bruta do período.
-                        '|'+                                                                              // 04 - Código da conta analítica contábil debitada/creditada.
-                        '|'+                                                                              // 05 - Descrição Complementar da Natureza da Receita.
+                        '|'+ Trim(tItens.FieldByName('CSTCOFINS').AsString) +                             // 02 - C digo da CST da COFINS
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Total_COFINS').AsCurrency) +        // 03 - Valor total da receita bruta do per odo.
+                        '|'+                                                                              // 04 - C digo da conta anal tica cont bil debitada/creditada.
+                        '|'+                                                                              // 05 - Descri  o Complementar da Natureza da Receita.
                         '|';
            Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -6324,7 +6465,7 @@ begin
      End;
 end;
 
-{* REGISTRO M810: DETALHAMENTO DAS RECEITAS ISENTAS, NÃO ALCANÇADAS PELA INCIDÊNCIA DA CONTRIBUIÇÃO, SUJEITAS A ALÍQUOTA ZERO OU DE VENDAS COM SUSPENSÃO – COFINS }
+{* REGISTRO M810: DETALHAMENTO DAS RECEITAS ISENTAS, N O ALCAN ADAS PELA INCID NCIA DA CONTRIBUI  O, SUJEITAS A AL QUOTA ZERO OU DE VENDAS COM SUSPENS O   COFINS }
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM810(CST: String);
 begin
      tItens.SQL.Clear;
@@ -6391,10 +6532,10 @@ begin
      While (not tItens.Eof) and (Funcoes.Cancelado = false) do begin
            Inc(mLinha);
            mRegistro := '|M810'+                                                                          // 01 - REG.
-                        '|'+ Trim(tItens.FieldByName('Natureza_Receita').AsString) +                      // 02 - Código da Natureza da Receita.
-                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_Total').AsCurrency) +         // 03 - Valor da receita bruta no período, relativo a natureza da receita.
-                        '|'+                                                                              // 04 - Código da conta analítica contábil debitada/creditada.
-                        '|'+                                                                              // 05 - Descrição Complementar da Natureza da Receita.
+                        '|'+ Trim(tItens.FieldByName('Natureza_Receita').AsString) +                      // 02 - C digo da Natureza da Receita.
+                        '|'+ FormatFloat('#0.00', tItens.FieldByName('Valor_Total').AsCurrency) +         // 03 - Valor da receita bruta no per odo, relativo a natureza da receita.
+                        '|'+                                                                              // 04 - C digo da conta anal tica cont bil debitada/creditada.
+                        '|'+                                                                              // 05 - Descri  o Complementar da Natureza da Receita.
                         '|';
            Say( mLinha, 000, Arquivo, mRegistro );
 
@@ -7777,3 +7918,4 @@ begin
 end;
 
 end.
+

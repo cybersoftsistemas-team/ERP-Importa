@@ -4561,6 +4561,7 @@ type
     ProdutosAliquotaINSS_Serv: TFloatField;
     PedidoServicoItensAliquota_INSS: TFloatField;
     PedidoServicoItensValor_INSS: TCurrencyField;
+    ClassificacaoFinanceiraJuros_SPEDPISCOFINS: TBooleanField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);

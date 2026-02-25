@@ -75,7 +75,7 @@ object PedidosOutra_TerceirosReferenciaItens: TPedidosOutra_TerceirosReferenciaI
     DesignSize = (
       895
       227)
-    object Grade2: TRxDBGrid
+    object Grade2: TDBGrid
       Left = 5
       Top = 17
       Width = 885
@@ -92,8 +92,6 @@ object PedidosOutra_TerceirosReferenciaItens: TPedidosOutra_TerceirosReferenciaI
       TitleFont.Height = -11
       TitleFont.Name = 'MS Sans Serif'
       TitleFont.Style = []
-      RowColor2 = 16776176
-      ShowGlyphs = False
       Columns = <
         item
           Expanded = False
@@ -302,7 +300,7 @@ object PedidosOutra_TerceirosReferenciaItens: TPedidosOutra_TerceirosReferenciaI
     DesignSize = (
       895
       223)
-    object Grade1: TRxDBGrid
+    object Grade1: TDBGrid
       Left = 5
       Top = 16
       Width = 885
@@ -320,8 +318,6 @@ object PedidosOutra_TerceirosReferenciaItens: TPedidosOutra_TerceirosReferenciaI
       TitleFont.Height = -11
       TitleFont.Name = 'MS Sans Serif'
       TitleFont.Style = []
-      RowColor2 = 16776176
-      ShowGlyphs = False
       Columns = <
         item
           Alignment = taCenter

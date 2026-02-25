@@ -5086,7 +5086,8 @@ object Dados: TDados
         ', Fechamento_Processo, Processo_Obrigatorio, Custo_Seletivo, Cus' +
         'to_Entrada, Natureza_Receita, Custo_Outros, Boleto, DRE, DRE_Pri' +
         'ncipal, DRE_Juros, DRE_Desconto, Codigo_RFB, DRE_DescontoDupl, T' +
-        'ipo_Documento, Tributo, Despesa_AgMaritima, Nivel_Codigo)'
+        'ipo_Documento, Tributo, Despesa_AgMaritima, Nivel_Codigo, Juros_' +
+        'SPEDPISCOFINS)'
       'VALUES'
       
         '  (:Codigo, :Descricao, :Tipo, :Relatorio, :Custo, :Provisao_Con' +
@@ -5099,7 +5100,7 @@ object Dados: TDados
         'rigatorio, :Custo_Seletivo, :Custo_Entrada, :Natureza_Receita, :' +
         'Custo_Outros, :Boleto, :DRE, :DRE_Principal, :DRE_Juros, :DRE_De' +
         'sconto, :Codigo_RFB, :DRE_DescontoDupl, :Tipo_Documento, :Tribut' +
-        'o, :Despesa_AgMaritima, :Nivel_Codigo)')
+        'o, :Despesa_AgMaritima, :Nivel_Codigo, :Juros_SPEDPISCOFINS)')
     SQLDelete.Strings = (
       'DELETE FROM ClassificacaoFinanceira'
       'WHERE'
@@ -5129,7 +5130,7 @@ object Dados: TDados
         'E_Desconto, Codigo_RFB = :Codigo_RFB, DRE_DescontoDupl = :DRE_De' +
         'scontoDupl, Tipo_Documento = :Tipo_Documento, Tributo = :Tributo' +
         ', Despesa_AgMaritima = :Despesa_AgMaritima, Nivel_Codigo = :Nive' +
-        'l_Codigo'
+        'l_Codigo, Juros_SPEDPISCOFINS = :Juros_SPEDPISCOFINS'
       'WHERE'
       '  Codigo = :Old_Codigo')
     SQLRefresh.Strings = (
@@ -5143,8 +5144,8 @@ object Dados: TDados
         'acao, Fechamento_Processo, Processo_Obrigatorio, Custo_Seletivo,' +
         ' Custo_Entrada, Natureza_Receita, Custo_Outros, Boleto, DRE, DRE' +
         '_Principal, DRE_Juros, DRE_Desconto, Codigo_RFB, DRE_DescontoDup' +
-        'l, Tipo_Documento, Tributo, Despesa_AgMaritima, Nivel_Codigo FRO' +
-        'M ClassificacaoFinanceira'
+        'l, Tipo_Documento, Tributo, Despesa_AgMaritima, Nivel_Codigo, Ju' +
+        'ros_SPEDPISCOFINS FROM ClassificacaoFinanceira'
       'WHERE'
       '  Codigo = :Codigo')
     SQLLock.Strings = (
@@ -5162,6 +5163,7 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = ClassificacaoFinanceiraBeforePost
     BeforeDelete = ClassificacaoFinanceiraBeforeDelete
+    Active = True
     Left = 1141
     Top = 105
     object ClassificacaoFinanceiraCodigo: TStringField
@@ -5369,6 +5371,9 @@ object Dados: TDados
     end
     object ClassificacaoFinanceiraNivel_Codigo: TSmallintField
       FieldName = 'Nivel_Codigo'
+    end
+    object ClassificacaoFinanceiraJuros_SPEDPISCOFINS: TBooleanField
+      FieldName = 'Juros_SPEDPISCOFINS'
     end
   end
   object dsClassificacaoFinanceira: TDataSource
@@ -15453,6 +15458,7 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
+    Connected = True
     LoginPrompt = False
     Left = 87
     Top = 14

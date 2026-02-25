@@ -87,30 +87,30 @@ begin
           sql.add('from (select Codigo_Mercadoria');
           sql.add('            ,Quantidade = sum(Quantidade)');
           sql.add('            ,Mes = cast(month(Data) as varchar(2))+cast(YEAR(Data) as varchar(4))');
-          sql.add('      from PedidosRepresentantesItens pri');
-          sql.add('      where Cancelado <> 1');
+          sql.add('from PedidosRepresentantesItens pri');
+          sql.add('where Cancelado <> 1');
           sql.add('and year(Data) between :pAnoIni and :pAnoFim');
           sql.add('and month(Data) between :pMesIni and :pMesFim');
 
-          sql.add('      and Codigo_Mercadoria > 0');
-          sql.add('      and Cancelado <> 1');
+          sql.add('and Codigo_Mercadoria > 0');
+          sql.add('and Cancelado <> 1');
           if Trim(cProduto.Text) <> '' then begin
-             sql.Add('      and (pri.Codigo_Mercadoria = :pCodigo)');
+             sql.Add('and (pri.Codigo_Mercadoria = :pCodigo)');
              ParamByName('pCodigo').AsInteger := tProdutos.FieldByName('Codigo').AsInteger;
           end;
           if cCliente.Text <> '' then begin
-             sql.add('      and (select Cliente from PedidosRepresentantes pr where pr.pedido = pri.pedido) = :pCliente');
+             sql.add('and (select Cliente from PedidosRepresentantes pr where pr.pedido = pri.pedido) = :pCliente');
              parambyname('pCliente').AsInteger := tClientes.FieldByName('Codigo').AsInteger;
           end;
           if Trim(cLinha.Text) <> '' then begin
-             sql.Add('      and (select Linha from Produtos prd where prd.Codigo = pri.Codigo_Mercadoria) = :pLinha');
+             sql.Add('and (select Linha from Produtos prd where prd.Codigo = pri.Codigo_Mercadoria) = :pLinha');
              parambyname('pLinha').AsInteger := Dados.ProdutosLinhasCodigo.AsInteger;
           end;
           if Trim(cNCM.Text) <> ''  then begin
              tItens.SQL.Add('and (select NCM From Produtos prd where prd.Codigo = pri.Codigo_Mercadoria) = :pNCM');
              tItens.ParamByName('pNCM').AsString := cNCM.Text;
           end;
-          sql.add('      group by Codigo_Mercadoria, cast(month(Data) as varchar(2))+cast(YEAR(Data) as varchar(4))) as Tabela');
+          sql.add('group by Codigo_Mercadoria, cast(month(Data) as varchar(2))+cast(YEAR(Data) as varchar(4))) as Tabela');
 
           // Soma dos meses.
           msoma := 'pivot (sum(Quantidade) for Mes in(';

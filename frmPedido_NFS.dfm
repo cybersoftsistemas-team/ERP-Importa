@@ -68,7 +68,6 @@ object Pedido_NFS: TPedido_NFS
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitTop = 511
     object bSair: TButton
       Left = 550
       Top = 1
@@ -86,7 +85,7 @@ object Pedido_NFS: TPedido_NFS
     object Navega: TDBNavigator
       Left = 1
       Top = 1
-      Width = 300
+      Width = 239
       Height = 28
       Cursor = crHandPoint
       DataSource = Dados.dsPedidoServico
@@ -113,7 +112,7 @@ object Pedido_NFS: TPedido_NFS
       OnClick = NavegaClick
     end
     object bPesquisa: TButton
-      Left = 369
+      Left = 296
       Top = 1
       Width = 65
       Height = 28
@@ -124,11 +123,12 @@ object Pedido_NFS: TPedido_NFS
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
+      ExplicitLeft = 369
     end
     object bItens: TButton
-      Left = 301
+      Left = 240
       Top = 1
-      Width = 68
+      Width = 56
       Height = 28
       Cursor = crHandPoint
       Hint = 'Procurar no banco de dados pelo registro informado.'
@@ -140,9 +140,9 @@ object Pedido_NFS: TPedido_NFS
       OnClick = bItensClick
     end
     object bDuplicatas: TButton
-      Left = 434
+      Left = 361
       Top = 1
-      Width = 97
+      Width = 101
       Height = 28
       Cursor = crHandPoint
       Hint = '   Mostrar os itens da nota fiscal.'
@@ -151,6 +151,21 @@ object Pedido_NFS: TPedido_NFS
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
+    end
+    object bXML: TButton
+      Left = 462
+      Top = 1
+      Width = 74
+      Height = 28
+      Cursor = crHandPoint
+      Hint = 'Gerar XML da Nota'
+      Align = alLeft
+      Caption = 'Gerar &XML'
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 5
+      OnClick = bXMLClick
+      ExplicitLeft = 470
     end
   end
   object PageControl1: TPageControl
@@ -170,7 +185,6 @@ object Pedido_NFS: TPedido_NFS
     TabHeight = 28
     TabOrder = 1
     TabWidth = 100
-    ExplicitHeight = 463
     object TabSheet1: TTabSheet
       Caption = '&Dados da Nota'
       Enabled = False
@@ -180,7 +194,6 @@ object Pedido_NFS: TPedido_NFS
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentFont = False
-      ExplicitHeight = 425
       object Image5: TImage
         Left = 264
         Top = 258
@@ -782,7 +795,6 @@ object Pedido_NFS: TPedido_NFS
     object TabSheet3: TTabSheet
       Caption = 'Itens'
       ImageIndex = 2
-      ExplicitHeight = 425
       object GradeItens: TDBGrid
         Left = 0
         Top = 0
@@ -863,7 +875,6 @@ object Pedido_NFS: TPedido_NFS
     object TabSheet2: TTabSheet
       Caption = 'Lista de Pedidos'
       ImageIndex = 2
-      ExplicitHeight = 425
       object Grade: TDBGrid
         Left = 0
         Top = 0
@@ -953,6 +964,23 @@ object Pedido_NFS: TPedido_NFS
   object ttmp: TMSQuery
     Connection = Dados.Banco_Empresas
     Left = 266
-    Top = 263
+    Top = 251
+  end
+  object NFS: TACBrNFSe
+    Configuracoes.Geral.SSLLib = libNone
+    Configuracoes.Geral.SSLCryptLib = cryNone
+    Configuracoes.Geral.SSLHttpLib = httpNone
+    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
+    Configuracoes.Geral.CodigoMunicipio = 0
+    Configuracoes.Geral.ConsultaLoteAposEnvio = False
+    Configuracoes.Geral.Emitente.DadosSenhaParams = <>
+    Configuracoes.Geral.Resposta = 0
+    Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.WebServices.UF = 'SP'
+    Configuracoes.WebServices.AguardarConsultaRet = 0
+    Configuracoes.WebServices.QuebradeLinha = '|'
+    Left = 362
+    Top = 252
   end
 end

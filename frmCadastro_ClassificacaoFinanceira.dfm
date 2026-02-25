@@ -558,6 +558,18 @@ object Cadastro_ClassificacaoFinanceira: TCadastro_ClassificacaoFinanceira
           ParentBiDiMode = False
           TabOrder = 18
         end
+        object DBCheckBox16: TDBCheckBox
+          Left = 467
+          Top = 92
+          Width = 173
+          Height = 17
+          BiDiMode = bdLeftToRight
+          Caption = 'Gera Juros SPED PIS/COFINS'
+          DataField = 'Juros_SPEDPISCOFINS'
+          DataSource = Dados.dsClassificacaoFinanceira
+          ParentBiDiMode = False
+          TabOrder = 19
+        end
       end
       object GroupBox4: TGroupBox
         Left = 3

@@ -2157,7 +2157,7 @@ begin
                ProcessosDOC.Open;
           End;
        end;
-       //cProdutoExit(Self);
+       cProdutoExit(Self);
 end;
 
 procedure TPedido_ItensOutros.cValorTotalChange(Sender: TObject);
@@ -2805,12 +2805,6 @@ Var
   ,mCST: String;
 begin
       With Dados, dmFiscal do begin
-           // Efetua o cálculo reverso do valor unitário do produto.
-           //If Dados.PedidosCalculo_Reverso.AsBoolean  and (TipoNotaOrigem_ValorUnitario.AsInteger <> 4) then begin
-//           If PedidosCalculo_Reverso.AsBoolean then begin
-//              PedidosItensValor_Unitario.Value := CalculoReverso;
-//           End;
-
            If PedidosItensValor_Unitario.Value > 0 then begin
               // Calcula o lucro e soma ao valor unitario.
               if (PedidosItensLucro.Value > 0) and (PedidosItensValor_Unitario.Value > 0) then begin
@@ -2945,10 +2939,10 @@ begin
               if Trim(TipoNotaCalculo_BCICMS.AsString) <> '' then
                  PedidosItensValor_BCICMSOper.Value := Roundto(CalculaMacro('Calculo_BCICMS'), -2);
 
-//              PedidosItensValor_ICMSOper.Value := Roundto(Percentual(PedidosItensValor_BCICMSOper.AsCurrency, PedidosItensAliquota_ICMSOper.AsFloat), -2);
               if Trim(TipoNotaCalculo_VlrICMS.Value) <> '' then
                  PedidosItensValor_ICMSOper.Value := Roundto(CalculaMacro('Calculo_VlrICMS'), -2);
-             // Ajusta o valor do ICMS para um centavo quando o valor do ICMS e menor que um centavo.
+                 
+              // Ajusta o valor do ICMS para um centavo quando o valor do ICMS e menor que um centavo.
               if (PedidosItensValor_ICMSOper.Value < 0.01) and (PedidosItensValor_BCICMSOper.Value > 0) then begin
                  PedidosItensValor_ICMSOper.Value := 0.01;
               end;
@@ -3144,7 +3138,6 @@ begin
               End;
 
               // Efetua os calculos de IBS/CBS.
-//              CalculoIBSCBS;
               PedidosItens.fieldbyname('Valor_BCIS').Value  := 0;
               PedidosItens.fieldbyname('Valor_IS').Value    := 0;
               PedidosItens.fieldbyname('Valor_BCCBS').Value := 0;

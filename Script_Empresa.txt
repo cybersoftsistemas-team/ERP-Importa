@@ -3022,3 +3022,13 @@ go
 --[04/02/2026 16:04:00]
 delete from Industrializacao where Registro is null
 go
+
+--[20/02/2026 11:06:00]
+update NotasItens set Tipo_Nota = (select Tipo_Nota from NotasFiscais where Numero = Nota and Data_Emissao = data) where isnull(Tipo_Nota, 0) = 0
+go
+
+--[24/02/2026 12:43:00]
+alter table ClassificacaoFinanceira add Juros_SPEDPISCOFINS bit
+go
+update ClassificacaoFinanceira set Juros_SPEDPISCOFINS = 0 where Juros_SPEDPISCOFINS is null
+go

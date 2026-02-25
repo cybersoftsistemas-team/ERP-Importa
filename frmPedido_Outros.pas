@@ -1859,12 +1859,21 @@ begin
            tPedidosItens.SQL.Add('SELECT Pedido,');
            tPedidosItens.SQL.Add('       Codigo_Mercadoria,');
            tPedidosItens.SQL.Add('       Codigo_Fabricante,');
+           {
            tPedidosItens.SQL.Add('       CASE WHEN (Total_Impostos > 0) AND (Valor_Total > 0) THEN');
            tPedidosItens.SQL.Add('            CAST(Descricao_Mercadoria AS VARCHAR(5000))+ CHAR(13)+CHAR(13)+''                              TRIBUTOS : R$ ''+ CONVERT(VARCHAR, CAST(Total_Impostos AS money),-1) +');
            tPedidosItens.SQL.Add('                 ''  (''+CONVERT(VARCHAR, CAST( ROUND((Total_Impostos/Valor_Total)*100,2) AS money),-1)+''%)''+CASE WHEN PO <> '''' THEN CHAR(13)+''PEDIDO DE COMPRA:''+PO+''     ORDEM:''+CAST(ISNULL(Ordem, '''') AS VARCHAR(4)) ELSE '''' END');
            tPedidosItens.SQL.Add('       ELSE');
            tPedidosItens.SQL.Add('            CAST(Descricao_Mercadoria AS VARCHAR(5000))+CASE WHEN PO <> '''' THEN CHAR(13)+''PEDIDO DE COMPRA:''+PO+''     ORDEM:''+CAST(ISNULL(Ordem, '''') AS VARCHAR(4)) ELSE '''' END');
            tPedidosItens.SQL.Add('       END AS Descricao_Mercadoria,');
+           }
+           tPedidosItens.SQL.Add('       CASE WHEN (Total_Impostos > 0) AND (Valor_Total > 0) THEN');
+           tPedidosItens.SQL.Add('            CAST(Descricao_Mercadoria AS VARCHAR(5000))+ CHAR(13)+CHAR(13)+''                              TRIBUTOS : R$ ''+ CONVERT(VARCHAR, CAST(Total_Impostos AS money),-1) +');
+           tPedidosItens.SQL.Add('                 ''  (''+CONVERT(VARCHAR, CAST( ROUND((Total_Impostos/Valor_Total)*100,2) AS money),-1)+''%)'' ');
+           tPedidosItens.SQL.Add('       ELSE');
+           tPedidosItens.SQL.Add('            CAST(Descricao_Mercadoria AS VARCHAR(5000))');
+           tPedidosItens.SQL.Add('       END AS Descricao_Mercadoria,');
+           
            tPedidosItens.SQL.Add('       NCM,');
            tPedidosItens.SQL.Add('       Unidade_Medida,');
            tPedidosItens.SQL.Add('       CodigoTrib_TabA,');
