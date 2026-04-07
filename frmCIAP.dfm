@@ -68,7 +68,6 @@ object CIAP: TCIAP
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitTop = 614
     DesignSize = (
       639
       31)
@@ -119,10 +118,10 @@ object CIAP: TCIAP
       Height = 28
       Hint = 'Procurar no banco de dados pelo registro informado.'
       Caption = '&Pesquisa'
-      Enabled = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
+      OnClick = bPesquisaClick
     end
   end
   object pPaginas: TPageControl
@@ -136,11 +135,9 @@ object CIAP: TCIAP
     TabHeight = 24
     TabOrder = 1
     TabWidth = 100
-    ExplicitHeight = 562
     object TabSheet1: TTabSheet
       Caption = '&Item'
       Enabled = False
-      ExplicitHeight = 528
       object bPesqCli: TSpeedButton
         Left = 567
         Top = 159
@@ -1459,7 +1456,6 @@ object CIAP: TCIAP
       Caption = '&Sa'#237'da'
       Enabled = False
       ImageIndex = 1
-      ExplicitHeight = 528
       object StaticText11: TStaticText
         Left = 0
         Top = 46
@@ -1907,7 +1903,6 @@ object CIAP: TCIAP
       Caption = '&Contabeis'
       Enabled = False
       ImageIndex = 2
-      ExplicitHeight = 528
       object StaticText29: TStaticText
         Left = 0
         Top = 0

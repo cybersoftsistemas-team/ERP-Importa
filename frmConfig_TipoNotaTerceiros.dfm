@@ -3,7 +3,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
   Top = 225
   BorderStyle = bsDialog
   Caption = 'Config_TipoNotaTerceiros'
-  ClientHeight = 715
+  ClientHeight = 733
   ClientWidth = 784
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -62,12 +62,13 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
   end
   object Panel1: TPanel
     Left = 0
-    Top = 685
+    Top = 703
     Width = 784
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitTop = 685
     object bSair: TButton
       Left = 708
       Top = 1
@@ -151,25 +152,28 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
     Left = 3
     Top = 49
     Width = 778
-    Height = 633
+    Height = 651
     ActivePage = TabSheet1
     Align = alClient
     TabHeight = 28
     TabOrder = 1
+    ExplicitHeight = 633
     object TabSheet1: TTabSheet
       Caption = 'Refer'#234'ncia'
+      ExplicitHeight = 595
       DesignSize = (
         770
-        595)
+        613)
       object Panel2: TPanel
         Left = 2
         Top = 1
         Width = 765
-        Height = 592
+        Height = 610
         Anchors = [akLeft, akTop, akRight, akBottom]
         BevelOuter = bvLowered
         Enabled = False
         TabOrder = 0
+        ExplicitHeight = 592
         object StaticText1: TStaticText
           Left = 7
           Top = 5
@@ -251,7 +255,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object StaticText2: TStaticText
           Left = 7
-          Top = 74
+          Top = 97
           Width = 162
           Height = 21
           Cursor = crHandPoint
@@ -276,7 +280,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object DBLookupComboBox2: TDBLookupComboBox
           Left = 233
-          Top = 74
+          Top = 97
           Width = 420
           Height = 21
           DataField = 'Natureza_Dentro'
@@ -295,7 +299,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object cCFOPDentro: TDBEdit
           Left = 171
-          Top = 74
+          Top = 97
           Width = 60
           Height = 21
           DataField = 'Natureza_Dentro'
@@ -311,7 +315,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object StaticText3: TStaticText
           Left = 7
-          Top = 97
+          Top = 120
           Width = 162
           Height = 21
           Cursor = crHandPoint
@@ -336,7 +340,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object DBLookupComboBox3: TDBLookupComboBox
           Left = 233
-          Top = 97
+          Top = 120
           Width = 420
           Height = 21
           DataField = 'Natureza_Fora'
@@ -355,7 +359,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object cCFOPFora: TDBEdit
           Left = 171
-          Top = 97
+          Top = 120
           Width = 60
           Height = 21
           DataField = 'Natureza_Fora'
@@ -371,7 +375,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object StaticText8: TStaticText
           Left = 7
-          Top = 212
+          Top = 235
           Width = 162
           Height = 21
           Cursor = crHandPoint
@@ -396,7 +400,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object DBLookupComboBox6: TDBLookupComboBox
           Left = 233
-          Top = 212
+          Top = 235
           Width = 420
           Height = 21
           DataField = 'Especie'
@@ -415,7 +419,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object DBEdit5: TDBEdit
           Left = 171
-          Top = 212
+          Top = 235
           Width = 60
           Height = 21
           CharCase = ecUpperCase
@@ -514,7 +518,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object StaticText4: TStaticText
           Left = 7
-          Top = 235
+          Top = 258
           Width = 162
           Height = 21
           Cursor = crHandPoint
@@ -539,7 +543,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object cCSTICMS: TDBEdit
           Left = 171
-          Top = 235
+          Top = 258
           Width = 60
           Height = 21
           CharCase = ecUpperCase
@@ -555,7 +559,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object StaticText6: TStaticText
           Left = 233
-          Top = 235
+          Top = 258
           Width = 47
           Height = 21
           Cursor = crHandPoint
@@ -580,7 +584,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object cCSTIPI: TDBLookupComboBox
           Left = 282
-          Top = 235
+          Top = 258
           Width = 81
           Height = 21
           DataField = 'CSTIPI'
@@ -602,7 +606,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object cFinalidade: TDBRadioGroup
           Left = 7
-          Top = 292
+          Top = 314
           Width = 210
           Height = 218
           Caption = ' Finalidade da Mercadoria '
@@ -636,7 +640,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object StaticText11: TStaticText
           Left = 7
-          Top = 258
+          Top = 281
           Width = 162
           Height = 21
           Cursor = crHandPoint
@@ -661,7 +665,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object cTipoCredito: TRxDBLookupCombo
           Left = 171
-          Top = 258
+          Top = 281
           Width = 587
           Height = 21
           DropDownCount = 8
@@ -683,7 +687,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object GroupBox2: TGroupBox
           Left = 233
-          Top = 292
+          Top = 314
           Width = 349
           Height = 293
           Caption = 'Par'#226'metros Diversos'
@@ -1000,7 +1004,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object StaticText17: TStaticText
           Left = 7
-          Top = 166
+          Top = 189
           Width = 162
           Height = 21
           Cursor = crHandPoint
@@ -1025,7 +1029,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object cNaturezaIndEntra2: TDBLookupComboBox
           Left = 233
-          Top = 166
+          Top = 189
           Width = 420
           Height = 21
           DataField = 'Natureza_IndEntrada'
@@ -1044,7 +1048,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object cNaturezaIndEntra: TDBEdit
           Left = 171
-          Top = 166
+          Top = 189
           Width = 60
           Height = 21
           DataField = 'Natureza_IndEntrada'
@@ -1060,7 +1064,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object StaticText18: TStaticText
           Left = 7
-          Top = 189
+          Top = 212
           Width = 162
           Height = 21
           Cursor = crHandPoint
@@ -1085,7 +1089,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object cNaturezaIndSai2: TDBLookupComboBox
           Left = 233
-          Top = 189
+          Top = 212
           Width = 420
           Height = 21
           DataField = 'Natureza_IndSaida'
@@ -1104,7 +1108,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object cNaturezaIndSai: TDBEdit
           Left = 171
-          Top = 189
+          Top = 212
           Width = 60
           Height = 21
           DataField = 'Natureza_IndSaida'
@@ -1120,7 +1124,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object GroupBox5: TGroupBox
           Left = 598
-          Top = 292
+          Top = 314
           Width = 149
           Height = 77
           Caption = 'CST PIS'
@@ -1234,7 +1238,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object GroupBox6: TGroupBox
           Left = 598
-          Top = 385
+          Top = 407
           Width = 149
           Height = 76
           Caption = 'CST COFINS'
@@ -1348,7 +1352,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object StaticText43: TStaticText
           Left = 7
-          Top = 120
+          Top = 143
           Width = 162
           Height = 21
           Cursor = crHandPoint
@@ -1373,7 +1377,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object DBLookupComboBox15: TDBLookupComboBox
           Left = 233
-          Top = 120
+          Top = 143
           Width = 420
           Height = 21
           DataField = 'Natureza_RefDentro'
@@ -1392,7 +1396,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object DBEdit1: TDBEdit
           Left = 171
-          Top = 120
+          Top = 143
           Width = 60
           Height = 21
           DataField = 'Natureza_RefDentro'
@@ -1408,7 +1412,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object StaticText44: TStaticText
           Left = 7
-          Top = 143
+          Top = 166
           Width = 162
           Height = 21
           Cursor = crHandPoint
@@ -1433,7 +1437,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object DBLookupComboBox20: TDBLookupComboBox
           Left = 233
-          Top = 143
+          Top = 166
           Width = 420
           Height = 21
           DataField = 'Natureza_RefFora'
@@ -1452,7 +1456,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         end
         object DBEdit3: TDBEdit
           Left = 171
-          Top = 143
+          Top = 166
           Width = 60
           Height = 21
           DataField = 'Natureza_RefFora'
@@ -1465,6 +1469,66 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
           MaxLength = 5
           ParentFont = False
           TabOrder = 14
+        end
+        object StaticText45: TStaticText
+          Left = 7
+          Top = 74
+          Width = 162
+          Height = 21
+          Cursor = crHandPoint
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkSoft
+          BevelOuter = bvSpace
+          BorderStyle = sbsSunken
+          Caption = 'C'#243'digo Servi'#231'o (Nacional)'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 43
+          Transparent = False
+          StyleElements = []
+          OnClick = StaticText9Click
+        end
+        object DBLookupComboBox22: TDBLookupComboBox
+          Left = 233
+          Top = 74
+          Width = 420
+          Height = 21
+          DataField = 'Servico_Nacional'
+          DataSource = Dados.dsReferenciasFiscais
+          DropDownRows = 15
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          KeyField = 'Codigo_Nacional'
+          ListField = 'Descricao'
+          ListSource = Dados.dsServicos
+          ParentFont = False
+          TabOrder = 44
+        end
+        object DBEdit9: TDBEdit
+          Left = 171
+          Top = 74
+          Width = 60
+          Height = 21
+          DataField = 'Servico_Nacional'
+          DataSource = Dados.dsReferenciasFiscais
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 45
+          OnChange = DBEdit6Change
         end
       end
     end
@@ -3291,7 +3355,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
       ImageIndex = 3
       DesignSize = (
         770
-        595)
+        613)
       object SpeedButton2: TSpeedButton
         Left = 513
         Top = 439
@@ -3384,7 +3448,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
       end
       object StaticText70: TStaticText
         Left = 9
-        Top = 465
+        Top = 483
         Width = 101
         Height = 21
         Anchors = [akLeft, akBottom]
@@ -3408,7 +3472,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
       end
       object cPesquisa: TEdit
         Left = 112
-        Top = 465
+        Top = 483
         Width = 400
         Height = 21
         Anchors = [akLeft, akBottom]
@@ -4808,7 +4872,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
       end
       object StaticText22: TStaticText
         Left = 9
-        Top = 488
+        Top = 506
         Width = 101
         Height = 21
         Anchors = [akLeft, akBottom]
@@ -4832,7 +4896,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
       end
       object cPesquisaH: TEdit
         Left = 112
-        Top = 488
+        Top = 506
         Width = 400
         Height = 21
         Anchors = [akLeft, akBottom]
@@ -5064,7 +5128,7 @@ object Config_TipoNotaTerceiros: TConfig_TipoNotaTerceiros
         Left = 0
         Top = 0
         Width = 770
-        Height = 595
+        Height = 613
         Align = alClient
         DataSource = Dados.dsReferenciasFiscais
         Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]

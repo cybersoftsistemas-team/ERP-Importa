@@ -2966,3 +2966,13 @@ alter table ClassificacaoFinanceira add Juros_SPEDPISCOFINS bit
 go
 update ClassificacaoFinanceira set Juros_SPEDPISCOFINS = 0 where Juros_SPEDPISCOFINS is null
 go
+
+--[10/03/2026 09:33:00]
+alter table Servicos add Codigo_Nacional varchar(6)
+go
+update Servicos set Codigo_Nacional = isnull(ltrim(rtrim(Codigo)), '')+'01' where Codigo is not null
+go
+
+--[06/04/2026 09:52:00]
+alter table OrgaosPublicos add Chave_PIX varchar(80)
+go

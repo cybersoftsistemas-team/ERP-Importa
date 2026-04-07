@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
-  RxDBCtrl, Vcl.StdCtrls, Vcl.DBCtrls, RxLookup, RxToolEdit, Vcl.Mask, Vcl.Buttons, Vcl.ComCtrls, Vcl.ExtCtrls, RxCtrls, MemDS, DBAccess, MSAccess, ACBrBase, ACBrDFe, ACBrNFSe;
+  RxDBCtrl, Vcl.StdCtrls, Vcl.DBCtrls, RxLookup, RxToolEdit, Vcl.Mask, Vcl.Buttons, Vcl.ComCtrls, Vcl.ExtCtrls, RxCtrls, MemDS, DBAccess, MSAccess, ACBrBase, ACBrDFe, ACBrNFSeX;
 
 type
   TPedido_NFS = class(TForm)
@@ -56,8 +56,8 @@ type
     ttmp: TMSQuery;
     StaticText1: TStaticText;
     DBEdit1: TDBEdit;
-    NFS: TACBrNFSe;
     bXML: TButton;
+    ACBrNFSeX1: TACBrNFSeX;
     procedure bSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -68,7 +68,6 @@ type
     procedure cPedidoChange(Sender: TObject);
     procedure bItensClick(Sender: TObject);
     procedure cReferenciaExit(Sender: TObject);
-    procedure bXMLClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -101,13 +100,6 @@ end;
 procedure TPedido_NFS.bSairClick(Sender: TObject);
 begin
      close;
-end;
-
-procedure TPedido_NFS.bXMLClick(Sender: TObject);
-begin
-     with NFS do begin
-          
-     end;
 end;
 
 procedure TPedido_NFS.cClienteExit(Sender: TObject);

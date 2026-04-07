@@ -2968,6 +2968,7 @@ begin
                                           PagarReceberCentro_Custo.Value     := TiposProcesso.FieldByName('SISCOMEX_CentroCusto').AsString;
                                           PagarReceberTipo.Value             := ClassificacaoFinanceira.FieldByName('Tipo').AsString;
                                           PagarReceberData_Documento.Value   := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
+                                          PagarReceberData_Previsao.Value    := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
                                           PagarReceberData_Vencimento.Value  := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
                                           PagarReceberNumero_Documento.Value := FormatMaskText('##/#######-#;0', ProcessosDOC.FieldByName('Numero_Declaracao').AsString);
                                           PagarReceberProcesso.Value         := ProcessosDOC.FieldByName('Processo').AsString;
@@ -3046,6 +3047,7 @@ begin
                                    PagarReceberClassificacao.Value    := TiposProcesso.FieldByName('SISCOMEX_ClassificacaoDifPIS').AsString;
                                    PagarReceberTipo.Value             := ClassificacaoFinanceira.FieldByName('Tipo').AsString;
                                    PagarReceberData_Documento.Value   := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
+                                   PagarReceberData_Previsao.Value    := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
                                    PagarReceberData_Vencimento.Value  := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
                                    PagarReceberValor_Documento.Value  := (ProcessosDOC.FieldByName('Valor_PIS').AsCurrency-ProcessosDOC.FieldByName('Valor_PIS2').AsCurrency);
                                    PagarReceberValor_Parcela.Value    := (ProcessosDOC.FieldByName('Valor_PIS').AsCurrency-ProcessosDOC.FieldByName('Valor_PIS2').AsCurrency);
@@ -3114,6 +3116,7 @@ begin
                                     PagarReceberClassificacao.Value    := TiposProcesso.FieldByName('SISCOMEX_ClassificacaoDifCOFINS').AsString;
                                     PagarReceberTipo.Value             := ClassificacaoFinanceira.FieldByName('Tipo').AsString;
                                     PagarReceberData_Documento.Value   := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
+                                    PagarReceberData_Previsao.Value    := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
                                     PagarReceberData_Vencimento.Value  := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
                                     PagarReceberValor_Documento.Value  := (ProcessosDOC.FieldByName('Valor_COFINS').AsCurrency-ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency);
                                     PagarReceberValor_Parcela.Value    := (ProcessosDOC.FieldByName('Valor_COFINS').AsCurrency-ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency);
@@ -3181,6 +3184,7 @@ begin
                                  PagarReceberClassificacao.Value    := TiposProcesso.FieldByName('Classificacao_AFRMM').AsString;
                                  PagarReceberTipo.Value             := ClassificacaoFinanceira.FieldByName('Tipo').AsString;
                                  PagarReceberData_Documento.Value   := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
+                                 PagarReceberData_Previsao.Value    := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
                                  PagarReceberData_Vencimento.Value  := ProcessosDOC.FieldByName('Data_RegistroDeclaracao').AsDateTime;
                                  PagarReceberValor_Documento.Value  := cAFRMM.Value;
                                  PagarReceberValor_Parcela.Value    := cAFRMM.Value;

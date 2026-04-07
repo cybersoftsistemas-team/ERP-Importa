@@ -217,6 +217,7 @@ begin
                                     PagarReceberClassificacao.Value    := ReferenciasFiscaisClassificacao_TotalNota.Value;
                                     PagarReceberCentro_Custo.Value     := NotasServicoCentro_Custo.Value;
                                     PagarReceberData_Documento.Value   := NotasServicoData_Emissao.Value;
+                                    PagarReceberData_Previsao.Value    := TabparcelasVencimento.Value;
                                     PagarReceberData_Vencimento.Value  := TabparcelasVencimento.Value;
                                     PagarReceberValor_Documento.Value  := NotasServicoTotal_Nota.Value;
                                     PagarReceberValor_Parcela.Value    := TabParcelasValor.Value;
@@ -263,6 +264,7 @@ begin
                                  PagarReceberClassificacao.Value    := ImpostosClassificacao_Financeira.Value;
                                  PagarReceberCentro_Custo.Value     := NotasServicoCentro_Custo.Value;
                                  PagarReceberData_Documento.Value   := NotasServicoData_Emissao.Value;
+                                 PagarReceberData_Previsao.Value    := mVencISS;
                                  PagarReceberData_Vencimento.Value  := mVencISS;
                                  PagarReceberValor_Documento.Value  := NotasServicoValor_ISS.Value;
                                  PagarReceberValor_Parcela.Value    := NotasServicoValor_ISS.Value;

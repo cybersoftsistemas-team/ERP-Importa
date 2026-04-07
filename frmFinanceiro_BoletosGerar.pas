@@ -329,14 +329,7 @@ type
     cTotal: TLabel;
     Bevel2: TBevel;
     ppDB2DBarCode1: TppDB2DBarCode;
-    QR: TppReport;
-    ppDetailBand2: TppDetailBand;
-    ppDesignLayers2: TppDesignLayers;
-    ppDesignLayer2: TppDesignLayer;
-    ppParameterList2: TppParameterList;
-    pQRCode: Tpp2DBarCode;
     tBoletosChave_PIX: TStringField;
-    pMemoQR: TppMemo;
     tBoletosQRCode: TMemoField;
     tBoletosSacado: TIntegerField;
     procedure bSairClick(Sender: TObject);

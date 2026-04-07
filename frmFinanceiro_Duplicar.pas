@@ -418,6 +418,7 @@ begin
                             PagarReceberCusto_Entrada.Value         := mCustoEntrada;
                             PagarReceberTransferencia.Value         := mTransferencia;
                             PagarReceberData_Documento.Value        := mData_Documento;
+                            PagarReceberData_Previsao.Value         := mData;
                             PagarReceberData_Vencimento.Value       := mData;
                             PagarReceberDesconto.Value              := mDesconto;
                             PagarReceberJuros.Value                 := mJuros;

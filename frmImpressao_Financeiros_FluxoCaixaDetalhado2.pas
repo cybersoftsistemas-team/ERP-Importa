@@ -284,8 +284,12 @@ begin
      Screen.Cursor := crSQLWait;
      with tFluxo do begin
           sql.clear;
-          sql.add('-- Abertos');
-          sql.add('select Data = iif(:pData = 0, pr.Data_Vencimento + :pDias, pr.Data_Previsao + :pDias)');
+          sql.add('-- ABERTOS');
+          sql.add('select Data = case when Tipo = ''R'' then ');
+          sql.add('                   iif(:pData = 0, pr.Data_Vencimento + :pDias, pr.Data_Previsao + :pDias)');
+          sql.add('              else');
+          sql.add('                   iif(:pData = 0, pr.Data_Vencimento, pr.Data_Previsao)');
+          sql.add('              end');
           sql.add('      ,pr.Forma_Tipo');
           sql.add('      ,Numero_Doc = pr.Numero_Documento');
           sql.add('      ,Beneficiario = case pr.Tipo');
@@ -308,7 +312,7 @@ begin
              sql.Add('and isnull(pr.Centro_Custo, '''') in('+mCCusto+')');
           end;
           sql.add('union all');
-          sql.add('-- Baixados');
+          sql.add('-- BAIXADOS');
           sql.add('select Data');
           sql.add('      ,Forma_Tipo = (select pr.Forma_Tipo from PagarReceber pr where pr.Numero = prb.Numero)');
           sql.add('      ,Numero_Doc = (select pr.Numero_Documento from PagarReceber pr where pr.Numero = prb.Numero)');

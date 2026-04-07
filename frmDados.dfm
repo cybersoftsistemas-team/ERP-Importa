@@ -2555,7 +2555,7 @@ object Dados: TDados
         'assive, Comissao_Gerencia, Lote, Simples, MEI, Zona_Franca, Swif' +
         't_Code, IBAN, Valor_Servico, Contato, Micro_Empresa, Vinculo_Com' +
         'pVend, Relacao_ExpFab, Estado_Nome, Codigo_DUIMP, Ident_Operador' +
-        ', Codigo_Estrangeiro)'
+        ', Codigo_Estrangeiro, Chave_PIX)'
       'VALUES'
       
         '  (:Codigo, :Nome, :Nome_Fantasia, :Tipo_Servico, :Rua, :Rua_Num' +
@@ -2572,7 +2572,7 @@ object Dados: TDados
         'missao_Gerencia, :Lote, :Simples, :MEI, :Zona_Franca, :Swift_Cod' +
         'e, :IBAN, :Valor_Servico, :Contato, :Micro_Empresa, :Vinculo_Com' +
         'pVend, :Relacao_ExpFab, :Estado_Nome, :Codigo_DUIMP, :Ident_Oper' +
-        'ador, :Codigo_Estrangeiro)')
+        'ador, :Codigo_Estrangeiro, :Chave_PIX)')
     SQLDelete.Strings = (
       'DELETE FROM Fornecedores'
       'WHERE'
@@ -2609,7 +2609,8 @@ object Dados: TDados
         'to, Micro_Empresa = :Micro_Empresa, Vinculo_CompVend = :Vinculo_' +
         'CompVend, Relacao_ExpFab = :Relacao_ExpFab, Estado_Nome = :Estad' +
         'o_Nome, Codigo_DUIMP = :Codigo_DUIMP, Ident_Operador = :Ident_Op' +
-        'erador, Codigo_Estrangeiro = :Codigo_Estrangeiro'
+        'erador, Codigo_Estrangeiro = :Codigo_Estrangeiro, Chave_PIX = :C' +
+        'have_PIX'
       'WHERE'
       '  Codigo = :Old_Codigo')
     SQLRefresh.Strings = (
@@ -2627,7 +2628,7 @@ object Dados: TDados
         'TP_Passive, Comissao_Gerencia, Lote, Simples, MEI, Zona_Franca, ' +
         'Swift_Code, IBAN, Valor_Servico, Contato, Micro_Empresa, Vinculo' +
         '_CompVend, Relacao_ExpFab, Estado_Nome, Codigo_DUIMP, Ident_Oper' +
-        'ador, Codigo_Estrangeiro FROM Fornecedores'
+        'ador, Codigo_Estrangeiro, Chave_PIX FROM Fornecedores'
       'WHERE'
       '  Codigo = :Codigo')
     SQLLock.Strings = (
@@ -2645,6 +2646,7 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = FornecedoresBeforePost
     BeforeDelete = FornecedoresBeforeDelete
+    Active = True
     Left = 169
     Top = 105
     object FornecedoresCodigo: TIntegerField
@@ -2968,6 +2970,10 @@ object Dados: TDados
     end
     object FornecedoresCodigo_Estrangeiro: TStringField
       FieldName = 'Codigo_Estrangeiro'
+    end
+    object FornecedoresChave_PIX: TStringField
+      FieldName = 'Chave_PIX'
+      Size = 80
     end
   end
   object dsFornecedores: TDataSource
@@ -5163,7 +5169,6 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = ClassificacaoFinanceiraBeforePost
     BeforeDelete = ClassificacaoFinanceiraBeforeDelete
-    Active = True
     Left = 1141
     Top = 105
     object ClassificacaoFinanceiraCodigo: TStringField
@@ -13214,7 +13219,8 @@ object Dados: TDados
         'quota_COFINS, PIS_Recuperar, PIS_Recolher, COFINS_Recuperar, COF' +
         'INS_Recolher, CSLL_Recuperar, CSLL_Recolher, IR_Recuperar, IR_Re' +
         'colher, INSS_Recuperar, INSS_Recolher, Limite_PIS, Limite_COFINS' +
-        ', Limite_CSLL, Limite_IR, Limite_INSS, Natureza_Rendimento)'
+        ', Limite_CSLL, Limite_IR, Limite_INSS, Natureza_Rendimento, Codi' +
+        'go_Nacional)'
       'VALUES'
       
         '  (:Codigo, :Ativo, :Descricao, :Texto, :Industria, :Aliquota_PI' +
@@ -13222,7 +13228,7 @@ object Dados: TDados
         'perar, :COFINS_Recolher, :CSLL_Recuperar, :CSLL_Recolher, :IR_Re' +
         'cuperar, :IR_Recolher, :INSS_Recuperar, :INSS_Recolher, :Limite_' +
         'PIS, :Limite_COFINS, :Limite_CSLL, :Limite_IR, :Limite_INSS, :Na' +
-        'tureza_Rendimento)')
+        'tureza_Rendimento, :Codigo_Nacional)')
     SQLDelete.Strings = (
       'DELETE FROM Servicos'
       'WHERE'
@@ -13241,7 +13247,8 @@ object Dados: TDados
         '_Recuperar, INSS_Recolher = :INSS_Recolher, Limite_PIS = :Limite' +
         '_PIS, Limite_COFINS = :Limite_COFINS, Limite_CSLL = :Limite_CSLL' +
         ', Limite_IR = :Limite_IR, Limite_INSS = :Limite_INSS, Natureza_R' +
-        'endimento = :Natureza_Rendimento'
+        'endimento = :Natureza_Rendimento, Codigo_Nacional = :Codigo_Naci' +
+        'onal'
       'WHERE'
       '  Codigo = :Old_Codigo')
     SQLRefresh.Strings = (
@@ -13250,8 +13257,8 @@ object Dados: TDados
         ' Aliquota_COFINS, PIS_Recuperar, PIS_Recolher, COFINS_Recuperar,' +
         ' COFINS_Recolher, CSLL_Recuperar, CSLL_Recolher, IR_Recuperar, I' +
         'R_Recolher, INSS_Recuperar, INSS_Recolher, Limite_PIS, Limite_CO' +
-        'FINS, Limite_CSLL, Limite_IR, Limite_INSS, Natureza_Rendimento F' +
-        'ROM Servicos'
+        'FINS, Limite_CSLL, Limite_IR, Limite_INSS, Natureza_Rendimento, ' +
+        'Codigo_Nacional FROM Servicos'
       'WHERE'
       '  Codigo = :Codigo')
     SQLLock.Strings = (
@@ -13390,6 +13397,10 @@ object Dados: TDados
     end
     object ServicosNatureza_Rendimento: TSmallintField
       FieldName = 'Natureza_Rendimento'
+    end
+    object ServicosCodigo_Nacional: TStringField
+      FieldName = 'Codigo_Nacional'
+      Size = 6
     end
   end
   object dsServicos: TDataSource
@@ -14826,7 +14837,7 @@ object Dados: TDados
         'I, CSTPIS_Dif, CSTCOFINS_Dif, Sinal_PISDif, Sinal_COFINSDif, Sin' +
         'al_BCIPI, Sinal_BCICMSOper, Sinal_BCICMSST, Sinal_BCFrete, Trans' +
         'ferencia, Natureza_RefDentro, Natureza_RefFora, Fechamento_Proce' +
-        'sso)'
+        'sso, Servico_Nacional)'
       'VALUES'
       
         '  (:Codigo, :Descricao, :Natureza_Dentro, :Natureza_Fora, :Espec' +
@@ -14855,7 +14866,7 @@ object Dados: TDados
         'talNota, :Zerar_IPI, :CSTPIS_Dif, :CSTCOFINS_Dif, :Sinal_PISDif,' +
         ' :Sinal_COFINSDif, :Sinal_BCIPI, :Sinal_BCICMSOper, :Sinal_BCICM' +
         'SST, :Sinal_BCFrete, :Transferencia, :Natureza_RefDentro, :Natur' +
-        'eza_RefFora, :Fechamento_Processo)')
+        'eza_RefFora, :Fechamento_Processo, :Servico_Nacional)')
     SQLDelete.Strings = (
       'DELETE FROM ReferenciasFiscais'
       'WHERE'
@@ -14916,7 +14927,8 @@ object Dados: TDados
         'nal_BCICMSOper = :Sinal_BCICMSOper, Sinal_BCICMSST = :Sinal_BCIC' +
         'MSST, Sinal_BCFrete = :Sinal_BCFrete, Transferencia = :Transfere' +
         'ncia, Natureza_RefDentro = :Natureza_RefDentro, Natureza_RefFora' +
-        ' = :Natureza_RefFora, Fechamento_Processo = :Fechamento_Processo'
+        ' = :Natureza_RefFora, Fechamento_Processo = :Fechamento_Processo' +
+        ', Servico_Nacional = :Servico_Nacional'
       'WHERE'
       '  Codigo = :Old_Codigo')
     SQLRefresh.Strings = (
@@ -14946,7 +14958,7 @@ object Dados: TDados
         'r_IPI, CSTPIS_Dif, CSTCOFINS_Dif, Sinal_PISDif, Sinal_COFINSDif,' +
         ' Sinal_BCIPI, Sinal_BCICMSOper, Sinal_BCICMSST, Sinal_BCFrete, T' +
         'ransferencia, Natureza_RefDentro, Natureza_RefFora, Fechamento_P' +
-        'rocesso FROM ReferenciasFiscais'
+        'rocesso, Servico_Nacional FROM ReferenciasFiscais'
       'WHERE'
       '  Codigo = :Codigo')
     SQLLock.Strings = (
@@ -15444,6 +15456,10 @@ object Dados: TDados
     object ReferenciasFiscaisFechamento_Processo: TBooleanField
       FieldName = 'Fechamento_Processo'
     end
+    object ReferenciasFiscaisServico_Nacional: TStringField
+      FieldName = 'Servico_Nacional'
+      Size = 6
+    end
   end
   object dsReferenciasFiscais: TDataSource
     DataSet = ReferenciasFiscais
@@ -15451,7 +15467,7 @@ object Dados: TDados
     Top = 340
   end
   object Banco_Empresas: TMSConnection
-    Database = 'Cybersoft_Ecotrading'
+    Database = 'Cybersoft_Vix_Matriz'
     Options.PersistSecurityInfo = True
     Options.ApplicationName = 'Cybersoft ERP Importa'
     Options.Provider = prSQL

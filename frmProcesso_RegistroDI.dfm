@@ -174,7 +174,7 @@ object Processo_RegistroDI: TProcesso_RegistroDI
     Top = 45
     Width = 1053
     Height = 576
-    ActivePage = tTributos
+    ActivePage = tDadosDI
     TabHeight = 24
     TabOrder = 1
     TabWidth = 110

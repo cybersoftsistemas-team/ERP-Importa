@@ -140,6 +140,7 @@ begin
                            PagarReceberClassificacao.Value    := ContratoCambio.FieldByName('Classificacao').AsString;
                            PagarReceberTipo.Value             := ClassificacaoFinanceira.FieldByName('Tipo').AsString;
                            PagarReceberData_Documento.Value   := ContratoCambio.FieldByName('Data').AsDateTime;
+                           PagarReceberData_Previsao.Value    := ContratoCambio.FieldByName('Data_Vencimento').AsDateTime;
                            PagarReceberData_Vencimento.Value  := ContratoCambio.FieldByName('Data_Vencimento').AsDateTime;
                            PagarReceberValor_Documento.Value  := cValorReal.Value;
                            PagarReceberValor_Parcela.Value    := cValorReal.Value;

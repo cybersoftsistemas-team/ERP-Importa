@@ -1274,7 +1274,7 @@ uses
 
      // Controle de Embarques.
      frmProcesso_ControleNavios,
-     frmUtilitarios_AjustarEstoqueNavio, frmNFE50, frmImpressao_FinanceirosOP_PagarReceberSimp, frmImpressao_FinanceirosOP_ControleAbertos, frmProcesso_DUIMP, frmCadastro_LPCO, frmIndustrializacao, frmPedido_NFS;
+     frmUtilitarios_AjustarEstoqueNavio, frmImpressao_FinanceirosOP_PagarReceberSimp, frmImpressao_FinanceirosOP_ControleAbertos, frmProcesso_DUIMP, frmCadastro_LPCO, frmIndustrializacao, frmPedido_NFS;
      
 
 {$R *.dfm}
@@ -2112,11 +2112,11 @@ begin
 //         NotaFiscal_Eletronica.ide_tpEmis         := 1;
 //         NotaFiscal_Eletronica.mTipoEnvio         := 'NORMAL';
 //         NotaFiscal_Eletronica.ShowModal;
-         NFE50 := TNFE50.Create(Self);
-         NFE50.Caption            := Caption;
-         NFE50.ide_tpEmis         := 1;
-         NFE50.mTipoEnvio         := 'NORMAL';
-         NFE50.ShowModal;
+//         NFE50 := TNFE50.Create(Self);
+//         NFE50.Caption            := Caption;
+//         NFE50.ide_tpEmis         := 1;
+//         NFE50.mTipoEnvio         := 'NORMAL';         duimp
+//         NFE50.ShowModal;
       end;
 end;
 
@@ -4193,9 +4193,9 @@ end;
 
 procedure TMenu_Principal.mnImpressao_Financeiros_PagarReceberSimpClick(Sender: TObject);
 begin
-      Impressao_FinanceirosOP_PagarReceberSimp := TImpressao_FinanceirosOP_PagarReceberSimp.Create(Self);
-      Impressao_FinanceirosOP_PagarReceberSimp.Caption := Caption;
-      Impressao_FinanceirosOP_PagarReceberSimp.ShowModal;
+     Impressao_FinanceirosOP_PagarReceberSimp := TImpressao_FinanceirosOP_PagarReceberSimp.Create(Self);
+     Impressao_FinanceirosOP_PagarReceberSimp.Caption := Caption;
+     Impressao_FinanceirosOP_PagarReceberSimp.ShowModal;
 end;
 
 procedure TMenu_Principal.ControledeBoletos1Click(Sender: TObject);
@@ -4423,7 +4423,7 @@ end;
 
 procedure TMenu_Principal.InputBoxPass(var Msg: TMessage);
 var
-    hInputForm, hEdit: HWND;
+   hInputForm, hEdit: HWND;
 begin
     hInputForm := Screen.Forms[0].Handle;
     if (hInputForm <> 0) then begin
@@ -4541,6 +4541,7 @@ begin
      tInad.Enabled := false;
      Screen.Cursor := crHourGlass;
      Dados.Configuracao.Open;
+     
      // Executa o download do arquivo de "Inadimplencia.txt" para saber se a empresa esta em dia com o pagamento.
      Menu_Principal.IdAntiFreeze1.Active := true;
      
@@ -4696,9 +4697,9 @@ end;
 
 procedure TMenu_Principal.mnCadastro_UsuariosClick(Sender: TObject);
 begin
-      Cadastro_Usuarios2 := TCadastro_Usuarios2.Create(Self);
-      Cadastro_Usuarios2.Caption := Caption;
-      Cadastro_Usuarios2.ShowModal;
+     Cadastro_Usuarios2 := TCadastro_Usuarios2.Create(Self);
+     Cadastro_Usuarios2.Caption := Caption;
+     Cadastro_Usuarios2.ShowModal;
 end;
 
 

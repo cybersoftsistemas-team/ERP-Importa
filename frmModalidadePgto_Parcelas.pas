@@ -251,6 +251,7 @@ begin
                                     PagarReceberClassificacao.Value    := ClassificacaoFinanceiraCodigo.Value;
                                     PagarReceberCentro_Custo.Value     := NotasTerceirosCentro_Custo.Value;
                                     PagarReceberData_Documento.Value   := NotasTerceirosData_Emissao.Value;
+                                    PagarReceberData_Previsao.Value    := TabparcelasVencimento.Value;
                                     PagarReceberData_Vencimento.Value  := TabParcelasVencimento.Value;
                                     PagarReceberValor_Documento.Value  := NotasTerceirosValor_TotalNota.Value;
                                     PagarReceberValor_Parcela.Value    := TabParcelasValor.Value;
@@ -377,6 +378,7 @@ begin
                                  PagarReceberClassificacao.Value    := ClassificacaoFinanceiraCodigo.Value;
                                  PagarReceberCentro_Custo.Value     := NotasTerceirosCentro_Custo.Value;
                                  PagarReceberData_Documento.Value   := NotasTerceirosData_Emissao.Value;
+                                 PagarReceberData_Previsao.Value    := NotasTerceirosData_Emissao.Value;
                                  PagarReceberData_Vencimento.Value  := NotasTerceirosData_Emissao.Value;
                                  PagarReceberValor_Documento.Value  := NotasTerceirosValor_TotalNota.Value;
                                  PagarReceberValor_Parcela.Value    := NotasTerceirosItensValor_Liquido.Value;
@@ -905,6 +907,7 @@ begin
                            PagarReceberClassificacao.Value    := ImpostosClassificacao_Financeira.Value;
                            PagarReceberCentro_Custo.Value     := NotasTerceirosCentro_Custo.Value;
                            PagarReceberData_Documento.Value   := NotasTerceirosData_Emissao.Value;
+                           PagarReceberData_Previsao.Value    := mDataVenc;
                            PagarReceberData_Vencimento.Value  := mDataVenc;
                            PagarReceberValor_Documento.Value  := Valor;
                            PagarReceberValor_Parcela.Value    := Valor;

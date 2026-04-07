@@ -33,10 +33,8 @@ type
     cLog: TMemo;
     Label5: TLabel;
     Memo2: TMemo;
-    TabCyber: TMSQuery;
-    ServerCyber: TMSConnection;
-    TabLocal: TMSQuery;
     Temp: TMSQuery;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure bAtualizarClick(Sender: TObject);
     procedure IdFTP1Work(ASender: TObject; AWorkMode: TWorkMode;AWorkCount: Int64);
@@ -51,9 +49,11 @@ type
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormActivate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
     STime: TDateTime;
+    procedure ImportaCSV(pCaminho, pArq: string);
   public
     { Public declarations }
     AbortTransfer   : Boolean;
@@ -105,7 +105,7 @@ begin
      AtDescompacta;
      //ChecaBACKUP;
      RodaScripts;
-     //AtualizaTabelas;
+     AtualizaTabelas;
 
      if mErros > 0 then AtUpLoad;
 
@@ -166,81 +166,6 @@ begin
      ShellExecute(Handle, 'Open', PChar(ExtractFilePath(Application.ExeName)+'Cybersoft_Atualiza.EXE'), PChar(''), nil, SW_SHOWNORMAL);
      Application.Terminate;
 end;
-(*
-procedure TAtualiza_Sistema.AtDownload;
-begin
-     Screen.Cursor        := crHourGlass;
-     mPastaLocal          := ExtractFilePath(Application.ExeName)+'Atualizacao';
-     lProgresso.Visible   := true;
-     ProgressBar1.Visible := true;
-
-     Dados.Configuracao.Open;
-
-     If (Trim(Dados.ConfiguracaoIP_Suporte.AsString) = '') or (Trim(Dados.ConfiguracaoUsuario_FTP.AsString) = '') or (Trim(Dados.ConfiguracaoSenha_FTP.AsString) = '') then begin
-        MessageDlg('Falta definir os parâmetros de conexão com o servidor da Cybersoft em configurações!', mtError, [mbOK], 0);
-        Abort;
-     End;
-
-     // Executa o download do arquivo executavel compactado.
-     IdFTP1.Disconnect;
-     Menu_Principal.IdAntiFreeze1.Active := true;
-
-     IdFTP1.Username := Dados.ConfiguracaoUsuario_FTP.AsString;
-     IdFTP1.Password := Dados.ConfiguracaoSenha_FTP.AsString;
-     IdFTP1.Host     := Dados.ConfiguracaoIP_Suporte.AsString;
-     IdFTP1.Passive  := Dados.ConfiguracaoPassive_FTP.AsBoolean;
-     IdFTP1.Port     := Dados.ConfiguracaoPorta_FTP.AsInteger;
-
-     Try
-         IdFTP1.Connect();
-     Except
-         ShowMessage('Falha na conexão com o servidor da CYBERSOFT!'+#13+'Não foi possivel fazer o download dos arquivos de atualização!'+#13+'Entre em contato com o suporte técnico.');
-     End;
-
-     If IdFTP1.Connected then begin
-        If not DirectoryExists(mPastaLocal) then begin
-           ForceDirectories(mPastaLocal);
-        end else begin
-           DeleteFile(mPastaLocal+'\IMPORTA.RAR');
-           DeleteFile(mPastaLocal+'\IMPORTA.EXE');
-           DeleteFile(mPastaLocal+'\Script_Cadastros.txt');
-           DeleteFile(mPastaLocal+'\Script_Empresa.txt');
-           DeleteFile(mPastaLocal+'\Script_Contabilidade.txt');
-           DeleteFile(mPastaLocal+'\Atualiza_Tabelas.txt');
-           DeleteFile(mPastaLocal+'\Cybersoft_Atualiza.exe');
-           DeleteFile(mPastaLocal+'\Fundo_Cybersoft.bmp');
-           DeleteFile(mPastaLocal+'\Fundo_Cybersoft_Logo.bmp');
-        End;
-
-        lArquivo.Caption := Dados.ConfiguracaoPasta_AtualizacaoCybersoft.AsString + '\IMPORTA.RAR';
-        lTamanho.Caption := FormatFloat('##0.000', IdFTP1.Size('\Importa.rar')/1024)+' MB';
-
-        // Este bloco foi removido por esta dando o erro "connection closed gracefully".
-        Try
-            cLog.Lines.Add('Fazendo o Download das atualizações...Importa.rar');
-            Application.ProcessMessages;
-            ProgressBar1.Max := IdFTP1.Size('\Importa.rar');
-            IdFTP1.TransferType := ftBinary;
-            IdFTP1.Get('IMPORTA.RAR', mPastaLocal+'\IMPORTA.RAR', true, false);
-            cLog.Lines.Add('     ...Download concluído');
-
-            Application.ProcessMessages;
-        except
-           cLog.Lines.Add('      ...Falha no download do servidor da Cybersoft.');
-        End;
-     end else begin
-        Abort;
-     End;
-
-     Dados.Configuracao.Close;
-
-     lProgresso.Visible   := false;
-     ProgressBar1.Visible := false;
-     Application.ProcessMessages;
-
-     Screen.Cursor := crDefault;
-end;
-*)
 
 procedure TAtualiza_Sistema.AtDownload;
 begin
@@ -513,36 +438,22 @@ end;
 procedure TAtualiza_Sistema.AtualizaTabelas;
 Var
     mPastaLocal,
-    mTab, mValor, minsert: String;
+    mTab: String;
     mCarrega: Boolean;
-    i, r: Integer;
-    mTipo:TFieldType;
 begin
      Screen.Cursor := crHourGlass;
      cLog.Lines.Add('Atualizando tabelas no banco de dados.');
-     Dados.Configuracao.Open;
 
      mDataAtual  := Dados.ConfiguracaoAtualiza_Data.Value;
      mPastaLocal := ExtractFilePath(Application.ExeName)+'Atualizacao';
      mCarrega    := false;
 
-     try
-         ServerCyber.Server    := Dados.ConfiguracaoIP_Suporte.AsString;
-         ServerCyber.Connected := true;
-     except
-         memo2.Lines.add('ERRO: Não foi possivel conectar ao banco de dados da Cybersoft para atualizar as tabelas.');
-         Abort;
-     end;
-
      // SCRIPT DO BANCO DE DADOS DO Cybersoft_Cadastros.
      Memo2.Lines.Add('[ ATUALIZAÇÃO DE TABELAS DO BANCO DE DADOS ]');
 
-     TabCyber.SQL.Clear;
-     TabLocal.SQL.Clear;
-
      AssignFile(mTexto, mPastaLocal+'\Atualiza_Tabelas.txt');
      Reset(mTexto);
-     while not Eof(mTexto) do begin
+     while not eof(mTexto) do begin
            ReadLn(mTexto, mLinha);
            if Copy(mLinha,1,3) = '--[' then begin
               mDataArq := StrtoDateTime(Copy(mLinha,  4, 19));
@@ -553,99 +464,14 @@ begin
                  mMaiorData := mDataArq;
               end;
            end;
-           if (mCarrega = true) and (Trim(UpperCase(mLinha)) <> 'GO') and (Trim(mLinha) <> '') then begin
-              if Copy(mLinha,1,3) <> '--[' then begin
+           if mCarrega and (Trim(UpperCase(mLinha)) <> 'GO') and (Trim(mLinha) <> '') then begin
+              if Copy(mLinha, 1, 3) <> '--[' then begin
                  mTab := mLinha;
-                 TabCyber.sql.add('SELECT * FROM '+mTab);
-                 temp.sql.Clear;
-                 temp.sql.add('select table_name from cybersoft_Cadastros.information_schema.tables where table_name = '+quotedstr(mTab));
-                 temp.Open;
-                 if temp.RecordCount > 0 then begin
-                    TabLocal.sql.Add('truncate table '+mTab);
-                 end;
               end;
            end;
-           if (Trim(UpperCase(mLinha)) = 'GO') and (Trim(TabCyber.SQL.Text) <> '') then begin
+           if (Trim(UpperCase(mLinha)) = 'GO') and (Trim(mTab) <> '') then begin
               try
-                  TabCyber.Open;
-                  // Limpa a tabela.
-                  if trim(TabLocal.sql.Text) <> '' then begin
-                     TabLocal.execute;
-                  end;
-
-                  TabLocal.sql.clear;
-                  mInsert := 'INSERT INTO '+ mTab + ' (';
-
-                  for i := 0 to Pred(TabCyber.FieldCount) do begin
-                      if i < Pred(TabCyber.FieldCount) then begin
-                         mInsert := mInsert + TabCyber.Fields[i].FieldName+',';
-                      end else begin
-                         mInsert := mInsert + TabCyber.Fields[i].FieldName;
-                      end;
-                  end;
-                  mInsert := mInsert + ') VALUES ';
-                  ProgressBar1.Max      := TabCyber.RecordCount;
-                  ProgressBar1.Position := 0;
-                  ProgressBar1.Visible  := true;
-                  ProgressBar1.Enabled  := true;
-                  
-                  TabLocal.sql.add(mInsert);
-                  TabCyber.first;
-                  r := 1;
-                  while not TabCyber.eof do begin
-                        mValor := '(';
-                        for i := 0 to Pred(TabCyber.FieldCount) do begin
-                            mTipo := TabCyber.FieldByName(TabCyber.Fields[i].FieldName).DataType;
-                            if (mTipo = ftString) or (mTipo = ftDateTime) then begin
-                               if i < Pred(TabCyber.FieldCount) then begin
-                                  mValor := mValor + quotedstr(TabCyber.Fields[i].AsString)+',';
-                               end else begin
-                                  mValor := mValor + quotedstr(TabCyber.Fields[i].AsString)+'),';
-                               end;
-                            end else begin
-                               if mTipo <> ftBoolean then begin
-                                  if i < Pred(TabCyber.FieldCount) then begin
-                                     mValor := mValor + TabCyber.Fields[i].AsString+',';
-                                  end else begin
-                                     mValor := mValor + TabCyber.Fields[i].AsString+'),';
-                                  end;
-                               end else begin
-                                  if i < Pred(TabCyber.FieldCount) then begin
-                                     mValor := mValor + iif(TabCyber.Fields[i].asboolean, '1', '0')+',';
-                                  end else begin
-                                     mValor := mValor + iif(TabCyber.Fields[i].asboolean, '1', '0')+'),';
-                                  end;
-                               end;
-                            end;
-                        end;
-                        TabLocal.sql.add(mValor);
-
-                        TabCyber.next;
-                        inc(r);
-                        if r > 990 then begin
-                           r := 1;
-                           TabLocal.sql.text := Copy(trim(TabLocal.sql.text), 1, length(trim(TabLocal.SQL.text))-1);
-                           TabLocal.sql.text := StringReplace(TabLocal.sql.text, 'False', '0', [rfReplaceAll,rfIgnoreCase]);
-                           TabLocal.sql.text := StringReplace(TabLocal.sql.text, 'True' , '1', [rfReplaceAll,rfIgnoreCase]);
-                           cLog.Lines.add(TabLocal.sql.text);
-                           //TabLocal.sql.SaveToFile('c:\temp\Atualiza_Tabela.sql');
-                           TabLocal.Execute;
-                           TabLocal.sql.clear;
-                           TabLocal.sql.add(mInsert);
-                        end;
-                  end;
-
-                  TabLocal.sql.text := Copy(trim(TabLocal.sql.text), 1, length(trim(TabLocal.SQL.text))-1);
-                  TabLocal.sql.text := StringReplace(TabLocal.sql.text, 'False', '0', [rfReplaceAll,rfIgnoreCase]);
-                  TabLocal.sql.text := StringReplace(TabLocal.sql.text, 'True' , '1', [rfReplaceAll,rfIgnoreCase]);
-                  cLog.Lines.add(TabLocal.sql.text);
-                  TabLocal.sql.SaveToFile('c:\temp\Atualiza_Tabela4.sql');
-                  TabLocal.Execute;
-
-                  TabCyber.Close;
-                  TabLocal.Close;
-                  TabCyber.sql.Clear;
-                  TabLocal.sql.Clear;
+                 ImportaCSV(mPastaLocal+'\Atualizar_Tabelas\', mTab);
               except on E: Exception do
                   begin
                       Memo2.Lines.Add(Trim(tScript.SQL.Text));
@@ -659,7 +485,6 @@ begin
            end;
      end;
      CloseFile(mTexto);
-     ServerCyber.Connected := false;
 
      DeleteFile(mPastaLocal+'\Script_Erros.txt');
      If mErros > 0 then begin
@@ -768,6 +593,11 @@ end;
 procedure TAtualiza_Sistema.bSairClick(Sender: TObject);
 begin
       Close;
+end;
+
+procedure TAtualiza_Sistema.Button1Click(Sender: TObject);
+begin
+    ImportaCSV('C:\Projetos\ERP-Importa\Atualizacao\Atualizar_Tabelas\', 'TabelaNBS');
 end;
 
 procedure TAtualiza_Sistema.FormClose(Sender: TObject;var Action: TCloseAction);
@@ -884,6 +714,68 @@ begin
 
      Screen.Cursor := crDefault;
 end;
+
+procedure TAtualiza_Sistema.ImportaCSV(pCaminho, pArq: string);
+var
+  mCSV: TStringList;
+  Campos
+ ,Dados: TArray<string>;
+  i, c, contador: Integer;
+  s: string;
+  mScript: TMemo;
+begin
+     mCSV    := TStringList.Create;
+     mScript := TMemo.Create(nil);
+     with mScript do begin
+          Visible := false;
+          Parent  := Atualiza_Sistema;
+          Clear;
+     end;
+     try
+       mCSV.LoadFromFile(pCaminho+pArq+'.csv');
+       Campos := mCSV[0].Split([';']); 
+       s := '';
+       for c := 0 to pred(Length(Campos)) do begin
+           s := s + Campos[c] + ',';
+       end;
+       s := copy(s, 1, length(trim(s))-1);
+       mScript.lines.Add('insert into ' + pArq + ' ('+ s + ') values');
+       s := '(';
+       contador := 1;
+       for i := 1 to pred(mCSV.Count) do begin
+           Dados := mCSV[i].Split([';']); 
+           for c := 0 to pred(Length(Campos)) do begin
+               s := s + quotedstr(trim(Dados[c]))+',';
+           end;
+           s := copy(s, 1, length(trim(s))-1)+')';
+           mScript.lines.add(s);
+           s := ',(';
+           inc(contador);
+           if (contador = 990) or (i = pred(mCSV.Count)) then begin
+              with temp do begin
+                   sql.Clear;
+                   sql.Add('use Cybersoft_Cadastros');
+                   sql.Add(mScript.Text);
+                   //sql.SaveToFile('c:\temp\Script_'+inttostr(Contador)+'.sql');
+                   execute;
+              end;
+              mScript.clear;
+              s := '';
+              for c := 0 to pred(Length(Campos)) do begin
+                  s := s + Campos[c] + ',';
+              end;
+              s := copy(s, 1, length(trim(s))-1);
+              mScript.lines.Add('insert into ' + pArq + ' ('+ s + ') values');
+              s := '(';
+              contador := 1;
+           end;
+       end;
+     finally
+       mCSV.Free;
+       mScript.Free;
+     end;
+end;
+
 
 
 

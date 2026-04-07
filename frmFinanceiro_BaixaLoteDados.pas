@@ -791,6 +791,7 @@ begin
            cValorBaixado.Value    := 0;
            cNumeroContrato.Text   := ContratoCambioNumero.AsString;
            cTaxaContrato.Value    := ContratoCambioTaxa_Cambial.AsFloat;
+           cBanco.KeyValue        := ContratoCambioBanco.AsInteger;
 
            cObsTitulo.Lines.Add(Financeiro_BaixaLote.tTitulos.FieldByName('Obs_Titulo').AsString);
 

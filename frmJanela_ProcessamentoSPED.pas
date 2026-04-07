@@ -63,6 +63,7 @@ begin
       Label3.Repaint;
       Label4.Repaint;
       Label6.Repaint;
+      Application.ProcessMessages;
 end;
 
 procedure TJanela_ProcessamentoSPED.FormShow(Sender: TObject);

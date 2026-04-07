@@ -371,6 +371,7 @@ begin
                                     PagarReceberTipo.Value               := ClassificacaoFinanceira.FieldByName('Tipo').AsString;
                                     PagarReceberClassificacao.Value      := tExtrato.FieldByName('Classificacao').AsString;
                                     PagarReceberData_Documento.Value     := tExtrato.FieldByName('Data').AsDateTime;
+                                    PagarReceberData_Previsao.Value      := tExtrato.FieldByName('Data').AsDateTime;
                                     PagarReceberData_Vencimento.Value    := tExtrato.FieldByName('Data').AsDateTime;
                                     PagarReceberMulta.Value              := 0;
                                     PagarReceberJuros.Value              := 0;

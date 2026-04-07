@@ -63,6 +63,10 @@ object Utilitarios_Importar_NFe_Propria: TUtilitarios_Importar_NFe_Propria
     TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = 'Dados da &NF-e'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cDadosNfe: TGroupBox
         Left = 0
         Top = 0
@@ -783,6 +787,10 @@ object Utilitarios_Importar_NFe_Propria: TUtilitarios_Importar_NFe_Propria
     object TabSheet2: TTabSheet
       Caption = '&Emitente'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox1: TGroupBox
         Left = 0
         Top = 0
@@ -1316,6 +1324,10 @@ object Utilitarios_Importar_NFe_Propria: TUtilitarios_Importar_NFe_Propria
     object TabSheet3: TTabSheet
       Caption = '&Destinat'#225'rio'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox2: TGroupBox
         Left = 0
         Top = 0
@@ -1822,6 +1834,10 @@ object Utilitarios_Importar_NFe_Propria: TUtilitarios_Importar_NFe_Propria
     object TabSheet6: TTabSheet
       Caption = '&Transportador'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox5: TGroupBox
         Left = 0
         Top = 0
@@ -2268,6 +2284,10 @@ object Utilitarios_Importar_NFe_Propria: TUtilitarios_Importar_NFe_Propria
     object TabSheet5: TTabSheet
       Caption = '&Totais'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox3: TGroupBox
         Left = 1
         Top = -2
@@ -3390,6 +3410,10 @@ object Utilitarios_Importar_NFe_Propria: TUtilitarios_Importar_NFe_Propria
     object TabSheet4: TTabSheet
       Caption = '&Itens'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GradeItens: TStringGrid
         Left = 1
         Top = 3
@@ -3434,6 +3458,10 @@ object Utilitarios_Importar_NFe_Propria: TUtilitarios_Importar_NFe_Propria
     object TabSheet7: TTabSheet
       Caption = '&Cadastro'
       ImageIndex = 6
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GradeCadastro: TStringGrid
         Left = 0
         Top = 4
@@ -3463,6 +3491,10 @@ object Utilitarios_Importar_NFe_Propria: TUtilitarios_Importar_NFe_Propria
     object TabSheet8: TTabSheet
       Caption = 'Duplicatas'
       ImageIndex = 7
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GradeDupl: TStringGrid
         Left = 2
         Top = 58

@@ -123,7 +123,6 @@ object Pedido_NFS: TPedido_NFS
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
-      ExplicitLeft = 369
     end
     object bItens: TButton
       Left = 240
@@ -164,8 +163,6 @@ object Pedido_NFS: TPedido_NFS
       ParentShowHint = False
       ShowHint = True
       TabOrder = 5
-      OnClick = bXMLClick
-      ExplicitLeft = 470
     end
   end
   object PageControl1: TPageControl
@@ -372,8 +369,8 @@ object Pedido_NFS: TPedido_NFS
           A6A68F8F8FEAEAEA0000}
       end
       object DBText2: TDBText
-        Left = 272
-        Top = 271
+        Left = 289
+        Top = 259
         Width = 147
         Height = 16
         Alignment = taRightJustify
@@ -966,21 +963,23 @@ object Pedido_NFS: TPedido_NFS
     Left = 266
     Top = 251
   end
-  object NFS: TACBrNFSe
+  object ACBrNFSeX1: TACBrNFSeX
     Configuracoes.Geral.SSLLib = libNone
     Configuracoes.Geral.SSLCryptLib = cryNone
     Configuracoes.Geral.SSLHttpLib = httpNone
     Configuracoes.Geral.SSLXmlSignLib = xsNone
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.CodigoMunicipio = 0
-    Configuracoes.Geral.ConsultaLoteAposEnvio = False
-    Configuracoes.Geral.Emitente.DadosSenhaParams = <>
-    Configuracoes.Geral.Resposta = 0
+    Configuracoes.Geral.Provedor = proNenhum
+    Configuracoes.Geral.Versao = ve100
+    Configuracoes.Arquivos.PathSalvar = 'c:\faturamento\'
     Configuracoes.Arquivos.OrdenacaoPath = <>
+    Configuracoes.Arquivos.PathRPS = 'c:\faturamento'
+    Configuracoes.Arquivos.PathNFSe = 'c:\faturamento'
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    Left = 362
+    Left = 326
     Top = 252
   end
 end

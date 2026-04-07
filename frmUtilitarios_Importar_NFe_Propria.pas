@@ -2636,6 +2636,7 @@ begin
                                PagarReceberClassificacao.Value    := TipoNotaClassificacao_Saida.AsString;
                                PagarReceberCentro_Custo.Value     := CentroCustoCodigo.Value;
                                PagarReceberData_Documento.Value   := StrtoDate(cdEmi.Text);
+                               PagarReceberData_Previsao.Value    := DuplicatasData_Vencimento.Value;
                                PagarReceberData_Vencimento.Value  := DuplicatasData_Vencimento.Value;
                                PagarReceberValor_Documento.Value  := cTotal.Value;
                                PagarReceberValor_Parcela.Value    := DuplicatasValor.Value;

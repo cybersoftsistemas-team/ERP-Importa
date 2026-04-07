@@ -646,6 +646,7 @@ begin
                         PagarReceberCusto_Seletivo.Value   := false;
                         PagarReceberCusto_Entrada.Value    := false;
                         PagarReceberData_Documento.Value   := EmprestimosData.Value;
+                        PagarReceberData_Previsao.Value    := EmprestimosData.Value;
                         PagarReceberData_Vencimento.Value  := EmprestimosData.Value;
                         PagarReceberValor_Documento.Value  := EmprestimosValor_Principal.Value;
                         PagarReceberValor_Parcela.Value    := EmprestimosValor_Principal.Value;

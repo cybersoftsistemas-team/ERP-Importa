@@ -3496,10 +3496,6 @@ object Pedido_ItensOutros: TPedido_ItensOutros
     object TabSheet2: TTabSheet
       Caption = 'Produtos'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeProdutos: TDBGrid
         AlignWithMargins = True
         Left = 3

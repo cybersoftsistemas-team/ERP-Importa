@@ -104,6 +104,7 @@ begin
                                 PagarReceberCusto_Entrada.Value    := ClassificacaoFinanceira.FieldByName('Custo_Entrada').AsBoolean;
                                 PagarReceberTransferencia.Value    := ClassificacaoFinanceira.FieldByName('Transferencia').AsBoolean;
                                 PagarReceberData_Documento.Value   := tLancamentos.FieldByName('Vencimento').AsDateTime;
+                                PagarReceberData_Previsao.Value    := tLancamentos.FieldByName('Vencimento').AsDateTime;
                                 PagarReceberData_Vencimento.Value  := tLancamentos.FieldByName('Vencimento').AsDateTime;
                                 PagarReceberDesconto.Value         := 0;
                                 PagarReceberDesconto_Liquidacao.Value := 0;

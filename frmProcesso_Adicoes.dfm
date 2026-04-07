@@ -1362,16 +1362,16 @@ object Processo_Adicoes: TProcesso_Adicoes
     SQL.Strings = (
       'SELECT MAX(Registro) as Registro FROM Adicoes')
     FetchRows = 1
-    Left = 209
-    Top = 486
+    Left = 153
+    Top = 480
   end
   object tCodigoPlano: TMSQuery
     Connection = Dados.Banco_Contabilidade
     SQL.Strings = (
       'SELECT MAX(Codigo) AS Codigo FROM PlanoContas')
     FetchRows = 1
-    Left = 272
-    Top = 487
+    Left = 279
+    Top = 480
     object tCodigoPlanoCodigo: TStringField
       FieldName = 'Codigo'
       ReadOnly = True
@@ -1384,8 +1384,8 @@ object Processo_Adicoes: TProcesso_Adicoes
     SQL.Strings = (
       'SELECT MAX(Conta) AS Conta FROM PlanoContas')
     FetchRows = 1
-    Left = 304
-    Top = 487
+    Left = 346
+    Top = 480
     object tContaPlanoConta: TStringField
       FieldName = 'Conta'
       ReadOnly = True
@@ -1398,8 +1398,8 @@ object Processo_Adicoes: TProcesso_Adicoes
     SQL.Strings = (
       'SELECT MAX(Codigo) AS Codigo FROM Fornecedores')
     FetchRows = 1
-    Left = 240
-    Top = 486
+    Left = 209
+    Top = 480
     object tFornecedorCodigo: TIntegerField
       FieldName = 'Codigo'
       ReadOnly = True
@@ -1438,8 +1438,8 @@ object Processo_Adicoes: TProcesso_Adicoes
     SQL.Strings = (
       'SELECT MAX(Sequencia) AS Sequencia FROM Adicoes')
     FetchRows = 1
-    Left = 337
-    Top = 486
+    Left = 414
+    Top = 480
     object tSequenciaSequencia: TSmallintField
       FieldName = 'Sequencia'
       ReadOnly = True

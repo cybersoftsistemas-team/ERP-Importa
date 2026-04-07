@@ -126,6 +126,7 @@ type
     procedure RxDBComboBox3KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure bPesqCliClick(Sender: TObject);
+    procedure bPesquisaClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -152,6 +153,20 @@ begin
           open;
           Imobilizado.FieldByName('Chave_Nota').Value := FieldByName('NFe_cNF').asstring;
      end;
+end;
+
+procedure TCIAP.bPesquisaClick(Sender: TObject);
+var
+   mPesquisa: string;
+begin
+      with dmFiscal do begin
+           mPesquisa := InputBox('Código Imobilizado', 'Código', mPesquisa);
+           if not Imobilizado.Locate('Codigo', mPesquisa, [loCaseInsensitive]) then begin
+              if not Imobilizado.Locate('Codigo_Sistema', mPesquisa, [loCaseInsensitive, loPartialKey]) then begin
+                 messageDlg('Não encontrado "Imobilizado" ou "Produto" com o código informado"', mtinformation, [mbok], 0);
+              end;
+           end;
+      End;
 end;
 
 procedure TCIAP.bSairClick(Sender: TObject);

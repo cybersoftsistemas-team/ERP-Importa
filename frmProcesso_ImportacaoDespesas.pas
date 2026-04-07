@@ -243,6 +243,7 @@ begin
                                 PagarReceberClassificacao.Value    := tDesp.FieldByName('Classificacao').Value;
                                 PagarReceberFornecedor.Value       := tDesp.FieldByName('Beneficiario').asinteger;
                                 PagarReceberData_Documento.Value   := tDesp.FieldByName('Data_DOC').Value;
+                                PagarReceberData_Previsao.Value    := tDesp.FieldByName('Data_Venc').Value;
                                 PagarReceberData_Vencimento.Value  := tDesp.FieldByName('Data_Venc').Value;
                                 PagarReceberValor_Documento.Value  := tDesp.FieldByName('Valor').Value;
                                 PagarReceberValor_Parcela.Value    := tDesp.FieldByName('Valor').Value;

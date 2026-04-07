@@ -187,17 +187,13 @@ object Financeiro_BoletosGerar: TFinanceiro_BoletosGerar
     Top = 56
     Width = 991
     Height = 458
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     TabHeight = 25
     TabOrder = 1
     TabWidth = 110
     OnChange = PageControl1Change
     object TabSheet1: TTabSheet
       Caption = '&T'#237'tulos'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Grade: TDBGrid
         Left = 0
         Top = 93
@@ -1834,6 +1830,7 @@ object Financeiro_BoletosGerar: TFinanceiro_BoletosGerar
       'where Registro = 239')
     FetchRows = 1
     AfterScroll = tBoletosAfterScroll
+    Active = True
     Left = 329
     Top = 237
     object tBoletosRegistro: TIntegerField
@@ -2151,7 +2148,7 @@ object Financeiro_BoletosGerar: TFinanceiro_BoletosGerar
       FieldName = 'Codigo'
       FieldLength = 0
       DataType = dtInteger
-      DisplayWidth = 0
+      DisplayWidth = 2
       Position = 0
     end
     object pEmpresasppField2: TppField
@@ -3942,161 +3939,161 @@ object Financeiro_BoletosGerar: TFinanceiro_BoletosGerar
       Position = 8
     end
     object pBoletoppField10: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Sacado'
-      FieldName = 'Sacado'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 9
-    end
-    object pBoletoppField11: TppField
       FieldAlias = 'Local_Pagamento'
       FieldName = 'Local_Pagamento'
       FieldLength = 120
       DisplayWidth = 120
+      Position = 9
+    end
+    object pBoletoppField11: TppField
+      FieldAlias = 'Data_Documento'
+      FieldName = 'Data_Documento'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
       Position = 10
     end
     object pBoletoppField12: TppField
-      FieldAlias = 'Data_Documento'
-      FieldName = 'Data_Documento'
+      FieldAlias = 'Data_Credito'
+      FieldName = 'Data_Credito'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
       Position = 11
     end
     object pBoletoppField13: TppField
-      FieldAlias = 'Data_Credito'
-      FieldName = 'Data_Credito'
+      FieldAlias = 'Data_Abatimento'
+      FieldName = 'Data_Abatimento'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
       Position = 12
     end
     object pBoletoppField14: TppField
-      FieldAlias = 'Data_Abatimento'
-      FieldName = 'Data_Abatimento'
+      FieldAlias = 'Data_Desconto'
+      FieldName = 'Data_Desconto'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
       Position = 13
     end
     object pBoletoppField15: TppField
-      FieldAlias = 'Data_Desconto'
-      FieldName = 'Data_Desconto'
+      FieldAlias = 'Data_Juros'
+      FieldName = 'Data_Juros'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
       Position = 14
     end
     object pBoletoppField16: TppField
-      FieldAlias = 'Data_Juros'
-      FieldName = 'Data_Juros'
+      FieldAlias = 'Data_Ocorrencia'
+      FieldName = 'Data_Ocorrencia'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
       Position = 15
     end
     object pBoletoppField17: TppField
-      FieldAlias = 'Data_Ocorrencia'
-      FieldName = 'Data_Ocorrencia'
+      FieldAlias = 'Data_Processamento'
+      FieldName = 'Data_Processamento'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
       Position = 16
     end
     object pBoletoppField18: TppField
-      FieldAlias = 'Data_Processamento'
-      FieldName = 'Data_Processamento'
+      FieldAlias = 'Data_Protesto'
+      FieldName = 'Data_Protesto'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
       Position = 17
     end
     object pBoletoppField19: TppField
-      FieldAlias = 'Data_Protesto'
-      FieldName = 'Data_Protesto'
+      FieldAlias = 'Data_Vencimento'
+      FieldName = 'Data_Vencimento'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
       Position = 18
     end
     object pBoletoppField20: TppField
-      FieldAlias = 'Data_Vencimento'
-      FieldName = 'Data_Vencimento'
+      FieldAlias = 'Data_Baixa'
+      FieldName = 'Data_Baixa'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
       Position = 19
     end
     object pBoletoppField21: TppField
-      FieldAlias = 'Data_Baixa'
-      FieldName = 'Data_Baixa'
+      FieldAlias = 'Valor_Documento'
+      FieldName = 'Valor_Documento'
       FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
+      DataType = dtCurrency
+      DisplayWidth = 10
       Position = 20
     end
     object pBoletoppField22: TppField
-      FieldAlias = 'Valor_Documento'
-      FieldName = 'Valor_Documento'
+      FieldAlias = 'Valor_Abatimento'
+      FieldName = 'Valor_Abatimento'
       FieldLength = 0
       DataType = dtCurrency
       DisplayWidth = 10
       Position = 21
     end
     object pBoletoppField23: TppField
-      FieldAlias = 'Valor_Abatimento'
-      FieldName = 'Valor_Abatimento'
+      FieldAlias = 'Valor_Desconto'
+      FieldName = 'Valor_Desconto'
       FieldLength = 0
       DataType = dtCurrency
       DisplayWidth = 10
       Position = 22
     end
     object pBoletoppField24: TppField
-      FieldAlias = 'Valor_Desconto'
-      FieldName = 'Valor_Desconto'
+      FieldAlias = 'Valor_Juros'
+      FieldName = 'Valor_Juros'
       FieldLength = 0
       DataType = dtCurrency
       DisplayWidth = 10
       Position = 23
     end
     object pBoletoppField25: TppField
-      FieldAlias = 'Valor_Juros'
-      FieldName = 'Valor_Juros'
-      FieldLength = 0
-      DataType = dtCurrency
-      DisplayWidth = 10
-      Position = 24
-    end
-    object pBoletoppField26: TppField
       FieldAlias = 'Instrucoes'
       FieldName = 'Instrucoes'
       FieldLength = 0
       DataType = dtMemo
       DisplayWidth = 10
-      Position = 25
+      Position = 24
       Searchable = False
       Sortable = False
     end
-    object pBoletoppField27: TppField
+    object pBoletoppField26: TppField
       FieldAlias = 'Linha_Digitavel'
       FieldName = 'Linha_Digitavel'
+      FieldLength = 60
+      DisplayWidth = 60
+      Position = 25
+    end
+    object pBoletoppField27: TppField
+      FieldAlias = 'Codigo_Barra'
+      FieldName = 'Codigo_Barra'
       FieldLength = 60
       DisplayWidth = 60
       Position = 26
     end
     object pBoletoppField28: TppField
-      FieldAlias = 'Codigo_Barra'
-      FieldName = 'Codigo_Barra'
-      FieldLength = 60
-      DisplayWidth = 60
+      Alignment = taRightJustify
+      FieldAlias = 'Financeiro_Numero'
+      FieldName = 'Financeiro_Numero'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
       Position = 27
     end
     object pBoletoppField29: TppField
       Alignment = taRightJustify
-      FieldAlias = 'Financeiro_Numero'
-      FieldName = 'Financeiro_Numero'
+      FieldAlias = 'Banco_Numero'
+      FieldName = 'Banco_Numero'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
@@ -4104,289 +4101,289 @@ object Financeiro_BoletosGerar: TFinanceiro_BoletosGerar
     end
     object pBoletoppField30: TppField
       Alignment = taRightJustify
-      FieldAlias = 'Banco_Numero'
-      FieldName = 'Banco_Numero'
+      FieldAlias = 'Numero_Remessa'
+      FieldName = 'Numero_Remessa'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
       Position = 29
     end
     object pBoletoppField31: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Numero_Remessa'
-      FieldName = 'Numero_Remessa'
+      FieldAlias = 'Data_Emissao'
+      FieldName = 'Data_Emissao'
       FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
+      DataType = dtDateTime
+      DisplayWidth = 18
       Position = 30
     end
     object pBoletoppField32: TppField
-      FieldAlias = 'Data_Emissao'
-      FieldName = 'Data_Emissao'
+      FieldAlias = 'Data_Retorno'
+      FieldName = 'Data_Retorno'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
       Position = 31
     end
     object pBoletoppField33: TppField
-      FieldAlias = 'Data_Retorno'
-      FieldName = 'Data_Retorno'
-      FieldLength = 0
-      DataType = dtDateTime
-      DisplayWidth = 18
-      Position = 32
-    end
-    object pBoletoppField34: TppField
       FieldAlias = 'Retorno'
       FieldName = 'Retorno'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 33
+      Position = 32
     end
-    object pBoletoppField35: TppField
+    object pBoletoppField34: TppField
       Alignment = taRightJustify
       FieldAlias = 'Percentual_Juros'
       FieldName = 'Percentual_Juros'
       FieldLength = 0
       DataType = dtDouble
       DisplayWidth = 10
-      Position = 34
+      Position = 33
     end
-    object pBoletoppField36: TppField
+    object pBoletoppField35: TppField
       FieldAlias = 'Cancelado'
       FieldName = 'Cancelado'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 1
-      Position = 35
+      Position = 34
     end
-    object pBoletoppField37: TppField
+    object pBoletoppField36: TppField
       FieldAlias = 'Beneficiario'
       FieldName = 'Beneficiario'
       FieldLength = 50
       DisplayWidth = 50
-      Position = 36
+      Position = 35
     end
-    object pBoletoppField38: TppField
+    object pBoletoppField37: TppField
       FieldAlias = 'Nome'
       FieldName = 'Nome'
       FieldLength = 30
       DisplayWidth = 30
-      Position = 37
+      Position = 36
     end
-    object pBoletoppField39: TppField
+    object pBoletoppField38: TppField
       Alignment = taRightJustify
       FieldAlias = 'Imagem'
       FieldName = 'Imagem'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 38
+      Position = 37
     end
-    object pBoletoppField40: TppField
+    object pBoletoppField39: TppField
       FieldAlias = 'Cliente_Rua'
       FieldName = 'Cliente_Rua'
       FieldLength = 40
       DisplayWidth = 40
-      Position = 39
+      Position = 38
     end
-    object pBoletoppField41: TppField
+    object pBoletoppField40: TppField
       FieldAlias = 'Cliente_Numero'
       FieldName = 'Cliente_Numero'
       FieldLength = 10
       DisplayWidth = 10
-      Position = 40
+      Position = 39
     end
-    object pBoletoppField42: TppField
+    object pBoletoppField41: TppField
       FieldAlias = 'Cliente_Complemento'
       FieldName = 'Cliente_Complemento'
       FieldLength = 20
       DisplayWidth = 20
-      Position = 41
+      Position = 40
     end
-    object pBoletoppField43: TppField
+    object pBoletoppField42: TppField
       FieldAlias = 'Cliente_Bairro'
       FieldName = 'Cliente_Bairro'
       FieldLength = 40
       DisplayWidth = 40
-      Position = 42
+      Position = 41
     end
-    object pBoletoppField44: TppField
+    object pBoletoppField43: TppField
       FieldAlias = 'Cliente_Municipio'
       FieldName = 'Cliente_Municipio'
       FieldLength = 60
       DisplayWidth = 60
-      Position = 43
+      Position = 42
     end
-    object pBoletoppField45: TppField
+    object pBoletoppField44: TppField
       FieldAlias = 'Cliente_CEP'
       FieldName = 'Cliente_CEP'
       FieldLength = 8
       DisplayWidth = 8
-      Position = 44
+      Position = 43
     end
-    object pBoletoppField46: TppField
+    object pBoletoppField45: TppField
       FieldAlias = 'Cliente_Estado'
       FieldName = 'Cliente_Estado'
       FieldLength = 2
       DisplayWidth = 2
-      Position = 45
+      Position = 44
     end
-    object pBoletoppField47: TppField
+    object pBoletoppField46: TppField
       FieldAlias = 'Cliente_CNPJ'
       FieldName = 'Cliente_CNPJ'
       FieldLength = 14
       DisplayWidth = 14
-      Position = 46
+      Position = 45
     end
-    object pBoletoppField48: TppField
+    object pBoletoppField47: TppField
       FieldAlias = 'Cliente_Email'
       FieldName = 'Cliente_Email'
       FieldLength = 60
       DisplayWidth = 60
+      Position = 46
+    end
+    object pBoletoppField48: TppField
+      FieldAlias = 'Valor_MultaVencimento'
+      FieldName = 'Valor_MultaVencimento'
+      FieldLength = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
       Position = 47
     end
     object pBoletoppField49: TppField
-      FieldAlias = 'Valor_MultaVencimento'
-      FieldName = 'Valor_MultaVencimento'
+      FieldAlias = 'Valor_JurosDia'
+      FieldName = 'Valor_JurosDia'
       FieldLength = 0
       DataType = dtCurrency
       DisplayWidth = 10
       Position = 48
     end
     object pBoletoppField50: TppField
-      FieldAlias = 'Valor_JurosDia'
-      FieldName = 'Valor_JurosDia'
+      FieldAlias = 'Percentual_Multa'
+      FieldName = 'Percentual_Multa'
       FieldLength = 0
       DataType = dtCurrency
       DisplayWidth = 10
       Position = 49
     end
     object pBoletoppField51: TppField
-      FieldAlias = 'Percentual_Multa'
-      FieldName = 'Percentual_Multa'
-      FieldLength = 0
-      DataType = dtCurrency
-      DisplayWidth = 10
-      Position = 50
-    end
-    object pBoletoppField52: TppField
       FieldAlias = 'Data_Remessa'
       FieldName = 'Data_Remessa'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
-      Position = 51
+      Position = 50
     end
-    object pBoletoppField53: TppField
+    object pBoletoppField52: TppField
       FieldAlias = 'Cliente_EmailCopia'
       FieldName = 'Cliente_EmailCopia'
       FieldLength = 500
       DisplayWidth = 500
-      Position = 52
+      Position = 51
     end
-    object pBoletoppField54: TppField
+    object pBoletoppField53: TppField
       FieldAlias = 'Especie_Codigo'
       FieldName = 'Especie_Codigo'
       FieldLength = 2
       DisplayWidth = 2
-      Position = 53
+      Position = 52
     end
-    object pBoletoppField55: TppField
+    object pBoletoppField54: TppField
       Alignment = taRightJustify
       FieldAlias = 'Codigo_Instrucao'
       FieldName = 'Codigo_Instrucao'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 54
+      Position = 53
     end
-    object pBoletoppField56: TppField
+    object pBoletoppField55: TppField
       FieldAlias = 'Numero_Documento2'
       FieldName = 'Numero_Documento2'
       FieldLength = 15
       DisplayWidth = 15
-      Position = 55
+      Position = 54
     end
-    object pBoletoppField57: TppField
+    object pBoletoppField56: TppField
       FieldAlias = 'Seleciona'
       FieldName = 'Seleciona'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 56
+      Position = 55
     end
-    object pBoletoppField58: TppField
+    object pBoletoppField57: TppField
       FieldAlias = 'Ocorrencia'
       FieldName = 'Ocorrencia'
       FieldLength = 80
       DisplayWidth = 80
-      Position = 57
+      Position = 56
     end
-    object pBoletoppField59: TppField
+    object pBoletoppField58: TppField
       FieldAlias = 'Data_Multa'
       FieldName = 'Data_Multa'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
-      Position = 58
+      Position = 57
     end
-    object pBoletoppField60: TppField
+    object pBoletoppField59: TppField
       FieldAlias = 'Pessoa'
       FieldName = 'Pessoa'
       FieldLength = 1
       DisplayWidth = 1
-      Position = 59
+      Position = 58
     end
-    object pBoletoppField61: TppField
+    object pBoletoppField60: TppField
       FieldAlias = 'Pedido'
       FieldName = 'Pedido'
       FieldLength = 15
       DisplayWidth = 15
-      Position = 60
+      Position = 59
     end
-    object pBoletoppField62: TppField
+    object pBoletoppField61: TppField
       FieldAlias = 'Valor_Multa'
       FieldName = 'Valor_Multa'
       FieldLength = 0
       DataType = dtCurrency
       DisplayWidth = 10
-      Position = 61
+      Position = 60
     end
-    object pBoletoppField63: TppField
+    object pBoletoppField62: TppField
       Alignment = taRightJustify
       FieldAlias = 'Numero_Envio'
       FieldName = 'Numero_Envio'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 62
+      Position = 61
     end
-    object pBoletoppField64: TppField
+    object pBoletoppField63: TppField
       FieldAlias = 'Email_Enviado'
       FieldName = 'Email_Enviado'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 1
-      Position = 63
+      Position = 62
     end
-    object pBoletoppField65: TppField
+    object pBoletoppField64: TppField
       FieldAlias = 'Chave_PIX'
       FieldName = 'Chave_PIX'
       FieldLength = 60
       DisplayWidth = 60
-      Position = 64
+      Position = 63
     end
-    object pBoletoppField66: TppField
+    object pBoletoppField65: TppField
       FieldAlias = 'QRCode'
       FieldName = 'QRCode'
       FieldLength = 0
       DataType = dtMemo
       DisplayWidth = 10
-      Position = 65
+      Position = 64
       Searchable = False
       Sortable = False
+    end
+    object pBoletoppField66: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Sacado'
+      FieldName = 'Sacado'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 65
     end
   end
   object rBoleto: TppReport
@@ -5654,10 +5651,10 @@ object Financeiro_BoletosGerar: TFinanceiro_BoletosGerar
         ParentDataPipeline = False
         Transparent = True
         DataPipelineName = 'pBoleto'
-        mmHeight = 2921
-        mmLeft = 3439
-        mmTop = 47361
-        mmWidth = 135466
+        mmHeight = 2910
+        mmLeft = 135202
+        mmTop = -6085
+        mmWidth = 135467
         BandType = 4
         LayerName = Foreground
       end
@@ -7021,8 +7018,8 @@ object Financeiro_BoletosGerar: TFinanceiro_BoletosGerar
         Transparent = True
         DataPipelineName = 'pBoleto'
         mmHeight = 3969
-        mmLeft = 150284
-        mmTop = 88900
+        mmLeft = 90752
+        mmTop = 24705
         mmWidth = 15346
         BandType = 4
         LayerName = Foreground
@@ -7517,160 +7514,5 @@ object Financeiro_BoletosGerar: TFinanceiro_BoletosGerar
     Connection = Dados.Banco_Empresas
     Left = 95
     Top = 333
-  end
-  object QR: TppReport
-    AutoStop = False
-    DataPipeline = pBoleto
-    PrinterSetup.BinName = 'Default'
-    PrinterSetup.DocumentName = 'Boleto'
-    PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
-    PrinterSetup.PrinterName = 'Default'
-    PrinterSetup.SaveDeviceSettings = False
-    PrinterSetup.mmMarginBottom = 6350
-    PrinterSetup.mmMarginLeft = 6350
-    PrinterSetup.mmMarginRight = 6350
-    PrinterSetup.mmMarginTop = 6350
-    PrinterSetup.mmPaperHeight = 297000
-    PrinterSetup.mmPaperWidth = 210000
-    PrinterSetup.PaperSize = 9
-    ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
-    BeforePrint = rBoletoBeforePrint
-    DeviceType = 'Screen'
-    DefaultFileDeviceType = 'PDF'
-    EmailSettings.ReportFormat = 'PDF'
-    LanguageID = 'Portuguese (Brazil)'
-    OpenFile = False
-    OutlineSettings.CreateNode = False
-    OutlineSettings.CreatePageNodes = False
-    OutlineSettings.Enabled = False
-    OutlineSettings.Visible = False
-    ThumbnailSettings.Enabled = True
-    ThumbnailSettings.Visible = False
-    ThumbnailSettings.DeadSpace = 30
-    ThumbnailSettings.PageHighlight.Width = 3
-    PDFSettings.EmbedFontOptions = []
-    PDFSettings.EncryptSettings.AllowCopy = True
-    PDFSettings.EncryptSettings.AllowInteract = True
-    PDFSettings.EncryptSettings.AllowModify = True
-    PDFSettings.EncryptSettings.AllowPrint = True
-    PDFSettings.EncryptSettings.AllowExtract = True
-    PDFSettings.EncryptSettings.AllowAssemble = True
-    PDFSettings.EncryptSettings.AllowQualityPrint = True
-    PDFSettings.EncryptSettings.Enabled = False
-    PDFSettings.EncryptSettings.KeyLength = kl40Bit
-    PDFSettings.EncryptSettings.EncryptionType = etRC4
-    PDFSettings.FontEncoding = feAnsi
-    PDFSettings.ImageCompressionLevel = 25
-    PDFSettings.PDFAFormat = pafNone
-    PreviewFormSettings.PageBorder.mmPadding = 0
-    PreviewFormSettings.WindowState = wsMaximized
-    PreviewFormSettings.ZoomSetting = zs100Percent
-    RTFSettings.DefaultFont.Charset = DEFAULT_CHARSET
-    RTFSettings.DefaultFont.Color = clWindowText
-    RTFSettings.DefaultFont.Height = -13
-    RTFSettings.DefaultFont.Name = 'Arial'
-    RTFSettings.DefaultFont.Style = []
-    TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<FindText>'
-    TextSearchSettings.Enabled = True
-    XLSSettings.AppName = 'ReportBuilder'
-    XLSSettings.Author = 'ReportBuilder'
-    XLSSettings.Subject = 'Report'
-    XLSSettings.Title = 'Report'
-    XLSSettings.WorksheetName = 'Report'
-    Left = 611
-    Top = 329
-    Version = '19.04'
-    mmColumnWidth = 0
-    DataPipelineName = 'pBoleto'
-    object ppDetailBand2: TppDetailBand
-      BeforePrint = ppDetailBand1BeforePrint
-      Background1.Brush.Style = bsClear
-      Background2.Brush.Style = bsClear
-      Border.mmPadding = 0
-      mmBottomOffset = 0
-      mmHeight = 243946
-      mmPrintPosition = 0
-      object pQRCode: Tpp2DBarCode
-        DesignLayer = ppDesignLayer2
-        UserName = 'TwoDBarCode1'
-        AlignBarcode = ahCenter
-        Alignment = taCenter
-        AutoScale = True
-        AutoSize = False
-        Border.mmPadding = 0
-        Color = clBlack
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Courier New'
-        Font.Size = 8
-        Font.Style = []
-        Transparent = True
-        BarCodeType = bcQRCode
-        Data = 
-          '00020126360014 br.gov.bcb.pix0114 101427850001905204000053039865' +
-          '40550.005802BR5916MM202211091024596009Sao Pau1o62250521mpqrinter' +
-          '1332416003126304DFE7'
-        PrintHumanReadable = False
-        MaxiCodeSettings.CarrierPostalCode = '000000000'
-        MaxiCodeSettings.HorPixelsPerMM = 4.000000000000000000
-        MaxiCodeSettings.VerPixelsPerMM = 4.000000000000000000
-        MaxiCodeSettings.mmBarHeight = 1059
-        MaxiCodeSettings.mmBarWidth = 1059
-        MaxiCodeSettings.mmQuietZone = 2118
-        PDF417Settings.RelativeBarHeight = True
-        PDF417Settings.mmBarHeight = 2118
-        PDF417Settings.mmBarWidth = 530
-        PDF417Settings.mmQuietZone = 2118
-        QRCodeSettings.mmModuleSize = 1059
-        QRCodeSettings.mmQuietZone = 1059
-        QRCodeSettings.ECICode = -1
-        DataMatrixSettings.Square = True
-        DataMatrixSettings.mmModuleSize = 1059
-        DataMatrixSettings.mmQuietZone = 1059
-        AztecCodeSettings.mmModuleSize = 1600
-        mmHeight = 24077
-        mmLeft = 76729
-        mmTop = 13229
-        mmWidth = 24342
-        BandType = 4
-        LayerName = Foreground1
-      end
-      object pMemoQR: TppMemo
-        DesignLayer = ppDesignLayer2
-        UserName = 'pMemoQR'
-        Border.mmPadding = 0
-        Caption = 'pMemoQR'
-        CharWrap = False
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlack
-        Font.Name = 'Courier New'
-        Font.Size = 8
-        Font.Style = []
-        RemoveEmptyLines = False
-        Transparent = True
-        mmHeight = 37571
-        mmLeft = 25400
-        mmTop = 83079
-        mmWidth = 144727
-        BandType = 4
-        LayerName = Foreground1
-        mmBottomOffset = 0
-        mmOverFlowOffset = 0
-        mmStopPosition = 0
-        mmMinHeight = 0
-        mmLeading = 0
-      end
-    end
-    object ppDesignLayers2: TppDesignLayers
-      object ppDesignLayer2: TppDesignLayer
-        UserName = 'Foreground1'
-        LayerType = ltBanded
-        Index = 0
-      end
-    end
-    object ppParameterList2: TppParameterList
-    end
   end
 end

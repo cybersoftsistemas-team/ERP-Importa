@@ -1638,7 +1638,7 @@ object Financeiro_BoletoLote: TFinanceiro_BoletoLote
       FieldName = 'Codigo'
       FieldLength = 0
       DataType = dtInteger
-      DisplayWidth = 2
+      DisplayWidth = 0
       Position = 0
     end
     object pEmpresasppField2: TppField
@@ -4149,7 +4149,7 @@ object Financeiro_BoletoLote: TFinanceiro_BoletoLote
         UserName = 'Line19'
         Border.mmPadding = 0
         Pen.Width = 0
-        mmHeight = 3969
+        mmHeight = 1499
         mmLeft = 3439
         mmTop = 85725
         mmWidth = 192617
@@ -4606,9 +4606,9 @@ object Financeiro_BoletoLote: TFinanceiro_BoletoLote
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         Transparent = True
-        mmHeight = 2879
-        mmLeft = 3439
-        mmTop = 44186
+        mmHeight = 2910
+        mmLeft = 5556
+        mmTop = 64558
         mmWidth = 133879
         BandType = 4
         LayerName = Foreground
@@ -6440,7 +6440,6 @@ object Financeiro_BoletoLote: TFinanceiro_BoletoLote
         Font.Size = 7
         Font.Style = []
         Transparent = True
-        Visible = False
         BarCodeType = bcQRCode
         DataPipeline = pBoleto
         DataField = 'QRCode'

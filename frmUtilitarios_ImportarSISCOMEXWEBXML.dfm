@@ -244,6 +244,10 @@ object Utilitarios_ImportarSISCOMEXWEBXML: TUtilitarios_ImportarSISCOMEXWEBXML
     TabOrder = 2
     object TabSheet6: TTabSheet
       Caption = '&Processo'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel3: TPanel
         AlignWithMargins = True
         Left = 1
@@ -1272,6 +1276,10 @@ object Utilitarios_ImportarSISCOMEXWEBXML: TUtilitarios_ImportarSISCOMEXWEBXML
     end
     object TabSheet1: TTabSheet
       Caption = 'Dados da &DI'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cSituacao: TEdit
         Left = 132
         Top = 1
@@ -4101,6 +4109,10 @@ object Utilitarios_ImportarSISCOMEXWEBXML: TUtilitarios_ImportarSISCOMEXWEBXML
     object TabSheet4: TTabSheet
       Caption = '&Mercadorias'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       DesignSize = (
         978
         558)
@@ -4542,6 +4554,10 @@ object Utilitarios_ImportarSISCOMEXWEBXML: TUtilitarios_ImportarSISCOMEXWEBXML
     object TabSheet5: TTabSheet
       Caption = 'D&umping'
       ImageIndex = 4
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cDumping: TCheckListBox
         Left = 0
         Top = 0
@@ -4812,6 +4828,10 @@ object Utilitarios_ImportarSISCOMEXWEBXML: TUtilitarios_ImportarSISCOMEXWEBXML
     object TabSheet14: TTabSheet
       Caption = 'CAME&X'
       ImageIndex = 13
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cCAMEX: TCheckListBox
         Left = 0
         Top = 0
@@ -5082,6 +5102,10 @@ object Utilitarios_ImportarSISCOMEXWEBXML: TUtilitarios_ImportarSISCOMEXWEBXML
     object TabSheet3: TTabSheet
       Caption = 'Inf.&Complem.'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cComplemento: TMemo
         Left = 0
         Top = 0
@@ -5104,6 +5128,10 @@ object Utilitarios_ImportarSISCOMEXWEBXML: TUtilitarios_ImportarSISCOMEXWEBXML
     object TabSheet2: TTabSheet
       Caption = '&Fornec./Fabric.'
       ImageIndex = 5
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cFabricantes: TCheckListBox
         Left = 0
         Top = 312

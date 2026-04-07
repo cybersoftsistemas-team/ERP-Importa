@@ -269,6 +269,9 @@ type
     DBEdit3: TDBEdit;
     bFiliais: TButton;
     DBCheckBox38: TDBCheckBox;
+    StaticText45: TStaticText;
+    DBLookupComboBox22: TDBLookupComboBox;
+    DBEdit9: TDBEdit;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);

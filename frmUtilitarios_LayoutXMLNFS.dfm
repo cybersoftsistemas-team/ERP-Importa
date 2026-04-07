@@ -114,7 +114,7 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
     Left = 6
     Top = 51
     Width = 1387
-    Height = 73
+    Height = 71
     Margins.Left = 6
     Margins.Top = 6
     Margins.Right = 6
@@ -164,8 +164,8 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
       OnChange = cArquivoChange
     end
     object StaticText3: TStaticText
-      Left = 1051
-      Top = 14
+      Left = 560
+      Top = 39
       Width = 80
       Height = 23
       Alignment = taCenter
@@ -188,15 +188,15 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
       StyleElements = []
     end
     object Edit1: TEdit
-      Left = 1132
-      Top = 14
+      Left = 641
+      Top = 39
       Width = 69
       Height = 21
       TabOrder = 3
     end
     object StaticText4: TStaticText
-      Left = 1203
-      Top = 14
+      Left = 712
+      Top = 39
       Width = 80
       Height = 23
       Alignment = taCenter
@@ -219,8 +219,8 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
       StyleElements = []
     end
     object Edit2: TEdit
-      Left = 1284
-      Top = 14
+      Left = 793
+      Top = 39
       Width = 69
       Height = 21
       TabOrder = 5
@@ -265,6 +265,7 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
       ListSource = dsMuni
       ParentFont = False
       TabOrder = 7
+      OnClick = cMunClick
       OnExit = cMunExit
     end
     object StaticText5: TStaticText
@@ -306,6 +307,20 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
       TabOrder = 9
       OnChange = cCodmunChange
     end
+    object cEmissao: TRadioGroup
+      Left = 1072
+      Top = 13
+      Width = 208
+      Height = 43
+      Caption = 'Emiss'#227'o'
+      Columns = 2
+      ItemIndex = 0
+      Items.Strings = (
+        'Pr'#243'pria'
+        'Terceiros')
+      TabOrder = 10
+      OnClick = cEmissaoClick
+    end
   end
   object PageControl1: TPageControl
     AlignWithMargins = True
@@ -317,16 +332,12 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
     Margins.Top = 6
     Margins.Right = 6
     Margins.Bottom = 6
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     Align = alBottom
     TabHeight = 25
     TabOrder = 2
     object TabSheet1: TTabSheet
       Caption = 'Layout NFS'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Splitter1: TSplitter
         AlignWithMargins = True
         Left = 579
@@ -348,7 +359,7 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
         Height = 568
         Align = alLeft
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = 2365440
+        Font.Color = 14117632
         Font.Height = -11
         Font.Name = 'JetBrains Mono'
         Font.Style = []
@@ -511,10 +522,6 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
     object TabSheet2: TTabSheet
       Caption = 'Dados ds NFS'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cDados: TMemo
         Left = 0
         Top = 0

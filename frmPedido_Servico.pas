@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,Dialogs, Vcl.ComCtrls, RXCtrls, Vcl.ExtCtrls, Vcl.StdCtrls, DBCtrls, RXDBCtrl, Mask,
-  Buttons, DB, FUNCOES, DBAccess, MSAccess, ClipBrd, DateUtils, Menus, system.UITypes, Grids, DBGrids, RxCurrEdit, MemDS, RxToolEdit, Xml.xmldom, Xml.XMLIntf, Xml.Win.msxmldom, Xml.XMLDoc, ACBrBase, ACBrDFe, ACBrNFSe, ACBrNFSeX;
+  Buttons, DB, FUNCOES, DBAccess, MSAccess, ClipBrd, DateUtils, Menus, system.UITypes, Grids, DBGrids, RxCurrEdit, MemDS, RxToolEdit, Xml.xmldom, Xml.XMLIntf, Xml.Win.msxmldom, Xml.XMLDoc, ACBrBase, ACBrDFe, ACBrNFSeX;
 
 type
   TPedido_Servico = class(TForm)
@@ -957,6 +957,7 @@ begin
                                    PagarReceberClassificacao.Value    := ReferenciasFiscaisClassificacao_TotalNota.Value;
                                    PagarReceberCentro_Custo.Value     := NotasServicoCentro_Custo.Value;
                                    PagarReceberData_Documento.Value   := NotasServicoData_Emissao.Value;
+                                   PagarReceberData_Previsao.Value    := PedidoServicoParcelasVencimento.Value;
                                    PagarReceberData_Vencimento.Value  := PedidoServicoParcelasVencimento.Value;
                                    PagarReceberValor_Documento.Value  := NotasServicoTotal_Nota.Value;
                                    PagarReceberValor_Parcela.Value    := PedidoServicoParcelasValor.Value;
@@ -1008,6 +1009,7 @@ begin
                              PagarReceberClassificacao.Value    := ImpostosClassificacao_Financeira.Value;
                              PagarReceberCentro_Custo.Value     := NotasServicoCentro_Custo.Value;
                              PagarReceberData_Documento.Value   := cDataEmissao.Date;
+                             PagarReceberData_Previsao.Value    := mVencISS;
                              PagarReceberData_Vencimento.Value  := mVencISS;
                              PagarReceberValor_Documento.Value  := PedidoServicoValor_ISS.Value;
                              PagarReceberValor_Parcela.Value    := PedidoServicoValor_ISS.Value;

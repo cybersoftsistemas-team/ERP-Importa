@@ -143,8 +143,8 @@ end;
 
 procedure TCadastro_ProdutosSeriais.NavegaBeforeAction(Sender: TObject;Button: TNavigateBtn);
 begin
-      With Dados do begin
-           If (Button = nbPost) and (ProdutosSeriais.State = dsInsert) then begin
+      with Dados do begin
+           if (Button = nbPost) and (ProdutosSeriais.State = dsInsert) then begin
              {
               tSeriais.SQL.Clear;
               tSeriais.SQl.Add('SELECT *');
@@ -205,8 +205,8 @@ begin
                                    ProdutosSeriaisNotasSaida_Entrada.Value  := 0;
                                    ProdutosSeriaisNotasEmissor.Value        := Copy(cEmissor.Text, 1, 1);
               ProdutosSeriaisNotas.Post;
-           End;
-      End;
+           end;
+      end;
 end;
 
 procedure TCadastro_ProdutosSeriais.StaticText2Click(Sender: TObject);

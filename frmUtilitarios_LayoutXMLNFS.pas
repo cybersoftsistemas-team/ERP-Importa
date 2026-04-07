@@ -47,6 +47,7 @@ type
     gCampos: TStringGrid;
     Splitter1: TSplitter;
     cDados: TMemo;
+    cEmissao: TRadioGroup;
     procedure FormCreate(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -58,6 +59,8 @@ type
     procedure bLimparClick(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
     procedure bImportarClick(Sender: TObject);
+    procedure cEmissaoClick(Sender: TObject);
+    procedure cMunClick(Sender: TObject);
   private
     procedure GeraTree(XMLNode: IXMLNode; TreeNode: TTreeNode);
     procedure PegaNo;
@@ -96,8 +99,8 @@ end;
 
 procedure TUtilitarios_LayOutXMLNFS.bImportarClick(Sender: TObject);
 begin
-    PageControl1.ActivePageIndex := 1;
-    CarregaDados;
+     PageControl1.ActivePageIndex := 1;
+     CarregaDados;
 end;
 
 procedure TUtilitarios_LayOutXMLNFS.CarregaDados;
@@ -118,12 +121,20 @@ begin
                     inc(MaxNivel);
               end;
               dec(MaxNivel);
-              Filho := Pai;
-              for Nivel := 3 to MaxNivel do begin
-                  Filho := Filho.ChildNodes.FindNode(gCampos.cells[Nivel, l]);
+              try
+                 Filho := Pai;
+                 for Nivel := 3 to MaxNivel do begin
+                     Filho := Filho.ChildNodes.FindNode(gCampos.cells[Nivel, l]);
+                 end;
+                 if Filho <> nil then begin
+                    mVal := Filho.Text;
+                    cDados.lines.add( concat(gCampos.cells[0, l], StringOfChar('.',25-Length(gCampos.cells[0, l])), gCampos.cells[MaxNivel,l], StringOfChar('.',25-Length(gCampos.cells[maxnivel, l])),': ', mval) );
+                 end;
+              except 
+                 cDados.lines.add(StringOfChar('-',110));
+                 cDados.lines.add(concat(gCampos.cells[0, l], StringOfChar('.',25-Length(gCampos.cells[0, l])), gCampos.cells[MaxNivel,l], StringOfChar('.',25-Length(gCampos.cells[maxnivel, l])),': ', '*************************[ ERRO ]*************************') );
+//                 cDados.lines.add(StringOfChar('-',110));
               end;
-              mVal := Filho.Text;
-              cDados.lines.add( concat(gCampos.cells[0, l], StringOfChar('.',25-Length(gCampos.cells[0, l])), gCampos.cells[MaxNivel,l], StringOfChar('.',25-Length(gCampos.cells[maxnivel, l])),': ', mval) );
           end;
      end;
 end;
@@ -156,14 +167,18 @@ end;
 
 procedure TUtilitarios_LayOutXMLNFS.CarregaMenu;
 var
-   NovoItem  : TMenuItem;
-   Lista     : TListBox;
+   NovoItem: TMenuItem;
+   Lista: TListBox;
    MenuCampos: TPopUpMenu;
    i, f, mQuebra: Integer;
 begin
      with Temp do begin
           sql.Clear;
-          sql.Add('select top 1 * from NotasTerceiros');
+          if cEmissao.ItemIndex = 0 then begin 
+             sql.Add('select top 1 * from NotasServico');
+          end else begin
+             sql.Add('select top 1 * from NotasTerceiros');
+          end;
           Open;
      end;
      MenuCampos           := TPopUpMenu.Create(Utilitarios_LayOutXMLNFS);
@@ -201,23 +216,41 @@ begin
          MenuCampos.Items.Items[i].OnClick := CapturaClick;
 
          Inc(mQuebra);
-         if mQuebra = 25 then begin
+         if mQuebra = 30 then begin
             mQuebra := 0;
             NovoItem.Break := mbBreak;
          end;
      end;
 
+     // Pegando os nomes dos campos da tabela de Clientes.
+     if cEmissao.ItemIndex = 0 then begin 
+        with Temp do begin
+             sql.Clear;
+             sql.Add('select top 1 * from Clientes');
+             Open;
+        end;
+        Lista.Clear;
+        for f := 0 to Temp.FieldCount-1 do begin
+            if (pos('Referencias', Temp.Fields[f].FieldName) = 0) and (pos('Desconto', Temp.Fields[f].FieldName) = 0) and (pos('Avalista', Temp.Fields[f].FieldName) = 0) 
+               and (pos('Entrega', Temp.Fields[f].FieldName) = 0) and (pos('Retirada', Temp.Fields[f].FieldName) = 0) and (pos('Trabalho', Temp.Fields[f].FieldName) = 0)
+               and (pos('Cobranca', Temp.Fields[f].FieldName) = 0) and (pos('Vencimento', Temp.Fields[f].FieldName) = 0) then begin
+               Lista.Items.Add('_Cli_'+Temp.Fields[f].FieldName);
+            end;
+        end;
+     end;
      // Pegando os nomes dos campos da tabela de Fornecedores.
-     with Temp do begin
-          sql.Clear;
-          sql.Add('select top 1 * from Fornecedores');
-          Open;
+     if cEmissao.ItemIndex = 1 then begin 
+        with Temp do begin
+             sql.Clear;
+             sql.Add('select top 1 * from Fornecedores');
+             Open;
+        end;
+        Lista.Clear;
+        for f := 0 to Temp.FieldCount-1 do begin
+            Lista.Items.Add('_Forn_'+Temp.Fields[f].FieldName);
+        end;
      end;
-     // Pegando os nomes dos campos.
-     Lista.Clear;
-     for f := 0 to Temp.FieldCount-1 do begin
-         Lista.Items.Add('_Forn_'+Temp.Fields[f].FieldName);
-     end;
+     
      inc(i);
      NovoItem.Break   := mbBreak;
      NovoItem.Caption := '-';
@@ -232,7 +265,7 @@ begin
          MenuCampos.Items.Items[i+f].OnClick := CapturaClick;
 
          Inc(mQuebra);
-         if mQuebra = 25 then begin
+         if mQuebra = 30 then begin
             mQuebra := 0;
             NovoItem.Break := mbBreak;
          end;
@@ -261,6 +294,16 @@ begin
           if recordcount > 0 then autoajustecol(gCampos);
      end;
      autoajustecol(gCampos);
+end;
+
+procedure TUtilitarios_LayOutXMLNFS.cEmissaoClick(Sender: TObject);
+begin
+    CarregaMenu;
+end;
+
+procedure TUtilitarios_LayOutXMLNFS.cMunClick(Sender: TObject);
+begin
+    CarregaMenu;
 end;
 
 procedure TUtilitarios_LayOutXMLNFS.cMunExit(Sender: TObject);
@@ -347,10 +390,8 @@ procedure TUtilitarios_LayOutXMLNFS.cArquivoChange(Sender: TObject);
 begin
       XMLDoc.LoadFromFile(cArquivo.FileName);
       XML.Items.Clear;
-      XMLDoc.Active := True;
-      
+      XMLDoc.Active := true;
       GeraTree(XMLDoc.DocumentElement, nil);
-      
       Application.ProcessMessages;
       XML.FullExpand;
       XML.Select(XML.Items.GetFirstNode);

@@ -519,6 +519,7 @@ begin
                               PagarReceberCusto_Seletivo.Value   := false;
                               PagarReceberCusto_Entrada.Value    := false;
                               PagarReceberData_Documento.Value   := EmprestimosFINIMPData.Value;
+                              PagarReceberData_Previsao.Value    := EmprestimosVencimento.Value;
                               PagarReceberData_Vencimento.Value  := EmprestimosVencimento.Value;
                               PagarReceberValor_Documento.Value  := EmprestimosFINIMPValor_ME.AsCurrency * EmprestimosTaxa_Cambial.AsFloat;
                               PagarReceberValor_Parcela.Value    := EmprestimosFINIMPValor_ME.AsCurrency * EmprestimosTaxa_Cambial.AsFloat;

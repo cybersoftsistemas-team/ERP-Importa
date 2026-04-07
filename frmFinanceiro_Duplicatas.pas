@@ -855,6 +855,7 @@ begin
                                      PagarReceberClassificacao.Value := cClass1.KeyValue;
 
                                      PagarReceberNumero_Documento.Value := cDuplicata1.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento1.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento1.Date;
                                      PagarReceberValor_Documento.Value  := cValor1.Value;
                                      PagarReceberValor_Parcela.Value    := cValor1.Value;
@@ -869,6 +870,7 @@ begin
                                      PagarReceberNivel.Value            := ClassificacaoFinanceiraNivel.Value;
                                      PagarReceberClassificacao.Value    := cClass2.KeyValue;
                                      PagarReceberNumero_Documento.Value := cDuplicata2.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento2.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento2.Date;
                                      PagarReceberValor_Documento.Value  := cValor2.Value;
                                      PagarReceberValor_Parcela.Value    := cValor2.Value;
@@ -883,6 +885,7 @@ begin
                                      PagarReceberNivel.Value            := ClassificacaoFinanceiraNivel.Value;
                                      PagarReceberClassificacao.Value    := cClass3.KeyValue;
                                      PagarReceberNumero_Documento.Value := cDuplicata3.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento3.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento3.Date;
                                      PagarReceberValor_Documento.Value  := cValor3.Value;
                                      PagarReceberValor_Parcela.Value    := cValor3.Value;
@@ -897,6 +900,7 @@ begin
                                      PagarReceberNivel.Value            := ClassificacaoFinanceiraNivel.Value;
                                      PagarReceberClassificacao.Value    := cClass4.KeyValue;
                                      PagarReceberNumero_Documento.Value := cDuplicata4.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento4.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento4.Date;
                                      PagarReceberValor_Documento.Value  := cValor4.Value;
                                      PagarReceberValor_Parcela.Value    := cValor4.Value;
@@ -911,6 +915,7 @@ begin
                                      PagarReceberNivel.Value            := ClassificacaoFinanceiraNivel.Value;
                                      PagarReceberClassificacao.Value    := cClass5.KeyValue;
                                      PagarReceberNumero_Documento.Value := cDuplicata5.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento5.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento5.Date;
                                      PagarReceberValor_Documento.Value  := cValor5.Value;
                                      PagarReceberValor_Parcela.Value    := cValor5.Value;
@@ -925,6 +930,7 @@ begin
                                      PagarReceberNivel.Value            := ClassificacaoFinanceiraNivel.Value;
                                      PagarReceberClassificacao.Value    := cClass6.KeyValue;
                                      PagarReceberNumero_Documento.Value := cDuplicata6.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento6.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento6.Date;
                                      PagarReceberValor_Documento.Value  := cValor6.Value;
                                      PagarReceberValor_Parcela.Value    := cValor6.Value;
@@ -939,6 +945,7 @@ begin
                                      PagarReceberNivel.Value            := ClassificacaoFinanceiraNivel.Value;
                                      PagarReceberClassificacao.Value    := cClass7.KeyValue;
                                      PagarReceberNumero_Documento.Value := cDuplicata7.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento7.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento7.Date;
                                      PagarReceberValor_Documento.Value  := cValor7.Value;
                                      PagarReceberValor_Parcela.Value    := cValor7.Value;
@@ -953,6 +960,7 @@ begin
                                      PagarReceberNivel.Value            := ClassificacaoFinanceiraNivel.Value;
                                      PagarReceberClassificacao.Value    := cClass8.KeyValue;
                                      PagarReceberNumero_Documento.Value := cDuplicata8.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento8.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento8.Date;
                                      PagarReceberValor_Documento.Value  := cValor8.Value;
                                      PagarReceberValor_Parcela.Value    := cValor8.Value;
@@ -963,6 +971,7 @@ begin
                                   End;
                                   If (i = 9) and (cDuplicata9.Enabled = true) then begin
                                      PagarReceberNumero_Documento.Value := cDuplicata9.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento9.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento9.Date;
                                      PagarReceberValor_Documento.Value  := cValor9.Value;
                                      PagarReceberValor_Parcela.Value    := cValor9.Value;
@@ -973,6 +982,7 @@ begin
                                   End;
                                   If (i = 10) and (cDuplicata10.Enabled = true) then begin
                                      PagarReceberNumero_Documento.Value := cDuplicata10.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento10.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento10.Date;
                                      PagarReceberValor_Documento.Value  := cValor10.Value;
                                      PagarReceberValor_Parcela.Value    := cValor10.Value;
@@ -983,6 +993,7 @@ begin
                                   End;
                                   If (i = 11) and (cDuplicata11.Enabled = true) then begin
                                      PagarReceberNumero_Documento.Value := cDuplicata11.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento11.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento11.Date;
                                      PagarReceberValor_Documento.Value  := cValor11.Value;
                                      PagarReceberValor_Parcela.Value    := cValor11.Value;
@@ -993,6 +1004,7 @@ begin
                                   End;
                                   If (i = 12) and (cDuplicata12.Enabled = true) then begin
                                      PagarReceberNumero_Documento.Value := cDuplicata12.Text;
+                                     PagarReceberData_Previsao.Value    := cData_Vencimento12.Date;
                                      PagarReceberData_Vencimento.Value  := cData_Vencimento12.Date;
                                      PagarReceberValor_Documento.Value  := cValor12.Value;
                                      PagarReceberValor_Parcela.Value    := cValor12.Value;

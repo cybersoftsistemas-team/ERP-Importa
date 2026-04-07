@@ -66,7 +66,7 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     Top = 40
     Width = 809
     Height = 587
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     TabHeight = 28
     TabOrder = 0
@@ -81,7 +81,6 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
         BevelOuter = bvLowered
         Enabled = False
         TabOrder = 0
-        ExplicitTop = 4
         object cNota: TDBEdit
           Left = 127
           Top = 5
@@ -3779,7 +3778,6 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
       ShowHint = True
       TabOrder = 2
       OnClick = bImportaXMLNFeClick
-      ExplicitLeft = 385
     end
     object bEfetivar: TButton
       AlignWithMargins = True
@@ -3799,7 +3797,6 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
       ShowHint = True
       TabOrder = 3
       OnClick = bEfetivarClick
-      ExplicitLeft = 556
     end
     object bImportaXMLCTe: TButton
       AlignWithMargins = True
@@ -3838,7 +3835,6 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
       ShowHint = True
       TabOrder = 5
       OnClick = bCreditoClick
-      ExplicitLeft = 300
     end
     object bVincular: TButton
       AlignWithMargins = True

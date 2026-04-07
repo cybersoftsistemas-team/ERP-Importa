@@ -204,7 +204,7 @@ object Cadastro_Produtos: TCadastro_Produtos
     Margins.Top = 8
     Margins.Right = 8
     Margins.Bottom = 8
-    ActivePage = TabValores
+    ActivePage = TabSheet8
     Align = alClient
     ParentShowHint = False
     ShowHint = True

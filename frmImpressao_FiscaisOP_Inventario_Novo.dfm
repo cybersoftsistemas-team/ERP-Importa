@@ -113,7 +113,6 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitWidth = 740
     DesignSize = (
       736
       30)
@@ -130,7 +129,6 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
-      ExplicitLeft = 674
     end
     object bImprimir: TButton
       Left = 604
@@ -145,7 +143,6 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
       ShowHint = True
       TabOrder = 1
       OnClick = bImprimirClick
-      ExplicitLeft = 608
     end
   end
   object StaticText6: TStaticText
@@ -3959,6 +3956,16 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
       DisplayWidth = 5
       Position = 218
     end
+    object pEmpresasppField220: TppField
+      FieldAlias = 'Email_MsgPedidos'
+      FieldName = 'Email_MsgPedidos'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 219
+      Searchable = False
+      Sortable = False
+    end
   end
   object pInventario: TppDBPipeline
     DataSource = dstInventario
@@ -3971,7 +3978,7 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
       FieldName = 'Registro'
       FieldLength = 0
       DataType = dtInteger
-      DisplayWidth = 10
+      DisplayWidth = 0
       Position = 0
     end
     object pInventarioppField2: TppField

@@ -7015,7 +7015,7 @@ object dmFiscal: TdmFiscal
         'rvico, Total_Despesas, Tipo_Pagamento, Complementar, Valor_IR, V' +
         'alor_CSLL, Valor_INSS, Armazem, Retencao_ISS, Valor_BCIBS, Valor' +
         '_IBSUF, Valor_IBSMun, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_' +
-        'IS)'
+        'IS, Valor_ISSQN, Servico_Nacional)'
       'VALUES'
       
         '  (:Processo, :FUNDAP, :Nota, :Referencia_Fiscal, :Data_Emissao,' +
@@ -7047,7 +7047,8 @@ object dmFiscal: TdmFiscal
         'nifestada, :Classificacao_Servico, :Total_Despesas, :Tipo_Pagame' +
         'nto, :Complementar, :Valor_IR, :Valor_CSLL, :Valor_INSS, :Armaze' +
         'm, :Retencao_ISS, :Valor_BCIBS, :Valor_IBSUF, :Valor_IBSMun, :Va' +
-        'lor_BCCBS, :Valor_CBS, :Valor_BCIS, :Valor_IS)')
+        'lor_BCCBS, :Valor_CBS, :Valor_BCIS, :Valor_IS, :Valor_ISSQN, :Se' +
+        'rvico_Nacional)')
     SQLDelete.Strings = (
       'DELETE FROM NotasTerceiros'
       'WHERE'
@@ -7118,7 +7119,8 @@ object dmFiscal: TdmFiscal
         ', Retencao_ISS = :Retencao_ISS, Valor_BCIBS = :Valor_BCIBS, Valo' +
         'r_IBSUF = :Valor_IBSUF, Valor_IBSMun = :Valor_IBSMun, Valor_BCCB' +
         'S = :Valor_BCCBS, Valor_CBS = :Valor_CBS, Valor_BCIS = :Valor_BC' +
-        'IS, Valor_IS = :Valor_IS'
+        'IS, Valor_IS = :Valor_IS, Valor_ISSQN = :Valor_ISSQN, Servico_Na' +
+        'cional = :Servico_Nacional'
       'WHERE'
       
         '  Nota = :Old_Nota AND Referencia_Fiscal = :Old_Referencia_Fisca' +
@@ -7154,7 +7156,7 @@ object dmFiscal: TdmFiscal
         'o_Servico, Total_Despesas, Tipo_Pagamento, Complementar, Valor_I' +
         'R, Valor_CSLL, Valor_INSS, Armazem, Retencao_ISS, Valor_BCIBS, V' +
         'alor_IBSUF, Valor_IBSMun, Valor_BCCBS, Valor_CBS, Valor_BCIS, Va' +
-        'lor_IS FROM NotasTerceiros'
+        'lor_IS, Valor_ISSQN, Servico_Nacional FROM NotasTerceiros'
       'WHERE'
       
         '  Nota = :Nota AND Referencia_Fiscal = :Referencia_Fiscal AND Da' +
@@ -7668,6 +7670,13 @@ object dmFiscal: TdmFiscal
     end
     object NotasTerceirosValor_IS: TCurrencyField
       FieldName = 'Valor_IS'
+    end
+    object NotasTerceirosValor_ISSQN: TCurrencyField
+      FieldName = 'Valor_ISSQN'
+    end
+    object NotasTerceirosServico_Nacional: TStringField
+      FieldName = 'Servico_Nacional'
+      Size = 6
     end
   end
   object dsNotasTerceiros: TDataSource

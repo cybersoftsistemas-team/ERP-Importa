@@ -168,7 +168,7 @@ object Cadastro_Fornecedores: TCadastro_Fornecedores
     Top = 49
     Width = 681
     Height = 598
-    ActivePage = TabSheet1
+    ActivePage = TabSheet7
     Align = alClient
     TabHeight = 24
     TabOrder = 1
@@ -1025,6 +1025,7 @@ object Cadastro_Fornecedores: TCadastro_Fornecedores
           Font.Height = -11
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
+          MaxLength = 14
           ParentFont = False
           TabOrder = 21
           OnExit = cCPFExit
@@ -1944,6 +1945,44 @@ object Cadastro_Fornecedores: TCadastro_Fornecedores
         Font.Style = [fsBold]
         ParentFont = False
         TabOrder = 9
+      end
+      object StaticText50: TStaticText
+        Left = 14
+        Top = 123
+        Width = 102
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Chave PIX'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 10
+        Transparent = False
+        StyleElements = []
+      end
+      object cPIX: TDBEdit
+        Left = 117
+        Top = 123
+        Width = 513
+        Height = 21
+        DataField = 'Chave_PIX'
+        DataSource = Dados.dsFornecedores
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 11
       end
     end
     object TabSheet6: TTabSheet

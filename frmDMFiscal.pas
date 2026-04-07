@@ -1396,6 +1396,8 @@ type
     NotasTerceirosItensPercentual_IS: TFloatField;
     NotasTerceirosItensValor_IS: TCurrencyField;
     NotasTerceirosItensClassificacao_Tributaria: TStringField;
+    NotasTerceirosValor_ISSQN: TCurrencyField;
+    NotasTerceirosServico_Nacional: TStringField;
     procedure NotasItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure NotasTerceirosItensDescricao_MercadoriaGetText(Sender: TField; var Text: String; DisplayText: Boolean);
     procedure NotasCalcFields(DataSet: TDataSet);

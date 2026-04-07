@@ -4,7 +4,7 @@ object Atualiza_Sistema: TAtualiza_Sistema
   BorderStyle = bsDialog
   Caption = 'Atualiza_Sistema'
   ClientHeight = 585
-  ClientWidth = 560
+  ClientWidth = 557
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object Atualiza_Sistema: TAtualiza_Sistema
   object Image2: TImage
     Left = 0
     Top = 0
-    Width = 560
+    Width = 557
     Height = 45
     Align = alTop
     Stretch = True
@@ -255,16 +255,17 @@ object Atualiza_Sistema: TAtualiza_Sistema
   object Panel2: TPanel
     Left = 0
     Top = 555
-    Width = 560
+    Width = 557
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 1
+    ExplicitWidth = 560
     DesignSize = (
-      560
+      557
       30)
     object bAtualizar: TButton
-      Left = 396
+      Left = 393
       Top = 1
       Width = 82
       Height = 29
@@ -272,9 +273,10 @@ object Atualiza_Sistema: TAtualiza_Sistema
       Caption = '&Atualizar'
       TabOrder = 0
       OnClick = bAtualizarClick
+      ExplicitLeft = 396
     end
     object bSair: TButton
-      Left = 478
+      Left = 475
       Top = 1
       Width = 82
       Height = 29
@@ -282,6 +284,16 @@ object Atualiza_Sistema: TAtualiza_Sistema
       Caption = '&Sair'
       TabOrder = 1
       OnClick = bSairClick
+      ExplicitLeft = 478
+    end
+    object Button1: TButton
+      Left = 674
+      Top = 2
+      Width = 75
+      Height = 25
+      Caption = 'Button1'
+      TabOrder = 2
+      OnClick = Button1Click
     end
   end
   object cLog: TMemo
@@ -365,45 +377,8 @@ object Atualiza_Sistema: TAtualiza_Sistema
     Left = 310
     Top = 8
   end
-  object TabCyber: TMSQuery
-    Connection = ServerCyber
-    ParamCheck = False
-    FetchRows = 1
-    RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
-    AutoCalcFields = False
-    Options.CursorUpdate = False
-    Options.QueryIdentity = False
-    Options.StrictUpdate = False
-    Options.TrimFixedChar = False
-    Options.RemoveOnRefresh = False
-    CursorType = ctStatic
-    Left = 208
-    Top = 185
-  end
-  object ServerCyber: TMSConnection
-    Database = 'Cybersoft_Cadastros'
-    Options.ApplicationName = 'Cybersoft ERP Importa'
-    Options.KeepDesignConnected = False
-    Username = 'sa'
-    Server = '187.64.130.9'
-    LoginPrompt = False
-    Left = 123
-    Top = 184
-    EncryptedPassword = '9CFF86FF9DFF9AFF8DFF8CFF90FF99FF8BFFBFFFCEFFCDFFCCFF'
-  end
-  object TabLocal: TMSQuery
-    Connection = Dados.Banco
-    SQL.Strings = (
-      '')
-    FetchRows = 1
-    RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
-    Options.UniqueRecords = False
-    Options.UpdateAllFields = True
-    Left = 250
-    Top = 251
-  end
   object Temp: TMSQuery
-    Connection = ServerCyber
+    Connection = Dados.Banco
     ParamCheck = False
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
@@ -414,7 +389,7 @@ object Atualiza_Sistema: TAtualiza_Sistema
     Options.TrimFixedChar = False
     Options.RemoveOnRefresh = False
     CursorType = ctStatic
-    Left = 277
-    Top = 185
+    Left = 199
+    Top = 210
   end
 end

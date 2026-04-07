@@ -185,6 +185,7 @@ begin
                               PagarReceberClassificacao.Value    := cClassificacao.KeyValue;
                               If Trim(cCentroCusto.Text) <> '' then PagarReceberCentro_Custo.Value := cCentroCusto.KeyValue;
                               PagarReceberData_Documento.Value   := cEmissao.Date;
+                              PagarReceberData_Previsao.Value    := mVencimento;
                               PagarReceberData_Vencimento.Value  := mVencimento;
                               PagarReceberValor_Documento.Value  := Clientes.FieldByName('Mensalidade').AsCurrency;
                               PagarReceberValor_Parcela.Value    := Clientes.FieldByName('Mensalidade').AsCurrency;

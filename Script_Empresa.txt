@@ -1,4 +1,5 @@
-15:12 16/05/2025--[10/01/2022 09:28:00]ALTER TABLE PedidoCompra ADD Referencia_Cliente varchar(15)
+--[10/01/2022 09:28:00]
+ALTER TABLE PedidoCompra ADD Referencia_Cliente varchar(15)
 GO
 
 --[20/01/2022 10:15:00]
@@ -3031,4 +3032,26 @@ go
 alter table ClassificacaoFinanceira add Juros_SPEDPISCOFINS bit
 go
 update ClassificacaoFinanceira set Juros_SPEDPISCOFINS = 0 where Juros_SPEDPISCOFINS is null
+go
+
+--[09/03/2026 16:47:00]
+alter table NotasServico add Valor_BC money
+                            ,Valor_ISSQN money
+                            ,Valor_Liquido money
+go
+
+--[10/03/2026 09:02:00]
+alter table NotasTerceiros add Valor_ISSQN money
+go
+alter table ReferenciasFiscais add Servico_Nacional varchar(6)
+go
+update ReferenciasFiscais set Servico_Nacional = isnull(ltrim(rtrim(Servico)), '')+'01'where Servico is not null
+go
+alter table NotasTerceiros add Servico_Nacional varchar(6)
+go
+update NotasTerceiros set Servico_Nacional = isnull(ltrim(rtrim(Servico)), '')+'01'where Servico is not null
+go
+
+--[06/04/2026 10:51:00]
+alter table Fornecedores add Chave_PIX varchar(80)
 go

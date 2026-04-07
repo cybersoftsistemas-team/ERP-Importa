@@ -185,6 +185,8 @@ type
     DBMemo2: TDBMemo;
     DBEdit20: TDBEdit;
     StaticText49: TStaticText;
+    StaticText50: TStaticText;
+    cPIX: TDBEdit;
     procedure bSairClick(Sender: TObject);
     procedure NavegaClick(Sender: TObject; Button: TNavigateBtn);
     procedure FormShow(Sender: TObject);

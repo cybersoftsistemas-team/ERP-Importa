@@ -192,8 +192,10 @@ begin
                                     end;
                                 end;
                                 Dec(Nivel);
-                                mVal := Filho.Text;
-                                cLog.lines.add(concat(fieldbyname('Campo_Tabela').asstring, StringOfChar('.',30-Length(fieldbyname('Campo_Tabela').asstring)), Fields[Nivel].asstring, StringOfChar('.',30-Length(Fields[Nivel].asstring)),': ', mval) );
+                                if Filho <> nil then begin
+                                   mVal := Filho.Text;
+                                   cLog.lines.add(concat(fieldbyname('Campo_Tabela').asstring, StringOfChar('.',30-Length(fieldbyname('Campo_Tabela').asstring)), Fields[Nivel].asstring, StringOfChar('.',30-Length(Fields[Nivel].asstring)),': ', mval) );
+                                end;
 
                                 // Salva a nota no banco de dados - Capa da Nota.
                                 // Dados da Nota fiscal.
@@ -256,7 +258,7 @@ begin
                           end;
                           with Dados, dmFiscal, tNotas do begin
                                // Pegando a referência fiscal.
-                               if ReferenciasFiscais.locate('Servico', ApenasNumeros(fieldbyname('Servico').asstring), [loCaseInsensitive]) then begin
+                               if ReferenciasFiscais.locate('Servico_Nacional', ApenasNumeros(fieldbyname('Servico_Nacional').asstring), [loCaseInsensitive]) then begin
                                   fieldbyname('Referencia_Fiscal').value := ReferenciasFiscaisCodigo.AsInteger;
                                end else begin
                                   cLog.lines.add('');

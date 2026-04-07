@@ -459,7 +459,6 @@ uses
   frmUtilitario_ExportaAPI in 'frmUtilitario_ExportaAPI.pas' {Utilitario_ExportaAPI},
   frmPedido_TelevendasCatalogo in 'frmPedido_TelevendasCatalogo.pas' {Pedido_TelevendasCatalogo},
   frmPedido_TelevendasCatalogoItem in 'frmPedido_TelevendasCatalogoItem.pas' {Pedido_TelevendasCatalogoItem},
-  frmNFE50 in 'frmNFE50.pas' {NFE50},
   frmImpressao_FinanceirosOP_PagarReceberSimp in 'frmImpressao_FinanceirosOP_PagarReceberSimp.pas' {Impressao_FinanceirosOP_PagarReceberSimp},
   frmFinanceiro_EmprestimosDDData in 'frmFinanceiro_EmprestimosDDData.pas' {Financeiro_EmprestimosDDData},
   frmImpressao_FinanceirosOP_ControleAbertos in 'frmImpressao_FinanceirosOP_ControleAbertos.pas' {Impressao_FinanceirosOP_ControleAbertos},

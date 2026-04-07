@@ -295,6 +295,7 @@ begin
                            PagarReceberClassificacao.Value    := cClassICMS.KeyValue;
                            PagarReceberCentro_Custo.Value     := iif(cCCICMS.KeyValue <> null, cCCICMS.KeyValue, '');
                            PagarReceberData_Documento.Value   := cICMSData.Date;
+                           PagarReceberData_Previsao.Value    := cICMSData.Date;
                            PagarReceberData_Vencimento.Value  := cICMSData.Date;
                            PagarReceberValor_Documento.Value  := cICMSRec.Value;
                            PagarReceberValor_Parcela.Value    := cICMSRec.Value;
@@ -329,6 +330,7 @@ begin
                            PagarReceberClassificacao.Value    := cClassIPI.KeyValue;
                            PagarReceberCentro_Custo.Value     := iif(cCCIPI.KeyValue <> null, cCCIPI.KeyValue, '');
                            PagarReceberData_Documento.Value   := cIPIData.Date;
+                           PagarReceberData_Previsao.Value    := cIPIData.Date;
                            PagarReceberData_Vencimento.Value  := cIPIData.Date;
                            PagarReceberValor_Documento.Value  := cIPIRec.Value;
                            PagarReceberValor_Parcela.Value    := cIPIRec.Value;
@@ -363,6 +365,7 @@ begin
                            PagarReceberClassificacao.Value    := cClassPIS.KeyValue;
                            PagarReceberCentro_Custo.Value     := iif(cCCPIS.KeyValue <> null, cCCPIS.KeyValue, '');
                            PagarReceberData_Documento.Value   := cPISData.Date;
+                           PagarReceberData_Previsao.Value    := cPISData.Date;
                            PagarReceberData_Vencimento.Value  := cPISData.Date;
                            PagarReceberValor_Documento.Value  := cPISRec.Value;
                            PagarReceberValor_Parcela.Value    := cPISRec.Value;
@@ -397,6 +400,7 @@ begin
                            PagarReceberClassificacao.Value    := cClassCOF.KeyValue;
                            PagarReceberCentro_Custo.Value     := iif(cCCCOF.KeyValue <> null, cCCCOF.KeyValue, '');
                            PagarReceberData_Documento.Value   := cCOFData.Date;
+                           PagarReceberData_Previsao.Value    := cCOFData.Date;
                            PagarReceberData_Vencimento.Value  := cCOFData.Date;
                            PagarReceberValor_Documento.Value  := cCOFINSRec.Value;
                            PagarReceberValor_Parcela.Value    := cCOFINSRec.Value;
@@ -431,6 +435,7 @@ begin
                            PagarReceberClassificacao.Value    := cClassIRPJ.KeyValue;
                            PagarReceberCentro_Custo.Value     := iif(cCCIRPJ.KeyValue <> null, cCCIRPJ.KeyValue, '');
                            PagarReceberData_Documento.Value   := cIRPJData.Date;
+                           PagarReceberData_Previsao.Value    := cIRPJData.Date;
                            PagarReceberData_Vencimento.Value  := cIRPJData.Date;
                            PagarReceberValor_Documento.Value  := cIRPJRec.Value;
                            PagarReceberValor_Parcela.Value    := cIRPJRec.Value;
@@ -465,6 +470,7 @@ begin
                            PagarReceberClassificacao.Value    := cClassCSLL.KeyValue;
                            PagarReceberCentro_Custo.Value     := cCCCSLL.KeyValue;
                            PagarReceberData_Documento.Value   := cCSLLData.Date;
+                           PagarReceberData_Previsao.Value    := cCSLLData.Date;
                            PagarReceberData_Vencimento.Value  := cCSLLData.Date;
                            PagarReceberValor_Documento.Value  := cCSLLRec.Value;
                            PagarReceberValor_Parcela.Value    := cCSLLRec.Value;

@@ -461,10 +461,6 @@ object NotaFiscal_ServicoXML: TNotaFiscal_ServicoXML
     TabWidth = 100
     object TabSheet1: TTabSheet
       Caption = 'Notas Fiscais'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Label1: TLabel
         Left = 320
         Top = 48
@@ -586,10 +582,6 @@ object NotaFiscal_ServicoXML: TNotaFiscal_ServicoXML
     object TabSheet2: TTabSheet
       Caption = 'Log'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cLog: TMemo
         AlignWithMargins = True
         Left = 3
@@ -612,7 +604,6 @@ object NotaFiscal_ServicoXML: TNotaFiscal_ServicoXML
         WantReturns = False
         WordWrap = False
         StyleElements = [seBorder]
-        ExplicitHeight = 484
       end
     end
   end
@@ -1058,11 +1049,56 @@ object NotaFiscal_ServicoXML: TNotaFiscal_ServicoXML
       item
         Name = 'Valor_INSS'
         DataType = ftCurrency
+      end
+      item
+        Name = 'Armazem'
+        DataType = ftSmallint
+      end
+      item
+        Name = 'Retencao_ISS'
+        DataType = ftBoolean
+      end
+      item
+        Name = 'Valor_BCIBS'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_IBSUF'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_IBSMun'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_BCCBS'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_CBS'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_BCIS'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_IS'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Valor_ISSQN'
+        DataType = ftCurrency
+      end
+      item
+        Name = 'Servico_Nacional'
+        DataType = ftString
+        Size = 6
       end>
     Left = 326
     Top = 222
     Data = {
-      04006200080050726F636573736F01000F0000000000060046554E4441500500
+      04006D00080050726F636573736F01000F0000000000060046554E4441500500
       00000000000004004E6F7461030000000000000011005265666572656E636961
       5F46697363616C02000000000000000C00446174615F456D697373616F0B0000
       00000000000F004E6F74615F5265666572656E63696103000000000000000F00
@@ -1139,7 +1175,14 @@ object NotaFiscal_ServicoXML: TNotaFiscal_ServicoXML
       0E005469706F5F506167616D656E746F02000000000000000C00436F6D706C65
       6D656E7461720500000000000000080056616C6F725F49520700000000000000
       0A0056616C6F725F43534C4C07000000000000000A0056616C6F725F494E5353
-      0700000000000000000000000000}
+      0700000000000000070041726D617A656D02000000000000000C00526574656E
+      63616F5F49535305000000000000000B0056616C6F725F424349425307000000
+      000000000B0056616C6F725F494253554607000000000000000C0056616C6F72
+      5F4942534D756E07000000000000000B0056616C6F725F424343425307000000
+      00000000090056616C6F725F43425307000000000000000A0056616C6F725F42
+      4349530700000000000000080056616C6F725F495307000000000000000B0056
+      616C6F725F495353514E070000000000000010005365727669636F5F4E616369
+      6F6E616C0100060000000000000000000000}
   end
   object dstNotas: TDataSource
     DataSet = tNotas
@@ -1509,11 +1552,18 @@ object NotaFiscal_ServicoXML: TNotaFiscal_ServicoXML
     Top = 271
   end
   object oCNPJ: TACBrConsultaCNPJ
+    ProxyHost = ''
     ProxyPort = '8080'
+    ProxyUser = ''
+    ProxyPass = ''
+    ContentsEncodingCompress = []
+    NivelLog = 0
     PesquisarIBGE = False
     IniServicos = 
       'C:\Program Files (x86)\Embarcadero\Studio\20.0\bin\ACBrConsultaC' +
       'NPJServicos.ini'
+    Mei = False
+    Simples = False
     Left = 432
     Top = 223
   end

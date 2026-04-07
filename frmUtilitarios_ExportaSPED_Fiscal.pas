@@ -816,10 +816,19 @@ begin
                      SQL.Add('       ,Estoque = ''1-ARMAZEM'' ');
                      SQL.Add('       ,FI1.ES');
                      SQL.Add('       ,FI1.Destinatario_Codigo');
-                     SQL.Add('       ,Qtde_Saldo     = (SELECT SUM(FI2.Qtde_Saida-FI2.Qtde_Entrada) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData)');
-                     SQL.Add('       ,Unitario_Saldo = ISNULL((SELECT SUM(FI2.Total_Saida-FI2.Total_Entrada) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData)');
-                     SQL.Add('                         /NULLIF((SELECT SUM(FI2.Qtde_Saida -FI2.Qtde_Entrada)  FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData), 0), 0)');
-                     SQL.Add('       ,Total_Saldo    = (SELECT SUM(FI2.Total_Saida-FI2.Total_Entrada) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData)');
+                     sql.add('        ,Qtde_Saldo = case when fi1.Qtde_Saldo > 0 then');
+                     sql.add('                           fi1.Qtde_Saldo');
+                     sql.add('                      else');
+                     sql.add('                           (select Qtde_Saldo from FichaInventario fi where fi.Codigo = fi1.Codigo ');
+                     sql.add('                                                                      and fi.Item = (select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pData and Estoque = ''1-ARMAZEM'' and Qtde_Saldo > 0))');
+                     sql.add('                      end');
+                     SQL.Add('       ,Unitario_Saldo = case when fi1.Unitario_Saldo > 0 then ');
+                     SQL.Add('                              fi1.Unitario_Saldo');
+                     SQL.Add('                         else  ');
+                     sql.add('                              (select Unitario_Saldo from FichaInventario fi where fi.Codigo = fi1.Codigo ');
+                     sql.add('                                                                          and fi.Item = (select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pData and Estoque = ''1-ARMAZEM'' and Qtde_Saldo > 0))');
+                     SQL.Add('                         end');
+                     SQL.Add('       ,Total_Saldo = 0');
                      SQL.Add('       ,Tipo = CASE WHEN Emissor = ''P'' AND ES = ''E'' THEN ''F'' ');
                      SQL.Add('                    WHEN Emissor = ''P'' AND ES = ''S'' THEN ''C'' ');
                      SQL.Add('                    WHEN Emissor = ''T'' THEN ''F'' ');
@@ -838,10 +847,19 @@ begin
                      SQL.Add('       ,Estoque = ''2-TERCEIROS'' ');
                      SQL.Add('       ,FI1.ES');
                      SQL.Add('       ,FI1.Destinatario_Codigo');
-                     SQL.Add('       ,Qtde_Saldo     = (SELECT SUM(FI2.Qtde_Entrada -FI2.Qtde_Saida) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData)');
-                     SQL.Add('       ,Unitario_Saldo = ISNULL((SELECT SUM(FI2.Total_Entrada-FI2.Total_Saida) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData)');
-                     SQL.Add('                         /NULLIF((SELECT SUM(FI2.Qtde_Entrada -FI2.Qtde_Saida) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData), 0), 0)');
-                     SQL.Add('       ,Total_Saldo    = (SELECT SUM(FI2.Total_Entrada-FI2.Total_Saida) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData)');
+                     sql.add('       ,Qtde_Saldo = case when fi1.Qtde_Saldo > 0 then');
+                     sql.add('                          fi1.Qtde_Saldo');
+                     sql.add('                     else');
+                     sql.add('                          (select Qtde_Saldo from FichaInventario fi where fi.Codigo = fi1.Codigo ');
+                     sql.add('                                                                      and fi.Item = (select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pData and Estoque = ''2-TERCEIROS'' and Qtde_Saldo > 0))');
+                     sql.add('                     end');
+                     SQL.Add('       ,Unitario_Saldo = case when fi1.Unitario_Saldo > 0 then ');
+                     SQL.Add('                              fi1.Unitario_Saldo');
+                     SQL.Add('                         else');
+                     sql.add('                              (select Unitario_Saldo from FichaInventario fi where fi.Codigo = fi1.Codigo ');
+                     sql.add('                                                                          and fi.Item = (select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pData and Estoque = ''2-TERCEIROS'' and Qtde_Saldo > 0))');
+                     SQL.Add('                         end');
+                     SQL.Add('       ,Total_Saldo = 0');
                      SQL.Add('       ,Tipo = CASE WHEN Emissor = ''P'' AND ES = ''E'' THEN ''F'' ');
                      SQL.Add('                    WHEN Emissor = ''P'' AND ES = ''S'' THEN ''C'' ');
                      SQL.Add('                    WHEN Emissor = ''T'' THEN ''F'' ');
@@ -852,8 +870,10 @@ begin
                      SQL.Add('  AND  FI1.Registro IS NOT NULL');
                      SQL.Add('  AND  FI1.Item IN(SELECT MAX(FI2.Item) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pData AND Estoque = ''2-TERCEIROS'' GROUP BY Codigo)');
                      SQL.Add('  AND (SELECT Tipo_Item FROM Produtos PRD WHERE PRD.Codigo = FI1.Codigo) IN(0,1,2,3,4,5,6,10)');
-                     SQL.Add('SELECT *');
-                     SQL.Add('FROM #TEMP');
+                     sql.add('');
+                     sql.add('update #temp set Total_Saldo = Unitario_Saldo * Qtde_Saldo where Estoque in(''1-ARMAZEM'', ''2-TERCEIROS'')');
+                     sql.add('');
+                     SQL.Add('SELECT * FROM #TEMP');
                      SQL.Add('WHERE round(Qtde_Saldo, 3) > 0');
                      SQL.Add('ORDER BY Estoque, Codigo');
                      SQL.Add('DROP TABLE #TEMP');
@@ -878,10 +898,9 @@ begin
                      SQL.Add('-- MERCADORIA PRÓPRIA EM PODER TERCEIROS.');
                      SQL.Add('UNION ALL');
                      SQL.Add('SELECT  Estoque = ''1-ARMAZEM'' ');
-                     SQL.Add('       ,Qtde_Saldo     = (SELECT SUM(FI2.Qtde_Saida-FI2.Qtde_Entrada) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData)');
-                     SQL.Add('       ,Unitario_Saldo = ISNULL((SELECT SUM(FI2.Total_Saida-FI2.Total_Entrada) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData)');
-                     SQL.Add('                         /NULLIF((SELECT SUM(FI2.Qtde_Saida -FI2.Qtde_Entrada)  FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData), 0), 0)');
-                     SQL.Add('       ,Total_Saldo    = (SELECT SUM(FI2.Total_Saida-FI2.Total_Entrada) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData)');
+                     SQL.Add('       ,Qtde_Saldo = (SELECT SUM(FI2.Qtde_Saida-FI2.Qtde_Entrada) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData)');
+                     SQL.Add('       ,Unitario_Saldo = FI1.Unitario_Entrada + Unitario_Saida');
+                     SQL.Add('       ,Total_Saldo = (FI1.Unitario_Entrada + fi1.Unitario_Saida) * (select sum(fi2.Qtde_Saida-fi2.Qtde_Entrada) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pData)');
                      SQL.Add('FROM   FichaInventario FI1');
                      SQL.Add('WHERE  FI1.Estoque = ''1-ARMAZEM'' ');
                      SQL.Add('  AND  FI1.Registro IS NOT NULL');
@@ -890,10 +909,9 @@ begin
                      SQL.Add('-- MERCADORIA DE TERCEIROS EM PODER DA EMPRESA');
                      SQL.Add('UNION ALL');
                      SQL.Add('SELECT  Estoque = ''2-TERCEIROS'' ');
-                     SQL.Add('       ,Qtde_Saldo     = (SELECT SUM(FI2.Qtde_Entrada -FI2.Qtde_Saida) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData)');
-                     SQL.Add('       ,Unitario_Saldo = ISNULL((SELECT SUM(FI2.Total_Entrada-FI2.Total_Saida) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData)');
-                     SQL.Add('                         /NULLIF((SELECT SUM(FI2.Qtde_Entrada -FI2.Qtde_Saida) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData), 0), 0)');
-                     SQL.Add('       ,Total_Saldo    = (SELECT SUM(FI2.Total_Entrada-FI2.Total_Saida) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData)');
+                     SQL.Add('       ,Qtde_Saldo = (SELECT SUM(FI2.Qtde_Entrada -FI2.Qtde_Saida) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData)');
+                     SQL.Add('       ,Unitario_Saldo = FI1.Unitario_Entrada + Unitario_Saida');
+                     SQL.Add('       ,Total_Saldo = (FI1.Unitario_Entrada + fi1.Unitario_Saida) * (select sum(fi2.Qtde_Saida-fi2.Qtde_Entrada) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pData)');
                      SQL.Add('FROM   FichaInventario FI1');
                      SQL.Add('WHERE  FI1.Estoque = ''2-TERCEIROS'' ');
                      SQL.Add('  AND  FI1.Registro IS NOT NULL');
@@ -902,6 +920,7 @@ begin
                      SQL.Add('SELECT Total = SUM(Total_Saldo)');
                      SQL.Add('FROM #TEMP');
                      SQL.Add('WHERE Qtde_Saldo > 0 ');
+                     SQL.Add('and Total_Saldo > 0 ');
                      SQL.Add('DROP TABLE #TEMP');
                      ParamByName('pData').AsDate := mDataInventF;
                      //SQL.SaveToFile('c:\temp\SPED_TotalInventario.sql');
@@ -947,9 +966,8 @@ begin
                      SQL.Add('       ,FI1.ES');
                      SQL.Add('       ,FI1.Destinatario_Codigo');
                      SQL.Add('       ,Qtde_Saldo     = (SELECT SUM(FI2.Qtde_Saida-FI2.Qtde_Entrada) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData)');
-                     SQL.Add('       ,Unitario_Saldo = ISNULL((SELECT SUM(FI2.Total_Saida-FI2.Total_Entrada) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData)');
-                     SQL.Add('                         /NULLIF((SELECT SUM(FI2.Qtde_Saida -FI2.Qtde_Entrada)  FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData), 0), 0)');
-                     SQL.Add('       ,Total_Saldo    = (SELECT SUM(FI2.Total_Saida-FI2.Total_Entrada) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''1-ARMAZEM'' AND FI2.Data <= :pData)');
+                     SQL.Add('       ,Unitario_Saldo = FI1.Unitario_Entrada + Unitario_Saida');
+                     SQL.Add('       ,Total_Saldo = (FI1.Unitario_Entrada + fi1.Unitario_Saida) * (select sum(fi2.Qtde_Saida-fi2.Qtde_Entrada) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pData)');
                      SQL.Add('       ,Tipo = CASE WHEN Emissor = ''P'' AND ES = ''E'' THEN ''F'' ');
                      SQL.Add('                    WHEN Emissor = ''P'' AND ES = ''S'' THEN ''C'' ');
                      SQL.Add('                    WHEN Emissor = ''T'' THEN ''F'' ');
@@ -969,9 +987,8 @@ begin
                      SQL.Add('       ,FI1.ES');
                      SQL.Add('       ,FI1.Destinatario_Codigo');
                      SQL.Add('       ,Qtde_Saldo     = (SELECT SUM(FI2.Qtde_Entrada -FI2.Qtde_Saida) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData)');
-                     SQL.Add('       ,Unitario_Saldo = ISNULL((SELECT SUM(FI2.Total_Entrada-FI2.Total_Saida) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData)');
-                     SQL.Add('                         /NULLIF((SELECT SUM(FI2.Qtde_Entrada -FI2.Qtde_Saida) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData), 0), 0)');
-                     SQL.Add('       ,Total_Saldo    = (SELECT SUM(FI2.Total_Entrada-FI2.Total_Saida) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Estoque = ''2-TERCEIROS'' AND FI2.Data <= :pData)');
+                     SQL.Add('       ,Unitario_Saldo = FI1.Unitario_Entrada + Unitario_Saida');
+                     SQL.Add('       ,Total_Saldo = (FI1.Unitario_Entrada + fi1.Unitario_Saida) * (select sum(fi2.Qtde_Saida-fi2.Qtde_Entrada) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pData)');
                      SQL.Add('       ,Tipo = CASE WHEN Emissor = ''P'' AND ES = ''E'' THEN ''F'' ');
                      SQL.Add('                    WHEN Emissor = ''P'' AND ES = ''S'' THEN ''C'' ');
                      SQL.Add('                    WHEN Emissor = ''T'' THEN ''F'' ');
@@ -1846,9 +1863,9 @@ begin
                    sql.add('from FichaInventario fi1');
                    sql.add('where fi1.Estoque = ''1-ARMAZEM'' ');
                    sql.add('and fi1.Registro is not null');
-                   sql.add('and Item in(select max(FI2.Item) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pDataI and Estoque = ''1-ARMAZEM'' group by Codigo)');
+                   sql.add('and Item in(select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pData and Estoque = ''1-ARMAZEM'' group by Codigo)');
                    sql.add('and (select Tipo_Item from Produtos prd where prd.Codigo = fi1.Codigo) in(0,1,2,3,4,5,6,10)');
-                   sql.add('and (select sum(fi2.Qtde_Saida-fi2.Qtde_Entrada) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pDataI) > 0');
+                   
                    sql.add('-- MERCADORIA DE TERCEIROS EM PODER DA EMPRESA');
                    sql.add('union all');
                    sql.add('select FI1.Codigo');
@@ -1861,12 +1878,11 @@ begin
                    sql.add('      ,Tipo_Item = (select Tipo_Item from Produtos where Produtos.Codigo = fi1.Codigo)');
                    sql.add('      ,QTDE = (select sum(fi2.Qtde_Entrada -fi2.Qtde_Saida) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''2-TERCEIROS'' and fi2.Data <= :pDataI)');
                    sql.add('from   FichaInventario FI1');
-                   sql.add('where  FI1.Estoque = ''2-TERCEIROS'' ');
-                   sql.add('and  fi1.Registro is not null');
-                   sql.add('and  fi1.Item in(select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pDataI and Estoque = ''2-TERCEIROS'' group by Codigo)');
+                   sql.add('where  fi1.Estoque = ''2-TERCEIROS'' ');
+                   sql.add('and fi1.Registro is not null');
+                   sql.add('and fi1.Item in(select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pDataI and Estoque = ''2-TERCEIROS'' group by Codigo)');
                    sql.add('and (select Tipo_Item from Produtos prd where prd.Codigo = fi1.Codigo) in(0,1,2,3,4,5,6,10)');
                    sql.add('and (select sum(fi2.Qtde_Entrada-fi2.Qtde_Saida) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''2-TERCEIROS'' and fi2.Data <= :pDataI) > 0');
-                   sql.add('and isnull(Qtde_Saldo, 0) > 0');
                    paramByName('pDataI').AsDate := mDataInventF;
                 end;
                 // ficha de estoque.
@@ -1943,6 +1959,7 @@ begin
                    sql.add('and isnull(ni.nfe_denegada, 0) = 0');
                    sql.add('and isnull(movimenta_estoque, 0) = 1');
                 end;
+                sql.add('-----------------------------------[ IMOBILIZADO ]-----------------------------------------');
                 sql.add('UNION ALL');
                 sql.add('SELECT Codigo_Sistema,');
                 sql.add('      (SELECT Codigo_Fabricante FROM Produtos WHERE(Produtos.Codigo = Imobilizado.Codigo_Sistema)),');
@@ -1954,10 +1971,11 @@ begin
                 sql.add('      (SELECT Tipo_Item FROM Produtos WHERE(Produtos.Codigo = Imobilizado.Codigo_Sistema)),');
                 sql.add('      QTDE = 1');
                 sql.add('FROM  Imobilizado');
-                sql.add('where isnull(Fim_Apropriacao, '''') = '''' ');
-                sql.add('or (substring(Fim_Apropriacao, 1, 2) >= :pMes and substring(Fim_Apropriacao, 3, 4) >= :pAno)');
-                parambyName('pMes').AsString := poezero(2, cMes.ItemIndex+1);
-                parambyName('pAno').AsString := cAno.Text;
+                sql.add('where (Saida_DataNota >= :pDataIni or isnull(Saida_DataNota, '''') = '''')');
+                sql.add('and (isnull(Fim_Apropriacao, '''') = '''' or (substring(Fim_Apropriacao, 3, 4)+substring(Fim_Apropriacao, 1, 2) >= :pAnoMes))');
+                parambyName('pMes').AsString    := poezero(2, cMes.ItemIndex+1);
+                parambyName('pAno').AsString    := cAno.Text;
+                paramByName('pAnoMes').AsString := cAno.Text+poezero(2, cMes.ItemIndex+1);
 
                 // OUTRAS OBRIGAÇÕES TRIBUTÁRIAS, AJUSTES E INFORMAÇÕES DE VALORES PROVENIENTES DE DOCUMENTO FISCAL
                 sql.add('----------------[OUTRAS OBRIGAÇÕES TRIBUTÁRIAS, AJUSTES E INFORMAÇÕES DE VALORES PROVENIENTES DE DOCUMENTO FISCAL]----------------');         
@@ -2059,16 +2077,13 @@ end;
 procedure TUtilitarios_ExportaSPED_Fiscal.Registro0300;
 begin
      with tCIAP do begin
-//          sql.clear;
-//          sql.add('select * from Imobilizado where isnull(Fim_Apropriacao, '''') = '''' or isnull(Fim_Apropriacao, '''') >= :pPeriodo');
-//          ParamByName('pPeriodo').AsString := PoeZero(2, cMes.ItemIndex+1)+PoeZero(4, cAno.AsInteger);
-//          Open;
            sql.Clear;
            sql.add('select * from Imobilizado');
-           sql.Add('where isnull(Fim_Apropriacao, '''') = '''' ');
-           sql.Add('or (substring(Fim_Apropriacao, 1, 2) >= :pMes and substring(Fim_Apropriacao, 3, 4) >= :pAno)');
-           paramByName('pMes').AsString := poezero(2, cMes.ItemIndex+1);
-           paramByName('pAno').AsString := cAno.Text;
+           sql.add('where (Saida_DataNota >= :pDataIni or isnull(Saida_DataNota, '''') = '''')');
+           sql.add('and (isnull(Fim_Apropriacao, '''') = '''' or (substring(Fim_Apropriacao, 3, 4)+substring(Fim_Apropriacao, 1, 2) >= :pAnoMes))');
+           paramByName('pAnoMes').AsString := cAno.Text+poezero(2, cMes.ItemIndex+1);
+           paramByName('pDataIni').AsDate   := mDataCIAPI;
+           //sql.savetoFile('c:\temp\SPED_FISCAL_REGISTRO0300.SQL');
            open;
      end;
      while not tCIAP.Eof do begin
@@ -5115,12 +5130,22 @@ end;
 procedure TUtilitarios_ExportaSPED_Fiscal.RegistroG001;
 begin
       with tCIAP do begin
+           {
            sql.Clear;
            sql.add('select * from Imobilizado');
            sql.Add('where isnull(Fim_Apropriacao, '''') = '''' ');
-           sql.Add('or (substring(Fim_Apropriacao, 1, 2) >= :pMes and substring(Fim_Apropriacao, 3, 4) >= :pAno)');
-           paramByName('pMes').AsString := poezero(2, cMes.ItemIndex+1);
+           //sql.Add('or (substring(Fim_Apropriacao, 1, 2) >= :pMes and substring(Fim_Apropriacao, 3, 4) >= :pAno)');
+             sql.add('or (substring(Fim_Apropriacao, 3, 4)+substring(Fim_Apropriacao, 1, 2) >= :pAnoMes))');
+           
+           paramByName('pAnoMes').AsString := poezero(2, cMes.ItemIndex+1);
            paramByName('pAno').AsString := cAno.Text;
+           open;
+           }
+           sql.Clear;
+           sql.add('select * from Imobilizado');
+           sql.Add('where isnull(Fim_Apropriacao, '''') = '''' ');
+           sql.add('or (substring(Fim_Apropriacao, 3, 4)+substring(Fim_Apropriacao, 1, 2) >= :pAnoMes)');
+           paramByName('pAnoMes').AsString := cAno.Text + poezero(2, cMes.ItemIndex+1);
            open;
       end;
 
@@ -5147,6 +5172,7 @@ var
    mIndice: Real;
    mSaldo : Real;
 begin
+      {
       tCIAP.SQL.Clear;
       tCIAP.SQL.Add('SELECT ISNULL(SUM(ICMS_Proprio+ICMS_Dif_Aliquota), 0) AS Saldo');
       tCIAP.SQL.Add('FROM   Imobilizado');
@@ -5154,19 +5180,43 @@ begin
       tCIAP.ParamByName('pDataI').AsDate := mDataCIAPI;
       tCIAP.Open;
       mSaldo := tCIAP.FieldByName('Saldo').AsCurrency;
-
-      tCIAP.SQL.Clear;
-      tCIAP.SQL.Add('SELECT SUM(ICMS_Proprio+ICMS_Dif_Aliquota) AS Saldo_In_ICMS,');
-      tCIAP.SQL.Add('       SUM(ICMS_Proprio)/48 AS Som_Parc,');
-      tCIAP.SQL.Add('       (SELECT ISNULL(SUM(Valor_TotalProdutos), 0) FROM NotasFiscais WHERE(Saida_Entrada = 1) AND (Cancelada <> 1) AND (Nfe_Denegada <> 1) AND (Data_Emissao BETWEEN :pDataI AND :pDataF) AND (Valor_ICMS > 0)) AS Vl_Trib_Exp,');
-      tCIAP.SQL.Add('       (SELECT ISNULL(SUM(Valor_TotalNota), 0)     FROM NotasFiscais WHERE(Saida_Entrada = 1) AND (Cancelada <> 1) AND (Nfe_Denegada <> 1) AND (Data_Emissao BETWEEN :pDataI AND :pDataF) AND (Valor_ICMS > 0)) AS Vl_Total,');
-      tCIAP.SQL.Add('       0 AS SOM_ICMS_OC');
-      tCIAP.SQL.Add('FROM   Imobilizado');
-      tCIAP.SQL.Add('WHERE  (ISNULL(Fim_Apropriacao, '''') < (CAST(MONTH(Data_Nota) AS VARCHAR(2))+CAST(YEAR(Data_Nota) AS VARCHAR(4))))');
-      tCIAP.ParamByName('pDataI').AsDate := mDataCIAPI;
-      tCIAP.ParamByName('pDataF').AsDate := mDataCIAPF;
-      //tCIAP.SQL.SavetoFile('c:\Temp\SPED_FISCAL_RegistroG110.sql');
-      tCIAP.Open;
+      }
+      with tCIAP do begin
+           sql.clear;
+           sql.add('select isnull(sum(ICMS_Proprio+ICMS_Dif_Aliquota), 0) as Saldo');
+           sql.add('from Imobilizado');
+           sql.add('where (isnull(Fim_Apropriacao, '''') = '''') and (Data_Nota < :pDataI) and (Tipo_Movimentacao = ''SI'') ');
+           parambyName('pDataI').AsDate := mDataCIAPI;
+           open;
+           mSaldo := FieldByName('Saldo').AsCurrency;
+           {
+           sql.clear;
+           sql.add('select sum(ICMS_Proprio+ICMS_Dif_Aliquota) as Saldo_In_ICMS,');
+           sql.add('       sum(ICMS_Proprio)/48 as Som_Parc,');
+           sql.add('       (select isnull(sum(Valor_TotalProdutos), 0) from NotasFiscais where(Saida_Entrada = 1) and (Cancelada <> 1) and (Nfe_Denegada <> 1) and (Data_Emissao between :pDataI and :pDataF) and (Valor_ICMS > 0)) as Vl_Trib_Exp,');
+           sql.add('       (select isnull(sum(Valor_TotalNota), 0)     from NotasFiscais where(Saida_Entrada = 1) and (Cancelada <> 1) and (Nfe_Denegada <> 1) and (Data_Emissao between :pDataI and :pDataF) and (Valor_ICMS > 0)) as Vl_Total,');
+           sql.add('       0 as SOM_ICMS_OC');
+           sql.add('from   Imobilizado');
+           sql.add('where  (isnull(Fim_Apropriacao, '''') < (cast(month(Data_Nota) as varchar(2))+cast(year(Data_Nota) as varchar(4))))');
+           paramByName('pDataI').AsDate := mDataCIAPI;
+           ParamByName('pDataF').AsDate := mDataCIAPF;
+           //sql.SavetoFile('c:\Temp\SPED_FISCAL_RegistroG110.sql');
+           Open;
+           }
+           sql.clear;
+           sql.add('select sum(ICMS_Proprio+ICMS_Dif_Aliquota) as Saldo_In_ICMS,');
+           sql.add('       sum(ICMS_Proprio)/48 as Som_Parc,');
+           sql.add('       (select isnull(sum(Valor_TotalProdutos), 0) from NotasFiscais where(Saida_Entrada = 1) and (Cancelada <> 1) and (Nfe_Denegada <> 1) and (Data_Emissao between :pDataI and :pDataF) and (Valor_ICMS > 0)) as Vl_Trib_Exp,');
+           sql.add('       (select isnull(sum(Valor_TotalNota), 0)     from NotasFiscais where(Saida_Entrada = 1) and (Cancelada <> 1) and (Nfe_Denegada <> 1) and (Data_Emissao between :pDataI and :pDataF) and (Valor_ICMS > 0)) as Vl_Total,');
+           sql.add('       0 as SOM_ICMS_OC');
+           sql.add('from   Imobilizado');
+           sql.add('where (isnull(Fim_Apropriacao, '''') = '''' or (substring(Fim_Apropriacao, 3, 4)+substring(Fim_Apropriacao, 1, 2) >= :pAnoMes))');
+           paramByName('pAnoMes').AsString := cAno.Text+poezero(2, cMes.ItemIndex+1);
+           paramByName('pDataI').AsDate := mDataCIAPI;
+           ParamByName('pDataF').AsDate := mDataCIAPF;
+           //sql.SavetoFile('c:\Temp\SPED_FISCAL_RegistroG110.sql');
+           Open;
+      end;
 
       mIndice := 0;
       If tCIAP.FieldByName('Vl_Trib_Exp').AsCurrency > 0 then begin
@@ -5211,6 +5261,7 @@ begin
                 //sql.SaveToFile('c:\temp\SPED_FISCAL_RegistroG125.sql');
                 open;
                 }
+                {
                 sql.clear;
                 sql.add('select *');
                 sql.add('from Imobilizado');
@@ -5222,6 +5273,18 @@ begin
                 paramByName('pDataIni').AsDate   := mDataCIAPI;
                 //sql.SaveToFile('c:\temp\SPED_FISCAL_RegistroG125.sql');
                 open;
+                }
+                sql.clear;
+                sql.add('select *');
+                sql.add('from Imobilizado');
+                sql.add('where (Saida_DataNota >= :pDataIni or isnull(Saida_DataNota, '''') = '''')');
+                sql.add('and (isnull(Fim_Apropriacao, '''') = '''' or (substring(Fim_Apropriacao, 3, 4)+substring(Fim_Apropriacao, 1, 2) >= :pAnoMes))');
+                sql.add('order by Codigo');
+                paramByName('pAnoMes').AsString := cAno.Text+poezero(2, cMes.ItemIndex+1);
+                paramByName('pDataIni').AsDate   := mDataCIAPI;
+                //sql.SaveToFile('c:\temp\SPED_FISCAL_RegistroG125.sql');
+                open;
+
            end;
 
            While not tCIAP.Eof do begin

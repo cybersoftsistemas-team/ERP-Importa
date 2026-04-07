@@ -965,6 +965,7 @@ begin
                                     PagarReceberClassificacao.Value      := mClassificacao;
                                     PagarReceberCentro_Custo.Value       := mCentro_Custo;
                                     PagarReceberData_Documento.Value     := mData_Documento;
+                                    PagarReceberData_Previsao.Value      := TabParcelasVencimento.Value;
                                     PagarReceberData_Vencimento.Value    := TabParcelasVencimento.Value;
                                     PagarReceberValor_Documento.Value    := mValor_Documento;
                                     PagarReceberValor_Parcela.Value      := TabParcelasValor.Value;
@@ -1490,6 +1491,7 @@ begin
            PagarReceberFornecedor_Banco.Value   := FornecedoresBanco_Nome.Value;
            PagarReceberFornecedor_Conta.Value   := FornecedoresBanco_Conta.Value;
            PagarReceberFornecedor_Agencia.Value := FornecedoresBanco_Agencia.Value;
+           PagarReceberChave_PIX.Value          := FornecedoresChave_PIX.Value;
       End;
 end;
 
@@ -1608,77 +1610,77 @@ end;
 
 procedure TFinanceiro_Lancamento.cBeneficiarioExit(Sender: TObject);
 begin
-      Screen.Cursor := crSQLWait;
-      With Dados do begin
-           TiposProcesso.Locate('Codigo', ClientesModalidade_Importacao.AsInteger, [loCaseInsensitive]);
-           If (ClassificacaoFinanceiraBaixa_Automatica.AsBoolean = true) and (PagarReceberBanco.AsInteger = 0) then begin
-              If Bancos.Locate('Nome', FornecedoresNome.AsString, [loCaseInsensitive]) then begin
-                 PagarReceberBanco.Value := BancosCodigo.Value;
-              End;
-           End;
-           with tAdiantamentos do begin
-                SQL.Clear;
-                SQL.Add('SELECT Numero');
-                SQL.Add('      ,pr.Valor_Total');
-                SQL.Add('      ,pr.Data_Documento');
-                SQL.Add('      ,Adiantamento_Numero = isnull(Fornecedor, 0) + isnull(Cliente, 0)');
-                SQL.Add('      ,Beneficiario = CASE WHEN PR.Tipo = ''P'' THEN (SELECT Nome FROM Fornecedores FR WHERE FR.Codigo = PR.Fornecedor) ELSE (SELECT Nome FROM Clientes CL WHERE CL.Codigo = PR.Cliente) END');
-                SQL.Add('      ,PR.Banco');
-                SQL.Add('      ,PR.Forma_Tipo');
-                SQL.Add('      ,PR.Numero_FormaTipo');
-                SQL.Add('      ,(SELECT SUM(Valor) FROM PagarReceberBaixas PRB WHERE( PRB.Numero=PR.Numero)) AS Valor_Baixado');
-                SQL.Add('      ,PR.Tipo');
-                SQL.Add('      ,CNPJ = iif(pr.Tipo = ''P'', (select CNPJ from Fornecedores fr where fr.Codigo = pr.Fornecedor), (select CNPJ from Clientes cl where cl.Codigo = pr.Cliente))');
-                SQL.Add('FROM PagarReceber PR');
-                SQL.Add('WHERE Processo = :pProcesso');
-                If ConfiguracaoCompartilhar_Classificacao.AsBoolean = true then
-                   SQL.Add('and (select Adiantamento FROM Cybersoft_Cadastros.dbo.ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1')
-                else
-                   SQL.Add('and (select Adiantamento FROM ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1');
-                SQL.Add('ORDER  BY Beneficiario');
-                ParamByName('pProcesso').AsString := PagarReceberProcesso.AsString;
-                //SQL.SaveToFile('c:\temp\Adiantamentos.SQL');
-                tAdiantamentos.Open;
-           end;
-           with tBeneAdiant do begin
-                SQL.Clear;
-                SQL.Add('select distinct');
-                SQL.Add('       CNPJ = iif(pr.Tipo = ''P'', (select CNPJ from Fornecedores fr where fr.Codigo = pr.Fornecedor), (select CNPJ from Clientes cl where cl.Codigo = pr.Cliente))');
-                SQL.Add('      ,Adiantamento_Numero = isnull(Fornecedor, 0) + isnull(Cliente, 0)');
-                SQL.Add('      ,Beneficiario = iif(pr.Tipo = ''P'',(select Nome from Fornecedores fr where fr.Codigo = pr.Fornecedor), (select Nome from Clientes cl where cl.Codigo = pr.Cliente))');
-                SQL.Add('from PagarReceber pr');
-                sql.Add('where Processo = :pProcesso');
-                if ConfiguracaoCompartilhar_Classificacao.AsBoolean = true then
-                   sql.Add('and (select Adiantamento FROM Cybersoft_Cadastros.dbo.ClassificacaoFinanceira where Codigo = Classificacao) = 1')
-                else
-                   sql.Add('and (select Adiantamento from ClassificacaoFinanceira where Codigo = Classificacao) = 1');
-                sql.Add('order by Beneficiario, CNPJ, Adiantamento_Numero');
-                ParamByName('pProcesso').AsString := PagarReceberProcesso.AsString;
-                //sql.SaveToFile('c:\temp\Beneficiario_Adiantamentos.SQL');
-                Open;
-           end;
+     Screen.Cursor := crSQLWait;
+     With Dados do begin
+          TiposProcesso.Locate('Codigo', ClientesModalidade_Importacao.AsInteger, [loCaseInsensitive]);
+          If ClassificacaoFinanceiraBaixa_Automatica.AsBoolean and (PagarReceberBanco.AsInteger = 0) then begin
+             If Bancos.Locate('Nome', FornecedoresNome.AsString, [loCaseInsensitive]) then begin
+                PagarReceberBanco.Value := BancosCodigo.Value;
+             End;
+          End;
+          with tAdiantamentos do begin
+               SQL.Clear;
+               SQL.Add('SELECT Numero');
+               SQL.Add('      ,pr.Valor_Total');
+               SQL.Add('      ,pr.Data_Documento');
+               SQL.Add('      ,Adiantamento_Numero = isnull(Fornecedor, 0) + isnull(Cliente, 0)');
+               SQL.Add('      ,Beneficiario = CASE WHEN PR.Tipo = ''P'' THEN (SELECT Nome FROM Fornecedores FR WHERE FR.Codigo = PR.Fornecedor) ELSE (SELECT Nome FROM Clientes CL WHERE CL.Codigo = PR.Cliente) END');
+               SQL.Add('      ,PR.Banco');
+               SQL.Add('      ,PR.Forma_Tipo');
+               SQL.Add('      ,PR.Numero_FormaTipo');
+               SQL.Add('      ,(SELECT SUM(Valor) FROM PagarReceberBaixas PRB WHERE( PRB.Numero=PR.Numero)) AS Valor_Baixado');
+               SQL.Add('      ,PR.Tipo');
+               SQL.Add('      ,CNPJ = iif(pr.Tipo = ''P'', (select CNPJ from Fornecedores fr where fr.Codigo = pr.Fornecedor), (select CNPJ from Clientes cl where cl.Codigo = pr.Cliente))');
+               SQL.Add('FROM PagarReceber PR');
+               SQL.Add('WHERE Processo = :pProcesso');
+               If ConfiguracaoCompartilhar_Classificacao.AsBoolean = true then
+                  SQL.Add('and (select Adiantamento FROM Cybersoft_Cadastros.dbo.ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1')
+               else
+                  SQL.Add('and (select Adiantamento FROM ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1');
+               SQL.Add('ORDER  BY Beneficiario');
+               ParamByName('pProcesso').AsString := PagarReceberProcesso.AsString;
+               //SQL.SaveToFile('c:\temp\Adiantamentos.SQL');
+               tAdiantamentos.Open;
+          end;
+          with tBeneAdiant do begin
+               SQL.Clear;
+               SQL.Add('select distinct');
+               SQL.Add('       CNPJ = iif(pr.Tipo = ''P'', (select CNPJ from Fornecedores fr where fr.Codigo = pr.Fornecedor), (select CNPJ from Clientes cl where cl.Codigo = pr.Cliente))');
+               SQL.Add('      ,Adiantamento_Numero = isnull(Fornecedor, 0) + isnull(Cliente, 0)');
+               SQL.Add('      ,Beneficiario = iif(pr.Tipo = ''P'',(select Nome from Fornecedores fr where fr.Codigo = pr.Fornecedor), (select Nome from Clientes cl where cl.Codigo = pr.Cliente))');
+               SQL.Add('from PagarReceber pr');
+               sql.Add('where Processo = :pProcesso');
+               if ConfiguracaoCompartilhar_Classificacao.AsBoolean = true then
+                  sql.Add('and (select Adiantamento FROM Cybersoft_Cadastros.dbo.ClassificacaoFinanceira where Codigo = Classificacao) = 1')
+               else
+                  sql.Add('and (select Adiantamento from ClassificacaoFinanceira where Codigo = Classificacao) = 1');
+               sql.Add('order by Beneficiario, CNPJ, Adiantamento_Numero');
+               ParamByName('pProcesso').AsString := PagarReceberProcesso.AsString;
+               //sql.SaveToFile('c:\temp\Beneficiario_Adiantamentos.SQL');
+               Open;
+          end;
 
-           tSaldoAdiantamento.SQL.Clear;
-           tSaldoAdiantamento.SQL.Add('SELECT AdiantRec  = 0');
-           tSaldoAdiantamento.SQL.Add('      ,AdiantEfet = 0');
-           tSaldoAdiantamento.Open;
-           if trim(PagarReceberProcesso.AsString) <> '' then begin
-              tSaldoAdiantamento.SQL.Clear;
-              If ConfiguracaoCompartilhar_Classificacao.AsBoolean = true then begin
-                 tSaldoAdiantamento.SQL.Add('SELECT AdiantRec  = (SELECT SUM(Valor_Total) FROM PagarReceber WHERE Tipo = ''R'' AND Processo = :pProcesso AND (SELECT Adiantamento FROM Cybersoft_Cadastros.dbo.ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1)');
-                 tSaldoAdiantamento.SQL.Add('      ,AdiantEfet = (SELECT SUM(Valor_Total) FROM PagarReceber WHERE Tipo = ''P'' AND Processo = :pProcesso AND (SELECT Adiantamento FROM Cybersoft_Cadastros.dbo.ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1)');
-              end else begin
-                 tSaldoAdiantamento.SQL.Add('SELECT AdiantRec  = (SELECT SUM(Valor_Total) FROM PagarReceber WHERE Tipo = ''R'' AND Processo = :pProcesso AND (SELECT Adiantamento FROM ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1)');
-                 tSaldoAdiantamento.SQL.Add('      ,AdiantEfet = (SELECT SUM(Valor_Total) FROM PagarReceber WHERE Tipo = ''P'' AND Processo = :pProcesso AND (SELECT Adiantamento FROM ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1)');
-              end;
-              tSaldoAdiantamento.ParamByName('pProcesso').AsString := PagarReceberProcesso.AsString;
-              //tSaldoAdiantamento.SQL.SaveToFile('c:\temp\Saldo_Adiantamento.sql');
-              tSaldoAdiantamento.Open;
-           end;
-           cAdEfe.Value := tSaldoAdiantamento.FieldbyName('AdiantEfet').AsCurrency;
-           cAdRec.Value := tSaldoAdiantamento.FieldbyName('AdiantRec').AsCurrency;
-      End;
-      Screen.Cursor := crDefault;
+          tSaldoAdiantamento.SQL.Clear;
+          tSaldoAdiantamento.SQL.Add('SELECT AdiantRec  = 0');
+          tSaldoAdiantamento.SQL.Add('      ,AdiantEfet = 0');
+          tSaldoAdiantamento.Open;
+          if trim(PagarReceberProcesso.AsString) <> '' then begin
+             tSaldoAdiantamento.SQL.Clear;
+             If ConfiguracaoCompartilhar_Classificacao.AsBoolean = true then begin
+                tSaldoAdiantamento.SQL.Add('SELECT AdiantRec  = (SELECT SUM(Valor_Total) FROM PagarReceber WHERE Tipo = ''R'' AND Processo = :pProcesso AND (SELECT Adiantamento FROM Cybersoft_Cadastros.dbo.ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1)');
+                tSaldoAdiantamento.SQL.Add('      ,AdiantEfet = (SELECT SUM(Valor_Total) FROM PagarReceber WHERE Tipo = ''P'' AND Processo = :pProcesso AND (SELECT Adiantamento FROM Cybersoft_Cadastros.dbo.ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1)');
+             end else begin
+                tSaldoAdiantamento.SQL.Add('SELECT AdiantRec  = (SELECT SUM(Valor_Total) FROM PagarReceber WHERE Tipo = ''R'' AND Processo = :pProcesso AND (SELECT Adiantamento FROM ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1)');
+                tSaldoAdiantamento.SQL.Add('      ,AdiantEfet = (SELECT SUM(Valor_Total) FROM PagarReceber WHERE Tipo = ''P'' AND Processo = :pProcesso AND (SELECT Adiantamento FROM ClassificacaoFinanceira WHERE Codigo = Classificacao) = 1)');
+             end;
+             tSaldoAdiantamento.ParamByName('pProcesso').AsString := PagarReceberProcesso.AsString;
+             //tSaldoAdiantamento.SQL.SaveToFile('c:\temp\Saldo_Adiantamento.sql');
+             tSaldoAdiantamento.Open;
+          end;
+          cAdEfe.Value := tSaldoAdiantamento.FieldbyName('AdiantEfet').AsCurrency;
+          cAdRec.Value := tSaldoAdiantamento.FieldbyName('AdiantRec').AsCurrency;
+     End;
+     Screen.Cursor := crDefault;
 end;
 
 procedure TFinanceiro_Lancamento.cCentroCustoExit(Sender: TObject);
