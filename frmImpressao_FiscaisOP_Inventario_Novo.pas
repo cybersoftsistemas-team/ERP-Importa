@@ -186,13 +186,14 @@ begin
       else
          aINI.WriteInteger( 'IMPRESSAO_Ficha_Inventario','TipoProduto', 0);
          
-      aINI.WriteString ( 'IMPRESSAO_Ficha_Inventario','NCM', cNCM.Text);
+      aINI.WriteString ( 'IMPRESSAO_Ficha_Inventario','NCM'       , cNCM.Text);
       aINI.WriteInteger( 'IMPRESSAO_Ficha_Inventario','PaginaIni' , cPaginaIni.AsInteger);
       aINI.WriteInteger( 'IMPRESSAO_Ficha_Inventario','Inventario', cInventario.ItemIndex);
       aINI.WriteInteger( 'IMPRESSAO_Ficha_Inventario','Ordem'     , cOrdem.ItemIndex);
       aINI.WriteInteger( 'IMPRESSAO_Ficha_Inventario','Situacao'  , cSituacao.ItemIndex);
       aINI.WriteBool   ( 'IMPRESSAO_Ficha_Inventario','Excel'     , cExcel.Checked);
       aINI.WriteBool   ( 'IMPRESSAO_Ficha_Inventario','Terceiros' , cTerceiros.Checked);
+      aINI.WriteString ( 'IMPRESSAO_Ficha_Inventario','Codigo'    , cCodigo.Text);
       aINI.Free;
       
       Impressao_FiscaisOP_Inventario_Novo.Release;
@@ -547,12 +548,23 @@ begin
               sql.add('                         where fi.Codigo = ni.Codigo_Mercadoria');
               sql.add('                         and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0))');
               }              
+              {
               sql.Add('      ,Valor_Unitario = (select round(isnull(Unitario_Saldo,0), 4)');
               sql.add('                         from FichaInventario fi');
               sql.add('                         where fi.Codigo = ni.Codigo_Mercadoria');
               sql.add('                         and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0))');
+              }
+              sql.Add('      ,Valor_Unitario = case when (select round(isnull(Unitario_Saldo, 0), 4) from FichaInventario fi where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria');
+              sql.add('                             and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0)) > 0 then');
+              sql.add('                             (select round(isnull(Unitario_Saldo,0), 4) from FichaInventario fi where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2');
+              sql.add('                              where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0))');
+              sql.add('                        else');
+              sql.add('                             (select round(isnull(Unitario_Entrada,0)+isnull(Unitario_Saida, 0), 4)');
+              sql.Add('                              from FichaInventario fi');
+              sql.add('                              where fi.Codigo = ni.Codigo_Mercadoria');
+              sql.add('                              and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM''))');
+              sql.add('                        end');
               sql.Add('      ,Estoque = ''1-ARMAZEM'' ');
-              
               sql.Add('from NotasItens ni');
               sql.Add('where ni.Data <= :pData');
               if trim(cCodigo.Text) <> '' then begin
@@ -586,10 +598,16 @@ begin
               sql.add('                         where fi.Codigo = ni.Codigo_Mercadoria');
               sql.add('                         and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0))');
               }
-              sql.Add('      ,Valor_Unitario = (select round(isnull(Unitario_Saldo,0), 4)');
-              sql.add('                         from FichaInventario fi');
-              sql.add('                         where fi.Codigo = ni.Codigo_Mercadoria');
-              sql.add('                         and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0))');
+              sql.Add('      ,Valor_Unitario = case when (select round(isnull(Unitario_Saldo, 0), 4) from FichaInventario fi where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria');
+              sql.add('                             and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0)) > 0 then');
+              sql.add('                             (select round(isnull(Unitario_Saldo,0), 4) from FichaInventario fi where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2');
+              sql.add('                              where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0))');
+              sql.add('                        else');
+              sql.add('                             (select round(isnull(Unitario_Entrada,0)+isnull(Unitario_Saida, 0), 4)');
+              sql.Add('                              from FichaInventario fi');
+              sql.add('                              where fi.Codigo = ni.Codigo_Mercadoria');
+              sql.add('                              and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM''))');
+              sql.add('                        end');
               sql.Add('      ,Estoque = ''1-ARMAZEM'' ');
               sql.Add('from NotasTerceirosItens ni');
               sql.Add('where ni.Data_Entrada <= :pData');
@@ -624,9 +642,16 @@ begin
               sql.add('                         from FichaInventario fi');
               sql.add('                         where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0))');
               }
-              sql.Add('      ,Valor_Unitario = (select round(isnull(Unitario_Saldo, 0), 4)');
-              sql.add('                         from FichaInventario fi');
-              sql.add('                         where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0))');
+              sql.Add('      ,Valor_Unitario = case when (select round(isnull(Unitario_Saldo, 0), 4) from FichaInventario fi where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria');
+              sql.add('                             and Data <= :pData and Estoque = ''2-TERCEIROS'' and Unitario_Saldo > 0)) > 0 then');
+              sql.add('                             (select round(isnull(Unitario_Saldo,0), 4) from FichaInventario fi where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2');
+              sql.add('                              where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''2-TERCEIROS'' and Unitario_Saldo > 0))');
+              sql.add('                        else');
+              sql.add('                             (select round(isnull(Unitario_Entrada,0)+isnull(Unitario_Saida, 0), 4)');
+              sql.Add('                              from FichaInventario fi');
+              sql.add('                              where fi.Codigo = ni.Codigo_Mercadoria');
+              sql.add('                              and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''2-TERCEIROS''))');
+              sql.add('                        end');
               sql.Add('      ,Estoque = ''2-TERCEIROS'' ');
               sql.Add('from NotasItens ni');
               sql.Add('where ni.Data <= :pData');
@@ -660,9 +685,16 @@ begin
               sql.add('                         from FichaInventario fi');
               sql.add('                         where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0))');
               }
-              sql.Add('      ,Valor_Unitario = (select round(isnull(Unitario_Saldo,0), 4)');
-              sql.add('                         from FichaInventario fi');
-              sql.add('                         where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''1-ARMAZEM'' and Unitario_Saldo > 0))');
+              sql.Add('      ,Valor_Unitario = case when (select round(isnull(Unitario_Saldo, 0), 4) from FichaInventario fi where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria');
+              sql.add('                             and Data <= :pData and Estoque = ''2-TERCEIROS'' and Unitario_Saldo > 0)) > 0 then');
+              sql.add('                             (select round(isnull(Unitario_Saldo,0), 4) from FichaInventario fi where fi.Codigo = ni.Codigo_Mercadoria and fi.Item = (select max(Item) from FichaInventario fi2');
+              sql.add('                              where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''2-TERCEIROS'' and Unitario_Saldo > 0))');
+              sql.add('                        else');
+              sql.add('                             (select round(isnull(Unitario_Entrada,0)+isnull(Unitario_Saida, 0), 4)');
+              sql.Add('                              from FichaInventario fi');
+              sql.add('                              where fi.Codigo = ni.Codigo_Mercadoria');
+              sql.add('                              and fi.Item = (select max(Item) from FichaInventario fi2 where fi2.Codigo = ni.Codigo_Mercadoria and Data <= :pData and Estoque = ''2-TERCEIROS''))');
+              sql.add('                        end');
               sql.Add('      ,Estoque = ''2-TERCEIROS'' ');
               sql.Add('from NotasTerceirosItens ni');
               sql.Add('where ni.Data_Entrada <= :pData');
@@ -766,6 +798,7 @@ begin
       cSituacao.ItemIndex   := aINI.ReadInteger('IMPRESSAO_Ficha_Inventario','Situacao'   , 0);
       cExcel.Checked        := aINI.ReadBool   ('IMPRESSAO_Ficha_Inventario','Excel'      , false);
       cTerceiros.Checked    := aINI.ReadBool   ('IMPRESSAO_Ficha_Inventario','Terceiros'  , false);
+      cCodigo.Text          := aINI.ReadString ('IMPRESSAO_Ficha_Inventario','Codigo'     , '');
       aINI.Free;
 
       With Dados do begin

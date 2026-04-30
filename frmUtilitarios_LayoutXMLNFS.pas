@@ -25,16 +25,12 @@ type
     StaticText4: TStaticText;
     Edit2: TEdit;
     bSalvar: TButton;
-    StaticText1: TStaticText;
     Municipios: TMSQuery;
     dsMuni: TDataSource;
-    cMun: TDBLookupComboBox;
     MunicipiosCodigo: TIntegerField;
     MunicipiosEstado: TSmallintField;
     MunicipiosNome: TStringField;
     MunicipiosUF: TStringField;
-    StaticText5: TStaticText;
-    cCodmun: TEdit;
     bLimpar: TButton;
     MenuOp: TPopupMenu;
     MenuItem1: TMenuItem;
@@ -53,9 +49,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure CapturaClick(Sender: TObject);
     procedure cArquivoChange(Sender: TObject);
-    procedure cMunExit(Sender: TObject);
     procedure bSalvarClick(Sender: TObject);
-    procedure cCodmunChange(Sender: TObject);
     procedure bLimparClick(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
     procedure bImportarClick(Sender: TObject);
@@ -66,6 +60,7 @@ type
     procedure PegaNo;
     procedure CarregaMenu;
     procedure CarregaDados;
+    procedure PegaLayout;
     { Private declarations }
   public
     { Public declarations }
@@ -128,12 +123,22 @@ begin
                  end;
                  if Filho <> nil then begin
                     mVal := Filho.Text;
-                    cDados.lines.add( concat(gCampos.cells[0, l], StringOfChar('.',25-Length(gCampos.cells[0, l])), gCampos.cells[MaxNivel,l], StringOfChar('.',25-Length(gCampos.cells[maxnivel, l])),': ', mval) );
+                    cDados.lines.add(concat(gCampos.cells[0, l]
+                                    ,StringOfChar('.',30-Length(gCampos.cells[0, l]))
+                                    ,' '
+                                    ,gCampos.cells[MaxNivel,l]
+                                    ,StringOfChar('.',30-Length(gCampos.cells[maxnivel, l]))
+                                    ,': '
+                                    , mval) );
                  end;
               except 
-                 cDados.lines.add(StringOfChar('-',110));
-                 cDados.lines.add(concat(gCampos.cells[0, l], StringOfChar('.',25-Length(gCampos.cells[0, l])), gCampos.cells[MaxNivel,l], StringOfChar('.',25-Length(gCampos.cells[maxnivel, l])),': ', '*************************[ ERRO ]*************************') );
-//                 cDados.lines.add(StringOfChar('-',110));
+                 cDados.lines.add(concat(gCampos.cells[0, l]
+                                 ,StringOfChar('.',30-Length(gCampos.cells[0, l]))
+                                 ,' '
+                                 ,gCampos.cells[MaxNivel,l]
+                                 ,StringOfChar('.',30-Length(gCampos.cells[maxnivel, l]))
+                                 ,': '
+                                 ,'********** TAG NÃO ENCONTRADA NO ARQUIVO XML **********'));
               end;
           end;
      end;
@@ -273,7 +278,7 @@ begin
      XML.PopupMenu := menuCampos;
 end;
 
-procedure TUtilitarios_LayOutXMLNFS.cCodmunChange(Sender: TObject);
+procedure TUtilitarios_LayOutXMLNFS.PegaLayout;
 var
    col, lin:integer;
 begin
@@ -281,7 +286,7 @@ begin
      with Temp do begin
           sql.clear;
           sql.add('select * from Cybersoft_Cadastros.dbo.LayoutNFS where Municipio = :pMun');
-          parambyname('pMun').AsString := cCodMun.Text;
+          parambyname('pMun').AsString := '9999999';
           open;
           first;
           while not eof do begin
@@ -291,7 +296,6 @@ begin
                 inc(lin);
                 next;
           end;
-          if recordcount > 0 then autoajustecol(gCampos);
      end;
      autoajustecol(gCampos);
 end;
@@ -304,11 +308,6 @@ end;
 procedure TUtilitarios_LayOutXMLNFS.cMunClick(Sender: TObject);
 begin
     CarregaMenu;
-end;
-
-procedure TUtilitarios_LayOutXMLNFS.cMunExit(Sender: TObject);
-begin
-     cCodMun.Text := Municipios.FieldByName('Codigo').AsString;
 end;
 
 procedure TUtilitarios_LayOutXMLNFS.CapturaClick(Sender: TObject);
@@ -397,6 +396,8 @@ begin
       XML.Select(XML.Items.GetFirstNode);
       Edit1.Text := XMLDoc.Version;
       Edit2.Text := XMLDoc.Encoding;
+
+      PegaLayout;
 end;
 
 procedure TUtilitarios_LayOutXMLNFS.bSalvarClick(Sender: TObject);
@@ -405,10 +406,10 @@ var
    val:string;
    par:boolean;
 begin
-     if trim(cCodMun.Text) = '' then begin
-        messagedlg('Municipio não informado!',mterror, [mbok], 0);
-        Abort;
-     end;
+//     if trim(cCodMun.Text) = '' then begin
+//        messagedlg('Municipio não informado!',mterror, [mbok], 0);
+//        Abort;
+//     end;
      par := false;
      for l := 0 to pred(gCampos.RowCount) do begin
          if gCampos.Cells[0,l] <> '' then begin
@@ -423,14 +424,14 @@ begin
      with Temp do begin
           sql.Clear;
           sql.Add('delete from Cybersoft_Cadastros.dbo.LayoutNFS where Municipio = :pMun');
-          parambyname('pMun').AsString := cCodMun.Text;
+          parambyname('pMun').AsString := '9999999';
           execute;
           sql.Clear;
           sql.Add('insert into Cybersoft_Cadastros.dbo.LayoutNFS (Municipio, Campo_Tabela, Node01, Node02, Node03, Node04, Node05, Node06, Node07, Node08, Node09, Node10, Node11, Node12, Node13, Node14, Node15)');
           sql.Add('values ');
           for l := 0 to pred(gCampos.RowCount) do begin
               if trim(gCampos.Cells[0, l]) <> '' then begin
-                 val := '('+quotedstr(cCodMun.Text)+',';
+                 val := '('+quotedstr('9999999')+',';
                  for c := 0 to gCampos.ColCount do begin
                      if trim(gCampos.cells[c, l]) <> '' then begin
                         val := val + quotedstr(gCampos.cells[c, l])+',';
@@ -448,7 +449,7 @@ begin
           //sql.SaveToFile('c:\temp\layout_NFS.sql');
           execute;
      end;
-     messagedlg('Layout de Nota Fiscal de Serviço de '+cMun.Text+' salvo com sucesso!',mtInformation, [mbok], 0);
+     messagedlg('Layout de Nota Fiscal de Serviço eletrônica salvo com sucesso!',mtInformation, [mbok], 0);
 end;
 
 end.

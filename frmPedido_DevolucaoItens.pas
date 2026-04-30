@@ -673,6 +673,12 @@ begin
                       PedidosValor_ICMSMonoRet.Value      := 0;
                       PedidosValor_AFRMM.Value            := 0;
                       PedidosValor_IPIDevol.Value         := 0;
+                      PedidosValor_BCCBS.value            := 0;
+                      PedidosValor_CBS.value              := 0;
+                      PedidosValor_BCIBS.Value            := 0;
+                      PedidosValor_IBS.value              := 0;
+                      PedidosValor_BCIS.value             := 0;
+                      PedidosValor_IS.value               := 0; 
               Pedidos.Post;
 
               // Totaliza os PRODUTOS e o total do IPI via macro e atualiza a tabela de pedidos.
@@ -765,13 +771,20 @@ begin
                             else
                                PedidosValor_AFRMM.Value := PedidosValor_AFRMM.Value + (PedidosItensValor_AFRMM.Value / (PedidosItensQuantidade.Value * ProdutosQuantidade_Unidade.Value));
                             PedidosValor_IPIDevol.Value := PedidosValor_IPIDevol.Value + PedidosItensValor_IPIDevol.Value;
-
+                            {
                             PedidosValor_BCCBS.value := PedidosItensValor_BCCBS.value + PedidosValor_BCCBS.value;
                             PedidosValor_CBS.value   := PedidosItensValor_CBS.value + PedidosValor_CBS.value;
                             PedidosValor_BCIBS.Value := PedidosItensValor_BCIBS.value + PedidosValor_BCIBS.value;
                             PedidosValor_IBS.value   := PedidosItensValor_IBS.value + PedidosValor_IBS.value;
                             PedidosValor_BCIS.value  := PedidosItensValor_BCIS.value + PedidosValor_BCIS.value;
                             PedidosValor_IS.value    := PedidosItensValor_IS.value + PedidosValor_IS.value;
+                            }
+                            PedidosValor_BCCBS.value := PedidosValor_BCCBS.value + PedidosItensValor_BCCBS.value;
+                            PedidosValor_CBS.value   := PedidosValor_CBS.value   + PedidosItensValor_CBS.value;
+                            PedidosValor_BCIBS.Value := PedidosValor_BCIBS.value + PedidosItensValor_BCIBS.value;
+                            PedidosValor_IBS.value   := PedidosValor_IBS.value   + PedidosItensValor_IBS.value;   
+                            PedidosValor_BCIS.value  := PedidosValor_BCIS.value  + PedidosItensValor_BCIS.value;  
+                            PedidosValor_IS.value    := PedidosValor_IS.value    + PedidosItensValor_IS.value;    
                     Pedidos.Post;
                     Janela_Processamento.Progresso.Position := Janela_Processamento.Progresso.Position +1;
                     PedidosItens.Next;

@@ -483,17 +483,17 @@ Var
     mTipo: String;
 begin
      if trim(cVersao.text) = '' then begin
-        MessageDlg('Campo "Vers o"   obrogat rio.', mtError, [mbOK], 0);
+        MessageDlg('Campo "Versão"   obrogatório.', mtError, [mbOK], 0);
         cVersao.SetFocus;
         Abort;
      end;
      If (Trim(cRecibo.Text) = '') and (cTipo.ItemIndex = 1) then begin
-        MessageDlg('Para escritura  o retificadora e obrigat rio o n mero do recibo de entrega anterior!'+#13+#13+'Informe o n mero do recibo para gerar o arquivo.', mtInformation, [mbOK], 0);
+        MessageDlg('Para escrituração retificadora e obrigat rio o n mero do recibo de entrega anterior!'+#13+#13+'Informe o n mero do recibo para gerar o arquivo.', mtInformation, [mbOK], 0);
         cRecibo.SetFocus;
         Abort;
      End;
      If (cMetodo.ItemIndex = -1) and (cIncidencia.ItemIndex <> 1) then begin
-        MessageDlg('Informe o "M todo de apropria  o de cr ditos comuns" para gerar o arquivo.', mtInformation, [mbOK], 0);
+        MessageDlg('Informe o "M todo de apropriação de créditos comuns" para gerar o arquivo.', mtInformation, [mbOK], 0);
         cmetodo.SetFocus;
         Abort;
      End;
@@ -501,7 +501,7 @@ begin
      Screen.Cursor  := crSQLWait;
      Panel1.Caption := ' Aguarde...Fazendo verificação dos dados.';
      Application.ProcessMessages;
-     
+
      With Dados,dmFiscal do Begin
           Empresas.SQL.Clear;
           Empresas.SQL.Add('SELECT * FROM Empresas WHERE (Codigo = :pEmpresa)');
@@ -541,7 +541,7 @@ begin
           //tItens.SQL.SaveToFile('c:\temp\SCRIPT_PIS_COFINS.SQL');
           tItens.Execute;
           }
-          // Verifica se as al quota b sicas de PIS/COFINS Est o informadas em "Configura  oes".
+          // Verifica se as al quota b sicas de PIS/COFINS Est o informadas em "Configurações".
           If ConfiguracaoPIS_AliquotaBasica.AsFloat <= 0 then begin
              Inc(mErros);
              cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': Informar a al quota b sica do PIS nas configura  es do sistema.');
@@ -900,15 +900,15 @@ begin
              While not tClassificacao.Eof do begin
                    If tClassificacao.FieldByName('Tipo_Credito').AsInteger = 0  then begin
                       //Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Cr dito" na Classifica  o Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Cr dito" na Classificação Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
                    End;
                    If Trim(tClassificacao.FieldByName('CST_COFINS').AsString) = '' then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Classifica  o Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Classificação Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
                    End;
                    If Trim(tClassificacao.FieldByName('Natureza_Receita').AsString) = '' then begin
                       Inc(mErros);
-                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "C digo da Natureza da Receita" na Classifica  o Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
+                      cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "C digo da Natureza da Receita" na Classificação Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
                    End;
                    tClassificacao.Next;
              End;
@@ -953,11 +953,11 @@ begin
                    While not tClassificacao.Eof do begin
                          If tClassificacao.FieldByName('Tipo_Credito').AsInteger = 0  then begin
                             //Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Cr dito" na Classifica  o Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "Tipo B.C.Cr dito" na Classificação Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
                          End;
                          If Trim(tClassificacao.FieldByName('CST_COFINS').AsString) = '' then begin
                             Inc(mErros);
-                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Classifica  o Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
+                            cMsg.Lines.Add('Erro '+PoeZero(3, mErros)+': '+'Informar "CST da COFINS" na Classificação Financeira : '+tClassificacao.FieldByName('Codigo').AsString+' - '+tClassificacao.FieldByName('Descricao').AsString);
                          End;
                          tClassificacao.Next;
                    End;
@@ -1492,7 +1492,7 @@ begin
           Janela_ProcessamentoSPED.lProcesso.Caption  := 'Gerando...'+cNomeArquivo.Text;
           Janela_ProcessamentoSPED.Show;
           
-          // BLOCO 0: (Abertura, Identifica  o e Refer ncias).
+          // BLOCO 0: (Abertura, Identificaçaão e Referências).
           If Funcoes.Cancelado = false then Registro0000;
                       If Funcoes.Cancelado = false then Registro0001;
                                   If Funcoes.Cancelado = false then Registro0100;
@@ -1630,7 +1630,7 @@ begin
            mRegistro := '|0000' +                                                                 // 01 - REG.
                         '|'+ cVersao.text +                                                       // 02 - Codigo Versao Layout.
                         '|'+ InttoStr(cTipo.ItemIndex) +                                          // 03 - Codigo da finalidade do arquivo.
-                        '|'+ mSituacao +                                                          // 04 - Indicador de situa  o especial.
+                        '|'+ mSituacao +                                                          // 04 - Indicador de situação especial.
                         '|'+ Trim(cRecibo.Text) +                                                 // 05 - N mero do recibo anterior.
                         '|'+ RemoveCaracter('/','',mDataIni) +                                    // 06 - Data inicial dos dados.
                         '|'+ RemoveCaracter('/','',mDataFim) +                                    // 07 - Data final dos dados.
@@ -1748,16 +1748,16 @@ begin
       End;
 end;
 
-{* REGISTRO 0110 - REGIMES DE APURA  O DA CONTRIBUI  O SOCIAL E DE APROPRIA  O DE CR DITO *}
+{* REGISTRO 0110 - REGIMES DE APURAÇÃO DA CONTRIBUIÇÃO SOCIAL E DE APROPRIAÇÃO DE CRÉDITO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.Registro0110;
 begin
-      Progresso1('Regimes de Apura  o da Contribui  o', 1);
+      Progresso1('Regimes de Apuração da Contribuição', 1);
 
       Inc(mLinha);
       mRegistro := '|0110' +                                                              // 01 - REG.
                    '|'+ InttoStr(cIncidencia.ItemIndex+1);                                // 02 - Codigo de incidencia tribbutaria.
                    If cMetodo.ItemIndex <> -1 then begin
-                      mRegistro := mRegistro + '|'+ InttoStr(cMetodo.ItemIndex+1);        // 03 - C digo indicador de m todo de apropria  o de cr ditos comuns, no caso de incid ncia no regime n o-cumulativo.
+                      mRegistro := mRegistro + '|'+ InttoStr(cMetodo.ItemIndex+1);        // 03 - C digo indicador de m todo de apropriação de cr ditos comuns, no caso de incid ncia no regime n o-cumulativo.
                    end else begin
                       mRegistro := mRegistro + '|';
                    End;
@@ -1832,7 +1832,7 @@ begin
       mRegistro := '|0111' +                                                                     // 01 - REG.
                    '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_Trib').AsCurrency) +      // 02 - Receita Bruta N o-Cumulativa - Tributada no Mercado Interno.
                    '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_NTrib').AsCurrency) +     // 03 - Receita Bruta N o-Cumulativa - N o Tributada no Mercado Interno (Vendas com suspens o, al quota zero, isen  o e sem incid ncia das contribui  es).
-                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_Export').AsCurrency) +    // 04 - Receita Bruta N o-Cumulativa - Exporta  o.
+                   '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_Export').AsCurrency) +    // 04 - Receita Bruta N o-Cumulativa - Exportação.
                    '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_Cumul').AsCurrency) +     // 05 - Receita Bruta Cumulativa.
                    '|'+ FormatFloat('#0.00', mTotalBruto) +                                      // 06 - Receita Bruta total.
                    '|';
@@ -2038,8 +2038,36 @@ begin
          tNotas.SQL.Add('FROM   Clientes, PagarReceber, Cybersoft_Cadastros.dbo.ClassificacaoFinanceira');
          tNotas.SQL.Add('WHERE (PagarReceber.Tipo = ''R'') AND (Cybersoft_Cadastros.dbo.ClassificacaoFinanceira.Codigo = PagarReceber.Classificacao) AND (ISNULL(Cybersoft_Cadastros.dbo.ClassificacaoFinanceira.CST_PIS, '''') <> '''')');
       End;
-
       tNotas.SQL.Add('      AND (YEAR(Data_Vencimento) = :pAno AND MONTH(Data_Vencimento) = :pMes) AND (Cliente = Clientes.Codigo)');
+
+
+      tNotas.SQL.Add('UNION  ALL');
+      tNotas.SQL.Add('select distinct');
+      tNotas.SQL.Add('       cast(Cliente as varchar(6))+''C'' as Codigo,');
+      tNotas.SQL.Add('       Cli.Nome,');
+      tNotas.SQL.Add('       Cli.Pais,');
+      tNotas.SQL.Add('       Cli.CNPJ,');
+      tNotas.SQL.Add('       Cli.CPF,');
+      tNotas.SQL.Add('       Cli.Inscricao_Estadual,');
+      tNotas.SQL.Add('       Cli.Municipio_Codigo,');
+      tNotas.SQL.Add('       Cli.SUFRAMA,');
+      tNotas.SQL.Add('       Cli.Rua,');
+      tNotas.SQL.Add('       Cli.Rua_Numero,');
+      tNotas.SQL.Add('       '''',');
+      tNotas.SQL.Add('       Cli.Bairro');
+      tNotas.SQL.Add('from PagarReceber pr, PagarReceberBaixas prb, Clientes cli');
+      if Dados.ConfiguracaoCompartilhar_Classificacao.AsBoolean = false then begin
+         tNotas.SQL.Add('where (select isnull(Juros_SPEDPISCOFINS, 0) from ClassificacaoFinanceira where Codigo = Classificacao) = 1');
+      end else begin
+         tNotas.SQL.Add('where (select isnull(Juros_SPEDPISCOFINS, 0) from Cybersoft_Cadastros.dbo.ClassificacaoFinanceira where Codigo = Classificacao) = 1');
+      end;
+      tNotas.SQL.Add('and isnull(Provisorio, 0) = 0');
+      tNotas.SQL.Add('and isnull(prb.Juros, 0) > 0');
+      tNotas.SQL.Add('and prb.Numero = pr.Numero ');
+      tNotas.SQL.Add('and cli.Codigo = pr.Cliente');
+      tNotas.SQL.Add('and (year(prb.Data) = :pAno and month(prb.Data) = :pMes)');
+
+      
       tNotas.SQL.Add('UNION  ALL');
       tNotas.SQL.Add('SELECT DISTINCT');
       tNotas.SQL.Add('       CAST(Cliente AS VARCHAR(6))+''C'',');
@@ -2190,7 +2218,7 @@ begin
       End;
 end;
 
-{* REGISTRO 0200: TABELA DE IDENTIFICA  O DO ITEM (PRODUTOS E SERVI OS *}
+{* REGISTRO 0200: TABELA DE IDENTIFIÇÃO DO ITEM (PRODUTOS E SERVIÇOS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.Registro0200(Empresa: Integer);
 Var
     mDescricao: WideString;
@@ -2206,7 +2234,6 @@ begin
      tItens.SQL.Add('       Codigo_Mercadoria AS Codigo_Produto,');
      tItens.SQL.Add('       CAST('''' AS VARCHAR(250)) AS Descricao_Mercadoria,');
      tItens.SQL.Add('       CAST('''' AS VARCHAR(8)) AS NCM,');
-//     tItens.SQL.Add('       (SELECT Produtos.Tipo_Item FROM Produtos WHERE(Codigo_Mercadoria = Produtos.Codigo)) AS Tipo_Item,');
      tItens.SQL.Add('       Tipo_Item = cast(null as smallint),');
      tItens.SQL.Add('       NULL AS EX_TIPI,');
      tItens.SQL.Add('       NULL AS Genero,');
@@ -2227,7 +2254,6 @@ begin
      tItens.SQL.Add('       Codigo_Mercadoria AS Codigo_Produto,');
      tItens.SQL.Add('       CAST('''' AS VARCHAR(250)) AS Descricao_Mercadoria,');
      tItens.SQL.Add('       CAST('''' AS VARCHAR(8)) AS NCM,');
-//     tItens.SQL.Add('       (SELECT Produtos.Tipo_Item FROM Produtos WHERE(Codigo_Mercadoria = Produtos.Codigo)) AS Tipo_Item,');
      tItens.SQL.Add('       Tipo_Item = cast(null as smallint),');
      tItens.SQL.Add('       NULL AS EX_TIPI,');
      tItens.SQL.Add('       NULL AS Genero,');
@@ -2241,7 +2267,6 @@ begin
      tItens.SQL.Add('       Codigo_Mercadoria AS Codigo_Produto,');
      tItens.SQL.Add('       CAST('''' AS VARCHAR(250)) AS Descricao_Mercadoria,');
      tItens.SQL.Add('       NULL AS NCM,');
-//     tItens.SQL.Add('       ISNULL((SELECT Produtos.Tipo_Item FROM Produtos WHERE(Codigo_Mercadoria = Produtos.Codigo)), 09) AS Tipo_Item,');
      tItens.SQL.Add('       Tipo_Item = cast(null as smallint),');
      tItens.SQL.Add('       NULL AS EX_TIPI,');
      tItens.SQL.Add('       NULL AS Genero,');
@@ -2249,8 +2274,6 @@ begin
      tItens.SQL.Add('FROM   NotasTerceirosItens NTI');
      tItens.SQL.Add('WHERE (MONTH(NTI.Data_Entrada) = :pMes) AND (YEAR(NTI.Data_Entrada) = :pAno)');
      tItens.SQL.Add('AND   (Apuracao_PISCOFINS = 1)');
-//     tItens.SQL.Add('AND   ISNULL((SELECT Provisoria FROM NotasTerceiros NT WHERE NT.Nota = NTI.Nota AND NT.Data_Emissao  = NTI.Data_Emissao AND NT.Fornecedor = NTI.Fornecedor), 0) = 0');
-//     tItens.SQL.Add('AND   ISNULL((SELECT Desdobramento FROM NotasTerceiros NT WHERE NT.Nota = NTI.Nota AND NT.Data_Emissao  = NTI.Data_Emissao AND NT.Fornecedor = NTI.Fornecedor), 0) = 0');
    tItens.SQL.Add('AND   ISNULL((SELECT Provisoria FROM NotasTerceiros NT WHERE NT.Nota = NTI.Nota AND NT.Data_Emissao  = NTI.Data_Emissao AND NT.Fornecedor = NTI.Fornecedor and nt.Natureza_Codigo = NTI.Natureza_Codigo), 0) = 0');
    tItens.SQL.Add('AND   ISNULL((SELECT Desdobramento FROM NotasTerceiros NT WHERE NT.Nota = NTI.Nota AND NT.Data_Emissao  = NTI.Data_Emissao AND NT.Fornecedor = NTI.Fornecedor and nt.Natureza_Codigo = NTI.Natureza_Codigo), 0) = 0');
 
@@ -2273,7 +2296,6 @@ begin
         tItens.SQL.Add('       Codigo_Mercadoria AS Codigo_Produto,');
         tItens.SQL.Add('       (SELECT CAST(Descricao AS VARCHAR(250)) FROM Produtos WHERE(Codigo_Mercadoria = Produtos.Codigo)) AS Descricao_Mercadoria,');
         tItens.SQL.Add('       NCM,');
-//        tItens.SQL.Add('       (SELECT Produtos.Tipo_Item FROM Produtos WHERE(Codigo_Mercadoria = Produtos.Codigo)) AS Tipo_Item,');
         tItens.SQL.Add('       Tipo_Item = cast(null as smallint),');
         tItens.SQL.Add('       NULL AS EX_TIPI,');
         tItens.SQL.Add('       NULL AS Genero,');
@@ -2297,7 +2319,6 @@ begin
      tItens.SQL.Add('       Descricao_Mercadoria,');
      tItens.SQL.Add('       ISNULL((SELECT Unidade FROM Produtos WHERE(Codigo = Codigo_Produto)), ''UN'') AS Unidade_Medida,');
      tItens.SQL.Add('       NCM,');
-//     tItens.SQL.Add('       Tipo_Item,');
      tItens.SQL.Add('       Tipo_Item = (select isnull(pd.Tipo_Item, 9) from Produtos pd where pd.Codigo = Codigo_Produto and Tipo_Item is null),');
      tItens.SQL.Add('       EX_TIPI,');
      tItens.SQL.Add('       Genero,');
@@ -2713,7 +2734,7 @@ end;
 {* REGISTRO A010 -  "Identifica  o do estabelecimento" *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroA010;
 begin
-      Progresso1('Identifica  o do estabelecimento', tEmpresas.RecordCount+1);
+      Progresso1('Identificação do estabelecimento', tEmpresas.RecordCount+1);
 
       // Matriz.
       Inc(mLinha);
@@ -3106,7 +3127,7 @@ end;
 {* REGISTRO C010 -  "Identifica  o do estabelecimento" *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC010;
 begin
-      Progresso1('Identifica  o do estabelecimento', tEmpresas.RecordCount+1);
+      Progresso1('Identificação do estabelecimento', tEmpresas.RecordCount+1);
 
       // Matriz.
       Inc(mLinha);
@@ -3661,7 +3682,7 @@ begin
                               '|0' +                                                                                   // 09 - Movimenta  o;
                               '|' + Trim(tItens.FieldByName('CST_ICMS').AsString) +                                    // 10 - CST do ICMS.
                               '|' + tItens.FieldByName('Natureza_Codigo').AsString +                                   // 11 - CFOP C digo Fiscal de Opera  o e Presta  o.
-                              '|' +                                                                                    // 12 - C digo da natureza da opera  o.
+                              '|' +                                                                                    // 12 - Código da natureza da opera  o.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Valor_BCICMSOper').AsCurrency) +           // 13 - Valor da B.C.ICMS Operacional.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Aliquota_ICMSOper').AsFloat) +             // 14 - Aliquota do ICMS Operacional.
                               '|' + FormatFloat('0.00', tItens.FieldByName('Valor_ICMSOper').AsCurrency) +             // 15 - Valor do ICMS Operacional.
@@ -3700,7 +3721,7 @@ begin
       End;
 end;
 
-{* REGISTRO C180 -  Consolida  o dos itens da NF-e (Vendas) *}
+{* REGISTRO C180 -  Consolidação dos itens da NF-e (Vendas) *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC180(Empresa: Integer);
 begin
       tItens.SQL.Clear;
@@ -3751,7 +3772,7 @@ begin
       End;
 end;
 
-{* REGISTRO C181 - DETALHAMENTO DA CONSOLIDA  O   OPERA  ES DE VENDAS   PIS/PASEP }
+{* REGISTRO C181 - DETALHAMENTO DA CONSOLIDAÇÃO   OPERA  ES DE VENDAS   PIS/PASEP }
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC181(Codigo_Item, Empresa: Integer);
 begin
       tItens2.SQL.Clear;
@@ -3809,7 +3830,7 @@ begin
       End;
 end;
 
-{* REGISTRO C185 -  Consolida  o dos itens da NF-e COFINS *}
+{* REGISTRO C185 -  Consolidação dos itens da NF-e COFINS *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC185(Codigo_Item, Empresa: Integer);
 begin
       tItens2.SQL.Clear;
@@ -3867,7 +3888,7 @@ begin
       End;
 end;
 
-{* REGISTRO C190: CONSOLIDA  O DE NOTAS FISCAIS ELETR NICAS (C DIGO 55)   OPERAÇÕES DE AQUISI  O COM DIREITO A CR DITO, E OPERA  ES DE DEVOLU  O DE COMPRAS E VENDAS.*}
+{* REGISTRO C190: CONSOLIDAÇÃO DE NOTAS FISCAIS ELETR NICAS (C DIGO 55)   OPERAÇÕES DE AQUISI  O COM DIREITO A CR DITO, E OPERA  ES DE DEVOLU  O DE COMPRAS E VENDAS.*}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC190(Empresa: Integer);
 begin
       tItens.SQL.Clear;
@@ -3910,7 +3931,7 @@ begin
       //tItens.SQL.SaveToFile('c:\temp\SPED_PISCOFINS_REGC190_'+InttoStr(Empresa)+'.SQL');
       tItens.Open;
 
-      Progresso3('Consolida  o da NF-e', tItens.RecordCount);
+      Progresso3('Consolidação da NF-e', tItens.RecordCount);
 
       While (not tItens.Eof) and (not Funcoes.Cancelado) do begin
             Inc(mLinha);
@@ -3938,7 +3959,7 @@ begin
       End;
 end;
 
-{* REGISTRO C191 -  Consolida  o dos itens da NF-e PIS (Entradas / Devolu  es) *}
+{* REGISTRO C191 -  Consolidação dos itens da NF-e PIS (Entradas / Devolu  es) *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC191(Codigo_Item, Empresa: Integer);
 Var
    mCNPJ_CPF : String;
@@ -4034,7 +4055,7 @@ begin
       End;
 end;
 
-{* REGISTRO C195 -  Consolida  o dos itens da NF-e COFINS (Entradas / Devolu  es) *}
+{* REGISTRO C195 -  Consolidação dos itens da NF-e COFINS (Entradas / Devolu  es) *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroC195(Codigo_Item, Empresa: Integer);
 Var
    mCNPJ_CPF: String;
@@ -4842,7 +4863,7 @@ begin
          tPagarReceber.SQL.Add('FROM  Adicoes AD');
          tPagarReceber.SQL.Add('WHERE (SELECT Data_RegistroDeclaracao FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI) BETWEEN :pDataIni AND :pDataFim');
          tPagarReceber.SQL.Add('  AND ISNULL((SELECT Apuracao_PISCOFINS FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI), 0) = 1');
-         tPagarReceber.SQL.Add('  AND (SELECT Tipo FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI) = ''IMPORTA  O'' ');
+         tPagarReceber.SQL.Add('  AND (SELECT Tipo FROM ProcessosDocumentos PD WHERE PD.Numero_Declaracao = AD.DI) = ''IMPORTAÇÃO'' ');
          tPagarReceber.SQL.Add('  AND (SELECT COUNT(*) FROM NotasFiscais NF WHERE NF.DI = AD.DI AND Saida_Entrada = 0 AND MONTH(NF.Data_Emissao) = MONTH(NF.Data_DI)) = 0');
       End;
       }
@@ -4851,7 +4872,6 @@ begin
            sql.add('use '+Dados.EmpresasBanco_Dados.AsString);
            sql.add('select Classificacao');
            sql.add('      ,Valor_Operacao');
-//           sql.add('      ,Data_Vencimento');
            sql.add('      ,Data_Vencimento = PRB.Data');
            sql.add('      ,Fornecedor');
            sql.add('      ,(select Aliquota_PIS    from '+mCompClass+' where Codigo = Classificacao) as Aliquota_PIS');
@@ -4874,8 +4894,6 @@ begin
            sql.add('                        end');
            sql.add('from PagarReceber pr, PagarReceberBaixas prb');
            sql.add('where (select isnull(CST_PIS, '''') from '+mCompClass+' where Codigo = pr.Classificacao) <> '''' ');
-//           sql.add('and year(Data_Documento) = :pAno');
-//           sql.add('and month(Data_Documento) = :pMes');
            sql.add('and isnull(Provisorio, 0) = 0');
            sql.add('and prb.Numero = pr.Numero ');
            sql.add('and prb.Data between :pDataini and :pDataFim');
@@ -4884,7 +4902,6 @@ begin
            sql.add('union all');
            sql.add('select Classificacao = (select Classificacao_JurosRC from Configuracao)');
            sql.add('      ,Valor_Operacao = prb.Juros');
-//           sql.add('      ,Data_Vencimento');
            sql.add('      ,Data_Vencimento = PRB.Data');
            sql.add('      ,Fornecedor');
            sql.add('      ,(select Aliquota_PIS    from '+mCompClass+' where Codigo = (select Classificacao_JurosRC from Configuracao) ) as Aliquota_PIS');
@@ -4907,8 +4924,6 @@ begin
            sql.add('                        end');
            sql.add('from PagarReceber pr, PagarReceberBaixas prb');
            sql.add('where (select isnull(Juros_SPEDPISCOFINS, 0) from '+mCompClass+' where Codigo = Classificacao) = 1');
-//           sql.add('where year(Data_Documento) = :pAno');
-//           sql.add('and month(Data_Documento) = :pMes');
            sql.add('and isnull(Provisorio, 0) = 0');
            sql.add('and isnull(prb.Juros, 0) > 0');
            sql.add('and prb.Numero = pr.Numero ');
@@ -4916,11 +4931,12 @@ begin
 
            if Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
               sql.add('union all');
-              sql.add('select  Classificacao       = ''D.I, ''+ substring(DI,1,2)+''/''+substring(DI,3,7)+''-''+substring(DI,10,1)');
+//              sql.add('select  Classificacao       = ''D.I, ''+ substring(DI,1,2)+''/''+substring(DI,3,7)+''-''+substring(DI,10,1)');
+              sql.add('select  Classificacao       = iif(Len(DI) <= 10, ''DI '', ''DUIMP '') + DI');
               sql.add('       ,Valor_Operacao      = (Valor_UnitarioReal + (case when (select Frete from Cybersoft_Cadastros.dbo.INCOTERMS where Codigo = (select INCOTERMS from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI)) = 1 then');
-              sql.add('                                                         ((select (Frete /Peso_Liquido) from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI) * Peso_Liquido) else 0 end +');
+              sql.add('                                                         ((select (Frete / iif(Peso_Liquido > 0, Peso_Liquido, 1)) from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI) * Peso_Liquido) else 0 end +');
               sql.add('                                                     case when (select Seguro from Cybersoft_Cadastros.dbo.INCOTERMS where Codigo = (select INCOTERMS from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI)) = 1 then');
-              sql.add('                                                         ((select (Seguro/FOB) from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI) * Valor_SemAdValorem) else 0 end)');
+              sql.add('                                                         ((select (Seguro / iif(FOB > 0, FOB, 1)) from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI) * Valor_SemAdValorem) else 0 end)');
               sql.add('                               )* Quantidade');
               sql.add('       ,Data_Vencimento     = (select Data_RegistroDeclaracao from ProcessosDocumentos PD where PD.Numero_Declaracao = AD.DI)');
               sql.add('       ,Fornecedor          = Exportador');
@@ -4949,7 +4965,7 @@ begin
            if Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
               ParamByName('pDataIni').AsDate := StrtoDate(mDataIni);
               ParamByName('pDataFim').AsDate := StrtoDate(mDataFim);
-           end;   
+           end;
            //sql.SaveToFile('c:\temp\SPED_PISCOFINS_REGF010_Matriz.SQL');
            open;
       end;
@@ -5322,7 +5338,7 @@ begin
      tApuracao.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_PIS > 0)');
      tApuracao.SQL.Add('GROUP BY Aliquota_PIS');
 
-     // Credito vinculado   receita "Exporta  o".
+     // Credito vinculado   receita "Exportação".
      tApuracao.SQL.Add('UNION ALL');
      tApuracao.SQL.Add('SELECT ''301'' AS Tipo_Credito,');
      tApuracao.SQL.Add('       Aliquota_PIS,');
@@ -5331,7 +5347,7 @@ begin
      tApuracao.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_PIS = :pAliquota)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
      tApuracao.SQL.Add('       Vinculado_PIS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasTerceirosItens');
      tApuracao.SQL.Add('WHERE  (YEAR(Data_Entrada) = :pAno AND MONTH(Data_Entrada) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Aliquota_PIS = :pAliquota)');
@@ -5344,7 +5360,7 @@ begin
      tApuracao.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_PIS <> :pAliquota)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
      tApuracao.SQL.Add('       Vinculado_PIS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasTerceirosItens');
      tApuracao.SQL.Add('WHERE  (YEAR(Data_Entrada) = :pAno AND MONTH(Data_Entrada) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Aliquota_PIS <> :pAliquota) AND (Aliquota_PIS > 0)');
@@ -5357,7 +5373,7 @@ begin
      tApuracao.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasItens.Aliquota_PIS)),0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasItens.Aliquota_PIS)),0),');
      tApuracao.SQL.Add('       Vinculado_PIS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasItens');
      tApuracao.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_PIS > 0)');
@@ -5505,7 +5521,7 @@ begin
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM TipoNota WHERE(Codigo = (SELECT Tipo_Nota FROM NotasFiscais WHERE(Numero = NotasItens.Nota) AND (Data_Emissao = NotasItens.Data)) )) AS Natureza_BC');
      tApuracao2.SQL.Add('FROM   NotasItens');
      tApuracao2.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_PIS > 0)');
-     // Credito vinculado   receita "Exporta  o".
+     // Credito vinculado   receita "Exportação".
      tApuracao2.SQL.Add('UNION ALL');
      tApuracao2.SQL.Add('SELECT ''301'' AS Tipo_Credito,');
      tApuracao2.SQL.Add('       Aliquota_PIS,');
@@ -5514,7 +5530,7 @@ begin
      tApuracao2.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_PIS = :pAliquota)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
      tApuracao2.SQL.Add('       Vinculado_PIS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CST_PIS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM ReferenciasFiscais WHERE(Codigo = Referencia_Fiscal)) AS Natureza_BC');
@@ -5528,7 +5544,7 @@ begin
      tApuracao2.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_PIS <> :pAliquota)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasTerceirosItens.Aliquota_PIS) ), 0),');
      tApuracao2.SQL.Add('       Vinculado_PIS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CST_PIS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM ReferenciasFiscais WHERE(Codigo = Referencia_Fiscal)) AS Natureza_BC');
@@ -5542,7 +5558,7 @@ begin
      tApuracao2.SQL.Add('       Receita_PIS = ISNULL((SELECT SUM(Valor_PIS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_PIS = NotasItens.Aliquota_PIS)),0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_PIS = NotasItens.Aliquota_PIS)),0),');
      tApuracao2.SQL.Add('       Vinculado_PIS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CSTPIS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM TipoNota WHERE(Codigo = (SELECT Tipo_Nota FROM NotasFiscais WHERE(Numero = NotasItens.Nota) AND (Data_Emissao = NotasItens.Data)) )) AS Natureza_BC');
@@ -5666,7 +5682,7 @@ begin
      end;
 end;
 
-{* REGISTRO M200: CONSOLIDA  O DA CONTRIBUI  O PARA O PIS/PASEP DO PER ODO *}
+{* REGISTRO M200: CONSOLIDAção DA CONTRIBUI  O PARA O PIS/PASEP DO PER ODO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM200;
 Var
    mValorContrib: Real;
@@ -5710,7 +5726,7 @@ begin
      If mValorContrib < 0 then mValorContrib := mValorContrib * -1;
      mValorDevido  := mValorContrib;
 
-     Progresso3('Consolida  o da Contribui  o p/PIS', 1);
+     Progresso3('Consolidação da Contribuição p/PIS', 1);
 
      Inc(mLinha);
      mRegistro := '|M200'+                                                                          // 01 - REG.
@@ -5735,7 +5751,7 @@ begin
      If mValorDevido > 0 then If Funcoes.Cancelado = false then RegistroM205;
      If tItens.RecordCount > 0 then If Funcoes.Cancelado = false then RegistroM210;
 
-     Progresso3('Consolida  o da Contribui  o p/PIS', 0);
+     Progresso3('Consolidação da Contribuição p/PIS', 0);
 end;
 
 {* REGISTRO M205: CONTRIBUI  O PARA O PIS/PASEP A RECOLHER   DETALHAMENTO POR C DIGO DE RECEITA  *}
@@ -6094,7 +6110,7 @@ begin
      tApuracao.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_COFINS > 0)');
      tApuracao.SQL.Add('GROUP BY Aliquota_COFINS');
 
-     // Credito vinculado   receita "Exporta  o".
+     // Credito vinculado   receita "Exportação".
      tApuracao.SQL.Add('UNION ALL');
      tApuracao.SQL.Add('SELECT ''301'' AS Tipo_Credito,');
      tApuracao.SQL.Add('       Aliquota_COFINS,');
@@ -6103,7 +6119,7 @@ begin
      tApuracao.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_COFINS = :pAliquota)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
      tApuracao.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasTerceirosItens');
      tApuracao.SQL.Add('WHERE  (YEAR(Data_Entrada) = :pAno AND MONTH(Data_Entrada) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Aliquota_COFINS = :pAliquota)');
@@ -6116,7 +6132,7 @@ begin
      tApuracao.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_COFINS <> :pAliquota)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
      tApuracao.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasTerceirosItens');
      tApuracao.SQL.Add('WHERE  (YEAR(Data_Entrada) = :pAno AND MONTH(Data_Entrada) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Aliquota_COFINS <> :pAliquota) AND (Aliquota_COFINS > 0)');
@@ -6129,7 +6145,7 @@ begin
      tApuracao.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao.SQL.Add('                             FROM   NotasItens NI');
      tApuracao.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1)');
-     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasItens.Aliquota_COFINS)),0),');
+     tApuracao.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasItens.Aliquota_COFINS)),0),');
      tApuracao.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money)');
      tApuracao.SQL.Add('FROM   NotasItens');
      tApuracao.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_COFINS > 0)');
@@ -6279,7 +6295,7 @@ begin
      tApuracao2.SQL.Add('FROM   NotasItens');
      tApuracao2.SQL.Add('WHERE  (Saida_Entrada = 0) AND (YEAR(Data) = :pAno AND MONTH(Data) = :pMes) AND (Apuracao_PISCOFINS = 1) AND (Cancelada <> 1) AND (Aliquota_COFINS > 0)');
 
-     // Credito vinculado   receita "Exporta  o".
+     // Credito vinculado   receita "Exportação".
      tApuracao2.SQL.Add('UNION ALL');
      tApuracao2.SQL.Add('SELECT ''301'' AS Tipo_Credito,');
      tApuracao2.SQL.Add('       Aliquota_COFINS,');
@@ -6288,7 +6304,7 @@ begin
      tApuracao2.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_COFINS = :pAliquota)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
      tApuracao2.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CST_COFINS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM ReferenciasFiscais WHERE(Codigo = Referencia_Fiscal)) AS Natureza_BC');
@@ -6302,7 +6318,7 @@ begin
      tApuracao2.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1) AND (NI.Aliquota_COFINS <> :pAliquota)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasTerceirosItens.Aliquota_COFINS) ), 0),');
      tApuracao2.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CST_COFINS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM ReferenciasFiscais WHERE(Codigo = Referencia_Fiscal)) AS Natureza_BC');
@@ -6316,7 +6332,7 @@ begin
      tApuracao2.SQL.Add('       Receita_COFINS = ISNULL((SELECT SUM(Valor_COFINS * Quantidade)');
      tApuracao2.SQL.Add('                             FROM   NotasItens NI');
      tApuracao2.SQL.Add('                             WHERE  (NI.Saida_Entrada = 1) AND (YEAR(NI.Data) = :pAno AND MONTH(NI.Data) = :pMes) AND (NI.Apuracao_PISCOFINS = 1) AND (NI.Cancelada <> 1)');
-     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTA  O'') AND (NI.Aliquota_COFINS = NotasItens.Aliquota_COFINS)),0),');
+     tApuracao2.SQL.Add('                                    AND ((SELECT Tipo FROM ProcessosDocumentos WHERE(Processo = NI.Processo)) = ''EXPORTAÇÃO'') AND (NI.Aliquota_COFINS = NotasItens.Aliquota_COFINS)),0),');
      tApuracao2.SQL.Add('       Vinculado_COFINS = CAST(0 AS Money),');
      tApuracao2.SQL.Add('       CSTCOFINS,');
      tApuracao2.SQL.Add('       (SELECT Tipo_Credito FROM TipoNota WHERE(Codigo = (SELECT Tipo_Nota FROM NotasFiscais WHERE(Numero = NotasItens.Nota) AND (Data_Emissao = NotasItens.Data)) )) AS Natureza_BC');
@@ -6441,7 +6457,7 @@ begin
      End;
 end;
 
-{* REGISTRO M600: CONSOLIDA  O DA CONTRIBUI  O PARA A SEGURIDADE SOCIAL - COFINS DO PER ODO *}
+{* REGISTRO M600: CONSOLIDAÇÃO DA CONTRIBUI  O PARA A SEGURIDADE SOCIAL - COFINS DO PER ODO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroM600;
 Var
    mValorDevido : Real;
@@ -6488,7 +6504,7 @@ begin
      If mValorContrib < 0 then mValorContrib := mValorContrib * -1;
      mValorDevido  := mValorContrib;
 
-     Progresso3('Consolida  o da Contribui  o (COFINS)', tItens.RecordCount);
+     Progresso3('Consolidação da Contribuição (COFINS)', tItens.RecordCount);
 
      Inc(mLinha);
      mRegistro := '|M600'+                                                                          // 01 - REG.

@@ -169,7 +169,7 @@ object Impressao_GeraisOP_DMI: TImpressao_GeraisOP_DMI
     DataPipeline = pDMI
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -215,7 +215,7 @@ object Impressao_GeraisOP_DMI: TImpressao_GeraisOP_DMI
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -520,7 +520,7 @@ object Impressao_GeraisOP_DMI: TImpressao_GeraisOP_DMI
           DataPipeline = pNCM
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Report'
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -1350,7 +1350,7 @@ object Impressao_GeraisOP_DMI: TImpressao_GeraisOP_DMI
               UserName = 'Label52'
               AutoSize = False
               Border.mmPadding = 0
-              Caption = '5 COFINS'
+              Caption = '5. COFINS'
               Font.Charset = DEFAULT_CHARSET
               Font.Color = clBlack
               Font.Name = 'Arial'
@@ -4683,7 +4683,7 @@ object Impressao_GeraisOP_DMI: TImpressao_GeraisOP_DMI
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -4729,7 +4729,7 @@ object Impressao_GeraisOP_DMI: TImpressao_GeraisOP_DMI
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -4831,7 +4831,7 @@ object Impressao_GeraisOP_DMI: TImpressao_GeraisOP_DMI
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Report'
           PrinterSetup.Orientation = poLandscape
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -5533,8 +5533,8 @@ object Impressao_GeraisOP_DMI: TImpressao_GeraisOP_DMI
         AutoSize = False
         Border.mmPadding = 0
         Caption = 
-          'GUIA PARA LIBERA'#199#195'O DE MERCADORIA ESTRANGEIRA SEM COMPROVA'#199#195'O DO' +
-          ' '
+          #61328#8084#61242#8084#61291#8084#61546#8084#61689#8084#61601#8084#61651#8084#62352#8084#62040#8084#62090#8084#62125#8084#62171#8084#6531#8105#6569#8105#6610#8105#6646#8105#45676#8100#62218#8084#62406#8084#6688#8105#62266#8084#62312#8084#62455#8084#62500#8084#62591#8084#62636#8084#45721#8100#45769#8100#62546#8084#6768#8105#6805#8105#6845#8105 +
+          #6888#8105#6926#8105#63232#18520#1200#2#1
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Name = 'Arial'

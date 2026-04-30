@@ -2090,7 +2090,9 @@ begin
                             NotasItensValor_BCPIS.Value            := PedidosItensValor_BCPIS.Value;
                             NotasItensAliquota_PIS.Value           := PedidosItensAliquota_PIS.Value;
                             NotasItensValor_PIS.Value              := PedidosItensValor_PIS.Value;
+                            NotasItensValor_BCPISST.Value          := PedidosItensValor_BCPISST.Value;
                             NotasItensValor_PISST.Value            := PedidosItensValor_PISST.Value;
+
                             NotasItensAliquota_COFINS.Value        := PedidosItensAliquota_COFINS.Value;
                             NotasItensValor_COFINS.Value           := PedidosItensValor_COFINS.Value;
                             NotasItensValor_BCCOFINSST.Value       := PedidosItensValor_BCCOFINSST.Value;

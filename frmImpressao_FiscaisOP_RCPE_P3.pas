@@ -294,7 +294,7 @@ begin
            tItens.SQL.Add('       MONTH(Data) as Mes,');
            tItens.SQL.Add('       Codigo_Mercadoria,');
            tItens.SQL.Add('       Quantidade,');
-           tItens.SQL.Add('       Saldo_Anterior = 0,');
+           tItens.SQL.Add('       Saldo_Anterior = cast(0 as float),');
            tItens.SQL.Add('       Quantidade_Entrada  = CASE WHEN NotasItens.Saida_Entrada = 0 then Quantidade ELSE 0 END,');
            tItens.SQL.Add('       Quantidade_Saida    = CASE WHEN NotasItens.Saida_Entrada = 1 then Quantidade ELSE 0 END,');
            tItens.SQL.Add('       Quantidade_Rel      = CASE WHEN NotasItens.Saida_Entrada = 0 then Quantidade ELSE Quantidade * -1 END,');
@@ -332,7 +332,7 @@ begin
            tItens.SQL.Add('       MONTH(NotasTerceirosItens.Data_Entrada),');
            tItens.SQL.Add('       Codigo_Mercadoria,');
            tItens.SQL.Add('       NotasTerceirosItens.Quantidade,');
-           tItens.SQL.Add('       Saldo_Anterior = 0,');
+           tItens.SQL.Add('       Saldo_Anterior = cast(0 as float),');
            tItens.SQL.Add('       Quantidade_Entrada = Quantidade,');
            tItens.SQL.Add('       Quantidade_Saida   = 0,');
            tItens.SQL.Add('       Quantidade_Rel = Quantidade,');
@@ -368,7 +368,7 @@ begin
            tItens.SQL.Add('       MONTH(PT.Data_Transferencia),');
            tItens.SQL.Add('       PT.Produto_Entrada,');
            tItens.SQL.Add('       PT.Quantidade_Entrada,');
-           tItens.SQL.Add('       Saldo_Anterior = 0,');
+           tItens.SQL.Add('       Saldo_Anterior = cast(0 as float),');
            tItens.SQL.Add('       Quantidade_Entrada = Quantidade_Entrada,');
            tItens.SQL.Add('       Quantidade_Saida   = 0,');
            tItens.SQL.Add('       Quantidade_Rel = Quantidade_Entrada,');
@@ -405,7 +405,7 @@ begin
            tItens.SQL.Add('       MONTH(PT.Data_Transferencia),');
            tItens.SQL.Add('       PT.Produto_Saida,');
            tItens.SQL.Add('       PT.Quantidade,');
-           tItens.SQL.Add('       Saldo_Anterior = 0,');
+           tItens.SQL.Add('       Saldo_Anterior = cast(0 as float),');
            tItens.SQL.Add('       Quantidade_Entrada = 0,');
            tItens.SQL.Add('       Quantidade_Saida   = Quantidade,');
            tItens.SQL.Add('       Quantidade_Rel = Quantidade_Entrada * -1,');
@@ -567,7 +567,7 @@ begin
 
            mProduto       := tItens.FieldByName('Codigo_Mercadoria').AsInteger;
            //mSaldo_Estoque := tItens.FieldByName('Saldo_Anterior').AsInteger;
-           mSaldo_Estoque := tSaldo.FieldByName('Saldo_Anterior').AsInteger;
+           mSaldo_Estoque := tSaldo.FieldByName('Saldo_Anterior').asfloat;
            mData          := tItens.FieldByName('Data').AsDateTime;
            mDia           := tItens.FieldByName('Dia').AsInteger;
            mMes           := MonthOf( tItens.FieldByName('Data').AsDateTime );

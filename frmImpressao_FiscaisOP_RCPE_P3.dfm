@@ -802,7 +802,6 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
       'DROP TABLE #TEMP, #TEMP2')
     FetchRows = 1
     MasterSource = dmFiscal.dsNotasItens
-    Active = True
     Left = 400
     Top = 56
   end
@@ -835,7 +834,7 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
       FieldAlias = 'Razao_Social'
       FieldName = 'Razao_Social'
       FieldLength = 50
-      DisplayWidth = 25
+      DisplayWidth = 28
       Position = 1
     end
     object pEmpresasppField3: TppField
@@ -893,7 +892,7 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
       FieldAlias = 'CNPJ'
       FieldName = 'CNPJ'
       FieldLength = 14
-      DisplayWidth = 14
+      DisplayWidth = 12
       Position = 9
     end
     object pEmpresasppField11: TppField
@@ -1509,266 +1508,267 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
       Position = 88
     end
     object pEmpresasppField90: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Pedido_Nota'
-      FieldName = 'Pedido_Nota'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 5
-      Position = 89
-    end
-    object pEmpresasppField91: TppField
       FieldAlias = 'Email_Copia'
       FieldName = 'Email_Copia'
       FieldLength = 0
       DataType = dtMemo
       DisplayWidth = 10
-      Position = 90
+      Position = 89
       Searchable = False
       Sortable = False
     end
-    object pEmpresasppField92: TppField
+    object pEmpresasppField91: TppField
       FieldAlias = 'Email_SSL'
       FieldName = 'Email_SSL'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 90
+    end
+    object pEmpresasppField92: TppField
+      FieldAlias = 'Email_Autenticacao'
+      FieldName = 'Email_Autenticacao'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 91
     end
     object pEmpresasppField93: TppField
-      FieldAlias = 'Email_Autenticacao'
-      FieldName = 'Email_Autenticacao'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 92
-    end
-    object pEmpresasppField94: TppField
       FieldAlias = 'Email_Metodo'
       FieldName = 'Email_Metodo'
       FieldLength = 20
       DisplayWidth = 20
-      Position = 93
+      Position = 92
     end
-    object pEmpresasppField95: TppField
+    object pEmpresasppField94: TppField
       FieldAlias = 'CartaCorrecao_Layout'
       FieldName = 'CartaCorrecao_Layout'
       FieldLength = 10
       DisplayWidth = 10
-      Position = 94
+      Position = 93
     end
-    object pEmpresasppField96: TppField
+    object pEmpresasppField95: TppField
       FieldAlias = 'CNAE'
       FieldName = 'CNAE'
       FieldLength = 20
       DisplayWidth = 20
-      Position = 95
+      Position = 94
     end
-    object pEmpresasppField97: TppField
+    object pEmpresasppField96: TppField
       FieldAlias = 'Email_MsgEnvioCCE'
       FieldName = 'Email_MsgEnvioCCE'
       FieldLength = 0
       DataType = dtMemo
       DisplayWidth = 10
-      Position = 96
+      Position = 95
       Searchable = False
       Sortable = False
     end
-    object pEmpresasppField98: TppField
+    object pEmpresasppField97: TppField
       Alignment = taRightJustify
       FieldAlias = 'Nota_EletronicaEntrada'
       FieldName = 'Nota_EletronicaEntrada'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 97
+      Position = 96
     end
-    object pEmpresasppField99: TppField
+    object pEmpresasppField98: TppField
       FieldAlias = 'NFEletronica_ModeloEntrada'
       FieldName = 'NFEletronica_ModeloEntrada'
       FieldLength = 2
       DisplayWidth = 2
-      Position = 98
+      Position = 97
     end
-    object pEmpresasppField100: TppField
+    object pEmpresasppField99: TppField
       FieldAlias = 'NFEletronica_SerieEntrada'
       FieldName = 'NFEletronica_SerieEntrada'
       FieldLength = 3
       DisplayWidth = 3
-      Position = 99
+      Position = 98
     end
-    object pEmpresasppField101: TppField
+    object pEmpresasppField100: TppField
       FieldAlias = 'NFEletronica_Numeracao'
       FieldName = 'NFEletronica_Numeracao'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 100
+      Position = 99
     end
-    object pEmpresasppField102: TppField
+    object pEmpresasppField101: TppField
       Alignment = taRightJustify
       FieldAlias = 'Logomarca_Largura'
       FieldName = 'Logomarca_Largura'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
+      Position = 100
+    end
+    object pEmpresasppField102: TppField
+      FieldAlias = 'Pagamento'
+      FieldName = 'Pagamento'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
       Position = 101
     end
     object pEmpresasppField103: TppField
-      FieldAlias = 'Pagamento'
-      FieldName = 'Pagamento'
+      FieldAlias = 'Modulo_Emprestimos'
+      FieldName = 'Modulo_Emprestimos'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 102
     end
     object pEmpresasppField104: TppField
-      FieldAlias = 'Modulo_Emprestimos'
-      FieldName = 'Modulo_Emprestimos'
+      FieldAlias = 'Modulo_XMLCTe'
+      FieldName = 'Modulo_XMLCTe'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 103
     end
     object pEmpresasppField105: TppField
-      FieldAlias = 'Modulo_XMLCTe'
-      FieldName = 'Modulo_XMLCTe'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 104
-    end
-    object pEmpresasppField106: TppField
       FieldAlias = 'Regime'
       FieldName = 'Regime'
       FieldLength = 1
       DisplayWidth = 1
-      Position = 105
+      Position = 104
     end
-    object pEmpresasppField107: TppField
+    object pEmpresasppField106: TppField
       FieldAlias = 'Modulo_Vendas'
       FieldName = 'Modulo_Vendas'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 106
+      Position = 105
     end
-    object pEmpresasppField108: TppField
+    object pEmpresasppField107: TppField
       Alignment = taRightJustify
       FieldAlias = 'CTE_Numero'
       FieldName = 'CTE_Numero'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 107
+      Position = 106
     end
-    object pEmpresasppField109: TppField
+    object pEmpresasppField108: TppField
       FieldAlias = 'CTE_Modelo'
       FieldName = 'CTE_Modelo'
       FieldLength = 2
       DisplayWidth = 2
-      Position = 108
+      Position = 107
     end
-    object pEmpresasppField110: TppField
+    object pEmpresasppField109: TppField
       FieldAlias = 'CTE_Serie'
       FieldName = 'CTE_Serie'
       FieldLength = 3
       DisplayWidth = 3
-      Position = 109
+      Position = 108
     end
-    object pEmpresasppField111: TppField
+    object pEmpresasppField110: TppField
       FieldAlias = 'CTE_Layout'
       FieldName = 'CTE_Layout'
       FieldLength = 10
       DisplayWidth = 10
+      Position = 109
+    end
+    object pEmpresasppField111: TppField
+      FieldAlias = 'Modulo_Logistica'
+      FieldName = 'Modulo_Logistica'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
       Position = 110
     end
     object pEmpresasppField112: TppField
-      FieldAlias = 'Modulo_Logistica'
-      FieldName = 'Modulo_Logistica'
+      FieldAlias = 'Modulo_Boleto'
+      FieldName = 'Modulo_Boleto'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 111
     end
     object pEmpresasppField113: TppField
-      FieldAlias = 'Modulo_Boleto'
-      FieldName = 'Modulo_Boleto'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
+      FieldAlias = 'Telefone1'
+      FieldName = 'Telefone1'
+      FieldLength = 11
+      DisplayWidth = 11
       Position = 112
     end
     object pEmpresasppField114: TppField
-      FieldAlias = 'Telefone1'
-      FieldName = 'Telefone1'
+      FieldAlias = 'Telefone2'
+      FieldName = 'Telefone2'
       FieldLength = 11
       DisplayWidth = 11
       Position = 113
     end
     object pEmpresasppField115: TppField
-      FieldAlias = 'Telefone2'
-      FieldName = 'Telefone2'
+      FieldAlias = 'Fax'
+      FieldName = 'Fax'
       FieldLength = 11
       DisplayWidth = 11
       Position = 114
     end
     object pEmpresasppField116: TppField
-      FieldAlias = 'Fax'
-      FieldName = 'Fax'
-      FieldLength = 11
-      DisplayWidth = 11
+      FieldAlias = 'Modulo_SISCOMEXWEB'
+      FieldName = 'Modulo_SISCOMEXWEB'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
       Position = 115
     end
     object pEmpresasppField117: TppField
-      FieldAlias = 'Modulo_SISCOMEXWEB'
-      FieldName = 'Modulo_SISCOMEXWEB'
+      FieldAlias = 'Modulo_ECommerce'
+      FieldName = 'Modulo_ECommerce'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 116
     end
     object pEmpresasppField118: TppField
-      FieldAlias = 'Modulo_ECommerce'
-      FieldName = 'Modulo_ECommerce'
+      FieldAlias = 'Modulo_ManifestoDest'
+      FieldName = 'Modulo_ManifestoDest'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 117
     end
     object pEmpresasppField119: TppField
-      FieldAlias = 'Modulo_ManifestoDest'
-      FieldName = 'Modulo_ManifestoDest'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
+      FieldAlias = 'Manifesto_LayOut'
+      FieldName = 'Manifesto_LayOut'
+      FieldLength = 10
+      DisplayWidth = 10
       Position = 118
     end
     object pEmpresasppField120: TppField
-      FieldAlias = 'Manifesto_LayOut'
-      FieldName = 'Manifesto_LayOut'
+      FieldAlias = 'UF_WebServiceManifesto'
+      FieldName = 'UF_WebServiceManifesto'
       FieldLength = 10
       DisplayWidth = 10
       Position = 119
     end
     object pEmpresasppField121: TppField
-      FieldAlias = 'UF_WebServiceManifesto'
-      FieldName = 'UF_WebServiceManifesto'
-      FieldLength = 10
-      DisplayWidth = 10
-      Position = 120
-    end
-    object pEmpresasppField122: TppField
       FieldAlias = 'Modulo_Televendas'
       FieldName = 'Modulo_Televendas'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 121
+      Position = 120
     end
-    object pEmpresasppField123: TppField
+    object pEmpresasppField122: TppField
       FieldAlias = 'Email_MsgOrcamento'
       FieldName = 'Email_MsgOrcamento'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 121
+      Searchable = False
+      Sortable = False
+    end
+    object pEmpresasppField123: TppField
+      FieldAlias = 'Email_MsgBoleto'
+      FieldName = 'Email_MsgBoleto'
       FieldLength = 0
       DataType = dtMemo
       DisplayWidth = 10
@@ -1777,360 +1777,360 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
       Sortable = False
     end
     object pEmpresasppField124: TppField
-      FieldAlias = 'Email_MsgBoleto'
-      FieldName = 'Email_MsgBoleto'
-      FieldLength = 0
-      DataType = dtMemo
-      DisplayWidth = 10
-      Position = 123
-      Searchable = False
-      Sortable = False
-    end
-    object pEmpresasppField125: TppField
       FieldAlias = 'PISCOFINS_F100'
       FieldName = 'PISCOFINS_F100'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 124
+      Position = 123
     end
-    object pEmpresasppField126: TppField
+    object pEmpresasppField125: TppField
       FieldAlias = 'Logo'
       FieldName = 'Logo'
       FieldLength = 120
       DisplayWidth = 120
+      Position = 124
+    end
+    object pEmpresasppField126: TppField
+      FieldAlias = 'Modulo_ConsultaProdutos'
+      FieldName = 'Modulo_ConsultaProdutos'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
       Position = 125
     end
     object pEmpresasppField127: TppField
-      FieldAlias = 'Modulo_ConsultaProdutos'
-      FieldName = 'Modulo_ConsultaProdutos'
+      FieldAlias = 'Modulo_Contabil'
+      FieldName = 'Modulo_Contabil'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 126
     end
     object pEmpresasppField128: TppField
-      FieldAlias = 'Modulo_Contabil'
-      FieldName = 'Modulo_Contabil'
+      FieldAlias = 'Modulo_EnviarArmazem'
+      FieldName = 'Modulo_EnviarArmazem'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 127
     end
     object pEmpresasppField129: TppField
-      FieldAlias = 'Modulo_EnviarArmazem'
-      FieldName = 'Modulo_EnviarArmazem'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 128
-    end
-    object pEmpresasppField130: TppField
       FieldAlias = 'Versao_DLL'
       FieldName = 'Versao_DLL'
       FieldLength = 15
       DisplayWidth = 15
+      Position = 128
+    end
+    object pEmpresasppField130: TppField
+      FieldAlias = 'Desativada'
+      FieldName = 'Desativada'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
       Position = 129
     end
     object pEmpresasppField131: TppField
-      FieldAlias = 'Desativada'
-      FieldName = 'Desativada'
+      FieldAlias = 'Menu_Inventario'
+      FieldName = 'Menu_Inventario'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 130
     end
     object pEmpresasppField132: TppField
-      FieldAlias = 'Menu_Inventario'
-      FieldName = 'Menu_Inventario'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 131
-    end
-    object pEmpresasppField133: TppField
       Alignment = taRightJustify
       FieldAlias = 'Ambiente_GNRE'
       FieldName = 'Ambiente_GNRE'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 132
+      Position = 131
     end
-    object pEmpresasppField134: TppField
+    object pEmpresasppField133: TppField
       FieldAlias = 'GNRE_Layout'
       FieldName = 'GNRE_Layout'
       FieldLength = 10
       DisplayWidth = 10
+      Position = 132
+    end
+    object pEmpresasppField134: TppField
+      FieldAlias = 'Modulo_GNRE'
+      FieldName = 'Modulo_GNRE'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
       Position = 133
     end
     object pEmpresasppField135: TppField
-      FieldAlias = 'Modulo_GNRE'
-      FieldName = 'Modulo_GNRE'
+      FieldAlias = 'Modulo_DadosDI'
+      FieldName = 'Modulo_DadosDI'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 134
     end
     object pEmpresasppField136: TppField
-      FieldAlias = 'Modulo_DadosDI'
-      FieldName = 'Modulo_DadosDI'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 135
-    end
-    object pEmpresasppField137: TppField
       Alignment = taRightJustify
       FieldAlias = 'Contador_Qualificacao'
       FieldName = 'Contador_Qualificacao'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 136
+      Position = 135
     end
-    object pEmpresasppField138: TppField
+    object pEmpresasppField137: TppField
       FieldAlias = 'Contador_CRCUF'
       FieldName = 'Contador_CRCUF'
       FieldLength = 2
       DisplayWidth = 2
-      Position = 137
+      Position = 136
     end
-    object pEmpresasppField139: TppField
+    object pEmpresasppField138: TppField
       FieldAlias = 'Contador_CRCData'
       FieldName = 'Contador_CRCData'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
-      Position = 138
+      Position = 137
     end
-    object pEmpresasppField140: TppField
+    object pEmpresasppField139: TppField
       FieldAlias = 'NIRE'
       FieldName = 'NIRE'
       FieldLength = 15
       DisplayWidth = 15
-      Position = 139
+      Position = 138
     end
-    object pEmpresasppField141: TppField
+    object pEmpresasppField140: TppField
       FieldAlias = 'Fechamento_FinanceiroFinal'
       FieldName = 'Fechamento_FinanceiroFinal'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
-      Position = 140
+      Position = 139
     end
-    object pEmpresasppField142: TppField
+    object pEmpresasppField141: TppField
       Alignment = taRightJustify
       FieldAlias = 'SPED_CTAPlanoRef'
       FieldName = 'SPED_CTAPlanoRef'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 141
+      Position = 140
     end
-    object pEmpresasppField143: TppField
+    object pEmpresasppField142: TppField
       FieldAlias = 'Contador_CRCSequencial'
       FieldName = 'Contador_CRCSequencial'
       FieldLength = 15
       DisplayWidth = 15
+      Position = 141
+    end
+    object pEmpresasppField143: TppField
+      FieldAlias = 'Refis'
+      FieldName = 'Refis'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
       Position = 142
     end
     object pEmpresasppField144: TppField
-      FieldAlias = 'Refis'
-      FieldName = 'Refis'
+      FieldAlias = 'Paes'
+      FieldName = 'Paes'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
       Position = 143
     end
     object pEmpresasppField145: TppField
-      FieldAlias = 'Paes'
-      FieldName = 'Paes'
-      FieldLength = 0
-      DataType = dtBoolean
-      DisplayWidth = 5
-      Position = 144
-    end
-    object pEmpresasppField146: TppField
       Alignment = taRightJustify
       FieldAlias = 'Forma_Tributacao'
       FieldName = 'Forma_Tributacao'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 145
+      Position = 144
     end
-    object pEmpresasppField147: TppField
+    object pEmpresasppField146: TppField
       FieldAlias = 'Extincao_RTT'
       FieldName = 'Extincao_RTT'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 146
+      Position = 145
     end
-    object pEmpresasppField148: TppField
+    object pEmpresasppField147: TppField
       Alignment = taRightJustify
       FieldAlias = 'Qtde_SCP'
       FieldName = 'Qtde_SCP'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 147
+      Position = 146
     end
-    object pEmpresasppField149: TppField
+    object pEmpresasppField148: TppField
       FieldAlias = 'Natureza_Juridica'
       FieldName = 'Natureza_Juridica'
       FieldLength = 10
       DisplayWidth = 10
-      Position = 148
+      Position = 147
     end
-    object pEmpresasppField150: TppField
+    object pEmpresasppField149: TppField
       FieldAlias = 'NIRE_Data'
       FieldName = 'NIRE_Data'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
-      Position = 149
+      Position = 148
     end
-    object pEmpresasppField151: TppField
+    object pEmpresasppField150: TppField
       FieldAlias = 'Representante_Bairro'
       FieldName = 'Representante_Bairro'
       FieldLength = 60
       DisplayWidth = 60
-      Position = 150
+      Position = 149
     end
-    object pEmpresasppField152: TppField
+    object pEmpresasppField151: TppField
       FieldAlias = 'Representante_CEP'
       FieldName = 'Representante_CEP'
       FieldLength = 8
       DisplayWidth = 8
-      Position = 151
+      Position = 150
     end
-    object pEmpresasppField153: TppField
+    object pEmpresasppField152: TppField
       FieldAlias = 'Representante_CNPJ'
       FieldName = 'Representante_CNPJ'
       FieldLength = 14
       DisplayWidth = 14
-      Position = 152
+      Position = 151
     end
-    object pEmpresasppField154: TppField
+    object pEmpresasppField153: TppField
       FieldAlias = 'Representante_Complemento'
       FieldName = 'Representante_Complemento'
       FieldLength = 60
       DisplayWidth = 60
-      Position = 153
+      Position = 152
     end
-    object pEmpresasppField155: TppField
+    object pEmpresasppField154: TppField
       FieldAlias = 'Representante_CPF'
       FieldName = 'Representante_CPF'
       FieldLength = 12
       DisplayWidth = 12
-      Position = 154
+      Position = 153
     end
-    object pEmpresasppField156: TppField
+    object pEmpresasppField155: TppField
       FieldAlias = 'Representante_CRC'
       FieldName = 'Representante_CRC'
       FieldLength = 10
       DisplayWidth = 10
-      Position = 155
+      Position = 154
     end
-    object pEmpresasppField157: TppField
+    object pEmpresasppField156: TppField
       FieldAlias = 'Representante_CRCData'
       FieldName = 'Representante_CRCData'
       FieldLength = 0
       DataType = dtDateTime
       DisplayWidth = 18
-      Position = 156
+      Position = 155
     end
-    object pEmpresasppField158: TppField
+    object pEmpresasppField157: TppField
       FieldAlias = 'Representante_CRCSequencial'
       FieldName = 'Representante_CRCSequencial'
       FieldLength = 15
       DisplayWidth = 15
-      Position = 157
+      Position = 156
     end
-    object pEmpresasppField159: TppField
+    object pEmpresasppField158: TppField
       FieldAlias = 'Representante_CRCUF'
       FieldName = 'Representante_CRCUF'
       FieldLength = 2
       DisplayWidth = 2
-      Position = 158
+      Position = 157
     end
-    object pEmpresasppField160: TppField
+    object pEmpresasppField159: TppField
       FieldAlias = 'Representante_Email'
       FieldName = 'Representante_Email'
       FieldLength = 60
       DisplayWidth = 60
-      Position = 159
+      Position = 158
     end
-    object pEmpresasppField161: TppField
+    object pEmpresasppField160: TppField
       FieldAlias = 'Representante_Estado'
       FieldName = 'Representante_Estado'
       FieldLength = 2
       DisplayWidth = 2
-      Position = 160
+      Position = 159
     end
-    object pEmpresasppField162: TppField
+    object pEmpresasppField161: TppField
       FieldAlias = 'Representante_FAX'
       FieldName = 'Representante_FAX'
       FieldLength = 10
       DisplayWidth = 10
-      Position = 161
+      Position = 160
     end
-    object pEmpresasppField163: TppField
+    object pEmpresasppField162: TppField
       FieldAlias = 'Representante_Nome'
       FieldName = 'Representante_Nome'
       FieldLength = 50
       DisplayWidth = 50
-      Position = 162
+      Position = 161
     end
-    object pEmpresasppField164: TppField
+    object pEmpresasppField163: TppField
       FieldAlias = 'Representante_Numero'
       FieldName = 'Representante_Numero'
       FieldLength = 10
       DisplayWidth = 10
-      Position = 163
+      Position = 162
     end
-    object pEmpresasppField165: TppField
+    object pEmpresasppField164: TppField
       Alignment = taRightJustify
       FieldAlias = 'Representante_Qualificacao'
       FieldName = 'Representante_Qualificacao'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 164
+      Position = 163
     end
-    object pEmpresasppField166: TppField
+    object pEmpresasppField165: TppField
       FieldAlias = 'Representante_Rua'
       FieldName = 'Representante_Rua'
       FieldLength = 60
       DisplayWidth = 60
-      Position = 165
+      Position = 164
     end
-    object pEmpresasppField167: TppField
+    object pEmpresasppField166: TppField
       FieldAlias = 'Representante_Telefone'
       FieldName = 'Representante_Telefone'
       FieldLength = 10
       DisplayWidth = 10
+      Position = 165
+    end
+    object pEmpresasppField167: TppField
+      FieldAlias = 'Contador_SignatarioResp'
+      FieldName = 'Contador_SignatarioResp'
+      FieldLength = 1
+      DisplayWidth = 1
       Position = 166
     end
     object pEmpresasppField168: TppField
-      FieldAlias = 'Contador_SignatarioResp'
-      FieldName = 'Contador_SignatarioResp'
+      FieldAlias = 'Representante_SignatarioResp'
+      FieldName = 'Representante_SignatarioResp'
       FieldLength = 1
       DisplayWidth = 1
       Position = 167
     end
     object pEmpresasppField169: TppField
-      FieldAlias = 'Representante_SignatarioResp'
-      FieldName = 'Representante_SignatarioResp'
-      FieldLength = 1
-      DisplayWidth = 1
-      Position = 168
-    end
-    object pEmpresasppField170: TppField
       FieldAlias = 'Autorizacao_NFECNPJ'
       FieldName = 'Autorizacao_NFECNPJ'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 168
+      Searchable = False
+      Sortable = False
+    end
+    object pEmpresasppField170: TppField
+      FieldAlias = 'Autorizacao_NFECPF'
+      FieldName = 'Autorizacao_NFECPF'
       FieldLength = 0
       DataType = dtMemo
       DisplayWidth = 10
@@ -2139,19 +2139,18 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
       Sortable = False
     end
     object pEmpresasppField171: TppField
-      FieldAlias = 'Autorizacao_NFECPF'
-      FieldName = 'Autorizacao_NFECPF'
-      FieldLength = 0
-      DataType = dtMemo
-      DisplayWidth = 10
-      Position = 170
-      Searchable = False
-      Sortable = False
-    end
-    object pEmpresasppField172: TppField
       Alignment = taRightJustify
       FieldAlias = 'Encerramento_Contabil'
       FieldName = 'Encerramento_Contabil'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 170
+    end
+    object pEmpresasppField172: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Contador_Municipio'
+      FieldName = 'Contador_Municipio'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
@@ -2159,33 +2158,33 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
     end
     object pEmpresasppField173: TppField
       Alignment = taRightJustify
-      FieldAlias = 'Contador_Municipio'
-      FieldName = 'Contador_Municipio'
+      FieldAlias = 'Representante_Municipio'
+      FieldName = 'Representante_Municipio'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
       Position = 172
     end
     object pEmpresasppField174: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'Representante_Municipio'
-      FieldName = 'Representante_Municipio'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 173
-    end
-    object pEmpresasppField175: TppField
       FieldAlias = 'Classificacao_Tributaria'
       FieldName = 'Classificacao_Tributaria'
       FieldLength = 2
       DisplayWidth = 2
+      Position = 173
+    end
+    object pEmpresasppField175: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Obrigada_ECD'
+      FieldName = 'Obrigada_ECD'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
       Position = 174
     end
     object pEmpresasppField176: TppField
       Alignment = taRightJustify
-      FieldAlias = 'Obrigada_ECD'
-      FieldName = 'Obrigada_ECD'
+      FieldAlias = 'Desoneracao_Folha'
+      FieldName = 'Desoneracao_Folha'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
@@ -2193,8 +2192,8 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
     end
     object pEmpresasppField177: TppField
       Alignment = taRightJustify
-      FieldAlias = 'Desoneracao_Folha'
-      FieldName = 'Desoneracao_Folha'
+      FieldAlias = 'Isencao_Multa'
+      FieldName = 'Isencao_Multa'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
@@ -2202,8 +2201,8 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
     end
     object pEmpresasppField178: TppField
       Alignment = taRightJustify
-      FieldAlias = 'Isencao_Multa'
-      FieldName = 'Isencao_Multa'
+      FieldAlias = 'Ambiente_REINF'
+      FieldName = 'Ambiente_REINF'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
@@ -2211,33 +2210,33 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
     end
     object pEmpresasppField179: TppField
       Alignment = taRightJustify
-      FieldAlias = 'Ambiente_REINF'
-      FieldName = 'Ambiente_REINF'
+      FieldAlias = 'REINF_Sequencia'
+      FieldName = 'REINF_Sequencia'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
       Position = 178
     end
     object pEmpresasppField180: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'REINF_Sequencia'
-      FieldName = 'REINF_Sequencia'
-      FieldLength = 0
-      DataType = dtInteger
+      FieldAlias = 'REINF_ModoLancamento'
+      FieldName = 'REINF_ModoLancamento'
+      FieldLength = 10
       DisplayWidth = 10
       Position = 179
     end
     object pEmpresasppField181: TppField
-      FieldAlias = 'REINF_ModoLancamento'
-      FieldName = 'REINF_ModoLancamento'
-      FieldLength = 10
+      Alignment = taRightJustify
+      FieldAlias = 'REINF_ProcEmi'
+      FieldName = 'REINF_ProcEmi'
+      FieldLength = 0
+      DataType = dtInteger
       DisplayWidth = 10
       Position = 180
     end
     object pEmpresasppField182: TppField
       Alignment = taRightJustify
-      FieldAlias = 'REINF_ProcEmi'
-      FieldName = 'REINF_ProcEmi'
+      FieldAlias = 'REINF_tpInsc'
+      FieldName = 'REINF_tpInsc'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
@@ -2245,218 +2244,303 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
     end
     object pEmpresasppField183: TppField
       Alignment = taRightJustify
-      FieldAlias = 'REINF_tpInsc'
-      FieldName = 'REINF_tpInsc'
+      FieldAlias = 'REINF_indSitPJ'
+      FieldName = 'REINF_indSitPJ'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
       Position = 182
     end
     object pEmpresasppField184: TppField
-      Alignment = taRightJustify
-      FieldAlias = 'REINF_indSitPJ'
-      FieldName = 'REINF_indSitPJ'
-      FieldLength = 0
-      DataType = dtInteger
-      DisplayWidth = 10
-      Position = 183
-    end
-    object pEmpresasppField185: TppField
       FieldAlias = 'REINF_ideEFR'
       FieldName = 'REINF_ideEFR'
       FieldLength = 1
       DisplayWidth = 1
-      Position = 184
+      Position = 183
     end
-    object pEmpresasppField186: TppField
+    object pEmpresasppField185: TppField
       FieldAlias = 'REINF_VerProc'
       FieldName = 'REINF_VerProc'
       FieldLength = 5
       DisplayWidth = 5
+      Position = 184
+    end
+    object pEmpresasppField186: TppField
+      FieldAlias = 'REINF_iniValid'
+      FieldName = 'REINF_iniValid'
+      FieldLength = 7
+      DisplayWidth = 7
       Position = 185
     end
     object pEmpresasppField187: TppField
-      FieldAlias = 'REINF_iniValid'
-      FieldName = 'REINF_iniValid'
+      FieldAlias = 'REINF_fimValid'
+      FieldName = 'REINF_fimValid'
       FieldLength = 7
       DisplayWidth = 7
       Position = 186
     end
     object pEmpresasppField188: TppField
-      FieldAlias = 'REINF_fimValid'
-      FieldName = 'REINF_fimValid'
+      FieldAlias = 'REINF_AltiniValid'
+      FieldName = 'REINF_AltiniValid'
       FieldLength = 7
       DisplayWidth = 7
       Position = 187
     end
     object pEmpresasppField189: TppField
-      FieldAlias = 'REINF_AltiniValid'
-      FieldName = 'REINF_AltiniValid'
+      FieldAlias = 'REINF_AltfimValid'
+      FieldName = 'REINF_AltfimValid'
       FieldLength = 7
       DisplayWidth = 7
       Position = 188
     end
     object pEmpresasppField190: TppField
-      FieldAlias = 'REINF_AltfimValid'
-      FieldName = 'REINF_AltfimValid'
-      FieldLength = 7
-      DisplayWidth = 7
-      Position = 189
-    end
-    object pEmpresasppField191: TppField
       FieldAlias = 'Versao_REINF'
       FieldName = 'Versao_REINF'
       FieldLength = 10
       DisplayWidth = 10
-      Position = 190
+      Position = 189
     end
-    object pEmpresasppField192: TppField
+    object pEmpresasppField191: TppField
       FieldAlias = 'EmissaoNFE_Bloqueada'
       FieldName = 'EmissaoNFE_Bloqueada'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 191
+      Position = 190
     end
-    object pEmpresasppField193: TppField
+    object pEmpresasppField192: TppField
       FieldAlias = 'EmissaoNFE_BloqueadaUsuario'
       FieldName = 'EmissaoNFE_BloqueadaUsuario'
       FieldLength = 80
       DisplayWidth = 80
-      Position = 192
+      Position = 191
     end
-    object pEmpresasppField194: TppField
+    object pEmpresasppField193: TppField
       FieldAlias = 'MOdulo_Despacho'
       FieldName = 'MOdulo_Despacho'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 193
+      Position = 192
     end
-    object pEmpresasppField195: TppField
+    object pEmpresasppField194: TppField
       Alignment = taRightJustify
       FieldAlias = 'Processo_Exp'
       FieldName = 'Processo_Exp'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 194
+      Position = 193
     end
-    object pEmpresasppField196: TppField
+    object pEmpresasppField195: TppField
       Alignment = taRightJustify
       FieldAlias = 'PO'
       FieldName = 'PO'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 195
+      Position = 194
     end
-    object pEmpresasppField197: TppField
+    object pEmpresasppField196: TppField
       FieldAlias = 'PO_Automatico'
       FieldName = 'PO_Automatico'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
+      Position = 195
+    end
+    object pEmpresasppField197: TppField
+      FieldAlias = 'Mascara_ProcessoExp'
+      FieldName = 'Mascara_ProcessoExp'
+      FieldLength = 7
+      DisplayWidth = 7
       Position = 196
     end
     object pEmpresasppField198: TppField
-      FieldAlias = 'Mascara_ProcessoExp'
-      FieldName = 'Mascara_ProcessoExp'
+      FieldAlias = 'Mascara_PO'
+      FieldName = 'Mascara_PO'
       FieldLength = 7
       DisplayWidth = 7
       Position = 197
     end
     object pEmpresasppField199: TppField
-      FieldAlias = 'Mascara_PO'
-      FieldName = 'Mascara_PO'
-      FieldLength = 7
-      DisplayWidth = 7
-      Position = 198
-    end
-    object pEmpresasppField200: TppField
       Alignment = taRightJustify
       FieldAlias = 'Ambiente_CTe'
       FieldName = 'Ambiente_CTe'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 199
+      Position = 198
     end
-    object pEmpresasppField201: TppField
+    object pEmpresasppField200: TppField
       FieldAlias = 'Transportadora'
       FieldName = 'Transportadora'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 200
+      Position = 199
     end
-    object pEmpresasppField202: TppField
+    object pEmpresasppField201: TppField
       FieldAlias = 'RNTRC'
       FieldName = 'RNTRC'
       FieldLength = 8
       DisplayWidth = 8
-      Position = 201
+      Position = 200
     end
-    object pEmpresasppField203: TppField
+    object pEmpresasppField202: TppField
       FieldAlias = 'Assinatura'
       FieldName = 'Assinatura'
       FieldLength = 120
       DisplayWidth = 120
-      Position = 202
+      Position = 201
     end
-    object pEmpresasppField204: TppField
+    object pEmpresasppField203: TppField
       FieldAlias = 'Classificacao_ContribIPI'
       FieldName = 'Classificacao_ContribIPI'
       FieldLength = 2
       DisplayWidth = 2
-      Position = 203
+      Position = 202
     end
-    object pEmpresasppField205: TppField
+    object pEmpresasppField204: TppField
       FieldAlias = 'Envio_Backup'
       FieldName = 'Envio_Backup'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 204
+      Position = 203
     end
-    object pEmpresasppField206: TppField
+    object pEmpresasppField205: TppField
       FieldAlias = 'ECommerce_Data'
       FieldName = 'ECommerce_Data'
       FieldLength = 10
       DisplayWidth = 10
-      Position = 205
+      Position = 204
     end
-    object pEmpresasppField207: TppField
+    object pEmpresasppField206: TppField
       FieldAlias = 'Processo_AutomaticoExp'
       FieldName = 'Processo_AutomaticoExp'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
-      Position = 206
+      Position = 205
     end
-    object pEmpresasppField208: TppField
+    object pEmpresasppField207: TppField
       FieldAlias = 'ECommerce_Hora'
       FieldName = 'ECommerce_Hora'
       FieldLength = 10
       DisplayWidth = 10
-      Position = 207
+      Position = 206
     end
-    object pEmpresasppField209: TppField
+    object pEmpresasppField208: TppField
       Alignment = taRightJustify
       FieldAlias = 'Ambiente_Armazem'
       FieldName = 'Ambiente_Armazem'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 208
+      Position = 207
     end
-    object pEmpresasppField210: TppField
+    object pEmpresasppField209: TppField
       FieldAlias = 'Lancamento_Contabil'
       FieldName = 'Lancamento_Contabil'
       FieldLength = 0
       DataType = dtBoolean
       DisplayWidth = 5
+      Position = 208
+    end
+    object pEmpresasppField210: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Pedido_Nota'
+      FieldName = 'Pedido_Nota'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
       Position = 209
+    end
+    object pEmpresasppField211: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Layout_Estoque'
+      FieldName = 'Layout_Estoque'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 210
+    end
+    object pEmpresasppField212: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Ultimo_NSU'
+      FieldName = 'Ultimo_NSU'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 211
+    end
+    object pEmpresasppField213: TppField
+      FieldAlias = 'UF_WEBServiceEPEC'
+      FieldName = 'UF_WEBServiceEPEC'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 212
+    end
+    object pEmpresasppField214: TppField
+      FieldAlias = 'Licensa_CTE_Util'
+      FieldName = 'Licensa_CTE_Util'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 213
+      Searchable = False
+      Sortable = False
+    end
+    object pEmpresasppField215: TppField
+      FieldAlias = 'UF_WebServiceCTe'
+      FieldName = 'UF_WebServiceCTe'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 214
+    end
+    object pEmpresasppField216: TppField
+      FieldAlias = 'Email_Criptografia'
+      FieldName = 'Email_Criptografia'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 215
+    end
+    object pEmpresasppField217: TppField
+      FieldAlias = 'Email_MsgFollowUp'
+      FieldName = 'Email_MsgFollowUp'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 216
+      Searchable = False
+      Sortable = False
+    end
+    object pEmpresasppField218: TppField
+      FieldAlias = 'FCP_Interno'
+      FieldName = 'FCP_Interno'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 217
+    end
+    object pEmpresasppField219: TppField
+      FieldAlias = 'ImportarPlanPed_Bloqueado'
+      FieldName = 'ImportarPlanPed_Bloqueado'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 218
+    end
+    object pEmpresasppField220: TppField
+      FieldAlias = 'Email_MsgPedidos'
+      FieldName = 'Email_MsgPedidos'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 219
+      Searchable = False
+      Sortable = False
     end
   end
   object pItens: TppDBPipeline
@@ -2686,7 +2770,7 @@ object Impressao_FiscaisOP_RCPE_P3: TImpressao_FiscaisOP_RCPE_P3
     NoDataBehaviors = [ndBlankReport]
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'RCPE'
-    PrinterSetup.PaperName = 'Carta 216 x 279 mm'
+    PrinterSetup.PaperName = 'Carta'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

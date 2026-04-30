@@ -3600,6 +3600,18 @@ begin
                  if PedidosItensAliquota_PIS.Value > 0 then begin
                     PedidosItensValor_PIS.Value    := Roundto(Percentual(PedidosItensValor_BCPIS.Value, PedidosItensAliquota_PIS.Value), -2);
                     PedidosItensValor_COFINS.Value := Roundto(Percentual(PedidosItensValor_BCPIS.Value, PedidosItensAliquota_COFINS.Value), -2);
+
+                    PedidosItensValor_BCPISST.Value    := 0;
+                    PedidosItensValor_BCCOFINSST.Value := 0;
+                    if ClientesVarejista.AsBoolean and ProdutosTributa_PISCOFINSST.AsBoolean then begin
+                       If Trim(TipoNotaCalculo_BCPISST.AsString)  <> '' then begin
+                          PedidosItensValor_BCPISST.Value    := RoundTo(CalculaMacro('Calculo_BCPISST'), -4);
+                          PedidosItensValor_BCCOFINSST.Value := PedidosItensValor_BCPISST.Value;
+                       end;
+                       If Trim(TipoNotaCalculo_PISST.AsString)    <> '' then PedidosItensValor_PISST.Value    := RoundTo(CalculaMacro('Calculo_PISST'), -2);
+                       If Trim(TipoNotaCalculo_COFINSST.AsString) <> '' then PedidosItensValor_COFINSST.Value := RoundTo(CalculaMacro('Calculo_COFINSST'), -2);
+                    end;
+                    
                  end;
               end;
            end;

@@ -4,7 +4,7 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
   BorderStyle = bsDialog
   Caption = 'Processo_ContratoCambio2'
   ClientHeight = 638
-  ClientWidth = 997
+  ClientWidth = 1123
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,10 +22,11 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 997
+    Width = 1123
     Height = 46
     Align = alTop
     Stretch = True
+    ExplicitWidth = 997
   end
   object RxLabel3: TRxLabel
     Left = 8
@@ -981,16 +982,17 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
   object Panel3: TPanel
     Left = 0
     Top = 607
-    Width = 997
+    Width = 1123
     Height = 31
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 2
+    ExplicitWidth = 997
     DesignSize = (
-      997
+      1123
       31)
     object Button1: TButton
-      Left = 921
+      Left = 1047
       Top = 2
       Width = 75
       Height = 28
@@ -1001,6 +1003,7 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
+      ExplicitLeft = 921
     end
     object Navega: TDBNavigator
       Left = 1
@@ -1034,15 +1037,17 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
   object Panel1: TPanel
     Left = 549
     Top = 50
-    Width = 444
+    Width = 570
     Height = 514
     BevelOuter = bvLowered
     TabOrder = 3
     object GradeItens: TDBGrid
-      Left = 2
+      AlignWithMargins = True
+      Left = 4
       Top = 4
-      Width = 436
+      Width = 562
       Height = 471
+      Align = alTop
       Color = 14155775
       DataSource = Dados.dsContratoCambioItens
       Font.Charset = DEFAULT_CHARSET
@@ -1064,7 +1069,12 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
           Expanded = False
           FieldName = 'Processo'
           Title.Alignment = taCenter
-          Width = 101
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Width = 105
           Visible = True
         end
         item
@@ -1072,6 +1082,11 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
           FieldName = 'Valor_Fatura'
           Title.Alignment = taCenter
           Title.Caption = 'Valor Fatura(ME)'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
           Width = 100
           Visible = True
         end
@@ -1080,6 +1095,11 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
           FieldName = 'Fatura'
           Title.Alignment = taCenter
           Title.Caption = 'N'#186' Fatura'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
           Width = 132
           Visible = True
         end
@@ -1088,12 +1108,30 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
           FieldName = 'Valor_ME'
           Title.Alignment = taCenter
           Title.Caption = 'Valor(ME)'
-          Width = 79
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Width = 100
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Valor_Real'
+          Title.Alignment = taCenter
+          Title.Caption = 'Valor (R$)'
+          Title.Font.Charset = DEFAULT_CHARSET
+          Title.Font.Color = clWindowText
+          Title.Font.Height = -11
+          Title.Font.Name = 'MS Sans Serif'
+          Title.Font.Style = [fsBold]
+          Width = 100
           Visible = True
         end>
     end
     object bAdicionar: TButton
-      Left = 122
+      Left = 184
       Top = 481
       Width = 67
       Height = 28
@@ -1102,7 +1140,7 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
       OnClick = bAdicionarClick
     end
     object bAlterar: TButton
-      Left = 189
+      Left = 251
       Top = 481
       Width = 67
       Height = 28
@@ -1111,7 +1149,7 @@ object Processo_ContratoCambio2: TProcesso_ContratoCambio2
       OnClick = bAlterarClick
     end
     object bExcluir: TButton
-      Left = 256
+      Left = 318
       Top = 481
       Width = 67
       Height = 28

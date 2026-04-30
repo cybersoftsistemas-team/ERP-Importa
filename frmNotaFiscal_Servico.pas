@@ -172,7 +172,7 @@ var
 implementation
 
 uses frmDMFiscal, frmDados, frmCadastro_Fornecedores,frmCadastro_Servicos,frmDMContab, frmModalidadePgto_Parcelas, frmMenu_Principal,
-     frmCadastro_CentroCusto, frmConfig_TipoNotaTerceiros, frmNotaFiscal_ServicoItens, frmNotaFiscal_ServicoXML, frmPesquisaGerais;
+     frmCadastro_CentroCusto, frmConfig_TipoNotaTerceiros, frmNotaFiscal_ServicoItens, frmPesquisaGerais, frmNotaFiscal_ImportarNFSe;
 
 {$R *.dfm}
 
@@ -271,9 +271,14 @@ end;
 
 procedure TNotaFiscal_Servico.bXMLClick(Sender: TObject);
 begin
+{
      NotaFiscal_ServicoXML := TNotaFiscal_ServicoXML.create(self);
      NotaFiscal_ServicoXML.caption := caption;
      NotaFiscal_ServicoXML.showmodal;
+}     
+     NotaFiscal_ImportarNFSe := TNotaFiscal_ImportarNFSe.create(self);
+     NotaFiscal_ImportarNFSe.caption := caption;
+     NotaFiscal_ImportarNFSe.showmodal;
      bFiltrarClick(Self);
 end;
 

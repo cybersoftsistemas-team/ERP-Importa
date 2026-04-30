@@ -494,6 +494,10 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     OnChange = PageControl1Change
     object TabSheet1: TTabSheet
       Caption = 'Pedidos prontos para envio'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Grade: TRxDBGrid
         AlignWithMargins = True
         Left = 3
@@ -3637,7 +3641,7 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Cybersoft - DANFE Retrato'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -3695,7 +3699,7 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     RTFSettings.DefaultFont.Style = []
     ShowCancelDialog = False
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -4803,7 +4807,7 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Cybersoft - DANFE Retrato'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -11732,7 +11736,7 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
             PrinterSetup.BinName = 'Default'
             PrinterSetup.DocumentName = 'Cybersoft - DANFE Retrato'
             PrinterSetup.Duplex = dpNone
-            PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+            PrinterSetup.PaperName = 'A4'
             PrinterSetup.PrinterName = 'Default'
             PrinterSetup.SaveDeviceSettings = False
             PrinterSetup.mmMarginBottom = 6350

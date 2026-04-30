@@ -3,8 +3,8 @@ object Menu_Principal: TMenu_Principal
   Top = 231
   HelpContext = 2
   Caption = 'Cybersoft Sistemas - ERP IMPORTA'
-  ClientHeight = 678
-  ClientWidth = 1214
+  ClientHeight = 654
+  ClientWidth = 1492
   Color = clBtnFace
   TransparentColorValue = clGray
   Font.Charset = DEFAULT_CHARSET
@@ -29,8 +29,8 @@ object Menu_Principal: TMenu_Principal
   object Fundo: TShape
     Left = 0
     Top = 66
-    Width = 1214
-    Height = 612
+    Width = 1492
+    Height = 588
     Align = alClient
     Brush.Color = 4144959
     Pen.Style = psClear
@@ -42,7 +42,7 @@ object Menu_Principal: TMenu_Principal
   object Panel3: TPanel
     Left = 0
     Top = 0
-    Width = 1214
+    Width = 1492
     Height = 66
     Align = alTop
     BevelInner = bvLowered
@@ -52,9 +52,9 @@ object Menu_Principal: TMenu_Principal
     ParentBackground = False
     TabOrder = 0
     StyleElements = [seFont, seBorder]
-    ExplicitWidth = 1203
+    ExplicitWidth = 1214
     object Panel2: TPanel
-      Left = 1109
+      Left = 1387
       Top = 2
       Width = 103
       Height = 62
@@ -73,7 +73,7 @@ object Menu_Principal: TMenu_Principal
       ParentFont = False
       TabOrder = 0
       StyleElements = []
-      ExplicitLeft = 1098
+      ExplicitLeft = 1109
       object cFoto: TImage
         Left = 1
         Top = 1

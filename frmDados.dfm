@@ -2646,7 +2646,6 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = FornecedoresBeforePost
     BeforeDelete = FornecedoresBeforeDelete
-    Active = True
     Left = 169
     Top = 105
     object FornecedoresCodigo: TIntegerField
@@ -15474,7 +15473,6 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
-    Connected = True
     LoginPrompt = False
     Left = 87
     Top = 14
@@ -22227,11 +22225,14 @@ object Dados: TDados
       ')')
     Connection = Banco_Empresas
     SQL.Strings = (
-      'SELECT * FROM ContratoCambioItens')
+      
+        'SELECT *, Valor_Real = round(Valor_ME * Taxa_Cambial, 2) FROM Co' +
+        'ntratoCambioItens')
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
+    OnCalcFields = ContratoCambioItensCalcFields
     Left = 169
-    Top = 613
+    Top = 571
     object ContratoCambioItensContrato: TStringField
       FieldName = 'Contrato'
       Origin = 'ContratoCambioItens.Contrato'
@@ -22278,11 +22279,17 @@ object Dados: TDados
     object ContratoCambioItensNavio_Ordem: TIntegerField
       FieldName = 'Navio_Ordem'
     end
+    object ContratoCambioItensValor_Real: TCurrencyField
+      FieldKind = fkCalculated
+      FieldName = 'Valor_Real'
+      DisplayFormat = ',##0.00'
+      Calculated = True
+    end
   end
   object dsContratoCambioItens: TDataSource
     DataSet = ContratoCambioItens
     Left = 169
-    Top = 660
+    Top = 618
   end
   object dsImpressaoServico: TDataSource
     DataSet = ImpressaoServico
@@ -24472,8 +24479,8 @@ object Dados: TDados
       'SELECT * FROM Proforma')
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
-    Left = 169
-    Top = 566
+    Left = 827
+    Top = 956
     object ProformaNumero: TIntegerField
       FieldName = 'Numero'
       Origin = 'Proforma.Numero'
@@ -24540,8 +24547,8 @@ object Dados: TDados
   end
   object dsProforma: TDataSource
     DataSet = Proforma
-    Left = 169
-    Top = 613
+    Left = 826
+    Top = 1006
   end
   object ProformaItens: TMSQuery
     SQLInsert.Strings = (
@@ -26197,7 +26204,7 @@ object Dados: TDados
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     Left = 169
-    Top = 705
+    Top = 663
     object ChequesRegistro: TIntegerField
       FieldName = 'Registro'
       Origin = 'Cheques.Registro'
@@ -26263,7 +26270,7 @@ object Dados: TDados
   object dsCheques: TDataSource
     DataSet = Cheques
     Left = 169
-    Top = 750
+    Top = 708
   end
   object DISeriais: TMSQuery
     SQLInsert.Strings = (
@@ -28112,7 +28119,7 @@ object Dados: TDados
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     Left = 169
-    Top = 797
+    Top = 755
     object PropostaExpProposta: TSmallintField
       DisplayWidth = 5
       FieldName = 'Proposta'
@@ -28295,7 +28302,7 @@ object Dados: TDados
   object dsPropostaExp: TDataSource
     DataSet = PropostaExp
     Left = 169
-    Top = 842
+    Top = 800
   end
   object PropostaExpDesp: TMSQuery
     SQLInsert.Strings = (
@@ -30544,7 +30551,7 @@ object Dados: TDados
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     Left = 168
-    Top = 887
+    Top = 845
     object ModalidadesParcelasRegistro: TSmallintField
       FieldName = 'Registro'
     end
@@ -30561,7 +30568,7 @@ object Dados: TDados
   object dsModalidadesParcelas: TDataSource
     DataSet = ModalidadesParcelas
     Left = 169
-    Top = 934
+    Top = 892
   end
   object PedidosItensNaviosRemessa: TMSQuery
     SQLInsert.Strings = (

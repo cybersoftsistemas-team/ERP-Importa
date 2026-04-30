@@ -419,7 +419,6 @@ uses
   frmPedidosRepresentantes_Parcial in 'frmPedidosRepresentantes_Parcial.pas' {PedidosRepresentantes_Parcial},
   frmCadastro_RecapPadrao in 'frmCadastro_RecapPadrao.pas' {Cadastro_RecapPadrao},
   frmPedido_TelevendasItensComb in 'frmPedido_TelevendasItensComb.pas' {Pedido_TelevendasItensComb},
-  frmNotaFiscal_ServicoXML in 'frmNotaFiscal_ServicoXML.pas' {NotaFiscal_ServicoXML},
   frmUtilitarios_AjustarEstoqueNavio in 'frmUtilitarios_AjustarEstoqueNavio.pas' {Utilitarios_AjustarEstoqueNavio},
   frmPedido_RepresentanteVeiculo in 'frmPedido_RepresentanteVeiculo.pas' {Pedido_RepresentanteVeiculo},
   frmImpressao_ProcessosOP_Navio in 'frmImpressao_ProcessosOP_Navio.pas' {Impressao_ProcessosOP_Navio},
@@ -469,7 +468,8 @@ uses
   frmIndustrializacao in 'frmIndustrializacao.pas' {Industrializacao},
   frmPedido_NFS in 'frmPedido_NFS.pas' {Pedido_NFS},
   frmPedido_NFSItens in 'frmPedido_NFSItens.pas' {Pedido_NFSItens},
-  frmPedido_NFSVinculo in 'frmPedido_NFSVinculo.pas' {Pedido_NFSVinculo};
+  frmPedido_NFSVinculo in 'frmPedido_NFSVinculo.pas' {Pedido_NFSVinculo},
+  frmNotaFiscal_ImportarNFSe in 'frmNotaFiscal_ImportarNFSe.pas' {NotaFiscal_ImportarNFSe};
 
 {$R *.res}
 

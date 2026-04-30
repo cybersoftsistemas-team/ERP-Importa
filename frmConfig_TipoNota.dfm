@@ -3592,7 +3592,7 @@ object Config_TipoNota: TConfig_TipoNota
             TabOrder = 51
           end
           object DBMemo32: TDBMemo
-            Left = 362
+            Left = 363
             Top = 175
             Width = 120
             Height = 31
@@ -3630,7 +3630,7 @@ object Config_TipoNota: TConfig_TipoNota
             OnClick = bValorPISSTClick
           end
           object DBMemo33: TDBMemo
-            Left = 362
+            Left = 363
             Top = 208
             Width = 120
             Height = 31
@@ -3834,7 +3834,7 @@ object Config_TipoNota: TConfig_TipoNota
             OnClick = Button15Click
           end
           object DBMemo38: TDBMemo
-            Left = 364
+            Left = 363
             Top = 142
             Width = 120
             Height = 31
@@ -3855,7 +3855,7 @@ object Config_TipoNota: TConfig_TipoNota
             TabOrder = 64
           end
           object Button16: TButton
-            Left = 244
+            Left = 243
             Top = 142
             Width = 118
             Height = 31

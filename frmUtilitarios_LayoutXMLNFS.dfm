@@ -164,7 +164,7 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
       OnChange = cArquivoChange
     end
     object StaticText3: TStaticText
-      Left = 560
+      Left = 11
       Top = 39
       Width = 80
       Height = 23
@@ -188,14 +188,14 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
       StyleElements = []
     end
     object Edit1: TEdit
-      Left = 641
+      Left = 92
       Top = 39
       Width = 69
       Height = 21
       TabOrder = 3
     end
     object StaticText4: TStaticText
-      Left = 712
+      Left = 163
       Top = 39
       Width = 80
       Height = 23
@@ -219,93 +219,11 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
       StyleElements = []
     end
     object Edit2: TEdit
-      Left = 793
+      Left = 244
       Top = 39
       Width = 69
       Height = 21
       TabOrder = 5
-    end
-    object StaticText1: TStaticText
-      Left = 11
-      Top = 39
-      Width = 80
-      Height = 21
-      Alignment = taCenter
-      AutoSize = False
-      BevelInner = bvNone
-      BevelKind = bkSoft
-      BevelOuter = bvSpace
-      BorderStyle = sbsSunken
-      Caption = 'Municpio'
-      Color = 7293440
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'Calibri'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      TabOrder = 6
-      Transparent = False
-      StyleElements = []
-    end
-    object cMun: TDBLookupComboBox
-      Left = 92
-      Top = 39
-      Width = 264
-      Height = 21
-      DropDownRows = 20
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      KeyField = 'Codigo'
-      ListField = 'Nome;UF;Codigo'
-      ListSource = dsMuni
-      ParentFont = False
-      TabOrder = 7
-      OnClick = cMunClick
-      OnExit = cMunExit
-    end
-    object StaticText5: TStaticText
-      Left = 360
-      Top = 39
-      Width = 80
-      Height = 23
-      Alignment = taCenter
-      AutoSize = False
-      BevelInner = bvNone
-      BevelKind = bkSoft
-      BevelOuter = bvSpace
-      BorderStyle = sbsSunken
-      Caption = 'XML Vers'#227'o'
-      Color = 7293440
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'Calibri'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      TabOrder = 8
-      Transparent = False
-      StyleElements = []
-    end
-    object cCodmun: TEdit
-      Left = 441
-      Top = 39
-      Width = 113
-      Height = 21
-      Enabled = False
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 9
-      OnChange = cCodmunChange
     end
     object cEmissao: TRadioGroup
       Left = 1072
@@ -318,7 +236,7 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
       Items.Strings = (
         'Pr'#243'pria'
         'Terceiros')
-      TabOrder = 10
+      TabOrder = 6
       OnClick = cEmissaoClick
     end
   end
@@ -530,7 +448,7 @@ object Utilitarios_LayOutXMLNFS: TUtilitarios_LayOutXMLNFS
         Align = alClient
         Color = 5190912
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
+        Font.Color = 16777043
         Font.Height = -13
         Font.Name = 'JetBrains Mono'
         Font.Style = []

@@ -4565,6 +4565,7 @@ type
     ReferenciasFiscaisServico_Nacional: TStringField;
     ServicosCodigo_Nacional: TStringField;
     FornecedoresChave_PIX: TStringField;
+    ContratoCambioItensValor_Real: TCurrencyField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);
@@ -4643,6 +4644,7 @@ type
     procedure ControleNaviosBLBeforePost(DataSet: TDataSet);
     procedure LogDetalheGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure ClassTributDescricaoGetText(Sender: TField; var Text: string; DisplayText: Boolean);
+    procedure ContratoCambioItensCalcFields(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -4924,6 +4926,13 @@ end;
 procedure TDados.ContratoCambioBeforePost(DataSet: TDataSet);
 begin
       LogDados(DataSet, '('+ContratoCambioRegistro.AsString+') Nº '+ContratoCambioNumero.AsString+'  Data'+ContratoCambioData.AsString, DataSet.State);
+end;
+
+procedure TDados.ContratoCambioItensCalcFields(DataSet: TDataSet);
+begin
+     with ContratoCambioItens do begin
+          fieldbyname('Valor_Real').value := fieldbyname('Valor_ME').ascurrency * fieldbyname('Taxa_Cambial').asfloat;
+     end;
 end;
 
 procedure TDados.ControleNaviosBeforeDelete(DataSet: TDataSet);

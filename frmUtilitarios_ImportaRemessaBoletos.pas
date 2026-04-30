@@ -249,7 +249,6 @@ begin
            Boletos.EnableControls;
            Grade.Enabled := True;
       End;
-//      cBancoChange(Self);
       bProcessar.Enabled := (Trim(cBanco.Text) <> '') and (Trim(cArquivo.Text) <> '');
 end;
 
@@ -299,8 +298,6 @@ begin
                                              PagarReceberBaixasJuros.Value := 0;
                                              PagarReceberBaixasValor.Value := Boletos.FieldByName('Valor_Documento').AsCurrency + Boletos.FieldByName('Valor_Juros').asCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency;
                                           end;
-                                          //PagarReceberBaixasJuros.Value               := Boletos.FieldByName('Valor_Juros').asCurrency;
-                                          //PagarReceberBaixasMulta.Value               := Boletos.FieldByName('Valor_MultaVencimento').asCurrency;
                                           PagarReceberBaixasDesconto.Value            := Boletos.FieldByName('Valor_Desconto').AsCurrency;
                                           PagarReceberBaixasOrigem_Multa.Value        := 'B';
                                           PagarReceberBaixasOrigem_Juros.Value        := 'B';

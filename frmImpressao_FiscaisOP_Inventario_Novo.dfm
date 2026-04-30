@@ -516,7 +516,7 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Registro de Inventario'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

@@ -472,7 +472,7 @@ begin
           sql.add('      ,BCICMS_Reducao = cast(0 as money)');
           sql.add('      ,BCICMS_Ajustada = cast(0 as money)');
           sql.add('      ,ICMS_Aliquota = cast(0 as float)');
-          sql.add('      ,ICMS_Aliquota_Valor = (select sum(Valor_ICMSOper) from NotasItens ni where ni.DI = pd.Numero_Declaracao)');
+          sql.add('      ,ICMS_Aliquota_Valor = (select sum(Valor_ICMSOper) from NotasItens ni where ni.DI = pd.Numero_Declaracao and Saida_Entrada = 1)');
           sql.add('      ,ICMS_Cred_Pres = cast(0 as money)');
           sql.add('      ,ICMS_Devido = (select sum(Valor_ICMSOper) from NotasItens ni where ni.DI = pd.Numero_Declaracao)');
           sql.add('      ,ICMS_Pago_Aliquota = cast(0 as float)');
