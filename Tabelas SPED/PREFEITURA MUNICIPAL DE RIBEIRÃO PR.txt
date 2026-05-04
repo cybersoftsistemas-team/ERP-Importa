@@ -1,0 +1,508 @@
+ 	PREFEITURA MUNICIPAL DE RIBEIRÃO PRETO
+SECRETARIA DA FAZENDA
+Lista: 2000    2003    2004    2005    2006    2007    2008    2009    2010    2011    2012    2013    2014    2015    2016    2017    2018    2019    2020    2021    2022    2023    2024    2025    2026   
+TABELA DE SERVIÇOS DO ANO BASE DE 2026
+
+CÓDIGO	 	SERVIÇO	REDUÇÃO BASE CALC.	ALIQUOTA	REDUÇÃO	INICIO	FIM	CÓD SERVIÇO LEI116
+01.01.00	-         	Análise E Desenvolvimento De Sistemas.	---	2.00		01/2026	12/2026	0101
+01.02.00	-         	Programação.	---	2.00		01/2026	12/2026	0102
+01.03.00	-         	Processamento, Armazenamento Ou Hospedagem De Dados, Textos, Imagens, Vídeos, Páginas Eletrônicas, Aplicativos E Sistemas De Informação, Entre Outros Formatos, E Congêneres.	---	2.00		01/2026	12/2026	0103
+01.04.00	-         	Elaboração De Programas De Computadores, Inclusive De Jogos Eletrônicos, Independentemente Da Arquitetura Construtiva Da Máquina Em Que O Programa Será Executado, Incluindo Tablets, Smartphones E Congêneres.	---	2.00		01/2026	12/2026	0104
+01.05.00	-         	Licenciamento Ou Cessão De Direito De Uso De Programas De Computação.	---	2.00		01/2026	12/2026	0105
+01.06.00	-         	Assessoria E Consultoria Em Informática.	---	2.00		01/2026	12/2026	0106
+01.07.00	-         	Suporte Técnico Em Informática, Inclusive Instalação, Configuração E Manutenção De Programas De Computação E Bancos De Dados.	---	2.00		01/2026	12/2026	0107
+01.08.01	-         	Planejamento, Confecção, Manutenção E Atualização De Páginas Eletrônicas.	---	2.00		01/2026	12/2026	0108
+01.08.02	-         	Provedor De Internet	---	2.00		01/2026	12/2026	0108
+01.09.00	-         	Disponibilização, Sem Cessão Definitiva, De Conteúdos De Áudio, Vídeo, Imagem E Texto Por Meio Da Internet, Respeitada A Imunidade De Livros, Jornais E Periódicos (Exceto A Distribuição De Conteúdos Pelas Prestadoras De Serviço De Acesso Condicionado, De Que Trata A Lei No 12.485, De 12 De Setembro De 2011, Sujeita Ao Icms).	---	2.00		01/2026	12/2026	0109
+02.01.00	-         	Serviços De Pesquisas E Desenvolvimento De Qualquer Natureza.	---	3.50		01/2026	12/2026	0201
+03.01.00	-         	(Vetado)	---	0.00		01/2026	12/2026	0301
+03.02.00	-         	Cessão De Direito De Uso De Marcas E De Sinais De Propaganda.	---	2.00		01/2026	12/2026	0302
+03.03.01	-         	Exploração De Salões De Festas, Para Realização De Eventos Ou Negócios De Qualquer Natureza.	---	4.00		01/2026	12/2026	0303
+03.03.02	-         	Exploração De Centro De Convenções, Escritórios Virtuais, Stands, Para Realização De Eventos Ou Negócios De Qualquer Natureza.	---	4.00		01/2026	12/2026	0303
+03.03.03	-         	Exploração De Quadras Esportivas, Estádios, Ginásios, Canchas E Congêneres, Para Realização De Eventos Ou Negócios De Qualquer Natureza.	---	4.00		01/2026	12/2026	0303
+03.03.04	-         	Exploração De Auditórios, Casas De Espetáculos, Para Realização De Eventos Ou Negócios De Qualquer Natureza.	---	4.00		01/2026	12/2026	0303
+03.03.05	-         	Exploração De Parques De Diversões, Para Realização De Eventos Ou Negócios De Qualquer Natureza.	---	4.00		01/2026	12/2026	0303
+03.04.00	-         	Locação, Sublocação, Arrendamento, Direito De Passagem Ou Permissão De Uso, Compartilhado Ou Não, De Ferrovia, Rodovia, Postes, Cabos, Dutos E Condutos De Qualquer Natureza.	---	3.50		01/2026	12/2026	0304
+03.05.00	-         	Cessão De Andaimes, Palcos, Coberturas E Outras Estruturas De Uso Temporário.	---	3.50		01/2026	12/2026	0305
+04.01.01	-         	Medicina	---	2.00		01/2026	12/2026	0401
+04.01.02	-         	Médico Residente	---	2.00		01/2026	12/2026	0401
+04.01.03	-         	Biomedicina	---	2.00		01/2026	12/2026	0401
+04.02.01	-         	Análises Clínicas, Patologia.	---	2.00		01/2026	12/2026	0402
+04.02.02	-         	Técnicos Em Análises Clinicas, Eletricidade Médica, Radioterapia, Radiologia..	---	2.00		01/2026	12/2026	0402
+04.02.03	-         	Eletricidade Médica	---	2.00		01/2026	12/2026	0402
+04.02.04	-         	Radioterapia, Quimioterapia, Ultra-Sonografia, Ressonância Magnética, Radiologia, Tomografia E Congêneres.	---	2.00		01/2026	12/2026	0402
+04.03.01	-         	Hospitais	---	2.00		01/2026	12/2026	0403
+04.03.02	-         	Clínicas	---	2.00		01/2026	12/2026	0403
+04.03.03	-         	Laboratórios	---	2.00		01/2026	12/2026	0403
+04.03.04	-         	Sanatórios	---	2.00		01/2026	12/2026	0403
+04.03.05	-         	Manicômios	---	2.00		01/2026	12/2026	0403
+04.03.06	-         	Casas De Saúde	---	2.00		01/2026	12/2026	0403
+04.03.07	-         	Prontos-Socorros	---	2.00		01/2026	12/2026	0403
+04.03.08	-         	Ambulatórios E Congêneres....	---	2.00		01/2026	12/2026	0403
+04.04.00	-         	Instrumentação Cirúrgica.	---	2.00		01/2026	12/2026	0404
+04.05.00	-         	Acupuntura.	---	2.00		01/2026	12/2026	0405
+04.06.01	-         	Enfermagem	---	2.00		01/2026	12/2026	0406
+04.06.02	-         	Atendente De Enfermagem.	---	2.00		01/2026	12/2026	0406
+04.06.03	-         	Técnico Em Enfermagem.	---	2.00		01/2026	12/2026	0406
+04.06.04	-         	Outros Serviços Auxiliares.	---	2.00		01/2026	12/2026	0406
+04.07.00	-         	Serviços Farmacêuticos.	---	2.00		01/2026	12/2026	0407
+04.08.01	-         	Terapia Ocupacional,	---	2.00		01/2026	12/2026	0408
+04.08.02	-         	Fisioterapia	---	2.00		01/2026	12/2026	0408
+04.08.03	-         	Fonoaudiologia	---	2.00		01/2026	12/2026	0408
+04.09.00	-         	Terapias De Qualquer Espécie Destinadas Ao Tratamento Físico, Orgânico E Mental.	---	2.00		01/2026	12/2026	0409
+04.10.00	-         	Nutrição.	---	2.00		01/2026	12/2026	0410
+04.11.00	-         	Obstetrícia.	---	2.00		01/2026	12/2026	0411
+04.12.00	-         	Odontologia.	---	2.00		01/2026	12/2026	0412
+04.13.00	-         	Ortóptica.	---	2.00		01/2026	12/2026	0413
+04.14.01	-         	Prótese Dentária.	---	2.00		01/2026	12/2026	0414
+04.14.02	-         	Prótese Ortopédica.	---	2.00		01/2026	12/2026	0414
+04.14.03	-         	Outras Próteses.	---	2.00		01/2026	12/2026	0414
+04.15.00	-         	Psicanálise.	---	2.00		01/2026	12/2026	0415
+04.16.00	-         	Psicologia.	---	2.00		01/2026	12/2026	0416
+04.17.01	-         	Casas De Repouso E De Recuperação E Congêneres.	---	2.00		01/2026	12/2026	0417
+04.17.02	-         	Creches.	---	2.00		01/2026	12/2026	0417
+04.17.03	-         	Asilos	---	2.00		01/2026	12/2026	0417
+04.18.00	-         	Inseminação Artificial, Fertilização In Vitro E Congêneres.	---	2.00		01/2026	12/2026	0418
+04.19.01	-         	Bancos De Sangue	---	2.00		01/2026	12/2026	0419
+04.19.02	-         	Banco De Leite	---	2.00		01/2026	12/2026	0419
+04.19.03	-         	Banco De Pele	---	2.00		01/2026	12/2026	0419
+04.19.04	-         	Banco De Olhos	---	2.00		01/2026	12/2026	0419
+04.19.05	-         	Banco De Óvulos E Sêmen	---	2.00		01/2026	12/2026	0419
+04.19.06	-         	Banco De Órgãos E Materiais Biológicos De Qualquer Espécie.	---	2.00		01/2026	12/2026	0419
+04.20.01	-         	Coleta De Sangue	---	2.00		01/2026	12/2026	0420
+04.20.02	-         	Coleta De Leite	---	2.00		01/2026	12/2026	0420
+04.20.03	-         	Coleta De Tecidos	---	2.00		01/2026	12/2026	0420
+04.20.04	-         	Coleta De Óvulos E Sêmen	---	2.00		01/2026	12/2026	0420
+04.20.05	-         	Coleta De Órgãos E Materiais Biológicos De Qualquer Espécie.	---	2.00		01/2026	12/2026	0420
+04.21.00	-         	Unidade De Atendimento, Assistência Ou Tratamento Móvel E Congêneres.	---	2.00		01/2026	12/2026	0421
+04.22.00	-         	Planos De Medicina De Grupo Ou Individual E Convênios Para Prestação De Assistência Médica, Hospitalar, Odontológica E Congêneres.	---	2.00		01/2026	12/2026	0422
+04.23.00	-         	Outros Planos De Saúde Que Se Cumpram Através De Serviços De Terceiros Contratados, Credenciados, Cooperados Ou Apenas Pagos Pelo Operador Do Plano Mediante Indicação Do Beneficiário.	---	2.00		01/2026	12/2026	0423
+05.01.01	-         	Medicina Veterinária	---	2.00		01/2026	12/2026	0501
+05.01.02	-         	Zootecnia.	---	2.00		01/2026	12/2026	0501
+05.02.00	-         	Hospitais, Clínicas, Ambulatórios, Prontos-Socorros E Congêneres, Na Área Veterinária.	---	3.00		01/2026	12/2026	0502
+05.03.00	-         	Laboratórios De Análise Na Área Veterinária.	---	2.50		01/2026	12/2026	0503
+05.04.00	-         	Inseminação Artificial, Fertilização In Vitro E Congêneres, Na Área Veterinária.	---	2.50		01/2026	12/2026	0504
+05.05.00	-         	Bancos De Sangue E De Órgãos E Congêneres, Na Área Veterinária.	---	2.50		01/2026	12/2026	0505
+05.06.00	-         	Coleta De Sangue, Leite, Tecidos, Sêmen, Órgãos E Materiais Biológicos De Qualquer Espécie, Na Área Veterinária.	---	2.50		01/2026	12/2026	0506
+05.07.00	-         	Unidade De Atendimento, Assistência Ou Tratamento Móvel E Congêneres, Na Área Veterinária.	---	2.50		01/2026	12/2026	0507
+05.08.01	-         	Guarda,Alojamento E Congêneres.	---	2.50		01/2026	12/2026	0508
+05.08.02	-         	Tratamento De Animais	---	2.50		01/2026	12/2026	0508
+05.08.03	-         	Amestramento	---	2.50		01/2026	12/2026	0508
+05.08.04	-         	Embelezamento De Animais	---	2.50		01/2026	12/2026	0508
+05.09.00	-         	Planos De Atendimento E Assistência Médico-Veterinária.	---	2.50		01/2026	12/2026	0509
+06.01.01	-         	Barbearia	---	2.00		01/2026	12/2026	0601
+06.01.02	-         	Cabeleireiros	---	2.00		01/2026	12/2026	0601
+06.01.03	-         	Manicuros	---	2.00		01/2026	12/2026	0601
+06.01.04	-         	Manicuros	---	2.00		01/2026	12/2026	0601
+06.01.05	-         	Pedicuros	---	2.00		01/2026	12/2026	0601
+06.01.06	-         	Pedicuros	---	2.00		01/2026	12/2026	0601
+06.02.01	-         	Esteticistas, Tratamento De Pele.	---	2.50		01/2026	12/2026	0602
+06.02.02	-         	Depilação, Embelezamento E Congêneres.	---	2.50		01/2026	12/2026	0602
+06.02.03	-         	Aplicação De Tatuagem, Piercing E Congêneres.	---	2.50		01/2026	12/2026	0606
+06.03.01	-         	Banhos, Duchas, Sauna, E Congêneres.	---	2.50		01/2026	12/2026	0603
+06.03.02	-         	Massagens.	---	2.50		01/2026	12/2026	0603
+06.04.01	-         	Ginástica E Demais Atividades Físicas.	---	3.00		01/2026	12/2026	0604
+06.04.02	-         	Dança	---	3.00		01/2026	12/2026	0604
+06.04.03	-         	Outros Esportes.	---	3.00		01/2026	12/2026	0604
+06.04.04	-         	Natação	---	3.00		01/2026	12/2026	0604
+06.04.05	-         	Artes Marciais	---	3.00		01/2026	12/2026	0604
+06.04.06	-         	Futebol	---	3.00		01/2026	12/2026	0604
+06.04.07	-         	Tênis	---	3.00		01/2026	12/2026	0604
+06.04.08	-         	Personal Trainer	---	3.00		01/2026	12/2026	0604
+06.05.00	-         	Centros De Emagrecimento, Spa E Congêneres.	---	2.50		01/2026	12/2026	0605
+07.01.01	-         	Engenharia Civil	---	2.00		01/2026	12/2026	0701
+07.01.02	-         	Agronomia E Agrimensura	---	2.00		01/2026	12/2026	0701
+07.01.03	-         	Arquitetura	---	2.00		01/2026	12/2026	0701
+07.01.04	-         	Geologia	---	2.00		01/2026	12/2026	0701
+07.01.05	-         	Urbanismo	---	2.00		01/2026	12/2026	0701
+07.01.06	-         	Paisagismo E Congêneres	---	2.00		01/2026	12/2026	0701
+07.01.07	-         	Outras Engenharias	---	2.00		01/2026	12/2026	0701
+07.02.01	-         	Execução, Por Administração, Empreitada Ou Subempreitada, De Obras De Construção Civil, (Exceto O Fornecimento De Mercadorias Produzidas Pelo Prestador De Serviços, Fora Do Local Da Prestação Serviços, Que Fica Sujeito Ao Icms).	---	2.00		01/2026	12/2026	0702
+07.02.02	-         	Execução De Obras Hidráulicas E De Outras Obras Semelhantes	---	2.00		01/2026	12/2026	0702
+07.02.03	-         	Execução De Obras Elétricas E De Outras Obras Semelhantes	---	2.00		01/2026	12/2026	0702
+07.02.04	-         	Sondagem, Perfuração De Poços, Escavação, Drenagem E Irrigação,	---	2.00		01/2026	12/2026	0702
+07.02.05	-         	Execução De Obras De Terraplanagem, Pavimentação.	---	2.00		01/2026	12/2026	0702
+07.02.06	-         	Instalação E Montagem De Produtos, Peças E Equipamentos (Construção Civil).	---	2.00		01/2026	12/2026	0702
+07.02.07	-         	Execução De Obras De Telecomunicações	---	2.00		01/2026	12/2026	0702
+07.02.08	-         	Execução De Edificações Em Geral	---	2.00		01/2026	12/2026	0702
+07.02.09	-         	Execução De Pré-Moldados, Obras Com Pré-Moldados Qualquer Natureza.	---	2.00		01/2026	12/2026	0702
+07.02.10	-         	Concretagem	---	2.00		01/2026	12/2026	0702
+07.02.11	-         	Execução De Obras De Arte Especiais (Pontes, Viadutos, Túneis).	---	2.00		01/2026	12/2026	0702
+07.02.12	-         	Execução De Estruturas Em Geral	---	2.00		01/2026	12/2026	0702
+07.02.13	-         	Serviços Complementares, Execução De Alambrados, Cercas, Redes De Proteção, Telas Etc.	---	2.00		01/2026	12/2026	0702
+07.02.14	-         	Impermeabilizações E Isolamentos	---	2.00		01/2026	12/2026	0702
+07.02.15	-         	Serviços De Pedreiro	---	2.00		01/2026	12/2026	0702
+07.02.16	-         	Serviços De Encanador	---	2.00		01/2026	12/2026	0702
+07.02.17	-         	Serviços De Eletricista	---	2.00		01/2026	12/2026	0702
+07.02.18	-         	Serviços De Pintor	---	2.00		01/2026	12/2026	0702
+07.02.19	-         	Serviços De Calheiro	---	2.00		01/2026	12/2026	0702
+07.02.20	-         	Serviços De Armador (Ferreiro)	---	2.00		01/2026	12/2026	0702
+07.02.21	-         	Serviços De Instalação Ou Montagem De Antena Externa, Cabo Ou Satélite Para Televisão, Internet Ou Congêneres.	---	2.00		01/2026	12/2026	0702
+07.02.22	-         	Serviços De Instalação Ou Montagem De Toldos Ou Congêneres, Fixos Ou Provisórios).	---	2.00		01/2026	12/2026	0702
+07.02.23	-         	Serviços De Instalação Ou Montagem De Ar Condicionado Ou Congeneres	---	2.00		01/2026	12/2026	0702
+07.02.24	-         	Serviços De Eletricista (Alarmes E Sistemas De Segurança)	---	2.00		01/2026	12/2026	0702
+07.02.25	-         	Montagem De Elevadores, Escadas E Esteiras Rolantes.	---	2.00		01/2026	12/2026	0702
+07.02.26	-         	Instalação E Montagem De Aparelhos E Centrais De Ar Condicionado, Refrigeração Ou Ventilação.	---	2.00		01/2026	12/2026	0702
+07.02.27	-         	Execução De Cozinhas Planejadas Ou Outros Ambientes, Moduladas Ou Não.	---	2.00		01/2026	12/2026	0702
+07.02.28	-         	Execução De Consultórios Planejados, Modulados Ou Não.	---	2.00		01/2026	12/2026	0702
+07.02.29	-         	Instalação E Montagem De Mobiliário Para Estabelecimentos (Aparelhados Ou Não De Equipamentos Tais Como Balcões Refrigerados Ou Aquecidos).	---	2.00		01/2026	12/2026	0702
+07.03.00	-         	Elaboração De Planos Diretores, Estudos De Viabilidade, Estudos Organizacionais E Outros, Relacionados Com Obras E Serviços De Engenharia. Elaboração De Anteprojetos, Projetos Básicos E Projetos Executivos Para Trabalhos De Engenharia.	---	3.00		01/2026	12/2026	0703
+07.04.00	-         	Demolição.	---	2.00		01/2026	12/2026	0704
+07.05.01	-         	Reparação, Conservação E Reforma De Edifícios, (Exceto O Fornecimento De Mercadorias Produzidas Pelo Prestador De Serviços, Fora Do Local Da Prestação Dos Serviços, Que Fica Sujeito Ao Icms).	---	2.00		01/2026	12/2026	0705
+07.05.02	-         	Reparação, Conservação E Reforma De Estradas, Pontes, Portos E Congêneres (Exceto O Fornecimento De Mercadorias Produzidas Pelo Prestador De Serviços, Fora Do Local Da Prestação Dos Serviços, Que Fica Sujeito Ao Icms).	---	2.00		01/2026	12/2026	0705
+07.05.03	-         	Execução De Obras Para Sinalização E Complementação Para Sistemas Viários.	---	2.00		01/2026	12/2026	0705
+07.06.01	-         	Colocação E Instalação De Tapetes, Com Material Fornecido Pelo Tomador Do Serviço.	---	2.50		01/2026	12/2026	0706
+07.06.02	-         	Colocação E Instalação De Carpetes, Assoalhos, Revestimentos De Parede, Pedras E Outros Revestimentos Com Material Fornecido Pelo Tomador Do Serviço.	---	2.50		01/2026	12/2026	0706
+07.06.03	-         	Colocação E Instalação De Cortinas, Com Material Fornecido Pelo Tomador Do Serviço.	---	2.50		01/2026	12/2026	0706
+07.06.04	-         	Colocação E Instalação De Vidros, Com Material Fornecido Pelo Tomador Do Serviço.	---	2.50		01/2026	12/2026	0706
+07.06.05	-         	Colocação E Instalação De Divisórias, Forros, Com Material Fornecido Pelo Tomador Do Serviço.	---	2.50		01/2026	12/2026	0706
+07.06.06	-         	Colocação E Instalação De Placas De Gesso E Congêneres, Com Material Fornecido Pelo Tomador Do Serviço.	---	2.50		01/2026	12/2026	0706
+07.06.07	-         	Serviço De Marmoreiro.	---	2.50		01/2026	12/2026	0706
+07.07.01	-         	Recuperação, Raspagem De Pisos E Congêneres.	---	3.00		01/2026	12/2026	0707
+07.07.02	-         	Polimento De Pisos E Congêneres.	---	3.00		01/2026	12/2026	0707
+07.07.03	-         	Lustração De Pisos E Congêneres.	---	3.00		01/2026	12/2026	0707
+07.08.00	-         	Calafetação.	---	2.50		01/2026	12/2026	0708
+07.09.01	-         	Varrição De Lixo, Rejeitos E Outros Resíduos Quaisquer.	---	3.50		01/2026	12/2026	0709
+07.09.02	-         	Coleta De Lixo, Rejeitos E Outros Resíduos Quaisquer.	---	3.50		01/2026	12/2026	0709
+07.09.03	-         	Coleta De Entulhos - Caçamba	---	3.50		01/2026	12/2026	0709
+07.09.04	-         	Remoção, Incineração De Lixo, Rejeitos E Outros Resíduos Quaisquer.	---	3.50		01/2026	12/2026	0709
+07.09.05	-         	Tratamento, Reciclagem, Separação E Destinação Final De Lixo, Rejeitos E Outros Resíduos Quaisquer.	---	3.50		01/2026	12/2026	0709
+07.10.01	-         	Limpeza, Manutenção E Conservação De Vias E Logradouros Públicos.	---	2.00		01/2026	12/2026	0710
+07.10.02	-         	Limpeza, Manutenção E Conservação De Piscinas.	---	2.00		01/2026	12/2026	0710
+07.10.03	-         	Limpeza, Manutenção E Conservação De Imóveis, Estruturas, Tanques, Chaminés, Dutos E Congêneres, Por Método Mecânico, Químico, Abrasivo Ou Outro.	---	2.00		01/2026	12/2026	0710
+07.10.04	-         	Desentupidora De Esgotos, Fossas E Congêneres.	---	2.00		01/2026	12/2026	0710
+07.11.01	-         	Decoração.	---	2.00		01/2026	12/2026	0711
+07.11.02	-         	Jardinagem, Inclusive Corte E Poda De Árvores.	---	2.00		01/2026	12/2026	0711
+07.11.03	-         	Jardineiro	---	2.00		01/2026	12/2026	0711
+07.12.00	-         	Controle E Tratamento De Efluentes De Qualquer Natureza E De Agentes Físicos, Químicos E Biológicos.	---	4.00		01/2026	12/2026	0712
+07.13.01	-         	Dedetização, Desinsetização, Imunização, Desratização, Pulverização E Congêneres.	---	2.00		01/2026	12/2026	0713
+07.13.02	-         	Desinfecção	---	2.00		01/2026	12/2026	0713
+07.13.03	-         	Higienização	---	2.00		01/2026	12/2026	0713
+07.13.04	-         	Pulverização Aérea	---	2.00		01/2026	12/2026	0713
+07.14.00	-         	Tratamento De Esgoto	---	0.00		01/2026	12/2026	0714
+07.15.00	-         	(Vetado)	---	0.00		01/2026	12/2026	0715
+07.16.01	-         	Florestamento	---	3.00		01/2026	12/2026	0716
+07.16.02	-         	Reflorestamento, Semeadura, Adubação, Reparação De Solo, Plantio, Silagem, Colheita, Corte E Descascamento De Árvores, Silvicultura, Exploração Florestal E Dos Serviços Congêneres Indissociáveis Da Formação, Manutenção E Colheita De Florestas, Para Quaisquer Fins E Por Quaisquer Meios.	---	3.00		01/2026	12/2026	0716
+07.16.03	-         	Mecanização Agrícola	---	3.00		01/2026	12/2026	0716
+07.16.04	-         	Aviação Agrícola	---	3.00		01/2026	12/2026	0716
+07.17.00	-         	Escoramento, Contenção De Encostas E Serviços Congêneres.	---	2.50		01/2026	12/2026	0717
+07.18.00	-         	Limpeza E Dragagem De Rios, Portos, Canais, Baías, Lagos, Lagoas, Represas, Açudes E Congêneres.	---	2.50		01/2026	12/2026	0718
+07.19.00	-         	Acompanhamento E Fiscalização Da Execução De Obras De Engenharia, Arquitetura E Urbanismo.	---	2.00		01/2026	12/2026	0719
+07.20.01	-         	Aerofotogrametria (Inclusive Interpretação).	---	2.50		01/2026	12/2026	0720
+07.20.02	-         	Cartografia, Mapeamento.	---	2.50		01/2026	12/2026	0720
+07.20.03	-         	Levantamentos Topográficos, Batimétricos, Geográficos, Geodésicos, Geológicos, Geofísicos E Congêneres.	---	2.50		01/2026	12/2026	0720
+07.21.00	-         	Pesquisa, Perfuração, Cimentação, Mergulho, Perfilagem, Concretação, Testemunhagem, Pescaria, Estimulação E Outros Serviços Relacionados Com A Exploração E Explotação De Petróleo, Gás Natural E De Outros Recursos Minerais.	---	3.00		01/2026	12/2026	0721
+07.22.00	-         	Nucleação E Bombardeamento De Nuvens E Congêneres.	---	3.00		01/2026	12/2026	0722
+08.01.01	-         	Ensino Fundamental.	---	2.00		01/2026	12/2026	0801
+08.01.02	-         	Ensino Regular Pré-Escolar.	---	2.00		01/2026	12/2026	0801
+08.01.03	-         	Professor Particular	---	2.00		01/2026	12/2026	0801
+08.01.04	-         	Ensino Médio.	---	2.00		01/2026	12/2026	0801
+08.01.05	-         	Ensino Superior, Seqüencial, Pós-Graduação.	---	2.00		01/2026	12/2026	0801
+08.02.01	-         	Instrução, Treinamento, Avaliação De Conhecimentos De Qualquer Natureza.	---	2.00		01/2026	12/2026	0802
+08.02.02	-         	Escola, Preparação P/Cursos Superiores, Cursinhos.	---	2.00		01/2026	12/2026	0802
+08.02.03	-         	Ensino De Escola De Cabeleireiros E Congêneres	---	2.00		01/2026	12/2026	0802
+08.02.04	-         	Ensino De Línguas.	---	2.00		01/2026	12/2026	0802
+08.02.05	-         	Ensino De Música, Violão, Piano, Etc.	---	2.00		01/2026	12/2026	0802
+08.02.06	-         	Ensino De Arte Culinária, Costura, Educação Artística, Artesanato, Etc......	---	2.00		01/2026	12/2026	0802
+08.02.07	-         	Treinamento, Instrução Na Área De Informática.	---	2.00		01/2026	12/2026	0802
+08.02.08	-         	Orientação Pedagógica E Educacional	---	2.00		01/2026	12/2026	0802
+08.02.09	-         	Auto Escola	---	2.00		01/2026	12/2026	0802
+08.02.10	-         	Moto Escola	---	2.00		01/2026	12/2026	0802
+09.01.01	-         	Hospedagem De Qualquer Natureza Em Hotéis, (O Valor Da Alimentação E Gorjeta, Quando Incluído No Preço Da Diária, Fica Sujeito Ao Iss).	---	4.00		01/2026	12/2026	0901
+09.01.02	-         	Hospedagem Em Apart-Service Condominiais, Flat, Apart-Hotéis, Hotéis Residência, Residence-Service, Suite Service, (O Valor Da Alimentação E Gorjeta).	---	4.00		01/2026	12/2026	0901
+09.01.03	-         	Hotelaria Marítima	---	4.00		01/2026	12/2026	0901
+09.01.04	-         	Motéis	---	4.00		01/2026	12/2026	0901
+09.01.05	-         	Hospedagem Em Pensões, Albergues, Pousadas, Hospedarias E Congêneres.	---	4.00		01/2026	12/2026	0901
+09.01.06	-         	Ocupação Por Temporada Com Fornecimento De Serviço.	---	4.00		01/2026	12/2026	0901
+09.01.07	-         	Hospedagem Infantil	---	4.00		01/2026	12/2026	0901
+09.02.00	-         	Agenciamento, Organização, Promoção, Intermediação E Execução De Programas De Turismo, Passeios, Viagens, Excursões, Hospedagem E Congêneres.	---	2.00		01/2026	12/2026	0902
+09.03.00	-         	Guias De Turismo.	---	2.00		01/2026	12/2026	0903
+10.01.01	-         	Agenciamento, Corretagem Ou Intermediação De Câmbio.	---	2.00		01/2026	12/2026	1001
+10.01.02	-         	Agenciamento, Corretagem Ou Intermediação De Seguros.	---	2.00		01/2026	12/2026	1001
+10.01.03	-         	Agenciamento, Corretagem Ou Intermediação De Cartões De Crédito.	---	2.00		01/2026	12/2026	1001
+10.01.04	-         	Agenciamento, Corretagem Ou Intermediação De Planos De Saúde.	---	2.00		01/2026	12/2026	1001
+10.01.05	-         	Agenciamento, Corretagem Ou Intermediação De Planos De Previdência Privada.	---	2.00		01/2026	12/2026	1001
+10.02.01	-         	Agenciamento De Títulos Em Geral, Valores Mobiliários, Contratos Quaisquer E Consórcios.	---	2.00		01/2026	12/2026	1002
+10.02.02	-         	Corretagem De Títulos Em Geral, Valores Mobiliários, Contratos Quaisquer E Consórcios.	---	2.00		01/2026	12/2026	1002
+10.02.03	-         	Intermediação De Títulos Em Geral, Valores Mobiliários, Contratos Quaisquer E Consórcios.	---	2.00		01/2026	12/2026	1002
+10.03.01	-         	Agenciamento, Corretagem Ou Intermediação De Direitos De Propriedade Industrial (Inclusive Marcas E Patentes).	---	2.00		01/2026	12/2026	1003
+10.03.02	-         	Agenciamento, Corretagem Ou Intermediação De Direitos De Propriedade Artística.	---	2.00		01/2026	12/2026	1003
+10.03.03	-         	Agenciamento, Corretagem Ou Intermediação De Direitos De Propriedade Literária.	---	2.00		01/2026	12/2026	1003
+10.04.01	-         	Agenciamento, Corretagem Ou Intermediação De Contratos De Arrendamento Mercantil (Leasing).	---	2.00		01/2026	12/2026	1004
+10.04.02	-         	Agenciamento, Corretagem Ou Intermediação De Contratos De Franquia (Franchising).	---	2.00		01/2026	12/2026	1004
+10.04.03	-         	Agenciamento, Corretagem Ou Intermediação De Contratos De Faturização (Factoring).	---	2.00		01/2026	12/2026	1004
+10.05.00	-         	Agenciamento, Corretagem Ou Intermediação De Bens Móveis Ou Imóveis, Não Abrangidos Em Outros Itens Ou Subitens, Inclusive Aqueles Realizados No Âmbito De Bolsas De Mercadorias E Futuros, Por Quaisquer Meios.	---	2.00		01/2026	12/2026	1005
+10.05.01	-         	Agenciamento, Corretagem Ou Intermediação De Veículos Automotores.	---	2.00		01/2026	12/2026	1005
+10.05.02	-         	Agenciamento, Corretagem Ou Intermediação De Imóveis.	---	2.00		01/2026	12/2026	1005
+10.05.03	-         	Agenciamento, Corretagem Ou Intermediação De Insumos Ou Produtos Agropecuários (Comodites).	---	2.00		01/2026	12/2026	1005
+10.05.04	-         	Agenciamento, Corretagem Ou Intermediação De Outros Bens Móveis Ou Imóveis, Não Abrangidos Em Outros Itens Ou Subitens, Inclusive Aqueles Realizados No Âmbito De Bolsas De Mercadorias E Futuros, Por Quaisquer Meios.	---	2.00		01/2026	12/2026	1005
+10.06.00	-         	Agenciamento Marítimo.	---	2.00		01/2026	12/2026	1006
+10.07.00	-         	Agenciamento De Notícias.	---	2.00		01/2026	12/2026	1007
+10.08.00	-         	Agenciamento De Publicidade E Propaganda, Inclusive O Agenciamento De Veiculação Por Quaisquer Meios.	---	2.00		01/2026	12/2026	1008
+10.09.01	-         	Representação De Qualquer Natureza, Inclusive Comercial.	---	2.00		01/2026	12/2026	1009
+10.09.02	-         	Representante Comercial Autônomo	---	2.00		01/2026	12/2026	1009
+10.09.03	-         	Telemarketing, Teleatendimento, Televendas E Congêneres.	---	2.00		01/2026	12/2026	1009
+10.10.00	-         	Distribuição De Bens De Terceiros.	---	2.00		01/2026	12/2026	1010
+11.01.01	-         	Guarda E Estacionamento De Veículos Terrestres Automotores (Estabelecimento).	---	4.00		01/2026	12/2026	1101
+11.01.02	-         	Guardadores De Veículos Em Vias Públicas	---	4.00		01/2026	12/2026	1101
+11.01.03	-         	Guarda E Estacionamento Tipo 'Valet Service'.	---	4.00		01/2026	12/2026	1101
+11.01.04	-         	Guarda E Estacionamento De Aeronaves.	---	4.00		01/2026	12/2026	1101
+11.01.05	-         	Guarda E Estacionamento De Embarcações.	---	4.00		01/2026	12/2026	1101
+11.02.01	-         	Vigilância, Segurança De Bens, Pessoas E Semoventes.	---	2.00		01/2026	12/2026	1102
+11.02.02	-         	Guarda Noturno, Vigilante.	---	2.00		01/2026	12/2026	1102
+11.02.03	-         	Monitoramento De Bens, Pessoas E Semoventes.	---	2.00		01/2026	12/2026	1102
+11.03.00	-         	Escolta, Inclusive De Veículos E Cargas.	---	2.00		01/2026	12/2026	1103
+11.04.01	-         	Armazenamento De Bens De Qualquer Espécie.	---	2.00		01/2026	12/2026	1104
+11.04.02	-         	Armazenamento (Frigoríficos).	---	2.00		01/2026	12/2026	1104
+11.04.03	-         	Depósito De Bens De Qualquer Espécie (Exceto Banco)	---	2.00		01/2026	12/2026	1104
+11.04.04	-         	Carga, Descarga De Bens De Qualquer Espécie.	---	2.00		01/2026	12/2026	1104
+11.04.05	-         	Arrumação E Guarda De Bens De Qualquer Espécie.	---	2.00		01/2026	12/2026	1104
+12.01.00	-         	Espetáculos Teatrais.	---	3.50		01/2026	12/2026	1201
+12.02.00	-         	Exibições Cinematográficas.	---	2.00		01/2026	12/2026	1202
+12.03.00	-         	Espetáculos Circenses.	---	3.50		01/2026	12/2026	1203
+12.04.00	-         	Programas De Auditório.	---	3.50		01/2026	12/2026	1204
+12.05.00	-         	Parques De Diversões, Centros De Lazer E Congêneres.	---	3.50		01/2026	12/2026	1205
+12.06.01	-         	Boates, Night Clube.	---	4.00		01/2026	12/2026	1206
+12.06.02	-         	Taxi-Dancing, Drive-In E Congêneres.	---	4.00		01/2026	12/2026	1206
+12.07.01	-         	Shows, Óperas, Concertos, Recitais, Festivais E Congêneres.	---	2.00		01/2026	12/2026	1207
+12.07.02	-         	Ballet, Danças, Desfiles.	---	2.00		01/2026	12/2026	1207
+12.07.03	-         	Bailes	---	2.00		01/2026	12/2026	1207
+12.08.01	-         	Feiras, Exposições, Congressos E Congêneres.	---	4.00		01/2026	12/2026	1208
+12.08.02	-         	Exposições Com Cobrança De Ingressos	---	4.00		01/2026	12/2026	1208
+12.09.01	-         	Bilhares	---	3.50		01/2026	12/2026	1209
+12.09.02	-         	Boliches	---	3.50		01/2026	12/2026	1209
+12.09.03	-         	Diversões Eletrônicas Ou Não.	---	3.50		01/2026	12/2026	1209
+12.09.04	-         	Futebol De Mesa (Pebolim)	---	3.50		01/2026	12/2026	1209
+12.09.05	-         	Carteado, Dominó, Víspora E Outros Tipos De Diversões.	---	3.50		01/2026	12/2026	1209
+12.10.00	-         	Corridas E Competições De Animais.	---	3.50		01/2026	12/2026	1210
+12.11.00	-         	Competições Esportivas Ou De Destreza Física Ou Intelectual, Com Ou Sem A Participação Do Espectador.	---	3.50		01/2026	12/2026	1211
+12.12.00	-         	Execução De Música. (Individual Ou Por Conjunto).	---	4.00		01/2026	12/2026	1212
+12.13.00	-         	Produção, Mediante Ou Sem Encomenda Prévia, De Eventos, Espetáculos, Entrevistas, Shows, Ballet, Danças, Desfiles, Bailes, Teatros, Óperas, Concertos, Recitais, Festivais E Congêneres, Inclusive Programas De Televisão, Matérias Jornalísticas Ou Publicitár	---	4.00		01/2026	12/2026	1213
+12.14.00	-         	Fornecimento De Música Para Ambientes Fechados Ou Não, Mediante Transmissão Por Qualquer Processo.	---	3.50		01/2026	12/2026	1214
+12.15.00	-         	Desfiles De Blocos Carnavalescos Ou Folclóricos, Trios Elétricos E Congêneres.	---	3.50		01/2026	12/2026	1215
+12.16.00	-         	Exibição De Filmes, Entrevistas, Musicais, Espetáculos, Shows, Concertos, Desfiles, Óperas, Competições Esportivas, Destreza Intelectual Ou Congêneres.	---	3.50		01/2026	12/2026	1216
+12.17.00	-         	Recreação E Animação, Inclusive Em Festas E Eventos De Qualquer Natureza.	---	4.00		01/2026	12/2026	1217
+13.02.00	-         	Fonografia Ou Gravação De Sons, Inclusive Trucagem, Dublagem, Mixagem E Congêneres.	---	3.00		01/2026	12/2026	1302
+13.03.01	-         	Fotografia.	---	3.00		01/2026	12/2026	1303
+13.03.02	-         	Produção Audiovisual	---	3.00		01/2026	12/2026	1303
+13.03.03	-         	Revelação, Ampliação, Cópia, Reprodução, Trucagem E Congêneres.	---	3.00		01/2026	12/2026	1303
+13.03.04	-         	Fotografia, Cinematografia Ou Outros, De Registro De Eventos (Casamentos, Formaturas, Festas, Recepções, Solenidades E Congêneres).	---	3.00		01/2026	12/2026	1303
+13.04.01	-         	Reprografia, (Cópia De Documentos).	---	2.00		01/2026	12/2026	1304
+13.04.02	-         	Microfilmagem E Digitalização.	---	2.00		01/2026	12/2026	1304
+13.05.01	-         	Composição Gráfica, Inclusive Confecção De Impressos Gráficos, Exceto Se Destinados A Posterior Operação De Comercialização Ou Industrialização, Ainda Que Incorporados, De Qualquer Forma, A Outra Mercadoria Que Deva Ser Objeto De Posterior Circulação, Tais Como Bulas, Rótulos, Etiquetas, Caixas, Cartuchos, Embalagens E Manuais Técnicos E De Instrução, Quando Ficarão Sujeitos Ao Icms.	---	2.00		01/2026	12/2026	1305
+13.05.02	-         	Fotocomposição	---	2.00		01/2026	12/2026	1305
+13.05.03	-         	Clicheria, Zincografia, Litografia E Fotolitografia.	---	2.00		01/2026	12/2026	1305
+13.05.04	-         	Artes Gráficas, Tipografia.	---	2.00		01/2026	12/2026	1305
+13.05.05	-         	Serigrafia (Silk Screen)	---	2.00		01/2026	12/2026	1305
+14.01.01	-         	Lubrificação De Máquinas, Aparelhos E Equipamentos, (Exceto Peças E Partes Empregadas, Que Ficam Sujeitas Ao Icms).	---	2.50		01/2026	12/2026	1401
+14.01.02	-         	Limpeza De Máquinas, Aparelhos E Equipamentos.	---	2.50		01/2026	12/2026	1401
+14.01.03	-         	Lustração De Máquinas, Aparelhos E Equipamentos.	---	2.50		01/2026	12/2026	1401
+14.01.04	-         	Lustrador	---	2.50		01/2026	12/2026	1401
+14.01.05	-         	Revisão, Carga E Recarga De Maquinas, Aparelhos E Equipamentos.	---	2.50		01/2026	12/2026	1401
+14.01.06	-         	Restauração De Quaisquer Objetos	---	2.50		01/2026	12/2026	1401
+14.01.07	-         	Conserto, Manutenção E Conservação De Quaisquer Objetos.	---	2.50		01/2026	12/2026	1401
+14.01.08	-         	Conserto, Restauração De Sapatos.	---	2.50		01/2026	12/2026	1401
+14.01.09	-         	Conserto, Restauração De Jóias, Relógios E Congêneres.	---	2.50		01/2026	12/2026	1401
+14.01.10	-         	Conserto, Restauração De Óculos (Óticas).	---	2.50		01/2026	12/2026	1401
+14.01.11	-         	Conserto, Restauração De Aparelhos Elétricos, Eletrônicos......	---	2.50		01/2026	12/2026	1401
+14.01.12	-         	Conserto, Restauração De Eletrodomésticos.	---	2.50		01/2026	12/2026	1401
+14.01.13	-         	Conserto, Restauração De Instrumentos Musicais.	---	2.50		01/2026	12/2026	1401
+14.01.14	-         	Conserto, Restauração De Máquinas Agrícolas E Congêneres.	---	2.50		01/2026	12/2026	1401
+14.01.15	-         	Conserto, Restauração De Aparelhos Odontológicos, Hospitalares, Ortopédicos, Laboratoriais..	---	2.50		01/2026	12/2026	1401
+14.01.16	-         	Conserto, Restauração De Maquinas E Equipamentos Para Escritório.	---	2.50		01/2026	12/2026	1401
+14.01.17	-         	Conserto Por Soldagem	---	2.50		01/2026	12/2026	1401
+14.01.18	-         	Conserto, Restauração De Computadores E Similares.	---	2.50		01/2026	12/2026	1401
+14.01.19	-         	Conserto, Restauração De Brinquedos Em Geral.	---	2.50		01/2026	12/2026	1401
+14.01.20	-         	Conserto, Restauração De Aparelhos Equipamentos Industriais, Gráficos Etc.	---	2.50		01/2026	12/2026	1401
+14.01.21	-         	Conserto, Restauração De Elevadores.	---	2.50		01/2026	12/2026	1401
+14.01.22	-         	Conserto, Restauração De Ar Condicionado, Refrigeração Ou Ventilação.	---	2.50		01/2026	12/2026	1401
+14.01.23	-         	Conserto, Restauração De Letreiros, Luminosos Em Geral.	---	2.50		01/2026	12/2026	1401
+14.01.24	-         	Conserto, Restauração De Móveis Em Geral.	---	2.50		01/2026	12/2026	1401
+14.01.25	-         	Conserto, Restauração De Bicicletas, Peças E Similares.	---	2.50		01/2026	12/2026	1401
+14.01.26	-         	Conserto De Veículos (Parte Elétrica)	---	2.50		01/2026	12/2026	1401
+14.01.27	-         	Conserto De Motocicletas E Similares	---	2.50		01/2026	12/2026	1401
+14.01.28	-         	Oficina Mecânica.	---	2.50		01/2026	12/2026	1401
+14.01.29	-         	Lubrificação, Revisão E Lavagem De Veículos (Postos).	---	2.50		01/2026	12/2026	1401
+14.01.30	-         	Lavagem, Lubrificação Em Veículos (Outros).	---	2.50		01/2026	12/2026	1401
+14.01.31	-         	Alinhamento E Balanceamento De Veículos Automotores.	---	2.50		01/2026	12/2026	1401
+14.01.32	-         	Borracharia	---	2.50		01/2026	12/2026	1401
+14.01.33	-         	Blindagens Em Geral	---	2.50		01/2026	12/2026	1401
+14.01.34	-         	Conserto De Radiadores De Veículos Automotores.	---	2.50		01/2026	12/2026	1401
+14.01.35	-         	Conserto De Direção De Veículos Automotores.	---	2.50		01/2026	12/2026	1401
+14.01.36	-         	Conserto De Câmbio De Veículos Automotores.	---	2.50		01/2026	12/2026	1401
+14.01.37	-         	Conserto De Vidros Elétricos De Veículos Automotores.	---	2.50		01/2026	12/2026	1401
+14.01.38	-         	Conserto De Tapeçaria De Veículos Automotores.	---	2.50		01/2026	12/2026	1401
+14.01.39	-         	Conserto De Aeronaves Ou Suas Partes	---	2.50		01/2026	12/2026	1401
+14.02.01	-         	Assistência Técnica.	---	2.50		01/2026	12/2026	1402
+14.02.02	-         	Contrato De Garantia De Assistência Técnica, Exceto Pelo Fabricante.	---	2.50		01/2026	12/2026	1402
+14.03.00	-         	Retífica E Recondicionamento De Motores (Exceto Peças E Partes Empregadas, Que Ficam Sujeitas Ao Icms).	---	2.50		01/2026	12/2026	1403
+14.04.00	-         	Recauchutagem Ou Regeneração De Pneus.	---	2.00		01/2026	12/2026	1404
+14.05.01	-         	Recondicionamento De Objetos Quaisquer, Afiação.	---	2.50		01/2026	12/2026	1405
+14.05.02	-         	Acondicionamento De Objetos Quaisquer	---	2.50		01/2026	12/2026	1405
+14.05.03	-         	Pintura De Objetos Quaisquer (Placas, Painéis, Quadros, Etc).	---	2.50		01/2026	12/2026	1405
+14.05.04	-         	Pintura De Veículos	---	2.50		01/2026	12/2026	1405
+14.05.05	-         	Beneficiamento De Objetos Quaisquer	---	2.50		01/2026	12/2026	1405
+14.05.06	-         	Lavagem De Objetos Quaisquer	---	2.50		01/2026	12/2026	1405
+14.05.07	-         	Costura, Acabamento De Objetos Quaisquer.	---	2.50		01/2026	12/2026	1405
+14.05.08	-         	Tingimento De Objetos Quaisquer	---	2.50		01/2026	12/2026	1405
+14.05.09	-         	Galvanoplastia De Objetos Quaisquer	---	2.50		01/2026	12/2026	1405
+14.05.10	-         	Anodização De Objetos Quaisquer	---	2.50		01/2026	12/2026	1405
+14.05.11	-         	Corte, Recorte, De Objetos Quaisquer.	---	2.50		01/2026	12/2026	1405
+14.05.12	-         	Polimento Ou Cristalização De Objetos Quaisquer	---	2.50		01/2026	12/2026	1405
+14.05.13	-         	Plastificação E Congêneres, De Objetos Quaisquer.	---	2.50		01/2026	12/2026	1405
+14.05.14	-         	Tornearia E Usinagem	---	2.50		01/2026	12/2026	1405
+14.05.15	-         	Jateamento	---	2.50		01/2026	12/2026	1405
+14.05.16	-         	Instalação De Acessórios Em Veículos Automotores	---	2.50		01/2026	12/2026	1405
+14.05.99	-         	Outros	---	2.50		01/2026	12/2026	1405
+14.06.01	-         	Instalação E Montagem De Aparelhos, Máquinas E Equipamentos, Prestados Ao Usuário Final, Exclusivamente Com Material Por Ele Fornecido.	---	2.50		01/2026	12/2026	1406
+14.06.02	-         	Montagem Industrial, Prestados Ao Usuário Final, Exclusivamente Com Material Por Ele Fornecido.	---	2.50		01/2026	12/2026	1406
+14.06.03	-         	Montagem De Óculos Para O Usuário Final (Ótica)	---	2.50		01/2026	12/2026	1406
+14.07.00	-         	Colocação De Molduras E Congêneres.	---	2.00		01/2026	12/2026	1407
+14.08.00	-         	Encadernação, Gravação E Douração De Livros, Revistas E Congêneres.	---	2.00		01/2026	12/2026	1408
+14.09.01	-         	Alfaiataria, Quando O Material For Fornecido Pelo Usuário Final, Exceto Aviamento.	---	2.50		01/2026	12/2026	1409
+14.09.02	-         	Costura (Costureiras Etc) Quando O Material For Fornecido Pelo Usuário Final, Exceto Aviamento.	---	2.50		01/2026	12/2026	1409
+14.09.03	-         	Modista	---	2.50		01/2026	12/2026	1409
+14.10.01	-         	Tinturaria	---	2.50		01/2026	12/2026	1410
+14.10.02	-         	Lavanderia.	---	2.50		01/2026	12/2026	1410
+14.11.00	-         	Tapeçaria E Reforma De Estofamentos Em Geral.	---	3.00		01/2026	12/2026	1411
+14.12.00	-         	Funilaria E Lanternagem.	---	2.50		01/2026	12/2026	1412
+14.13.01	-         	Carpintaria (Instalação, Montagem Ou Conserto De Bens Móveis).	---	2.50		01/2026	12/2026	1413
+14.13.02	-         	Serralheria (Instalação, Montagem Ou Conserto De Bens Móveis).	---	2.50		01/2026	12/2026	1413
+14.13.03	-         	Marcenaria (Instalação, Montagem Ou Conserto De Bens Móveis).	---	2.50		01/2026	12/2026	1413
+14.14.01	-         	Guincho Intramunicipal	---	3.00		01/2026	12/2026	1414
+14.14.02	-         	Guindaste E Içamento	---	3.00		01/2026	12/2026	1414
+15.01.01	-         	Administração De Fundos Quaisquer.	---	5.00		01/2026	12/2026	1501
+15.01.02	-         	Organização E Administração De Consórcio.	---	5.00		01/2026	12/2026	1501
+15.01.03	-         	Administração De Cartões De Crédito, Débito E Congêneres.	---	5.00		01/2026	12/2026	1501
+15.01.04	-         	Administração De Carteiras De Clientes, De Cheques Pré-Datado E Congêneres.	---	5.00		01/2026	12/2026	1501
+15.02.00	-         	Abertura De Contas Em Geral, Inclusive Conta-Corrente, Conta De Investimentos E Aplicação E Caderneta De Poupança, No País E No Exterior, Bem Como A Manutenção Das Referidas Contas Ativas E Inativas.	---	5.00		01/2026	12/2026	1502
+15.03.00	-         	Locação E Manutenção De Cofres Particulares, De Terminais Eletrônicos, De Terminais De Atendimento E De Bens E Equipamentos Em Geral.	---	5.00		01/2026	12/2026	1503
+15.04.00	-         	Fornecimento Ou Emissão De Atestados Em Geral, Inclusive Atestado De Idoneidade, Atestado De Capacidade Financeira E Congêneres.	---	5.00		01/2026	12/2026	1504
+15.05.00	-         	Cadastro, Elaboração De Ficha Cadastral, Renovação Cadastral E Congêneres, Inclusão Ou Exclusão No Cadastro De Emitentes De Cheques Sem Fundos ¿ Ccf Ou Em Quaisquer Outros Bancos Cadastrais.	---	5.00		01/2026	12/2026	1505
+15.06.00	-         	Emissão, Reemissão E Fornecimento De Avisos, Comprovantes E Documentos Em Geral. Abono De Firmas. Coleta E Entrega De Documentos, Bens E Valores. Comunicação Com Outra Agência Ou Com A Administração Central. Licenciamento Eletrônico De Veículos. Transferê	---	5.00		01/2026	12/2026	1506
+15.07.00	-         	Acesso, Movimentação, Atendimento E Consulta A Contas Em Geral, Por Qualquer Meio Ou Processo, Inclusive Por Telefone, Fac-Símile, Internet E Telex, Acesso A Terminais De Atendimento, Inclusive Vinte E Quatro Horas. Acesso A Outro Banco E A Rede Compartil	---	5.00		01/2026	12/2026	1507
+15.08.00	-         	Emissão, Reemissão, Alteração, Cessão, Substituição, Cancelamento E Registro De Contrato De Crédito. Estudo, Análise E Avaliação De Operações De Crédito. Emissão, Concessão, Alteração Ou Contratação De Aval, Fiança, Anuência E Congêneres. Serviços Relativ	---	5.00		01/2026	12/2026	1508
+15.09.00	-         	Arrendamento Mercantil (Leasing) De Quaisquer Bens, Inclusive Cessão De Direitos E Obrigações, Substituição De Garantia, Alteração, Cancelamento E Registro De Contrato, E Demais Serviços Relacionados Ao Arrendamento Mercantil (Leasing).	---	5.00		01/2026	12/2026	1509
+15.10.00	-         	Serviços Relacionados A Cobranças, Recebimentos Ou Pagamentos Em Geral, De Títulos Quaisquer, De Contas Ou Carnês, De Câmbio, De Tributos E Por Conta De Terceiros, Inclusive Os Efetuados Por Meio Eletrônico, Automático Ou Por Máquinas De Atendimento. Forn	---	5.00		01/2026	12/2026	1510
+15.11.00	-         	Devolução De Títulos, Protesto De Títulos, Sustação De Protesto, Manutenção De Títulos, Reapresentação De Títulos, E Demais Serviços A Eles Relacionados.	---	5.00		01/2026	12/2026	1511
+15.12.00	-         	Custódia Em Geral, Inclusive De Títulos E Valores Mobiliários.	---	5.00		01/2026	12/2026	1512
+15.13.00	-         	Serviços Relacionados A Operações De Câmbio Em Geral, Edição, Alteração, Prorrogação, Cancelamento E Baixa De Contrato De Câmbio. Emissão De Registro De Exportação Ou De Crédito. Cobrança Ou Depósito No Exterior. Emissão, Fornecimento E Cancelamento De Ch	---	5.00		01/2026	12/2026	1513
+15.14.00	-         	Fornecimento, Emissão, Reemissão, Renovação E Manutenção De Cartão Magnético, Cartão De Crédito, Cartão De Débito, Cartão Salário E Congêneres.	---	5.00		01/2026	12/2026	1514
+15.15.00	-         	Compensação De Cheques E Títulos Quaisquer. Serviços Relacionados A Depósito, Inclusive Depósito Identificado, A Saque De Contas Quaisquer, Por Qualquer Meio Ou Processo, Inclusive Em Terminais Eletrônicos E De Atendimento.	---	5.00		01/2026	12/2026	1515
+15.16.00	-         	Emissão, Reemissão, Liquidação, Alteração, Cancelamento E Baixa De Ordens De Pagamento, Ordens De Crédito E Similares, Por Qualquer Meio Ou Processo. Serviços Relacionados À Transferência De Valores, Dados, Fundos, Pagamentos E Similares, Inclusive Entre	---	5.00		01/2026	12/2026	1516
+15.17.00	-         	Emissão, Fornecimento, Devolução, Sustação, Cancelamento E Oposição De Cheques Quaisquer, Avulso Ou Por Talão.	---	5.00		01/2026	12/2026	1517
+15.18.00	-         	Serviços Relacionados A Crédito Imobiliário, Avaliação E Vistoria De Imóvel Ou Obra, Análise Técnica E Jurídica, Emissão, Reemissão, Alteração, Transferência E Renegociação De Contrato, Emissão E Reemissão Do Termo De Quitação E Demais Serviços Relacionad	---	5.00		01/2026	12/2026	1518
+16.01.01	-         	Transporte De Natureza Municipal	---	2.00		01/2026	12/2026	1601
+16.01.02	-         	Transporte Por Taxi (Sem Empregados)	---	2.00		01/2026	12/2026	1601
+16.01.03	-         	Transporte Por Taxi.	---	2.00		01/2026	12/2026	1601
+16.01.04	-         	Outros Serviços De Transporte De Pessoas E Passageiros	---	2.00		01/2026	12/2026	1601
+16.01.05	-         	Transporte De Veículos	---	2.00		01/2026	12/2026	1601
+16.01.06	-         	Transporte De Mudanças	---	2.00		01/2026	12/2026	1601
+16.01.07	-         	Transporte De Cargas	---	2.00		01/2026	12/2026	1601
+16.01.08	-         	Transporte Por Ônibus	---	2.00		01/2026	12/2026	1601
+16.01.09	-         	Transporte De Pequenas Cargas - Carretos	---	2.00		01/2026	12/2026	1601
+16.01.10	-         	Transporte De Passageiros (Condutor Escolar).	---	2.00		01/2026	12/2026	1601
+16.01.11	-         	Transporte De Passageiros (Moto-Taxi).	---	2.00		01/2026	12/2026	1601
+16.01.12	-         	Transporte De Cargas (Ponto De Caminhão)	---	2.00		01/2026	12/2026	1601
+16.02.01	-         	Serviços De Transporte Coletivo Municipal Rodoviário, Metroviário, Ferroviário E Aquaviário De Passageiros.	---	2.00		01/2026	12/2026	1602
+17.01.01	-         	Assessoria De Qualquer Natureza, Não Contida Em Outros Itens Desta Lista. Análise, Exame, Pesquisa, Coleta, Compilação E Fornecimento De Dados E Informações De Qualquer Natureza.	---	4.00		01/2026	12/2026	1701
+17.01.02	-         	Consultoria De Qualquer Natureza, Não Contida Em Outros Itens Desta Lista. Análise, Exame, Pesquisa, Coleta, Compilação E Fornecimento De Dados.	---	4.00		01/2026	12/2026	1701
+17.01.03	-         	Escrituração. Cadastro E Congêneres	---	4.00		01/2026	12/2026	1701
+17.02.01	-         	Datilografia	---	2.50		01/2026	12/2026	1702
+17.02.02	-         	Digitação	---	2.50		01/2026	12/2026	1702
+17.02.03	-         	Estenografia	---	2.50		01/2026	12/2026	1702
+17.02.04	-         	Expediente	---	2.50		01/2026	12/2026	1702
+17.02.05	-         	Secretaria Em Geral	---	2.50		01/2026	12/2026	1702
+17.02.06	-         	Resposta Audível (Telemensagem)	---	2.50		01/2026	12/2026	1702
+17.02.07	-         	Tradução E Interpretação	---	2.50		01/2026	12/2026	1702
+17.02.08	-         	Redação, Edição, Revisão, Apoio E Infra-Estrutura Administrativa E Congêneres.	---	2.50		01/2026	12/2026	1702
+17.03.01	-         	Planejamento, Coordenação Técnica, Financeira Ou Administrativa.	---	3.50		01/2026	12/2026	1703
+17.03.02	-         	Programação, Organização Técnica, Financeira Ou Administrativa.	---	3.50		01/2026	12/2026	1703
+17.04.01	-         	Recrutamento De Mão-De-Obra.	---	3.00		01/2026	12/2026	1704
+17.04.02	-         	Agenciamento, Seleção De Mão-De-Obra.	---	3.00		01/2026	12/2026	1704
+17.04.03	-         	Colocação De Mão-De-Obra.	---	3.00		01/2026	12/2026	1704
+17.05.01	-         	Fornecimento De Mão-De-Obra, Mesmo Em Caráter Temporário, Inclusive De Empregados Ou Trabalhadores, Avulsos Ou Temporários, Contratados Pelo Prestador De Serviço.	---	2.50		01/2026	12/2026	1705
+17.06.01	-         	Propaganda E Publicidade.	---	2.00		01/2026	12/2026	1706
+17.06.02	-         	Promoção De Vendas E Negócios	---	2.00		01/2026	12/2026	1706
+17.06.03	-         	Planejamento De Campanhas Ou Sistemas De Publicidade	---	2.00		01/2026	12/2026	1706
+17.06.04	-         	Elaboração De Desenhos, Textos E Demais Materiais Publicitários.	---	2.00		01/2026	12/2026	1706
+17.06.05	-         	Pesquisa De Mercado	---	2.00		01/2026	12/2026	1706
+17.07.00	-         	(Vetado)	---	0.00		01/2026	12/2026	1707
+17.08.00	-         	Franquia (Franchising).	---	4.00		01/2026	12/2026	1708
+17.09.01	-         	Perícias, Laudos, Exames Técnicos.	---	2.00		01/2026	12/2026	1709
+17.09.02	-         	Análises Técnicas.	---	2.00		01/2026	12/2026	1709
+17.09.03	-         	Exames Psicotécnicos	---	2.00		01/2026	12/2026	1709
+17.10.01	-         	Planejamento, Organização E Administração De Feiras E Congêneres.	---	2.00		01/2026	12/2026	1710
+17.10.02	-         	Planejamento, Organização E Administração De Exposições, Congressos E Congêneres.	---	2.00		01/2026	12/2026	1710
+17.11.01	-         	Organização De Festas E Recepções. (Exceto O Fornecimento De Alimentação E Bebidas Que Fica Sujeito Ao Icms).	---	3.00		01/2026	12/2026	1711
+17.11.02	-         	Bufê (Exceto O Fornecimento De Alimentação E Bebidas Que Fica Sujeito Ao Icms).	---	3.00		01/2026	12/2026	1711
+17.12.01	-         	Administração Em Geral, Inclusive De Bens E Negócios De Terceiros.	---	2.50		01/2026	12/2026	1712
+17.12.02	-         	Administração De Imóveis	---	2.50		01/2026	12/2026	1712
+17.12.03	-         	Administração De Empresas	---	2.50		01/2026	12/2026	1712
+17.12.04	-         	Administração De Distribuição De Co-Seguros.	---	2.50		01/2026	12/2026	1712
+17.13.00	-         	Leilão E Congêneres.	---	2.50		01/2026	12/2026	1713
+17.14.00	-         	Advocacia.	---	2.00		01/2026	12/2026	1714
+17.15.00	-         	Arbitragem De Qualquer Espécie, Inclusive Jurídica.	---	2.00		01/2026	12/2026	1715
+17.16.00	-         	Auditoria.	---	2.00		01/2026	12/2026	1716
+17.17.00	-         	Análise De Organização E Métodos.	---	2.50		01/2026	12/2026	1717
+17.18.00	-         	Atuária E Cálculos Técnicos De Qualquer Natureza.	---	2.50		01/2026	12/2026	1718
+17.19.01	-         	Contabilidade.	---	2.00		01/2026	12/2026	1719
+17.19.02	-         	Técnico Em Contabilidade	---	2.00		01/2026	12/2026	1719
+17.20.01	-         	Consultoria Econômica Ou Financeira.	---	3.50		01/2026	12/2026	1720
+17.20.02	-         	Assessoria Econômica Ou Financeira.	---	3.50		01/2026	12/2026	1720
+17.20.03	-         	Economista	---	3.50		01/2026	12/2026	1720
+17.21.00	-         	Estatística.	---	3.50		01/2026	12/2026	1721
+17.22.01	-         	Cobrança Em Geral. (Cobrador).	---	3.50		01/2026	12/2026	1722
+17.22.02	-         	Cobranças (Outras Instituições).	---	3.50		01/2026	12/2026	1722
+17.23.00	-         	Factoring - Assessoria, Análise, Avaliação, Atendimento, Consulta,Cadastro,Seleção,Gerenciamento De Informações,Administração De Contas A Receber Ou A Pagar E Em Geral, Relacionadas A Operações De Faturização.	---	3.50		01/2026	12/2026	1723
+17.24.00	-         	Apresentação De Palestras, Conferências, Seminários E Congêneres.	---	2.00		01/2026	12/2026	1724
+17.25.00	-         	Inserção De Textos, Desenhos E Outros Materiais De Propaganda E Publicidade, Em Qualquer Meio (Exceto Em Livros, Jornais, Periódicos E Nas Modalidades De Serviços De Radiodifusão Sonora E De Sons E Imagens De Recepção Livre E Gratuita).	---	2.00		01/2026	12/2026	1725
+18.01.01	-         	Regulação De Sinistros Vinculados A Contratos De Seguros. Inspeção E Avaliação De Riscos P/Cobertura De Contratos De Seguros.	---	2.50		01/2026	12/2026	1801
+18.01.02	-         	Prevenção E Gerência De Riscos Seguráveis E Congêneres.	---	2.50		01/2026	12/2026	1801
+19.01.01	-         	Serviços De Distribuição E Venda De Bilhetes E Demais Produtos De Loteria, Bingos, Cartões, Pules Ou Cupons De Apostas, Sorteios, Prêmios, Inclusive Os Decorrentes De Títulos De Capitalização E Congêneres.	---	4.00		01/2026	12/2026	1901
+19.01.02	-         	Distribuição E Venda De Cartelas, Sorteios Ou Prêmios Em Bingos, Telebingos E Assemelhados.	---	4.00		01/2026	12/2026	1901
+20.01.00	-         	Serviços Portuários, Ferroportuários, Utilização De Porto, Movimentação De Passageiros, Reboque De Embarcações, Rebocador Escoteiro, Atracação, Desatracação, Serviços De Praticagem, Capatazia, Armazenagem De Qualquer Natureza, Serviços Acessórios, Movimen	---	5.00		01/2026	12/2026	2001
+20.02.00	-         	Serviços Aeroportuários, Utilização De Aeroporto, Movimentação De Passageiros, Armazenagem De Qualquer Natureza, Capatazia, Movimentação De Aeronaves, Serviços De Apoio Aeroportuários, Serviços Acessórios, Movimentação De Mercadorias, Logística E Congêner	---	5.00		01/2026	12/2026	2002
+20.03.00	-         	Serviços De Terminais Rodoviários, Ferroviários, Metroviários, Movimentação De Passageiros, Mercadorias, Inclusive Suas Operações, Logística E Congêneres.	---	5.00		01/2026	12/2026	2003
+21.01.00	-         	Serviços De Registros Públicos, Cartorários E Notariais.	---	2.00		01/2026	12/2026	2101
+22.01.01	-         	Serviços De Exploração De Rodovia Mediante Cobrança De Preço Ou Pedágio Dos Usuários, Envolvendo Execução De Serviços De Conservação, Manutenção, Melhoramentos Para Adequação De Capacidade E Segurança De Trânsito, Operação, Monitoração, Assistência Aos Us	---	5.00		01/2026	12/2026	2201
+22.01.02	-         	Serviços Definidos Em Contrato - Operação, Manutenção, Coordenação, Fornecimento, Fiscalização E Instalação De Equipamentos Estáticos Ou Portáteis, Fixos Ou Não, De Registro Das Infrações De Excesso De Velocidade, Ou De Passagem, Em Rodovias.	---	5.00		01/2026	12/2026	2201
+23.01.00	-         	Serviços De Programação E Comunicação Visual, Desenho Industrial E Congêneres.	---	2.00		01/2026	12/2026	2301
+24.01.01	-         	Serviços De Chaveiros.	---	2.50		01/2026	12/2026	2401
+24.01.02	-         	Serviços De Confecção De Carimbos.	---	2.50		01/2026	12/2026	2401
+24.01.03	-         	Serviços De Confecção De Placas, Sinalização Visual, Banners, Adesivos E Congêneres.	---	2.50		01/2026	12/2026	2401
+25.01.00	-         	Funerais, Inclusive Fornecimento De Caixão, Urna Ou Esquifes. Aluguel De Capela. Transporte Do Corpo Cadavérico. Fornecimento De Flores, Coroas E Outros Paramentos. Desembaraço De Certidão De Óbito. Fornecimento De Véu, Essa E Outros Adornos. Embalsamento	---	4.00		01/2026	12/2026	2501
+25.02.00	-         	Translado Intramunicipal E Cremação De Corpos E Partes De Corpos Cadavéricos. 	---	4.00		01/2026	12/2026	2502
+25.03.00	-         	Planos Ou Convênio Funerários.	---	4.00		01/2026	12/2026	2503
+25.04.00	-         	Manutenção E Conservação De Jazigos E Cemitérios.	---	2.00		01/2026	12/2026	2504
+25.05.00	-         	Cessão De Uso De Espaços Em Cemitérios Para Sepultamento.	---	4.00		01/2026	12/2026	2505
+26.01.01	-         	Serviços De Coleta, Remessa Ou Entrega De Correspondências, Documentos, Objetos Ou Bens, Pelos Correios E Suas Agências Franqueadas.	---	4.00		01/2026	12/2026	2601
+26.01.02	-         	Transporte De Valores, Dentro Do Território Do Município.	---	4.00		01/2026	12/2026	2601
+26.01.03	-         	Serviços De Coleta, Remessa Ou Entrega De Correspondências, Documentos, Objetos, Bens Ou Valores, Por Courrier, Moto-Boy Ou Congêneres.	---	4.00		01/2026	12/2026	2601
+27.01.00	-         	Serviços De Assistência Social.	---	2.00		01/2026	12/2026	2701
+28.01.00	-         	Serviços De Avaliação De Bens E Serviços De Qualquer Natureza.	---	2.00		01/2026	12/2026	2801
+29.01.00	-         	Serviços De Biblioteconomia.	---	2.00		01/2026	12/2026	2901
+30.01.01	-         	Serviços De Biologia.	---	2.00		01/2026	12/2026	3001
+30.01.02	-         	Serviços De Biotecnologia	---	2.00		01/2026	12/2026	3001
+30.01.03	-         	Serviços De Química	---	2.00		01/2026	12/2026	3001
+31.01.01	-         	Serviços Técnicos Em Edificações	---	2.00		01/2026	12/2026	3101
+31.01.02	-         	Serviços Técnicos Em Eletrônica.	---	2.00		01/2026	12/2026	3101
+31.01.03	-         	Serviços Técnicos Em Eletrotécnica.	---	2.00		01/2026	12/2026	3101
+31.01.04	-         	Serviços Técnicos Em Mecânica.	---	2.00		01/2026	12/2026	3101
+31.01.05	-         	Serviços Técnicos Em Telecomunicações E Congêneres.	---	2.00		01/2026	12/2026	3101
+32.01.00	-         	Serviços De Desenhos Técnicos.	---	3.00		01/2026	12/2026	3201
+33.01.00	-         	Serviços De Desembaraço Aduaneiro, Comissários, Despachantes E Congêneres.	---	2.00		01/2026	12/2026	3301
+34.01.00	-         	Serviços De Investigações Particulares, Detetives E Congêneres.	---	2.50		01/2026	12/2026	3401
+35.01.01	-         	Serviços De Reportagem.	---	2.00		01/2026	12/2026	3501
+35.01.02	-         	Assessoria De Imprensa	---	2.00		01/2026	12/2026	3501
+35.01.03	-         	Jornalismo.	---	2.00		01/2026	12/2026	3501
+35.01.04	-         	Relações Públicas.	---	2.00		01/2026	12/2026	3501
+35.01.05	-         	Locutor, Apresentador	---	2.00		01/2026	12/2026	3501
+36.01.00	-         	Serviços De Meteorologia.	---	2.50		01/2026	12/2026	3601
+37.01.01	-         	Serviços De Artistas.	---	2.00		01/2026	12/2026	3701
+37.01.02	-         	Serviços De Atletas.	---	2.00		01/2026	12/2026	3701
+37.01.03	-         	Serviços De Modelos E Manequins.	---	2.00		01/2026	12/2026	3701
+38.01.00	-         	Serviços De Museologia.	---	2.00		01/2026	12/2026	3801
+39.01.00	-         	Serviços De Ourivesaria E Lapidação (Quando O Material For Fornecido Pelo Tomador Do Serviço).	---	2.50		01/2026	12/2026	3901
+40.01.00	-         	Obras De Arte Sob Encomenda.	---	2.50		01/2026	12/2026	4001
+13.01.00	-         	(Vetado)	---	0.00		01/2026	12/2026	1301
