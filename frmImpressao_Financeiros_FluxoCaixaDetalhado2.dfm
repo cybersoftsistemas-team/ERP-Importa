@@ -3,7 +3,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   Top = 222
   BorderStyle = bsDialog
   Caption = 'Impressao_Financeiros_FluxoCaixaDetalhado'
-  ClientHeight = 649
+  ClientHeight = 631
   ClientWidth = 699
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -63,12 +63,13 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   end
   object Panel1: TPanel
     Left = 0
-    Top = 619
+    Top = 601
     Width = 699
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 5
+    ExplicitTop = 619
     DesignSize = (
       699
       30)
@@ -456,7 +457,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
   end
   object cSint: TCheckBox
     Left = 15
-    Top = 567
+    Top = 571
     Width = 65
     Height = 17
     Caption = 'Sint'#233'tico'
@@ -532,8 +533,8 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
       end>
   end
   object cExcel: TCheckBox
-    Left = 15
-    Top = 584
+    Left = 227
+    Top = 571
     Width = 79
     Height = 17
     Caption = 'Gerar Excel'
@@ -543,7 +544,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     Left = 456
     Top = 57
     Width = 234
-    Height = 57
+    Height = 48
     Caption = 'Data de Refer'#234'ncia'
     Columns = 2
     Items.Strings = (
@@ -590,6 +591,14 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     ParentFont = False
     TabOrder = 12
     Value = 0
+  end
+  object cConsol: TCheckBox
+    Left = 227
+    Top = 550
+    Width = 79
+    Height = 17
+    Caption = 'Consolidado'
+    TabOrder = 13
   end
   object tFluxo: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -720,7 +729,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Financeiro - Fluxo de Caixa (Mensal)'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -1460,7 +1469,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Financeiro - Fluxo de Caixa (Mensal)'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -3720,7 +3729,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Financeiro - Fluxo de Caixa (Mensal)'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -4421,7 +4430,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Financeiro - Fluxo de Caixa (Mensal)'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -4844,5 +4853,20 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     DataSet = tCCusto
     Left = 323
     Top = 273
+  end
+  object tEmpresas: TMSQuery
+    Connection = Dados.Banco
+    SQL.Strings = (
+      'SELECT BAN.Codigo'
+      '      ,BAN.Nome'
+      '      ,BAN.Agencia'
+      '      ,BAN.Conta'
+      '      ,BAN.Saldo'
+      '      ,BAN.Data_Saldo'
+      '      ,Sel = cast(1 as bit)'
+      'FROM Cybersoft_Cadastros.dbo.Bancos AS BAN'
+      'WHERE Tipo_Conta = '#39'CORRENTE'#39)
+    Left = 58
+    Top = 228
   end
 end

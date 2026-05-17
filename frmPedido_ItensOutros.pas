@@ -829,17 +829,22 @@ begin
                                    If ProdutosTipo_Conversao.Value <> 'M' then begin
                                       mVolume_PesoLiquido := mVolume_PesoLiquido + Roundto((PedidosItensPeso_Liquido.Value * (PedidosItensQuantidade.Value * ProdutosQuantidade_Unidade.Value)), -3);
                                       mVolume_PesoBruto   := mVolume_PesoBruto   + Roundto((PedidosItensPeso_Bruto.Value   * (PedidosItensQuantidade.Value * ProdutosQuantidade_Unidade.Value)), -3);
-                                      //mValor_TotalII      := mValor_TotalII      + (PedidosItensValor_II.Value * (PedidosItensQuantidade.Value * ProdutosQuantidade_Unidade.Value) );
                                       mValor_TotalII      := mValor_TotalII      + PedidosItensValor_II.Value;
                                       mValor_BCII         := mValor_BCII         + Roundto((PedidosItensValor_BCII.Value * (PedidosItensQuantidade.AsFloat * ProdutosQuantidade_Unidade.Value)), -3);
                                    end else begin
                                       mVolume_PesoLiquido := mVolume_PesoLiquido + Roundto((PedidosItensPeso_Liquido.Value * (PedidosItensQuantidade.Value / ProdutosQuantidade_Unidade.Value)), -3);
                                       mVolume_PesoBruto   := mVolume_PesoBruto   + Roundto((PedidosItensPeso_Bruto.Value   * (PedidosItensQuantidade.Value / ProdutosQuantidade_Unidade.Value)), -3);
-                                      //mValor_TotalII      := mValor_TotalII      + (PedidosItensValor_II.Value     * (PedidosItensQuantidade.Value / ProdutosQuantidade_Unidade.Value) );
                                       mValor_TotalII      := mValor_TotalII      + PedidosItensValor_II.Value;
                                       mValor_BCII         := mValor_BCII         + Roundto((PedidosItensValor_BCII.Value * (PedidosItensQuantidade.AsFloat / ProdutosQuantidade_Unidade.Value)), -3);
                                    End;
-
+                                   
+                                   // II "Soma dos produtos que tiveram II".
+                                   if not TipoNotaVisiveis_II.Value then begin
+                                      PedidosItensAliquota_II.Value := 0;
+                                      PedidosItensValor_BCII.Value  := 0;
+                                      PedidosItensValor_II.Value    := 0;
+                                   end;
+                                   
                                    If (PedidosItensValor_PIS.Value = 0) and (PedidosItensCSTPIS.asstring <> '05') then begin
                                       PedidosItensValor_BCPIS.Value        := 0;
                                       PedidosItensAliquota_PIS.Value       := 0;
@@ -860,108 +865,6 @@ begin
                                          end;
                                       end;
                                    end;
-                                   
-
-                                   {
-                                   PedidosItensValor_BCICMSDest.Value := 0;
-                                   PedidosItensValor_ICMSDest.Value   := 0;
-                                   PedidosItensValor_BCDIFAL.Value    := 0;
-                                   PedidosItensDIFAL_Valor.Value      := 0;
-                                   PedidosItensDIFAL_PercOrig.Value   := 0;
-                                   PedidosItensDIFAL_ValorOrig.Value  := 0;
-                                   PedidosItensDIFAL_PercDest.Value   := 0;
-                                   PedidosItensDIFAL_ValorDest.Value  := 0;
-                                   PedidosItensFCP_Aliquota.Value     := 0;
-                                   PedidosItensFCP_ValorDest.Value    := 0;
-                                   PedidosItensFCP_ICMSDest.Value     := 0;
-                                   PedidosItensFCP_ICMSOrig.Value     := 0;
-                                   PedidosItensValor_BCFCP.Value      := 0;
-                                   PedidosItensValor_FCP.Value        := 0;
-                                   PedidosItensValor_BCFCPST.Value    := 0;
-                                   PedidosItensValor_FCPST.Value      := 0;
-                                   mAliquotaDIFAL                     := 0;
-                                   
-                                   if TipoNotaVisiveis_DIFAL.AsBoolean then begin
-                                      // DIFAL.
-                                      mAliquotaDIFAL := ICMSICMS_Interno.AsFloat;
-                                      mUF            := Trim(ClientesEstado.Value)+'_ICMS';
-                                      
-                                      NCM.Locate('NCM', PedidosItensNCM.AsString, [loCaseInsensitive]);;
-                                      if NCM.FieldbyName(mUF).AsFloat > 0 then begin
-                                         mAliquotaDIFAL := NCM.FieldbyName(mUF).AsFloat;
-                                      end;   
-
-                                      PedidosItensValor_BCICMSDest.Value  := PedidosItensValor_BCICMSOper.Value;
-                                      PedidosItensValor_ICMSDest.Value    := Roundto(Percentual(PedidosItensValor_BCICMSOper.Value, mAliquotaDIFAL), -2);
-                                      PedidosItensAliquota_ICMSDest.Value := mAliquotaDIFAL;
-
-                                      if (Clientes.FieldByName('Consumidor_Final').AsBoolean) and (not Clientes.FieldByName('MEI').AsBoolean) then begin  // Cliente é consumidor final.
-                                         if PedidosItensSaida_Entrada.AsInteger = 1 then begin
-                                            PedidosItensTotal_Impostos.Value := RoundTo(PedidosItensTotal_IPI.AsCurrency+(PedidosItensValor_II.AsCurrency*PedidosItensQuantidade.AsFloat)+PedidosItensValor_ICMSOper.AsCurrency+PedidosItensValor_PIS.AsCurrency+PedidosItensValor_COFINS.AsCurrency, -2);
-                                            mTotalImpostos                   := mTotalImpostos + PedidosItensTotal_Impostos.AsCurrency;
-                                         end;
-
-                                         // Diferencial de alíquota do ICMS (DIFAL) p/consumidor final.
-                                         if (TipoNotaSaida_Entrada.Value = 1) and (TipoNotaVisiveis_DIFAL.AsBoolean) then Begin                   // Nota Fiscal de saída.
-                                            if PedidosItensAliquota_ICMSOper.Value <> mAliquotaDIFAL then begin                                   // Aliquota de icms dos estados diferente.
-                                               if (PedidosDestinatario_Estado.Value <> EmpresasEstado.Value) then begin                           // Cliente é de fora do estado.
-                                                  if TipoNotaFinalidade_Mercadoria.Value = 0 then begin
-                                                     PedidosItensValor_BCDIFAL.Value   := CalculaMacro('Calculo_BCDIFAL');
-                                                     PedidosItensDIFAL_Valor.Value     := CalculaMacro('Calculo_DIFAL');
-                                                     PedidosItensDIFAL_PercOrig.Value  := 100 - ConfiguracaoDIFAL_ICMSPart.Value;
-                                                     PedidosItensDIFAL_ValorOrig.Value := Roundto(Percentual(PedidosItensDIFAL_Valor.Value, (100-ConfiguracaoDIFAL_ICMSPart.Value)), -2);
-                                                     PedidosItensDIFAL_PercDest.Value  := ConfiguracaoDIFAL_ICMSPart.Value;
-                                                     PedidosItensDIFAL_ValorDest.Value := Roundto(Percentual(PedidosItensDIFAL_Valor.Value, ConfiguracaoDIFAL_ICMSPart.Value), -2);
-                                                  end;
-                                               end;
-                                            end;
-                                         end;
-                                      end;
-                                      
-                                      if ProdutosFCP.AsBoolean then begin
-                                         // Cliente é de fora do estado.
-                                         if PedidosDestinatario_Estado.Value <> EmpresasEstado.Value then begin
-                                            // Cliente é consumidor final.
-                                            if (Clientes.FieldByName('Consumidor_Final').AsBoolean) and (not Clientes.FieldByName('MEI').AsBoolean) then begin
-                                               if TipoNotaFinalidade_Mercadoria.Value = 0 then begin
-                                                  PedidosItensFCP_Aliquota.Value  := ICMSFCP.Value;
-                                                  PedidosItensFCP_ValorDest.Value := Roundto(Percentual(PedidosItensValor_BCICMSOper.Value, ICMSFCP.Value), -2);
-                                                  PedidosItensFCP_ICMSDest.Value  := Roundto(Percentual(PedidosItensValor_BCICMSOper.Value, mAliquotaDIFAL) - PedidosItensValor_ICMSOper.Value, -2);
-                                                  PedidosItensFCP_ICMSDest.Value  := Roundto(Percentual(PedidosItensFCP_ICMSDest.Value, ConfiguracaoDIFAL_ICMSPart.Value), -2);
-                                                  PedidosItensFCP_ICMSOrig.Value  := Roundto(Percentual(PedidosItensValor_BCICMSOper.Value, mAliquotaDIFAL) - PedidosItensValor_ICMSOper.Value, -2);
-                                                  PedidosItensFCP_ICMSOrig.Value  := Roundto(Percentual(PedidosItensFCP_ICMSOrig.Value, (100-ConfiguracaoDIFAL_ICMSPart.Value)), -2);
-
-                                                  // Calculo do FCP pela CST ICMS.
-                                                  case AnsiIndexStr((PedidosItensCodigoTrib_TabB.Value), ['10','20','51','70','90']) of
-                                                       0..4: PedidosItensValor_BCFCP.Value := PedidosItensValor_BCICMSOper.Value;
-                                                  end;
-                                                  case AnsiIndexStr((PedidosItensCodigoTrib_TabB.Value), ['00','10','20','51','70','90']) of
-                                                       0..5: begin
-                                                                  PedidosItensValor_BCFCP.Value := PedidosItensValor_BCICMSOper.Value;
-                                                                  PedidosItensValor_FCP.Value   := roundto(Percentual(PedidosItensValor_BCICMSOper.Value, ICMSFCP.Value), -2);
-                                                             end;
-                                                  end;
-
-                                                  // Calculo do FCP ST pela CST ICMS.
-                                                  case AnsiIndexStr((PedidosItensCodigoTrib_TabB.Value), ['10','30','70','90','201','202','203','900']) of
-                                                       0..7: begin
-                                                                  PedidosItensValor_BCFCPST.Value := PedidosItensValor_BCICMSSub.Value;
-                                                                  PedidosItensValor_FCPST.Value   := Roundto(Percentual(PedidosItensValor_BCICMSSub.Value, ICMSFCP.Value)-PedidosItensValor_FCP.Value, -2);
-                                                             end;
-                                                  end;
-                                                  if PedidosItensValor_FCP.Value > 0 then begin
-                                                     PedidosItensFCP_ValorDest.Value := 0;
-                                                     PedidosItensFCP_ICMSDest.Value  := 0;
-                                                     PedidosItensFCP_ICMSDest.Value  := 0;
-                                                     PedidosItensFCP_ICMSOrig.Value  := 0;
-                                                     PedidosItensFCP_ICMSOrig.Value  := 0;
-                                                  end;
-                                               end;
-                                            end;
-                                         end;
-                                      end;
-                                   end;
-                                   }
                                    PedidosItensDevolucao.Value := PedidosDevolucao.Value;
                       PedidosItens.Post;
 

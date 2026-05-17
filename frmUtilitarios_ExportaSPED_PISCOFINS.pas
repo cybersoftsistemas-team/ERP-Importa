@@ -2680,8 +2680,8 @@ begin
            sql.add('select (select count(*) from NotasServico where Data_Emissao between :pDataIni and :pDataFim) +');
            sql.add('       (select count(*) from NotasTerceirosItens nti');
            sql.add('        where nti.Data_Entrada between :pDataIni and :pDataFim');
-           sql.add('        and (select isnull(Provisoria, 0) from NotasTerceiros nt where nt.Nota = nti.Nota and nt.Data_Emissao = nti.Data_Emissao and nt.Fornecedor = nti.Fornecedor) <> 1');
-           sql.add('        and (select isnull(Desdobramento, 0) from NotasTerceiros nt where nt.Nota = nti.Nota and nt.Data_Emissao = nti.Data_Emissao and nt.Fornecedor = nti.Fornecedor) <> 1');
+           sql.add('        and (select isnull(Provisoria, 0) from NotasTerceiros nt where nt.Nota = nti.Nota and nt.Data_Emissao = nti.Data_Emissao and nt.Fornecedor = nti.Fornecedor and nt.provisoria = 1) <> 1');
+           sql.add('        and (select isnull(Desdobramento, 0) from NotasTerceiros nt where nt.Nota = nti.Nota and nt.Data_Emissao = nti.Data_Emissao and nt.Fornecedor = nti.Fornecedor and nt.Desdobramento = 1) <> 1');
            sql.add('        and (select Tributavel from Cybersoft_Cadastros.dbo.CSTPIS where Codigo = nti.CST_PIS) = 1');
            sql.add('        and (select isnull(Servico, 0) from Produtos where Codigo = nti.Codigo_Mercadoria) = 1');
            sql.add('       ) as QtdeNotas');

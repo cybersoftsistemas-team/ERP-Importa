@@ -41,8 +41,6 @@ object Processo_POImportaItens: TProcesso_POImportaItens
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
-      ExplicitLeft = 1033
-      ExplicitTop = 0
     end
     object Progresso: TProgressBar
       Left = 8
@@ -62,7 +60,6 @@ object Processo_POImportaItens: TProcesso_POImportaItens
       Enabled = False
       TabOrder = 2
       OnClick = bImportarCliClick
-      ExplicitLeft = 961
     end
     object blayout: TButton
       Left = 875
@@ -87,10 +84,6 @@ object Processo_POImportaItens: TProcesso_POImportaItens
     object TabSheet2: TTabSheet
       Caption = 'Produtos'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cLinhaIniCli: TRxSpinEdit
         Left = 105
         Top = 26
@@ -607,10 +600,6 @@ object Processo_POImportaItens: TProcesso_POImportaItens
     end
     object TabSheet1: TTabSheet
       Caption = 'Purchase Order (PO)'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       DesignSize = (
         1072
         533)
@@ -990,10 +979,6 @@ object Processo_POImportaItens: TProcesso_POImportaItens
     object TabSheet3: TTabSheet
       Caption = 'LOG'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Memo1: TMemo
         Left = 0
         Top = 0

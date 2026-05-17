@@ -181,7 +181,7 @@ object Config_TipoNota: TConfig_TipoNota
     Top = 45
     Width = 750
     Height = 656
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     TabHeight = 28
     TabOrder = 1
@@ -677,7 +677,7 @@ object Config_TipoNota: TConfig_TipoNota
         Left = 601
         Top = 106
         Width = 137
-        Height = 259
+        Height = 285
         Caption = 'Campos Vis'#237'veis DANFE '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -806,6 +806,17 @@ object Config_TipoNota: TConfig_TipoNota
           DataField = 'IPI_Devolucao'
           DataSource = Dados.dsTipoNota
           TabOrder = 10
+        end
+        object DBCheckBox71: TDBCheckBox
+          Left = 7
+          Top = 250
+          Width = 122
+          Height = 17
+          Alignment = taLeftJustify
+          Caption = 'II'
+          DataField = 'Visiveis_II'
+          DataSource = Dados.dsTipoNota
+          TabOrder = 11
         end
       end
       object StaticText57: TStaticText

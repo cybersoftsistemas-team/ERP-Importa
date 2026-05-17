@@ -168,15 +168,28 @@ object Impressao_ProdutosRanking: TImpressao_ProdutosRanking
       OnClick = BitBtn1Click
     end
     object bDes: TBitBtn
-      Left = 0
+      Left = 98
       Top = 1
-      Width = 105
+      Width = 97
       Height = 28
+      Align = alLeft
       Cancel = True
       Caption = 'Desmarcar Tudo'
       NumGlyphs = 2
       TabOrder = 3
       OnClick = bDesClick
+    end
+    object bMarc: TBitBtn
+      Left = 1
+      Top = 1
+      Width = 97
+      Height = 28
+      Align = alLeft
+      Cancel = True
+      Caption = 'Marcar Tudo'
+      NumGlyphs = 2
+      TabOrder = 4
+      OnClick = bMarcClick
     end
   end
   object cDataIni: TDateEdit
@@ -569,7 +582,7 @@ object Impressao_ProdutosRanking: TImpressao_ProdutosRanking
       end>
   end
   object cOrig: TRadioGroup
-    Left = 124
+    Left = 126
     Top = 383
     Width = 96
     Height = 80
@@ -581,7 +594,7 @@ object Impressao_ProdutosRanking: TImpressao_ProdutosRanking
     TabOrder = 11
   end
   object cMov: TRadioGroup
-    Left = 236
+    Left = 238
     Top = 383
     Width = 119
     Height = 80
@@ -594,14 +607,14 @@ object Impressao_ProdutosRanking: TImpressao_ProdutosRanking
   end
   object cExcel: TCheckBox
     Left = 8
-    Top = 472
+    Top = 474
     Width = 97
     Height = 17
     Caption = 'Gerar em Excel.'
     TabOrder = 13
   end
   object cEstoque: TRadioGroup
-    Left = 370
+    Left = 373
     Top = 383
     Width = 142
     Height = 80
@@ -2353,7 +2366,7 @@ object Impressao_ProdutosRanking: TImpressao_ProdutosRanking
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Gerais - Produtos Vendidos'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

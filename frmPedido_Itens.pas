@@ -3881,6 +3881,14 @@ begin
                                    mValor_TotalIINF    := mValor_TotalIINF    + Roundto((PedidosItensValor_II.Value * (PedidosItensQuantidade.Value / ProdutosQuantidade_Unidade.Value)), -2);
                                 End;
 
+                                // II "Soma dos produtos que tiveram II".
+                                if not TipoNotaVisiveis_II.asboolean then begin
+                                   PedidosItensAliquota_II.Value := 0;
+                                   PedidosItensValor_BCII.Value  := 0;
+                                   PedidosItensValor_II.Value    := 0;
+                                   mValor_TotalIINF              := 0;
+                                end;
+
                                 If cVolumes.Checked = true then begin
                                    mVolumes := mVolumes + (PedidosItensQuantidade.Value / ProdutosQuantidade_Volumes.Value);
                                 End;
@@ -3894,8 +3902,6 @@ begin
                                    PedidosItensValor_BCPISST.Value      := 0;
                                    PedidosItensValor_BCCOFINSST.Value   := 0;
                                 End;
-//                                mBCPIS   := mBCPIS + RoundTo(PedidosItensValor_BCPIS.Value, -2);
-//                                mBCPISST := mBCPISST + RoundTo(PedidosItensValor_BCPISST.Value, -2);
 
                                 PedidosItensTotal_Impostos.Value := 0;
                                 If (Clientes.FieldByName('Consumidor_Final').AsBoolean = true) and (PedidosItensSaida_Entrada.AsInteger = 1) then begin

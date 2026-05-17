@@ -63,6 +63,7 @@ type
     ppLabel4: TppLabel;
     cExcel: TCheckBox;
     cEstoque: TRadioGroup;
+    bMarc: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -76,6 +77,7 @@ type
     procedure bDesClick(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure ppDetailBand1AfterPrint(Sender: TObject);
+    procedure bMarcClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -173,6 +175,16 @@ begin
       Screen.Cursor := crDefault;
 end;
 
+procedure TImpressao_ProdutosRanking.bMarcClick(Sender: TObject);
+begin
+      with Dados, tPesquisa do begin
+           sql.clear;
+           sql.add('update Produtos set Selecionado = 1');
+           execute;
+           Produtos.Refresh;
+      end;
+end;
+
 procedure TImpressao_ProdutosRanking.bPesquisaCEPClick(Sender: TObject);
 begin
       Screen.Cursor := crSQLWait;
@@ -206,217 +218,217 @@ procedure TImpressao_ProdutosRanking.bImprimirClick(Sender: TObject);
 var
    mLista: widestring;
 begin
-       lPeriodo.Caption := '';
-       with tPesquisa do begin
-            sql.clear;
-            sql.add('declare @Lista varchar(500)');
-            sql.add('set @Lista = '''' ');
-            sql.add('select 0 as tmp_flag, Codigo into #tmp_produto from produtos where Selecionado = 1');
-            sql.add('while((select count(*) from #tmp_produto where tmp_flag = 0 ) > 0) begin');
-            sql.add('     set @Lista = @Lista + cast((select top 1 Codigo from #tmp_produto where tmp_flag = 0) as varchar(15)) + '','' ');
-            sql.add('     update #tmp_produto set tmp_flag = 1 where #tmp_produto.codigo = (select top 1 codigo from #tmp_produto where tmp_flag = 0)');
-            sql.add('end');
-            sql.add('if len(@lista) > 0 set @Lista = substring(@Lista, 1, len(@lista)-1)');
-            sql.add('select Lista = @Lista');
-            sql.add('drop table #tmp_produto');
-            execute;
-            mLista := FieldByName('Lista').asstring;
-       end;
-       
-       with tItens do begin
-            if cOrig.ItemIndex = 0 then begin
-               if cMov.ItemIndex = 0 then begin
-                  SQL.Clear;
-                  SQL.Add('SELECT Codigo    = CAST(Codigo_Mercadoria AS VARCHAR(10)),');
-                  SQL.Add('       Descricao = CAST(Descricao_Mercadoria AS VARCHAR(500)),');
-                  SQL.Add('       SUM(Valor_Total) AS Valor,');
-                  SQL.Add('       SUM(Quantidade) AS Quantidade');
-                  SQL.Add('INTO #TEMP');
-                  SQL.Add('FROM NotasItens');
-                  SQL.Add('WHERE Saida_Entrada = 1');
-                  SQL.Add('AND Cancelada <> 1');
-                  SQL.Add('AND (SELECT Gerar_Financeiro FROM TipoNota WHERE(Codigo = Tipo_Nota)) = 1');
-                  If Trim(RemoveCaracter('/', '', cDataIni.Text)) <> '' then begin
-                     SQL.Add('AND Data BETWEEN :pDataIni AND :pDataFim');
-                     ParamByName('pDataIni').AsDate := cDataIni.Date;
-                     ParamByName('pDataFim').AsDate := cDataFim.Date;
-                     lPeriodo.Caption := 'Período de '+cDataIni.Text + ' a '+cDataFim.Text+ '  ';
-                  End;
-                  If (cCodigoProduto.Value > 0) and (trim(mlista) = '') then begin
-                     SQL.Add('AND Codigo_Mercadoria = :pCodigo');
-                     ParamByName('pCodigo').AsInteger := cCodigoProduto.AsInteger;
-                  End;
-                  If trim(mLista) <> '' then begin
-                     SQL.Add('AND Codigo_Mercadoria in('+mLista+')');
-                  End;
-                  if cEstoque.ItemIndex = 0 then begin
-                     sql.Add('and (select Estoque_Disponivel from Produtos where Codigo = NotasItens.odigo_Mercadoria) > 0');
-                  end;
-                  if cEstoque.ItemIndex = 1 then begin
-                     sql.Add('and (select Estoque_Disponivel from Produtos where Codigo = NotasItens.Codigo_Mercadoria) <= 0');
-                  end;
-                  SQL.Add('GROUP BY Codigo_Mercadoria, CAST(Descricao_Mercadoria AS VARCHAR(500))');
-                  SQL.Add('SELECT Codigo,');
-                  SQL.Add('       Descricao = REPLACE(Descricao,''<{''+Codigo+''}>'',''''),');
-                  SQL.Add('       Valor,');
-                  SQL.Add('       Quantidade');
-                  SQL.Add('FROM #TEMP');
-                  If (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 0) then
-                     SQL.Add('order by Quantidade desc');
-                  If (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 1) then
-                     SQL.Add('order by Quantidade');
-                  If (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 0) then
-                     SQL.Add('order by Valor desc');
-                  If (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 1) then
-                     SQL.Add('order by Valor');
-                  SQL.Add('drop table #temp');
-                  //SQl.SaveToFile('c:\temp\Produtos_Ranking_Notas.SQL');
-                  Open;
-               end;
-               if cMov.ItemIndex = 1 then begin
-                  sql.Clear;
-                  sql.Add('select Codigo    = cast(Codigo as varchar(10))');
-                  sql.Add('      ,Descricao = replace(cast(Descricao as varchar(500)) ,''<{''+cast(Codigo as varchar(10))+''}>'','''')');
-                  sql.add('      ,Valor = 0');
-                  sql.Add('      ,Quantidade = 0');
-                  sql.Add('from Produtos prd');
-                  sql.Add('where Desativado <> 1');
-                  sql.Add('and Codigo not in(select Codigo_Mercadoria from NotasItens where Data between :pDataini and :pDataFim)');
-                  if cEstoque.ItemIndex = 0 then begin
-                     sql.Add('and Estoque_Disponivel > 0');
-                  end;
-                  if cEstoque.ItemIndex = 1 then begin
-                     sql.Add('and Estoque_Disponivel <= 0');
-                  end;
-                  If (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 0) then
-                     SQL.Add('order by Quantidade desc');
-                  If (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 1) then
-                     SQL.Add('order by Quantidade');
-                  If (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 0) then
-                     SQL.Add('order by Valor desc');
-                  If (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 1) then
-                     SQL.Add('order by Valor');
-                  open;
-               end;
-            end;
-            if cOrig.ItemIndex = 1 then begin
-               if cMov.ItemIndex = 0 then begin
-                  SQL.Clear;
-                  SQL.Add('select Codigo    = cast(Codigo_Mercadoria as varchar(10))');
-                  SQL.Add('      ,Descricao = replace((select cast(Descricao as varchar(500)) from Produtos where Codigo = Codigo_Mercadoria),''<{''+cast(Codigo_Mercadoria as varchar(10))+''}>'','''')');
-                  SQL.Add('      ,Valor = sum(Valor_Unitario * Quantidade)');
-                  SQL.Add('      ,Quantidade = sum(Quantidade)');
-                  SQL.Add('from PedidosRepresentantesItens pri');
-                  SQL.Add('where Cancelado <> 1');
-                  if Trim(RemoveCaracter('/', '', cDataIni.Text)) <> '' then begin
-                     SQL.Add('and Data between :pDataIni AND :pDataFim');
-                     ParamByName('pDataIni').AsDate := cDataIni.Date;
-                     ParamByName('pDataFim').AsDate := cDataFim.Date;
-                     lPeriodo.Caption := 'Período de '+cDataIni.Text + ' a '+cDataFim.Text+ '  ';
-                  end;
-                  if (cCodigoProduto.Value > 0) and (trim(mlista) = '') then begin
-                     SQL.Add('and Codigo_Mercadoria = :pCodigo');
-                     ParamByName('pCodigo').AsInteger := cCodigoProduto.AsInteger;
-                  end;
-                  if trim(mLista) <> '' then begin
-                     tItens.SQL.Add('and Codigo_Mercadoria in('+mLista+')');
-                  end;
-                  if cEstoque.ItemIndex = 0 then begin
-                     sql.Add('and (select Estoque_Disponivel from Produtos pr where pr.Codigo = pri.Codigo_Mercadoria) > 0');
-                  end;
-                  if cEstoque.ItemIndex = 1 then begin
-                     sql.Add('and (select Estoque_Disponivel from Produtos pr where pr.Codigo = pri.Codigo_Mercadoria) <= 0');
-                  end;
-                  SQL.Add('group by Codigo_Mercadoria');
-                  if (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 0) then
-                     SQL.Add('order by Quantidade desc');
-                  if (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 1) then
-                     SQL.Add('order by Quantidade');
-                  if (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 0) then
-                     SQL.Add('order by Valor desc');
-                  if (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 1) then
-                     SQL.Add('order by Valor');
-                  //sql.SaveToFile('c:\temp\Produtos_Ranking_Pedidos.SQL');
-                  open;
-               end;
-               if cMov.ItemIndex = 1 then begin
-                  sql.Clear;
-                  sql.Add('select Codigo    = cast(Codigo as varchar(10))');
-                  sql.Add('      ,Descricao = replace(cast(Descricao as varchar(500)) ,''<{''+cast(Codigo as varchar(10))+''}>'','''')');
-                  sql.add('      ,Valor = 0');
-                  sql.Add('      ,Quantidade = 0');
-                  sql.Add('from Produtos prd');
-                  sql.Add('where prd.Desativado <> 1');
-                  sql.Add('and prd.Codigo not in(select Codigo_Mercadoria from PedidosRepresentantesItens pri where pri.Codigo_Mercadoria = prd.Codigo and pri.Data between :pDataini and :pDataFim)');
-                  if cEstoque.ItemIndex = 0 then begin
-                     sql.Add('and prd.Estoque_Disponivel > 0');
-                  end;
-                  if cEstoque.ItemIndex = 1 then begin
-                     sql.Add('and prd.Estoque_Disponivel <= 0');
-                  end;
-                  sql.Add('order by Descricao');
-                  ParamByName('pDataIni').AsDate := cDataIni.Date;
-                  ParamByName('pDataFim').AsDate := cDataFim.Date;
-                  //sql.SaveToFile('c:\temp\Produtos_Ranking_Pedidos.SQL');
-                  open;
-                  lPeriodo.Caption := 'Período de '+cDataIni.Text + ' a '+cDataFim.Text+ '  ';
-               end;
-            end;
-       end;
-       
-       With Dados do begin
-            Empresas.SQL.Clear;
-            Empresas.SQL.Add('SELECT * FROM Empresas WHERE(Codigo = :pCodigo)');
-            Empresas.ParamByName('pCodigo').AsInteger := Menu_Principal.mEmpresa;
-            Empresas.Open;
-       End;
-       
-       If tItens.RecordCount > 0 then begin
-          if not cExcel.Checked then begin
-             with rProdutosRanking do begin
-                  if FileExists(Dados.EmpresasLogo.Value) then begin
-                     iLogo.Picture.LoadFromFile(Dados.EmpresasLogo.Value);
-                  end;
-                  OpenFile                  := false;
-                  AllowPrintToArchive       := false;
-                  AllowPrintToFile          := false;
-                  PrinterSetup.PaperHeight  := 11.6929;
-                  //ppDetailBand1.Height      := 0.125;
-                  DeviceType                := 'Screen';
-                  XLSSettings.AppName       := '';
-                  XLSSettings.Author        := '';
-                  XLSSettings.Title         := '';
-                  XLSSettings.WorksheetName := '';
-                  ArchiveFileName           := '';
-                  TextFileName              := '';
-                  ShowPrintDialog           := true;
-                  Print;
-                  Reset;
-                  FreeOnRelease;
+     lPeriodo.Caption := '';
+     with tPesquisa do begin
+          sql.clear;
+          sql.add('declare @Lista varchar(500)');
+          sql.add('set @Lista = '''' ');
+          sql.add('select 0 as tmp_flag, Codigo into #tmp_produto from produtos where Selecionado = 1');
+          sql.add('while((select count(*) from #tmp_produto where tmp_flag = 0 ) > 0) begin');
+          sql.add('     set @Lista = @Lista + cast((select top 1 Codigo from #tmp_produto where tmp_flag = 0) as varchar(15)) + '','' ');
+          sql.add('     update #tmp_produto set tmp_flag = 1 where #tmp_produto.codigo = (select top 1 codigo from #tmp_produto where tmp_flag = 0)');
+          sql.add('end');
+          sql.add('if len(@lista) > 0 set @Lista = substring(@Lista, 1, len(@lista)-1)');
+          sql.add('select Lista = @Lista');
+          sql.add('drop table #tmp_produto');
+          execute;
+          mLista := FieldByName('Lista').asstring;
+     end;
+     
+     with tItens do begin
+          if cOrig.ItemIndex = 0 then begin
+             if cMov.ItemIndex = 0 then begin
+                SQL.Clear;
+                SQL.Add('SELECT Codigo    = CAST(Codigo_Mercadoria AS VARCHAR(10)),');
+                SQL.Add('       Descricao = CAST(Descricao_Mercadoria AS VARCHAR(500)),');
+                SQL.Add('       SUM(Valor_Total) AS Valor,');
+                SQL.Add('       SUM(Quantidade) AS Quantidade');
+                SQL.Add('INTO #TEMP');
+                SQL.Add('FROM NotasItens');
+                SQL.Add('WHERE Saida_Entrada = 1');
+                SQL.Add('AND Cancelada <> 1');
+                SQL.Add('AND (SELECT Gerar_Financeiro FROM TipoNota WHERE(Codigo = Tipo_Nota)) = 1');
+                If Trim(RemoveCaracter('/', '', cDataIni.Text)) <> '' then begin
+                   SQL.Add('AND Data BETWEEN :pDataIni AND :pDataFim');
+                   ParamByName('pDataIni').AsDate := cDataIni.Date;
+                   ParamByName('pDataFim').AsDate := cDataFim.Date;
+                   lPeriodo.Caption := 'Período de '+cDataIni.Text + ' a '+cDataFim.Text+ '  ';
+                End;
+                If (cCodigoProduto.Value > 0) and (trim(mlista) = '') then begin
+                   SQL.Add('AND Codigo_Mercadoria = :pCodigo');
+                   ParamByName('pCodigo').AsInteger := cCodigoProduto.AsInteger;
+                End;
+                If trim(mLista) <> '' then begin
+                   SQL.Add('AND Codigo_Mercadoria in('+mLista+')');
+                End;
+                if cEstoque.ItemIndex = 0 then begin
+                   sql.Add('and (select Estoque_Disponivel from Produtos where Codigo = NotasItens.odigo_Mercadoria) > 0');
+                end;
+                if cEstoque.ItemIndex = 1 then begin
+                   sql.Add('and (select Estoque_Disponivel from Produtos where Codigo = NotasItens.Codigo_Mercadoria) <= 0');
+                end;
+                SQL.Add('GROUP BY Codigo_Mercadoria, CAST(Descricao_Mercadoria AS VARCHAR(500))');
+                SQL.Add('SELECT Codigo,');
+                SQL.Add('       Descricao = REPLACE(Descricao,''<{''+Codigo+''}>'',''''),');
+                SQL.Add('       Valor,');
+                SQL.Add('       Quantidade');
+                SQL.Add('FROM #TEMP');
+                If (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 0) then
+                   SQL.Add('order by Quantidade desc');
+                If (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 1) then
+                   SQL.Add('order by Quantidade');
+                If (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 0) then
+                   SQL.Add('order by Valor desc');
+                If (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 1) then
+                   SQL.Add('order by Valor');
+                SQL.Add('drop table #temp');
+                //SQl.SaveToFile('c:\temp\Produtos_Ranking_Notas.SQL');
+                Open;
              end;
-          end else begin
-              with rProdutosRanking do begin
-                   OpenFile                  := true;
-                   AllowPrintToArchive       := true;
-                   AllowPrintToFile          := true;
-                   //PrinterSetup.PaperHeight  := 60;
-                   //ppDetailBand1.Height      := 0.25;
-                   DeviceType                := 'XlsxReport';
-                   XLSSettings.AppName       := 'ERP Importa';
-                   XLSSettings.Author        := 'Cybersoft';
-                   XLSSettings.Title         := 'Ranking de Produtos Vendidos';
-                   XLSSettings.WorksheetName := 'Ranking de Produtos Vendidos';
-                   ArchiveFileName           := 'c:\faturamento\Ranking_Produtos_Vendidos.xlsx';
-                   TextFileName              := 'c:\faturamento\Ranking_Produtos_Vendidos.xlsx';
-                   ShowPrintDialog           := false;
-                   Print;
-                   Reset;
-                   FreeOnRelease;
-              end;
+             if cMov.ItemIndex = 1 then begin
+                sql.Clear;
+                sql.Add('select Codigo    = cast(Codigo as varchar(10))');
+                sql.Add('      ,Descricao = replace(cast(Descricao as varchar(500)) ,''<{''+cast(Codigo as varchar(10))+''}>'','''')');
+                sql.add('      ,Valor = 0');
+                sql.Add('      ,Quantidade = 0');
+                sql.Add('from Produtos prd');
+                sql.Add('where Desativado <> 1');
+                sql.Add('and Codigo not in(select Codigo_Mercadoria from NotasItens where Data between :pDataini and :pDataFim)');
+                if cEstoque.ItemIndex = 0 then begin
+                   sql.Add('and Estoque_Disponivel > 0');
+                end;
+                if cEstoque.ItemIndex = 1 then begin
+                   sql.Add('and Estoque_Disponivel <= 0');
+                end;
+                If (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 0) then
+                   SQL.Add('order by Quantidade desc');
+                If (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 1) then
+                   SQL.Add('order by Quantidade');
+                If (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 0) then
+                   SQL.Add('order by Valor desc');
+                If (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 1) then
+                   SQL.Add('order by Valor');
+                open;
+             end;
           end;
-       end else begin
-          ShowMessage('Não há dados para o relatório solicitado!');
-       End;
+          if cOrig.ItemIndex = 1 then begin
+             if cMov.ItemIndex = 0 then begin
+                SQL.Clear;
+                SQL.Add('select Codigo    = cast(Codigo_Mercadoria as varchar(10))');
+                SQL.Add('      ,Descricao = replace((select cast(Descricao as varchar(500)) from Produtos where Codigo = Codigo_Mercadoria),''<{''+cast(Codigo_Mercadoria as varchar(10))+''}>'','''')');
+                SQL.Add('      ,Valor = sum(Valor_Unitario * Quantidade)');
+                SQL.Add('      ,Quantidade = sum(Quantidade)');
+                SQL.Add('from PedidosRepresentantesItens pri');
+                SQL.Add('where Cancelado <> 1');
+                if Trim(RemoveCaracter('/', '', cDataIni.Text)) <> '' then begin
+                   SQL.Add('and Data between :pDataIni AND :pDataFim');
+                   ParamByName('pDataIni').AsDate := cDataIni.Date;
+                   ParamByName('pDataFim').AsDate := cDataFim.Date;
+                   lPeriodo.Caption := 'Período de '+cDataIni.Text + ' a '+cDataFim.Text+ '  ';
+                end;
+                if (cCodigoProduto.Value > 0) and (trim(mlista) = '') then begin
+                   SQL.Add('and Codigo_Mercadoria = :pCodigo');
+                   ParamByName('pCodigo').AsInteger := cCodigoProduto.AsInteger;
+                end;
+                if trim(mLista) <> '' then begin
+                   tItens.SQL.Add('and Codigo_Mercadoria in('+mLista+')');
+                end;
+                if cEstoque.ItemIndex = 0 then begin
+                   sql.Add('and (select Estoque_Disponivel from Produtos pr where pr.Codigo = pri.Codigo_Mercadoria) > 0');
+                end;
+                if cEstoque.ItemIndex = 1 then begin
+                   sql.Add('and (select Estoque_Disponivel from Produtos pr where pr.Codigo = pri.Codigo_Mercadoria) <= 0');
+                end;
+                SQL.Add('group by Codigo_Mercadoria');
+                if (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 0) then
+                   SQL.Add('order by Quantidade desc');
+                if (cTipo.ItemIndex = 0) and (cOrdem.ItemIndex = 1) then
+                   SQL.Add('order by Quantidade');
+                if (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 0) then
+                   SQL.Add('order by Valor desc');
+                if (cTipo.ItemIndex = 1) and (cOrdem.ItemIndex = 1) then
+                   SQL.Add('order by Valor');
+                //sql.SaveToFile('c:\temp\Produtos_Ranking_Pedidos.SQL');
+                open;
+             end;
+             if cMov.ItemIndex = 1 then begin
+                sql.Clear;
+                sql.Add('select Codigo    = cast(Codigo as varchar(10))');
+                sql.Add('      ,Descricao = replace(cast(Descricao as varchar(500)) ,''<{''+cast(Codigo as varchar(10))+''}>'','''')');
+                sql.add('      ,Valor = 0');
+                sql.Add('      ,Quantidade = 0');
+                sql.Add('from Produtos prd');
+                sql.Add('where prd.Desativado <> 1');
+                sql.Add('and prd.Codigo not in(select Codigo_Mercadoria from PedidosRepresentantesItens pri where pri.Codigo_Mercadoria = prd.Codigo and pri.Data between :pDataini and :pDataFim)');
+                if cEstoque.ItemIndex = 0 then begin
+                   sql.Add('and prd.Estoque_Disponivel > 0');
+                end;
+                if cEstoque.ItemIndex = 1 then begin
+                   sql.Add('and prd.Estoque_Disponivel <= 0');
+                end;
+                sql.Add('order by Descricao');
+                ParamByName('pDataIni').AsDate := cDataIni.Date;
+                ParamByName('pDataFim').AsDate := cDataFim.Date;
+                //sql.SaveToFile('c:\temp\Produtos_Ranking_Pedidos.SQL');
+                open;
+                lPeriodo.Caption := 'Período de '+cDataIni.Text + ' a '+cDataFim.Text+ '  ';
+             end;
+          end;
+     end;
+     
+     With Dados do begin
+          Empresas.SQL.Clear;
+          Empresas.SQL.Add('SELECT * FROM Empresas WHERE(Codigo = :pCodigo)');
+          Empresas.ParamByName('pCodigo').AsInteger := Menu_Principal.mEmpresa;
+          Empresas.Open;
+     End;
+     
+     If tItens.RecordCount > 0 then begin
+        if not cExcel.Checked then begin
+           with rProdutosRanking do begin
+                if FileExists(Dados.EmpresasLogo.Value) then begin
+                   iLogo.Picture.LoadFromFile(Dados.EmpresasLogo.Value);
+                end;
+                OpenFile                  := false;
+                AllowPrintToArchive       := false;
+                AllowPrintToFile          := false;
+                PrinterSetup.PaperHeight  := 11.6929;
+                //ppDetailBand1.Height      := 0.125;
+                DeviceType                := 'Screen';
+                XLSSettings.AppName       := '';
+                XLSSettings.Author        := '';
+                XLSSettings.Title         := '';
+                XLSSettings.WorksheetName := '';
+                ArchiveFileName           := '';
+                TextFileName              := '';
+                ShowPrintDialog           := true;
+                Print;
+                Reset;
+                FreeOnRelease;
+           end;
+        end else begin
+            with rProdutosRanking do begin
+                 OpenFile                  := true;
+                 AllowPrintToArchive       := true;
+                 AllowPrintToFile          := true;
+                 //PrinterSetup.PaperHeight  := 60;
+                 //ppDetailBand1.Height      := 0.25;
+                 DeviceType                := 'XlsxReport';
+                 XLSSettings.AppName       := 'ERP Importa';
+                 XLSSettings.Author        := 'Cybersoft';
+                 XLSSettings.Title         := 'Ranking de Produtos Vendidos';
+                 XLSSettings.WorksheetName := 'Ranking de Produtos Vendidos';
+                 ArchiveFileName           := 'c:\faturamento\Ranking_Produtos_Vendidos.xlsx';
+                 TextFileName              := 'c:\faturamento\Ranking_Produtos_Vendidos.xlsx';
+                 ShowPrintDialog           := false;
+                 Print;
+                 Reset;
+                 FreeOnRelease;
+            end;
+        end;
+     end else begin
+        ShowMessage('Não há dados para o relatório solicitado!');
+     End;
 end;
 
 procedure TImpressao_ProdutosRanking.lNumeroCalc(Sender: TObject;var Value: Variant);

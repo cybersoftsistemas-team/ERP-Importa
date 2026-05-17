@@ -560,7 +560,7 @@ object Impressao_Estoque_Inventario: TImpressao_Estoque_Inventario
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Invetario Gerencial'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

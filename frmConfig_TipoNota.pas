@@ -451,6 +451,7 @@ type
     DBCheckBox70: TDBCheckBox;
     StaticText77: TStaticText;
     DBLookupComboBox31: TDBLookupComboBox;
+    DBCheckBox71: TDBCheckBox;
     procedure FormShow(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

@@ -15466,13 +15466,14 @@ object Dados: TDados
     Top = 340
   end
   object Banco_Empresas: TMSConnection
-    Database = 'Cybersoft_Vix_Matriz'
+    Database = 'Cybersoft_Ecotrading'
     Options.PersistSecurityInfo = True
     Options.ApplicationName = 'Cybersoft ERP Importa'
     Options.Provider = prSQL
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
+    Connected = True
     LoginPrompt = False
     Left = 87
     Top = 14
@@ -20494,10 +20495,10 @@ object Dados: TDados
         'Formula_BCPISST, Calculo_BCPISST, IPI_Devolucao, Devolucao_Impor' +
         'tacao, Formula_BCIBS, Calculo_BCIBS, Formula_VlrIBS, Calculo_Vlr' +
         'IBS, Formula_BCCBS, Calculo_BCCBS, Formula_VlrCBS, Calculo_VlrCB' +
-        'S, Formula_BCIS, Calculo_BCIS, Formula_VlrIS, Calculo_VlrIS, IBS' +
-        '_Isencao, IBS_Imunidade, IBS_Diferido, IBS_Suspensao, CBS_Isenca' +
-        'o, CBS_Imunidade, CBS_Diferido, CBS_Suspensao, Classificacao_Tri' +
-        'butaria)'
+        'S, Formula_BCIS, Calculo_BCIS, Formula_VlrIS, Calculo_VlrIS, Cla' +
+        'ssificacao_Tributaria, IBS_Isencao, IBS_Imunidade, IBS_Diferido,' +
+        ' IBS_Suspensao, CBS_Isencao, CBS_Imunidade, CBS_Diferido, CBS_Su' +
+        'spensao, Visiveis_II)'
       'VALUES'
       
         '  (:Codigo, :Saida_Entrada, :Descricao, :Inf_Complementares, :Li' +
@@ -20571,10 +20572,10 @@ object Dados: TDados
         'BCPISST, :IPI_Devolucao, :Devolucao_Importacao, :Formula_BCIBS, ' +
         ':Calculo_BCIBS, :Formula_VlrIBS, :Calculo_VlrIBS, :Formula_BCCBS' +
         ', :Calculo_BCCBS, :Formula_VlrCBS, :Calculo_VlrCBS, :Formula_BCI' +
-        'S, :Calculo_BCIS, :Formula_VlrIS, :Calculo_VlrIS, :IBS_Isencao, ' +
-        ':IBS_Imunidade, :IBS_Diferido, :IBS_Suspensao, :CBS_Isencao, :CB' +
-        'S_Imunidade, :CBS_Diferido, :CBS_Suspensao, :Classificacao_Tribu' +
-        'taria)')
+        'S, :Calculo_BCIS, :Formula_VlrIS, :Calculo_VlrIS, :Classificacao' +
+        '_Tributaria, :IBS_Isencao, :IBS_Imunidade, :IBS_Diferido, :IBS_S' +
+        'uspensao, :CBS_Isencao, :CBS_Imunidade, :CBS_Diferido, :CBS_Susp' +
+        'ensao, :Visiveis_II)')
     SQLDelete.Strings = (
       'DELETE FROM TipoNota'
       'WHERE'
@@ -20726,12 +20727,12 @@ object Dados: TDados
         'Calculo_BCCBS = :Calculo_BCCBS, Formula_VlrCBS = :Formula_VlrCBS' +
         ', Calculo_VlrCBS = :Calculo_VlrCBS, Formula_BCIS = :Formula_BCIS' +
         ', Calculo_BCIS = :Calculo_BCIS, Formula_VlrIS = :Formula_VlrIS, ' +
-        'Calculo_VlrIS = :Calculo_VlrIS, IBS_Isencao = :IBS_Isencao, IBS_' +
-        'Imunidade = :IBS_Imunidade, IBS_Diferido = :IBS_Diferido, IBS_Su' +
-        'spensao = :IBS_Suspensao, CBS_Isencao = :CBS_Isencao, CBS_Imunid' +
-        'ade = :CBS_Imunidade, CBS_Diferido = :CBS_Diferido, CBS_Suspensa' +
-        'o = :CBS_Suspensao, Classificacao_Tributaria = :Classificacao_Tr' +
-        'ibutaria'
+        'Calculo_VlrIS = :Calculo_VlrIS, Classificacao_Tributaria = :Clas' +
+        'sificacao_Tributaria, IBS_Isencao = :IBS_Isencao, IBS_Imunidade ' +
+        '= :IBS_Imunidade, IBS_Diferido = :IBS_Diferido, IBS_Suspensao = ' +
+        ':IBS_Suspensao, CBS_Isencao = :CBS_Isencao, CBS_Imunidade = :CBS' +
+        '_Imunidade, CBS_Diferido = :CBS_Diferido, CBS_Suspensao = :CBS_S' +
+        'uspensao, Visiveis_II = :Visiveis_II'
       'WHERE'
       '  Codigo = :Old_Codigo')
     SQLRefresh.Strings = (
@@ -20804,9 +20805,9 @@ object Dados: TDados
         'mportacao, Formula_BCIBS, Calculo_BCIBS, Formula_VlrIBS, Calculo' +
         '_VlrIBS, Formula_BCCBS, Calculo_BCCBS, Formula_VlrCBS, Calculo_V' +
         'lrCBS, Formula_BCIS, Calculo_BCIS, Formula_VlrIS, Calculo_VlrIS,' +
-        ' IBS_Isencao, IBS_Imunidade, IBS_Diferido, IBS_Suspensao, CBS_Is' +
-        'encao, CBS_Imunidade, CBS_Diferido, CBS_Suspensao, Classificacao' +
-        '_Tributaria FROM TipoNota'
+        ' Classificacao_Tributaria, IBS_Isencao, IBS_Imunidade, IBS_Difer' +
+        'ido, IBS_Suspensao, CBS_Isencao, CBS_Imunidade, CBS_Diferido, CB' +
+        'S_Suspensao, Visiveis_II FROM TipoNota'
       'WHERE'
       '  Codigo = :Codigo')
     SQLLock.Strings = (
@@ -21924,6 +21925,9 @@ object Dados: TDados
     object TipoNotaClassificacao_Tributaria: TStringField
       FieldName = 'Classificacao_Tributaria'
       Size = 6
+    end
+    object TipoNotaVisiveis_II: TBooleanField
+      FieldName = 'Visiveis_II'
     end
   end
   object CondicaoCambial: TMSQuery

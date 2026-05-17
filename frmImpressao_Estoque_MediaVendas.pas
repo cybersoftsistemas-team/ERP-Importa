@@ -155,7 +155,24 @@ begin
           sql.add('        ,Custo = (select isnull(Valor_Entrada, 0) from Produtos prd where prd.Codigo = #temp.Codigo_Mercadoria)');
           sql.add('into #temp2');
           sql.add('from #temp');
-          sql.add('select *, Total = cast(Custo * Estoque as money) from #temp2');
+          sql.add('select *');
+          sql.add('      ,Total = cast(Custo * Estoque as money)');
+          {
+          sql.Add('      ,Entrada = cast((select max(Data_Entrada)');
+          sql.add('                       from (select Data_Entrada from NotasTerceirosItens where Codigo_Mercadoria = #temp2.Produto');
+          sql.Add('                       union all');
+          sql.add('                       select Data_Transferencia from ProdutosTransferencia where Produto_Entrada = #temp2.Produto) as Todas) as date)');
+          sql.add('      ,Quantidade = (select max(Quantidade)');
+          sql.add('                     from (select Quantidade, Data_Entrada from NotasTerceirosItens where Codigo_Mercadoria = #temp2.Produto');
+          sql.add('                     union all');
+          sql.add('                     select Quantidade_Entrada, Data_Transferencia from ProdutosTransferencia where Produto_Entrada = #temp2.Produto) as Todas)');
+          }
+          sql.Add('      ,Entrada    = cast((select max(Data_Entrada) from (select Data_Entrada from NotasTerceirosItens where Codigo_Mercadoria = #temp2.Produto) as todas) as date)');
+          sql.Add('      ,Quantidade = ( select sum(Quantidade) from NotasTerceirosItens nti');
+          sql.Add('                      where nti.Codigo_Mercadoria = #temp2.Produto');
+          sql.Add('                      and nti.Data_Entrada = (select MAX(Data_Entrada) from NotasTerceirosItens nti2 where nti2.Codigo_Mercadoria = #temp2.Produto) )');
+          sql.add('from #temp2');
+          
           if cSaldo.Checked then begin
              sql.add('where Estoque > 0');
           end;
@@ -329,7 +346,10 @@ begin
                if tItens.Fields[c].DataType = ftString then begin 
                   mPlanilha.Cells[mLin,c+1] := tItens.Fields[c].asstring;
                end;
-               if (tItens.Fields[c].FieldName = 'Estoque') or (tItens.Fields[c].FieldName = 'Custo') or (tItens.Fields[c].FieldName = 'Total')then begin
+               if tItens.Fields[c].DataType = ftWidestring then begin 
+                  mPlanilha.Cells[mLin,c+1] := tItens.Fields[c].asstring;
+               end;
+               if (tItens.Fields[c].FieldName = 'Estoque') or (tItens.Fields[c].FieldName = 'Custo') or (tItens.Fields[c].FieldName = 'Total') then begin
                   mPlanilha.Cells[mLin,c+1].Interior.Color := RGB(217, 225, 242);
                end;
                if pos('Media', tItens.Fields[c].FieldName) > 0 then begin
@@ -344,7 +364,7 @@ begin
            if (tItens.Fieldbyname('Linha').asstring <> mLinProd) or tItens.eof then begin
               mPlanilha.Cells[mLin, 4] := 'TOTAL DA LINHA '+mLinProd;
               l := 69;
-              for c := 5 to tItens.FieldCount do begin          
+              for c := 5 to (tItens.FieldCount-2) do begin          
                   mPlanilha.Cells[mLin, c] := concat('=SUM(',char(l), inttostr(li), ':',char(l), inttostr(lf-1),')');
                   if c < 26 then mRange := char(l); 
                   if (c > 25) and (c < 52) then mRange := 'A'+char(l); 

@@ -1001,18 +1001,17 @@ procedure TProcesso_POImportaItens.AbrePlan;
 Var
    i: integer;
 begin
-      if Trim(cArquivoCli.Text) <> '' then begin
-         Screen.Cursor := crAppStart;
-         with Grade do begin
-              for i := 0 to RowCount -1 do begin
-                  Rows[i].Clear;
-              end;
-         end;
-         ImportaEXCEL(Grade, cArquivoCli.FileName, nil, 1, cLinhaIniCli.AsInteger, cLinhaFimCli.AsInteger, true);
-         AutoAjusteCol(Grade);
-      end;
-
-      Screen.Cursor := crDefault;
+     if Trim(cArquivoCli.Text) <> '' then begin
+        Screen.Cursor := crAppStart;
+        with Grade do begin
+             for i := 0 to RowCount -1 do begin
+                 Rows[i].Clear;
+             end;
+        end;
+        ImportaEXCEL(Grade, cArquivoCli.FileName, nil, 1, cLinhaIniCli.AsInteger, cLinhaFimCli.AsInteger, true);
+        AutoAjusteCol(Grade);
+     end;
+     Screen.Cursor := crDefault;
 end;
 
 procedure TProcesso_POImportaItens.MontaMenu;

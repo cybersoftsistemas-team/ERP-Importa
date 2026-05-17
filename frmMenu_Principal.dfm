@@ -35,9 +35,8 @@ object Menu_Principal: TMenu_Principal
     Brush.Color = 4144959
     Pen.Style = psClear
     Pen.Width = 0
+    ExplicitLeft = 8
     ExplicitTop = 67
-    ExplicitWidth = 1203
-    ExplicitHeight = 605
   end
   object Panel3: TPanel
     Left = 0
@@ -52,7 +51,6 @@ object Menu_Principal: TMenu_Principal
     ParentBackground = False
     TabOrder = 0
     StyleElements = [seFont, seBorder]
-    ExplicitWidth = 1214
     object Panel2: TPanel
       Left = 1387
       Top = 2
@@ -73,7 +71,6 @@ object Menu_Principal: TMenu_Principal
       ParentFont = False
       TabOrder = 0
       StyleElements = []
-      ExplicitLeft = 1109
       object cFoto: TImage
         Left = 1
         Top = 1

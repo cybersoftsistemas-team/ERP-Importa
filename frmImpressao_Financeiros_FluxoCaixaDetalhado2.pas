@@ -182,6 +182,8 @@ type
     cDataRef: TRadioGroup;
     StaticText3: TStaticText;
     cDias: TSpinEdit;
+    cConsol: TCheckBox;
+    tEmpresas: TMSQuery;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure bImprimirClick(Sender: TObject);
@@ -260,11 +262,12 @@ Var
 begin
       // Salvando as ultimas opções utilizadas no relatório como default.
       aIni := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
-      aINI.WriteDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataIni', cDataIni.Date);
-      aINI.WriteDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim', cDataFim.Date);
-      aINI.WriteBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel'  , cExcel.Checked);
-      aINI.WriteInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataRef', cDataRef.ItemIndex);
-      aINI.WriteInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Dias'   , cDias.value);
+      aINI.WriteDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataIni'   , cDataIni.Date);
+      aINI.WriteDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim'   , cDataFim.Date);
+      aINI.WriteBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel'     , cExcel.Checked);
+      aINI.WriteBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Consolidar', cConsol.Checked);
+      aINI.WriteInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataRef'   , cDataRef.ItemIndex);
+      aINI.WriteInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Dias'      , cDias.value);
       aINI.Free;
 
       FecharTabelas(Dados, nil, nil, nil);
@@ -273,6 +276,9 @@ begin
 end;
 
 procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.bImprimirClick(Sender: TObject);
+var
+   mSQLMatriz
+  ,mSQLFilial: Widestring;
 begin
      mBancos := PegaBancos;
      mCCusto := PegaCCusto;
@@ -282,6 +288,7 @@ begin
      end;
 
      Screen.Cursor := crSQLWait;
+     {
      with tFluxo do begin
           sql.clear;
           sql.add('-- ABERTOS');
@@ -346,6 +353,102 @@ begin
           //sql.SaveToFile('c:\temp\Fluxo_Caixa_Itens.sql');
           open;
      end;
+     }
+     
+     //==================================================================[ CONSOLIDADNDO ]=====================================================================
+     with Dados, tFluxo do begin
+          sql.clear;
+          sql.add('-- ABERTOS');
+          sql.add('select Data = case when Tipo = ''R'' then ');
+          sql.add('                   iif(:pData = 0, pr.Data_Vencimento + :pDias, pr.Data_Previsao + :pDias)');
+          sql.add('              else');
+          sql.add('                   iif(:pData = 0, pr.Data_Vencimento, pr.Data_Previsao)');
+          sql.add('              end');
+          sql.add('      ,pr.Forma_Tipo');
+          sql.add('      ,Numero_Doc = pr.Numero_Documento');
+          sql.add('      ,Beneficiario = case pr.Tipo');
+          sql.add('                           when ''R'' then (select Nome from Clientes cl where cl.Codigo = pr.Cliente)');
+          sql.add('                           when ''P'' then ');
+          sql.add('                                case when isnull(Fornecedor, 0) <> 0 then (select Nome from Fornecedores fr where fr.Codigo = pr.Fornecedor)');
+          sql.add('                                     when isnull(Fornecedor, 0)  = 0 then (select Nome from Cybersoft_Cadastros.dbo.OrgaosPublicos op where op.Codigo = pr.Orgao)');
+          sql.add('                                end');
+          sql.add('                      end');
+          sql.add('      ,Debito  = iif(pr.Tipo = ''P'', cast(pr.Valor_Total as decimal(18,2)), 0)');
+          sql.add('      ,Credito = iif(pr.Tipo = ''R'', cast(pr.Valor_Total as decimal(18,2)), 0)');
+          sql.add('      ,pr.Numero');
+          sql.add('      ,pr.Processo');
+          sql.add('      ,pr.Tipo');
+          sql.add('from PagarReceber pr');
+          sql.Add('where iif(:pData = 0, Data_Vencimento, pr.Data_Previsao) between :pDataIni AND :pDataFim');
+          sql.add('and isnull(Adiantamento_Numero, 0) = 0');
+          sql.add('and isnull(pr.Banco, 0) = 0');
+          if mCCusto <> '' then begin
+             sql.Add('and isnull(pr.Centro_Custo, '''') in('+mCCusto+')');
+          end;
+          sql.add('union all');
+          sql.add('-- BAIXADOS');
+          sql.add('select Data');
+          sql.add('      ,Forma_Tipo = (select pr.Forma_Tipo from PagarReceber pr where pr.Numero = prb.Numero)');
+          sql.add('      ,Numero_Doc = (select pr.Numero_Documento from PagarReceber pr where pr.Numero = prb.Numero)');
+          sql.add('      ,Beneficiario = case prb.Tipo');
+          sql.add('                           when ''R'' then (select Nome from Clientes cl where cl.Codigo = (select pr.Cliente from PagarReceber pr where pr.Numero = prb.Numero))');
+          sql.add('                           when ''P'' then ');
+          sql.add('                                case when (select isnull(pr.Fornecedor, 0) from PagarReceber pr where pr.Numero = prb.Numero) <> 0 then ');
+          sql.add('                                     (select Nome from Fornecedores fr where fr.Codigo = (select pr.Fornecedor from PagarReceber pr where pr.Numero = prb.Numero))');
+          sql.add('                                else');
+          sql.add('                                     (select Nome from Cybersoft_Cadastros.dbo.OrgaosPublicos org where org.Codigo = (select pr.orgao from PagarReceber pr where pr.Numero = prb.Numero))');
+          sql.add('                                end');
+          sql.add('                      end');
+          sql.add('      ,Debito  = iif(prb.Tipo = ''P'', cast(prb.Valor as decimal(18,2)), 0)');
+          sql.add('      ,Credito = iif(prb.Tipo = ''R'', cast(prb.Valor as decimal(18,2)), 0)');
+          sql.add('      ,prb.Numero');
+          sql.add('      ,Processo = (select pr.Processo from PagarReceber pr where pr.Numero = prb.Numero)');
+          sql.add('      ,prb.Tipo');
+          sql.add('from PagarReceberBaixas prb');
+          sql.Add('where Data between :pDataIni AND :pDataFim');
+          if mBancos <> '' then begin
+             sql.Add('and isnull(prb.Banco, 0) in('+mBancos+')');
+          end;
+          if mCCusto <> '' then begin
+             sql.Add('and (select isnull(pr.Centro_Custo, '''') from PagarReceber pr where pr.Numero = prb.Numero) in('+mCCusto+')');
+          end;
+
+          // Outras Empresas.
+          if cConsol.Checked then begin
+             with tEmpresas do begin
+                  sql.clear;
+                  sql.add('select Codigo, Matriz_Filial, Numero_Filial, Estado, CNPJ, Banco_Dados ');
+                  sql.add('from Empresas where Codigo <> :pEmpresa and Consolidar = 1 and substring(CNPJ, 1, 8) = :pCNPJ order by Numero_Filial');
+                  parambyName('pEmpresa').AsInteger := Menu_Principal.mEmpresa;
+                  parambyName('pCNPJ').AsString     := Copy(Dados.Empresas.fieldbyname('CNPJ').asstring, 1, 8);
+                  open;
+             end;
+
+             mSQLMatriz := sql.Text;
+
+             tEmpresas.First;
+             while not tEmpresas.eof do begin
+                   if Copy(tEmpresas.FieldByName('CNPJ').AsString, 1, 8) = Copy(Empresas.FieldByName('CNPJ').AsString, 1, 8) then begin
+                      mSQLFilial := RemoveCaracter('use '+ EmpresasBanco_Dados.AsString, '', mSQLMatriz );
+                      mSQLFilial := RemoveCaracter('CentroCusto'            , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.CentroCusto'            , mSQLFilial);
+                      mSQLFilial := RemoveCaracter('PagarReceberBaixas pb'  , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceberBaixas PB'  , mSQLFilial);
+                      mSQLFilial := RemoveCaracter('PagarReceber pr'        , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceber PR'        , mSQLFilial);
+                      mSQLFilial := RemoveCaracter(':pEmpresa'              , tEmpresas.FieldByName('Codigo').AsString, mSQLFilial);
+                      tFluxo.sql.add('union all');
+                      tFluxo.sql.add(mSQLFilial);
+                   end;
+                   tEmpresas.Next;
+             end;
+          end;
+          sql.Add('order by Data, Tipo desc, Numero_Doc');
+          parambyname('pDataIni').AsDate := cDataIni.Date;
+          parambyname('pDataFim').AsDate := cDataFim.Date;
+          parambyname('pData').value     := cDataRef.ItemIndex;
+          parambyname('pDias').value     := cDias.Value;
+          //sql.SaveToFile('c:\temp\Fluxo_Caixa_Itens.sql');
+          open;
+          //========================================================================================================================================================
+     end;
      with tBancosSaldos do begin
           sql.clear;
           sql.Add('select ban.Conta');
@@ -353,6 +456,7 @@ begin
           sql.Add('      ,Saldo = isnull(ban.Saldo, 0) + isnull((select sum(round(iif(prb.Tipo = ''R'', prb.Valor, prb.Valor *-1), 2)) from PagarReceberBaixas prb where prb.Banco = ban.Codigo and prb.Data <= :pData), 0)');
           sql.Add('from Bancos ban');
           sql.Add('where isnull(ban.Codigo, 0) in(0,'+mBancos+')');
+          parambyname('pData').value := cDataIni.Date;
           //sql.SaveToFile('c:\temp\Fluxo_Caixa_Saldos_Bancos.sql');
           open;
      end;
@@ -402,11 +506,12 @@ var
 begin
       // Carregando as ultimas opções utilizadas no relatório como default.
       aINI               := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
-      cDataIni.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataIni', Date);
-      cDataFim.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim', Date);
-      cExcel.Checked     := aINI.ReadBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel'  , false);
-      cDataRef.ItemIndex := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataRef', 0);
-      cDias.value        := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Dias'   , 0);
+      cDataIni.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataIni'   , Date);
+      cDataFim.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim'   , Date);
+      cExcel.Checked     := aINI.ReadBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel'     , false);
+      cConsol.Checked    := aINI.ReadBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Consolidar', false);
+      cDataRef.ItemIndex := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataRef'   , 0);
+      cDias.value        := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Dias'      , 0);
       aINI.Free;
 
       mSel := false;
@@ -414,9 +519,12 @@ begin
            Configuracao.Open;
            mCompBancos := iif(ConfiguracaoCompartilhar_Bancos.AsBoolean, 'Cybersoft_Cadastros.dbo.Bancos', 'Bancos');
 
-           Empresas.Open;
-           Empresas.locate('Codigo', Menu_Principal.mEmpresa, [loCaseInsensitive]);
-           
+           with Empresas do begin 
+                sql.clear;
+                sql.add('select * from Empresas where Codigo = :pEmpresa');
+                parambyname('pEmpresa').AsInteger := Menu_Principal.mEmpresa;
+                open;
+           end;
            with tCCusto do begin
                 sql.Clear;
                 sql.Add('select Codigo');

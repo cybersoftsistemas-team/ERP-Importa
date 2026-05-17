@@ -1036,10 +1036,6 @@ begin
       screen.Cursor := crSQLWait;
       with Dados do begin
            if Produtos.Active then begin
-//              GradeSeriais.DisableScroll;
-//              GradeDetalhes.DisableScroll;
-//              GradeMateria.DisableScroll;
-
               ProdutosSeriais.SQL.Clear;
               ProdutosSeriais.SQL.Add('SELECT * FROM ProdutosSeriais WHERE(Produto_Codigo = :pCodigo) ORDER BY Cor, Numero');
               ProdutosSeriais.ParamByName('pCodigo').AsInteger := ProdutosCodigo.AsInteger;
@@ -1075,11 +1071,11 @@ begin
                          sql.add('                            as decimal(14,3))');
                          sql.add('      ,Lancado_Pedidos    = cast((select isnull(sum(Quantidade), 0) from PedidosItens WHERE(Codigo_Mercadoria = :pCodigo) AND (Saida_Entrada = 1) AND (Movimenta_Estoque = 1)) as decimal(14,3))');
                          sql.add('where Codigo = :pCodigo');
-                         ParamByName('pCodigo').AsInteger := ProdutosCodigo.AsInteger;
-                         ParamByName('pEstoque').asfloat  := mEstoque;
-                         //SQL.SaveToFile('c:\temp\Cadastro_Produtos_Estoque.sql');
-                         Execute;
-                         Close;
+                         parambyname('pCodigo').AsInteger := ProdutosCodigo.AsInteger;
+                         parambyname('pEstoque').asfloat  := mEstoque;
+                         //sql.SaveToFile('c:\temp\Cadastro_Produtos_Estoque.sql');
+                         execute;
+                         close;
                     end;
                     Produtos.RefreshRecord;
                     with tUltimas do begin

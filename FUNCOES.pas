@@ -3800,26 +3800,6 @@ begin
                    sql.Add('                                  and (select Local from PedidosRepresentantes pr where pr.Pedido = pri.Pedido) < 4), 0)');
                 end else begin
                    // Apuração do estoque do produtos para quem não emite nota fiscal de pedidos dos representantes.
-                   {
-                   sql.add('select Disponivel = cast(');
-                   sql.add('                       isnull((select sum(Quantidade)');
-                   sql.add('                               from NotasTerceirosItens');
-                   sql.Add('                               where Codigo_Mercadoria = :pCodigo');
-                   sql.add('                               and Movimenta_Estoque = 1), 0) +');
-                   sql.add('                       isnull((select sum(Quantidade_Entrada)');
-                   sql.Add('                               from ProdutosTransferencia');
-                   sql.Add('                               where Produto_Entrada = :pCodigo), 0) -');
-                   sql.add('                       isnull((select sum(Quantidade)');
-                   sql.Add('                               from ProdutosTransferencia');
-                   sql.Add('                               where Produto_Saida = :pCodigo), 0) -');
-                   sql.add('                       isnull((select sum(Quantidade)');
-                   sql.Add('                               from PedidosRepresentantesItens pri');
-                   sql.Add('                               where Codigo_Mercadoria = :pCodigo');
-                   sql.Add('                               and isnull(Faturamento, 0) = 0');
-                   sql.Add('                               and isnull(Faturado, 0) = 0');
-                   sql.Add('                               and (select isnull(Cancelado, 0) from PedidosRepresentantes pr where pr.Pedido = pri.Pedido) = 0), 0) ');
-                   sql.add('                       as decimal(14,3))');
-                   }
                    sql.Add('select Disponivel = cast((isnull((select sum(Quantidade)');
                    sql.add('                                  from NotasItens where Codigo_Mercadoria = :pCodigo');
                    sql.add('                                  and Saida_Entrada = 0');
@@ -3845,6 +3825,12 @@ begin
                    sql.add('                                  where Codigo_Mercadoria = :pCodigo');
                    sql.add('                                  and Saida_Entrada = 1');
                    sql.add('                                  and Movimenta_Inventario = 1), 0)) -');
+                   sql.add('                          isnull((select sum(Quantidade)');
+                   sql.Add('                                  from PedidosRepresentantesItens pri');
+                   sql.Add('                                  where Codigo_Mercadoria = :pCodigo');
+                   sql.Add('                                  and isnull(Faturamento, 0) = 0');
+                   sql.Add('                                  and isnull(Faturado, 0) = 0');
+                   sql.Add('                                  and isnull(Cancelado, 0) = 0), 0) -');
                    sql.Add('                          isnull((select sum(Quantidade)');
                    sql.add('                                  from ProdutosTransferencia');
                    sql.add('                                  where Produto_Saida = :pCodigo), 0) as decimal(14,3))');

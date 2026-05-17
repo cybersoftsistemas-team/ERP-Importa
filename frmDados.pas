@@ -4566,6 +4566,7 @@ type
     ServicosCodigo_Nacional: TStringField;
     FornecedoresChave_PIX: TStringField;
     ContratoCambioItensValor_Real: TCurrencyField;
+    TipoNotaVisiveis_II: TBooleanField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);

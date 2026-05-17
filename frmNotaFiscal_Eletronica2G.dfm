@@ -494,10 +494,6 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     OnChange = PageControl1Change
     object TabSheet1: TTabSheet
       Caption = 'Pedidos prontos para envio'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Grade: TRxDBGrid
         AlignWithMargins = True
         Left = 3
