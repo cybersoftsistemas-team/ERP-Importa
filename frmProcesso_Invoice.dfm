@@ -73,8 +73,6 @@ object Processo_Invoice: TProcesso_Invoice
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitTop = 603
-    ExplicitWidth = 867
     object bSair: TButton
       AlignWithMargins = True
       Left = 788
@@ -92,7 +90,6 @@ object Processo_Invoice: TProcesso_Invoice
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
-      ExplicitLeft = 790
     end
     object Navega: TDBNavigator
       AlignWithMargins = True
@@ -190,18 +187,14 @@ object Processo_Invoice: TProcesso_Invoice
     Width = 859
     Height = 614
     Margins.Bottom = 15
-    ActivePage = AbaInvoice
+    ActivePage = Abaitens
     Align = alClient
     TabHeight = 28
     TabOrder = 1
     TabWidth = 100
-    ExplicitWidth = 861
-    ExplicitHeight = 539
     object AbaLista: TTabSheet
       Caption = '&Lista'
       ImageIndex = 1
-      ExplicitWidth = 853
-      ExplicitHeight = 501
       object Grade: TDBGrid
         AlignWithMargins = True
         Left = 3
@@ -280,8 +273,6 @@ object Processo_Invoice: TProcesso_Invoice
         ParentFont = False
         TabOrder = 1
         OnChange = cPesquisaChange
-        ExplicitTop = 479
-        ExplicitWidth = 847
       end
       object StaticText5: TStaticText
         AlignWithMargins = True
@@ -309,15 +300,11 @@ object Processo_Invoice: TProcesso_Invoice
         TabOrder = 2
         Transparent = False
         StyleElements = []
-        ExplicitTop = 456
-        ExplicitWidth = 847
       end
     end
     object AbaInvoice: TTabSheet
       Caption = 'Dados da &Invoice'
       Enabled = False
-      ExplicitLeft = 29
-      ExplicitTop = -18
       object bPesqTrans: TSpeedButton
         Left = 363
         Top = 72
@@ -1839,7 +1826,6 @@ object Processo_Invoice: TProcesso_Invoice
         Caption = 'Totais do Processo'
         Enabled = False
         TabOrder = 57
-        ExplicitTop = 525
         object StaticText6: TStaticText
           Left = 389
           Top = 20
@@ -2532,8 +2518,6 @@ object Processo_Invoice: TProcesso_Invoice
     object Abaitens: TTabSheet
       Caption = 'Itens da Invoice'
       ImageIndex = 2
-      ExplicitWidth = 853
-      ExplicitHeight = 501
       object GradeItens: TDBGrid
         AlignWithMargins = True
         Left = 3
@@ -2598,8 +2582,6 @@ object Processo_Invoice: TProcesso_Invoice
         ParentBackground = False
         TabOrder = 1
         StyleElements = []
-        ExplicitTop = 130
-        ExplicitWidth = 847
         object NavegaItens: TDBNavigator
           AlignWithMargins = True
           Left = 2
@@ -2645,7 +2627,6 @@ object Processo_Invoice: TProcesso_Invoice
         BevelOuter = bvLowered
         Enabled = False
         TabOrder = 2
-        ExplicitWidth = 858
         object bPesqProd: TSpeedButton
           Left = 816
           Top = 4

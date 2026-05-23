@@ -10,6 +10,7 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
+    Connected = True
     LoginPrompt = False
     Left = 17
     Top = 14

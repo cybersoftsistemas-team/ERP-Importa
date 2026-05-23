@@ -692,10 +692,6 @@ object Financeiro_PedidosRepresentantes: TFinanceiro_PedidosRepresentantes
     TabWidth = 100
     object TabSheet1: TTabSheet
       Caption = 'Pedidos'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel5: TPanel
         Left = 0
         Top = 0
@@ -989,10 +985,6 @@ object Financeiro_PedidosRepresentantes: TFinanceiro_PedidosRepresentantes
     object TabSheet2: TTabSheet
       Caption = 'Itens'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeItens: TDBGrid
         Left = 0
         Top = 0
@@ -1097,10 +1089,6 @@ object Financeiro_PedidosRepresentantes: TFinanceiro_PedidosRepresentantes
     object TabSheet3: TTabSheet
       Caption = 'Log'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cLog: TListBox
         AlignWithMargins = True
         Left = 3
@@ -1887,7 +1875,7 @@ object Financeiro_PedidosRepresentantes: TFinanceiro_PedidosRepresentantes
     DataPipeline = pPedidos
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Pedido de Venda'
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -1940,7 +1928,7 @@ object Financeiro_PedidosRepresentantes: TFinanceiro_PedidosRepresentantes
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -4056,7 +4044,7 @@ object Financeiro_PedidosRepresentantes: TFinanceiro_PedidosRepresentantes
           DataPipeline = pItens
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Pedido de Venda'
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -4741,7 +4729,7 @@ object Financeiro_PedidosRepresentantes: TFinanceiro_PedidosRepresentantes
     DataPipeline = pPedidos
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Romaneio de Carga'
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -4792,7 +4780,7 @@ object Financeiro_PedidosRepresentantes: TFinanceiro_PedidosRepresentantes
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -6908,7 +6896,7 @@ object Financeiro_PedidosRepresentantes: TFinanceiro_PedidosRepresentantes
           DataPipeline = pItens
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Romaneio de Carga'
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350

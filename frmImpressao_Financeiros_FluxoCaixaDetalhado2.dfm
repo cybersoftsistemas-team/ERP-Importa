@@ -69,7 +69,6 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 5
-    ExplicitTop = 619
     DesignSize = (
       699
       30)
@@ -463,7 +462,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     Caption = 'Sint'#233'tico'
     TabOrder = 7
   end
-  object DBGrid1: TDBGrid
+  object gCCusto: TDBGrid
     Left = 10
     Top = 351
     Width = 680
@@ -483,8 +482,8 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     TitleFont.Name = 'MS Sans Serif'
     TitleFont.Style = []
     StyleElements = [seClient, seBorder]
-    OnDblClick = DBGrid1DblClick
-    OnTitleClick = DBGrid1TitleClick
+    OnDblClick = gCCustoDblClick
+    OnTitleClick = gCCustoTitleClick
     Columns = <
       item
         Alignment = taCenter
@@ -599,6 +598,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     Height = 17
     Caption = 'Consolidado'
     TabOrder = 13
+    OnClick = cConsolClick
   end
   object tFluxo: TMSQuery
     Connection = Dados.Banco_Empresas

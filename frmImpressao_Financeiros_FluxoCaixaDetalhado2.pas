@@ -51,7 +51,7 @@ type
     rFluxoSint: TppReport;
     ppParameterList2: TppParameterList;
     cSint: TCheckBox;
-    DBGrid1: TDBGrid;
+    gCCusto: TDBGrid;
     tCCusto: TMSQuery;
     BooleanField1: TBooleanField;
     dstCCusto: TMSDataSource;
@@ -196,19 +196,22 @@ type
     procedure lTotalSaldoSintCalc(Sender: TObject; var Value: Variant);
     procedure ppDetailBand3BeforePrint(Sender: TObject);
     procedure ppGroupHeaderBand2BeforePrint(Sender: TObject);
-    procedure DBGrid1TitleClick(Column: TColumn);
-    procedure DBGrid1DblClick(Sender: TObject);
+    procedure gCCustoTitleClick(Column: TColumn);
+    procedure gCCustoDblClick(Sender: TObject);
     procedure SaldoItemCalc(Sender: TObject; var Value: Variant);
     procedure ppDetailBand1AfterGenerate(Sender: TObject);
+    procedure cConsolClick(Sender: TObject);
   private
     mBancos
    ,mCCusto 
    ,mCompBancos:string;
-    mSel: boolean;
+    mSel, mselCC: boolean;
     function PegaBancos: string;
     function PegaCCusto: string;
     procedure ExportaEXCEL;
     procedure SaldoIni;
+    procedure FiltraBancos;
+    procedure FiltraCentroCustos;
   public
     { Public declarations }
     mSaldoExcel
@@ -229,7 +232,37 @@ begin
      Close;
 end;
 
-procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.DBGrid1DblClick(Sender: TObject);
+procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.cConsolClick(Sender: TObject);
+begin
+     FiltraBancos;
+     FiltraCentroCustos;
+     with tBancos do begin
+          DisableControls;
+          first;
+          while not eof do begin
+                edit;
+                   fieldbyname('Sel').value := false;
+                post;
+                next;
+          end;
+          EnableControls;
+     end;
+     with tCCusto do begin
+          DisableControls;
+          first;
+          while not eof do begin
+                edit;
+                   fieldbyname('Sel').value := false;
+                post;
+                next;
+          end;
+          EnableControls;
+     end;
+     mSel   := false;
+     mSelCC := false;
+end;
+
+procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.gCCustoDblClick(Sender: TObject);
 begin
       with tCCusto do begin
            Edit;
@@ -238,16 +271,16 @@ begin
       end;
 end;
 
-procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.DBGrid1TitleClick(Column: TColumn);
+procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.gCCustoTitleClick(Column: TColumn);
 begin
      if Column.FieldName = 'Sel' then begin
         with tCCusto do begin
-             msel := not mSel;
+             mselcc := not mSelcc;
              DisableControls;
              First;
              while not Eof do begin
                    Edit;
-                      fieldbyname('Sel').value := msel;
+                      fieldbyname('Sel').value := mselcc;
                    Post;
                    Next;
              end;
@@ -431,11 +464,13 @@ begin
                    if Copy(tEmpresas.FieldByName('CNPJ').AsString, 1, 8) = Copy(Empresas.FieldByName('CNPJ').AsString, 1, 8) then begin
                       mSQLFilial := RemoveCaracter('use '+ EmpresasBanco_Dados.AsString, '', mSQLMatriz );
                       mSQLFilial := RemoveCaracter('CentroCusto'            , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.CentroCusto'            , mSQLFilial);
-                      mSQLFilial := RemoveCaracter('PagarReceberBaixas pb'  , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceberBaixas PB'  , mSQLFilial);
-                      mSQLFilial := RemoveCaracter('PagarReceber pr'        , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceber PR'        , mSQLFilial);
+                      mSQLFilial := RemoveCaracter('Clientes cl'            , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Clientes cl'            , mSQLFilial);
+                      mSQLFilial := RemoveCaracter('Fornecedores fr'        , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Fornecedores fr'        , mSQLFilial);
+                      mSQLFilial := RemoveCaracter('PagarReceberBaixas prb' , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceberBaixas prb'  , mSQLFilial);
+                      mSQLFilial := RemoveCaracter('PagarReceber pr'        , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceber pr'        , mSQLFilial);
                       mSQLFilial := RemoveCaracter(':pEmpresa'              , tEmpresas.FieldByName('Codigo').AsString, mSQLFilial);
-                      tFluxo.sql.add('union all');
-                      tFluxo.sql.add(mSQLFilial);
+                      sql.add('union all');
+                      sql.add(mSQLFilial);
                    end;
                    tEmpresas.Next;
              end;
@@ -447,19 +482,44 @@ begin
           parambyname('pDias').value     := cDias.Value;
           //sql.SaveToFile('c:\temp\Fluxo_Caixa_Itens.sql');
           open;
-          //========================================================================================================================================================
+          //============================================================================================================================================================================
      end;
-     with tBancosSaldos do begin
+     
+     // Saldos dos bancos.
+     with Dados, tBancosSaldos do begin
           sql.clear;
-          sql.Add('select ban.Conta');
-          sql.Add('      ,Nome  = upper(ban.Nome)');
-          sql.Add('      ,Saldo = isnull(ban.Saldo, 0) + isnull((select sum(round(iif(prb.Tipo = ''R'', prb.Valor, prb.Valor *-1), 2)) from PagarReceberBaixas prb where prb.Banco = ban.Codigo and prb.Data <= :pData), 0)');
-          sql.Add('from Bancos ban');
-          sql.Add('where isnull(ban.Codigo, 0) in(0,'+mBancos+')');
+          if ConfiguracaoCompartilhar_Bancos.AsBoolean then begin
+             sql.Add('select ban.Conta');
+             sql.Add('      ,Nome  = upper(ban.Nome)');
+             sql.Add('      ,Saldo = isnull(ban.Saldo, 0) + isnull((select sum(round(iif(prb.Tipo = ''R'', prb.Valor, prb.Valor *-1), 2)) from PagarReceberBaixas prb where prb.Banco = ban.Codigo and prb.Data <= :pData), 0)');
+             sql.Add('from '+mCompBancos+' ban');
+             sql.Add('where isnull(ban.Codigo, 0) in(0,'+mBancos+')');
+          end else begin
+             // Outras Empresas.
+             sql.Add('select ban.Conta');
+             sql.Add('      ,Nome  = upper(ban.Nome)');
+             sql.Add('      ,Saldo = isnull(ban.Saldo, 0) + isnull((select sum(round(iif(prb.Tipo = ''R'', prb.Valor, prb.Valor *-1), 2)) from PagarReceberBaixas prb where prb.Banco = ban.Codigo and prb.Data <= :pData), 0)');
+             sql.Add('from Bancos ban');
+             sql.Add('where isnull(ban.Codigo, 0) in(0,'+mBancos+')');
+             if cConsol.Checked then begin
+                mSQLMatriz := sql.Text;
+                tEmpresas.First;
+                while not tEmpresas.eof do begin
+                      if Copy(tEmpresas.FieldByName('CNPJ').AsString, 1, 8) = Copy(Empresas.FieldByName('CNPJ').AsString, 1, 8) then begin
+                         mSQLFilial := RemoveCaracter('use '+ EmpresasBanco_Dados.AsString, '', mSQLMatriz );
+                         mSQLFilial := RemoveCaracter('Bancos ban', tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Bancos ban', mSQLFilial);
+                         sql.add('union');
+                         sql.add(mSQLFilial);
+                      end;
+                      tEmpresas.Next;
+                end;
+             end;
+          end;
           parambyname('pData').value := cDataIni.Date;
           //sql.SaveToFile('c:\temp\Fluxo_Caixa_Saldos_Bancos.sql');
           open;
      end;
+     
      Screen.Cursor := crDefault;
      
      lPeriodo.Caption         := '| Período ' + cDataIni.Text + ' à ' + cDataFim.Text+ ' | '+cDataRef.Items[cDataRef.ItemIndex]+' |';
@@ -504,52 +564,43 @@ procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.FormShow(Sender: TObject);
 var
   aINI: TIniFile;
 begin
-      // Carregando as ultimas opções utilizadas no relatório como default.
-      aINI               := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
-      cDataIni.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataIni'   , Date);
-      cDataFim.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim'   , Date);
-      cExcel.Checked     := aINI.ReadBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel'     , false);
-      cConsol.Checked    := aINI.ReadBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Consolidar', false);
-      cDataRef.ItemIndex := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataRef'   , 0);
-      cDias.value        := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Dias'      , 0);
-      aINI.Free;
+     // Carregando as ultimas opções utilizadas no relatório como default.
+     Dados.Configuracao.Open;
+     mCompBancos := iif(Dados.ConfiguracaoCompartilhar_Bancos.AsBoolean, 'Cybersoft_Cadastros.dbo.Bancos', 'Bancos');
+          
+     aINI               := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
+     cDataIni.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataIni'   , Date);
+     cDataFim.Date      := aINI.ReadDate   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataFim'   , Date);
+     cExcel.Checked     := aINI.ReadBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Excel'     , false);
+     cConsol.Checked    := aINI.ReadBool   ('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Consolidar', false);
+     cDataRef.ItemIndex := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'DataRef'   , 0);
+     cDias.value        := aINI.ReadInteger('IMPRESSAO_FINANCEIRO_FLUXOCAIXADET', 'Dias'      , 0);
+     aINI.Free;
 
-      mSel := false;
-      with Dados do begin
-           Configuracao.Open;
-           mCompBancos := iif(ConfiguracaoCompartilhar_Bancos.AsBoolean, 'Cybersoft_Cadastros.dbo.Bancos', 'Bancos');
+     mSel   := false;
+     mSelcc := false;
+     with Dados do begin
+          with Empresas do begin 
+               sql.clear;
+               sql.add('select * from Empresas where Codigo = :pEmpresa');
+               parambyname('pEmpresa').AsInteger := Menu_Principal.mEmpresa;
+               open;
+          end;
+          {
+          with tCCusto do begin
+               sql.Clear;
+               sql.Add('select Codigo');
+               sql.add('      ,Descricao');
+               sql.Add('      ,Sel = cast(0 as bit)');
+               sql.Add('from CentroCusto');
+               sql.Add('order by Descricao');
+               open;
+          end;
+          }
+     end;
 
-           with Empresas do begin 
-                sql.clear;
-                sql.add('select * from Empresas where Codigo = :pEmpresa');
-                parambyname('pEmpresa').AsInteger := Menu_Principal.mEmpresa;
-                open;
-           end;
-           with tCCusto do begin
-                sql.Clear;
-                sql.Add('select Codigo');
-                sql.add('      ,Descricao');
-                sql.Add('      ,Sel = cast(0 as bit)');
-                sql.Add('from CentroCusto');
-                sql.Add('order by Descricao');
-                open;
-           end;
-      end;
-      with tBancos do begin  
-           sql.Clear;
-           sql.add('select ban.Codigo');
-           sql.add('      ,ban.Nome');
-           sql.add('      ,ban.Agencia');
-           sql.add('      ,ban.Conta');
-           sql.add('      ,ban.Saldo');
-           sql.add('      ,ban.Data_Saldo');
-           sql.add('      ,Sel = cast(0 as bit)');
-           sql.add('from '+mCompBancos+' as ban');
-           sql.add('where ban.Tipo_Conta = ''CORRENTE'' ');
-           sql.add('and Rel_Fluxo_Caixa = 1');
-           sql.add('order by Nome');
-           open;
-      end;
+     FiltraBancos;
+     FiltraCentroCustos;
 end;
 
 procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.gBancosDblClick(Sender: TObject);
@@ -605,8 +656,12 @@ begin
 end;
 
 procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.SaldoIni;
+var
+  mSQLMatriz: string;
+  mSQLFilial: string;
 begin
      if mBancos <> '' then begin
+        {
         with qrysinit do begin
              sql.Clear;
              sql.add('select SaldoIni = (select isnull(sum(Saldo), 0) from '+mCompBancos+' where Codigo in('+mBancos+')) +');
@@ -619,6 +674,50 @@ begin
              ParamByName('pData').AsDate := cDataIni.Date;
              //sql.SaveToFile('c:\temp\Fluxo_Saldo_Inicial.sql');
              open;
+             InicialSal.value := fieldbyname('SaldoIni').AsCurrency;
+             SaldoItem.Value  := fieldbyname('SaldoIni').AsCurrency + tFluxo.FieldByName('Credito').AsCurrency - tFluxo.FieldByName('Debito').AsCurrency;
+             mSaldoIniExcel   := fieldbyname('SaldoIni').AsCurrency;
+             mSaldoExcel      := fieldbyname('SaldoIni').AsCurrency;
+        end;
+        }
+
+        with Dados, qrysinit do begin
+             if not cConsol.Checked then begin
+                sql.Clear;
+                sql.add('select SaldoIni = (select isnull(sum(Saldo), 0) from '+mCompBancos+' where Codigo in('+mBancos+')) +');
+                if mCCusto = '' then begin
+                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+'))');
+                end else begin
+                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+')');
+                   sql.add('                   and (select Centro_Custo from PagarReceber pr where pr.Numero = PagarReceberBaixas.Numero) in('+mCCusto+'))');
+                end;
+             end else begin
+                sql.Clear;
+                sql.add('select SaldoIni = (select isnull(sum(Saldo), 0) from '+mCompBancos+' where Codigo in('+mBancos+')) +');
+                if mCCusto = '' then begin
+                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+')) +');
+                end else begin
+                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+')');
+                   sql.add('                   and (select Centro_Custo from PagarReceber pr where pr.Numero = PagarReceberBaixas.Numero) in('+mCCusto+')) +');
+                end;
+                mSQLMatriz := sql.Text;
+                tEmpresas.First;
+                while not tEmpresas.eof do begin
+                      if Copy(tEmpresas.FieldByName('CNPJ').AsString, 1, 8) = Copy(Empresas.FieldByName('CNPJ').AsString, 1, 8) then begin
+                         mSQLFilial := RemoveCaracter('select SaldoIni = ' , '', mSQLMatriz);
+                         mSQLFilial := RemoveCaracter('PagarReceberBaixas ', tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceberBaixas ', mSQLFilial);
+                         mSQLFilial := RemoveCaracter('PagarReceber '      , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceber '      , mSQLFilial);
+                         mSQLFilial := RemoveCaracter('Bancos '            , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Bancos '            , mSQLFilial);
+                         sql.add(mSQLFilial);
+                      end;
+                      tEmpresas.Next;
+                end;
+                sql.text := copy(trim(sql.text), 1, length(trim(sql.text))-1);
+             end;
+             ParamByName('pData').AsDate := cDataIni.Date;
+             //sql.SaveToFile('c:\temp\Fluxo_Saldo_Inicial.sql');
+             open;
+             
              InicialSal.value := fieldbyname('SaldoIni').AsCurrency;
              SaldoItem.Value  := fieldbyname('SaldoIni').AsCurrency + tFluxo.FieldByName('Credito').AsCurrency - tFluxo.FieldByName('Debito').AsCurrency;
              mSaldoIniExcel   := fieldbyname('SaldoIni').AsCurrency;
@@ -888,6 +987,100 @@ begin
      mPlanilha.ActiveWindow.FreezePanes := True;
 
      Screen.Cursor := crDefault;
+end;
+
+procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.FiltraBancos;
+var
+  mSQL
+ ,mSQLFilial: string;
+begin
+     msql       := '';
+     mSQLFilial := '';
+     with Dados, tBancos do begin
+          sql.clear;
+          sql.add('select ban.Codigo');
+          sql.add('      ,ban.Nome');
+          sql.add('      ,ban.Agencia');
+          sql.add('      ,ban.Conta');
+          sql.add('      ,ban.Saldo');
+          sql.add('      ,ban.Data_Saldo');
+          sql.add('      ,Sel = cast(0 as bit)');
+          if not cConsol.Checked then begin
+             sql.add('from '+mCompBancos+' as ban');
+             sql.add('where ban.Tipo_Conta = ''CORRENTE'' ');
+             sql.add('and Rel_Fluxo_Caixa = 1');
+          end else begin
+             if ConfiguracaoCompartilhar_Bancos.AsBoolean then begin
+                sql.add('from '+mCompBancos+' as ban');
+                sql.add('where ban.Tipo_Conta = ''CORRENTE'' ');
+                sql.add('and Rel_Fluxo_Caixa = 1');
+             end else begin
+                sql.add('from Bancos as ban');
+                sql.add('where ban.Tipo_Conta = ''CORRENTE'' ');
+                sql.add('and Rel_Fluxo_Caixa = 1');
+                // Outras Empresas.
+                mSQL := sql.Text;
+                with tEmpresas do begin
+                     sql.clear;
+                     sql.add('select Codigo, Matriz_Filial, Numero_Filial, Estado, CNPJ, Banco_Dados ');
+                     sql.add('from Empresas where Codigo <> :pEmpresa and Consolidar = 1 and substring(CNPJ, 1, 8) = :pCNPJ order by Numero_Filial');
+                     parambyName('pEmpresa').AsInteger := Menu_Principal.mEmpresa;
+                     parambyName('pCNPJ').AsString     := Copy(Dados.Empresas.fieldbyname('CNPJ').asstring, 1, 8);
+                     open;
+                     first;
+                     while not eof do begin
+                           mSQLFilial := RemoveCaracter('use '+ EmpresasBanco_Dados.AsString, '', mSQL);
+                           mSQLFilial := RemoveCaracter('Bancos as ban', FieldByName('Banco_Dados').AsString+'.dbo.Bancos as ban', mSQLFilial);
+                           tBancos.sql.add('union');
+                           tBancos.sql.add(mSQLFilial);
+                           next;
+                     end;
+                end;
+             end;
+          end;
+          sql.add('order by Nome');
+          //sql.SaveToFile('c:\temp\Fluxo_Caixa_Bancos.sql');
+          open;
+     end;
+end;
+
+procedure TImpressao_Financeiros_FluxoCaixaDetalhado2.FiltraCentroCustos;
+var
+  mSQL
+ ,mSQLFilial: string;
+begin
+     msql       := '';
+     mSQLFilial := '';
+     with Dados, tCCusto do begin
+          sql.clear;
+          sql.Add('select Codigo');
+          sql.add('      ,Descricao');
+          sql.Add('      ,Sel = cast(0 as bit)');
+          sql.Add('from CentroCusto');
+          if cConsol.Checked then begin
+             // Outras Empresas.
+             mSQL := sql.Text;
+             with tEmpresas do begin
+                  sql.clear;
+                  sql.add('select Codigo, Matriz_Filial, Numero_Filial, Estado, CNPJ, Banco_Dados ');
+                  sql.add('from Empresas where Codigo <> :pEmpresa and Consolidar = 1 and substring(CNPJ, 1, 8) = :pCNPJ order by Numero_Filial');
+                  parambyName('pEmpresa').AsInteger := Menu_Principal.mEmpresa;
+                  parambyName('pCNPJ').AsString     := Copy(Dados.Empresas.fieldbyname('CNPJ').asstring, 1, 8);
+                  open;
+                  first;
+                  while not eof do begin
+                        mSQLFilial := RemoveCaracter('use '+ EmpresasBanco_Dados.AsString, '', mSQL);
+                        mSQLFilial := RemoveCaracter('CentroCusto', FieldByName('Banco_Dados').AsString+'.dbo.CentroCusto', mSQLFilial);
+                        mSQLFilial := RemoveCaracter('into #temp', '', mSQLFilial);
+                        tCCusto.sql.add('union');
+                        tCCusto.sql.add(mSQLFilial);
+                        next;
+                  end;
+             end;
+          end;
+          //sql.SaveToFile('c:\temp\Fluxo_Caixa_Centro_Custo.sql');
+          open;
+     end;
 end;
 
 
