@@ -441,6 +441,7 @@ begin
           sql.Add('where Data between :pDataIni AND :pDataFim');
           if mBancos <> '' then begin
              sql.Add('and isnull(prb.Banco, 0) in('+mBancos+')');
+             sql.Add('and (select Rel_Fluxo_Caixa from '+mCompBancos+' where Codigo = prb.Banco) = 1');
           end;
           if mCCusto <> '' then begin
              sql.Add('and (select isnull(pr.Centro_Custo, '''') from PagarReceber pr where pr.Numero = prb.Numero) in('+mCCusto+')');
@@ -463,11 +464,14 @@ begin
              while not tEmpresas.eof do begin
                    if Copy(tEmpresas.FieldByName('CNPJ').AsString, 1, 8) = Copy(Empresas.FieldByName('CNPJ').AsString, 1, 8) then begin
                       mSQLFilial := RemoveCaracter('use '+ EmpresasBanco_Dados.AsString, '', mSQLMatriz );
-                      mSQLFilial := RemoveCaracter('CentroCusto'            , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.CentroCusto'            , mSQLFilial);
-                      mSQLFilial := RemoveCaracter('Clientes cl'            , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Clientes cl'            , mSQLFilial);
-                      mSQLFilial := RemoveCaracter('Fornecedores fr'        , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Fornecedores fr'        , mSQLFilial);
-                      mSQLFilial := RemoveCaracter('PagarReceberBaixas prb' , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceberBaixas prb'  , mSQLFilial);
-                      mSQLFilial := RemoveCaracter('PagarReceber pr'        , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceber pr'        , mSQLFilial);
+                      mSQLFilial := RemoveCaracter('CentroCusto'            , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.CentroCusto'           , mSQLFilial);
+                      mSQLFilial := RemoveCaracter('Clientes cl'            , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Clientes cl'           , mSQLFilial);
+                      mSQLFilial := RemoveCaracter('Fornecedores fr'        , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Fornecedores fr'       , mSQLFilial);
+                      mSQLFilial := RemoveCaracter('PagarReceberBaixas prb' , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceberBaixas prb', mSQLFilial);
+                      mSQLFilial := RemoveCaracter('PagarReceber pr'        , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceber pr'       , mSQLFilial);
+                      if not ConfiguracaoCompartilhar_Bancos.AsBoolean then begin
+                         mSQLFilial := RemoveCaracter('from Bancos ', 'from '+tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Bancos ', mSQLFilial);
+                      end;
                       mSQLFilial := RemoveCaracter(':pEmpresa'              , tEmpresas.FieldByName('Codigo').AsString, mSQLFilial);
                       sql.add('union all');
                       sql.add(mSQLFilial);
@@ -684,20 +688,20 @@ begin
         with Dados, qrysinit do begin
              if not cConsol.Checked then begin
                 sql.Clear;
-                sql.add('select SaldoIni = (select isnull(sum(Saldo), 0) from '+mCompBancos+' where Codigo in('+mBancos+')) +');
+                sql.add('select SaldoIni = (select isnull(sum(Saldo), 0) from '+mCompBancos+' where Codigo in('+mBancos+') and Rel_Fluxo_Caixa = 1) +');
                 if mCCusto = '' then begin
-                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+'))');
+                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+') and (select Rel_Fluxo_Caixa from '+mCompBancos+' Bancos where Codigo = Banco) = 1)');
                 end else begin
-                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+')');
+                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+') and (select Rel_Fluxo_Caixa from '+mCompBancos+' where Codigo = Banco) = 1');
                    sql.add('                   and (select Centro_Custo from PagarReceber pr where pr.Numero = PagarReceberBaixas.Numero) in('+mCCusto+'))');
                 end;
              end else begin
                 sql.Clear;
-                sql.add('select SaldoIni = (select isnull(sum(Saldo), 0) from '+mCompBancos+' where Codigo in('+mBancos+')) +');
+                sql.add('select SaldoIni = (select isnull(sum(Saldo), 0) from '+mCompBancos+' where Codigo in('+mBancos+') and Rel_Fluxo_Caixa = 1) +');
                 if mCCusto = '' then begin
-                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+')) +');
+                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+') and (select Rel_Fluxo_Caixa from '+mCompBancos+' where Codigo = Banco) = 1) +');
                 end else begin
-                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+')');
+                   sql.add('                  (select isnull(sum(round(iif(Tipo = ''R'', Valor, Valor*-1), 2)), 0) from PagarReceberBaixas where Data < :pData and Banco in('+mBancos+') and (select Rel_Fluxo_Caixa from '+mCompBancos+' where Codigo = Banco) = 1');
                    sql.add('                   and (select Centro_Custo from PagarReceber pr where pr.Numero = PagarReceberBaixas.Numero) in('+mCCusto+')) +');
                 end;
                 mSQLMatriz := sql.Text;
@@ -707,7 +711,9 @@ begin
                          mSQLFilial := RemoveCaracter('select SaldoIni = ' , '', mSQLMatriz);
                          mSQLFilial := RemoveCaracter('PagarReceberBaixas ', tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceberBaixas ', mSQLFilial);
                          mSQLFilial := RemoveCaracter('PagarReceber '      , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.PagarReceber '      , mSQLFilial);
-                         mSQLFilial := RemoveCaracter('Bancos '            , tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Bancos '            , mSQLFilial);
+                         if not ConfiguracaoCompartilhar_Bancos.AsBoolean then begin
+                            mSQLFilial := RemoveCaracter('Bancos ', tEmpresas.FieldByName('Banco_Dados').AsString+'.dbo.Bancos ', mSQLFilial);
+                         end;
                          sql.add(mSQLFilial);
                       end;
                       tEmpresas.Next;

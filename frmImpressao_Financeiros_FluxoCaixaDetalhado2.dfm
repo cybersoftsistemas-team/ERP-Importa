@@ -628,6 +628,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
       'order by Banco, Data_Vencimento, Numero_Documento'
       '')
     FetchRows = 1
+    Active = True
     Left = 30
     Top = 101
     object tFluxoData: TDateTimeField
@@ -674,7 +675,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
       FieldName = 'Data'
       FieldLength = 0
       DataType = dtDateTime
-      DisplayWidth = 18
+      DisplayWidth = 0
       Position = 0
     end
     object pFluxoppField2: TppField
@@ -1967,6 +1968,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
         'co = ban.Codigo and Data < '#39'08/01/2024'#39')'
       'from Bancos ban'
       'where Tipo_Conta = '#39'CORRENTE'#39)
+    Active = True
     Left = 230
     Top = 100
   end
@@ -1984,8 +1986,8 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     object pBancosSaldosppField1: TppField
       FieldAlias = 'Conta'
       FieldName = 'Conta'
-      FieldLength = 15
-      DisplayWidth = 15
+      FieldLength = 0
+      DisplayWidth = 0
       Position = 0
     end
     object pBancosSaldosppField2: TppField
