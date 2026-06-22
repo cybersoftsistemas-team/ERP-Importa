@@ -3773,11 +3773,11 @@ begin
           PedidosItensValor_FCP.Value        := 0;
           PedidosItensValor_BCFCPST.Value    := 0;
           PedidosItensValor_FCPST.Value      := 0;
-          mAliquotaDIFAL                     := 0;
-          
+//          mAliquotaDIFAL                     := 0;
+
           if TipoNotaVisiveis_DIFAL.AsBoolean then begin
              // DIFAL.
-             mAliquotaDIFAL := ICMSICMS_Interno.AsFloat;
+//             mAliquotaDIFAL := ICMSICMS_Interno.AsFloat;
              mUF            := Trim(ClientesEstado.Value)+'_ICMS';
              
              NCM.Locate('NCM', PedidosItensNCM.AsString, [loCaseInsensitive]);;

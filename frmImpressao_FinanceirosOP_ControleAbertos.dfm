@@ -462,7 +462,7 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Controle de Duplicatas Abertas'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

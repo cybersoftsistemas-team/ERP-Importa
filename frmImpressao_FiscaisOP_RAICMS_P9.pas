@@ -420,7 +420,8 @@ begin
            tEntradas.SQL.Add('UNION ALL');
            tEntradas.SQL.Add('SELECT SE = 1');
            tEntradas.SQL.Add('      ,NF.Natureza_Codigo');
-           tEntradas.SQL.Add('      ,Valor_Contabil = CAST(((ISNULL(NI.Valor_ICMSSub, 0) + ISNULL(NI.Valor_Total, 0) + ISNULL(NI.Total_IPI, 0) ) - ISNULL(NI.Desconto_Valor, 0)) AS DECIMAL (14,2))');
+//           tEntradas.SQL.Add('      ,Valor_Contabil = CAST(((ISNULL(NI.Valor_ICMSSub, 0) + ISNULL(NI.Valor_Total, 0) + ISNULL(NI.Total_IPI, 0) ) - ISNULL(NI.Desconto_Valor, 0)) AS DECIMAL (14,2))');
+           tEntradas.SQL.Add('      ,Valor_Contabil = CAST(((ISNULL(NI.Valor_ICMSSub, 0) + ISNULL(NI.Valor_Total, 0) + ISNULL(NI.Total_IPI, 0) + ISNULL(NI.Valor_Frete, 0) + ISNULL(NI.Valor_Seguro, 0)) - ISNULL(NI.Desconto_Valor, 0)) AS DECIMAL (14,2))');
            tEntradas.SQL.Add('      ,(CASE WHEN ISNULL(NF.ICMS_Destacar, 0) = 0 THEN NI.Valor_BCICMSOper ELSE 0 END) AS Valor_BCICMS');
            tEntradas.SQL.Add('      ,(CASE WHEN ISNULL(NF.ICMS_Destacar, 0) = 0 THEN NI.Valor_ICMSOper ELSE 0 END) AS Valor_ICMS');
            tEntradas.SQL.Add('      ,(NI.Valor_IsentasICMS) AS Valor_Isentas');

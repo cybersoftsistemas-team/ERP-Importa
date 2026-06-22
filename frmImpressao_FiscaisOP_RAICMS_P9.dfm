@@ -265,7 +265,6 @@ object Impressao_FiscaisOP_RAICMS_P9: TImpressao_FiscaisOP_RAICMS_P9
       'GROUP BY Natureza_Codigo'
       'ORDER BY Natureza_Codigo')
     FetchRows = 1
-    Active = True
     Left = 42
     Top = 169
     object tEntradasNatureza_Codigo: TStringField
@@ -463,7 +462,7 @@ object Impressao_FiscaisOP_RAICMS_P9: TImpressao_FiscaisOP_RAICMS_P9
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'

@@ -10,7 +10,6 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
-    Connected = True
     LoginPrompt = False
     Left = 17
     Top = 14
@@ -76,7 +75,8 @@ object Dados: TDados
         'merce_Data, ECommerce_Hora, Ambiente_Armazem, Lancamento_Contabi' +
         'l, Layout_Estoque, Ultimo_NSU, UF_WEBServiceEPEC, Licensa_CTE_Ut' +
         'il, UF_WebServiceCTe, Email_Criptografia, Email_MsgFollowUp, FCP' +
-        '_Interno, ImportarPlanPed_Bloqueado, Email_MsgPedidos)'
+        '_Interno, ImportarPlanPed_Bloqueado, Email_MsgPedidos, PISCOFINS' +
+        '_F100Financ)'
       'VALUES'
       
         '  (:Codigo, :Matriz_Filial, :Numero_Filial, :Razao_Social, :Nome' +
@@ -139,7 +139,7 @@ object Dados: TDados
         'Lancamento_Contabil, :Layout_Estoque, :Ultimo_NSU, :UF_WEBServic' +
         'eEPEC, :Licensa_CTE_Util, :UF_WebServiceCTe, :Email_Criptografia' +
         ', :Email_MsgFollowUp, :FCP_Interno, :ImportarPlanPed_Bloqueado, ' +
-        ':Email_MsgPedidos)')
+        ':Email_MsgPedidos, :PISCOFINS_F100Financ)')
     SQLDelete.Strings = (
       'DELETE FROM EMPRESAS'
       'WHERE'
@@ -268,7 +268,8 @@ object Dados: TDados
         ' = :UF_WebServiceCTe, Email_Criptografia = :Email_Criptografia, ' +
         'Email_MsgFollowUp = :Email_MsgFollowUp, FCP_Interno = :FCP_Inter' +
         'no, ImportarPlanPed_Bloqueado = :ImportarPlanPed_Bloqueado, Emai' +
-        'l_MsgPedidos = :Email_MsgPedidos'
+        'l_MsgPedidos = :Email_MsgPedidos, PISCOFINS_F100Financ = :PISCOF' +
+        'INS_F100Financ'
       'WHERE'
       '  Codigo = :Old_Codigo')
     SQLRefresh.Strings = (
@@ -329,8 +330,8 @@ object Dados: TDados
         'ECommerce_Data, ECommerce_Hora, Ambiente_Armazem, Lancamento_Con' +
         'tabil, Layout_Estoque, Ultimo_NSU, UF_WEBServiceEPEC, Licensa_CT' +
         'E_Util, UF_WebServiceCTe, Email_Criptografia, Email_MsgFollowUp,' +
-        ' FCP_Interno, ImportarPlanPed_Bloqueado, Email_MsgPedidos FROM E' +
-        'MPRESAS'
+        ' FCP_Interno, ImportarPlanPed_Bloqueado, Email_MsgPedidos, PISCO' +
+        'FINS_F100Financ FROM EMPRESAS'
       'WHERE'
       '  Codigo = :Codigo')
     SQLLock.Strings = (
@@ -1393,6 +1394,9 @@ object Dados: TDados
     object EmpresasEmail_MsgPedidos: TMemoField
       FieldName = 'Email_MsgPedidos'
       BlobType = ftMemo
+    end
+    object EmpresasPISCOFINS_F100Financ: TBooleanField
+      FieldName = 'PISCOFINS_F100Financ'
     end
   end
   object dsEmpresas: TDataSource
@@ -15474,7 +15478,6 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
-    Connected = True
     LoginPrompt = False
     Left = 87
     Top = 14

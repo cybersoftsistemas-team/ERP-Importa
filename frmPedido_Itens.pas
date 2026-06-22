@@ -591,7 +591,7 @@ end;
 procedure TPedido_Itens.FormCreate(Sender: TObject);
 begin
      Application.ShowHint   := True;
-      Application.OnShowHint := AppShowHint;
+     Application.OnShowHint := AppShowHint;
      with Dados.Pedidos do begin
           if (fieldbyname('Saida_Entrada').asinteger = 0) and (FileExists('fundo_barra_Vermelha.bmp')) then begin
              Image1.Picture.LoadFromFile('fundo_barra_Vermelha.bmp');

@@ -130,13 +130,14 @@ type
     { Private declarations }
   public
     { Public declarations }
-    mUltimoClick   : String;
-    mContador      : integer;
-    mContadorFinal : integer;
-    mSelecionou    : boolean;
-    mSolicitacao   : Integer;
-    mCheque        : Integer;
-    mFiltra        : Boolean;
+//    mUltimoClick: String;
+    mDirecao: string;
+    mContador: integer;
+    mContadorFinal: integer;
+    mSelecionou: boolean;
+    mSolicitacao: Integer;
+    mCheque: Integer;
+//    mFiltra        : Boolean;
     CompClass
    ,CompBanco: string;
   end;
@@ -180,7 +181,7 @@ end;
 
 procedure TFinanceiro_BaixaLote.Filtra(Coluna:Integer; Ordem: Boolean);
 begin
-     If mFiltra = true then begin
+//     If mFiltra = true then begin
         Screen.Cursor := crSQLWait;
         Grade.DisableScroll;
         Grade.UnselectAll;
@@ -302,7 +303,8 @@ begin
              end else begin
                 SQL.Add('select * from #temp');
              end;
-             If Ordem = True then begin
+             {
+             If Ordem then begin
                 If mUltimoClick <> Grade.Columns[Coluna].FieldName then begin
                    SQL.Add('ORDER BY '+Grade.Columns[Coluna].FieldName+' ASC');
                    mUltimoClick := Grade.Columns[Coluna].FieldName;
@@ -313,6 +315,10 @@ begin
              end else begin
                 SQL.Add('ORDER BY '+Grade.Columns[Coluna].FieldName+' DESC');
              End;
+             }
+             if mDirecao = 'asc' then mDirecao := 'desc' else mDirecao := 'asc';
+             SQL.Add('order by '+Grade.Columns[Coluna].FieldName + ' '+mDirecao);
+             
              SQL.Add('drop table #temp');
              //SQL.SaveToFile('c:\temp\Filtro_Baixa.sql');
              Open;
@@ -336,14 +342,14 @@ begin
         Grade.EnableScroll;
         tTitulos.EnableControls;
         cTitulos.Value := tTitulos.RecordCount;
-     End;
+//     End;
      SomaSel;
      Screen.Cursor := crDefault;
 end;
 
 procedure TFinanceiro_BaixaLote.bLimpaFiltroClick(Sender: TObject);
 begin
-      mFiltra                 := false;
+//      mFiltra                 := false;
       cData.Clear;
       cDataFim.Clear;
       mSolicitacao            :=  0;
@@ -351,7 +357,7 @@ begin
       cClassificacao.KeyValue := -1;
       cProcesso.ItemIndex     := -1;
       cBeneficiario.KeyValue  := -1;
-      mFiltra                 := True;
+//      mFiltra                 := True;
       cComissao.Checked       := false;
       cSelecionar.Checked     := false;
       cEmpresa.KeyValue       := -1;
@@ -377,8 +383,9 @@ begin
         Financeiro_BaixaLoteDados.bDadosCheque.Enabled := Trim(tTitulos.FieldByName('Forma_Tipo').AsString) = 'CHEQUE';
      End;
      Financeiro_BaixaLoteDados.ShowModal;
-
-     Filtra(1, False);
+//     mFiltra := false;
+     mDirecao := '';
+     Filtra(1, true);
 end;
 
 procedure TFinanceiro_BaixaLote.GradeKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -405,8 +412,9 @@ end;
 procedure TFinanceiro_BaixaLote.FormShow(Sender: TObject);
 begin
      Screen.Cursor := crSQLWait;
-     mFiltra       := true;
+//     mFiltra       := true;
      With Dados do begin
+          Configuracao.Open;
           CompClass := iif(not ConfiguracaoCompartilhar_Classificacao.AsBoolean, 'ClassificacaoFinanceira', 'Cybersoft_Cadastros.dbo.ClassificacaoFinanceira');
           CompBanco := iif(not ConfiguracaoCompartilhar_Bancos.AsBoolean       , 'Bancos'                 , 'Cybersoft_Cadastros.dbo.Bancos');
           with tProcessos do begin
@@ -486,8 +494,6 @@ begin
                open;
           end;
 
-          Configuracao.Open;
-
           // Mensagem informando até quando o movimento esta bloqueado.
           If Trim(RemoveCaracter('/', '', Dados.EmpresasFechamento_Financeiro.AsString)) <> '' then begin;
              lBloqueado.Visible := true;
@@ -551,7 +557,7 @@ begin
         tBeneficiarios.Filter := '(Beneficiario_Tipo <> ''C'')'
      else
         tBeneficiarios.Filter := 'Beneficiario_Tipo = ''C'' ';
-     Filtra(1, True);
+     Filtra(1, false);
 end;
 
 procedure TFinanceiro_BaixaLote.GradeCellClick(Column: TColumn);

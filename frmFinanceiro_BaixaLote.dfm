@@ -5,7 +5,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
   BorderStyle = bsDialog
   Caption = 'Financeiro_BaixaLote'
   ClientHeight = 631
-  ClientWidth = 993
+  ClientWidth = 1091
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -165,7 +165,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
   object Image2: TImage
     Left = 0
     Top = 0
-    Width = 993
+    Width = 1091
     Height = 44
     Align = alTop
     Stretch = True
@@ -413,14 +413,15 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
   object Panel1: TPanel
     Left = 0
     Top = 599
-    Width = 993
+    Width = 1091
     Height = 32
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 1
+    ExplicitWidth = 993
     object bSair: TButton
       AlignWithMargins = True
-      Left = 916
+      Left = 1014
       Top = 2
       Width = 75
       Height = 28
@@ -436,6 +437,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
+      ExplicitLeft = 916
     end
     object bDesmarcar: TButton
       AlignWithMargins = True
@@ -1108,7 +1110,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
   object Grade: TRxDBGrid
     Left = 4
     Top = 209
-    Width = 981
+    Width = 1082
     Height = 363
     Color = 14024703
     DataSource = dstTitulos
@@ -1150,7 +1152,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
         FieldName = 'Data_Vencimento'
         Title.Alignment = taCenter
         Title.Caption = 'Data Venc.'
-        Width = 60
+        Width = 63
         Visible = True
       end
       item
@@ -1216,7 +1218,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
       end>
   end
   object cTitulos: TCurrencyEdit
-    Left = 896
+    Left = 984
     Top = 574
     Width = 88
     Height = 21
@@ -1233,7 +1235,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
     TabOrder = 3
   end
   object StaticText5: TStaticText
-    Left = 802
+    Left = 890
     Top = 574
     Width = 92
     Height = 21
@@ -1256,7 +1258,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
     StyleElements = []
   end
   object cTotal: TCurrencyEdit
-    Left = 711
+    Left = 799
     Top = 574
     Width = 88
     Height = 21
@@ -1273,7 +1275,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
     TabOrder = 5
   end
   object StaticText6: TStaticText
-    Left = 617
+    Left = 705
     Top = 574
     Width = 92
     Height = 21

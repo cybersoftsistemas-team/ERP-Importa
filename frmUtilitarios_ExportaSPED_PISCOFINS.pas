@@ -2040,7 +2040,6 @@ begin
       End;
       tNotas.SQL.Add('      AND (YEAR(Data_Vencimento) = :pAno AND MONTH(Data_Vencimento) = :pMes) AND (Cliente = Clientes.Codigo)');
 
-
       tNotas.SQL.Add('UNION  ALL');
       tNotas.SQL.Add('select distinct');
       tNotas.SQL.Add('       cast(Cliente as varchar(6))+''C'' as Codigo,');
@@ -2274,8 +2273,8 @@ begin
      tItens.SQL.Add('FROM   NotasTerceirosItens NTI');
      tItens.SQL.Add('WHERE (MONTH(NTI.Data_Entrada) = :pMes) AND (YEAR(NTI.Data_Entrada) = :pAno)');
      tItens.SQL.Add('AND   (Apuracao_PISCOFINS = 1)');
-   tItens.SQL.Add('AND   ISNULL((SELECT Provisoria FROM NotasTerceiros NT WHERE NT.Nota = NTI.Nota AND NT.Data_Emissao  = NTI.Data_Emissao AND NT.Fornecedor = NTI.Fornecedor and nt.Natureza_Codigo = NTI.Natureza_Codigo), 0) = 0');
-   tItens.SQL.Add('AND   ISNULL((SELECT Desdobramento FROM NotasTerceiros NT WHERE NT.Nota = NTI.Nota AND NT.Data_Emissao  = NTI.Data_Emissao AND NT.Fornecedor = NTI.Fornecedor and nt.Natureza_Codigo = NTI.Natureza_Codigo), 0) = 0');
+     tItens.SQL.Add('AND   ISNULL((SELECT Provisoria FROM NotasTerceiros NT WHERE NT.Nota = NTI.Nota AND NT.Data_Emissao  = NTI.Data_Emissao AND NT.Fornecedor = NTI.Fornecedor and nt.Natureza_Codigo = NTI.Natureza_Codigo), 0) = 0');
+     tItens.SQL.Add('AND   ISNULL((SELECT Desdobramento FROM NotasTerceiros NT WHERE NT.Nota = NTI.Nota AND NT.Data_Emissao  = NTI.Data_Emissao AND NT.Fornecedor = NTI.Fornecedor and nt.Natureza_Codigo = NTI.Natureza_Codigo), 0) = 0');
 
      tItens.SQL.Add('UNION ALL');
      tItens.SQL.Add('SELECT DISTINCT');
@@ -2495,11 +2494,11 @@ begin
            sql.add('select Conta = (select Pagamento_Conta from ClassificacaoFinanceira cf where cf.Codigo = (select Classificacao from PagarReceber pr where pr.Numero = prb.Numero))');
            sql.add('from PagarReceberBaixas prb');
            sql.add('where Data between :pDataIni and :pDataFim');
-           sql.add('and Tipo = ''R'' ');             
+//           sql.add('and Tipo = ''R'' ');             
+           sql.add('and (select isnull(CST_PIS, '''') from ClassificacaoFinanceira cf where cf.Codigo = (select Classificacao from PagarReceber pr where pr.Numero = prb.Numero)) <> '''' ');
            sql.add('and isnull(Juros, 0) = 0');
            
            sql.add('union all');
-//           sql.add('select Conta = (select Pagamento_Conta from ClassificacaoFinanceira cf where cf.Codigo = (select Classificacao from PagarReceber pr where pr.Numero = prb.Numero))');
            sql.add('select Conta = (select Pagamento_Conta from ClassificacaoFinanceira cf where cf.Codigo = (select Classificacao_JurosRC from Configuracao))');
            sql.add('from PagarReceberBaixas prb');
            sql.add('where Data between :pDataIni and :pDataFim');
@@ -2507,7 +2506,7 @@ begin
            sql.add('and isnull(Juros, 0) > 0');
            sql.add('and (select Juros_SPEDPISCOFINS from ClassificacaoFinanceira cf where cf.Codigo = (select Classificacao from PagarReceber pr where pr.Numero = prb.Numero)) = 1');
 
-           if dados.EmpresasPISCOFINS_F100.AsBoolean then begin
+           if Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
               sql.add('union all');
               sql.add('select Conta_Contabil = Conta_Despesas');
               sql.add('from ProcessosDocumentos pd');
@@ -4702,13 +4701,11 @@ begin
            sql.add('               and isnull(Provisorio, 0) = 0)');
            sql.add('           + (select isnull(count(*) , 0)');
            sql.add('              from PagarReceber pr, PagarReceberBaixas prb');
-//           sql.add('              where year(Data_Documento) = :pAno');
-//           sql.add('              and month(Data_Documento) = :pMes');
            sql.add('              where prb.Numero = pr.Numero');
            sql.add('              and isnull(pr.Provisorio, 0) = 0');
            sql.add('              and isnull(pr.Juros, 0) > 0');
            sql.add('              and (select isnull(Juros_SPEDPISCOFINS, 0) from ClassificacaoFinanceira where Codigo = Classificacao) = 1)');
-           if Dados.EmpresasPISCOFINS_F100.AsBoolean then begin 
+           if Dados.EmpresasPISCOFINS_F100Financ.AsBoolean then begin 
               sql.add('           + (select count(*)');
               sql.add('              from Adicoes ad');
               sql.add('              where (select Data_RegistroDeclaracao from ProcessosDocumentos pd where pd.Numero_Declaracao = ad.DI and Apuracao_PISCOFINS = 1) between :pDataIni and :pDataFim');
@@ -4739,7 +4736,7 @@ begin
       End;
       tPagarReceber.SQL.Add('select sum(Qtde) as Qtde from #Temp');
       tPagarReceber.SQL.Add('drop table #Temp');
-      If Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
+      If Dados.EmpresasPISCOFINS_F100Financ.AsBoolean then begin
          tPagarReceber.ParamByName('pDataIni').AsDate := StrtoDate(mDataIni);
          tPagarReceber.ParamByName('pDataFim').AsDate := StrtoDate(mDataFim);
       End;
@@ -4765,7 +4762,7 @@ begin
       Progresso2('Registro: F001');
 end;
 
-{* REGISTRO F010: IDENTIFICA  O DO ESTABELECIMENTO *}
+{* REGISTRO F010: IDENTIFICAÇÃO DO ESTABELECIMENTO *}
 procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroF010;
 begin
       Progresso2('Identificão do Estabelecimento');
@@ -4962,7 +4959,7 @@ begin
 //           ParamByName('pAno').AsInteger := cAno.AsInteger;
 //           ParamByName('pMes').AsInteger := cMes.ItemIndex + 1;
 
-           if Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
+           if Dados.EmpresasPISCOFINS_F100.AsBoolean or Dados.EmpresasPISCOFINS_F100Financ.AsBoolean then begin
               ParamByName('pDataIni').AsDate := StrtoDate(mDataIni);
               ParamByName('pDataFim').AsDate := StrtoDate(mDataFim);
            end;
@@ -5026,7 +5023,7 @@ begin
                  sql.add(mSQLFilial);
 //                 parambyname('pAno').AsInteger := cAno.AsInteger;
 //                 parambyname('pMes').AsInteger := cMes.ItemIndex + 1;
-                 if Dados.EmpresasPISCOFINS_F100.AsBoolean then begin
+                 if Dados.EmpresasPISCOFINS_F100.AsBoolean OR Dados.EmpresasPISCOFINS_F100Financ.AsBoolean then begin
                     ParamByName('pDataIni').AsDate := StrtoDate(mDataIni);
                     ParamByName('pDataFim').AsDate := StrtoDate(mDataFim);
                  end;
@@ -5053,7 +5050,7 @@ procedure TUtilitarios_ExportaSPED_PISCOFINS.RegistroF100;
 Var
    mCodigoBC: String;
 begin
-     Progresso3('Demais documentos e Operações Geradoras de Créditos', tPagarReceber.RecordCount);
+     Progresso3('Demais documentos e operações geradoras de créditos', tPagarReceber.RecordCount);
 
      While (not tPagarReceber.Eof) and (Funcoes.Cancelado = false) do begin
            mCodigoBC := PoeZero(2, tPagarReceber.FieldByName('Codigo_BC').AsInteger);

@@ -784,7 +784,7 @@ begin
                     sql.add('      ,Classificacao_Descricao = (select Descricao from '+CompClass+' where(Codigo = Classificacao))');
                     sql.add('      ,Banco_Nome = (select Nome from '+CompBancos+' where(Bancos.Codigo = Banco))');
                     sql.add('      ,Baixa = cast(null as varchar(7))');
-                    sql.add('      ,Liquidada = isnull((select Liquidar from EmprestimosDuplicatas where Duplicata= Numero_Documento), 0)');
+                    sql.add('      ,Liquidada = isnull((select distinct Liquidar from EmprestimosDuplicatas where Duplicata= Numero_Documento), 0)');
                     sql.add('      ,Saldo = cast(0 as money)');
                     sql.add('      ,CustoConta');
                     sql.add('      ,Custo_Seletivo');

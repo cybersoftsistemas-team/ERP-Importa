@@ -119,7 +119,7 @@ object Cadastro_Empresas: TCadastro_Empresas
     Top = 50
     Width = 629
     Height = 618
-    ActivePage = pParametros
+    ActivePage = pSPEDFiscal
     TabHeight = 24
     TabOrder = 1
     object pCadastrais: TTabSheet
@@ -5268,7 +5268,7 @@ object Cadastro_Empresas: TCadastro_Empresas
         Top = 3
         Width = 607
         Height = 505
-        ActivePage = TabSheet2
+        ActivePage = TabSheet3
         TabHeight = 24
         TabOrder = 1
         TabPosition = tpBottom
@@ -5428,11 +5428,11 @@ object Cadastro_Empresas: TCadastro_Empresas
           object DBCheckBox7: TDBCheckBox
             Left = 12
             Top = 18
-            Width = 415
+            Width = 484
             Height = 17
             Caption = 
               'Apurar cr'#233'ditos de PIS/COFINS do bloco F100 pela Declara'#231#227'o de I' +
-              'mporta'#231#227'o (DI).'
+              'mporta'#231#227'o (DI). (Nota Fiscal)'
             DataField = 'PISCOFINS_F100'
             DataSource = Dados.dsEmpresas
             Font.Charset = DEFAULT_CHARSET
@@ -5442,6 +5442,25 @@ object Cadastro_Empresas: TCadastro_Empresas
             Font.Style = []
             ParentFont = False
             TabOrder = 0
+            OnClick = cProcessoAutomaticoClick
+          end
+          object DBCheckBox5: TDBCheckBox
+            Left = 12
+            Top = 42
+            Width = 484
+            Height = 17
+            Caption = 
+              'Apurar cr'#233'ditos de PIS/COFINS do bloco F100 pela Declara'#231#227'o de I' +
+              'mporta'#231#227'o (DI). (Financeiro)'
+            DataField = 'PISCOFINS_F100Financ'
+            DataSource = Dados.dsEmpresas
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            TabOrder = 1
             OnClick = cProcessoAutomaticoClick
           end
         end

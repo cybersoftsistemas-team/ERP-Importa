@@ -158,7 +158,7 @@ begin
            sql.add('and (isnull((select Count(*) from EmprestimosDuplicatas ed where ed.Duplicata = pr.Numero_Documento), 1) = 0 ');
            sql.Add('     and pr.Valor_Total - isnull((select sum(Valor) from PagarReceberBaixas prb where prb.Numero = pr.Numero), 0) > 0');
            sql.add('     or  isnull((select Count(*) from EmprestimosDuplicatas ed where ed.Duplicata = pr.Numero_Documento), 1) > 0');
-           sql.Add('     and isnull((select Liquidar from EmprestimosDuplicatas ed where ed.Duplicata = pr.Numero_Documento), 0) = 0)');
+           sql.Add('     and isnull((select Liquidar from EmprestimosDuplicatas ed where ed.Duplicata = pr.Numero_Documento and ed.Vencimento = pr.Data_Vencimento), 0) = 0)');
            if cCliente.DisplayValue <> '' then begin
               sql.add('and pr.Cliente = :pCliente');
               parambyname('pCliente').AsInteger := Dados.ClientesCodigo.AsInteger;

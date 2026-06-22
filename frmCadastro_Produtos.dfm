@@ -1496,10 +1496,6 @@ object Cadastro_Produtos: TCadastro_Produtos
       Caption = '&CST'
       Enabled = False
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cCSTPIS: TStaticText
         Left = 2
         Top = 2
@@ -2099,10 +2095,6 @@ object Cadastro_Produtos: TCadastro_Produtos
       Caption = '&Impostos/Valores'
       Enabled = False
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox15: TGroupBox
         Left = 5
         Top = 90
@@ -3603,10 +3595,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet8: TTabSheet
       Caption = 'Estoque'
       ImageIndex = 10
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox19: TGroupBox
         Left = 7
         Top = 92
@@ -4324,10 +4312,6 @@ object Cadastro_Produtos: TCadastro_Produtos
       Caption = '&Comiss'#227'o/Desconto'
       Enabled = False
       ImageIndex = 7
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GroupBox7: TGroupBox
         Left = 8
         Top = 8
@@ -5908,18 +5892,10 @@ object Cadastro_Produtos: TCadastro_Produtos
         object TabSheet3: TTabSheet
           Caption = 'Armamento'
           ImageIndex = 1
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
         end
         object TabSheet4: TTabSheet
           Caption = 'Medicamento'
           ImageIndex = 2
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object StaticText93: TStaticText
             Left = 2
             Top = 1
@@ -5962,10 +5938,6 @@ object Cadastro_Produtos: TCadastro_Produtos
         object TabSheet5: TTabSheet
           Caption = 'Combust'#237'vel'
           ImageIndex = 3
-          ExplicitLeft = 0
-          ExplicitTop = 0
-          ExplicitWidth = 0
-          ExplicitHeight = 0
           object StaticText41: TStaticText
             Left = 1
             Top = 2
@@ -6818,10 +6790,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet10: TTabSheet
       Caption = 'Atributos'
       ImageIndex = 11
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object RxDBGrid2: TDBGrid
         Left = 0
         Top = 0
@@ -6899,10 +6867,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet6: TTabSheet
       Caption = '&Seriais'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeSeriais: TDBGrid
         Left = 0
         Top = 0
@@ -7048,10 +7012,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet7: TTabSheet
       Caption = 'Detal&hes/Lotes'
       ImageIndex = 6
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeDetalhes: TDBGrid
         Left = 0
         Top = 0
@@ -7182,10 +7142,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet9: TTabSheet
       Caption = '&Mat'#233'ria Prima'
       ImageIndex = 8
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeMateria: TDBGrid
         Left = 0
         Top = 0
@@ -7252,10 +7208,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabSheet1: TTabSheet
       Caption = 'Tabela &ICMS'
       ImageIndex = 9
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object RxDBGrid1: TDBGrid
         Left = 0
         Top = 0
@@ -7324,10 +7276,6 @@ object Cadastro_Produtos: TCadastro_Produtos
     object TabLista: TTabSheet
       Caption = '&Lista'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object GradeProdutos: TDBGrid
         Left = 0
         Top = 0

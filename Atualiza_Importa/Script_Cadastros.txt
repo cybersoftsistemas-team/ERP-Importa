@@ -3479,3 +3479,9 @@ insert into Paises (Codigo, Nome, Nome_Ingles, Sigla,Mercosul) values
 (8958, 'ZONA DO CANAL DO PANAMÁ', '' ,'' ,0),
 (5860, 'PARAGUAI', 'PARAGUAI' ,'' ,1)
 go
+
+--[28/05/2026 12:21:00]
+alter table Empresas add PISCOFINS_F100Financ bit
+go
+update Empresas SET PISCOFINS_F100Financ = PISCOFINS_F100
+go

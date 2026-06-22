@@ -1924,7 +1924,7 @@ begin
                    sql.add('      ,NCM = (select NCM from Produtos where Produtos.Codigo = fi1.Codigo)');
                    sql.add('      ,0 as ICMS');
                    sql.add('      ,Tipo_Item = (select Tipo_Item from Produtos where Produtos.Codigo = fi1.Codigo)');
-                   sql.add('      ,QTDE = (select sum(fi2.Qtde_Saida-fi2.Qtde_Entrada) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pDataI)');
+                   sql.add('      ,QTDE = (select sum(round(fi2.Qtde_Saida-fi2.Qtde_Entrada, -3)) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pDataI)');
                    sql.add('from FichaInventario fi1');
                    sql.add('where fi1.Estoque = ''1-ARMAZEM'' ');
                    sql.add('and fi1.Registro is not null');
@@ -1941,13 +1941,13 @@ begin
                    sql.add('      ,NCM = (select NCM from Produtos where Produtos.Codigo = fi1.Codigo)');
                    sql.add('      ,0 as ICMS');
                    sql.add('      ,Tipo_Item = (select Tipo_Item from Produtos where Produtos.Codigo = fi1.Codigo)');
-                   sql.add('      ,QTDE = (select sum(fi2.Qtde_Entrada -fi2.Qtde_Saida) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''2-TERCEIROS'' and fi2.Data <= :pDataI)');
+                   sql.add('      ,QTDE = (select sum(round(fi2.Qtde_Entrada-fi2.Qtde_Saida, -3)) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''2-TERCEIROS'' and fi2.Data <= :pDataI)');
                    sql.add('from   FichaInventario FI1');
                    sql.add('where  fi1.Estoque = ''2-TERCEIROS'' ');
                    sql.add('and fi1.Registro is not null');
                    sql.add('and fi1.Item in(select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pDataI and Estoque = ''2-TERCEIROS'' group by Codigo)');
                    sql.add('and (select Tipo_Item from Produtos prd where prd.Codigo = fi1.Codigo) in(0,1,2,3,4,5,6,10)');
-                   sql.add('and (select sum(fi2.Qtde_Entrada-fi2.Qtde_Saida) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''2-TERCEIROS'' and fi2.Data <= :pDataI) > 0');
+                   sql.add('and (select sum(round(fi2.Qtde_Entrada-fi2.Qtde_Saida, -3)) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''2-TERCEIROS'' and fi2.Data <= :pDataI) > 0');
                    paramByName('pDataI').AsDate := mDataInventF;
                 end;
                 // ficha de estoque.
@@ -1978,13 +1978,13 @@ begin
                    sql.add('      ,NCM = (select NCM from Produtos where Produtos.Codigo = fi1.Codigo)');
                    sql.add('      ,0 as ICMS');
                    sql.add('      ,Tipo_Item = (select Tipo_Item from Produtos where Produtos.Codigo = fi1.Codigo)');
-                   sql.add('      ,QTDE = (select sum(fi2.qtde_saida-fi2.qtde_entrada) from fichaestoque fi2 where fi2.codigo = fi1.codigo and fi2.estoque = ''1-armazem'' and fi2.data <= :pData)');
+                   sql.add('      ,QTDE = (select sum(round(fi2.qtde_saida-fi2.qtde_entrada, -3)) from fichaestoque fi2 where fi2.codigo = fi1.codigo and fi2.estoque = ''1-armazem'' and fi2.data <= :pData)');
                    sql.add('from FichaEstoque fi1');
                    sql.add('where fi1.estoque = ''1-ARMAZEM'' ');
                    sql.add('and fi1.Registro is not null');
                    sql.add('and Item in(select max(fi2.Item) from FichaEstoque fi2 where fi2.Codigo = fi1.Codigo and fi2.Data <= :pData and Estoque = ''1-ARMAZEM'' group by Codigo)');
                    sql.add('and (select Tipo_Item from Produtos prd where prd.Codigo = fi1.Codigo) in(0,1,2,3,4,5,6,10)');
-                   sql.add('and (select sum(fi2.Qtde_Saida-fi2.Qtde_Entrada) from FichaEstoque fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pData) > 0');
+                   sql.add('and (select sum(round(fi2.Qtde_Saida-fi2.Qtde_Entrada, -3)) from FichaEstoque fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pData) > 0');
                    sql.add('-- MERCADORIA DE TERCEIROS EM PODER DA EMPRESA');
                    sql.add('union all');
                    sql.add('select fi1.Codigo');
@@ -1995,13 +1995,13 @@ begin
                    sql.add('      ,NCM = (select NCM from Produtos where Produtos.Codigo = fi1.Codigo)');
                    sql.add('      ,0 as ICMS');
                    sql.add('      ,Tipo_Item = (select Tipo_Item from Produtos where Produtos.Codigo = fi1.Codigo)');
-                   sql.add('      ,QTDE = (select sum(fi2.qtde_entrada -fi2.qtde_saida) from fichaestoque fi2 where fi2.codigo = fi1.codigo and fi2.estoque = ''2-terceiros'' and fi2.data <= :pData)');
+                   sql.add('      ,QTDE = (select sum(round(fi2.qtde_entrada-fi2.qtde_saida, -3)) from fichaestoque fi2 where fi2.codigo = fi1.codigo and fi2.estoque = ''2-terceiros'' and fi2.data <= :pData)');
                    sql.add('from FichaEstoque fi1');
                    sql.add('where fi1.estoque = ''2-terceiros'' ');
                    sql.add('and fi1.registro is not null');
                    sql.add('and fi1.item in(select max(fi2.item) from fichaestoque fi2 where fi2.codigo = fi1.codigo and fi2.data <= :pData and estoque = ''2-terceiros'' group by codigo)');
                    sql.add('and (select tipo_item from produtos prd where prd.codigo = fi1.codigo) in(0,1,2,3,4,5,6,10)');
-                   sql.add('and (select sum(fi2.qtde_entrada -fi2.qtde_saida) from fichaestoque fi2 where fi2.codigo = fi1.codigo and fi2.estoque = ''2-terceiros'' and fi2.data <= :pData) > 0');
+                   sql.add('and (select sum(round(fi2.qtde_entrada-fi2.qtde_saida, -3)) from fichaestoque fi2 where fi2.codigo = fi1.codigo and fi2.estoque = ''2-terceiros'' and fi2.data <= :pData) > 0');
                    sql.add('and isnull(Qtde_Saldo, 0) > 0');
                    parambyName('pData').AsDate := mDataEstoqueF;
                 end;
@@ -2038,9 +2038,10 @@ begin
                 sql.add('FROM  Imobilizado');
                 sql.add('where (Saida_DataNota >= :pDataIni or isnull(Saida_DataNota, '''') = '''')');
                 sql.add('and (isnull(Fim_Apropriacao, '''') = '''' or (substring(Fim_Apropriacao, 3, 4)+substring(Fim_Apropriacao, 1, 2) >= :pAnoMes))');
-                parambyName('pMes').AsString    := poezero(2, cMes.ItemIndex+1);
-                parambyName('pAno').AsString    := cAno.Text;
-                paramByName('pAnoMes').AsString := cAno.Text+poezero(2, cMes.ItemIndex+1);
+                parambyName('pMes').AsString     := poezero(2, cMes.ItemIndex+1);
+                parambyName('pAno').AsString     := cAno.Text;
+                paramByName('pAnoMes').AsString  := cAno.Text+poezero(2, cMes.ItemIndex+1);
+                paramByName('pDataIni').value    := mDataCIAPI;
 
                 // OUTRAS OBRIGAÇÕES TRIBUTÁRIAS, AJUSTES E INFORMAÇÕES DE VALORES PROVENIENTES DE DOCUMENTO FISCAL
                 sql.add('----------------[OUTRAS OBRIGAÇÕES TRIBUTÁRIAS, AJUSTES E INFORMAÇÕES DE VALORES PROVENIENTES DE DOCUMENTO FISCAL]----------------');         

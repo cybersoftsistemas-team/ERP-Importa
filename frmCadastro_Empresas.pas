@@ -382,6 +382,7 @@ type
     bBloqueioPed: TBitBtn;
     StaticText20: TStaticText;
     DBMemo2: TDBMemo;
+    DBCheckBox5: TDBCheckBox;
     procedure bSairClick(Sender: TObject);
     procedure NavegaClick(Sender: TObject; Button: TNavigateBtn);
     procedure FormShow(Sender: TObject);
