@@ -4059,6 +4059,17 @@ begin
                         PedidosValor_OutrasDespesas.Value := 0;
                 Pedidos.Post;
              end;
+             
+             // Rateio do valor total da nota para os itens.
+             with tsoma do begin
+                  sql.clear;
+                  //sql.add('update PedidosItens set Valor_TotalNota = cast(:pTotal / :pProd as decimal(18, 12)) * Valor_Total where Pedido = :pPed');
+                  sql.add('update PedidosItens set Valor_TotalNota = Valor_Total * (:pTotal / :pProd) where Pedido = :pPed');
+                  parambyname('pProd').asfloat  := PedidosValor_TotalProdutos.asfloat;
+                  parambyname('pTotal').asfloat := PedidosValor_TotalNota.asfloat;
+                  parambyname('pPed').value     := PedidosNumero.value;
+                  execute;
+             end;
 
              // Verifica se o total das despesas rateadas bate com o total das despesas real na NF de Entrada e ajusta no último item caso aja diferença.
              {

@@ -4743,7 +4743,8 @@ var
    mCNPJ,
    mCodigoProd:String;
    mBCIPI,
-   mValorFrete:Real;
+   mValorFrete,
+   vItem:Real;
    mDesoneracao:Integer;
    mDespesa,
    mDesconto,
@@ -5019,7 +5020,7 @@ begin
            end;
 
            // Monta a TAG dos produtos.
-           _produto := Util.produtoRTCv130(mCodigoProd                                                           // 01.informar o código do produto ou servi o.
+           _produto := Util.produtoRTCv130(mCodigoProd                                                           // 01.informar o código do produto ou serviço.
                                           ,mGTIN                                                                 // 02.informar o GTIN (Global Trade Item Number) do produto, antigo c digo EAN ou c digo de barras.
                                           ,mDescricao                                                            // 03.informar a descrição do produto ou servi o.
                                           ,PedidosItensNCM.Value                                                 // 04.nformar o Codigo NCM com 8 d gitos.
@@ -5033,16 +5034,16 @@ begin
                                           ,RemoveCaracterXML(PedidosItensUnidade_Medida.AsString)                // 12.informar a unidade de comercialização do produto.
                                           ,FormatFloat('0.0000', mQuantidade)                                    // 13.nformar a quantidade de comercialização do do produto.
                                           ,FormatFloat('0.0000000000', PedidosItensValor_Unitario.Value)         // 14.Informar o valor unitario de comercializa o do produto.
-                                          ,PedidosItensValor_Total.AsCurrency                                    // 15.informar o valor total bruto do produto ou servi os.
+                                          ,PedidosItensValor_Total.AsCurrency                                    // 15.informar o valor total bruto do produto ou serviços.
                                           ,RemoveCaracterXML(mGTINUnidade)                                       // 16.informar o GTIN (Global Trade Item Number) da unidade de tributa  o do produto.
                                           ,RemoveCaracterXML(ProdutosUnidade_Origem.Value)                       // 17.informar a unidade de tributação do produto.
-                                          ,FormatFloat('0.0000', Roundto(mQtdeTrib, -4))                         // 18.Qtde Tributa  o.
+                                          ,FormatFloat('0.0000', Roundto(mQtdeTrib, -4))                         // 18.Qtde Tributação.
                                           ,FormatFloat('0.0000000000', mValTrib)                                 // 19.Valor Unitario de tributação.
                                           ,mValorFrete                                                           // 20.Valor Frete.
                                           ,0                                                                     // 21.Valor Seguro.
                                           ,mDesconto                                                             // 22.Valor Desconto.
                                           ,mDespesa                                                              // 23.Valor Outros.
-                                          ,1                                                                     // 24.Este campo dever  ser preenchido com: 0 - o valor do item (vProd) n o comp e o valor total da NF-e (vProd).
+                                          ,1                                                                     // 24.Este campo devera ser preenchido com: 0 - o valor do item (vProd) n o comp e o valor total da NF-e (vProd).
                                           ,_DI                                                                   // 25.informar o XML do grupo DI - dados da importa  o nas opera  es de importa  o.
                                           ,_Exporta                                                              // 26.Detalhamento da exportação.
                                           ,_Especifico                                                           // 27.informar o XML do grupo - detalhamento de espec fico.
@@ -5387,10 +5388,19 @@ begin
                                       ,''
                                       ,_ICMSUFDest
                                       ,''
-                                      ,_IBSCBS
-                                      );
+                                      ,_IBSCBS);
 
-           _Detalhe := Util.detalhe(item, _Produto, _Imposto, mDescricaoResto);
+//           _Detalhe := Util.detalhe(item, _Produto, _Imposto, mDescricaoResto);
+           _Detalhe := Util.detalheRTC(item                                      // informar o número do item do detalhe, deve ser um valor único crescente compreendido na faixa de 1 a 990.
+                                      ,_Produto                                  // informar o grupo XML prod com o detalhamento do produto/serviço do item.
+                                      ,_Imposto                                  // informar o grupo XML imposto com as informações dos tributos incidentes no item.
+                                      , mDescricaoResto                          // pode ser utilizado para complementar a descrição e informações adicionais do produto.
+                                      ,0                                         // informar o percentual da mercadoria devolvida.
+                                      ,0                                         // informar Valor do IPI devolvido.
+                                      ,''                                        // informar o grupo XML com obsCont com as informações do contribuinte do item.
+                                      ,''                                        // informar o grupo XML com obsFisco com as informações do fisco do item.
+                                      ,PedidosItensValor_TotalNota.value         // informar o Valor Total do Item da NF-e. Valor total do Item, correspondente à sua participação no total da nota.
+                                      ,'');                                      // informar o grupo XML com DFeReferenciado com as informações que referencia um item de outro DF-e.
            
            Util := nil;
            MontaDetalhe := _Detalhe;

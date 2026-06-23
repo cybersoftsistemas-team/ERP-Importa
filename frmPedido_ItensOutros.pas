@@ -888,7 +888,7 @@ begin
                       // Totaliza o lucro
                       mTotalLucro := PedidosItensLucro_Valor.AsCurrency * PedidosItensQuantidade.asfloat;
 
-                      mTotalNota := mTotalNota + PedidosItensValor_TotalNota.AsCurrency;
+//                      mTotalNota := mTotalNota + PedidosItensValor_TotalNota.AsCurrency;
 
                       If cVolumes.Checked = true then begin
                          mVolumes := mVolumes + (PedidosItensQuantidade.Value / ProdutosQuantidade_Volumes.Value);
@@ -984,7 +984,8 @@ begin
                      End;
 
                      PedidosMedia_BCR.Value            := mMediaBCR;
-                     PedidosValor_TotalNota.Value      := PedidosValor_TotalNota.Value + mTotalNota;
+//                     PedidosValor_TotalNota.Value      := PedidosValor_TotalNota.Value + mTotalNota;
+                     PedidosValor_TotalNota.Value      := PedidosValor_TotalNota.Value;
                      PedidosValor_BCPIS.Value          := mBCPIS;
                      PedidosValor_BCPISST.Value        := mBCPISST;
                      PedidosValor_BCCOFINSST.Value     := mBCPISST;
@@ -1048,6 +1049,17 @@ begin
                      PedidosValor_BCICMSPresumido.Value := mValor_BCICMSPresumido;
                      PedidosValor_ICMSPresumido.Value   := mValor_ICMSPresumido;
              Pedidos.Post;
+
+             // Rateio do valor total da nota para os itens.
+             with tTemp do begin
+                  sql.clear;
+                  //sql.add('update PedidosItens set Valor_TotalNota = cast(:pTotal / :pProd as decimal(18, 12)) * Valor_Total where Pedido = :pPed');
+                  sql.add('update PedidosItens set Valor_TotalNota = Valor_Total * (:pTotal / :pProd) where Pedido = :pPed');
+                  parambyname('pProd').asfloat  := PedidosValor_TotalProdutos.asfloat;
+                  parambyname('pTotal').asfloat := PedidosValor_TotalNota.asfloat;
+                  parambyname('pPed').value     := PedidosNumero.value;
+                  execute;
+             end;
 
              Pedidos.EnableControls;
              PedidosItens.EnableControls;
