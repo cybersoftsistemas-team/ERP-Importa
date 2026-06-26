@@ -16,7 +16,6 @@ type
     StaticText1: TStaticText;
     StaticText3: TStaticText;
     cCentroCusto: TRxDBLookupCombo;
-    cExcel: TCheckBox;
     StaticText5: TStaticText;
     cCliente: TRxDBLookupCombo;
     cDataFim: TDateEdit;
@@ -43,7 +42,6 @@ type
     ppSystemVariable5: TppSystemVariable;
     ppLine8: TppLine;
     ppLine9: TppLine;
-    ppDBText2: TppDBText;
     pTotalGeral: TppSummaryBand;
     ppLabel12: TppLabel;
     pTotalBaixado: TppDBCalc;
@@ -116,6 +114,39 @@ type
     ppLine1: TppLine;
     ppLine2: TppLine;
     ppSystemVariable1: TppSystemVariable;
+    cFormato: TRadioGroup;
+    cSaida: TRadioGroup;
+    rCliente: TppReport;
+    ppHeaderBand2: TppHeaderBand;
+    ppDBText3: TppDBText;
+    ppLabel2: TppLabel;
+    lPeriodo2: TppLabel;
+    iLogo2: TppImage;
+    ppLabel6: TppLabel;
+    ppLabel8: TppLabel;
+    ppLabel9: TppLabel;
+    ppLabel10: TppLabel;
+    ppDetailBand2: TppDetailBand;
+    ppDBText8: TppDBText;
+    ppDBText11: TppDBText;
+    ppDBText12: TppDBText;
+    ppDBText14: TppDBText;
+    ppFooterBand1: TppFooterBand;
+    ppLabel14: TppLabel;
+    ppSystemVariable2: TppSystemVariable;
+    ppSystemVariable3: TppSystemVariable;
+    ppLine3: TppLine;
+    ppLine4: TppLine;
+    ppLine5: TppLine;
+    ppSystemVariable6: TppSystemVariable;
+    ppSummaryBand1: TppSummaryBand;
+    ppLabel15: TppLabel;
+    ppDBCalc2: TppDBCalc;
+    ppDBText17: TppDBText;
+    ppDesignLayers2: TppDesignLayers;
+    ppDesignLayer2: TppDesignLayer;
+    ppParameterList2: TppParameterList;
+    ppLabel11: TppLabel;
     procedure FormCreate(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -124,6 +155,7 @@ type
     procedure bImprimirClick(Sender: TObject);
   private
     procedure ExportaEXCEL;
+    procedure ExportaEXCEL2;
     { Private declarations }
   public
     { Public declarations }
@@ -173,18 +205,29 @@ begin
            //sql.SaveToFile('c:\temp\Controle_Titulos_Abertos.sql.');
            open;
       end;
-      with rTitulos do begin
-           lPeriodo.Caption := 'Período de '+cDataIni.Text + ' á ' + cDataFim.Text;
-           if cExcel.Checked = false then begin
-              if FileExists(Dados.EmpresasLogo.Value) then begin
-                 iLogo.Picture.LoadFromFile(Dados.EmpresasLogo.Value);
-              end;
-              Print;
-              FreeOnRelease;
-              Reset;
-           end else begin
-              ExportaEXCEL;
-           end;
+      lPeriodo.Caption := 'Período de '+cDataIni.Text + ' á ' + cDataFim.Text;
+      if (cSaida.itemIndex = 0) and (cFormato.ItemIndex = 0) then begin
+         if FileExists(Dados.EmpresasLogo.Value) then begin
+            iLogo.Picture.LoadFromFile(Dados.EmpresasLogo.Value);
+         end;
+         rTitulos.Print;
+         rTitulos.FreeOnRelease;
+         rTitulos.Reset;
+      end;
+      if (cSaida.itemIndex = 0) and (cFormato.ItemIndex = 1) then begin
+         lPeriodo2.Caption := 'Período de '+cDataIni.Text + ' á ' + cDataFim.Text;
+         if FileExists(Dados.EmpresasLogo.Value) then begin
+            iLogo2.Picture.LoadFromFile(Dados.EmpresasLogo.Value);
+         end;
+         rCliente.Print;
+         rCliente.FreeOnRelease;
+         rCliente.Reset;
+      end;
+      if (cSaida.itemIndex = 1) and (cFormato.ItemIndex = 0) then begin
+         ExportaEXCEL;
+      end;
+      if (cSaida.itemIndex = 1) and (cFormato.ItemIndex = 1) then begin
+         ExportaEXCEL2;
       end;
 end;
 
@@ -192,9 +235,10 @@ procedure TImpressao_FinanceirosOP_ControleAbertos.bLimparClick(Sender: TObject)
 begin
     cDataIni.Clear;
     cDataFim.Clear;
-    cCliente.KeyValue := -1;
+    cCliente.KeyValue     := -1;
     cCentroCusto.KeyValue := -1;
-    cExcel.Checked := false;
+    cSaida.ItemIndex  := 0;
+    cFormato.ItemIndex    := 0;
 end;
 
 procedure TImpressao_FinanceirosOP_ControleAbertos.bSairClick(Sender: TObject);
@@ -212,7 +256,8 @@ begin
       aINI.WriteDate   ('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'DataFim'    , cDataFim.Date);
       aINI.WriteString ('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'CentroCusto', iif(cCentroCusto.keyvalue = null, 0, cCentroCusto.keyvalue));
       aINI.WriteString ('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'Cliente'    , iif(cCliente.keyvalue = null, 0, cCliente.KeyValue));
-      aINI.WriteBool   ('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'Excel'      , cExcel.Checked);
+      aINI.WriteInteger('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'Impressao'  , cSaida.ItemIndex);
+      aINI.WriteInteger('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'Emissao'    , cFormato.ItemIndex);
       aINI.Free;
 
       FecharTabelas(Dados, nil, nil, nil);
@@ -257,13 +302,14 @@ begin
       cDataFim.Date         := aINI.ReadDate   ('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'DataFim'     , 0);
       cCentroCusto.keyvalue := aINI.ReadString ('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'CentroCusto' , '');
       cCliente.KeyValue     := aINI.ReadInteger('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'Cliente'     , 0);
-      cExcel.Checked        := aINI.ReadBool   ('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'Excel'       , false);
+      cSaida.ItemIndex      := aINI.ReadInteger('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'Impressao'   , 0);
+      cFormato.ItemIndex    := aINI.ReadInteger('IMPRESSAO_FINANCEIROS_CONTRABERTOS', 'Emissao'     , 0);
       aINI.Free;
 
       Screen.Cursor := crDefault;
 end;
 
-// Envia informações para o excel.
+// Envia informações para o excel (Formato Gerencial).
 procedure TImpressao_FinanceirosOP_ControleAbertos.ExportaEXCEL;
 var
    mPlanilha: Variant;
@@ -290,7 +336,7 @@ begin
        mPlanilha.Range['A1','E1'].RowHeight           := 26;
        mPlanilha.Range['A1','E3'].VerticalAlignment   := 2;
 
-       mPlanilha.Cells[2,01] := 'CONTROLE DE DUPLICATAS ABERTAS';
+       mPlanilha.Cells[2,01] := 'CONTROLE DE DUPLICATAS ABERTAS (GERENCIAL)';
        mPlanilha.Range['A2','A2'].Font.Size           := 14;
        mPlanilha.Range['A2','E2'].Mergecells          := True;
        mPlanilha.Range['A2','E2'].HorizontalAlignment := 3;
@@ -407,6 +453,118 @@ begin
        
        if cCliente.DisplayValue = '' then begin
           inc(mLinha, 2);
+          mPlanilha.Cells[mLinha,04] := 'TOTAL GERAL';
+          mPlanilha.Cells[mLinha,05] := mTotalGeral;
+          mPlanilha.Cells[mLinha,05].NumberFormat := '#.##0,00_);(#.##0,00)';
+          mPlanilha.Range['C'+InttoStr(mLinha),'E'+InttoStr(mLinha)].Font.Bold           := true;
+          mPlanilha.Range['A'+inttostr(mLinha),'E'+inttostr(mLinha)].Font.Color          := clwhite;
+          mPlanilha.Range['D'+inttostr(mLinha),'E'+inttostr(mLinha)].Interior.Color      := RGB(83, 83, 83);
+          mPlanilha.Range['D'+inttostr(mLinha),'E'+inttostr(mLinha)].Interior.Pattern    := 1;
+          mPlanilha.Range['D'+inttostr(mLinha),'E'+inttostr(mLinha)].Borders.LineStyle   := 1; //xlContinuous;
+          mPlanilha.Range['D'+inttostr(mLinha),'E'+inttostr(mLinha)].Borders.Weight      := 2; //xlThin;
+          mPlanilha.Range['D'+inttostr(mLinha),'E'+inttostr(mLinha)].Borders.Color       := RGB(0,0,0);
+          mPlanilha.Range['A'+inttostr(mLinha),'E'+inttostr(mLinha)].RowHeight           := 18;
+          mPlanilha.Range['E'+inttostr(mLinha),'E'+inttostr(mLinha)].HorizontalAlignment := 1;
+          mPlanilha.Range['A'+inttostr(mLinha),'E'+inttostr(mLinha)].VerticalAlignment   := 2;
+       end;
+
+       Janela_Processamento.Close;
+       mPlanilha.Visible := true;
+end;
+
+// Envia informações para o excel (Formato Cliente).
+procedure TImpressao_FinanceirosOP_ControleAbertos.ExportaEXCEL2;
+var
+   mPlanilha: Variant;
+   mCliente: string;
+   mLinha: Integer;
+   mTotalCliente
+  ,mTotalGeral: Real;
+begin
+       Janela_Processamento := TJanela_Processamento.Create(Self);
+       Janela_Processamento.Progresso.Position := 0;
+       Janela_Processamento.Progresso.Max      := tTitulos.RecordCount;
+       Janela_Processamento.lProcesso.Caption  := 'Enviando dados para o EXCEL...';
+       Janela_Processamento.Show;
+
+       mPlanilha := CreateOleObject('Excel.Application');
+       mPlanilha.WorkBooks.add(1);
+       mPlanilha.Visible := false;                   
+
+       mPlanilha.Cells[1,01] := Dados.EmpresasRazao_Social.AsString + '('+Dados.EmpresasEstado.AsString+')';
+       mPlanilha.Range['A1','A1'].Font.Size           := 18;
+       mPlanilha.Range['A1','A1'].Font.Bold           := true;
+       mPlanilha.Range['A1','E1'].Mergecells          := True;
+       mPlanilha.Range['A1','E1'].HorizontalAlignment := 3;
+       mPlanilha.Range['A1','E1'].RowHeight           := 26;
+       mPlanilha.Range['A1','E3'].VerticalAlignment   := 2;
+
+       mPlanilha.Cells[2,01] := 'CONTROLE DE DUPLICATAS ABERTAS (CLIENTE)';
+       mPlanilha.Range['A2','A2'].Font.Size           := 14;
+       mPlanilha.Range['A2','E2'].Mergecells          := True;
+       mPlanilha.Range['A2','E2'].HorizontalAlignment := 3;
+       mPlanilha.Range['A2','E2'].RowHeight           := 26;
+       
+       mPlanilha.Range['A3','E3'].Interior.Color      := RGB(94, 94, 174);
+       mPlanilha.Range['A3','E3'].Interior.Pattern    := 1;
+       mPlanilha.Range['A3','E3'].Font.Bold           := true;
+       mPlanilha.Range['A3','E3'].Font.Color          := clwhite;
+       mPlanilha.Range['A3','E3'].Borders.LineStyle   := 1; //xlContinuous;
+       mPlanilha.Range['A3','E3'].Borders.Weight      := 2; //xlThin;
+       mPlanilha.Range['A3','E3'].Borders.Color       := RGB(0,0,0);
+       mPlanilha.Range['A3','E3'].RowHeight           := 18;
+       mPlanilha.Range['A3','E3'].HorizontalAlignment := 3;
+
+       mPlanilha.Cells[3,01] := 'CLIENTE';
+       mPlanilha.Cells[3,01].ColumnWidth := 60;
+       mPlanilha.Cells[3,02] := 'DATA DOC';
+       mPlanilha.Cells[3,02].ColumnWidth := 12;
+       mPlanilha.Cells[3,03] := 'DATA VENC';
+       mPlanilha.Cells[3,03].ColumnWidth := 12;
+       mPlanilha.Cells[3,04] := 'DOCUMENTO Nº';
+       mPlanilha.Cells[3,04].ColumnWidth := 25;
+       mPlanilha.Cells[3,05] := 'VALOR';
+       mPlanilha.Cells[3,05].ColumnWidth := 22;
+
+       mLinha        := 3;
+       mTotalCliente := 0;
+       mTotalGeral   := 0;
+
+       inc(mLinha);
+       
+       while (not tTitulos.Eof) and (not Funcoes.Cancelado) do begin
+             mPlanilha.Range['B'+InttoStr(mLinha),'C'+InttoStr(mLinha)].HorizontalAlignment := 3;
+             mPlanilha.Range['A'+InttoStr(mLinha),'E'+InttoStr(mLinha)].Borders.Color       := clSilver;
+             mPlanilha.Range['A'+InttoStr(mLinha),'E'+InttoStr(mLinha)].VerticalAlignment   := 2;
+
+             mPlanilha.Cells[mLinha,01] := tTitulos.FieldByName('Cliente').asstring;
+             mPlanilha.Cells[mLinha,02] := tTitulos.FieldByName('Data_Documento').value;
+             mPlanilha.Cells[mLinha,02].NumberFormat := 'dd/mm/aaaa';
+             mPlanilha.Cells[mLinha,03] := tTitulos.FieldByName('Data_Vencimento').value;
+             mPlanilha.Cells[mLinha,03].NumberFormat := 'dd/mm/aaaa';
+             mPlanilha.Cells[mLinha,04] := tTitulos.FieldByName('Duplicata').asstring;
+             mPlanilha.Cells[mLinha,04].NumberFormat := '@';
+             mPlanilha.Cells[mLinha,05] := tTitulos.FieldByName('Valor_Parcela').AsCurrency;
+             mPlanilha.Cells[mLinha,05].NumberFormat := '#.##0,00_);(#.##0,00)';
+
+             mTotalCliente := mTotalCliente + tTitulos.FieldByName('Valor_Parcela').AsCurrency;
+             mTotalGeral   := mTotalGeral   + tTitulos.FieldByName('Valor_Parcela').AsCurrency;
+            
+             Inc(mLinha);
+             tTitulos.Next;
+
+             Janela_Processamento.Progresso.Position := Janela_Processamento.Progresso.Position + 1;
+             Application.ProcessMessages;
+       end;
+
+       //Fecha o Excel.
+       If Funcoes.Cancelado = true then begin
+          Abort;
+          mPlanilha.Free;
+          mPlanilha.Destroy;
+       End;
+       
+       if cCliente.DisplayValue = '' then begin
           mPlanilha.Cells[mLinha,04] := 'TOTAL GERAL';
           mPlanilha.Cells[mLinha,05] := mTotalGeral;
           mPlanilha.Cells[mLinha,05].NumberFormat := '#.##0,00_);(#.##0,00)';

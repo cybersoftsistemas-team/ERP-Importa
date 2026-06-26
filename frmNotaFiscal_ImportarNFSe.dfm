@@ -418,11 +418,8 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
     TabHeight = 25
     TabOrder = 2
     TabWidth = 100
-    ExplicitTop = 117
-    ExplicitHeight = 531
     object TabSheet1: TTabSheet
       Caption = 'Notas Fiscais'
-      ExplicitHeight = 496
       object Label1: TLabel
         Left = 320
         Top = 48
@@ -437,8 +434,6 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
         Height = 521
         Align = alClient
         TabOrder = 0
-        ExplicitLeft = 204
-        ExplicitWidth = 821
         object Panel4: TPanel
           AlignWithMargins = True
           Left = 4
@@ -459,9 +454,6 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
           ParentFont = False
           TabOrder = 0
           StyleElements = [seBorder]
-          ExplicitLeft = 3
-          ExplicitTop = 3
-          ExplicitWidth = 1019
         end
         object cArquivos: TListBox
           AlignWithMargins = True
@@ -483,10 +475,6 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
           Sorted = True
           TabOrder = 1
           OnClick = cArquivosClick
-          ExplicitLeft = 3
-          ExplicitTop = 25
-          ExplicitWidth = 1019
-          ExplicitHeight = 152
         end
         object DBGrid1: TDBGrid
           AlignWithMargins = True
@@ -533,9 +521,6 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
           ParentFont = False
           TabOrder = 3
           StyleElements = [seBorder]
-          ExplicitLeft = 3
-          ExplicitTop = 317
-          ExplicitWidth = 1019
         end
         object DBGrid2: TDBGrid
           AlignWithMargins = True
@@ -569,7 +554,6 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
         Height = 521
         Align = alRight
         TabOrder = 1
-        ExplicitLeft = 0
         object cRelacao: TStringGrid
           AlignWithMargins = True
           Left = 4
@@ -602,7 +586,6 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
     object TabSheet3: TTabSheet
       Caption = 'Layout NFS-e'
       ImageIndex = 2
-      ExplicitHeight = 496
       object gCampos: TStringGrid
         AlignWithMargins = True
         Left = 3
@@ -626,7 +609,6 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
         Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goDrawFocusSelected, goRowSelect]
         ParentFont = False
         TabOrder = 0
-        ExplicitHeight = 490
         RowHeights = (
           18
           18
@@ -753,7 +735,6 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
     object TabSheet2: TTabSheet
       Caption = 'Log'
       ImageIndex = 1
-      ExplicitHeight = 496
       object cLog: TMemo
         AlignWithMargins = True
         Left = 3
@@ -776,7 +757,6 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
         WantReturns = False
         WordWrap = False
         StyleElements = [seBorder]
-        ExplicitHeight = 483
       end
     end
   end

@@ -3,7 +3,7 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Impressao_FinanceirosOP_ControleAbertos'
-  ClientHeight = 223
+  ClientHeight = 277
   ClientWidth = 595
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -170,7 +170,7 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 5
+    TabOrder = 4
     Transparent = False
     StyleElements = []
   end
@@ -193,7 +193,7 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 6
+    TabOrder = 5
     Transparent = False
     StyleElements = []
   end
@@ -216,14 +216,6 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
     ParentFont = False
     TabOrder = 3
   end
-  object cExcel: TCheckBox
-    Left = 16
-    Top = 158
-    Width = 156
-    Height = 17
-    Caption = 'Enviar dados para o EXCEL.'
-    TabOrder = 4
-  end
   object StaticText5: TStaticText
     Left = 16
     Top = 87
@@ -244,7 +236,7 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 7
+    TabOrder = 6
     Transparent = False
     StyleElements = []
   end
@@ -358,12 +350,13 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
   end
   object Panel1: TPanel
     Left = 0
-    Top = 193
+    Top = 247
     Width = 595
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
-    TabOrder = 8
+    TabOrder = 7
+    ExplicitTop = 193
     object bSair: TButton
       Left = 528
       Top = 1
@@ -421,6 +414,30 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
       OnClick = bLimparClick
     end
   end
+  object cFormato: TRadioGroup
+    Left = 211
+    Top = 152
+    Width = 157
+    Height = 72
+    Caption = 'Formato'
+    ItemIndex = 0
+    Items.Strings = (
+      'Formato Gerencial'
+      'Formato Cliente')
+    TabOrder = 8
+  end
+  object cSaida: TRadioGroup
+    Left = 8
+    Top = 152
+    Width = 157
+    Height = 72
+    Caption = 'Sa'#237'da'
+    ItemIndex = 0
+    Items.Strings = (
+      'Gerar Relat'#243'rio'
+      'Gerar Excel')
+    TabOrder = 9
+  end
   object dstTitulos: TDataSource
     DataSet = tTitulos
     Left = 387
@@ -443,13 +460,13 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
         '      ,Centro_CustoNome = (select Descricao from CentroCusto whe' +
         're Codigo =  Centro_Custo)'
       '      ,Valor_Parcela'
-      'from PagarReceber '
-      'where Tipo = '#39'R'#39' '
-      'and Documento IN('#39'DUPL'#39', '#39'NF'#39') '
-      'and Cliente = 109'
+      'from Cybersoft_Givotrading_Matriz.dbo.PagarReceber '
+      '--where Tipo = '#39'R'#39' '
+      '--and Documento IN('#39'DUPL'#39', '#39'NF'#39') '
+      '--and Cliente = 109'
       
-        'and (select Liquidar from EmprestimosDuplicatas where Duplicata ' +
-        '= Numero_Documento) = 0'
+        '--and (select Liquidar from EmprestimosDuplicatas where Duplicat' +
+        'a = Numero_Documento) = 0'
       'order by Duplicata')
     Active = True
     Left = 387
@@ -462,7 +479,7 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Controle de Duplicatas Abertas'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4'
+    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -905,9 +922,9 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
         TextAlignment = taCentered
         Transparent = True
         mmHeight = 2910
-        mmLeft = 90750
+        mmLeft = 69123
         mmTop = 529
-        mmWidth = 25400
+        mmWidth = 47294
         BandType = 8
         LayerName = Foreground
       end
@@ -926,7 +943,7 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
         mmHeight = 2910
         mmLeft = 118002
         mmTop = 529
-        mmWidth = 23813
+        mmWidth = 27285
         BandType = 8
         LayerName = Foreground
       end
@@ -935,8 +952,8 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
         UserName = 'Line8'
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
+        Pen.Width = 0
         Position = lpLeft
-        Weight = 0.750000000000000000
         mmHeight = 3703
         mmLeft = 66412
         mmTop = 0
@@ -949,32 +966,11 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
         UserName = 'Line9'
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
-        Weight = 0.750000000000000000
+        Pen.Width = 0
         mmHeight = 265
         mmLeft = 19845
         mmTop = 0
         mmWidth = 156634
-        BandType = 8
-        LayerName = Foreground
-      end
-      object ppDBText2: TppDBText
-        DesignLayer = ppDesignLayer1
-        UserName = 'DBText2'
-        Border.Weight = 1.000000000000000000
-        Border.mmPadding = 0
-        DataField = 'Documento'
-        DataPipeline = pTitulos
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Name = 'Tahoma'
-        Font.Size = 6
-        Font.Style = []
-        Transparent = True
-        DataPipelineName = 'pTitulos'
-        mmHeight = 2910
-        mmLeft = 75140
-        mmTop = 0
-        mmWidth = 13494
         BandType = 8
         LayerName = Foreground
       end
@@ -983,11 +979,11 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
         UserName = 'Line2'
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
+        Pen.Width = 0
         Position = lpLeft
-        Weight = 0.750000000000000000
         mmHeight = 3704
         mmLeft = 154782
-        mmTop = 529
+        mmTop = 197
         mmWidth = 2117
         BandType = 8
         LayerName = Foreground
@@ -1007,7 +1003,7 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
         mmHeight = 3175
         mmLeft = 159279
         mmTop = 794
-        mmWidth = 12965
+        mmWidth = 16371
         BandType = 8
         LayerName = Foreground
       end
@@ -1219,8 +1215,67 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
   object pTitulos: TppDBPipeline
     DataSource = dstTitulos
     UserName = 'pTitulos'
-    Left = 541
-    Top = 56
+    Left = 540
+    Top = 53
+    object pTitulosppField1: TppField
+      FieldAlias = 'Data_Documento'
+      FieldName = 'Data_Documento'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 0
+    end
+    object pTitulosppField2: TppField
+      FieldAlias = 'Data_Vencimento'
+      FieldName = 'Data_Vencimento'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 1
+    end
+    object pTitulosppField3: TppField
+      FieldAlias = 'Cliente'
+      FieldName = 'Cliente'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 2
+    end
+    object pTitulosppField4: TppField
+      FieldAlias = 'CNPJ'
+      FieldName = 'CNPJ'
+      FieldLength = 28
+      DisplayWidth = 28
+      Position = 3
+    end
+    object pTitulosppField5: TppField
+      FieldAlias = 'Duplicata'
+      FieldName = 'Duplicata'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 4
+    end
+    object pTitulosppField6: TppField
+      FieldAlias = 'Centro_Custo'
+      FieldName = 'Centro_Custo'
+      FieldLength = 10
+      DisplayWidth = 10
+      Position = 5
+    end
+    object pTitulosppField7: TppField
+      FieldAlias = 'Centro_CustoNome'
+      FieldName = 'Centro_CustoNome'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 6
+    end
+    object pTitulosppField8: TppField
+      FieldAlias = 'Valor_Parcela'
+      FieldName = 'Valor_Parcela'
+      FieldLength = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
+      Position = 7
+    end
   end
   object pItens: TppDBPipeline
     UserName = 'pItens'
@@ -1609,7 +1664,7 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
       FieldName = 'Codigo'
       FieldLength = 0
       DataType = dtInteger
-      DisplayWidth = 2
+      DisplayWidth = 0
       Position = 0
     end
     object pEmpresasppField2: TppField
@@ -3323,6 +3378,613 @@ object Impressao_FinanceirosOP_ControleAbertos: TImpressao_FinanceirosOP_Control
       Position = 219
       Searchable = False
       Sortable = False
+    end
+    object pEmpresasppField221: TppField
+      FieldAlias = 'PISCOFINS_F100Financ'
+      FieldName = 'PISCOFINS_F100Financ'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 220
+    end
+  end
+  object rCliente: TppReport
+    AutoStop = False
+    DataPipeline = pTitulos
+    PassSetting = psTwoPass
+    PrinterSetup.BinName = 'Default'
+    PrinterSetup.DocumentName = 'Controle de Duplicatas Abertas'
+    PrinterSetup.Duplex = dpNone
+    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PrinterName = 'Default'
+    PrinterSetup.SaveDeviceSettings = False
+    PrinterSetup.mmMarginBottom = 6350
+    PrinterSetup.mmMarginLeft = 7620
+    PrinterSetup.mmMarginRight = 6350
+    PrinterSetup.mmMarginTop = 6350
+    PrinterSetup.mmPaperHeight = 297011
+    PrinterSetup.mmPaperWidth = 209974
+    PrinterSetup.PaperSize = 9
+    Template.FileName = 
+      'C:\Sistemas\Faturamento\Codigo Fonte\Relatorios\ControleRecebive' +
+      'is.rtm'
+    Units = utPrinterPixels
+    ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
+    DeviceType = 'Screen'
+    DefaultFileDeviceType = 'PDF'
+    EmailSettings.ReportFormat = 'PDF'
+    LanguageID = 'Portuguese (Brazil)'
+    OpenFile = False
+    OutlineSettings.CreateNode = False
+    OutlineSettings.CreatePageNodes = False
+    OutlineSettings.Enabled = False
+    OutlineSettings.Visible = False
+    ThumbnailSettings.Enabled = True
+    ThumbnailSettings.Visible = False
+    ThumbnailSettings.DeadSpace = 30
+    ThumbnailSettings.PageHighlight.Width = 3
+    PDFSettings.EmbedFontOptions = []
+    PDFSettings.EncryptSettings.AllowCopy = True
+    PDFSettings.EncryptSettings.AllowInteract = True
+    PDFSettings.EncryptSettings.AllowModify = True
+    PDFSettings.EncryptSettings.AllowPrint = True
+    PDFSettings.EncryptSettings.AllowExtract = True
+    PDFSettings.EncryptSettings.AllowAssemble = True
+    PDFSettings.EncryptSettings.AllowQualityPrint = True
+    PDFSettings.EncryptSettings.Enabled = False
+    PDFSettings.EncryptSettings.KeyLength = kl40Bit
+    PDFSettings.EncryptSettings.EncryptionType = etRC4
+    PDFSettings.FontEncoding = feAnsi
+    PDFSettings.ImageCompressionLevel = 25
+    PDFSettings.PDFAFormat = pafNone
+    PreviewFormSettings.PageBorder.mmPadding = 0
+    PreviewFormSettings.WindowState = wsMaximized
+    PreviewFormSettings.ZoomSetting = zs100Percent
+    RTFSettings.DefaultFont.Charset = DEFAULT_CHARSET
+    RTFSettings.DefaultFont.Color = clWindowText
+    RTFSettings.DefaultFont.Height = -13
+    RTFSettings.DefaultFont.Name = 'Arial'
+    RTFSettings.DefaultFont.Style = []
+    TextFileName = '($MyDocuments)\Report.pdf'
+    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.Enabled = True
+    XLSSettings.AppName = 'ReportBuilder'
+    XLSSettings.Author = 'ReportBuilder'
+    XLSSettings.Subject = 'Report'
+    XLSSettings.Title = 'Report'
+    XLSSettings.WorksheetName = 'Report'
+    Left = 496
+    Top = 173
+    Version = '19.04'
+    mmColumnWidth = 0
+    DataPipelineName = 'pTitulos'
+    object ppHeaderBand2: TppHeaderBand
+      Background.Brush.Style = bsClear
+      Border.mmPadding = 0
+      PrintHeight = phDynamic
+      mmBottomOffset = 0
+      mmHeight = 20902
+      mmPrintPosition = 0
+      object ppDBText3: TppDBText
+        DesignLayer = ppDesignLayer2
+        UserName = 'DBText9'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        DataField = 'Razao_Social'
+        DataPipeline = pEmpresas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Calibri'
+        Font.Size = 12
+        Font.Style = [fsBold]
+        ParentDataPipeline = False
+        TextAlignment = taCentered
+        Transparent = True
+        DataPipelineName = 'pEmpresas'
+        mmHeight = 4995
+        mmLeft = 39326
+        mmTop = 265
+        mmWidth = 146216
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppLabel2: TppLabel
+        DesignLayer = ppDesignLayer2
+        UserName = 'lTitulo1'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'CONTROLE DE T'#205'TULOS ABERTOS'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Calibri'
+        Font.Size = 10
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 4763
+        mmLeft = 39325
+        mmTop = 6615
+        mmWidth = 146216
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object lPeriodo2: TppLabel
+        DesignLayer = ppDesignLayer2
+        UserName = 'lPeriodo'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'Per'#237'odo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = [fsItalic]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 3260
+        mmLeft = 39326
+        mmTop = 13624
+        mmWidth = 146216
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object iLogo2: TppImage
+        DesignLayer = ppDesignLayer2
+        UserName = 'iLogo'
+        AlignHorizontal = ahCenter
+        AlignVertical = avCenter
+        MaintainAspectRatio = False
+        Stretch = True
+        Border.mmPadding = 0
+        mmHeight = 16933
+        mmLeft = 10383
+        mmTop = 0
+        mmWidth = 27517
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppLabel6: TppLabel
+        DesignLayer = ppDesignLayer2
+        UserName = 'Label16'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'DOCUMENTO N'#186
+        Color = 11427422
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        VerticalAlignment = avCenter
+        mmHeight = 3528
+        mmLeft = 124672
+        mmTop = 17338
+        mmWidth = 30410
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppLabel8: TppLabel
+        DesignLayer = ppDesignLayer2
+        UserName = 'Label3'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'VALOR'
+        Color = 11427422
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        VerticalAlignment = avCenter
+        mmHeight = 3528
+        mmLeft = 155550
+        mmTop = 17338
+        mmWidth = 30057
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppLabel9: TppLabel
+        DesignLayer = ppDesignLayer2
+        UserName = 'Label13'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'DATA DOC'
+        Color = 11427422
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        VerticalAlignment = avCenter
+        mmHeight = 3528
+        mmLeft = 86405
+        mmTop = 17338
+        mmWidth = 18556
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppLabel10: TppLabel
+        DesignLayer = ppDesignLayer2
+        UserName = 'Label7'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'DATA VENC'
+        Color = 11427422
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        VerticalAlignment = avCenter
+        mmHeight = 3528
+        mmLeft = 105596
+        mmTop = 17338
+        mmWidth = 18556
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppLabel11: TppLabel
+        DesignLayer = ppDesignLayer2
+        UserName = 'Label1'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'CLIENTE'
+        Color = 11427422
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        VerticalAlignment = avCenter
+        mmHeight = 3440
+        mmLeft = 10417
+        mmTop = 17427
+        mmWidth = 75572
+        BandType = 0
+        LayerName = Foreground1
+      end
+    end
+    object ppDetailBand2: TppDetailBand
+      Background1.Brush.Style = bsClear
+      Background2.Brush.Style = bsClear
+      Border.mmPadding = 0
+      PrintHeight = phDynamic
+      mmBottomOffset = -169
+      mmHeight = 3704
+      mmPrintPosition = 0
+      object ppDBText8: TppDBText
+        DesignLayer = ppDesignLayer2
+        UserName = 'DBText1'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        DataField = 'Duplicata'
+        DataPipeline = pTitulos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = []
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'pTitulos'
+        mmHeight = 3528
+        mmLeft = 124646
+        mmTop = 0
+        mmWidth = 30410
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText11: TppDBText
+        DesignLayer = ppDesignLayer2
+        UserName = 'DBText6'
+        BlankWhenZero = True
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        DataField = 'Valor_Parcela'
+        DataPipeline = pTitulos
+        DisplayFormat = ',##0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'pTitulos'
+        mmHeight = 3528
+        mmLeft = 155575
+        mmTop = 0
+        mmWidth = 30057
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText12: TppDBText
+        DesignLayer = ppDesignLayer2
+        UserName = 'DBText13'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        DataField = 'Data_Documento'
+        DataPipeline = pTitulos
+        DisplayFormat = 'dd/mm/yyyy'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taCentered
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'pTitulos'
+        mmHeight = 3528
+        mmLeft = 86405
+        mmTop = 0
+        mmWidth = 18556
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText14: TppDBText
+        DesignLayer = ppDesignLayer2
+        UserName = 'DBText10'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        DataField = 'Data_Vencimento'
+        DataPipeline = pTitulos
+        DisplayFormat = 'dd/mm/yyyy'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = []
+        TextAlignment = taCentered
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'pTitulos'
+        mmHeight = 3528
+        mmLeft = 105596
+        mmTop = 0
+        mmWidth = 18556
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText17: TppDBText
+        DesignLayer = ppDesignLayer2
+        UserName = 'DBText4'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        DataField = 'Cliente'
+        DataPipeline = pTitulos
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        VerticalAlignment = avCenter
+        DataPipelineName = 'pTitulos'
+        mmHeight = 3969
+        mmLeft = 10319
+        mmTop = 0
+        mmWidth = 75737
+        BandType = 4
+        LayerName = Foreground1
+      end
+    end
+    object ppFooterBand1: TppFooterBand
+      Background.Brush.Style = bsClear
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 3704
+      mmPrintPosition = 0
+      object ppLabel14: TppLabel
+        DesignLayer = ppDesignLayer2
+        UserName = 'Label101'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'ERP Importa (Cybersoft Sistemas Ltda.)'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 2910
+        mmLeft = 10319
+        mmTop = 529
+        mmWidth = 45773
+        BandType = 8
+        LayerName = Foreground1
+      end
+      object ppSystemVariable2: TppSystemVariable
+        DesignLayer = ppDesignLayer2
+        UserName = 'SystemVariable4'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        VarType = vtDocumentName
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 2910
+        mmLeft = 63169
+        mmTop = 462
+        mmWidth = 58870
+        BandType = 8
+        LayerName = Foreground1
+      end
+      object ppSystemVariable3: TppSystemVariable
+        DesignLayer = ppDesignLayer2
+        UserName = 'SystemVariable5'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        VarType = vtPrintDateTime
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        Transparent = True
+        mmHeight = 2910
+        mmLeft = 126302
+        mmTop = 529
+        mmWidth = 32081
+        BandType = 8
+        LayerName = Foreground1
+      end
+      object ppLine3: TppLine
+        DesignLayer = ppDesignLayer2
+        UserName = 'Line8'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Pen.Width = 0
+        Position = lpLeft
+        mmHeight = 3704
+        mmLeft = 60590
+        mmTop = 0
+        mmWidth = 2117
+        BandType = 8
+        LayerName = Foreground1
+      end
+      object ppLine4: TppLine
+        DesignLayer = ppDesignLayer2
+        UserName = 'Line9'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Pen.Width = 0
+        mmHeight = 992
+        mmLeft = 10418
+        mmTop = 0
+        mmWidth = 174956
+        BandType = 8
+        LayerName = Foreground1
+      end
+      object ppLine5: TppLine
+        DesignLayer = ppDesignLayer2
+        UserName = 'Line2'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Pen.Width = 0
+        Position = lpLeft
+        mmHeight = 3704
+        mmLeft = 163082
+        mmTop = 197
+        mmWidth = 2117
+        BandType = 8
+        LayerName = Foreground1
+      end
+      object ppSystemVariable6: TppSystemVariable
+        DesignLayer = ppDesignLayer2
+        UserName = 'SystemVariable1'
+        Border.mmPadding = 0
+        VarType = vtPageSetDesc
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 3175
+        mmLeft = 167579
+        mmTop = 794
+        mmWidth = 17859
+        BandType = 8
+        LayerName = Foreground1
+      end
+    end
+    object ppSummaryBand1: TppSummaryBand
+      Background.Brush.Style = bsClear
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 5821
+      mmPrintPosition = 0
+      object ppLabel15: TppLabel
+        DesignLayer = ppDesignLayer2
+        UserName = 'Label11'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'TOTAL'
+        Color = 5460819
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        VerticalAlignment = avCenter
+        mmHeight = 3528
+        mmLeft = 124672
+        mmTop = 528
+        mmWidth = 30410
+        BandType = 7
+        LayerName = Foreground1
+      end
+      object ppDBCalc2: TppDBCalc
+        DesignLayer = ppDesignLayer2
+        UserName = 'pTotalBaixado'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Color = 5460819
+        DataField = 'Valor_Parcela'
+        DataPipeline = pTitulos
+        DisplayFormat = ',##0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Calibri'
+        Font.Size = 8
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        VerticalAlignment = avCenter
+        DataPipelineName = 'pTitulos'
+        mmHeight = 3528
+        mmLeft = 155575
+        mmTop = 528
+        mmWidth = 30057
+        BandType = 7
+        LayerName = Foreground1
+      end
+    end
+    object ppDesignLayers2: TppDesignLayers
+      object ppDesignLayer2: TppDesignLayer
+        UserName = 'Foreground1'
+        LayerType = ltBanded
+        Index = 0
+      end
+    end
+    object ppParameterList2: TppParameterList
     end
   end
 end

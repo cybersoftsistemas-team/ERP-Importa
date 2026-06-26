@@ -872,6 +872,10 @@ object Pedido_NFS: TPedido_NFS
     object TabSheet2: TTabSheet
       Caption = 'Lista de Pedidos'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Grade: TDBGrid
         Left = 0
         Top = 0
