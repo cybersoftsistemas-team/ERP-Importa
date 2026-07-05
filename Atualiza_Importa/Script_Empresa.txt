@@ -3065,3 +3065,7 @@ alter table TipoNota add Visiveis_II bit
 go
 update TipoNota set Visiveis_II = 1
 go
+
+--[02/07/2026 11:16:00]
+update TipoNota set Visiveis_II = 0 where Saida_Entrada = 1
+go
