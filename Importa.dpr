@@ -469,7 +469,10 @@ uses
   frmPedido_NFS in 'frmPedido_NFS.pas' {Pedido_NFS},
   frmPedido_NFSItens in 'frmPedido_NFSItens.pas' {Pedido_NFSItens},
   frmPedido_NFSVinculo in 'frmPedido_NFSVinculo.pas' {Pedido_NFSVinculo},
-  frmNotaFiscal_ImportarNFSe in 'frmNotaFiscal_ImportarNFSe.pas' {NotaFiscal_ImportarNFSe};
+  frmNotaFiscal_ImportarNFSe in 'frmNotaFiscal_ImportarNFSe.pas' {NotaFiscal_ImportarNFSe},
+  uNFSeTipos in 'uNFSeTipos.pas',
+  uNFSeModel in 'uNFSeModel.pas',
+  uNFSeXMLReader in 'uNFSeXMLReader.pas';
 
 {$R *.res}
 

@@ -6,7 +6,6 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls,
   RXCtrls, Vcl.ExtCtrls, Vcl.StdCtrls, DBCtrls, RXDBCtrl, Mask, Buttons, DB, DBAccess, MSAccess, Funcoes, ClipBrd, DateUtils, RxLookup, Math, Grids,
   DBGrids, RxCurrEdit, RxToolEdit, system.UITypes, MemDS;
-
 type
   TNotaFiscal_Servico = class(TForm)
     Panel1: TPanel;
@@ -115,6 +114,7 @@ type
     bPesqFor: TSpeedButton;
     bPesqMod: TSpeedButton;
     DBCheckBox1: TDBCheckBox;
+    tmp: TMSQuery;
     procedure FormShow(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure NavegaClick(Sender: TObject; Button: TNavigateBtn);
@@ -269,6 +269,27 @@ begin
       Close;
 end;
 
+{
+procedure TNotaFiscal_Servico.Button1Click(Sender: TObject);
+var
+  Reader: TNFSeXMLReader;
+  NFSe: TNFSe;
+  mArq: string;
+begin
+     mArq   := 'c:\temp\OK - SERASA - NFS 312939 - R$ 63,51 - VENC. 15-03-2026.xml';
+     Reader := TNFSeXMLReader.Create;
+     try
+       // Lendo o arquivo XML. 
+       NFSe := Reader.LerArquivo(mArq);
+       
+       // Salvando a nota carregada do xml.
+       SalvarNFSe(NFSe);
+       
+     finally
+       Reader.Free;
+     end;
+end;
+}
 procedure TNotaFiscal_Servico.bXMLClick(Sender: TObject);
 begin
 {

@@ -3501,7 +3501,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'Tahoma'
             Title.Font.Style = [fsBold]
-            Width = 64
             Visible = True
           end>
       end
@@ -4057,7 +4056,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'MS Sans Serif'
             Title.Font.Style = [fsBold]
-            Width = 64
             Visible = True
           end
           item
@@ -4092,7 +4090,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'MS Sans Serif'
             Title.Font.Style = [fsBold]
-            Width = 64
             Visible = True
           end>
       end
@@ -10187,30 +10184,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
               BandType = 4
               LayerName = PageLayer1
             end
-            object ppDBText62: TppDBText
-              DesignLayer = ppDesignLayer4
-              UserName = 'DBText62'
-              BlankWhenZero = True
-              Border.mmPadding = 0
-              DataField = 'Total_Produtos'
-              DataPipeline = pProdutos
-              DisplayFormat = ',##0.00'
-              Font.Charset = DEFAULT_CHARSET
-              Font.Color = clBlack
-              Font.Name = 'Tahoma'
-              Font.Size = 6
-              Font.Style = []
-              ParentDataPipeline = False
-              TextAlignment = taRightJustified
-              Transparent = True
-              DataPipelineName = 'pProdutos'
-              mmHeight = 2646
-              mmLeft = 102395
-              mmTop = 0
-              mmWidth = 15881
-              BandType = 4
-              LayerName = PageLayer1
-            end
             object ppDBText64: TppDBText
               DesignLayer = ppDesignLayer4
               UserName = 'DBText64'
@@ -10351,6 +10324,30 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
               mmLeft = 51666
               mmTop = 0
               mmWidth = 11156
+              BandType = 4
+              LayerName = PageLayer1
+            end
+            object ppDBText62: TppDBText
+              DesignLayer = ppDesignLayer4
+              UserName = 'DBText62'
+              BlankWhenZero = True
+              Border.mmPadding = 0
+              DataField = 'Total_Produtos'
+              DataPipeline = pProdutos
+              DisplayFormat = ',##0.00'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Name = 'Tahoma'
+              Font.Size = 6
+              Font.Style = []
+              ParentDataPipeline = False
+              TextAlignment = taRightJustified
+              Transparent = True
+              DataPipelineName = 'pProdutos'
+              mmHeight = 2646
+              mmLeft = 102395
+              mmTop = 0
+              mmWidth = 15881
               BandType = 4
               LayerName = PageLayer1
             end
@@ -14227,6 +14224,24 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
       DisplayWidth = 5
       Position = 218
     end
+    object pEmpresasppField220: TppField
+      FieldAlias = 'Email_MsgPedidos'
+      FieldName = 'Email_MsgPedidos'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 219
+      Searchable = False
+      Sortable = False
+    end
+    object pEmpresasppField221: TppField
+      FieldAlias = 'PISCOFINS_F100Financ'
+      FieldName = 'PISCOFINS_F100Financ'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 220
+    end
   end
   object pSimulacao: TppDBPipeline
     DataSource = dstSimula
@@ -15863,6 +15878,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
       'where Simulacao = 20')
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
+    Active = True
     Left = 306
     Top = 6
   end
@@ -16051,7 +16067,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
       FieldName = 'Simulacao'
       FieldLength = 0
       DataType = dtInteger
-      DisplayWidth = 10
+      DisplayWidth = 0
       Position = 0
     end
     object pProdutosppField2: TppField

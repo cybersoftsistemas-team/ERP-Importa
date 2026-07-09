@@ -4705,12 +4705,23 @@ begin
            sql.add('              and isnull(pr.Provisorio, 0) = 0');
            sql.add('              and isnull(pr.Juros, 0) > 0');
            sql.add('              and (select isnull(Juros_SPEDPISCOFINS, 0) from ClassificacaoFinanceira where Codigo = Classificacao) = 1)');
+           {
            if Dados.EmpresasPISCOFINS_F100Financ.AsBoolean then begin 
               sql.add('           + (select count(*)');
               sql.add('              from Adicoes ad');
               sql.add('              where (select Data_RegistroDeclaracao from ProcessosDocumentos pd where pd.Numero_Declaracao = ad.DI and Apuracao_PISCOFINS = 1) between :pDataIni and :pDataFim');
               sql.add('              and (select Tipo from ProcessosDocumentos pd where pd.Numero_Declaracao = ad.DI) = ''IMPORTAÇÃO'' ');
               sql.add('              and (select count(*) from NotasFiscais nf where nf.DI = ad.DI and Saida_Entrada = 0 and month(nf.Data_Emissao) = month(nf.Data_DI)) = 0)');
+           end;
+           }
+           if Dados.EmpresasPISCOFINS_F100Financ.AsBoolean then begin 
+              sql.add('        + (select count(*)');
+              sql.add('           from ProcessosDocumentos pd');
+              sql.add('           where Data_RegistroDeclaracao between :pDataIni and :pDataFim');
+              sql.add('           and Apuracao_PISCOFINS = 1');
+              sql.add('           and Tipo = ''IMPORTAÇÃO'' ');
+              sql.add('           and (select count(*) from adicoes where DI = Numero_Declaracao) > 0');
+              sql.add('           and (select count(*) from NotasFiscais nf where nf.DI = Numero_Declaracao and Saida_Entrada = 0 and month(nf.Data_Emissao) = month(nf.Data_DI)) = 0)');
            end;
            sql.add('into #Temp');
 
@@ -4963,7 +4974,7 @@ begin
               ParamByName('pDataIni').AsDate := StrtoDate(mDataIni);
               ParamByName('pDataFim').AsDate := StrtoDate(mDataFim);
            end;
-           //sql.SaveToFile('c:\temp\SPED_PISCOFINS_REGF010_Matriz.SQL');
+//           sql.SaveToFile('c:\temp\SPED_PISCOFINS_REGF010_Matriz.SQL');
            open;
       end;
 

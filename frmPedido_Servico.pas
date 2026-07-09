@@ -4,7 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,Dialogs, Vcl.ComCtrls, RXCtrls, Vcl.ExtCtrls, Vcl.StdCtrls, DBCtrls, RXDBCtrl, Mask,
-  Buttons, DB, FUNCOES, DBAccess, MSAccess, ClipBrd, DateUtils, Menus, system.UITypes, Grids, DBGrids, RxCurrEdit, MemDS, RxToolEdit, Xml.xmldom, Xml.XMLIntf, Xml.Win.msxmldom, Xml.XMLDoc, ACBrBase, ACBrDFe, ACBrNFSeX;
+  Buttons, DB, FUNCOES, DBAccess, MSAccess, ClipBrd, DateUtils, Menus, system.UITypes, Grids, DBGrids, RxCurrEdit, MemDS, RxToolEdit, Xml.xmldom, Xml.XMLIntf, Xml.Win.msxmldom, Xml.XMLDoc, ACBrBase, ACBrDFe,
+  ACBrNFSeX;
 
 type
   TPedido_Servico = class(TForm)

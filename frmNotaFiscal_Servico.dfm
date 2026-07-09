@@ -3,7 +3,7 @@ object NotaFiscal_Servico: TNotaFiscal_Servico
   Top = 128
   BorderStyle = bsDialog
   Caption = 'NotaFiscal_Servico'
-  ClientHeight = 591
+  ClientHeight = 586
   ClientWidth = 617
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -62,12 +62,13 @@ object NotaFiscal_Servico: TNotaFiscal_Servico
   end
   object Panel1: TPanel
     Left = 0
-    Top = 561
+    Top = 556
     Width = 617
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitTop = 604
     object bSair: TButton
       Left = 554
       Top = 1
@@ -2399,5 +2400,10 @@ object NotaFiscal_Servico: TNotaFiscal_Servico
     Connection = Dados.Banco_Empresas
     Left = 557
     Top = 4
+  end
+  object tmp: TMSQuery
+    Connection = Dados.Banco_Empresas
+    Left = 422
+    Top = 48
   end
 end
