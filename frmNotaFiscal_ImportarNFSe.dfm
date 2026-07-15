@@ -4,7 +4,7 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
   BorderStyle = bsDialog
   Caption = 'NotaFiscal_ImportarNFSe'
   ClientHeight = 466
-  ClientWidth = 711
+  ClientWidth = 782
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,13 +20,14 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
   object Panel1: TPanel
     Left = 0
     Top = 436
-    Width = 711
+    Width = 782
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitWidth = 711
     object bSair: TButton
-      Left = 643
+      Left = 714
       Top = 1
       Width = 67
       Height = 28
@@ -44,20 +45,21 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
+      ExplicitLeft = 643
     end
   end
   object Panel2: TPanel
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 705
-    Height = 86
+    Width = 776
+    Height = 109
     Align = alTop
     BevelOuter = bvLowered
     TabOrder = 1
     object bAbrir: TSpeedButton
-      Left = 519
-      Top = 6
+      Left = 643
+      Top = 19
       Width = 108
       Height = 70
       AllowAllUp = True
@@ -285,7 +287,7 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
     end
     object StaticText13: TStaticText
       Left = 10
-      Top = 56
+      Top = 79
       Width = 77
       Height = 21
       AutoSize = False
@@ -308,7 +310,7 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
     end
     object cDataEnt: TDateEdit
       Left = 89
-      Top = 56
+      Top = 79
       Width = 122
       Height = 21
       CheckOnExit = True
@@ -398,9 +400,9 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
       TabOrder = 5
     end
     object cSubs: TCheckBox
-      Left = 237
-      Top = 59
-      Width = 174
+      Left = 469
+      Top = 35
+      Width = 151
       Height = 17
       Caption = 'Substituir notas existentes'
       Font.Charset = DEFAULT_CHARSET
@@ -411,13 +413,55 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
       ParentFont = False
       TabOrder = 6
     end
+    object cCentroCusto: TDBLookupComboBox
+      Left = 89
+      Top = 56
+      Width = 362
+      Height = 21
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Pitch = fpFixed
+      Font.Style = [fsBold]
+      KeyField = 'Codigo'
+      ListField = 'Codigo;Descricao'
+      ListFieldIndex = 1
+      ListSource = Dados.dsCentroCusto
+      ParentFont = False
+      TabOrder = 7
+    end
+    object StaticText60: TStaticText
+      Left = 10
+      Top = 56
+      Width = 77
+      Height = 21
+      Cursor = crHandPoint
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Centro Custo'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 8
+      Transparent = False
+      StyleElements = []
+    end
   end
   object Grade: TStringGrid
     AlignWithMargins = True
     Left = 3
-    Top = 95
-    Width = 705
-    Height = 331
+    Top = 118
+    Width = 776
+    Height = 308
     Margins.Bottom = 10
     Align = alClient
     ColCount = 2
@@ -431,6 +475,9 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
     Font.Style = []
     ParentFont = False
     TabOrder = 2
+    ExplicitTop = 95
+    ExplicitWidth = 705
+    ExplicitHeight = 331
   end
   object tTmp: TMSQuery
     Connection = Dados.Banco_Empresas

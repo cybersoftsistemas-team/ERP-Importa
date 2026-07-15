@@ -1063,7 +1063,7 @@ begin
           tNotas.SQL.Add('ORDER BY Nota');
           tNotas.ParamByName('pAno').AsInteger   := cAno.AsInteger;
           tNotas.ParamByName('pMes').AsInteger   := cMes.ItemIndex + 1;
-          //tNotas.SQL.SaveToFile('c:\temp\PIS_COFINS_Aliquota_PIS.sql');
+          tNotas.SQL.SaveToFile('c:\temp\PIS_COFINS_Aliquota_PIS.sql');
           tNotas.Open;
 
           If Empresas.FieldByName('Matriz_Filial').AsBoolean = true then mTipo := 'MATRIZ' else mTipo := 'FILIAL';

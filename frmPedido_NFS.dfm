@@ -369,8 +369,8 @@ object Pedido_NFS: TPedido_NFS
           A6A68F8F8FEAEAEA0000}
       end
       object DBText2: TDBText
-        Left = 289
-        Top = 259
+        Left = 272
+        Top = 272
         Width = 147
         Height = 16
         Alignment = taRightJustify
@@ -872,10 +872,6 @@ object Pedido_NFS: TPedido_NFS
     object TabSheet2: TTabSheet
       Caption = 'Lista de Pedidos'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Grade: TDBGrid
         Left = 0
         Top = 0

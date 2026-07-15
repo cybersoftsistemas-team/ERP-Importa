@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,Dialogs, Vcl.ComCtrls, RXCtrls, Vcl.ExtCtrls, Vcl.StdCtrls, DBCtrls, RXDBCtrl, Mask,
   Buttons, DB, FUNCOES, DBAccess, MSAccess, ClipBrd, DateUtils, Menus, system.UITypes, Grids, DBGrids, RxCurrEdit, MemDS, RxToolEdit, Xml.xmldom, Xml.XMLIntf, Xml.Win.msxmldom, Xml.XMLDoc, ACBrBase, ACBrDFe,
-  ACBrNFSeX;
+  ACBrNFSeX, uNFSeModel, uNFSeXMLReader;
 
 type
   TPedido_Servico = class(TForm)
@@ -303,33 +303,78 @@ begin
 end;
 
 procedure TPedido_Servico.bImportarClick(Sender: TObject);
-Var
-    i: Integer;
-    mNotaXML: TEdit;
+//Var
+//    i: Integer;
+//    mNotaXML: TEdit;
 begin
-     with Dados, dmFiscal do begin
-          cXML.Execute;
-          if cXML.Files.Count > 0 then begin
-             Pedido_ServicoXML         := TPedido_ServicoXML.Create(Self);
-             Pedido_ServicoXML.Caption := Caption;
+//     with Dados, dmFiscal do begin
+//          cXML.Execute;
+//          if cXML.Files.Count > 0 then begin
+//             Pedido_ServicoXML         := TPedido_ServicoXML.Create(Self);
+//             Pedido_ServicoXML.Caption := Caption;
+//
+//              Preenchendo o vetor com os nomes dos arquivos "XML".
+//             for i := 0 to pred(cXML.Files.Count) do begin
+//                 Pedido_ServicoXML.cNotas.Items.Assign(cXML.Files);
+//             end;
+//             Pedido_ServicoXML .mTamanho := cXML.Files.Count;
+//             Pedido_ServicoXML .ShowModal;
+//             
+//             with NotasServico do begin
+//                  sql.Clear;
+//                  sql.Add('select * from NotasServico order by Data_Emissao Desc');
+//                  open;
+//             end;
+//          end;
+//          bDuplicatas.Enabled := (dmFiscal.NotasTerceirosValor_TotalNota.Value > 0);
+//     end;
+       Pedido_ServicoXML         := TPedido_ServicoXML.Create(Self);
+       Pedido_ServicoXML.Caption := Caption;
+       Pedido_ServicoXML .ShowModal;
 
-             // Preenchendo o vetor com os nomes dos arquivos "XML".
-             for i := 0 to pred(cXML.Files.Count) do begin
-                 Pedido_ServicoXML.cNotas.Items.Assign(cXML.Files);
-             end;
-             //Pedido_ServicoXML .mTamanho := cXML.Files.Count;
-             Pedido_ServicoXML .ShowModal;
-             
-             with NotasServico do begin
-                  sql.Clear;
-                  sql.Add('select * from NotasServico order by Data_Emissao Desc');
-                  open;
-             end;
-          end;
-          bDuplicatas.Enabled := (dmFiscal.NotasTerceirosValor_TotalNota.Value > 0);
+end;
+{
+procedure TPedido_Servico.bImportarClick(Sender: TObject);
+var
+  Reader: TNFSeXMLReader;
+  NFSe: TNFSe;
+  mArq: string;
+  i: integer;
+  infNFSe: IXMLNode;
+begin
+     if cDataEnt.Date = 0 then begin 
+        showmessage('Data de entrada invalida!');
+        abort;
+     end;
+     
+     cArqXML.Execute;
+     if cArqXML.Files.Count > 0 then begin
+        mLin   := 0;
+        Reader := TNFSeXMLReader.Create;
+        for i :=  0 to pred(cArqXML.Files.Count) do begin
+               mArq := cArqXML.Files.Strings[i];
+
+               // Lendo o arquivo XML.
+               NFSe := Reader.LerArquivo(mArq);
+               
+               if NFSe.Nota > 0 then begin
+                  // Salvando a nota carregada do xml.
+                  if SalvarNFSe(NFSe) then begin
+                     Grade.Cells[0, mLin] := mArq;
+                     Grade.Cells[1, mLin] := 'SUCESSO';
+                     inc(mLin);
+                  end;
+               end else begin
+                  Grade.Cells[0, mLin] := mArq;
+                  Grade.cells[1, mLin] := 'XML da NFS-e invalido';
+                  inc(mLin);
+               end;
+               Grade.RowCount := mlin;
+        end;
+        Showmessage('Importação terminada!');
      end;
 end;
-
+ }
 procedure TPedido_Servico.bSairClick(Sender: TObject);
 begin
       Close;

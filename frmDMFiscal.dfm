@@ -2875,7 +2875,8 @@ object dmFiscal: TdmFiscal
         'nal05, Valor_Adicional05, Codigo_Adicional06, Aliquota_Adicional' +
         '06, Valor_Adicional06, Cancelada, Aliquota_PIS, Aliquota_COFINS,' +
         ' Modalidade_Pgto, Centro_Custo, Referencia_Fiscal, Total_Dedutiv' +
-        'eis, Total_Servicos, Observacao, Classificacao_Servico)'
+        'eis, Total_Servicos, Observacao, Classificacao_Servico, Valor_BC' +
+        ', Valor_ISSQN, Valor_Liquido, Servico_Nacional)'
       'VALUES'
       
         '  (:Numero, :Data_Emissao, :Modelo, :Serie, :Processo, :FUNDAP, ' +
@@ -2890,7 +2891,8 @@ object dmFiscal: TdmFiscal
         'go_Adicional06, :Aliquota_Adicional06, :Valor_Adicional06, :Canc' +
         'elada, :Aliquota_PIS, :Aliquota_COFINS, :Modalidade_Pgto, :Centr' +
         'o_Custo, :Referencia_Fiscal, :Total_Dedutiveis, :Total_Servicos,' +
-        ' :Observacao, :Classificacao_Servico)')
+        ' :Observacao, :Classificacao_Servico, :Valor_BC, :Valor_ISSQN, :' +
+        'Valor_Liquido, :Servico_Nacional)')
     SQLDelete.Strings = (
       'DELETE FROM NotasServico'
       'WHERE'
@@ -2924,36 +2926,36 @@ object dmFiscal: TdmFiscal
         'Centro_Custo, Referencia_Fiscal = :Referencia_Fiscal, Total_Dedu' +
         'tiveis = :Total_Dedutiveis, Total_Servicos = :Total_Servicos, Ob' +
         'servacao = :Observacao, Classificacao_Servico = :Classificacao_S' +
-        'ervico'
+        'ervico, Valor_BC = :Valor_BC, Valor_ISSQN = :Valor_ISSQN, Valor_' +
+        'Liquido = :Valor_Liquido, Servico_Nacional = :Servico_Nacional'
       'WHERE'
       '  Numero = :Old_Numero AND Data_Emissao = :Old_Data_Emissao')
     SQLRefresh.Strings = (
       
-        'SELECT NotasServico.Numero, NotasServico.Data_Emissao, NotasServ' +
-        'ico.Modelo, NotasServico.Serie, NotasServico.Processo, NotasServ' +
-        'ico.FUNDAP, NotasServico.Fatura_Numero, NotasServico.Desconto_Pe' +
-        'rcentual, NotasServico.Desconto_Valor, NotasServico.Data_Descont' +
-        'o, NotasServico.Cliente, NotasServico.Natureza_Operacao, NotasSe' +
-        'rvico.Servico, NotasServico.Descricao_Servico, NotasServico.Valo' +
-        'r_Servico, NotasServico.Aliquota_ISS, NotasServico.Valor_ISS, No' +
-        'tasServico.Total_Nota, NotasServico.Codigo_Adicional01, NotasSer' +
-        'vico.Aliquota_Adicional01, NotasServico.Valor_Adicional01, Notas' +
-        'Servico.Codigo_Adicional02, NotasServico.Aliquota_Adicional02, N' +
-        'otasServico.Valor_Adicional02, NotasServico.Codigo_Adicional03, ' +
-        'NotasServico.Aliquota_Adicional03, NotasServico.Valor_Adicional0' +
-        '3, NotasServico.Codigo_Adicional04, NotasServico.Aliquota_Adicio' +
-        'nal04, NotasServico.Valor_Adicional04, NotasServico.Codigo_Adici' +
-        'onal05, NotasServico.Aliquota_Adicional05, NotasServico.Valor_Ad' +
-        'icional05, NotasServico.Codigo_Adicional06, NotasServico.Aliquot' +
-        'a_Adicional06, NotasServico.Valor_Adicional06, NotasServico.Canc' +
-        'elada, NotasServico.Aliquota_PIS, NotasServico.Aliquota_COFINS, ' +
-        'NotasServico.Modalidade_Pgto, NotasServico.Centro_Custo, NotasSe' +
-        'rvico.Referencia_Fiscal, NotasServico.Total_Dedutiveis, NotasSer' +
-        'vico.Total_Servicos, NotasServico.Observacao, NotasServico.Class' +
-        'ificacao_Servico FROM NotasServico'
-      
-        'WHERE NotasServico.Numero = :Numero AND NotasServico.Data_Emissa' +
-        'o = :Data_Emissao ')
+        'SELECT Numero, Data_Emissao, Modelo, Serie, Processo, FUNDAP, Fa' +
+        'tura_Numero, Desconto_Percentual, Desconto_Valor, Data_Desconto,' +
+        ' Cliente, Natureza_Operacao, Servico, Descricao_Servico, Valor_S' +
+        'ervico, Aliquota_ISS, Valor_ISS, Total_Nota, Codigo_Adicional01,' +
+        ' Aliquota_Adicional01, Valor_Adicional01, Codigo_Adicional02, Al' +
+        'iquota_Adicional02, Valor_Adicional02, Codigo_Adicional03, Aliqu' +
+        'ota_Adicional03, Valor_Adicional03, Codigo_Adicional04, Aliquota' +
+        '_Adicional04, Valor_Adicional04, Codigo_Adicional05, Aliquota_Ad' +
+        'icional05, Valor_Adicional05, Codigo_Adicional06, Aliquota_Adici' +
+        'onal06, Valor_Adicional06, Cancelada, Aliquota_PIS, Aliquota_COF' +
+        'INS, Modalidade_Pgto, Centro_Custo, Referencia_Fiscal, Total_Ded' +
+        'utiveis, Total_Servicos, Observacao, Classificacao_Servico, Valo' +
+        'r_BC, Valor_ISSQN, Valor_Liquido, Servico_Nacional FROM NotasSer' +
+        'vico'
+      'WHERE'
+      '  Numero = :Numero AND Data_Emissao = :Data_Emissao')
+    SQLLock.Strings = (
+      'SELECT * FROM NotasServico'
+      'WITH (UPDLOCK, ROWLOCK, HOLDLOCK)'
+      'WHERE'
+      '  Numero = :Old_Numero AND Data_Emissao = :Old_Data_Emissao')
+    SQLRecCount.Strings = (
+      'SET :PCOUNT = (SELECT COUNT(*) FROM NotasServico'
+      ')')
     Connection = Dados.Banco_Empresas
     SQL.Strings = (
       'SELECT * FROM NotasServico')
@@ -3248,6 +3250,19 @@ object dmFiscal: TdmFiscal
     end
     object NotasServicoClassificacao_Servico: TIntegerField
       FieldName = 'Classificacao_Servico'
+    end
+    object NotasServicoValor_BC: TCurrencyField
+      FieldName = 'Valor_BC'
+    end
+    object NotasServicoValor_ISSQN: TCurrencyField
+      FieldName = 'Valor_ISSQN'
+    end
+    object NotasServicoValor_Liquido: TCurrencyField
+      FieldName = 'Valor_Liquido'
+    end
+    object NotasServicoServico_Nacional: TStringField
+      FieldName = 'Servico_Nacional'
+      Size = 6
     end
   end
   object dsNotasServico: TDataSource
@@ -8880,5 +8895,147 @@ object dmFiscal: TdmFiscal
     DataSet = CreditoPresumido
     Left = 515
     Top = 374
+  end
+  object NotasServicoItens: TMSQuery
+    SQLInsert.Strings = (
+      'INSERT INTO NotasServicoItens'
+      
+        '  (Nota, Data, Item, Codigo_Mercadoria, Processo, Quantidade, Va' +
+        'lor_Unitario, Valor_Total, Aliquota_INSS, Valor_INSS, Aliquota_P' +
+        'IS, Valor_PIS, Aliquota_COFINS, Valor_COFINS, Aliquota_CSLL, Val' +
+        'or_CSLL, Aliquota_IRPJ, Valor_IRPJ, Aliquota_CPP, Valor_CPP, Ali' +
+        'quota_IPI, Valor_IPI)'
+      'VALUES'
+      
+        '  (:Nota, :Data, :Item, :Codigo_Mercadoria, :Processo, :Quantida' +
+        'de, :Valor_Unitario, :Valor_Total, :Aliquota_INSS, :Valor_INSS, ' +
+        ':Aliquota_PIS, :Valor_PIS, :Aliquota_COFINS, :Valor_COFINS, :Ali' +
+        'quota_CSLL, :Valor_CSLL, :Aliquota_IRPJ, :Valor_IRPJ, :Aliquota_' +
+        'CPP, :Valor_CPP, :Aliquota_IPI, :Valor_IPI)')
+    SQLDelete.Strings = (
+      'DELETE FROM NotasServicoItens'
+      'WHERE'
+      
+        '  Nota = :Old_Nota AND Data = :Old_Data AND Item = :Old_Item AND' +
+        ' Codigo_Mercadoria = :Old_Codigo_Mercadoria')
+    SQLUpdate.Strings = (
+      'UPDATE NotasServicoItens'
+      'SET'
+      
+        '  Nota = :Nota, Data = :Data, Item = :Item, Codigo_Mercadoria = ' +
+        ':Codigo_Mercadoria, Processo = :Processo, Quantidade = :Quantida' +
+        'de, Valor_Unitario = :Valor_Unitario, Valor_Total = :Valor_Total' +
+        ', Aliquota_INSS = :Aliquota_INSS, Valor_INSS = :Valor_INSS, Aliq' +
+        'uota_PIS = :Aliquota_PIS, Valor_PIS = :Valor_PIS, Aliquota_COFIN' +
+        'S = :Aliquota_COFINS, Valor_COFINS = :Valor_COFINS, Aliquota_CSL' +
+        'L = :Aliquota_CSLL, Valor_CSLL = :Valor_CSLL, Aliquota_IRPJ = :A' +
+        'liquota_IRPJ, Valor_IRPJ = :Valor_IRPJ, Aliquota_CPP = :Aliquota' +
+        '_CPP, Valor_CPP = :Valor_CPP, Aliquota_IPI = :Aliquota_IPI, Valo' +
+        'r_IPI = :Valor_IPI'
+      'WHERE'
+      
+        '  Nota = :Old_Nota AND Data = :Old_Data AND Item = :Old_Item AND' +
+        ' Codigo_Mercadoria = :Old_Codigo_Mercadoria')
+    SQLRefresh.Strings = (
+      
+        'SELECT Nota, Data, Item, Codigo_Mercadoria, Processo, Quantidade' +
+        ', Valor_Unitario, Valor_Total, Aliquota_INSS, Valor_INSS, Aliquo' +
+        'ta_PIS, Valor_PIS, Aliquota_COFINS, Valor_COFINS, Aliquota_CSLL,' +
+        ' Valor_CSLL, Aliquota_IRPJ, Valor_IRPJ, Aliquota_CPP, Valor_CPP,' +
+        ' Aliquota_IPI, Valor_IPI FROM NotasServicoItens'
+      'WHERE'
+      
+        '  Nota = :Nota AND Data = :Data AND Item = :Item AND Codigo_Merc' +
+        'adoria = :Codigo_Mercadoria')
+    SQLLock.Strings = (
+      'SELECT * FROM NotasServicoItens'
+      'WITH (UPDLOCK, ROWLOCK, HOLDLOCK)'
+      'WHERE'
+      
+        '  Nota = :Old_Nota AND Data = :Old_Data AND Item = :Old_Item AND' +
+        ' Codigo_Mercadoria = :Old_Codigo_Mercadoria')
+    SQLRecCount.Strings = (
+      'SET :PCOUNT = (SELECT COUNT(*) FROM NotasServicoItens'
+      ')')
+    Connection = Dados.Banco_Empresas
+    SQL.Strings = (
+      'SELECT * FROM NotasServicoItens')
+    FetchRows = 1
+    RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
+    BeforePost = NotasServicoBeforePost
+    Left = 623
+    Top = 324
+    object NotasServicoItensNota: TIntegerField
+      FieldName = 'Nota'
+    end
+    object NotasServicoItensData: TDateTimeField
+      FieldName = 'Data'
+    end
+    object NotasServicoItensItem: TSmallintField
+      FieldName = 'Item'
+    end
+    object NotasServicoItensCodigo_Mercadoria: TIntegerField
+      FieldName = 'Codigo_Mercadoria'
+    end
+    object NotasServicoItensProcesso: TStringField
+      FieldName = 'Processo'
+      Size = 15
+    end
+    object NotasServicoItensQuantidade: TFloatField
+      FieldName = 'Quantidade'
+    end
+    object NotasServicoItensValor_Unitario: TCurrencyField
+      FieldName = 'Valor_Unitario'
+    end
+    object NotasServicoItensValor_Total: TCurrencyField
+      FieldName = 'Valor_Total'
+    end
+    object NotasServicoItensAliquota_INSS: TFloatField
+      FieldName = 'Aliquota_INSS'
+    end
+    object NotasServicoItensValor_INSS: TCurrencyField
+      FieldName = 'Valor_INSS'
+    end
+    object NotasServicoItensAliquota_PIS: TFloatField
+      FieldName = 'Aliquota_PIS'
+    end
+    object NotasServicoItensValor_PIS: TCurrencyField
+      FieldName = 'Valor_PIS'
+    end
+    object NotasServicoItensAliquota_COFINS: TFloatField
+      FieldName = 'Aliquota_COFINS'
+    end
+    object NotasServicoItensValor_COFINS: TCurrencyField
+      FieldName = 'Valor_COFINS'
+    end
+    object NotasServicoItensAliquota_CSLL: TFloatField
+      FieldName = 'Aliquota_CSLL'
+    end
+    object NotasServicoItensValor_CSLL: TCurrencyField
+      FieldName = 'Valor_CSLL'
+    end
+    object NotasServicoItensAliquota_IRPJ: TFloatField
+      FieldName = 'Aliquota_IRPJ'
+    end
+    object NotasServicoItensValor_IRPJ: TCurrencyField
+      FieldName = 'Valor_IRPJ'
+    end
+    object NotasServicoItensAliquota_CPP: TFloatField
+      FieldName = 'Aliquota_CPP'
+    end
+    object NotasServicoItensValor_CPP: TCurrencyField
+      FieldName = 'Valor_CPP'
+    end
+    object NotasServicoItensAliquota_IPI: TFloatField
+      FieldName = 'Aliquota_IPI'
+    end
+    object NotasServicoItensValor_IPI: TCurrencyField
+      FieldName = 'Valor_IPI'
+    end
+  end
+  object dsNotasServicoItens: TDataSource
+    DataSet = NotasServicoItens
+    Left = 626
+    Top = 372
   end
 end

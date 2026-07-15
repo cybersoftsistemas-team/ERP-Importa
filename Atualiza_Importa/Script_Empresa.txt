@@ -3069,3 +3069,7 @@ go
 --[02/07/2026 11:16:00]
 update TipoNota set Visiveis_II = 0 where Saida_Entrada = 1
 go
+
+--[10/07/2026 11:50:00]
+alter table NotasServico add Servico_Nacional varchar(6)
+go

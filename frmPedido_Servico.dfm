@@ -86,7 +86,7 @@ object Pedido_Servico: TPedido_Servico
     object Navega: TDBNavigator
       Left = 1
       Top = 1
-      Width = 360
+      Width = 339
       Height = 28
       Cursor = crHandPoint
       DataSource = Dados.dsPedidoServico
@@ -112,7 +112,7 @@ object Pedido_Servico: TPedido_Servico
       OnClick = NavegaClick
     end
     object bDuplicatas: TButton
-      Left = 361
+      Left = 340
       Top = 1
       Width = 94
       Height = 28
@@ -124,9 +124,10 @@ object Pedido_Servico: TPedido_Servico
       ShowHint = True
       TabOrder = 2
       OnClick = bDuplicatasClick
+      ExplicitLeft = 232
     end
     object bImportar: TButton
-      Left = 549
+      Left = 528
       Top = 1
       Width = 94
       Height = 28
@@ -138,9 +139,10 @@ object Pedido_Servico: TPedido_Servico
       ShowHint = True
       TabOrder = 3
       OnClick = bImportarClick
+      ExplicitLeft = 420
     end
     object bEnviar: TButton
-      Left = 455
+      Left = 434
       Top = 1
       Width = 94
       Height = 28
@@ -153,6 +155,7 @@ object Pedido_Servico: TPedido_Servico
       TabOrder = 4
       Visible = False
       OnClick = bEnviarClick
+      ExplicitLeft = 326
     end
   end
   object PageControl1: TPageControl
@@ -171,10 +174,6 @@ object Pedido_Servico: TPedido_Servico
     TabOrder = 1
     object TabSheet1: TTabSheet
       Caption = '&Pedidos'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel2: TPanel
         AlignWithMargins = True
         Left = 3
