@@ -1051,14 +1051,16 @@ begin
              Pedidos.Post;
 
              // Rateio do valor total da nota para os itens.
-             with tTemp do begin
-                  sql.clear;
-                  //sql.add('update PedidosItens set Valor_TotalNota = cast(:pTotal / :pProd as decimal(18, 12)) * Valor_Total where Pedido = :pPed');
-                  sql.add('update PedidosItens set Valor_TotalNota = Valor_Total * (:pTotal / :pProd) where Pedido = :pPed');
-                  parambyname('pProd').asfloat  := PedidosValor_TotalProdutos.asfloat;
-                  parambyname('pTotal').asfloat := PedidosValor_TotalNota.asfloat;
-                  parambyname('pPed').value     := PedidosNumero.value;
-                  execute;
+             if PedidosValor_TotalProdutos.asfloat > 0 then begin
+                with tTemp do begin
+                     sql.clear;
+                     //sql.add('update PedidosItens set Valor_TotalNota = cast(:pTotal / :pProd as decimal(18, 12)) * Valor_Total where Pedido = :pPed');
+                     sql.add('update PedidosItens set Valor_TotalNota = Valor_Total * (:pTotal / :pProd) where Pedido = :pPed');
+                     parambyname('pProd').asfloat  := PedidosValor_TotalProdutos.asfloat;
+                     parambyname('pTotal').asfloat := PedidosValor_TotalNota.asfloat;
+                     parambyname('pPed').value     := PedidosNumero.value;
+                     execute;
+                end;
              end;
 
              Pedidos.EnableControls;

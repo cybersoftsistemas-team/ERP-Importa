@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DB, DBAccess, MSAccess, Vcl.StdCtrls, Mask,  DBCtrls, Grids, DBGrids, Vcl.ComCtrls, Vcl.ExtCtrls,
-  Buttons, RXDBCtrl, ImgList, Menus, RXCtrls, ClipBrd, RxLookup, RxToolEdit, system.UITypes, MemDS;
+  Buttons, RXDBCtrl, ImgList, Menus, RXCtrls, ClipBrd, RxLookup, RxToolEdit, system.UITypes, MemDS, RxDBComb;
 
 type
   TConfig_TipoNota = class(TForm)
@@ -452,6 +452,10 @@ type
     StaticText77: TStaticText;
     DBLookupComboBox31: TDBLookupComboBox;
     DBCheckBox71: TDBCheckBox;
+    cTipoDeb: TRxDBComboBox;
+    StaticText78: TStaticText;
+    StaticText79: TStaticText;
+    cTipoCred: TRxDBComboBox;
     procedure FormShow(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -1137,6 +1141,8 @@ begin
            cCSTCOFINS.Enabled       := TipoNotaSaida_Entrada.Value = 0;
            lCSTPIS.Enabled          := TipoNotaSaida_Entrada.Value = 0;
            lCSTCOFINS.Enabled       := TipoNotaSaida_Entrada.Value = 0;
+           cTipoDeb.Enabled         := TipoNotaSaida_Entrada.Value = 1;
+           cTipoCred.Enabled        := TipoNotaSaida_Entrada.Value = 0;
 
            CSTPIS.SQL.Clear;
            CSTCOFINS.SQL.Clear;

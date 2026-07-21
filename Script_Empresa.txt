@@ -3073,3 +3073,29 @@ go
 --[10/07/2026 11:50:00]
 alter table NotasServico add Servico_Nacional varchar(6)
 go
+
+--[17/07/2026 09:43:00]
+alter table TipoNota add Entrega_Futura bit
+go
+update TipoNota set Entrega_Futura = 0
+go
+alter table Pedidos add Entrega_Futura bit
+go
+update Pedidos set Entrega_Futura = 0
+go
+alter table NotasFiscais add Entrega_Futura bit
+go
+update NotasFiscais set Entrega_Futura = 0
+go
+alter table TipoNota add Tipo_NFDebito smallint
+                        ,Tipo_NFCredito smallint
+go 
+
+--[21/07/2026 10:35:00]
+alter table TipoNota drop column Entrega_Futura
+go
+alter table Pedidos drop column Entrega_Futura
+go
+alter table NotasFiscais drop column Entrega_Futura
+go
+

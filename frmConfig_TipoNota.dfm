@@ -192,7 +192,7 @@ object Config_TipoNota: TConfig_TipoNota
       Enabled = False
       object cEntrada_Saida: TDBRadioGroup
         Left = 3
-        Top = 106
+        Top = 122
         Width = 121
         Height = 70
         Caption = ' Tipo de Nota'
@@ -293,9 +293,9 @@ object Config_TipoNota: TConfig_TipoNota
       end
       object GroupBox2: TGroupBox
         Left = 319
-        Top = 106
+        Top = 122
         Width = 277
-        Height = 466
+        Height = 473
         Caption = ' Par'#226'metros Diversos '
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
@@ -306,7 +306,7 @@ object Config_TipoNota: TConfig_TipoNota
         TabOrder = 7
         object cNFReferencia: TDBCheckBox
           Left = 6
-          Top = 52
+          Top = 122
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -323,7 +323,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object cApuracaoPISCOFINS: TDBCheckBox
           Left = 6
-          Top = 70
+          Top = 140
           Width = 265
           Height = 17
           HelpType = htKeyword
@@ -341,7 +341,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object cGerarFinanceiro: TDBCheckBox
           Left = 6
-          Top = 88
+          Top = 158
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -376,7 +376,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox1: TDBCheckBox
           Left = 6
-          Top = 106
+          Top = 176
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -393,7 +393,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object cRelatorioVendas: TDBCheckBox
           Left = 6
-          Top = 124
+          Top = 194
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -410,7 +410,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox14: TDBCheckBox
           Left = 6
-          Top = 142
+          Top = 212
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -427,7 +427,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox29: TDBCheckBox
           Left = 6
-          Top = 34
+          Top = 104
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -444,7 +444,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object cICMSDestacar: TDBCheckBox
           Left = 6
-          Top = 160
+          Top = 230
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -461,7 +461,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox13: TDBCheckBox
           Left = 6
-          Top = 178
+          Top = 248
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -478,7 +478,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox30: TDBCheckBox
           Left = 6
-          Top = 196
+          Top = 34
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -495,7 +495,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox33: TDBCheckBox
           Left = 6
-          Top = 214
+          Top = 52
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -512,7 +512,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox48: TDBCheckBox
           Left = 6
-          Top = 232
+          Top = 265
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -529,7 +529,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox49: TDBCheckBox
           Left = 6
-          Top = 250
+          Top = 283
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -546,7 +546,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox50: TDBCheckBox
           Left = 6
-          Top = 268
+          Top = 301
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -563,7 +563,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox51: TDBCheckBox
           Left = 6
-          Top = 287
+          Top = 320
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -580,7 +580,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox53: TDBCheckBox
           Left = 6
-          Top = 306
+          Top = 339
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -597,7 +597,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox55: TDBCheckBox
           Left = 6
-          Top = 325
+          Top = 356
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -608,7 +608,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object cRemessa: TDBCheckBox
           Left = 6
-          Top = 344
+          Top = 68
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -619,7 +619,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox35: TDBCheckBox
           Left = 6
-          Top = 363
+          Top = 374
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -630,7 +630,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox36: TDBCheckBox
           Left = 6
-          Top = 382
+          Top = 393
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -641,7 +641,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object DBCheckBox38: TDBCheckBox
           Left = 6
-          Top = 401
+          Top = 412
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -652,7 +652,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object cEstDevol: TDBCheckBox
           Left = 6
-          Top = 420
+          Top = 431
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -663,7 +663,7 @@ object Config_TipoNota: TConfig_TipoNota
         end
         object cDevImp: TDBCheckBox
           Left = 6
-          Top = 439
+          Top = 86
           Width = 265
           Height = 17
           Alignment = taLeftJustify
@@ -675,7 +675,7 @@ object Config_TipoNota: TConfig_TipoNota
       end
       object GroupBox3: TGroupBox
         Left = 601
-        Top = 106
+        Top = 122
         Width = 137
         Height = 285
         Caption = 'Campos Vis'#237'veis DANFE '
@@ -875,7 +875,7 @@ object Config_TipoNota: TConfig_TipoNota
       end
       object DBRadioGroup1: TDBRadioGroup
         Left = 3
-        Top = 184
+        Top = 200
         Width = 121
         Height = 70
         Caption = ' PIS/COFINS Entrada'
@@ -898,7 +898,7 @@ object Config_TipoNota: TConfig_TipoNota
       end
       object DBRadioGroup2: TDBRadioGroup
         Left = 3
-        Top = 504
+        Top = 527
         Width = 311
         Height = 68
         Caption = 'C'#225'lculo do ICMS Operacional'
@@ -921,7 +921,7 @@ object Config_TipoNota: TConfig_TipoNota
       end
       object DBRadioGroup3: TDBRadioGroup
         Left = 3
-        Top = 347
+        Top = 363
         Width = 311
         Height = 138
         Caption = 'Valor Unit'#225'rio do Produto'
@@ -950,7 +950,7 @@ object Config_TipoNota: TConfig_TipoNota
       end
       object cFinalidade: TDBRadioGroup
         Left = 128
-        Top = 106
+        Top = 123
         Width = 185
         Height = 210
         Caption = ' Finalidade da Mercadoria '
@@ -982,6 +982,118 @@ object Config_TipoNota: TConfig_TipoNota
           '6'
           '9')
         OnChange = cFinalidadeChange
+      end
+      object cTipoDeb: TRxDBComboBox
+        Left = 130
+        Top = 96
+        Width = 602
+        Height = 21
+        DataField = 'Tipo_NFDebito'
+        DataSource = Dados.dsTipoNota
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        Items.Strings = (
+          '01=Transfer'#234'ncia de cr'#233'ditos para Cooperativas'
+          '02=Anula'#231#227'o de Cr'#233'dito por Sa'#237'das Imunes/Isentas'
+          '03=D'#233'bitos de notas fiscais n'#227'o processadas na apura'#231#227'o'
+          '04=Multa e juros'
+          '05=Transfer'#234'ncia de cr'#233'dito na sucess'#227'o'
+          '06=Pagamento antecipado'
+          '07=Perda em estoque (Perecimento, Perda, Furto, Roubo)'
+          '08=Desenquadramento do SN')
+        ParentFont = False
+        TabOrder = 14
+        Values.Strings = (
+          '1'
+          '2'
+          '3'
+          '4'
+          '5'
+          '6'
+          '7'
+          '8')
+      end
+      object StaticText78: TStaticText
+        Left = 3
+        Top = 96
+        Width = 125
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Tipo de NF de D'#233'bito'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 15
+        Transparent = False
+        StyleElements = []
+      end
+      object StaticText79: TStaticText
+        Left = 3
+        Top = 73
+        Width = 125
+        Height = 21
+        AutoSize = False
+        BevelInner = bvNone
+        BevelKind = bkSoft
+        BevelOuter = bvSpace
+        BorderStyle = sbsSunken
+        Caption = 'Tipo de NF de Cr'#233'dito'
+        Color = 7293440
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -11
+        Font.Name = 'Calibri'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+        TabOrder = 16
+        Transparent = False
+        StyleElements = []
+      end
+      object cTipoCred: TRxDBComboBox
+        Left = 130
+        Top = 73
+        Width = 602
+        Height = 21
+        DataField = 'Tipo_NFCredito'
+        DataSource = Dados.dsTipoNota
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Font.Style = [fsBold]
+        Items.Strings = (
+          '01=Multa e juros'
+          
+            '02=Apropria'#231#227'o de cr'#233'dito presumido de IBS sobre o saldo devedor' +
+            ' na ZFM (art. 450, '#167' 1'#186', LC 214/25)'
+          
+            '03=Retorno por recusa na entrega ou por n'#227'o localiza'#231#227'o do desti' +
+            'nat'#225'rio na tentativa de entrega'
+          '04=Redu'#231#227'o de valores'
+          '05=Transfer'#234'ncia de cr'#233'dito na sucess'#227'o'
+          '06=Retorno por recusa parcial na entrega')
+        ParentFont = False
+        TabOrder = 17
+        Values.Strings = (
+          '1'
+          '2'
+          '3'
+          '4'
+          '5'
+          '6')
       end
     end
     object TabSheet5: TTabSheet

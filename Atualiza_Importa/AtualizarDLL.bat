@@ -1,0 +1,1 @@
+NFe_Util_2Gv5.02b.exe /verysilent /components="DLL" /DIR=".\teste"

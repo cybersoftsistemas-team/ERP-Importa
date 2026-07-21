@@ -269,6 +269,10 @@ object Pedido_Outros: TPedido_Outros
     TabOrder = 3
     object TabSheet1: TTabSheet
       Caption = 'Capa do Pedido'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -2067,6 +2071,10 @@ object Pedido_Outros: TPedido_Outros
       Caption = 'Informa'#231#245'es Complementares'
       Enabled = False
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cInfComplementares: TDBMemo
         AlignWithMargins = True
         Left = 3
@@ -2118,6 +2126,10 @@ object Pedido_Outros: TPedido_Outros
     object TabSheet3: TTabSheet
       Caption = 'Lista de Pedidos'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Grade: TDBGrid
         Left = 0
         Top = 0

@@ -162,6 +162,9 @@ begin
      aIni.WriteBool('ATUALIZA','MostrarAtual', true);
      aIni.Free;
 
+     // Roda o .BAT de atualização da DLL.
+     //ShellExecute(0, nil, 'cmd.exe', '/C AtualizarDLL.bat', nil, SW_HIDE);
+     
      // Roda o atualizador.
      ShellExecute(Handle, 'Open', PChar(ExtractFilePath(Application.ExeName)+'Cybersoft_Atualiza.EXE'), PChar(''), nil, SW_SHOWNORMAL);
      Application.Terminate;

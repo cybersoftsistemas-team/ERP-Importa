@@ -1537,7 +1537,7 @@ begin
       mServidor       := Dados.Banco.Server;
       mServidorBox    := Dados.Banco.Server;
       mINI            := ExtractFilePath(UpperCase(Application.ExeName))+'ImportaServidor.ini';
-      mVersao_Sistema := 'Cybersoft v2025';
+      mVersao_Sistema := 'Cybersoft v2026';
       mDataCenter     := 0;
       corlabel        := ColorToString($006F4A00);
 

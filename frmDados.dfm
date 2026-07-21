@@ -15471,13 +15471,14 @@ object Dados: TDados
     Top = 340
   end
   object Banco_Empresas: TMSConnection
-    Database = 'Cybersoft_Ecotrading'
+    Database = 'Cybersoft_PVM_Filial1'
     Options.PersistSecurityInfo = True
     Options.ApplicationName = 'Cybersoft ERP Importa'
     Options.Provider = prSQL
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
+    Connected = True
     LoginPrompt = False
     Left = 87
     Top = 14
@@ -20502,7 +20503,7 @@ object Dados: TDados
         'S, Formula_BCIS, Calculo_BCIS, Formula_VlrIS, Calculo_VlrIS, Cla' +
         'ssificacao_Tributaria, IBS_Isencao, IBS_Imunidade, IBS_Diferido,' +
         ' IBS_Suspensao, CBS_Isencao, CBS_Imunidade, CBS_Diferido, CBS_Su' +
-        'spensao, Visiveis_II)'
+        'spensao, Visiveis_II, Tipo_NFDebito, Tipo_NFCredito)'
       'VALUES'
       
         '  (:Codigo, :Saida_Entrada, :Descricao, :Inf_Complementares, :Li' +
@@ -20579,7 +20580,7 @@ object Dados: TDados
         'S, :Calculo_BCIS, :Formula_VlrIS, :Calculo_VlrIS, :Classificacao' +
         '_Tributaria, :IBS_Isencao, :IBS_Imunidade, :IBS_Diferido, :IBS_S' +
         'uspensao, :CBS_Isencao, :CBS_Imunidade, :CBS_Diferido, :CBS_Susp' +
-        'ensao, :Visiveis_II)')
+        'ensao, :Visiveis_II, :Tipo_NFDebito, :Tipo_NFCredito)')
     SQLDelete.Strings = (
       'DELETE FROM TipoNota'
       'WHERE'
@@ -20736,7 +20737,8 @@ object Dados: TDados
         '= :IBS_Imunidade, IBS_Diferido = :IBS_Diferido, IBS_Suspensao = ' +
         ':IBS_Suspensao, CBS_Isencao = :CBS_Isencao, CBS_Imunidade = :CBS' +
         '_Imunidade, CBS_Diferido = :CBS_Diferido, CBS_Suspensao = :CBS_S' +
-        'uspensao, Visiveis_II = :Visiveis_II'
+        'uspensao, Visiveis_II = :Visiveis_II, Tipo_NFDebito = :Tipo_NFDe' +
+        'bito, Tipo_NFCredito = :Tipo_NFCredito'
       'WHERE'
       '  Codigo = :Old_Codigo')
     SQLRefresh.Strings = (
@@ -20811,7 +20813,8 @@ object Dados: TDados
         'lrCBS, Formula_BCIS, Calculo_BCIS, Formula_VlrIS, Calculo_VlrIS,' +
         ' Classificacao_Tributaria, IBS_Isencao, IBS_Imunidade, IBS_Difer' +
         'ido, IBS_Suspensao, CBS_Isencao, CBS_Imunidade, CBS_Diferido, CB' +
-        'S_Suspensao, Visiveis_II FROM TipoNota'
+        'S_Suspensao, Visiveis_II, Tipo_NFDebito, Tipo_NFCredito FROM Tip' +
+        'oNota'
       'WHERE'
       '  Codigo = :Codigo')
     SQLLock.Strings = (
@@ -21932,6 +21935,12 @@ object Dados: TDados
     end
     object TipoNotaVisiveis_II: TBooleanField
       FieldName = 'Visiveis_II'
+    end
+    object TipoNotaTipo_NFDebito: TSmallintField
+      FieldName = 'Tipo_NFDebito'
+    end
+    object TipoNotaTipo_NFCredito: TSmallintField
+      FieldName = 'Tipo_NFCredito'
     end
   end
   object CondicaoCambial: TMSQuery

@@ -593,6 +593,8 @@ var
   ide_xJust,
   ide_dEmi310,
   ide_dSaiEnt310,
+  ide_tpNFCred,
+  ide_tpNFDeb,
   ide_verProc:widestring;
 
   ide_cUF,
@@ -3973,12 +3975,16 @@ begin
                ide_finNFe := 1;
             if PedidosComplementar.AsBoolean then 
                ide_finNFe := 2;
-            if PedidosAjuste.AsBoolean       then 
+            if PedidosAjuste.AsBoolean then 
                ide_finNFE := 3;
-            if PedidosDevolucao.AsBoolean    then 
+            if PedidosNFE_Estorno.AsBoolean then 
+               ide_finNFE := 3;
+            if PedidosDevolucao.AsBoolean then 
                ide_finNFE := 4;
-            if PedidosNFE_Estorno.AsBoolean  then 
-               ide_finNFE := 3;
+            if TipoNotaTipo_NFCredito.asinteger <> 0 then 
+               ide_finNFE := 5;
+            if TipoNotaTipo_NFDebito .asinteger <> 0 then 
+               ide_finNFE := 6;
             
             PedidosItens.First;
             while not PedidosItens.Eof do begin
@@ -4001,11 +4007,15 @@ begin
                ide_natOp := UpperCase(RemoveCaracterXML(Copy(TipoNotaDescricao_CFOP_Nota.AsString,1,60)));
 
             If PedidosSaida_Entrada.Value = 0 then begin
-               ide_mode  := EmpresasNFEletronica_ModeloEntrada.AsInteger;
-               ide_serie := EmpresasNFEletronica_SerieEntrada.AsInteger;
+               ide_mode     := EmpresasNFEletronica_ModeloEntrada.AsInteger;
+               ide_serie    := EmpresasNFEletronica_SerieEntrada.AsInteger;
+               ide_tpNFDeb  := '';
+               ide_tpNFCred := formatfloat('00', TipoNotaTipo_NFCredito.asinteger);
             end else begin
-               ide_mode  := EmpresasNFEletronica_Modelo.AsInteger;
-               ide_serie := EmpresasNFEletronica_Serie.AsInteger;
+               ide_mode     := EmpresasNFEletronica_Modelo.AsInteger;
+               ide_serie    := EmpresasNFEletronica_Serie.AsInteger;
+               ide_tpNFDeb  := formatfloat('00', TipoNotaTipo_NFDebito.asinteger);
+               ide_tpNFCred := ''
             End;
 
             ide_nNF     := PedidosNota.Value;
@@ -4121,33 +4131,7 @@ begin
             end;
 
             // Identificação da NFE.
-            {
-            ide := Util.identificador202006(ide_cUF
-                                           ,ide_cNF
-                                           ,ide_NatOP
-                                           ,ide_Mode
-                                           ,ide_Serie
-                                           ,ide_nNF
-                                           ,ide_dEmi310
-                                           ,ide_dSaiEnt310
-                                           ,ide_tpNF
-                                           ,ide_Dest
-                                           ,ide_cMunFG
-                                           ,ide_NFRef
-                                           ,ide_tpImp
-                                           ,iif(not PedidosDPEC.asboolean, InttoStr(ide_tpEmis), 4)
-                                           ,ide_cDV
-                                           ,ide_tpAmb
-                                           ,ide_finNFe
-                                           ,ide_Final
-                                           ,ide_Pres
-                                           ,ide_procEmi
-                                           ,ide_verProc
-                                           ,''
-                                           ,''
-                                           ,ide_Interm);
-            }
-            ide := Util.identificadorRTCv130(ide_cUF
+            ide := Util.identificadorRTCv140(ide_cUF
                                             ,ide_cNF
                                             ,ide_NatOP
                                             ,ide_Mode
@@ -4170,13 +4154,14 @@ begin
                                             ,ide_verProc
                                             ,''
                                             ,''
-                                            ,ide_Interm
-                                            ,''
-                                            ,''
-                                            ,''
-                                            ,''
-                                            ,''
-                                            ,'');
+                                            ,ide_Interm                                                      // informar o indicador de intermediador/marketplace.
+                                            ,''                                                              // informar o código do Município de Ocorrência do Fato Gerador do IBS/CBS.
+                                            ,ide_tpNFDeb                                                     // informar o Tipo de Nota de Débito.
+                                            ,ide_tpNFCred                                                    // informar o Tipo de Nota de Crédito.
+                                            ,''                                                              // informar o grupo gCompraGov - Compra Governamental.
+                                            ,''                                                              // informar a(s) chave(s) das NFe(s) gPagAntecipado - Notas de antecipação de pagamentos.
+                                            ,''                                                              // Data da previsão de entrega ou disponibilização do bem no formato AAAA-MM-DD.
+                                            ,'');                                                            // Código indicador do local da operação de fornecimento.
                                             
             // Dados do emitente.
             emi         := '';

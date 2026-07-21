@@ -1,0 +1,921 @@
+versao 4.01i
+
+
+13/12/2023 [4.0.1.9]
+
+  . Correção no tratamento de caracteres multibyte no processo de compactação gZip 
+  . Alteração para aceitar CPF no WS de distribuição do CT-e
+  . Alteração para alertar que inexiste envio assíncrono na versão 4.00
+  . Alteração do envEmail e envEmail2 para permitir a informação do TLS
+
+22/08/2023 [4.0.1.8]
+
+  . CriaProcCTe atualizado para aceitar a CT-e da versão 4.00
+
+27/07/2023 [4.0.1.7]
+
+  . Correção da literal da descEvento do evento Cancelamento de Prestação em Desacordo para o MT
+
+
+27/06/2023 [4.0.1.6]
+
+  . Eliminação do tratamento do retorno fora de padrão do WS RecepcaoCTeOS de MG
+  . Atualização do arquivo de URL dos Web Services da versão 4.00 (arquivo wsCTe4v.xml)
+
+29/05/2023 [4.0.1.5]
+
+  . Correção do tag do evento Cancelamento de Prestação em Desacordo
+
+24/05/2023 [4.0.1.4]
+
+  . Tratamento de parâmetros vazios recebidos de aplicativo Delphi no Evento Insucesso Entrega
+  . Alteração para gerar a tag nTentativa com 3 dígitos.
+
+22/05/2023 [4.0.1.3]
+
+  . Tratamento da versão 4.00 na geração do DACTE 
+
+20/05/2023 [4.0.1.2]
+
+  . Correção da montagem do procEventoCTe
+  . Alteração na validação do schema XML (include/import)
+  . Alteração na gravação do log de erro
+
+08/05/2023 [4.0.1.1]
+
+  . Alteração para suportar URL distintas dos Web Services da versão 4.00 (arquivo wsCTe4v.xml)
+    
+    ***Necessário o acréscimo/atualização a medida que as UF disponibilizarem os WS***
+
+   <servico IdServico="">         <== nome interno da DLL do servico
+      <nomeServico></nomeServico> <== <service name="">
+      <metodo></metodo>           <== <operation name="">
+      <nameSpace></nameSpace>     <== <definition targetNamespace="">
+      <soapAction></soapAction>   <== <soapAction="">
+      <xmlEntrada></xmlEntrada>
+      <xmlSaida></xmlSaida>
+      <urlHomologacao></urlHomologacao>
+      <urlProducao></urlProducao>
+   </servico>
+
+
+01/05/2023 [4.0.1.0]
+
+  . Evento Insucesso na Entrega CT-e
+
+     string EnviaIECTe(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, int nroIECTe, string chaveCTe, string nProtocoloCTe, string dhTentativaEntrega, int nroTentativa, int tpMotivo, string xJustMotivo, double latitude_Opc, double longitude_Opc, string hashTentativaEntrega_Opc, string dhHashTentativaEntrega_Opc, string XMLInfEntrega, string dhEvento, out string nProtocolo, out string dProtocolo, string proxy, string usuario, string senha, string licenca);
+
+  . Evento Cancela Insucesso na Entrega CT-e
+
+      string EnviaCancIECTe(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, int nroCancIECTe, string chaveCTe, string nProt, string nProtIE, string dhEvento, out string nProtocolo, out string dProtocolo, string proxy, string usuario, string senha, string licenca);
+
+
+20/03/2023 [4.0.0.0]
+
+  . Alteração na chamada do WS (abandono do classe proxy .NET para todas as UF)
+  
+  . Eliminação do SoapHeader para versão 4.00
+  
+  . tratamento para diferenciar versão 4.00 das demais versões
+  
+  . acréscimo da versão 4.00 no schema XML
+  
+  . tratamento para nseq com 3 dígitos
+  
+  . Evento de cancelamento de evento de prestação em desacordo
+  
+  . informação do CT-e de substituição
+
+    string infCteSub(string chCte, string indAlteraToma_Opc)
+
+
+24/10/2022 [3.0.10a]
+
+   . alteração da forma de consumir os WS para o ambiente de homologação do MT
+
+
+27/05/2022 [3.0.10]
+
+   . acréscimo da emitenteCRT para gerar o grupo emit com a tag CRT
+   
+     string emitenteCRT(string _CNPJ, string _IE, string _IEST_Opc, string _xNome, string _xFant_Opc, string _xLgr, string _nro, string _xCpl_Opc, string _xBairro, string _cMun, string _xMun, string _CEP_Opc, string _UF, string _fone_Opc, string _CRT_Opc)
+   
+
+07/04/2022 [3.0.9.5]
+
+  . alteração para informar o CST no quadro "Classificação Tributária do Serviço" do DACTE para emissores optantes do Simples Nacional.
+
+09/12/2021 [3.0.9.4]
+
+   . revisão do consulta do CT-e no CriaProcCTe
+
+14/07/2021 [3.0.9.3]
+
+  . adequação da geração do código de barra a partir da 2ª página quando houver QRCode
+
+26/06/2021 [3.0.9.2]
+
+  . alteração para aproveitar os quadros do seguro do DACTE para XML da versão 3.0 que não tem mais a informação do seguro
+
+27/03/2021 [3.0.9.1]
+
+  . alteração para não gerar a tag UF quando não informada no grupo infVeiculo do GTVe
+
+    string infVeiculo(string placa, string UF_Opc, string RNTRC_Opc)
+
+  . alteração para não gerar a tag UF quando não informada no grupo veic do CTeOS
+
+    string veicOS(string placa, string RENAVAM_Opc, string propOS_Opc, string UF_Opc)
+
+  . atualização dos schemas XML
+
+
+19/08/2020 [3.0.9.0]
+
+  . envio de GTV-e sincrono
+
+    string EnviaGTVe(string siglaWS, string versao, string nomeCertificado, string GTVe, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, out string GTVeAssinado, out string nProtocolo, out string dProtocolo, string proxy, string usuario, string senha, string licenca)        
+
+  . atualização do validaXML para aceitar o GTV-e e procGTVe:
+
+    .. GTV-e (GTVe_v300.xsd) - tipoXML=84 
+    .. procGTV-e (procGTVe_v300.xsd)- tipoXML=85
+
+  . geração do XML do GTV-e (modelo 64):
+
+    string GTVe(string versao, string Id, string ide, string compl_Opc, string emit, string rem, string dest, string origem_Opc, string destino_Opc, string detGTV, string autXML_Opc, string infRespTec_Opc, string infSuplCTe_Opc)
+    string ideGTVe(int cUF, int cCT, string CFOP, string natOp, int mod, int serie, int nCT, string dhEmi, int tpImp, int tpEmis, int cDV, int tpAmb, int tpCTe, string verProc, string cMunEnv, string xMunEnv, string UFEnv, string modal, int tpServ, int indIEToma, string dhSaidaOrig, string dhChegadaDest, string tomador, string dhCont_Opc, string xJust_Opc);
+    string tomadorGVTe(int toma, string CNPJ, string CPF, string IE_Opc, string xNome, string xFant_Opc, string fone_Opc, string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string cPais_Opc, string xPais_Opc, string email_Opc)
+    string origem(string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string fone_Opc)
+    string destino(string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string fone_Opc)
+    string detGTV(string infEspecie, string qCarga, string infVeiculo)
+    string infEspecie(string tpEspecie, string vEspecie, string tpNumerario, string xMoedaEstr_Opc)
+    string infVeiculo(string placa, string UF, string RNTRC_Opc)
+    string infDocRefChBPe(string chBPe)
+    string comp(string tpComp, double vComp, string xComp)
+    string infGTVe(string chCTe, string Comp)
+    string infCTeOSNormNT202002(string infServico, string infDocRef_Opc, string seg_Opc, string infModal_Opc, string infCteSub_Opc, string refCTeCanc_Opc, string cobr_Opc, string infGTVe_Opc)
+
+12/03/2020 [3.0.8.4]
+
+  . alteração para mostrar o conteúdo da tag vICMSSTRet e vICMSOutraUF no quadro VALOR DO ICMS do DACTE, a descrição do quadro também será alterada para indicar o conteúdo que está sendo mostrado; exemplo: quando for mostrado o vICMSSTRet, a descrição será "VALOR ICMS ST".
+
+07/01/2020 [3.0.8.3]
+
+  . correção para gerar o sign no QRCode para tpEmis=4 (EPEC)
+
+07/09/2019 [3.0.8.2]
+
+  . atualização de schema XML
+  . atualização da geração do DACTE para suportar o QRCode
+
+03/08/2019 [3.0.8.1]
+
+  . alteração das mensagens dos eventos comprovante de entrega e cancelamento do comprovante de entrega decorrentes da alteração do schema XML;
+
+  . envio de CT-e sincrono
+
+    string EnviaCTeSinc(string siglaWS, string versao, string nomeCertificado, string CTe, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, out string CTeAssinado, out string nProtocolo, out string dProtocolo, string proxy, string usuario, string senha, string licenca)
+
+
+31/07/2019 [3.0.8.0]
+
+  . acréscimo da tag ICMSST evento EPEC
+
+  . geração do QRCode no XML (gerar o grupo infCTeSupl e consolidar o  CTe / CTeOS)
+
+    string infCTeSupl(string URL, string chaveCTe, int tipoAmbiente, string nomeCertificado, out string qrCode, out int resultado, out string msgResultado)
+    string CTe_v3a(string versao, string Id, string ide, string compl_Opc, string emit, string rem_Opc, string exped_Opc, string receb_Opc, string dest_Opc, string vPrest, string imp, string infCTe, string autXML_Opc, string infRespTec_Opc, string infSuplCTe_Opc)
+    string CTeOS_v3a(string versao, string Id, string ide, string complOpc, string emit, string tomaOpc, string vPrest, string imp, string infCTe, string autXMLOpc, string infRespTecOpc, string infSuplCTeOpc)
+
+  . exclusão da tag pICMSInterPart (a tag não será gerada quando o valor informado for zero) 
+
+  . evento comprovante de entrega (calcular o sha1 do arquivo do comprovante de entrega, concatenar com a chave do CT-e e calcular o sha1 novamente, gerar o grupo infEntrega com as chaves das notas fiscais e enviar o evento)
+
+    string EnviaCECTE(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, int nroCECTe, string chaveCTe, string nProtocoloCTe, string dhEntrega, string nDoc, string xNome, double latitude, double longitude, string hashEntrega, string dhHashEntrega, string XMLInfEntrega, string dhEvento, out string nProtocolo, out string dProtocolo, string proxy, string usuario, string senha, string licenca)
+    string infEntrega(string chNFe)
+    string calcSha1(string texto)
+
+
+   . evento cancelamento do comprovante de entrega
+
+     string EnviaCancCE(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, int nroCancCE, string chaveCTe, string nProtocoloCTe, nProtocoloCE, string dhEvento, out string nProtocolo, out string dProtocolo, string proxy, string usuario, string senha, string licenca)
+
+
+23/05/2019 [3.0.7.0]
+
+   . alteração para forçar o algoritmo sha1 na assinatura digital
+   . nova funcionalidade para gerar o grupo infRespTec
+
+    infRespTec2(string CNPJ, string xContato, string email, string fone, string idCSRT_Opc, string CSRT_Opc, string chaveCTe_Opc)
+
+25/02/2016 - [3.0.6.3]
+
+   . correção para suportar o TLS 1.2 na consulta do CT-e utilizada pelo criaProcCTe
+
+19/10/2018 - [3.0.6.2]
+
+   . correção para não gerar a tag dhViagem quando omitida:
+
+     string infFretamento(string tpFretamento, string dhViagem_Opc)
+
+versao 3.06a
+
+04/10/2018 - [3.0.6.1]
+
+   . alteração para permitir informar um CPF (11 dígitos) no parâmetro CNPJ
+
+    string infCteSub_refNF300(string chCte, string CNPJ, string mod, string serie, string subSerie_Opc, string nro, double valor, DateTime dEmi, string indAlteraToma_Opc)
+    string infCteSub_refNF(string chCte, string CNPJ, string mod, string serie, string subSerie_Opc, string nro, double valor, DateTime dEmi)
+
+
+   . acréscimo das seguintes funcionalidades para geração do XML (NT 2018/002):
+
+      string infRespTec(string CNPJ, string xContato, string email, string fone, string idCSRT_Opc, string hashCSRT_Opc)
+      string CTe_2018002(string versao, string Id, string ide, string compl_Opc, string emit, string rem_Opc, string exped_Opc, string receb_Opc, string dest_Opc, string vPrest, string imp, string infCTe, string autXML_Opc, string infRespTec_Opc)
+      string CTeOS_2018002(string versao, string Id, string ide, string compl_Opc, string emit, string tomaOpc, string vPrest, string imp, string infCTe, string autXML_Opc, string infRespTec_Opc)
+      string infFretamento(string tpFretamento, string dhViagem)
+      string rodOS_2018002(string versaoModal, string TAF, string NroRegEstadual, string veicOS_Opc, string infFretamento_Opc)
+
+   . atualização do schema XML (NT 2018/002)
+
+versao 3.05b
+
+10/06/2018 - [3.0.5b]
+
+    correção do retorno do distNSU
+
+
+13/02/2018 - [3.0.5a]
+
+    correção do nome da tag dPrevAereo no aereo300
+
+15/01/2018 - [3.0.5]
+
+    atualização para suportar o TLS 1.2, esta versão requer Windows 7 ou superior (.NET 4.5 ou superior)
+
+28/11/2017 - [3.0.4a]
+
+    correção da funcionalidade infUnidCarga para gerar a tag qtdRat
+    correção da funcionalidade infUnidTransp para gerar a tag qtdRat
+ 
+
+23/10/2017 - [3.0.4]
+
+    acréscimo do string infCTeMultimodal(string chCte)
+    eliminação da literal fracionada do DACTE versão 3.00
+    correção da geração do infGlobalizado no infCTeNorm300
+
+30/09/2017 - [3.03] - acréscimo das seguintes funcionalidades (NT 2017/002):
+
+    string infCTeOSNormNT201702(string infServico, string infDocRef_Opc, string seg_Opc, string infModal_Opc, string infCteSub_Opc, string refCTeCanc_Opc, string cobr_Opc) 
+    string aquavNT201702(string versaoModal,double vPrest, double vAFRMM, string xNavio, string balsa_Opc, string nViag_Opc, string direc, string irin, string detCont_Opc, string tpNav_Opc);
+
+21/07/2017 - [3.0.2c] - Alteração
+
+      alteração para aceitar o modelo 67 na inutilização de numeração de CT-e
+
+20/06/2017 - [3.0.2b] - Alteração
+
+      alteração para tratar o cStat do retorno do lote para aceitar 104 - Lote Processado ou 100, 150, 301 e 302, pois existe diferença nos retornos das UF
+
+16/06/2017 - [3.0.2a] - Correções
+
+      correção da funcionalidade string infDocRef(string nDoc, string serie_Opc, string subSerie_Opc, string dEmi, string vDoc_Opc)
+      correção da funcionalidade string infCTeOSNorm(string infServico, string infDocRef_Opc, string seg_Opc, string infModal_Opc, string infCteSub_Opc, string refCTeCanc_Opc)
+
+14/06/2017 - [3.0.2a] - Correções
+
+      correção da funcionalidade string infPercurso string infPercurso(string UFPer)
+      alteração da funcionalidade string infCTeOSNorm(string infServico, string infDocRef_Opc, string seg_Opc, string infModal_Opc, string infCteSub_Opc, string refCTeCanc_Opc)
+
+03/06/2017 - [3.0.2] - acréscimo das seguintes funcionalidades:
+
+      string idDocAntEle300(string chCTe)
+      string fluxo300(string xOrig_Opc, string pass_Opc, string xDest_Opc, string xRota_Opc)
+      string infCteSub_refNFe300(string chCte, string refNFe, string indAlteraToma_Opc)
+      string infCteSub_refNF300(string chCte, string CNPJ, string mod, string serie, string subSerie_Opc, string nro, double valor, DateTime dEmi, string indAlteraToma_Opc)
+      string infCteSub_refCTe300(string chCte, string refCte, string indAlteraToma_Opc)
+      string infCteSub_refCTeAnu300(string chCte, string refCteAnu, string indAlteraToma_Opc)
+
+26/05/2017 - [3.0.1] - acréscimo da funcionalidade string infCteComp300(string chCTe)
+
+24/05/2017 - [3.0.0g] - Correções
+
+      alteração na montagem da mensagem do evento EPEC da versão 3.00
+
+23/05/2017 - [3.0.0f] - Correções
+
+      correção da montagem do procCTe do enviaCTeOS
+      alteração para eliminar as quebras de linhas no XML de retorno do WS distNSU      
+      alteração para tratar o dhEvento nos eventos Cancelamento, EPEC, CC, Registra Multimodal, EnviaPrestDesacordo, EnviaInfGTV, etc.
+
+04/05/2017 - [3.0.0e] - Alterações
+
+       alteração para aceitar a versão 3.00 no montaProcCTe
+       alteração para aceitar a versão 3.00 no enviaEPEC
+
+
+17-04-2017 - [3.0.0d] - Correções
+
+       correção para aceitar o modelo 67 na funcionalidade CriaChaveCTeNovo
+       alteração para não exigir o infModal no infCTeNorm300
+
+12-04-2017 - [3.0.0c] - Correções
+
+       correção para tratar a situação de ausência dos dados do remetente na geração do DACTE
+       correção para gerar o atributo versao na tag raiz do CTeOS na funcionalidade que consolida o XML do CTeOS
+
+22-02-2017 - [3.0.0b] - Correções:
+
+        correção do namespace do WS de distribuição de DF.
+
+10-02-2017 - [3.0.0a] - Correções:
+
+        tratamento do xObs do do infGlobalizado
+        alteração para validação do CT-e assinado.
+
+30-01-2017 - [3.0.0] - acréscimo das seguintes funcionalidade de geração do XML
+
+        Web Service - novas chamadas
+        -------------------------------------------------------------------------------------------------------
+        string EnviaPrestDesacordo(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, string chaveCTe, string CNPJTomador, string xObs, string dhEvento, out string nProtocolo, out string dProtocolo, string proxy, string usuario, string senha, string licenca);
+        string EnviaCTeOS(string siglaWS, string versao, string nomeCertificado, string CTeOS, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, out string CTeOSAssinado, out string nProtocolo, out string dProtocolo, string proxy, string usuario, string senha, string licenca);
+        string EnviaInfGTV(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, string chaveCTe, int nroInfGTV, string XMLInfGTV, string dhEvento, out string nProtocolo, out string dProtocolo, string proxy, string usuario, string senha, string licenca);
+        string consNSU(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, string CNPJ, string cUF, string NSU, out string verAplic, out string dhResp, out string ultNSU, out string maxNSU, out string NSUXML, out string schemaXML, string proxy, string usuario, string senha, string licenca);
+        string distNSU(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, string CNPJ, string cUF, string ultNSURecebido, out string verAplic, out string dhResp, out string ultNSU, out string maxNSU, out int qtdeDocto, string proxy, string usuario, string senha, string licenca);
+
+
+
+        CT-e - modelo 57
+        -------------------------------------------------------------------------------------------------------
+        string identificador300(int cUF, int cCT, string CFOP, string natOp, int mod, int serie, int nCT, string dhEmi, int tpImp, int tpEmis, int cDV, int tpAmb, int tpCTe, int procEmi, string verProc, string indGlobalizado, string cMunEnv, string xMunEnv, string UFEnv, string modal, int tpServ, string cMunIni, string xMunIni, string UFIni, string cMunFim, string xMunFim, string UFFim, int retira, string xDetRetira, int indIEToma, string tomador, string dhCont_Opc, string xJust_Opc);
+        string ideVFP300(int cUF, int cCT, string CFOP, string natOp, int mod, int serie, int nCT, string dhEmi, int tpImp, int tpEmis, int cDV, int tpAmb, int tpCTe, int procEmi, string verProc, string indGlobalizado, string xMunEnv, string modal, int tpServ, string xMunIni, string xMunFim, int retira, string xDetRetira, int indIEToma, string tomador, string dhCont_Opc, string xJust_Opc);
+        string emitente300(string CNPJ, string IE, string IEST_Opc, string xNome, string xFant_Opc, string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string fone_Opc);
+        string tomador300(int toma, string CNPJ, string CPF, string IE_Opc, string xNome, string xFant_Opc, string fone_Opc, string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string cPais_Opc, string xPais_Opc, string email_Opc);
+        string remetente300(string CNPJ, string CPF, string IE_Opc, string xNome, string xFant_Opc, string fone_Opc, string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string cPais_Opc, string xPais_Opc, string email_Opc);
+        string expedidor300(string CNPJ, string CPF, string IE_Opc, string xNome, string fone_Opc, string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string cPais_Opc, string xPais_Opc, string email_Opc);
+        string recebedor300(string CNPJ, string CPF, string IE_Opc, string xNome, string fone_Opc, string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string cPais_Opc, string xPais_Opc, string email_Opc);
+        string destinatario300(string CNPJ, string CPF, string IE_Opc, string xNome, string fone_Opc, string ISUF_Opc, string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string cPais_Opc, string xPais_Opc, string email_Opc);
+        string infCTeNorm300(string infCarga, string infDoc_Opc, string emiDocAnt_Opc, string infModal, string veicNovos_Opc, string cobr_Opc, string infCteSub_Opc, string infGlobalizado_Opc, string infCTeMultimodal_Opc);
+        string infCarga300(double vCarga_Opc, string prodPred, string xOutCat_Opc, string infQ, double vCargaAverb_Opc);
+        string rod300(string versaoModal, string RNTRC, string occ_Opc);
+        string aereo300(string versaoModal, string nMinu_Opc, string nOCA_Opc, DateTime dPrevAereo, string xDime_natCarga_Opc, string cInfManu_Opc, string CL_tarifa, string cTar_tarifa_Opc, double vTar_tarifa, string peri_Opc);
+        string peri300(string nOnu, string qTotEmb, double qTotProd, string uniAP);
+        string ImpICMSSN300(double _vTotTrib_Opc, string _infAdFisco_Opc, string ICMSUFFim_Opc);
+
+
+
+        CT-e OS - modelo 67
+        -------------------------------------------------------------------------------------------------------
+        string ideCTeOS(int cUF, int cCT, string CFOP, string natOp, int mod, int serie, int nCT, string dhEmi, int tpImp, int tpEmis, int cDV, int tpAmb, int tpCTe, int procEmi, string verProc, string cMunEnv, string xMunEnv, string UFEnv, string modal, int tpServ, int indIEToma, string cMunIni_Opc, string xMunIni_Opc, string UFIni_Opc, string cMunFim_Opc, string xMunFim_Opc, string UFFim_Opc, string infPercurso_Opc, string dhCont_Opc, string xJust_Opc);
+        string ideCTeOSVFP(int cUF, int cCT, string CFOP, string natOp, int mod, int serie, int nCT, string dhEmi, int tpImp, int tpEmis, int cDV, int tpAmb, int tpCTe, int procEmi, string verProc, string xMunEnv, string modal, int tpServ, int indIEToma, string xMunIni, string xMunFim, string infPercurso_Opc, string dhCont_Opc, string xJust_Opc);        string complCTeOS(string xCaracAd_Opc, string xCaracSer_Opc, string xEmi_Opc, string xObs_Opc, string obsCont_Opc, string obsFisco_Opc);
+        string tomadorCTeOS(string CNPJ, string CPF, string IE_Opc, string xNome, string xFant_Opc, string fone_Opc, string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string cPais_Opc, string xPais_Opc, string email_Opc);
+        string ImpICMS00CTeOS(string CST, double vBC, double pICMS, double vICMS, double vTotTrib_Opc, string infAdFisco_Opc, string ICMSUFFim_Opc, string infTribFed_Opc);
+        string ImpICMS45CTeOS(string CST, double vTotTrib_Opc, string infAdFisco, string ICMSUFFim_Opc, string infTribFed_Opc);
+        string ImpICMS90CTeOS(string CST, double pRedBC, double vBC, double pICMS, double vICMS, double vCred, double vTotTrib_Opc, string infAdFisco_Opc, string ICMSUFFim_Opc, string infTribFed_Opc);
+        string ImpICMSOutraUFCTeOS(string CST, double pRedBCOutraUF, double vBCOutraUF, double pICMSOutraUF, double vICMSOutraUF,double vTotTrib_Opc, string infAdFisco_Opc, string ICMSUFFim_Opc, string infTribFed_Opc);
+        string ImpICMSSNCTeOS(double vTotTrib_Opc, string infAdFisco_Opc, string ICMSUFFim_Opc, string infTribFed_Opc);
+        string InfTribFed(double vPIS_Opc, double vCOFINS_Opc, double vIR_Opc, double vINSS_Opc, double vCSLL_Opc);
+        string infServico(string xDescServ, string infQ_Opc);
+        string infQCteOS(string qCarga);
+        string infDocRef(string nDoc, string serie_Opc, string subSerie_Opc, string dEmi, string vDoc_Opc);
+        string segCTeOS(string respSeg, string xSeg_Opc, string nApol_Opc);
+        string infCteOSSub_refNFe(string chCte, string refNFe);
+        string infCteOSSub_refNF(string chCte, string CNPJ, string CPF, string mod, string serie, string subSerie_Opc, string nro, double valor, string dEmi);
+        string infCteOSSub_refCTe(string chCte, string refCte);
+        string infCteOSSub_refCTeAnu(string chCte, string refCteAnu);
+        string infCTeOSNorm(string infServico, string infDocRef_Opc, string seg_Opc, string infModal_Opc, string infCteSub_Opc);
+        string rodOS(string _versaoModal, string TAF, string NroRegEstadual, string veicOS_Opc);
+        string veicOS(string placa, string RENAVAM_Opc, string propOS_Opc, string UF);
+        string propOS(string CPF, string CNPJ, string TAF, string NroRegEstadual, string xNome, string IE_Opc, string UF_Opc, string tpProp);
+        string CTeOS(string versao, string Id, string ide, string complOpc, string emit, string tomaOpc, string vPrest, string imp, string infCTe, string autXMLOpc);        [DispId(633)]
+        string infPercurso(string UFPer);
+
+
+        funcionalidade de apoio do evento infGTV - CT-e OS - modelo 67
+        -------------------------------------------------------------------------------------------------------
+        string infGTV(string nDoc, string id, string serieOpc, string subSerieOpc, string dEmi, string nDV, string qCarga, string infEspecie, string CNPJRem, string CPFRem, string IERemOpc, string UFRem, string xNomeRem, string CNPJDest, string CPFDest, string IEDestOpc, string UFDest, string xNomeDest, string placaOpc, string UFOpc, string RNTRCOpc);
+        string infEspecie(string tpEspecie, string vEspecieOpc);
+
+
+versão 2.03b
+
+-------------------------------------------------------------------------------------------------------------------------
+22-12-2015 - [2.0.3.2-001] -  alteração para NÃO gerar a tag CST no grupo do ICMSSN (schema XML com erro)
+ 
+             atualização do pacote de schemaXML (versão de 30/11/2015)
+
+
+
+versão 2.03a
+
+-------------------------------------------------------------------------------------------------------------------------
+
+29-11-2015 - [2.0.3.1-001] -  Acéscimo das tags do fundo de combate a pobreza 
+ 
+             string ICMSUFFim(double vBCUFFim, double pFCPUFFim, double pICMSUFFim, double pICMSInter, double pICMSInterPart, double vFCPUFFim, double vICMSUFFim, double vICMSUFIni)
+
+             [2.0.3.1-002] - alteração para gerar a tag CST no grupo do ICMSSN
+
+             atualização do pacote de schemaXML
+ 
+
+versão 2.03
+
+-------------------------------------------------------------------------------------------------------------------------
+
+10-11-2015 - [2.0.3.0-001] -  Acéscimo da funcionalidade para gerar grupo ICMSUFFim
+ 
+             string ICMSUFFim(double vBCUFFim, double pICMSUFFim, double pICMSInter, double pICMSInterPart, double vICMSUFFim, double vICMSUFIni)
+
+
+             [2.0.3.0-002] - alterações para acréscimo do grupo ICMSUFFim
+
+             string ImpICMS00_NT2015003(string _CST, double _vBC, double _pICMS, double _vICMS, double _vTotTrib_Opc, string _infAdFisco_Opc, string ICMSUFFim_Opc);
+             string ImpICMS20_NT2015003(string _CST, double _pRedBC, double _vBC, double _pICMS, double _vICMS, double _vTotTrib_Opc, string _infAdFisco_Opc, string ICMSUFFim_Opc);
+             string ImpICMS45_NT2015003(string _CST, double _vTotTrib_Opc, string _infAdFisco, string ICMSUFFim_Opc);
+             string ImpICMS60_NT2015003(string _CST, double _vBCSTRet, double _pICMSSTRet, double _vICMSSTRet, double _vCred,double _vTotTrib_Opc, string _infAdFisco_Opc, string ICMSUFFim_Opc);
+             string ImpICMS90_NT2015003(string _CST, double _pRedBC, double _vBC, double _pICMS, double _vICMS, double _vCred,double _vTotTrib_Opc, string _infAdFisco_Opc, string ICMSUFFim_Opc);
+             string ImpICMSOutraUF_NT2015003(string _CST, double _pRedBCOutraUF, double _vBCOutraUF, double _pICMSOutraUF, double _vICMSOutraUF,double _vTotTrib_Opc, string _infAdFisco_Opc, string ICMSUFFim_Opc);
+             string ImpICMSSN_NT2015003(double _vTotTrib_Opc, string _infAdFisco_Opc, string ICMSUFFim_Opc);
+
+
+versão 2.02b
+
+-------------------------------------------------------------------------------------------------------------------------
+
+10-07-2015 - [2.0.2.2-001] - alteração das URL da SEFAZ/RS e atualização de schema XML Schemas XML CT-e : Pacote de Liberação 2.00a (ZIP) - (NT 2015.001) (Atualizado)
+             [2.0.2.2-002] - alteração para não gerar a tag forPag quando o valor for diferente de 0, 1 e 2 - NT 2015.001
+             [2.0.2.2-003] - alteração para aceitar a omissao do forPag no DACTE - NT 2015.001
+
+
+versão 2.02a
+
+-------------------------------------------------------------------------------------------------------------------------
+
+20-09-2013 - [2.0.0.2-001] - correção da montagem do grupo infDoc do grupo infCTeNorm;
+             [2.0.0.2-002] - correção da validação do buscaCTe;
+             [2.0.0.2-003] - correção da validação da versão do EnviaCTe;
+             
+24-09-2013 - [2.0.0.3-001] - correção da montagem do retorno do procEvento da CC-e;
+	     [2.0.0.3-002] - correção da montagem do retorno do procEvento do RegistroMultimodal;
+
+24-09-2013 - [2.0.0.4-001] - correção da montagem do retorno do procEvento da CC-e(parte 2);
+
+30-09-2013 - [2.0.0.5-001] - aperfeiçoamento para poder informar a quantidade casas decimais [qComDEC=n], onde n = 0 a 4;
+
+04-10-2013 - [2.0.0.6-001] - correção na montagem dos lacres dos containers [MOSTRACONTAINER]
+
+09-10-2013 - [2.0.1.0-001] - acréscimo da funcionalidade string valePed_2G(string CNPJForn, string nCompra, string CNPJPg_Opc, double vValePed) 
+
+18-10-2013 - [2.0.1.1-001] - correção da literal da condição de uso da CC-e (versão sem acentos)
+                           - atualização do PL de Schemas XML
+
+29-10-2013 - [2.0.1.2-001] - correção do tratamento do ICMSOutra na geração do EPEC
+
+31-10-2013 - [2.0.1.2-002] - correção do tratamento da versão na montagem do procCTe na funcionalidade CriaProcCTe
+
+18-11-2013 - [2.0.1.3-001] - correção para aceitar a versão "2.00" no MontaLoteCTe
+19-11-2013 - [2.0.1.3-002] - correção para aceitar a versão "2.00" no MontaProcCTe
+
+26-12-2013 - [2.0.1.4-001] - alteração para informar o vICMS do EPEC com o conteúdo da tag vICMSSTRet
+
+31-01-2014 -               - atualização das URL de Eventos do PR/MS/MG e MT              
+
+07-02-2014 - [2.0.1.5-001] - correção da geração da tag dEmi do grupo infOutros_2G
+
+13-02-2014 - [2.0.2.0-001] - acréscimo do envEmail2 que permite informar o tempo de time-out
+
+16-03-2014 - [2.0.2.0-002] - DACTE - aperfeiçoamento para permitir a quebra de linha nas informações complementare - (xObs) possibilidade de informar o string utilizado para indicar a quebra de linha
+                             [SALTALINHA=;] -> indica ";"  como identificador de quebra de linha
+                             [SALTALINHA=*/*] -> indica "*/*"  como identificador de quebra de linha
+                             [MOSTRAUNIDADECARGA] -> gerar as informações da unidade de carga em observações quando informado.
+                            
+30-03-2014 - [2.0.2.0-003] - correção do tratamento da versão na montagem do procCTe na funcionalidade CriaProcCTe
+                             
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+versão 1.5
+
+24-07-2013
+
+   . correção da geração do grupo idDocAntPap para gerar a tag subser ao invés de subSerie; [10/09/2013] [v2.0]
+   . aperfeiçpamento para aceitar uma lista de e-mail BCC;
+   . acréscimo da funcionalidade:
+   
+    int CriaCodigoBarrasContingencia(string cUF, int tipoEmissao, string CNPJ, double valorTotalCTe, int destaqueICMSproprio, int destaqueICMSST, DateTime dataEmissaoCTe, out string codigoBarras, out string msgResultado)
+    
+    parâmetros de entrada:
+    
+    - cUF = Código da UF do destinatário ou remetente do Documento Fiscal, informar 99 quando a tomador do exterior;
+    - tpEmis = Forma de Emissão do CT-e, informar 5-Contingência FS-DA.
+    - CNPJ = CNPJ do tomador, informar zeros no caso de tomador estrangeiro ou o CPF caso de tomador pessoa física;
+    - valorTotalCTe = Valor Total da CT-e (sem ponto decimal, informar sempre os centavos), correspondendo à tag vTPrest, de vPrest;
+    - destaqueICMSproprio = Destaque de ICMS próprio no CT-e no seguinte formato:
+       . 1 = há destaque de ICMS próprio. Ese caso ocorre quando se tiver a tag vICMS, a qual aparece quando esta é tag de:
+             .. ICMS00 (Prestação sujeito à tributação normal do ICMS), ou
+             .. ICMS20 (Prestação sujeito à tributação com redução de BC do ICMS), ou
+             .. ICMS90 (ICMS Outros)
+       . 2 = não há destaque de ICMS próprio. Esse caso ocorre quando não se tiver a tag vICMS, o que acontece quando se tem tag de:
+             .. ICMSOutraUF (ICMS devido à UF de origem da prestação, quando diferente da UF do emitente), ou
+             .. ICMS45 (ICMS Isento, não Tributado ou diferido), ou
+             .. ICMSSN (Simples Nacional) e demais casos em que não haja destaque do ICMS próprio
+    - destaqueICMSST = Destaque de ICMS por substituição tributária no CT-e, no seguinte formato:
+        . 1 = há destaque de ICMS por substituição tributária. Neste caso se terá a tag vICMSSTRet, de ICMS60 (Tributação pelo ICMS60 - ICMS cobrado por substituição tributária. Responsabilidade do recolhimento do ICMS atribuído ao tomador ou 3º por ST)
+        . 2 = não há destaque de ICMS por substituição tributária. Nos demais casos, que não se tenha ICMS60
+    - DataEmissaoCTe =data emissão do CT-e;
+
+    parâmetros de saída:
+    
+    - codigoBarras
+    - msgResultado
+    
+    5701 - Representação numérica do código de barras criada
+    5702 - Erro: O parâmetro cUF não informado
+    5703 - Erro: O parâmetro tipoEmissao não informado
+    5704 - Erro: O parâmetro CNPJ não informado
+    5705 - Erro: O parâmetro valoTotalNFe não informado
+    5706 - Erro: O parâmetro destaqueICMSProprio não informado
+    5707 - Erro: O parâmetro destaqueICMSST não informado
+    5708 - Erro: O conteúdo do parâmetro cUF [{0:0}] é inválido
+    5709 - Erro: O conteúdo do parâmetro tipoEmissao [{0:0}] é inválido
+    5710 - Erro: O conteúdo do parâmetro CNPJ [{0:0}] é um CPF inválido
+    5711 - Erro: O conteúdo do parâmetro CNPJ [{0:0}] é um CNPJ inválido
+    5712 - Erro: O conteúdo do parâmetro CNPJ [{0:0}] tem tamanho inválido
+    5713 - Erro: O conteúdo do parâmetro valorTotalNFe [{0:0}] deve ser positivo
+    5714 - Erro: O conteúdo do parâmetro destaqueICMSProprio [{0:0}] é inválido [1-2]
+    5715 - Erro: O conteúdo do parâmetro destaqueICMSST [{0:0}] é inválido [1-2]
+   
+versão 1.4b
+
+16-07-2013
+
+  . acréscimo da opção para gerar as informações da fatura na Quadro Observação do DACTE [COM FATURA];
+  . acréscimo da opção para gerar as informações das duplicatas na Quadro Observação do DACTE [COM DUPLICATA];
+  . redução do tamanho da fonte para o nAver caber no quadro do DACTE;
+  . correção da montagem do quadro valor dos tributos do DACTE para mostrar os valores para CT-e complementar/Anulação
+  . correção da montagem do grupo aereo
+  . correção da montagem do grupo Entrega para tpHor=4 e tpPer=4
+  . correção da geração do código de barras auxiliar do DACTE para emissão em contingência FS-DA
+
+versão 1.4a
+
+04-06-2013
+
+  . correção na montagem dos dados do tomador do EPEC.
+
+versão 1.4
+
+28-05-2013
+
+ . correção da quebra de página do DACTE para quando existirem mais de 2 folhas;
+ . alteração do EnviaEPEC para aceitar o parâmetro xJust e alteração das instruções para não informar o dhCont e xJust;
+ . alteração do DACTE para gerar a informação da Lei da Transparência de acordo com a orientação da NT 2013/005;
+ . eliminação da geração da mensagem da informação da Lei da Transparência de forma automática.
+
+versão  1.3
+
+01-05-2013
+
+ . acréscimo da opção para mostrar os dados do container no DACTE [MOSTRACONTAINER];
+ . alteração permitir a informação de RENAVAM com 9, 10 ou 11 dígitos - não esquecer de atulizar a pasta Schemas;
+ 
+ . alterações para suportar o EPEC (contingência similar o DPEC da NF-e) - NT 2012/004:
+ ====================================================================================================================================   
+ 
+    Passos básicos para geração e envio evento EPEC - roteiro para o "DIA FELIZ" (tudo dando certo)
+    ---------------------------------------------------------------------------------------------------------------------------------
+    1. constatação de impedimento para envio do CT-e;
+    2. decisão de adoção da contingência EPEC;
+    3. geração do CT-e com tpEmis="4" e informação das tags: dhCont e xJust;
+    4. envio EPEC;
+    5. geração do DACTE, necessário informar o protocolo de registro do EPEC;
+    6. liberação do caminhão;
+    7. envio do CT-e gerado no item 3 quando cessar o problema que impedia o envio do CT-e para a SEFAZ.
+   ---------------------------------------------------------------------------------------------------------------------------------
+ 
+    * atualização do schema XML;
+    * acréscimo do tpEmis=4 no CriaChaveCTeNovo do CT-e;
+    * acréscimo do tratamento do tpEmis=4 no DACTE;
+    * informe [EPEC=numero protocolo de registro EPEC] no parametro da chamada do geraDACTE para mostrar o número do protocolo do registro do EPEC no DACTE;
+    * funcionalidade para Enviar EPEC:
+    
+    string EnviaEPEC(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, out string msgDados, out string msgRetWS, out int resultado, out string msgResultado, string XMLCTe, string xJust, string dhEvento, out string nProtocoloEPEC, out string dProtocoloEPEC, string proxy, string usuario, string senha, string licenca)
+    
+    - parâmetros de entrada:
+      siglaWS         -> informar "RS" (UF do emissor = MT, MS, SP ou SVSP) ou "SP" (UF do emissor = RS, SVRS, MG ou PR), 
+      tipoAmbiente    -> 1-produção ou 2-homologação;
+      nomeCertificado -> dados do ceritificado digital;
+      versao          -> "1.04";
+      XMLCTe          -> XML do CT-e gerado com tpEmis=4
+      dhEvento        -> data e hora do evento, a DLL pega a data e hora do sistema se omitido;
+      xJust           -> motivo da entrada me contingência -> até 255 caracters
+      
+    - parâmetro de saída:
+      msgDados        -> XML da mensagem enviada ao WS;
+      msgRetWS        -> XML da resposta do WS;
+      resultado       -> código com o retorno da chamada;
+      msgResultado    -> mensagem literal do retorno da chamada;
+      nProtocoloEPEC  -> número do protocolo de registro do evento EPEC;
+      dProtocoloEPEC  -> data e hora de registro do evento EPEC;
+      procEventoEPEC  -> retorna na chamada da funcionalidade quando o EPEC tiver sido registrado, isto é o resultado=136
+      
+ 
+ . alterações para suportar o vTotTrib:
+ ====================================================================================================================================   
+    * geração da informação do vTotTrib no DACTE;
+    * acréscimo das funcionalidades 2G que permite informar o vTotTrib:
+
+        string ImpICMS00_2G(string _CST, double _vBC, double _pICMS, double _vICMS, double _vTotTrib_Opc, string _infAdFisco_Opc);
+        string ImpICMS20_2G(string _CST, double _pRedBC, double _vBC, double _pICMS, double _vICMS, double _vTotTrib_Opc, string _infAdFisco_Opc);
+        string ImpICMS45_2G(string _CST, double _vTotTrib_Opc, string _infAdFisco);
+        string ImpICMS60_2G(string _CST, double _vBCSTRet, double _pICMSSTRet, double _vICMSSTRet, double _vCred,double _vTotTrib_Opc, string _infAdFisco_Opc);
+        string ImpICMS90_2G(string _CST, double _pRedBC, double _vBC, double _pICMS, double _vICMS, double _vCred,double _vTotTrib_Opc, string _infAdFisco_Opc);
+        string ImpICMSOutraUF_2G(string _CST, double _pRedBCOutraUF, double _vBCOutraUF, double _pICMSOutraUF, double _vICMSOutraUF,double _vTotTrib_Opc, string _infAdFisco_Opc);
+        string ImpICMSSN_2G(double _vTotTrib_Opc, string _infAdFisco_Opc);
+        string ImpCompICMS00_2G(string _CST, double _vBC, double _pICMS, double _vICMS, double _vTotTrib_Opc, string _infAdFisco_Opc);
+        string ImpCompICMS20_2G(string _CST, double _pRedBC, double _vBC, double _pICMS, double _vICMS, double _vTotTrib_Opc, string _infAdFisco_Opc);
+        string ImpCompICMS45_2G(string _CST, double _vTotTrib_Opc, string _infAdFisco);
+        string ImpCompICMS60_2G(string _CST, double _vBCSTRet, double _pICMSSTRet, double _vICMSSTRet, double _vCred, double _vTotTrib_Opc , string _infAdFisco_Opc);
+        string ImpCompICMS90_2G(string _CST, double _pRedBC, double _vBC, double _pICMS, double _vICMS, double _vCred, double _vTotTrib_Opc, string _infAdFisco_Opc);
+        string ImpCompICMSOutraUF_2G(string _CST, double _pRedBCOutraUF, double _vBCOutraUF, double _pICMSOutraUF, double _vICMSOutraUF,double _vTotTrib_Opc,  string _infAdFisco_Opc);
+        string ImpCompICMSSN_2G(double _vTotTrib_Opc, string _infAdFisco_Opc);
+
+
+versão  1.2e
+
+09-04-2013
+
+   . alteração para tratar a rejeição 678 - Rejeição: Uso Indevido na BuscaCTe e não devolver 27 - erro de schema XML.
+   . alteração para devolver o XML validado em msgRetWS quando ocorrer um erro de validação no XML da resposta do WS;
+   . alteração para não tentar gerar o procCTe de CTe com situação cancelado, pois a consulta protocoloo CT-e cancelado não devolve os dados da autorização de uso necessários para gerar o procCTe.
+   . alteração para aceitar a versão 1.04 do pedido de cancelamento do CT-e no criaProcCancCTe
+   . acréscimo da opção de mostrar os dados do tomador que é remetente, expedidor, recebedor ou destinatário [MOSTRADADOSTOMADOR]
+   . acréscimo de opção para destaque do ICMSST quando o CST=60, opções:
+
+                    [DESTAQUEICMSST1] - quadro BASE CÁLCULO  = vBCSTRet
+                                        quadro ÁLIQ.ICMS     = pICMSSTRet
+                                        quadro VALOR DO ICMS = vICMSSTRet
+
+                    [DESTAQUEICMSST2] - quadro BASE CÁLCULO  = vBCSTRet
+                                        quadro ÁLIQ.ICMS     = pICMSSTRet
+                                        quadro ICMS ST       = vICMSSTRet
+
+                    [DESTAQUEICMSST3] - quadro BASE CÁLCULO  = vBCSTRet
+                                        quadro ÁLIQ.ICMS     = pICMSSTRet
+                                        quadro VALOR DO ICMS = vICMSSTRet
+                                        quadro ICMS ST       = vICMSSTRet
+
+         O padrão é informar somente o vICMSSTRet no quadro ICMS ST quando CST=60
+
+
+versão 1.2d
+
+05-02-2013
+
+ . correção da descrição do situação tributária para CST-40 - ICMS isenção
+ . alteração para não gerar o grupo fluxo quando não existir tag filho no grupo
+
+versão 1.2c
+
+2013-01-29
+
+. correção no tratamento da IE da BA e MT no geraPdfDACTE
+. correção da descrição do tipo do CT-e quando for CT-e de Anulação de Valores no geraPdfDACTE
+
+versão 1.2b
+
+2013-01-11
+
+ . correção do tamanho máximo do conteúdo da tag obsCont para 160 caracteres na funcionalidade de geração do ObsCont
+
+versão 1.2a
+
+
+2012-11-09
+
+ . alteração da montagem do código de barras adicional para usar o CNPJ/CPF do tomador do serviço - NT 2012/007
+ . aceitar certificado digital não confiável no envio de e-mail em uma conexão autenticada
+
+versão 1.2
+
+
+2012/10/30
+
+. disponibilização da funcionalidade para geração do DACTE.
+
+  int geraPdfDACTE(string XML, string logo, string quadroRecibo, string visualizar, string parametros, out string msgResultado);
+  
+  .. XML => informar a string com o procCTe ou CTe (NÃO INFORME O NOME DO ARQUIVO)
+  
+  .. logo =>  informar a forma de identificação do emitente, possibilidades:
+  
+             sem conteúdo - se o parâmetro for informado com vazio, os dados de identificação do emissor serão obtidos do XML do CT-e;
+             nome de arquivo - se informado com um nome de arquivo, a imagem do arquivo informado irá ocupar o quadro de identificação do emitente. A imagem deve ser um arquivo jpg de 339 x 114 pixels (ou outro multiplo, exemplo: 678 x 228 ) que deverá ter os dados cadastrais do emitente do CT-e, pois a imagem irá ocupar todo o quadro do emissor.
+             impresso personalizado - se informado o literal [SEM DADOS EMITENTE], nenhum dado será impresso no quadro de identificação do emitente ou [SEM QUADRO EMITENTE] para omitir o quadro e dados do emitente..
+             
+  .. quadroRecibo => informar S ou I para indicar a posição onde será gerado o quadro do Recibo de Entrega: posição [S]uperior ou posição [I]nferior
+  
+  .. visualizar => informar S ou N para indicar a visualização do PDF.  
+  
+  .. parametros => parâmetos validos:
+  
+     [RODAPE=texto da mensagem de rodape]
+     [MENSAGEM=texto da mensagem]
+     [PASTA=caminho da pasta]
+     [MarcaDagua=xml arquivo]
+     [DadosEmissor=xml com dados do emissor]
+     [IMPRIMIR=n]
+     [OBSCONTRIBUINTE]
+     [OBSFISCO]
+     
+     Exemplo:
+     
+     "[RODAPE=Powered by NFe_Util.dll - FlexDocs Documentos Eletronicos - (C) 2011 - Todos os direitos reservados.][IMPRIMIR=1][ARQUIVO=TESTE.PDF][PASTA=C:\]"
+     
+     
+     Códigos de retorno da chamada:
+     
+     7900 - PDF do DACTE do CT-e: [{0}] foi gerado com sucesso
+     7901 - PDF do DACTE do CT-e: [{0}] foi gravado com nome [{1}] com sucesso
+     7902 - Erro: Indicador de Imprimir Quadro de Recibo informado [{0}] inválido, divergente de: [S]uperior ou [I]nferior
+     7903 - Erro: Indicador de visualização informado [{0}] inválido, divergente de: [S]imr ou [N]ão
+     7904 - Erro: A DLL não oferece suporte para geração do modal:[{0}] desejado
+     7905 - Erro: A DLL não oferece suporte para geração do PDF para a versão do CT-e: [{0}]
+     7906 - Erro: Falha na gravação do PDF [{0}], motivo da falha: [{1}]
+     7907 - Erro: Falha na leitura do XML do CT-e:[{0}]
+     7908 - Erro: Falha no processo de geração do PDF, examine a mensagem de erro do Windows: {[0}]
+     7909 - Erro: Falha no processo de tratamento do XML, examine a mensagem de erro do Windows: [{0}]
+     7910 - Erro: Falha na leitura do arquivo de logo:[{0}]
+     7911 - Erro: Falha no processo de visualização do PDF, examine a mensagem de erro do Windows: [{0}]
+     7912 - Erro: Falha no processo de impressão do PDF, examine a mensagem de erro do Windows: [{0}]
+     7913 - Erro: Falha no processo de tratamento do DadosEmissor=[{0}], examine a mensagem de erro do Windows: [{1}]
+     7914 - Erro: SumatraPDF.exe inexiste na pasta da DLL: [{0}]
+     7915 - Erro: Falha no processo de tratamento do MarcaDagua =[{0}], examine a mensagem de erro do Windows: [{1}]
+     7916 - Erro: Arquivo de imagem:[{0}] não localizado
+     7917 - Erro: Falha na leitura do arquivo de imagem:[{0}], examine a mensagem de erro do Windows: [{1}]
+     
+     
+. correção na forma de recuperar o nome do titular do certificado digital
+. aperfeiçoamento para não devolver <infNFe><chave/></infNFe> quando não for informado a chave da NF-e e nem o PIN no infNFe
+
+
+versão 1.1
+
+2012/09/18
+
+. acréscimo da funcionalidade para gerar a string para ser utilizada com a font true type do GrandZebu - http://grandzebu.net/index.php?page=/informatique/codbar-en/code128.htm
+
+  int GeraStringCode128C(string codigo, out string code128C, out string msgErro)
+  
+. acréscimo da funcionalidade para consumir os WS da Rodocred
+
+  string WS_Rodocred(int idWS, int tipoAmbiente, string CNPJEmissor, string mensagemXML, out int resultado, out string msgResultado, string proxy, string usuario, string senha, string licenca)
+  
+  valores válidos para idWS:
+  
+   0 - AutenticarCliente
+   1 - CancelarViagem
+   2 - ConsultarClausulas
+   3 - ConsultarEstabelecimentos
+   4 - ConsultarLocalImpressao
+   5 - ConsultarRotas
+   6 - ConsultarTarifas
+   7  - ConsultarViagens
+   8 - DetalharRota
+   9 - DetalharViagem
+  10 - ManterMotorista
+  11 - ManterOperacaoViagem
+  12 - ManterTransportador
+  13 - ManterVeiculo
+  14 - ManterViagem
+  15 - RegistrarOperacaoViagem
+  16 - RetificarViagem
+
+. alteração na forma de pegar o path da aplicação
+. possibilidade de informar o arquivo do certificado digital nas chamadas que requer o uso de certificado digital
+. correção para não gerar a tag fone no grupo occ quando omitida
+. acréscimo da funcionalidade ideVFP para contornar o limite de parâmetros do VFP que existe na funcionalidade identificador
+
+   string ideVFP(int _cUF, int _cCT, string _CFOP, string _natOp, int _forPag, int _mod, int _serie, int _nCT, DateTime _dhEmi, int _tpImp, int _tpEmis, int _cDV, int _tpAmb, int _tpCTe, int _procEmi, string _verProc, string _refCTe_Opc, string _xMunEnv, string _modal, int _tpServ, string _xMunIni, string _xMunFim, int _retira, string _xDetRetira, string _tomador, DateTime _dhCont_Opc, string _xJust_Opc)
+
+   A identificação dos municípios de envio do CT-e, início da prestação e fim da prestação devem ser informados no seguinte formato:
+
+   UF9999999xxxxxxxxxxxxxxxxxx, ond UF é a sigla da UF, 9999999 é o código do município do IBGE e xxxxxxxxxxxxxxx a descrição do município.
+
+   xMunEnv = "SP3550308São Paulo" && Nome do Município de 
+   xMunIni = "SP3550308São Paulo" && Nome do Município do início da prestação
+   xMunFim = "MT5103403Cuiabá" && Nome do Município do término da prestação
+
+ . correção para permitir pegar as propriedades de certificado digital que não CNPJ/CPF
+ 
+ . tempo de time-out do enviaEmail alterado para 180000 ms
+ 
+ .  correção na montagem do grupo Entrega para tpPer=4
+
+ . alterado para ignorar a validade do certificado digital do WS
+
+2012/03/14
+
+. correção para não gerar as tags: xCaracAd, CaracSer, origCalc, destCalc e xObs quando não tiverem conteúdo;
+. atualização das URL da consulta cadastro;
+. alteração do schema XML do CT-e para validação do modal.
+
+versão 1.0a
+
+2012/01/02
+
+. alteração da URL do WS de recepção de Capa de Lote
+
+versão 1.0
+
+2012/01/02
+
+. atualização da ConsultaCadastro para a versão 2G;
+. alteração na estrutura das pastas com a adoção da pasta CTe_Util para melhor organização dos arquivos e pastas utilizadas pela DLL;
+
+        funcionalidades para gerar o XML do CT-e do modal rodoviário e aquaviário;
+        string ***CriaProcCTe***(string siglaWS, ref string CTeAssinada, out string protocolo, out string retCancCTe, out int resultado, string nomeCertificado, out string msgResultado, string proxy, string usuario, string senha);
+        string ***CriaProcCancCTe***(string siglaWS, ref string cancCTe, out string protocolo, out string retCancCTe, out int resultado, string nomeCertificado, out string msgResultado, string proxy, string usuario, string senha);
+        int ***EnvEmail***(string emailRemetente, string nomeRemetente, string emailDestinatario, string emailBcc, string assunto, string mensagem, string arquivos, string smtpCliente, string smtpPorta, string smtpSSL, string smtpUsuario, string smtpSenha, string HTML, string confirmacao, out string msgResultado);
+        string ***IdentaXML***(string txtXML, out int cResultado, out string msgResultado);
+        string ***EliminaIdentacaoXML***(string txtXML, out int cResultado, out string msgResultado);
+        string ***LeArquivoANSI***(string nomeArquivo, out int cResultado, out string msgResultado);
+        string ***encodeBase64***(string txtANSI, out int cResultado, out string msgResultado);
+        string ***decodeBase64***(string txtBase64, out int cResultado, out string msgResultado);
+        string ***ConverteArquivoBase64***(string nomeArquivo, out int cResultado, out string msgResultado);
+        string ***MontaLoteCTe***(string versao, string idLote, string CTe, out int quantidadeCTe, out int cResultado, out string msgResultado);
+        string ***PegaProtCTe***(string retConsReciCTe, out string versao, out int tpAmb, out string verAplic, out string nRec, out int cStat, out string xMotivo, out int cUF, out int cMsg, out string xMsg, out int qtdeProtCTe, out int cResultado, out string msgResultado);
+        string ***MontaProcCTe***(string versao, string enviCTe, string retConsReciCTe, out int qtdeCTe, out int qtdeProcCTe, out int cResultado, out string msgResultado);
+ 
+
+versão 0.5
+
+2011/08/03 - acréscimo da funcionalidade para envio da Capa de Lote eletrônica
+
+             A funcionalidade retorna o cStat da SEFAZ:
+
+             int EnviaCLe(int tipoAmbiente,              <=== ambiente 1- produção / 2 - homologação
+                          string nomeCertificado,        <=== informar o nome certificado
+                          out string msgCabec,           <=== devolve o msgCabec utilizado para consumir o WS
+                          ref string msgDados,           <=== informar o XML da capa de lote
+                          out string msgRetWS,           <=== devolve o XML da resposta do WS
+                          out string msgResultado,       <=== devolve a literal do xMotivo ou mensagem de erro da DLL
+                          out string chvCLe,             <=== devolve a chave da capa de Lote em caso de cadastro com sucesso (cStat=129)
+                          string proxy, string usuario, string senha  <=== dados do proxy, informe se necessário.
+                          )
+                          
+             . atualização para aceitar a versao 1.04 das mensagens XML;
+             . acréscimo da funcionalidade que cria a chavCTe com o tpEmis na composição da chave:
+             
+             int CriaChaveCTeNovo(string cUF,
+                                  string Ano,
+                                  string Mes,
+                                  string CNPJ,
+                                  string modelo,
+                                  string serie,
+                                  string numero,
+                                  string tpEmis,             <=== novo campo
+                                  string codigoSeguranca,
+                                  out string msgResultado,
+                                  out string cCT,            <=== tamanho reduzido para 8 dígitos
+                                  out string cDV,
+                                  out string chaveCTe
+                                  );
+              
+             
+
+versão 0.4f
+
+2011/04/08 - alteração da DLL para ignorar o erro de retorno invalido da mensagem SOAP da SEF/MG
+
+versão 0.4e
+
+2010/05/06 - correção da tag procInutCTe que estava corrompida, quem teve o problema deve substituir o trecho:
+ 
+               xmlns="http://www.portalfiscal.inf.br/cte ersao="1.03"
+  
+                 por
+
+               xmlns="http://www.portalfiscal.inf.br/cte versao="1.03"
+
+Versão 0.4d
+
+2010/01/08 - aperfeiçoamento no tratamento do retorno do XML do envio do lote de CT-e para 
+identificar os casos em que o WS não retorna nada.
+
+
+Versão 0.4c
+
+2010/01/06 - correção no tratamento da montagem do procCanc e procInut.
+
+Versão 0.4b
+
+2009/12/22 - aperfeiçoamento no tratamento do retorno do XML para 
+identificar os casos em que o WS não retorna nada.
+
+2009/12/23 - correção da validação do Schema XML para envio de CTE da versão 1.03
+
+
+
+

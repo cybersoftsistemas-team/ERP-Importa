@@ -260,7 +260,6 @@ object Atualiza_Sistema: TAtualiza_Sistema
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 1
-    ExplicitWidth = 560
     DesignSize = (
       557
       30)
@@ -273,7 +272,6 @@ object Atualiza_Sistema: TAtualiza_Sistema
       Caption = '&Atualizar'
       TabOrder = 0
       OnClick = bAtualizarClick
-      ExplicitLeft = 396
     end
     object bSair: TButton
       Left = 475
@@ -284,7 +282,6 @@ object Atualiza_Sistema: TAtualiza_Sistema
       Caption = '&Sair'
       TabOrder = 1
       OnClick = bSairClick
-      ExplicitLeft = 478
     end
     object Button1: TButton
       Left = 674
