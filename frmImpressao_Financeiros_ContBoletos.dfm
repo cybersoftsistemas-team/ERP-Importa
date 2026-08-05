@@ -513,6 +513,29 @@ object Impressao_Financeiros_ContBoletos: TImpressao_Financeiros_ContBoletos
         BandType = 0
         LayerName = Foreground
       end
+      object ppDBText2: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DBText2'
+        Border.mmPadding = 0
+        DataField = 'Razao_Social'
+        DataPipeline = pEmpresas
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Calibri'
+        Font.Size = 16
+        Font.Style = [fsBold]
+        ParentDataPipeline = False
+        TextAlignment = taCentered
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'pEmpresas'
+        mmHeight = 5556
+        mmLeft = 28974
+        mmTop = 1852
+        mmWidth = 167482
+        BandType = 0
+        LayerName = Foreground
+      end
       object lTitulo: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'lTitulo3'
@@ -783,29 +806,6 @@ object Impressao_Financeiros_ContBoletos: TImpressao_Financeiros_ContBoletos
         mmLeft = 89226
         mmTop = 0
         mmWidth = 24590
-        BandType = 4
-        LayerName = Foreground
-      end
-      object ppDBText2: TppDBText
-        DesignLayer = ppDesignLayer1
-        UserName = 'DBText2'
-        Border.mmPadding = 0
-        DataField = 'Razao_Social'
-        DataPipeline = pEmpresas
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Name = 'Calibri'
-        Font.Size = 16
-        Font.Style = [fsBold]
-        ParentDataPipeline = False
-        TextAlignment = taCentered
-        Transparent = True
-        VerticalAlignment = avCenter
-        DataPipelineName = 'pEmpresas'
-        mmHeight = 6350
-        mmLeft = 114300
-        mmTop = 4233
-        mmWidth = 167482
         BandType = 4
         LayerName = Foreground
       end
@@ -1186,20 +1186,6 @@ object Impressao_Financeiros_ContBoletos: TImpressao_Financeiros_ContBoletos
           GroupNo = 0
           LayerName = Foreground
         end
-        object ppLine1: TppLine
-          DesignLayer = ppDesignLayer1
-          UserName = 'Line1'
-          Border.mmPadding = 0
-          Pen.Style = psDot
-          Pen.Width = 0
-          mmHeight = 1585
-          mmLeft = 30163
-          mmTop = 256
-          mmWidth = 166952
-          BandType = 5
-          GroupNo = 0
-          LayerName = Foreground
-        end
         object lSaldoCliente: TppVariable
           DesignLayer = ppDesignLayer1
           UserName = 'lSaldoCliente'
@@ -1220,6 +1206,20 @@ object Impressao_Financeiros_ContBoletos: TImpressao_Financeiros_ContBoletos
           mmLeft = 89165
           mmTop = 1058
           mmWidth = 24871
+          BandType = 5
+          GroupNo = 0
+          LayerName = Foreground
+        end
+        object ppLine1: TppLine
+          DesignLayer = ppDesignLayer1
+          UserName = 'Line1'
+          Border.mmPadding = 0
+          Pen.Style = psDot
+          Pen.Width = 0
+          mmHeight = 1585
+          mmLeft = 30163
+          mmTop = 256
+          mmWidth = 166952
           BandType = 5
           GroupNo = 0
           LayerName = Foreground
@@ -3627,6 +3627,26 @@ object Impressao_Financeiros_ContBoletos: TImpressao_Financeiros_ContBoletos
       DataType = dtNotKnown
       DisplayWidth = 0
       Position = 218
+      Searchable = False
+      Sortable = False
+    end
+    object pEmpresasppField220: TppField
+      FieldAlias = 'Email_MsgPedidos'
+      FieldName = 'Email_MsgPedidos'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 219
+      Searchable = False
+      Sortable = False
+    end
+    object pEmpresasppField221: TppField
+      FieldAlias = 'PISCOFINS_F100Financ'
+      FieldName = 'PISCOFINS_F100Financ'
+      FieldLength = 0
+      DataType = dtNotKnown
+      DisplayWidth = 0
+      Position = 220
       Searchable = False
       Sortable = False
     end

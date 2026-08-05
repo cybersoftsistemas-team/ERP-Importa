@@ -213,11 +213,21 @@ begin
                         PedidosItensAliquota_ICMSPresumido.Value := NotasItensAliquota_ICMSPresumido.Value;
                         PedidosItensValor_ICMSPresumido.Value    := NotasItensValor_ICMSPresumido.Value;
 
+                        PedidosItensValor_BCIBS.Value            := (NotasItensValor_BCIBS.AsCurrency / NotasItensQuantidade.AsFloat) * pQtde;
+                        PedidosItensValor_IBS.Value              := (NotasItensValor_IBS.AsCurrency   / NotasItensQuantidade.AsFloat) * pQtde;
+                        PedidosItensValor_BCCBS.Value            := (NotasItensValor_BCCBS.AsCurrency / NotasItensQuantidade.AsFloat) * pQtde;
+                        PedidosItensValor_CBS.Value              := (NotasItensValor_CBS.AsCurrency   / NotasItensQuantidade.AsFloat) * pQtde;
+
                         if TipoNotaFormula_Produto.AsBoolean then begin
                            Pedido_ItensOutros.PegaValorUni;
-                           PedidosItensValor_Unitario.Value := Pedido_ItensOutros.CalculaMacro('Calculo_Mercadoria');
+                           if trim(TipoNotaCalculo_Mercadoria.AsString) <> '' then begin
+                              PedidosItensValor_Unitario.Value := Pedido_ItensOutros.CalculaMacro('Calculo_Mercadoria');
+                           end;
                         end else begin
-                           Pedido_ItensOutros.Recalcula;
+                           //Pedido_ItensOutros.Recalcula;
+                           Pedido_ItensOutros.cProdutoExit(self);
+                           Pedido_ItensOutros.cValorIBSChange(self);
+                           Pedido_ItensOutros.cValorCBSChange(self);
                         end;
                         PedidosItensValor_Total.Value := Roundto(PedidosItensValor_Unitario.Value * PedidosItensQuantidade.Value, -2);
                         
@@ -277,6 +287,25 @@ begin
                                    end;
                               end;
                            end;
+                        end;
+                        
+                        if PedidosNFE_Estorno.asboolean then begin
+                           PedidosItensValor_IsentasIPI.Value  := 0;
+                           PedidosItensValor_OutrasIPI.Value   := 0;
+                           PedidosItensValor_IsentasICMS.Value := 0;
+                           PedidosItensValor_OutrasICMS.Value  := 0;
+                           PedidosItensAliquota_PIS.Value      := 0;
+                           PedidosItensAliquota_COFINS.Value   := 0;
+                           PedidosItensValor_PIS.Value         := 0;
+                           PedidosItensValor_COFINS.Value      := 0;
+                           PedidosItensAliquota_ICMSOper.Value := 0;
+                           PedidosItensValor_BCICMSOper.Value  := 0;
+                           PedidosItensValor_ICMSOper.Value    := 0;
+                           PedidosItensAliquota_ICMSSub.Value  := 0;
+                           PedidosItensValor_BCICMSSub.Value   := 0;
+                           PedidosItensValor_ICMSSub.Value     := 0;
+                           PedidosItensAliquota_IPI.Value      := 0;
+                           PedidosItensValor_BCIPI.Value       := 0;
                         end;
            PedidosItens.Post;
       End;

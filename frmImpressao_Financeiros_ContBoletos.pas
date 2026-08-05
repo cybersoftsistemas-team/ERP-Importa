@@ -67,13 +67,13 @@ type
     ppLine5: TppLine;
     ppLabel9: TppLabel;
     ppDBCalc1: TppDBCalc;
-    ppLine1: TppLine;
     ppSummaryBand1: TppSummaryBand;
     ppLabel10: TppLabel;
     ppDBCalc3: TppDBCalc;
     ppLine2: TppLine;
     lSaldoCliente: TppVariable;
     lSaldoTotal: TppVariable;
+    ppLine1: TppLine;
     procedure bSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

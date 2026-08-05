@@ -1301,10 +1301,9 @@ begin
              End;
 
              ICMS.Locate('UF', PedidosDestinatario_Estado.Value, [loCaseInsensitive]);
-
+                        
              PedidosSaida_Entrada.Value        := TipoNotaSaida_Entrada.Value;
              PedidosData_Emissao.Value         := Date;
-             PedidosAjuste.Value               := TipoNotaNFE_Estorno.AsBoolean;
              PedidosImportacao.Value           := False;
              PedidosApuracao_PISCOFINS.Value   := NaturezaApuracao_PISCOFINS.Value;
              PedidosComplementar.Value         := TipoNotaComplementar.Value;
@@ -1314,6 +1313,8 @@ begin
              PedidosICMS_Destacar.Value        := TipoNotaICMS_Destacar.Value;
              PedidosInscricao_Substituto.Value := ICMSInscricao.Value;
              PedidosRemessa.Value              := TipoNotaRemessa.Value;
+             PedidosAjuste.Value               := TipoNotaNFE_Estorno.AsBoolean;
+             PedidosNFE_Estorno.Value          := (TipoNotaTipo_NFDebito.asinteger = 7) or (TipoNotaTipo_NFCredito.asinteger = 7);
 
              // Dados do armazem.
              if PedidosArmazem.AsInteger <> 0 then begin

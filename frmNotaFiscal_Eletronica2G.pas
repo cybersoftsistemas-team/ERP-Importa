@@ -670,6 +670,7 @@ var
   _gEstornoCred,
   _IBSCBSTotv130,
   totICMS : widestring;
+  
   //====== Dados do Transportador =========
   Transp,
   TranspModFrete,
@@ -3975,13 +3976,11 @@ begin
                ide_finNFe := 1;
             if PedidosComplementar.AsBoolean then 
                ide_finNFe := 2;
-            if PedidosAjuste.AsBoolean then 
-               ide_finNFE := 3;
-            if PedidosNFE_Estorno.AsBoolean then 
+            if PedidosAjuste.AsBoolean or PedidosNFE_Estorno.AsBoolean then 
                ide_finNFE := 3;
             if PedidosDevolucao.AsBoolean then 
                ide_finNFE := 4;
-            if TipoNotaTipo_NFCredito.asinteger <> 0 then 
+            if TipoNotaTipo_NFCredito.asinteger <> 0 then
                ide_finNFE := 5;
             if TipoNotaTipo_NFDebito .asinteger <> 0 then 
                ide_finNFE := 6;
@@ -4010,11 +4009,11 @@ begin
                ide_mode     := EmpresasNFEletronica_ModeloEntrada.AsInteger;
                ide_serie    := EmpresasNFEletronica_SerieEntrada.AsInteger;
                ide_tpNFDeb  := '';
-               ide_tpNFCred := formatfloat('00', TipoNotaTipo_NFCredito.asinteger);
+               ide_tpNFCred := iif(TipoNotaTipo_NFCredito.asinteger <> 0, formatfloat('00', TipoNotaTipo_NFCredito.asinteger), '');
             end else begin
                ide_mode     := EmpresasNFEletronica_Modelo.AsInteger;
                ide_serie    := EmpresasNFEletronica_Serie.AsInteger;
-               ide_tpNFDeb  := formatfloat('00', TipoNotaTipo_NFDebito.asinteger);
+               ide_tpNFDeb  := iif(TipoNotaTipo_NFDebito.asinteger <> 0, formatfloat('00', TipoNotaTipo_NFDebito.asinteger), '');
                ide_tpNFCred := ''
             End;
 
@@ -4293,9 +4292,10 @@ begin
                                         ,''                                                                                // 12 Informar o CNPJ do estabelecimento beneficiário do pagamento.
                                         ,'');                                                                              // 13 Identificar o terminal em que foi realizado o pagamento.
 
-            Pagamento := Util.Pagamento400(DetPag   // 01 informar o detalhe do pagamento gerado com o uso da detPag.
-                                          ,0);      // 02 informar o valor do Troco caso exista.
+            Pagamento := Util.Pagamento400(DetPag                            // 01 informar o detalhe do pagamento gerado com o uso da detPag.
+                                          ,0);                               // 02 informar o valor do Troco caso exista.
 
+                                          
             // Soma o total da base de calculo do ICMS com arredondamento devido a validação do XML pela SEFAZ.
             tItens.SQL.Clear;
             tItens.SQL.Add('SELECT  Total_BCICMS    = SUM(CAST(Valor_BCICMSOper AS DECIMAL(18,2) ))');
@@ -4365,9 +4365,7 @@ begin
                                     ,0                                        // informar o valor total do crédito presumido.
                                     ,0);                                      // informar o valor total do crédito presumido em condição suspensiva.
                                     
-            _gMonoTot     := '';
-            _gEstornoCred := '';
-            (*
+            _gMonoTot := '';
             _gMonoTot := util.gMonoTot(0                                      // informar o valor total do IBS monofásico.
                                       ,0                                      // informar o valor total da CBS monofásico.
                                       ,0                                      // informar o valor total do IBS monofásico sujeito a retenção.
@@ -4376,11 +4374,15 @@ begin
                                       ,0                                      // informar o valor total da CBS monofásica retida anteriormente.
                                       );
 
-             _gEstornoCred := util.gEstornoCred(0                             // Informar o Valor do IBS a ser estornado
-                                               ,0                             // Informar o Valor do CBS a ser estornado
+            _gEstornoCred := '';
+            if PedidosNFE_Estorno.AsBoolean then begin
+             _gEstornoCred := util.gEstornoCred(PedidosValor_IBS.ascurrency   // Informar o Valor do IBS a ser estornado
+                                               ,PedidosValor_CBS.ascurrency   // Informar o Valor do CBS a ser estornado
                                                );
-             *)
+            end;
+                                               
             _IBSCBSTotv130 := '';
+            {
             if PedidosValor_BCCBS.AsCurrency > 0 then begin
                _IBSCBSTotv130 := util.IBSCBSTotv130(PedidosValor_BCCBS.AsCurrency   // informar o Valor total da BC do IBS e da CBS.
                                                    ,_gIBSTot                        // informar o XML do grupo de totalização do gIBS se existirem valores.
@@ -4394,13 +4396,30 @@ begin
                                                    ,''    
                                                    ,'');  
             end;
+            }
+            if PedidosItensCSTCBS.value <> '410' then begin
+               _IBSCBSTotv130 := util.IBSCBSTotv130(PedidosValor_BCCBS.AsCurrency   // informar o Valor total da BC do IBS e da CBS.
+                                                   ,_gIBSTot                        // informar o XML do grupo de totalização do gIBS se existirem valores.
+                                                   ,_gCBSTot                        // informar o XML do grupo de totalização do gCBS se existirem valores.
+                                                   ,_gMonoTot                       // informar o XML do grupo de totalização do gMono se existirem valores.
+                                                   ,_gEstornoCred                   // informar o XML do grupo de totalização do gEstornoCred se existirem valores.
+                                                   );
+                                                   
+            end else begin
+               _IBSCBSTotv130 := util.IBSCBSTotv130(0                               // informar o Valor total da BC do IBS e da CBS.
+                                                   ,''                              // informar o XML do grupo de totalização do gIBS se existirem valores.
+                                                   ,''                              // informar o XML do grupo de totalização do gCBS se existirem valores.
+                                                   ,''                              // informar o XML do grupo de totalização do gMono se existirem valores.
+                                                   ,_gEstornoCred                   // informar o XML do grupo de totalização do gEstornoCred se existirem valores.
+                                                   );
+            end;
 
-            total := util.totalRTC(totICMS                                    // informar o XML do grupo ICMSTot.
-                                  ,''                                         // informar o XML do grupo ISSQNTot.
-                                  ,''                                         // informar o XML do grupo retTrib.
-                                  ,PedidosValor_IS.AsCurrency                 // informar o Valor Total do IS.
-                                  ,_IBSCBSTotv130                             // informar o XML do grupo IBSCBSTot.
-                                  ,PedidosValor_TotalNota.AsCurrency);        // informar o Valor total da NF-e com IBS/CBS/IS.
+            total := util.totalRTC(totICMS                                       // informar o XML do grupo ICMSTot.
+                                  ,''                                            // informar o XML do grupo ISSQNTot.
+                                  ,''                                            // informar o XML do grupo retTrib.
+                                  ,PedidosValor_IS.AsCurrency                    // informar o Valor Total do IS.
+                                  ,_IBSCBSTotv130                                // informar o XML do grupo IBSCBSTot.
+                                  ,PedidosValor_TotalNota.AsCurrency);           // informar o Valor total da NF-e com IBS/CBS/IS.
 
             TranspModFrete := PedidosModalidade_Frete.AsString;
 
@@ -4540,11 +4559,6 @@ begin
             // Informações adicionais
             InfAdic             := '';
             InfAdic_InfAdiFisco := '';
-            (*
-            if PedidosNFE_Estorno.AsBoolean then begin
-               InfAdic_InfAdiFisco := Trim(RemoveCaracterXML(PedidosInf_Complementares2.AsString));
-            end;
-            *)
             InfAdic_InfAdiFisco := Trim(RemoveCaracterXML(PedidosInf_Complementares2.AsString));
 
             InfAdic_InfCpl := Trim(RemoveCaracterXML(PedidosInf_Complementares.AsString))+Trim(RemoveCaracterXML(PedidosInf_Complementares2.AsString));
@@ -5045,242 +5059,263 @@ begin
               mDesoneracao := ClientesDesoneracao.AsInteger;
            end;
 
-           // ICMS Normal.
-           if (PedidosItensCodigoTrib_TabB.value <> '15') and (PedidosItensCodigoTrib_TabB.value <> '61') then begin
-              if (PedidosItensCodigoTrib_TabB.value <> '51') then begin
-                  if (PedidosItensCodigoTrib_TabB.value <> '60') and (PedidosItensCodigoTrib_TabB.value <> '500') then begin
-                     _ICMS := Util.icmsNT2023004(PedidosItensCodigoTrib_TabA.Value,                                              // Origem da mercadoria.
-                                                 PedidosItensCodigoTrib_TabB.Value,                                              // Código CST.
-                                                 PedidosItensModalidade_BCICMS.Value,                                            // Modalidade de determinação da BC do ICMS.
-                                                 PedidosItensAliquota_ICMSReducao.Value,                                         // Percentual de redução da BC do ICMS da operação própria.
-                                                 PedidosItensValor_BCICMSOper.Value,                                             // Valor da BC do ICMS do ICMS da operação própria.
-                                                 PedidosItensAliquota_ICMSOper.Value,                                            // Alíquota do ICMS do ICMS da operação própria.
-                                                 PedidosItensValor_ICMSOper.Value,                                               // Valor do ICMS do ICMS da operação própria.
-                                                 PedidosItensModalidade_BCICMSST.Value,                                          // Modalidade de determinação da BC do ICMS ST.
-                                                 PedidosItensAliquota_MVA.Value,                                                 // Percentual da Margem de Valor Adicionado ICMS ST.
-                                                 PedidosItensReducao_ICMSST.Value,                                               // Percentual de redução da BC ICMS ST.
-                                                 PedidosItensValor_BCICMSSub.Value,                                              // Valor da BC do ICMS ST.
-                                                 PedidosItensAliquota_ICMSSub.Value,                                             // Alíquota do ICMS ST.
-                                                 PedidosItensValor_ICMSSub.Value,                                                // Valor do ICMS ST.
-                                                 PedidosItensMedia_BCR.value,                                                    // Valor da BC do ICMS ST retido.
-                                                 PedidosItensValor_ICMSSubAnt.Value,                                             // Valor do ICMS ST retido.
-                                                 0,                                                                              // Valor da BC do ICMS ST da UF Destino.
-                                                 0,                                                                              // Valor do ICMS ST da UF destino.
-                                                 mDesoneracao,                                                                   // Motivo da desoneração do ICMS.
-                                                 0,                                                                              // Percentual da BC operação própria.
-                                                 '',                                                                             // UF para qual é devido o ICMS ST.
-                                                 0,                                                                              // Alíquota aplicável de cálculo do crédito (Simples Nacional).
-                                                 0,                                                                              // Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (SIMPLES NACIONAL).
-                                                 PedidosItensValor_ICMSDesonerado.Value,                                         // Valor do ICMS da desoneração, deve ser informado quando em conjunto com motDesICMS.
-                                                 PedidosItensValor_ICMSOper.Ascurrency - PedidosItensValor_ICMSDif.Ascurrency,   // Valor do ICMS da operação que não será diferido.
-                                                 PedidosItensAliquota_ICMSDif.AsFloat,                                           // Percentual do diferimento.
-                                                 PedidosItensValor_ICMSDif.Ascurrency,                                           // Valor do ICMS que será diferido.
-                                                 iif(PedidosItensValor_FCP.Value > 0, PedidosItensValor_BCFCP.Value, 0),         // Valor da Base de Cálculo do FCP.
-                                                 iif(PedidosItensDIFAL_Valor.Value > 0, 0, PedidosAliquota_FCP.Value),           // Percentual do FCP Nota: Percentual máximo de 2%.
-                                                 iif(PedidosItensDIFAL_Valor.Value > 0, 0, PedidosItensValor_FCP.Value),         // Valor do FCP.
-                                                 PedidosItensValor_BCFCPST.Value,                                                // Valor da Base de Cálculo do FCP retido por Substituição Tributária.
-                                                 PedidosAliquota_FCPST.Value,                                                    // Percentual do FCP retido por Substituição Tributária.
-                                                 PedidosItensValor_FCPST.Value,                                                  // Valor do FCP retido por Substituição Tributária.
-                                                 0,                                                                              // Valor da Base de Cálculo do FCP retido anteriormente por Substituição Tributária.
-                                                 0,                                                                              // Percentual do FCP retido anteriormente por Substituição Tributária.
-                                                 0,                                                                              // Valor do FCP retido anteriormente por Substituição Tributária.
-                                                 0,                                                                              // Alíquota suportada pelo Consumidor Final.
-                                                 0,                                                                              // Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza (FCP).
-                                                 0,                                                                              // Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido.
-                                                 0,                                                                              // Valor da Base de Cálculo do FCP.
-                                                 0,                                                                              // Valor da Base de Cálculo do FCP retido por Substituição Tributária.
-                                                 0,                                                                              // Motivo da desoneração do ICMS- ST.
-                                                 0,                                                                              // Indica se o valor do ICMS desonerado deduz do valor do item. 0=não deduz /1=deduz.
-                                                 '');                                                                            // Código de Benefício Fiscal utilizado pela UF, aplicado ao item quando houver RBC.informar somente quando CST=51 e cumular com diferimento.
+
+//*****************************************************************************************************************************************************************           
+           _ICMS := '';
+           if ((TipoNotaTipo_NFCredito.asinteger = 0) and (TipoNotaTipo_NFDebito.asinteger = 0)) or (TipoNotaNFE_Estorno.AsBoolean) or (PedidosDevolucao.AsBoolean) then begin
+              // ICMS Normal.
+              if (PedidosItensCodigoTrib_TabB.value <> '15') and (PedidosItensCodigoTrib_TabB.value <> '61') then begin
+                 if (PedidosItensCodigoTrib_TabB.value <> '51') then begin
+                     if (PedidosItensCodigoTrib_TabB.value <> '60') and (PedidosItensCodigoTrib_TabB.value <> '500') then begin
+                        _ICMS := Util.icmsNT2023004(PedidosItensCodigoTrib_TabA.Value,                                              // Origem da mercadoria.
+                                                    PedidosItensCodigoTrib_TabB.Value,                                              // Código CST.
+                                                    PedidosItensModalidade_BCICMS.Value,                                            // Modalidade de determinação da BC do ICMS.
+                                                    PedidosItensAliquota_ICMSReducao.Value,                                         // Percentual de redução da BC do ICMS da operação própria.
+                                                    PedidosItensValor_BCICMSOper.Value,                                             // Valor da BC do ICMS do ICMS da operação própria.
+                                                    PedidosItensAliquota_ICMSOper.Value,                                            // Alíquota do ICMS do ICMS da operação própria.
+                                                    PedidosItensValor_ICMSOper.Value,                                               // Valor do ICMS do ICMS da operação própria.
+                                                    PedidosItensModalidade_BCICMSST.Value,                                          // Modalidade de determinação da BC do ICMS ST.
+                                                    PedidosItensAliquota_MVA.Value,                                                 // Percentual da Margem de Valor Adicionado ICMS ST.
+                                                    PedidosItensReducao_ICMSST.Value,                                               // Percentual de redução da BC ICMS ST.
+                                                    PedidosItensValor_BCICMSSub.Value,                                              // Valor da BC do ICMS ST.
+                                                    PedidosItensAliquota_ICMSSub.Value,                                             // Alíquota do ICMS ST.
+                                                    PedidosItensValor_ICMSSub.Value,                                                // Valor do ICMS ST.
+                                                    PedidosItensMedia_BCR.value,                                                    // Valor da BC do ICMS ST retido.
+                                                    PedidosItensValor_ICMSSubAnt.Value,                                             // Valor do ICMS ST retido.
+                                                    0,                                                                              // Valor da BC do ICMS ST da UF Destino.
+                                                    0,                                                                              // Valor do ICMS ST da UF destino.
+                                                    mDesoneracao,                                                                   // Motivo da desoneração do ICMS.
+                                                    0,                                                                              // Percentual da BC operação própria.
+                                                    '',                                                                             // UF para qual é devido o ICMS ST.
+                                                    0,                                                                              // Alíquota aplicável de cálculo do crédito (Simples Nacional).
+                                                    0,                                                                              // Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (SIMPLES NACIONAL).
+                                                    PedidosItensValor_ICMSDesonerado.Value,                                         // Valor do ICMS da desoneração, deve ser informado quando em conjunto com motDesICMS.
+                                                    PedidosItensValor_ICMSOper.Ascurrency - PedidosItensValor_ICMSDif.Ascurrency,   // Valor do ICMS da operação que não será diferido.
+                                                    PedidosItensAliquota_ICMSDif.AsFloat,                                           // Percentual do diferimento.
+                                                    PedidosItensValor_ICMSDif.Ascurrency,                                           // Valor do ICMS que será diferido.
+                                                    iif(PedidosItensValor_FCP.Value > 0, PedidosItensValor_BCFCP.Value, 0),         // Valor da Base de Cálculo do FCP.
+                                                    iif(PedidosItensDIFAL_Valor.Value > 0, 0, PedidosAliquota_FCP.Value),           // Percentual do FCP Nota: Percentual máximo de 2%.
+                                                    iif(PedidosItensDIFAL_Valor.Value > 0, 0, PedidosItensValor_FCP.Value),         // Valor do FCP.
+                                                    PedidosItensValor_BCFCPST.Value,                                                // Valor da Base de Cálculo do FCP retido por Substituição Tributária.
+                                                    PedidosAliquota_FCPST.Value,                                                    // Percentual do FCP retido por Substituição Tributária.
+                                                    PedidosItensValor_FCPST.Value,                                                  // Valor do FCP retido por Substituição Tributária.
+                                                    0,                                                                              // Valor da Base de Cálculo do FCP retido anteriormente por Substituição Tributária.
+                                                    0,                                                                              // Percentual do FCP retido anteriormente por Substituição Tributária.
+                                                    0,                                                                              // Valor do FCP retido anteriormente por Substituição Tributária.
+                                                    0,                                                                              // Alíquota suportada pelo Consumidor Final.
+                                                    0,                                                                              // Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza (FCP).
+                                                    0,                                                                              // Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido.
+                                                    0,                                                                              // Valor da Base de Cálculo do FCP.
+                                                    0,                                                                              // Valor da Base de Cálculo do FCP retido por Substituição Tributária.
+                                                    0,                                                                              // Motivo da desoneração do ICMS- ST.
+                                                    0,                                                                              // Indica se o valor do ICMS desonerado deduz do valor do item. 0=não deduz /1=deduz.
+                                                    '');                                                                            // Código de Benefício Fiscal utilizado pela UF, aplicado ao item quando houver RBC.informar somente quando CST=51 e cumular com diferimento.
+                     end;
+                 end else begin
+                     _ICMS := Util.icmsNT2023004(PedidosItensCodigoTrib_TabA.Value,                                                 // Origem da mercadoria.
+                                                 PedidosItensCodigoTrib_TabB.Value,                                                 // Código CST.
+                                                 PedidosItensModalidade_BCICMS.Value,                                               // Modalidade de determinação da BC do ICMS.
+                                                 PedidosItensAliquota_ICMSReducao.Value,                                            // Percentual de redução da BC do ICMS da operação própria.
+                                                 PedidosItensValor_BCICMSOper.Value,                                                // Valor da BC do ICMS do ICMS da operação própria.
+                                                 PedidosItensAliquota_ICMSOper.Value,                                               // Alíquota do ICMS do ICMS da operação própria.
+                                                 PedidosItensValor_ICMSDif.ascurrency,                                              // Valor do ICMS do ICMS da operação própria.
+                                                 PedidosItensModalidade_BCICMSST.Value,                                             // Modalidade de determinação da BC do ICMS ST.
+                                                 PedidosItensAliquota_MVA.Value,                                                    // Percentual da Margem de Valor Adicionado ICMS ST.
+                                                 PedidosItensReducao_ICMSST.Value,                                                  // Percentual de redução da BC ICMS ST.
+                                                 PedidosItensValor_BCICMSSub.Value,                                                 // Valor da BC do ICMS ST.
+                                                 PedidosItensAliquota_ICMSSub.Value,                                                // Alíquota do ICMS ST.
+                                                 PedidosItensValor_ICMSSub.Value,                                                   // Valor do ICMS ST.
+                                                 PedidosItensMedia_BCR.value,                                                       // Valor da BC do ICMS ST retido.
+                                                 PedidosItensValor_ICMSSubAnt.Value,                                                // Valor do ICMS ST retido.
+                                                 0,                                                                                 // Valor da BC do ICMS ST da UF Destino.
+                                                 0,                                                                                 // Valor do ICMS ST da UF destino.
+                                                 mDesoneracao,                                                                      // Motivo da desoneração do ICMS.
+                                                 0,                                                                                 // Percentual da BC operação própria.
+                                                 '',                                                                                // UF para qual é devido o ICMS ST.
+                                                 0,                                                                                 // Alíquota aplicável de cálculo do crédito (Simples Nacional).
+                                                 0,                                                                                 // Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (SIMPLES NACIONAL).
+                                                 PedidosItensValor_ICMSDesonerado.Value,                                            // Valor do ICMS da desoneração, deve ser informado quando em conjunto com motDesICMS.
+                                                 PedidosItensValor_ICMSOper.Ascurrency,                                             // Valor do ICMS da operação que não será diferido.
+                                                 PedidosItensAliquota_ICMSDif.AsFloat,                                              // Percentual do diferimento.
+                                                 PedidosItensValor_ICMSOper.AsCurrency - PedidosItensValor_ICMSDif.ascurrency,      // Valor do ICMS que será diferido.
+                                                 iif(PedidosItensValor_FCP.Value > 0, PedidosItensValor_BCFCP.Value, 0),            // Valor da Base de Cálculo do FCP.
+                                                 iif(PedidosItensDIFAL_Valor.Value > 0, 0, PedidosAliquota_FCP.Value),              // Percentual do FCP Nota: Percentual máximo de 2%.
+                                                 iif(PedidosItensDIFAL_Valor.Value > 0, 0, PedidosItensValor_FCP.Value),            // Valor do FCP.
+                                                 PedidosItensValor_BCFCPST.Value,                                                   // Valor da Base de Cálculo do FCP retido por Substituição Tributária.
+                                                 PedidosAliquota_FCPST.Value,                                                       // Percentual do FCP retido por Substituição Tributária.
+                                                 PedidosItensValor_FCPST.Value,                                                     // Valor do FCP retido por Substituição Tributária.
+                                                 0,                                                                                 // Valor da Base de Cálculo do FCP retido anteriormente por Substituição Tributária.
+                                                 0,                                                                                 // Percentual do FCP retido anteriormente por Substituição Tributária.
+                                                 0,                                                                                 // Valor do FCP retido anteriormente por Substituição Tributária.
+                                                 0,                                                                                 // Alíquota suportada pelo Consumidor Final.
+                                                 0,                                                                                 // Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza (FCP).
+                                                 0,                                                                                 // Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido.
+                                                 0,                                                                                 // Valor da Base de Cálculo do FCP.
+                                                 0,                                                                                 // Valor da Base de Cálculo do FCP retido por Substituição Tributária.
+                                                 0,                                                                                 // Motivo da desoneração do ICMS- ST.
+                                                 0,                                                                                 // Indica se o valor do ICMS desonerado deduz do valor do item. 0=não deduz /1=deduz.
+                                                 '');                                                                               // Código de Benefício Fiscal utilizado pela UF, aplicado ao item quando houver RBC.informar somente quando CST=51 e cumular com diferimento.
+                 end;
+              end else begin
+                  if PedidosItensCodigoTrib_TabB.value = '15' then begin
+                     mQtdeMono := iif(TipoNotaVisiveis_QuantidadeItem.asboolean, PedidosItensValor_BCICMSMono.asfloat, 1);
+                     _ICMS := Util.icms15(PedidosItensCodigoTrib_TabA.Value                       // 1-Origem da mercadoria
+                                         ,mQtdeMono                                               // 2-Quantidade tributada.
+                                         ,PedidosItensPercentual_ICMSMono.asfloat                 // 3-Alíquota ad rem do ICMS, estabelecida na legislação para o produto.
+                                         ,PedidosItensValor_ICMSMono.ascurrency                   // 4-Valor do ICMS próprio.
+                                         ,roundto(PedidosItensValor_BCICMSMonoRet.asfloat, -2)    // 5-Quantidade tributada sujeitoa retenção.
+                                         ,PedidosItensPercentual_ICMSMono.asfloat                 // 6-Alíquota ad rem do imposto com retenção.
+                                         ,PedidosItensValor_ICMSMonoRet.asfloat                   // 7-Valor do ICMS com retenção.
+                                         ,0                                                       // 8-Percentual de redução do valor da alíquota adrem do ICMS.
+                                         ,0 );                                                    // 9-Motivo da redução do adrem. Informar o motivo da redução quando o campo anterior estiver preenchido.
                   end;
-              end else begin
-                  _ICMS := Util.icmsNT2023004(PedidosItensCodigoTrib_TabA.Value,                                                 // Origem da mercadoria.
-                                              PedidosItensCodigoTrib_TabB.Value,                                                 // Código CST.
-                                              PedidosItensModalidade_BCICMS.Value,                                               // Modalidade de determinação da BC do ICMS.
-                                              PedidosItensAliquota_ICMSReducao.Value,                                            // Percentual de redução da BC do ICMS da operação própria.
-                                              PedidosItensValor_BCICMSOper.Value,                                                // Valor da BC do ICMS do ICMS da operação própria.
-                                              PedidosItensAliquota_ICMSOper.Value,                                               // Alíquota do ICMS do ICMS da operação própria.
-                                              PedidosItensValor_ICMSDif.ascurrency,                                              // Valor do ICMS do ICMS da operação própria.
-                                              PedidosItensModalidade_BCICMSST.Value,                                             // Modalidade de determinação da BC do ICMS ST.
-                                              PedidosItensAliquota_MVA.Value,                                                    // Percentual da Margem de Valor Adicionado ICMS ST.
-                                              PedidosItensReducao_ICMSST.Value,                                                  // Percentual de redução da BC ICMS ST.
-                                              PedidosItensValor_BCICMSSub.Value,                                                 // Valor da BC do ICMS ST.
-                                              PedidosItensAliquota_ICMSSub.Value,                                                // Alíquota do ICMS ST.
-                                              PedidosItensValor_ICMSSub.Value,                                                   // Valor do ICMS ST.
-                                              PedidosItensMedia_BCR.value,                                                       // Valor da BC do ICMS ST retido.
-                                              PedidosItensValor_ICMSSubAnt.Value,                                                // Valor do ICMS ST retido.
-                                              0,                                                                                 // Valor da BC do ICMS ST da UF Destino.
-                                              0,                                                                                 // Valor do ICMS ST da UF destino.
-                                              mDesoneracao,                                                                      // Motivo da desoneração do ICMS.
-                                              0,                                                                                 // Percentual da BC operação própria.
-                                              '',                                                                                // UF para qual é devido o ICMS ST.
-                                              0,                                                                                 // Alíquota aplicável de cálculo do crédito (Simples Nacional).
-                                              0,                                                                                 // Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (SIMPLES NACIONAL).
-                                              PedidosItensValor_ICMSDesonerado.Value,                                            // Valor do ICMS da desoneração, deve ser informado quando em conjunto com motDesICMS.
-                                              PedidosItensValor_ICMSOper.Ascurrency,                                             // Valor do ICMS da operação que não será diferido.
-                                              PedidosItensAliquota_ICMSDif.AsFloat,                                              // Percentual do diferimento.
-                                              PedidosItensValor_ICMSOper.AsCurrency - PedidosItensValor_ICMSDif.ascurrency,      // Valor do ICMS que será diferido.
-                                              iif(PedidosItensValor_FCP.Value > 0, PedidosItensValor_BCFCP.Value, 0),            // Valor da Base de Cálculo do FCP.
-                                              iif(PedidosItensDIFAL_Valor.Value > 0, 0, PedidosAliquota_FCP.Value),              // Percentual do FCP Nota: Percentual máximo de 2%.
-                                              iif(PedidosItensDIFAL_Valor.Value > 0, 0, PedidosItensValor_FCP.Value),            // Valor do FCP.
-                                              PedidosItensValor_BCFCPST.Value,                                                   // Valor da Base de Cálculo do FCP retido por Substituição Tributária.
-                                              PedidosAliquota_FCPST.Value,                                                       // Percentual do FCP retido por Substituição Tributária.
-                                              PedidosItensValor_FCPST.Value,                                                     // Valor do FCP retido por Substituição Tributária.
-                                              0,                                                                                 // Valor da Base de Cálculo do FCP retido anteriormente por Substituição Tributária.
-                                              0,                                                                                 // Percentual do FCP retido anteriormente por Substituição Tributária.
-                                              0,                                                                                 // Valor do FCP retido anteriormente por Substituição Tributária.
-                                              0,                                                                                 // Alíquota suportada pelo Consumidor Final.
-                                              0,                                                                                 // Percentual do diferimento do ICMS relativo ao Fundo de Combate à Pobreza (FCP).
-                                              0,                                                                                 // Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) diferido.
-                                              0,                                                                                 // Valor da Base de Cálculo do FCP.
-                                              0,                                                                                 // Valor da Base de Cálculo do FCP retido por Substituição Tributária.
-                                              0,                                                                                 // Motivo da desoneração do ICMS- ST.
-                                              0,                                                                                 // Indica se o valor do ICMS desonerado deduz do valor do item. 0=não deduz /1=deduz.
-                                              '');                                                                               // Código de Benefício Fiscal utilizado pela UF, aplicado ao item quando houver RBC.informar somente quando CST=51 e cumular com diferimento.
+                  if PedidosItensCodigoTrib_TabB.value = '61' then begin
+                     _ICMS := Util.icms61(PedidosItensCodigoTrib_TabA.Value                       // 1-Origem da mercadoria
+                                         ,PedidosItensValor_BCICMSMonoRet.ascurrency              // 2-Quantidade tributada retida anteriormente.
+                                         ,PedidosItensPercentual_ICMSMono.asfloat                 // 3-Alíquota ad rem do ICMS, estabelecida na legislação para o produto.
+                                         ,PedidosItensValor_ICMSMonoRet.ascurrency);              // 4-Valor do ICMS próprio.
+                  end;
               end;
-           end else begin
-               if PedidosItensCodigoTrib_TabB.value = '15' then begin
-                  mQtdeMono := iif(TipoNotaVisiveis_QuantidadeItem.asboolean, PedidosItensValor_BCICMSMono.asfloat, 1);
-                  _ICMS := Util.icms15(PedidosItensCodigoTrib_TabA.Value                       // 1-Origem da mercadoria
-                                      ,mQtdeMono                                               // 2-Quantidade tributada.
-                                      ,PedidosItensPercentual_ICMSMono.asfloat                 // 3-Alíquota ad rem do ICMS, estabelecida na legislação para o produto.
-                                      ,PedidosItensValor_ICMSMono.ascurrency                   // 4-Valor do ICMS próprio.
-                                      ,roundto(PedidosItensValor_BCICMSMonoRet.asfloat, -2)    // 5-Quantidade tributada sujeitoa retenção.
-                                      ,PedidosItensPercentual_ICMSMono.asfloat                 // 6-Alíquota ad rem do imposto com retenção.
-                                      ,PedidosItensValor_ICMSMonoRet.asfloat                   // 7-Valor do ICMS com retenção.
-                                      ,0                                                       // 8-Percentual de redução do valor da alíquota adrem do ICMS.
-                                      ,0 );                                                    // 9-Motivo da redução do adrem. Informar o motivo da redução quando o campo anterior estiver preenchido.
-               end;
-               if PedidosItensCodigoTrib_TabB.value = '61' then begin
-                  _ICMS := Util.icms61(PedidosItensCodigoTrib_TabA.Value                       // 1-Origem da mercadoria
-                                      ,PedidosItensValor_BCICMSMonoRet.ascurrency              // 2-Quantidade tributada retida anteriormente.
-                                      ,PedidosItensPercentual_ICMSMono.asfloat                 // 3-Alíquota ad rem do ICMS, estabelecida na legislação para o produto.
-                                      ,PedidosItensValor_ICMSMonoRet.ascurrency);              // 4-Valor do ICMS próprio.
-               end;
-           end;
 
-           if (PedidosItensCodigoTrib_TabB.value = '60') or (PedidosItensCodigoTrib_TabB.value = '500') then begin
-              // Grupo de ICMS Para CST 60/500.
-              _ICMS := Util.ICMSEfetNT201805(PedidosItensCodigoTrib_TabA.Value,                // Código da origem da mercadoria:.
-                                             PedidosItensCodigoTrib_TabB.Value,                // CST da operação:.
-                                             PedidosItensMedia_BCR.value,                      // Valor da BC do ICMS ST retido anteriormente.É o valor que vem informado na tag vBCST da nota de compra.
-                                             PedidosItensAliquota_ICMSSubAnt.value,            // Alíquota suportada pelo Consumidor Final. Deve ser informada a alíquota do cálculo do ICMS-ST, já incluso o FCP caso incida sobre a mercadoria.
-                                             PedidosItensValor_ICMSAnt.value,                  // Valor do ICMS Próprio do Substituto cobrado em operação anterior.É o valor que vem informado na tag vICMS da nota de compra.
-                                             PedidosItensValor_ICMSSubAnt.Value,               // informar o Valor do ICMS ST retido anteriormente.É o valor que vem informado na tag vICMSST da nota de compra.
-                                             0,                                                // informar o Valor da Base de Cálculo do FCP retido anteriormente por Substituição Tributária.
-                                             0,                                                //
-                                             0,                                                //
-                                             0,                                                //
-                                             0,                                                //
-                                             0,                                                //
-                                             0,                                                //
-                                             0,                                                //
-                                             0);                                               //
-           end;
+              if (PedidosItensCodigoTrib_TabB.value = '60') or (PedidosItensCodigoTrib_TabB.value = '500') then begin
+                 // Grupo de ICMS Para CST 60/500.
+                 _ICMS := Util.ICMSEfetNT201805(PedidosItensCodigoTrib_TabA.Value,                // Código da origem da mercadoria:.
+                                                PedidosItensCodigoTrib_TabB.Value,                // CST da operação:.
+                                                PedidosItensMedia_BCR.value,                      // Valor da BC do ICMS ST retido anteriormente.É o valor que vem informado na tag vBCST da nota de compra.
+                                                PedidosItensAliquota_ICMSSubAnt.value,            // Alíquota suportada pelo Consumidor Final. Deve ser informada a alíquota do cálculo do ICMS-ST, já incluso o FCP caso incida sobre a mercadoria.
+                                                PedidosItensValor_ICMSAnt.value,                  // Valor do ICMS Próprio do Substituto cobrado em operação anterior.É o valor que vem informado na tag vICMS da nota de compra.
+                                                PedidosItensValor_ICMSSubAnt.Value,               // informar o Valor do ICMS ST retido anteriormente.É o valor que vem informado na tag vICMSST da nota de compra.
+                                                0,                                                // informar o Valor da Base de Cálculo do FCP retido anteriormente por Substituição Tributária.
+                                                0,                                                //
+                                                0,                                                //
+                                                0,                                                //
+                                                0,                                                //
+                                                0,                                                //
+                                                0,                                                //
+                                                0,                                                //
+                                                0);                                               //
+              end;
 
-           // ICMS Destino (Diferencial de alíquota - DIFAL).
-           if PedidosItensDIFAL_Valor.Value > 0 then begin
-              _ICMSUFDest := Util.ICMSUFDest400(PedidosItensValor_BCDIFAL.Value,               // 01. Valor da Base de Cálculo do ICMS na UF de destino.
-                                                PedidosItensValor_BCFCP.Value,                 // 02. Informar o Valor da Base de Cálculo do FCP na UF Destino
-                                                PedidosItensFCP_Aliquota.Value,                // 03. Percentual adicional inserido na alíquota interna da UF de destino,(FCP) naquela UF.
-                                                PedidosItensAliquota_ICMSDest.Value,           // 04. Alíquota adotada nas operações internas na UF de destino.
-                                                PedidosItensAliquota_ICMSOper.Value,           // 05. Alíquota interestadual das UF envolvidas.
-                                                ConfiguracaoDIFAL_ICMSPart.Value,              // 06. Percentual de ICMS Interestadual para a UF de destino.
-                                                PedidosItensValor_FCP.Value,                   // 07. Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino.
-                                                PedidosItensDIFAL_ValorDest.Value,             // 08. Valor do ICMS Interestadual para a UF de destino, já considerando o valor do ICMS relativo FCP.
-                                                PedidosItensDIFAL_ValorOrig.Value);            // 09. Valor do ICMS Interestadual para a UF do remetente.
-           end;
+              // ICMS Destino (Diferencial de alíquota - DIFAL).
+              if PedidosItensDIFAL_Valor.Value > 0 then begin
+                 _ICMSUFDest := Util.ICMSUFDest400(PedidosItensValor_BCDIFAL.Value,               // 01. Valor da Base de Cálculo do ICMS na UF de destino.
+                                                   PedidosItensValor_BCFCP.Value,                 // 02. Informar o Valor da Base de Cálculo do FCP na UF Destino
+                                                   PedidosItensFCP_Aliquota.Value,                // 03. Percentual adicional inserido na alíquota interna da UF de destino,(FCP) naquela UF.
+                                                   PedidosItensAliquota_ICMSDest.Value,           // 04. Alíquota adotada nas operações internas na UF de destino.
+                                                   PedidosItensAliquota_ICMSOper.Value,           // 05. Alíquota interestadual das UF envolvidas.
+                                                   ConfiguracaoDIFAL_ICMSPart.Value,              // 06. Percentual de ICMS Interestadual para a UF de destino.
+                                                   PedidosItensValor_FCP.Value,                   // 07. Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino.
+                                                   PedidosItensDIFAL_ValorDest.Value,             // 08. Valor do ICMS Interestadual para a UF de destino, já considerando o valor do ICMS relativo FCP.
+                                                   PedidosItensDIFAL_ValorOrig.Value);            // 09. Valor do ICMS Interestadual para a UF do remetente.
+              end;
            
-           // PIS.
-           _PIS := Util.PIS(PedidosItensCSTPIS.Value,                                          // 01. Código de Situação Tributária do PIS.
-                            PedidosItensValor_BCPIS.AsFloat,                                   // 02. Valor da BC do PIS.
-                            PedidosItensAliquota_PIS.Value,                                    // 03. Alíquota percentual do PIS.
-                            PedidosItensValor_PIS.Value,                                       // 04. Valor do PIS.
-                            PedidosItensValor_BCPIS.AsFloat,                                   // 05. Quantidade vendida.
-                            0);                                                                // 06. Alíquota do PIS em reais.
+              // PIS.
+              _PIS := Util.PIS(PedidosItensCSTPIS.Value,                                          // 01. Código de Situação Tributária do PIS.
+                               PedidosItensValor_BCPIS.AsFloat,                                   // 02. Valor da BC do PIS.
+                               PedidosItensAliquota_PIS.Value,                                    // 03. Alíquota percentual do PIS.
+                               PedidosItensValor_PIS.Value,                                       // 04. Valor do PIS.
+                               PedidosItensValor_BCPIS.AsFloat,                                   // 05. Quantidade vendida.
+                               0);                                                                // 06. Alíquota do PIS em reais.
                                                                                               
-           // PIS quando CST 05.
-           _PISST := '';
-           if PedidosItensCSTPIS.asstring = '05' then begin
-              _PISST := util.PISSTNT2020005(PedidosItensValor_BCPIS.AsFloat                    // 01. Informar o Valor da BC do PIS ST, este campo deve ser informado em caso de alíquota ad valorem.
-                                           ,PedidosItensAliquota_PIS.asfloat                   // 02. Informar a alíquota percentual do PIS ST, este campo deve ser informado em caso de alíquota ad valorem.
-                                           ,PedidosItensValor_PISST.Value                      // 03. Informar o Valor do PIS ST.
-                                           ,0                                                  // 04. Informar a quantidade vendida, este campo deve ser informado em caso de alíquota específica.
-                                           ,0                                                  // 05. Informar a alíquota do PIS ST em reais, este campo deve ser informado em caso de alíquota específica.
-                                           ,0);                                                // 06. Indica se o valor do PISST compõe o valor total da NF-e 0=Valor do PISST não compõe / 1=Valor do PISST compõe.
-           end;                    
+              // PIS quando CST 05.
+              _PISST := '';
+              if PedidosItensCSTPIS.asstring = '05' then begin
+                 _PISST := util.PISSTNT2020005(PedidosItensValor_BCPIS.AsFloat                    // 01. Informar o Valor da BC do PIS ST, este campo deve ser informado em caso de alíquota ad valorem.
+                                              ,PedidosItensAliquota_PIS.asfloat                   // 02. Informar a alíquota percentual do PIS ST, este campo deve ser informado em caso de alíquota ad valorem.
+                                              ,PedidosItensValor_PISST.Value                      // 03. Informar o Valor do PIS ST.
+                                              ,0                                                  // 04. Informar a quantidade vendida, este campo deve ser informado em caso de alíquota específica.
+                                              ,0                                                  // 05. Informar a alíquota do PIS ST em reais, este campo deve ser informado em caso de alíquota específica.
+                                              ,0);                                                // 06. Indica se o valor do PISST compõe o valor total da NF-e 0=Valor do PISST não compõe / 1=Valor do PISST compõe.
+              end;                    
            
-           // COFINS.
-           _COFINS := Util.COFINS(PedidosItensCSTCOFINS.Value,                                 // 01. Código de Situação Tributária do COFINS.
-                                  PedidosItensValor_BCPIS.AsFloat,                             // 02. Valor da BC do COFINS.
-                                  PedidosItensAliquota_COFINS.Value,                           // 03. Alíquota percentual do COFINS.
-                                  PedidosItensValor_COFINS.Value,                              // 04. Valor do COFINS.
-                                  PedidosItensValor_BCPIS.AsFloat,                             // 05. Quantidade vendida.
-                                  0);                                                          // 06. Alíquota do COFINS em reais.
+              // COFINS.
+              _COFINS := Util.COFINS(PedidosItensCSTCOFINS.Value,                                 // 01. Código de Situação Tributária do COFINS.
+                                     PedidosItensValor_BCPIS.AsFloat,                             // 02. Valor da BC do COFINS.
+                                     PedidosItensAliquota_COFINS.Value,                           // 03. Alíquota percentual do COFINS.
+                                     PedidosItensValor_COFINS.Value,                              // 04. Valor do COFINS.
+                                     PedidosItensValor_BCPIS.AsFloat,                             // 05. Quantidade vendida.
+                                     0);                                                          // 06. Alíquota do COFINS em reais.
 
-           // COFINS quando para CST 05.
-           _COFINSST := '';
-           if PedidosItensCSTCOFINS.asstring = '05' then begin
-              _COFINSST := util.COFINSSTNT2020005(PedidosItensValor_BCPIS.AsFloat              // 01. Informar o Valor da BC do COFINS ST, este campo deve ser informado em caso de alíquota ad valorem.
-                                                 ,PedidosItensAliquota_COFINS.asfloat          // 02. Informar a alíquota percentual da COFINS ST, este campo deve ser informado em caso de alíquota ad valorem.
-                                                 ,PedidosItensValor_COFINSST.Value             // 03. Informar o Valor da COFINS ST.
-                                                 ,0                                            // 04. Informar a quantidade vendida, este campo deve ser informado em caso de alíquota específica.
-                                                 ,0                                            // 05. Informar a alíquota da COFINS ST em reais, este campo deve ser informado em caso de alíquota específica.
-                                                 ,0);                                          // 06. Indica se o valor do COFINSST compõe o valor total da NF-e 0=Valor da COFINSST não compõe / 1=Valor da COFINSST compõe.
-           end;                    
+              // COFINS quando para CST 05.
+              _COFINSST := '';
+              if PedidosItensCSTCOFINS.asstring = '05' then begin
+                 _COFINSST := util.COFINSSTNT2020005(PedidosItensValor_BCPIS.AsFloat              // 01. Informar o Valor da BC do COFINS ST, este campo deve ser informado em caso de alíquota ad valorem.
+                                                    ,PedidosItensAliquota_COFINS.asfloat          // 02. Informar a alíquota percentual da COFINS ST, este campo deve ser informado em caso de alíquota ad valorem.
+                                                    ,PedidosItensValor_COFINSST.Value             // 03. Informar o Valor da COFINS ST.
+                                                    ,0                                            // 04. Informar a quantidade vendida, este campo deve ser informado em caso de alíquota específica.
+                                                    ,0                                            // 05. Informar a alíquota da COFINS ST em reais, este campo deve ser informado em caso de alíquota específica.
+                                                    ,0);                                          // 06. Indica se o valor do COFINSST compõe o valor total da NF-e 0=Valor da COFINSST não compõe / 1=Valor da COFINSST compõe.
+              end;                    
 
-           // IPI.
-           mBCIPI := PedidosItensValor_BCIPI.Value;
-           mCNPJ := '';
-           if ProdutosFabricante.AsInteger > 0 then begin
-              if Fornecedores.Locate('Codigo', ProdutosFabricante.AsInteger, [loCaseInsensitive]) then begin
-                 mCNPJ := Fornecedores.FieldByName('CNPJ').AsString;
-              end;   
-           end;
+              // IPI.
+              mBCIPI := PedidosItensValor_BCIPI.Value;
+              mCNPJ := '';
+              if ProdutosFabricante.AsInteger > 0 then begin
+                 if Fornecedores.Locate('Codigo', ProdutosFabricante.AsInteger, [loCaseInsensitive]) then begin
+                    mCNPJ := Fornecedores.FieldByName('CNPJ').AsString;
+                 end;   
+              end;
            
-           _IPI := Util.IPI400(mCNPJ,                                                                       // CNPJ do produtor.
-                               Trim(NCMSelo_IPI.Value),                                                     // Selo do IPI.
-                               0,                                                                           // Quantidade de selos.
-                               Trim(TipoNotaEnquadramento_IPI.AsString),                                    // Código do enquadramento IPI.
-                               PedidosItensCSTIPI.Value,                                                    // Código da situação tributária do IPI.
-                               mBCIPI,                                                                      // Valor da base de calculo do IPI.
-                               PedidosItensAliquota_IPI.Value,                                              // Aliquota do IPI.
-                               PedidosItensTotal_IPI.Value,                                                 // Valor do IPI.
-                               iif(PedidosItensTotal_IPI.Value <> 0,ProdutosQuantidade_Unidade.Value, 0),   // Informar o Valor por Unidade Tributável.
-                               ProdutosValor_IPI.Value);
+              _IPI := Util.IPI400(mCNPJ,                                                                       // CNPJ do produtor.
+                                  Trim(NCMSelo_IPI.Value),                                                     // Selo do IPI.
+                                  0,                                                                           // Quantidade de selos.
+                                  Trim(TipoNotaEnquadramento_IPI.AsString),                                    // Código do enquadramento IPI.
+                                  PedidosItensCSTIPI.Value,                                                    // Código da situação tributária do IPI.
+                                  mBCIPI,                                                                      // Valor da base de calculo do IPI.
+                                  PedidosItensAliquota_IPI.Value,                                              // Aliquota do IPI.
+                                  PedidosItensTotal_IPI.Value,                                                 // Valor do IPI.
+                                  iif(PedidosItensTotal_IPI.Value <> 0,ProdutosQuantidade_Unidade.Value, 0),   // Informar o Valor por Unidade Tributável.
+                                  ProdutosValor_IPI.Value);
 
-           // II.
-           if PedidosSaida_Entrada.Value = 0 then begin 
-              _II := Util.II(PedidosItensValor_BCII.Value,
-                             mDespesa,
-                             Roundto(PedidosItensValor_II.asfloat * (mQuantidade / ProdutosQuantidade_Unidade.AsFloat), -2),
-                             0);
-           end else begin
-              if not TipoNotaDevolucao_Importacao.AsBoolean then begin
-                 _II := Util.II(0, 0, 0, 0);
-              end else begin
-                 _II := Util.II(PedidosItensValor_BCII.Value * PedidosItensQuantidade.AsFloat,
+              // II.
+              if PedidosSaida_Entrada.Value = 0 then begin 
+                 _II := Util.II(PedidosItensValor_BCII.Value,
                                 mDespesa,
-                                roundto(PedidosItensValor_II.asfloat, -2),
+                                Roundto(PedidosItensValor_II.asfloat * (mQuantidade / ProdutosQuantidade_Unidade.AsFloat), -2),
                                 0);
+              end else begin
+                 if not TipoNotaDevolucao_Importacao.AsBoolean then begin
+                    _II := Util.II(0, 0, 0, 0);
+                 end else begin
+                    _II := Util.II(PedidosItensValor_BCII.Value * PedidosItensQuantidade.AsFloat,
+                                   mDespesa,
+                                   roundto(PedidosItensValor_II.asfloat, -2),
+                                   0);
                  
+                 end;
               end;
            end;
-                          
+//
+//*****************************************************************************************************************************************************************
            mAnalise.Lines.Add(floattostr(Roundto(PedidosItensValor_IBS.asfloat, -4)));
            
-           // IBS.              
-           _gIBSUF := '';
-           _gIBSUF := util.gIBSUF(PedidosItensAliquota_IBS.AsFloat          // Informar a alíquota do IBS de competência das UF.
-                                 ,0                                         // 
-                                 ,0                                         // 
-                                 ,0                                         // 
-                                 ,0                                         // 
-                                 ,0                                         // 
-                                 ,PedidosItensValor_IBS.ascurrency          // 
-                                 );
+           _gIBSUF         := '';
+           _gIBSMun        := '';
+           _gCBS           := '';
+           _gTribReg       := '';
+           _gTribCompraGov := '';
+           _gIBSCBSMono    := '';
+           _gIBSCBS        := '';
+           _IBSCBS         := '';
+           _gEstornoCred   := '';
+           
+           if PedidosNFE_Estorno.AsBoolean then begin
+              _gEstornoCred := util.gEstornoCred(PedidosItensValor_IBS.ascurrency   // Informar o Valor do IBS a ser estornado
+                                                ,PedidosItensValor_CBS.ascurrency   // Informar o Valor do CBS a ser estornado
+                                                );
+           end;
+           
+           _gIBSUF := util.gIBSUFv140(PedidosItensAliquota_IBS.AsFloat                    // Informar a alíquota do IBS de competência das UF.
+                                     ,0                                                   // Grupo de informações do Diferimento exigido quando CST=510-Diferimento ou CST=515-Diferimento com redução de alíquota.
+                                     ,0                                                   // Informar o percentual do diferimento.
+                                     ,0                                                   // Informar o valor do Diferimento vDif = vBC x (pIBSUF / 100 x (pDif / 100).
+                                     ,0                                                   // Grupo de Informações da devolução de tributos.
+                                     ,0                                                   // Informar o valor Percentual de devolução do IBS da UF, conforme LC 214/25 art. 118.
+                                     ,0                                                   // Valor do tributo devolvido (“cashback” de desconto na própria Nota Fiscal / Fatura).
+                                     ,PedidosItensValor_IBS.ascurrency                    // Informar o Valor do IBS de competência da UF.
+                                     );
 
-           _gIBSMun := '';
+           // IBS.
            _gIBSMun := util.gIBSMun(0                                       // Informar a alíquota do IBS de competência das UF.
                                    ,0                                       // 
                                    ,0                                       // 
@@ -5290,21 +5325,17 @@ begin
                                    ,0                                       // Informar o Valor do IBS de competência do Município.
                                    );
 
-           _gCBS := '';
-           _gCBS := util.gCBS(PedidosItensAliquota_CBS.AsFloat              // Informar a alíquota do CBS.
-                             ,0                                             // informaro o grupo de informações do Diferimento para CST=510-Diferimento ou CST=515-Diferimento com redução de alíquota.
-                             ,0                                             // 
-                             ,0                                             // 
-                             ,0                                             // 
-                             ,0                                             // 
-                             ,PedidosItensValor_CBS.ascurrency              // Informar o Valor do CBS Valor do CBS (vCBS) deverá ser resultante de: vCBS = (gIBSCBS/vBC x (pCBS / 100)) - vDif - vDevTrib.
-                             );                                       
-                                                                 
-           _gTribReg       := '';
-           _gTribCompraGov := '';
-
-           _gIBSCBSMono := '';
-           _gIBSCBS := '';
+           _gCBS := util.gCBSv140(PedidosItensAliquota_CBS.AsFloat          // Informar a alíquota do CBS.
+                                 ,0
+                                 ,0
+                                 ,0
+                                 ,0
+                                 ,0
+                                 ,0
+                                 ,''
+                                 ,PedidosItensValor_CBS.ascurrency
+                                 );
+                                                              
            _gIBSCBS := util.gIBSCBSv130(PedidosItensValor_BCCBS.AsCurrency            // Informar a Base de cálculo do IBS e CBS.
                                        ,_gIBSUF                                       // Informar o grupo gIBSUF - informações da tributação do IBS da UF.
                                        ,_gIBSMun                                      // Informar o grupo gIBSMun - informações da tributação do IBS do Município.
@@ -5314,7 +5345,6 @@ begin
                                        ,_gTribCompraGov                               // Informar o grupo gTribCompraGov quando informado o grupo gCompraGov - Compra Governamental.
                                        );
 
-           _IBSCBS  := '';
            if (PedidosItensCSTCBS.value = '000') or (PedidosItensCSTCBS.value = '200') or (PedidosItensCSTCBS.value = '510') or (PedidosItensCSTCBS.value = '515') or (PedidosItensCSTCBS.value = '550') then begin
               _IBSCBS := util.IBSCBSv130(PedidosItensCSTCBS.AsString                     // Informar o Código de Situação Tributária do IBS/CBS Tabela - CST.
                                         ,TipoNotaClassificacao_Tributaria.asstring       // Informar o Código de Classificação Tributária Tabela - cClassTrib.
@@ -5329,7 +5359,7 @@ begin
                                         ,TipoNotaClassificacao_Tributaria.asstring       // Informar o Código de Classificação Tributária Tabela - cClassTrib.
                                         ,''                                              // Indica a natureza da operação de doação, orientando a apuração e a geração de débitos ou estornos conforme o cenário.
                                         ,''                                              // O grupo de tributo a ser informado depende do CST da operação.
-                                        ,''                                              // Informar o grupo gEstornoCred (Estorno de Crédito) quando houver estorno de crédito.
+                                        ,_gEstornoCred                                   // Informar o grupo gEstornoCred (Estorno de Crédito) quando houver estorno de crédito.
                                         ,''                                              // Informar o grupo gCredPresOper ou gCredPresIBSZFM (CST=810-Ajuste IBS ZFM) quando houver crédito presumido.
                                         );
            end;
@@ -5360,7 +5390,7 @@ begin
                                         ,''                                              // Informar o grupo gCredPresOper ou gCredPresIBSZFM (CST=810-Ajuste IBS ZFM) quando houver crédito presumido.
                                         );
            end;
-                      
+
            // Monta as TAGS de impostos dos produtos "Reforma tributária".
            _Imposto := Util.impostoRTC(PedidosItensTotal_Impostos.AsCurrency
                                       ,_ICMS
@@ -5375,7 +5405,6 @@ begin
                                       ,''
                                       ,_IBSCBS);
 
-//           _Detalhe := Util.detalhe(item, _Produto, _Imposto, mDescricaoResto);
            _Detalhe := Util.detalheRTC(item                                      // informar o número do item do detalhe, deve ser um valor único crescente compreendido na faixa de 1 a 990.
                                       ,_Produto                                  // informar o grupo XML prod com o detalhamento do produto/serviço do item.
                                       ,_Imposto                                  // informar o grupo XML imposto com as informações dos tributos incidentes no item.
@@ -5390,7 +5419,7 @@ begin
            Util := nil;
            MontaDetalhe := _Detalhe;
       End;
-      util := nil;;
+      util := nil;
 end;
 
 // Rotina de assinatura da NFe usando o certificado selecionado na empresa.
@@ -5849,7 +5878,7 @@ begin
            end;
 
            // Zera os valores do labels.
-            ZerarDupl;
+           ZerarDupl;
 
            // Dados da Fatura / Duplicata.
            if Fatura.RecordCount <> 0 then begin

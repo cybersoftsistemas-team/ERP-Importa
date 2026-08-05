@@ -916,7 +916,6 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 45
-          OnChange = cValorPISChange
         end
         object StaticText14: TStaticText
           Left = 5

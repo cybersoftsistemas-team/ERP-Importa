@@ -361,7 +361,6 @@ uses
   frmPedidosOutra_LoteItens in 'frmPedidosOutra_LoteItens.pas' {PedidosOutra_LoteItens},
   frmUtilitarios_Script in 'frmUtilitarios_Script.pas' {Utilitarios_Script},
   frmFinanceiro_Agendamento in 'frmFinanceiro_Agendamento.pas' {Financeiro_Agendamento},
-  NFe_Util_2G_TLB in 'NFe_Util_2G_TLB.pas',
   frmPedido_EndEntregaRetirada in 'frmPedido_EndEntregaRetirada.pas' {Pedido_EndEntregaRetirada},
   frmCTEPasta in 'frmCTEPasta.pas' {CTePasta},
   frmProcesso_PLI in 'frmProcesso_PLI.pas' {Processo_PLI},

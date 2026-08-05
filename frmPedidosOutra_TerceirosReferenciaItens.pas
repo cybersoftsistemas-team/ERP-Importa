@@ -189,24 +189,8 @@ begin
                      fieldbyname('NCM').Value                  := NotasTerceirosItensNCM.Value;
                      fieldbyname('Unidade_Medida').Value       := NotasTerceirosItensUnidade_Medida.Value;
                      fieldbyname('Quantidade').Value           := pQtde;
-                     fieldbyname('Aliquota_PIS').Value         := NotasTerceirosItensAliquota_PIS.Value;
-                     fieldbyname('Aliquota_COFINS').Value      := NotasTerceirosItensAliquota_COFINS.Value;
-                     fieldbyname('Valor_PIS').Value            := NotasTerceirosItensValor_PIS.Value;
-                     fieldbyname('Valor_COFINS').Value         := NotasTerceirosItensValor_COFINS.Value;
-                     fieldbyname('Aliquota_ICMSOper').Value    := NotasTerceirosItensAliquota_ICMSOper.Value;
-                     fieldbyname('Valor_BCICMSOper').Value     := (NotasTerceirosItensValor_BCICMSOper.AsCurrency / NotasTerceirosItensQuantidade.AsFloat) * pQtde;
-                     fieldbyname('Valor_ICMSOper').Value       := (NotasTerceirosItensValor_ICMSOper.AsCurrency / NotasTerceirosItensQuantidade.AsFloat) * pQtde;
-                     fieldbyname('Aliquota_ICMSSub').Value     := NotasTerceirosItensAliquota_ICMSSub.Value;
-                     fieldbyname('Valor_BCICMSSub').Value      := NotasTerceirosItensValor_BCICMSSub.Value;
-                     fieldbyname('Valor_ICMSSub').Value        := NotasTerceirosItensValor_ICMSSub.Value;
-                     fieldbyname('Aliquota_IPI').Value         := NotasTerceirosItensAliquota_IPI.Value;
-                     fieldbyname('Valor_BCIPI').Value          := NotasTerceirosItensValor_BCIPI.Value;
                      fieldbyname('Peso_Liquido').Value         := NotasTerceirosItensPeso_Liquido.Value;
                      fieldbyname('Peso_Bruto').Value           := NotasTerceirosItensPeso_Bruto.Value;
-                     fieldbyname('Valor_IsentasIPI').Value     := (NotasTerceirosItensValor_IsentasIPI.Value / NotasTerceirosItensQuantidade.Value) * pQtde;
-                     fieldbyname('Valor_OutrasIPI').Value      := (NotasTerceirosItensValor_OutrasIPI.Value  / NotasTerceirosItensQuantidade.Value) * pQtde;
-                     fieldbyname('Valor_IsentasICMS').Value    := (NotasTerceirosItensValor_IsentasICMS.Value/ NotasTerceirosItensQuantidade.Value) * pQtde;
-                     fieldbyname('Valor_OutrasICMS').Value     := (NotasTerceirosItensValor_OutrasICMS.Value / NotasTerceirosItensQuantidade.Value) * pQtde;
                      fieldbyname('Nota_Referencia').Value      := NotasTerceirosNFe_cNF.Value;
                      fieldbyname('Numero_Referencia').Value    := NotasTerceirositensNota.Value;
                      fieldbyname('Nota_Terceiros').Value       := NotasTerceirositensNota.Value;
@@ -225,44 +209,55 @@ begin
                      fieldbyname('Lucro').Value                := PedidosLucro.Value;
                      fieldbyname('Valor_Unitario').Value       := pValor;
 
+                     if not PedidosNFE_Estorno.asboolean then begin
+                        fieldbyname('Valor_IsentasIPI').Value     := (NotasTerceirosItensValor_IsentasIPI.Value / NotasTerceirosItensQuantidade.Value) * pQtde;
+                        fieldbyname('Valor_OutrasIPI').Value      := (NotasTerceirosItensValor_OutrasIPI.Value  / NotasTerceirosItensQuantidade.Value) * pQtde;
+                        fieldbyname('Valor_IsentasICMS').Value    := (NotasTerceirosItensValor_IsentasICMS.Value/ NotasTerceirosItensQuantidade.Value) * pQtde;
+                        fieldbyname('Valor_OutrasICMS').Value     := (NotasTerceirosItensValor_OutrasICMS.Value / NotasTerceirosItensQuantidade.Value) * pQtde;
+                        fieldbyname('Aliquota_PIS').Value         := NotasTerceirosItensAliquota_PIS.Value;
+                        fieldbyname('Aliquota_COFINS').Value      := NotasTerceirosItensAliquota_COFINS.Value;
+                        fieldbyname('Valor_PIS').Value            := NotasTerceirosItensValor_PIS.Value;
+                        fieldbyname('Valor_COFINS').Value         := NotasTerceirosItensValor_COFINS.Value;
+                        fieldbyname('Aliquota_ICMSOper').Value    := NotasTerceirosItensAliquota_ICMSOper.Value;
+                        fieldbyname('Valor_BCICMSOper').Value     := (NotasTerceirosItensValor_BCICMSOper.AsCurrency / NotasTerceirosItensQuantidade.AsFloat) * pQtde;
+                        fieldbyname('Valor_ICMSOper').Value       := (NotasTerceirosItensValor_ICMSOper.AsCurrency / NotasTerceirosItensQuantidade.AsFloat) * pQtde;
+                        fieldbyname('Aliquota_ICMSSub').Value     := NotasTerceirosItensAliquota_ICMSSub.Value;
+                        fieldbyname('Valor_BCICMSSub').Value      := NotasTerceirosItensValor_BCICMSSub.Value;
+                        fieldbyname('Valor_ICMSSub').Value        := NotasTerceirosItensValor_ICMSSub.Value;
+                        fieldbyname('Aliquota_IPI').Value         := NotasTerceirosItensAliquota_IPI.Value;
+                        fieldbyname('Valor_BCIPI').Value          := NotasTerceirosItensValor_BCIPI.Value;
+                     end;
+                     fieldbyname('Valor_BCIBS').Value := (NotasTerceirosItensValor_BCIBS.AsCurrency / NotasTerceirosItensQuantidade.AsFloat) * pQtde;
+                     fieldbyname('Valor_IBS').Value   := (NotasTerceirosItensValor_IBSUF.AsCurrency / NotasTerceirosItensQuantidade.AsFloat) * pQtde;
+                     fieldbyname('Valor_BCCBS').Value := (NotasTerceirosItensValor_BCCBS.AsCurrency / NotasTerceirosItensQuantidade.AsFloat) * pQtde;
+                     fieldbyname('Valor_CBS').Value   := (NotasTerceirosItensValor_CBS.AsCurrency   / NotasTerceirosItensQuantidade.AsFloat) * pQtde;
+
                      // Pega a aliquota de ICMS da tabela.
                      PegaICMS;
 
                      // Calculando valor do produto pela formula.
                      Pedido_ItensOutros.cCodigoExit(Self);
-                     {
-                             if TipoNotaFormula_Produto.AsBoolean then begin
-                                Pedido_ItensOutros.cCodigoExit(Self);
-                                Pedido_ItensOutros.PegaValorUni;
-                                PedidosItensCodigo_Mercadoria.Value := NotasTerceirosItensCodigo_Mercadoria.Value;
-                                PedidosItensValor_Unitario.Value    := Pedido_ItensOutros.CalculaMacro('Calculo_Mercadoria');
-                             end;
-                       
-                             // Calculando valor da BCICMS pela formula.
-                             if Trim(TipoNotaCalculo_BCICMS.AsString) <> '' then begin
-                                Pedido_ItensOutros.cCodigoExit(Self);
-                                Pedido_ItensOutros.PegaValorUni;
-                                PedidosItensCodigo_Mercadoria.Value := NotasTerceirosItensCodigo_Mercadoria.Value;
-                                PedidosItensValor_BCICMSOper.Value  := Pedido_ItensOutros.CalculaMacro('Calculo_BCICMS');
-                                PedidosItensValor_ICMSOper.Value    := Pedido_ItensOutros.CalculaMacro('Calculo_VlrICMS');
-                             end;
-
-                             PedidosItensValor_Total.Value := Roundto(PedidosItensValor_Unitario.Value * PedidosItensQuantidade.Value, -2);
-                             }
                      Pedido_ItensOutros.Recalcula;
                      Pedido_ItensOutros.cValorCBSChange(nil);
-      {
-                       // Calculo do ICMS Desonerado.
-                       PedidosItensValor_ICMSDesonerado.Value := 0;
-                       if PedidosItensValor_ICMSOper.AsCurrency > 0 then begin
-                          case AnsiIndexStr((PedidosItensCodigoTrib_TabB.Value), ['20','30','40','41','50','70','90']) of
-                               0.6: PedidosItensValor_ICMSDesonerado.Value := PedidosItensValor_IsentasICMS.Value + PedidosItensValor_OutrasICMS.Value;
-                          end;
-                       end;
-                       if PedidosItensFCP_ICMSDest.Value > 0 then begin
-                          PedidosItensValor_ICMSDesonerado.Value := 0;
-                       end;
-      }
+                     
+                     if PedidosNFE_Estorno.asboolean then begin
+                        fieldbyname('Valor_IsentasIPI').Value  := 0;
+                        fieldbyname('Valor_OutrasIPI').Value   := 0;
+                        fieldbyname('Valor_IsentasICMS').Value := 0;
+                        fieldbyname('Valor_OutrasICMS').Value  := 0;
+                        fieldbyname('Aliquota_PIS').Value      := 0;
+                        fieldbyname('Aliquota_COFINS').Value   := 0;
+                        fieldbyname('Valor_PIS').Value         := 0;
+                        fieldbyname('Valor_COFINS').Value      := 0;
+                        fieldbyname('Aliquota_ICMSOper').Value := 0;
+                        fieldbyname('Valor_BCICMSOper').Value  := 0;
+                        fieldbyname('Valor_ICMSOper').Value    := 0;
+                        fieldbyname('Aliquota_ICMSSub').Value  := 0;
+                        fieldbyname('Valor_BCICMSSub').Value   := 0;
+                        fieldbyname('Valor_ICMSSub').Value     := 0;
+                        fieldbyname('Aliquota_IPI').Value      := 0;
+                        fieldbyname('Valor_BCIPI').Value       := 0;
+                     end;
                 Post;
            end;
       End;

@@ -1214,7 +1214,6 @@
         <DCCReference Include="frmFinanceiro_Agendamento.pas">
             <Form>Financeiro_Agendamento</Form>
         </DCCReference>
-        <DCCReference Include="NFe_Util_2G_TLB.pas"/>
         <DCCReference Include="frmPedido_EndEntregaRetirada.pas">
             <Form>Pedido_EndEntregaRetirada</Form>
         </DCCReference>

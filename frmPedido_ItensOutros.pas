@@ -259,7 +259,6 @@ type
     procedure cTabBExit(Sender: TObject);
     procedure cValorCBSChange(Sender: TObject);
     procedure cValorIBSChange(Sender: TObject);
-    procedure cValorPISChange(Sender: TObject);
     procedure cValorCOFINSChange(Sender: TObject);
     procedure bCopiarClick(Sender: TObject);
   private
@@ -421,7 +420,6 @@ Var
     mAliquota_ICMSOper, 
     mRateioFrete,       
     mVolumes: real;
-    //mAliquotaDIFAL: real;
     
     mBCIPI,
     mValor_TotalIPI,
@@ -888,8 +886,6 @@ begin
                       // Totaliza o lucro
                       mTotalLucro := PedidosItensLucro_Valor.AsCurrency * PedidosItensQuantidade.asfloat;
 
-//                      mTotalNota := mTotalNota + PedidosItensValor_TotalNota.AsCurrency;
-
                       If cVolumes.Checked = true then begin
                          mVolumes := mVolumes + (PedidosItensQuantidade.Value / ProdutosQuantidade_Volumes.Value);
                       End;
@@ -984,7 +980,6 @@ begin
                      End;
 
                      PedidosMedia_BCR.Value            := mMediaBCR;
-//                     PedidosValor_TotalNota.Value      := PedidosValor_TotalNota.Value + mTotalNota;
                      PedidosValor_TotalNota.Value      := PedidosValor_TotalNota.Value;
                      PedidosValor_BCPIS.Value          := mBCPIS;
                      PedidosValor_BCPISST.Value        := mBCPISST;
@@ -1054,7 +1049,6 @@ begin
              if PedidosValor_TotalProdutos.asfloat > 0 then begin
                 with tTemp do begin
                      sql.clear;
-                     //sql.add('update PedidosItens set Valor_TotalNota = cast(:pTotal / :pProd as decimal(18, 12)) * Valor_Total where Pedido = :pPed');
                      sql.add('update PedidosItens set Valor_TotalNota = Valor_Total * (:pTotal / :pProd) where Pedido = :pPed');
                      parambyname('pProd').asfloat  := PedidosValor_TotalProdutos.asfloat;
                      parambyname('pTotal').asfloat := PedidosValor_TotalNota.asfloat;
@@ -1150,7 +1144,6 @@ begin
                   Navega.Controls[i].Enabled := False;
               End;
               PageControl1.ActivePageIndex := 0;
-              //PageControl1.Enabled         := true;
               cCopiaDesc.Text              := PedidosItensDescricao_Mercadoria.Value;
               mQuantidade                  := PedidosItensQuantidade.Value;
               PedidosItenstipo_Nota.Value  := PedidosTipo_Nota.Value;
@@ -1195,7 +1188,6 @@ begin
                  cQuantidade.Enabled := not ProdutosSerial_Obrigatorio.AsBoolean;
               End;
            end else begin
-              //PageControl1.Enabled := false;
               GradeItens.Enabled   := true;
            end;
 
@@ -1564,11 +1556,6 @@ begin
                  PedidosItensDI.Value := ProcessosDocNumero_Declaracao.Value;
               end;
 
-              // Verifica o codigo do credito presumido.
-//              if (PedidosItensValor_ICMSPresumido.ascurrency > 0) and (trim(PedidosItensCodigo_CredPres.AsString) = '') then begin
-//                 MessageDlg('Atenção!'+#13+#13+'Código da do Credito Presumido não informado na NCM.'#13+#13+'Isso pode causar rejeição da nota fiscal na SEFAZ.', mtWarning, [mbok], 0);
-//              end;
-              
               // Log de operações do sistema.
               LogDados(Dados.PedidosItens, '('+Dados.PedidosItensPedido.AsString+') '+mSaiEntra[Dados.PedidosItensSaida_Entrada.AsInteger]+ ' [Outras], de '+Dados.PedidosData_Emissao.AsString+' Item '+Dados.PedidosItensItem.AsString+ ' - '+Dados.PedidosItensCodigo_Mercadoria.AsString, Dados.PedidosItens.State);
            End;
@@ -2103,16 +2090,6 @@ begin
            if (PedidosItens.State = dsInsert) or (PedidosItens.State = dsEdit) then begin
               mCST := '';
               if (PedidosItensValor_IBS.Value > 0) or (PedidosItensAliquota_IBS.Value > 0) then mCST := 'T+I';
-              {
-              if ProdutosValor_IPI.Value         <> 0   then mCST := Trim(TipoNotaSaida_Entrada.AsString)+'+V';
-              if NCMIPI_TribAliquotaZero.Value   = True then mCST := Trim(TipoNotaSaida_Entrada.AsString)+'+V';
-              if (NCMIPI_Isento.AsBoolean) or (TipoNotaIsencao_IPI.AsBoolean) then mCST := Trim(TipoNotaSaida_Entrada.AsString)+'+I';
-              if TipoNotaNao_Tributada_IPI.Value = True then mCST := Trim(TipoNotaSaida_Entrada.AsString)+'+NT';
-              if TipoNotaImune_IPI.Value         = True then mCST := Trim(TipoNotaSaida_Entrada.AsString)+'+IM';
-              if NCMIPI_Suspensao.Value          = True then mCST := Trim(TipoNotaSaida_Entrada.AsString)+'+SUS';
-              if TipoNotaSuspensao_IPI.Value     = True then mCST := Trim(TipoNotaSaida_Entrada.AsString)+'+SUS';
-              if mCST                            = ''   then mCST := Trim(TipoNotaSaida_Entrada.AsString)+'+<>';
-              }
               if CSTIBS.Locate('Classificacao', mCST, [loCaseInsensitive]) = False then begin
                  mCST := '<>';
                  CSTIBS.Locate('Classificacao', mCST, [loCaseInsensitive]);
@@ -2360,11 +2337,6 @@ begin
                           0..6: PedidosItensValor_ICMSDesonerado.Value := PedidosItensValor_IsentasICMS.Value + PedidosItensValor_OutrasICMS.Value;
                      end;
                   end;
-                  {
-                  if PedidosItensFCP_ICMSDest.Value > 0 then begin
-                     PedidosItensValor_ICMSDesonerado.Value := 0;
-                  end;
-                  }
                   
                   // Calculo do ICMS diferimento.
                   PedidosItensValor_ICMSDif.Value    := 0;
@@ -2407,12 +2379,8 @@ begin
            // Pegando a aliquota do ICMS Operacional.
            ICMS.Locate('UF', ClientesEstado.AsString, [loCaseInsensitive]);
            PedidosItensAliquota_IBS.Value := ICMS.FieldbyName('Aliquota_IBS').AsFloat;
-//           PedidosItensAliquota_IBS.Value := iif(trim(TipoNotaCalculo_VlrIBS.asstring) <> '', ICMS.FieldbyName('Aliquota_IBS').AsFloat, 0);
 
            if (PedidosItens.State = dsInsert) then begin
-              // Pegando a aliquota do ICMS Operacional.
-              //ICMS.Locate('UF', ClientesEstado.AsString, [loCaseInsensitive]);
-
               NCM.SQL.Clear;
               NCM.SQL.Add('SELECT * FROM NCM WHERE NCM = :pNCM');
               NCM.ParamByName('pNCM').AsString := ProdutosNCM.AsString;
@@ -3055,12 +3023,14 @@ begin
               End;
 
               // Efetua os calculos de IBS/CBS.
-              PedidosItens.fieldbyname('Valor_BCIS').Value  := 0;
-              PedidosItens.fieldbyname('Valor_IS').Value    := 0;
-              PedidosItens.fieldbyname('Valor_BCCBS').Value := 0;
-              PedidosItens.fieldbyname('Valor_CBS').Value   := 0;
-              PedidosItens.fieldbyname('Valor_BCIBS').Value := 0;
-              PedidosItens.fieldbyname('Valor_IBS').Value   := 0;
+              if not PedidosNFE_Estorno.asboolean then begin
+                 PedidosItens.fieldbyname('Valor_BCIS').Value  := 0;
+                 PedidosItens.fieldbyname('Valor_IS').Value    := 0;
+                 PedidosItens.fieldbyname('Valor_BCCBS').Value := 0;
+                 PedidosItens.fieldbyname('Valor_CBS').Value   := 0;
+                 PedidosItens.fieldbyname('Valor_BCIBS').Value := 0;
+                 PedidosItens.fieldbyname('Valor_IBS').Value   := 0;
+              end;
            
               if trim(TipoNotaCalculo_BCIS.AsString) <> '' then 
                  PedidosItens.fieldbyname('Valor_BCIS').Value := RoundTo(CalculaMacro('Calculo_BCIS'), -2);
@@ -3165,15 +3135,7 @@ begin
                     PedidosItensValor_IsentasIPI.Value := mApuracao1;
               End;
          End;
-         
-//        CalculoIBSCBS;
-
       end;
-end;
-
-procedure TPedido_ItensOutros.cValorPISChange(Sender: TObject);
-begin
-//     CalculoIBSCBS;
 end;
 
 procedure TPedido_ItensOutros.cCodigoChange(Sender: TObject);
@@ -3348,17 +3310,6 @@ end;
 
 procedure TPedido_ItensOutros.cTabAExit(Sender: TObject);
 begin
-{
-     with Dados, dmFiscal do begin
-          if (PedidosItensCodigoTrib_TabA.asstring <> '1') and (PedidosItensCodigoTrib_TabA.asstring <> '6') then begin
-             PedidosItensBeneficio_Fiscal.Clear;
-             PedidosItensCodigo_CredPres.Clear;
-          end else begin
-             PedidosItensBeneficio_Fiscal.value := TipoNota.FieldByName('Beneficio_Fiscal').AsString;
-             PedidosItensCodigo_CredPres.value  := NCM.FieldByName('Codigo_CredPres').AsString;
-          end;
-     end;
-}
      with Dados, dmFiscal do begin
           PedidosItensBeneficio_Fiscal.Clear;
           PedidosItensCodigo_CredPres.Clear;
@@ -3653,7 +3604,9 @@ begin
                        PedidosItensValor_Unitario.Value := PedidosItensValor_Unitario.AsCurrency + PedidosItensLucro_Valor.Value;
                     end;
                  end else begin
-                    PedidosItensValor_Unitario.Value := CalculaMacro('Calculo_Mercadoria');
+                    if trim(TipoNotaCalculo_Mercadoria.AsString) <> '' then begin
+                        PedidosItensValor_Unitario.Value := CalculaMacro('Calculo_Mercadoria');
+                    end;
                  end
               end;
            end;
@@ -3787,13 +3740,10 @@ begin
           PedidosItensValor_FCP.Value        := 0;
           PedidosItensValor_BCFCPST.Value    := 0;
           PedidosItensValor_FCPST.Value      := 0;
-//          mAliquotaDIFAL                     := 0;
 
           if TipoNotaVisiveis_DIFAL.AsBoolean then begin
              // DIFAL.
-//             mAliquotaDIFAL := ICMSICMS_Interno.AsFloat;
              mUF            := Trim(ClientesEstado.Value)+'_ICMS';
-             
              NCM.Locate('NCM', PedidosItensNCM.AsString, [loCaseInsensitive]);;
              if NCM.FieldbyName(mUF).AsFloat > 0 then begin
                 mAliquotaDIFAL := NCM.FieldbyName(mUF).AsFloat;
@@ -3804,11 +3754,6 @@ begin
              PedidosItensAliquota_ICMSDest.Value := mAliquotaDIFAL;
 
              if (Clientes.FieldByName('Consumidor_Final').AsBoolean) and (not Clientes.FieldByName('MEI').AsBoolean) then begin  // Cliente é consumidor final.
-//                if PedidosItensSaida_Entrada.AsInteger = 1 then begin
-//                   PedidosItensTotal_Impostos.Value := RoundTo(PedidosItensTotal_IPI.AsCurrency+(PedidosItensValor_II.AsCurrency*PedidosItensQuantidade.AsFloat)+PedidosItensValor_ICMSOper.AsCurrency+PedidosItensValor_PIS.AsCurrency+PedidosItensValor_COFINS.AsCurrency, -2);
-//                   mTotalImpostos                   := mTotalImpostos + PedidosItensTotal_Impostos.AsCurrency;
-//                end;
-
                 // Diferencial de alíquota do ICMS (DIFAL) p/consumidor final.
                 if (TipoNotaSaida_Entrada.Value = 1) and (TipoNotaVisiveis_DIFAL.AsBoolean) then Begin                   // Nota Fiscal de saída.
                    if PedidosItensAliquota_ICMSOper.Value <> mAliquotaDIFAL then begin                                   // Aliquota de icms dos estados diferente.
