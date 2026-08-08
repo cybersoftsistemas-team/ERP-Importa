@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,Dialogs, DBCtrls, Vcl.StdCtrls, Vcl.ExtCtrls, RXCtrls, Grids, DBGrids,RXDBCtrl,
   ppClass, ppReport, ppDBPipe, ppCtrls, ppPrnabl, ppBands, DB, DBAccess, MSAccess, ppSubRpt, ppVar, Buttons, Funcoes,
-  ppParameter, ppRichTx, Maskutils, MemDS, ppDB, ppDesignLayer, ppModule, raCodMod, ppStrtch, ppCache, ppComm, ppRelatv, ppProd;
+  ppParameter, ppRichTx, Maskutils, MemDS, ppDB, ppDesignLayer, ppModule, raCodMod, ppStrtch, ppCache, ppComm, ppRelatv, ppProd, uniGUIBaseClasses, uniGUIClasses, uniRadioGroup;
 
 type
   TImpressao_ProcessosOP_Fechamento = class(TForm)
@@ -292,6 +292,7 @@ type
     ppDesignLayers4: TppDesignLayers;
     ppDesignLayer4: TppDesignLayer;
     ppDBText71: TppDBText;
+    cTipo: TRadioGroup;
     procedure bSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -302,7 +303,6 @@ type
     procedure bLimpaFiltroClick(Sender: TObject);
     procedure pValor_RealCalc(Sender: TObject; var Value: Variant);
     procedure gSaidaBeforePrint(Sender: TObject);
-    procedure lSaldoFinanceiroCalc(Sender: TObject; var Value: Variant);
     procedure GradeDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
   private
     { Private declarations }
@@ -387,7 +387,6 @@ begin
            tProcessos.SQL.Add('       PD.Numero_Declaracao,');
            tProcessos.SQL.Add('       PD.Data_RegistroDeclaracao,');
            tProcessos.SQL.Add('       PD.II,');
-           //tProcessos.SQL.Add('       PD.Valor_IPI,');
            tProcessos.SQL.Add('       Valor_IPI = PF.IPI_Entrada,');
            tProcessos.SQL.Add('       PF.PIS_Entrada AS Valor_PIS,');
            tProcessos.SQL.Add('       PF.COFINS_Entrada AS Valor_COFINS,');
@@ -461,22 +460,6 @@ begin
            tDespesas.ParamByName('pFechamento').AsInteger := ProcessosFechamento.FieldByName('Codigo').AsInteger;
            tDespesas.Open;
 
-           {
-           tTotalSaida.SQL.Clear;
-           tTotalSaida.SQL.Add('SELECT SUM(Valor_ICMS)             AS Total_ICMS,');
-           tTotalSaida.SQL.Add('       SUM(ValorICMS_Substitutivo) AS Total_ICMSSub,');
-           tTotalSaida.SQL.Add('       SUM(BCICMS)                 AS Total_BCICMS,');
-           tTotalSaida.SQL.Add('       SUM(Valor_TotalIPI)         AS Total_IPI,');
-           tTotalSaida.SQL.Add('       IIF ((SELECT Modalidade_Importacao FROM ProcessosDocumentos PD WHERE PD.Processo = :pProcesso) <> 2, SUM(Valor_PIS)   , (SELECT Valor_PIS    FROM ProcessosDocumentos PD WHERE PD.Processo = :pProcesso)) AS Total_PIS,');
-           tTotalSaida.SQL.Add('       IIF ((SELECT Modalidade_Importacao FROM ProcessosDocumentos PD WHERE PD.Processo = :pProcesso) <> 2, SUM(Valor_COFINS), (SELECT Valor_COFINS FROM ProcessosDocumentos PD WHERE PD.Processo = :pProcesso)) AS Total_COFINS,');
-           tTotalSaida.SQL.Add('       SUM(Valor_TotalNota)        AS Valor_TotalNota');
-           tTotalSaida.SQL.Add('FROM   NotasFiscais');
-           tTotalSaida.SQL.Add('WHERE  (Saida_Entrada = 1) AND (Processo = :pProcesso) AND (Cancelada <> 1)');
-           tTotalSaida.SQL.Add('       AND (SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = Tipo_Nota)) = 0');
-           tTotalSaida.SQL.Add('        OR (SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = Tipo_Nota)) = 3');
-           tTotalSaida.ParamByName('pProcesso').AsString := ProcessosFechamento.FieldByName('Processo').AsString;
-           tTotalSaida.Open;
-           }
            with tTotalSaida do begin
                 SQL.Clear;
                 SQL.Add('SELECT SUM(Valor_ICMS)             AS Total_ICMS,');
@@ -492,22 +475,8 @@ begin
                 ParamByName('pProcesso').AsString := ProcessosFechamento.FieldByName('Processo').AsString;
                 Open;
            end;
-           {
-           tNotas.SQL.Clear;
-           tNotas.SQL.Add('SELECT Numero,');
-           tNotas.SQL.Add('       Data_Emissao,');
-           tNotas.SQL.Add('       BCICMS,');
-           tNotas.SQL.Add('       Valor_TotalNota,');
-           tNotas.SQL.Add('       CASE WHEN Saida_Entrada = 0 THEN ''ENTRADA''     ELSE ''SAÍDA'' END AS Tipo,');
-           tNotas.SQL.Add('       CASE WHEN Saida_Entrada = 1 THEN Valor_TotalNota ELSE 0         END AS Total_Saida,');
-           tNotas.SQL.Add('       CASE WHEN Saida_Entrada = 1 THEN BCICMS          ELSE 0         END AS BCICMS_Saida');
-           tNotas.SQL.Add('FROM   NotasFiscais');
-           tNotas.SQL.Add('WHERE(Processo = :pProcesso) AND (Cancelada <> 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = Tipo_Nota)) IN(0, 5))');
-           tNotas.SQL.Add('ORDER BY Saida_Entrada, Numero');
-           tNotas.ParamByName('pProcesso').AsString := ProcessosFechamento.FieldByName('Processo').AsString;
-           tNotas.Open;
-           }
            with tNotas do begin 
+                {
                 SQL.Clear;
                 SQL.Add('SELECT Numero,');
                 SQL.Add('       Data_Emissao,');
@@ -521,6 +490,25 @@ begin
                 SQL.Add('ORDER BY Saida_Entrada, Numero');
                 ParamByName('pProcesso').AsString := ProcessosFechamento.FieldByName('Processo').AsString;
                 Open;
+                }
+                sql.clear;
+                sql.add('select Numero,');
+                sql.add('       Data_Emissao,');
+                sql.add('       BCICMS,');
+                sql.add('       Valor_TotalNota,');
+                sql.add('       case when Saida_Entrada = 0 then ''Entrada''     else ''Saída'' end as Tipo,');
+                sql.add('       case when Saida_Entrada = 1 then Valor_TotalNota else 0         end as Total_Saida,');
+                sql.add('       case when Saida_Entrada = 1 then BCICMS          else 0         end as BCICMS_Saida');
+                sql.add('from NotasFiscais');
+                sql.add('where Processo = :pProcesso');
+                sql.add('and Cancelada <> 1');
+                sql.add('and (select Fechamento_Processo from TipoNota where Codigo = Tipo_Nota) = 1');
+                if cTipo.ItemIndex = 1 then begin
+                   sql.add('and Saida_Entrada = 1');
+                end;
+                sql.add('order by Saida_Entrada, Numero');
+                parambyname('pProcesso').asstring := processosfechamento.fieldbyname('processo').asstring;
+                open;
            end;
 
            ProcessosHistorico.SQL.Clear;
@@ -589,24 +577,7 @@ end;
 
 procedure TImpressao_ProcessosOP_Fechamento.gSaidaBeforePrint(Sender: TObject);
 begin
-{
-      lDiferencaICMS.Value   := tProcessos.FieldByName('ICMS_Saida').AsCurrency;
-      lDiferencaIPI.Value    := tProcessos.FieldByName('IPI_Saida').AsCurrency    - tProcessos.FieldByName('Valor_IPI').AsCurrency;
-      lDiferencaPIS.Value    := tProcessos.FieldByName('PIS_Saida').AsCurrency    - tProcessos.FieldByName('Valor_PIS').AsCurrency;
-      lDiferencaCOFINS.Value := tProcessos.FieldByName('COFINS_Saida').AsCurrency - tProcessos.FieldByName('Valor_COFINS').AsCurrency;
-
-      lTotalImpDI.Value := tProcessos.FieldByName('II').AsCurrency + tProcessos.FieldByName('Valor_IPI').AsCurrency + tProcessos.FieldByName('Valor_PIS').AsCurrency +
-                           tProcessos.FieldByName('Valor_COFINS').AsCurrency + tProcessos.FieldByName('Valor_ICMS').AsCurrency +
-                           lDiferencaICMS.Value + lDiferencaIPI.Value + lDiferencaPIS.Value + lDiferencaCOFINS.Value + tTotalSaida.FieldByName('Total_ICMSSub').AsCurrency;
-
-      lImpostos.Value := lTotalImpDI.Value;
-
-      lTotalImpSaida.Value   := tProcessos.FieldByName('ICMS_Saida').AsCurrency + tProcessos.FieldByName('ICMS_SaidaST').AsCurrency + tProcessos.FieldByName('IPI_Saida').AsCurrency + tProcessos.FieldByName('PIS_Saida').AsCurrency + tProcessos.FieldByName('COFINS_Saida').AsCurrency;
-      lTotalCusto.Value      := tProcessos.FieldByName('Total_CambioReal').AsCurrency + tProcessos.FieldByName('Total_Despesas').AsCurrency + lImpostos.Value;
-      lTotalNegociacao.Value := tProcessos.FieldByName('Margem_LucroValor').AsCurrency + tProcessos.FieldByName('Desconto_AdicionalValor').AsCurrency + tProcessos.FieldByName('Desconto_ComercialValor').AsCurrency;
-      lSubTotal.Value        := lTotalCusto.Value + lTotalNegociacao.Value;
-      lTotalGeral.Value      := tProcessos.FieldByName('Pagamento_Cliente').AsCurrency - lSubTotal.Value;
-}     with tProcessos do begin 
+      with tProcessos do begin 
            lDiferencaIPI.Value    := FieldByName('IPI_Saida').AsCurrency    - FieldByName('Valor_IPI').AsCurrency;
            lDiferencaPIS.Value    := FieldByName('PIS_Saida').AsCurrency    - FieldByName('Valor_PIS').AsCurrency;
            lDiferencaCOFINS.Value := FieldByName('COFINS_Saida').AsCurrency - FieldByName('Valor_COFINS').AsCurrency;
@@ -637,8 +608,6 @@ begin
            
            lDiferenca.Value      := lTotalDiferenca.Value;
 
-//           lTotalEntDif.Value    := lTotalImpDI.Value + lTotalDiferenca.Value;
-      
            lTotalCusto.Value     := FieldByName('Total_CambioReal').AsCurrency +
                                     FieldByName('Total_Despesas').AsCurrency +
                                     lImpostos.Value +
@@ -651,16 +620,13 @@ begin
                                      FieldByName('Desconto_ComercialValor').AsCurrency;
                                      
            lSubTotal.Value   := lTotalCusto.Value + lTotalNegociacao.Value;
-           //lTotalGeral.Value := FieldByName('Pagamento_Cliente').AsCurrency - lSubTotal.Value;
-           lTotalGeral.Value := FieldByName('Pagamento_Cliente').AsCurrency - (FieldByName('Transferencia_Efetuada').AsCurrency+FieldByName('Devolucoes').AsCurrency + lSubTotal.Value);
+           if cTipo.ItemIndex = 0 then begin
+              lTotalGeral.Value := FieldByName('Pagamento_Cliente').AsCurrency - (FieldByName('Transferencia_Efetuada').AsCurrency+FieldByName('Devolucoes').AsCurrency + lSubTotal.Value);
+           end else begin
+              lTotalGeral.Value := FieldByName('Pagamento_Cliente').ascurrency - tTotalSaida.FieldByName('Valor_TotalNota').ascurrency;
+           end;
            lSaldoFinanceiro.Value := (tProcessos.FieldByName('Pagamento_Cliente').AsCurrency + tProcessos.FieldByName('Valor_DescontoJuros').AsCurrency) - lSubTotal.value;
       end;
-end;
-
-procedure TImpressao_ProcessosOP_Fechamento.lSaldoFinanceiroCalc(Sender: TObject; var Value: Variant);
-begin
-//      Value := tTotalSaida.FieldByName('Valor_TotalNota').AsCurrency - tProcessos.FieldByName('Pagamento_Cliente').AsCurrency + tProcessos.FieldByName('Valor_DescontoJuros').AsCurrency;
-//      Value := (tProcessos.FieldByName('Pagamento_Cliente').AsCurrency + tProcessos.FieldByName('Valor_DescontoJuros').AsCurrency) - lSubTotal.value;
 end;
 
 procedure TImpressao_ProcessosOP_Fechamento.GradeDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn;State: TGridDrawState);

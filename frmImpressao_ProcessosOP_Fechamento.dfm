@@ -3,7 +3,7 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
   Top = 125
   BorderStyle = bsDialog
   Caption = 'Impressao_ProcessosOP_Fechamento'
-  ClientHeight = 490
+  ClientHeight = 558
   ClientWidth = 650
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -62,12 +62,13 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
   end
   object Panel1: TPanel
     Left = 0
-    Top = 460
+    Top = 528
     Width = 650
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitTop = 460
     DesignSize = (
       650
       30)
@@ -138,10 +139,12 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
     end
   end
   object Grade: TDBGrid
-    Left = 5
-    Top = 82
-    Width = 638
+    AlignWithMargins = True
+    Left = 3
+    Top = 162
+    Width = 644
     Height = 363
+    Align = alBottom
     DataSource = Dados.dsProcessosFechamento
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
@@ -194,7 +197,7 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
         Title.Font.Height = -11
         Title.Font.Name = 'MS Sans Serif'
         Title.Font.Style = [fsBold]
-        Width = 106
+        Width = 112
         Visible = True
       end
       item
@@ -230,11 +233,24 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
   end
   object cCapa: TCheckBox
     Left = 8
-    Top = 56
+    Top = 124
     Width = 139
     Height = 17
     Caption = 'Imprimir Pagina da Capa'
     TabOrder = 2
+  end
+  object cTipo: TRadioGroup
+    Left = 8
+    Top = 60
+    Width = 267
+    Height = 47
+    Caption = 'Tipo de Fechamento'
+    Columns = 2
+    ItemIndex = 0
+    Items.Strings = (
+      'Empresa'
+      'Cliente')
+    TabOrder = 3
   end
   object rProcessoFechamento: TppReport
     AutoStop = False
@@ -3223,7 +3239,6 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
         Font.Size = 7
         Font.Style = [fsBold]
         LookAhead = True
-        OnCalc = lSaldoFinanceiroCalc
         TextAlignment = taRightJustified
         Transparent = True
         Visible = False
@@ -7405,7 +7420,7 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
     FetchRows = 1
     Active = True
     Left = 306
-    Top = 281
+    Top = 283
   end
   object pNotas: TppDBPipeline
     DataSource = dstNotas

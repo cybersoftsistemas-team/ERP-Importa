@@ -15471,7 +15471,7 @@ object Dados: TDados
     Top = 340
   end
   object Banco_Empresas: TMSConnection
-    Database = 'Cybersoft_PVM_Filial1'
+    Database = 'Cybersoft_Givotrading_Matriz'
     Options.PersistSecurityInfo = True
     Options.ApplicationName = 'Cybersoft ERP Importa'
     Options.Provider = prSQL
@@ -18973,11 +18973,11 @@ object Dados: TDados
       ')')
     Connection = Banco_Empresas
     SQL.Strings = (
-      
-        'SELECT * FROM ProcessosFechamento WHERE Processo = '#39'ABRTO 0030/1' +
-        '2'#39)
+      'SELECT * FROM ProcessosFechamento '
+      '--WHERE Processo = '#39'ABRTO 0030/12'#39)
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
+    Active = True
     Left = 500
     Top = 475
     object ProcessosFechamentoCodigo: TIntegerField
