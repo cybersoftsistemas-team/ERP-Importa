@@ -761,7 +761,7 @@ object Pedido: TPedido
     Top = 51
     Width = 774
     Height = 467
-    ActivePage = TabSheet2
+    ActivePage = TabSheet3
     TabHeight = 28
     TabOrder = 4
     object TabSheet1: TTabSheet
@@ -2406,7 +2406,7 @@ object Pedido: TPedido
     object TabSheet3: TTabSheet
       Caption = 'Movimenta'#231#227'o Financeira'
       ImageIndex = 2
-      object Grade2: TRxDBGrid
+      object Grade2: TDBGrid
         Left = 0
         Top = 0
         Width = 766
@@ -2420,11 +2420,10 @@ object Pedido: TPedido
         Font.Height = -11
         Font.Name = 'Calibri'
         Font.Style = [fsBold]
-        Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+        Options = [dgEditing, dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]
         ParentCtl3D = False
         ParentFont = False
         PopupMenu = MenuCusto
-        ReadOnly = True
         TabOrder = 0
         TitleFont.Charset = DEFAULT_CHARSET
         TitleFont.Color = clBlue
@@ -2433,12 +2432,13 @@ object Pedido: TPedido
         TitleFont.Style = [fsBold]
         OnCellClick = Grade2CellClick
         OnDrawColumnCell = Grade2DrawColumnCell
-        RowColor2 = 16776176
+        OnKeyDown = Grade2KeyDown
         Columns = <
           item
             Alignment = taCenter
             Expanded = False
             FieldName = 'Processo'
+            ReadOnly = True
             Title.Alignment = taCenter
             Title.Font.Charset = DEFAULT_CHARSET
             Title.Font.Color = clBlack
@@ -2450,6 +2450,7 @@ object Pedido: TPedido
           item
             Expanded = False
             FieldName = 'Classificacao'
+            ReadOnly = True
             Title.Alignment = taCenter
             Title.Caption = 'Class'
             Title.Font.Charset = DEFAULT_CHARSET
@@ -2468,6 +2469,7 @@ object Pedido: TPedido
             Font.Height = -11
             Font.Name = 'Calibri'
             Font.Style = []
+            ReadOnly = True
             Title.Alignment = taCenter
             Title.Caption = 'Despesa'
             Title.Font.Charset = DEFAULT_CHARSET
@@ -2487,6 +2489,7 @@ object Pedido: TPedido
             Font.Height = -11
             Font.Name = 'Calibri'
             Font.Style = []
+            ReadOnly = True
             Title.Alignment = taCenter
             Title.Caption = 'P/R'
             Title.Font.Charset = DEFAULT_CHARSET
@@ -2499,7 +2502,7 @@ object Pedido: TPedido
           end
           item
             Expanded = False
-            FieldName = 'Valor_Total'
+            FieldName = 'Valor_TotalPed'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlack
             Font.Height = -11
@@ -2518,6 +2521,7 @@ object Pedido: TPedido
           item
             Expanded = False
             FieldName = 'Custo_Entrada'
+            ReadOnly = True
             Title.Alignment = taCenter
             Title.Caption = 'C.Ent'
             Title.Font.Charset = DEFAULT_CHARSET
@@ -2531,6 +2535,7 @@ object Pedido: TPedido
           item
             Expanded = False
             FieldName = 'CustoConta'
+            ReadOnly = True
             Title.Alignment = taCenter
             Title.Caption = 'C.Sai'
             Title.Font.Charset = DEFAULT_CHARSET
@@ -2544,6 +2549,7 @@ object Pedido: TPedido
           item
             Expanded = False
             FieldName = 'Custo_Seletivo'
+            ReadOnly = True
             Title.Alignment = taCenter
             Title.Caption = 'C.Sel'
             Title.Font.Charset = DEFAULT_CHARSET
@@ -2557,6 +2563,7 @@ object Pedido: TPedido
           item
             Expanded = False
             FieldName = 'Custo_Outros'
+            ReadOnly = True
             Title.Caption = 'C.Out'
             Title.Font.Charset = DEFAULT_CHARSET
             Title.Font.Color = clBlack
@@ -2946,7 +2953,7 @@ object Pedido: TPedido
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -15428,6 +15435,12 @@ object Pedido: TPedido
   object MenuCusto: TPopupMenu
     Left = 570
     Top = 5
+    object AlterarValor1: TMenuItem
+      Caption = 'Alterar Valor'
+    end
+    object N4: TMenuItem
+      Caption = '-'
+    end
     object mnMarcarCustoEntrada: TMenuItem
       Caption = 'Marcar como Custo Geral (Entrada)'
       OnClick = mnMarcarCustoEntradaClick

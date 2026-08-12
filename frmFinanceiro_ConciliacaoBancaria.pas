@@ -381,12 +381,14 @@ begin
                                        PagarReceberValor_Documento.Value := tExtrato.FieldByName('Valor').AsCurrency;
                                        PagarReceberValor_Parcela.Value   := tExtrato.FieldByName('Valor').AsCurrency;
                                        PagarReceberValor_Total.Value     := tExtrato.FieldByName('Valor').AsCurrency;
+                                       PagarReceberValor_TotalPed.Value  := tExtrato.FieldByName('Valor').AsCurrency;
                                        PagarReceberValor_Operacao.Value  := tExtrato.FieldByName('Valor').AsCurrency;
                                        PagarReceberValor_Baixado.Value   := tExtrato.FieldByName('Valor').AsCurrency;
                                     end else begin
                                        PagarReceberValor_Documento.Value := tExtrato.FieldByName('Valor').AsCurrency *-1;
                                        PagarReceberValor_Parcela.Value   := tExtrato.FieldByName('Valor').AsCurrency *-1;
                                        PagarReceberValor_Total.Value     := tExtrato.FieldByName('Valor').AsCurrency *-1;
+                                       PagarReceberValor_TotalPed.Value  := tExtrato.FieldByName('Valor').AsCurrency *-1;
                                        PagarReceberValor_Operacao.Value  := tExtrato.FieldByName('Valor').AsCurrency *-1;
                                        PagarReceberValor_Baixado.Value   := tExtrato.FieldByName('Valor').AsCurrency *-1;
                                     End;

@@ -73,6 +73,7 @@ begin
                               PagarReceberValor_Parcela.Value   := EmprestimosFINIMPValor_ME.AsCurrency * cTaxa.Value;
                               PagarReceberValor_Operacao.Value  := EmprestimosFINIMPValor_ME.AsCurrency * cTaxa.Value;
                               PagarReceberValor_Total.Value     := EmprestimosFINIMPValor_ME.AsCurrency * cTaxa.Value;
+                              PagarReceberValor_TotalPed.Value  := EmprestimosFINIMPValor_ME.AsCurrency * cTaxa.Value;
                               PagarReceberBanco.Value           := EmprestimosBanco.Value;
                  PagarReceber.Post;
 

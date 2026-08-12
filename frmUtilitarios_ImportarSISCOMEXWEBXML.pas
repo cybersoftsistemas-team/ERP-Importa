@@ -3496,6 +3496,7 @@ begin
                                              PagarReceberValor_Documento.Value := StrValor(Cells[9, i]);
                                              PagarReceberValor_Parcela.Value   := StrValor(Cells[9, i]);
                                              PagarReceberValor_Total.Value     := StrValor(Cells[9, i]);
+                                             PagarReceberValor_TotalPed.Value  := StrValor(Cells[9, i]);
                                              PagarReceberValor_Operacao.Value  := StrValor(Cells[9, i]);
                                              if Trim(cBanco.Text) <> '' then
                                                 PagarReceberValor_Baixado.Value := StrValor(Cells[9, i])
@@ -3503,6 +3504,7 @@ begin
                                              PagarReceberValor_Documento.Value := ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency;
                                              PagarReceberValor_Parcela.Value   := ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency;
                                              PagarReceberValor_Total.Value     := ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency;
+                                             PagarReceberValor_TotalPed.Value  := ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency;
                                              PagarReceberValor_Operacao.Value  := ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency;
                                              if Trim(cBanco.Text) <> '' then
                                                 PagarReceberValor_Baixado.Value := ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency;
@@ -3618,6 +3620,7 @@ begin
                                     PagarReceberJuros.Value            := 0;
                                     PagarReceberDesconto.Value         := 0;
                                     PagarReceberValor_Total.Value      := (ProcessosDOC.FieldByName('Valor_PIS').AsCurrency-ProcessosDOC.FieldByName('Valor_PIS2').AsCurrency);
+                                    PagarReceberValor_TotalPed.Value   := (ProcessosDOC.FieldByName('Valor_PIS').AsCurrency-ProcessosDOC.FieldByName('Valor_PIS2').AsCurrency);
                                     PagarReceberValor_Operacao.Value   := (ProcessosDOC.FieldByName('Valor_PIS').AsCurrency-ProcessosDOC.FieldByName('Valor_PIS2').AsCurrency);
                                     PagarReceberOrgao.Value            := TiposProcesso.FieldByName('SISCOMEX_Orgao').AsString;
                                     PagarReceberDocumento.Value        := TiposProcesso.FieldByName('SISCOMEX_Documento').AsString;
@@ -3745,6 +3748,7 @@ begin
                                     PagarReceberJuros.Value            := 0;
                                     PagarReceberDesconto.Value         := 0;
                                     PagarReceberValor_Total.Value      := (ProcessosDOC.FieldByName('Valor_COFINS').AsCurrency-ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency);
+                                    PagarReceberValor_TotalPed.Value   := (ProcessosDOC.FieldByName('Valor_COFINS').AsCurrency-ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency);
                                     PagarReceberValor_Operacao.Value   := (ProcessosDOC.FieldByName('Valor_COFINS').AsCurrency-ProcessosDOC.FieldByName('Valor_COFINS2').AsCurrency);
                                     PagarReceberOrgao.Value            := TiposProcesso.FieldByName('SISCOMEX_Orgao').AsString;
                                     PagarReceberDocumento.Value        := TiposProcesso.FieldByName('SISCOMEX_Documento').AsString;
@@ -3870,6 +3874,7 @@ begin
                                     PagarReceberJuros.Value            := 0;
                                     PagarReceberDesconto.Value         := 0;
                                     PagarReceberValor_Total.Value      := cAFRMMReal.Value;
+                                    PagarReceberValor_TotalPed.Value   := cAFRMMReal.Value;
                                     PagarReceberValor_Operacao.Value   := cAFRMMReal.Value;
                                     PagarReceberOrgao.Value            := TiposProcesso.FieldByName('SISCOMEX_Orgao').AsString;
                                     PagarReceberDocumento.Value        := TiposProcesso.FieldByName('SISCOMEX_Documento').AsString;
@@ -3995,6 +4000,7 @@ begin
                                     PagarReceberJuros.Value            := 0;
                                     PagarReceberDesconto.Value         := 0;
                                     PagarReceberValor_Total.Value      := cTUPReal.Value;
+                                    PagarReceberValor_TotalPed.Value   := cTUPReal.Value;
                                     PagarReceberValor_Operacao.Value   := cTUPReal.Value;
                                     PagarReceberOrgao.Value            := TiposProcesso.FieldByName('SISCOMEX_Orgao').AsString;
                                     PagarReceberDocumento.Value        := TiposProcesso.FieldByName('SISCOMEX_Documento').AsString;

@@ -655,6 +655,7 @@ begin
                         PagarReceberDesconto.Value         := 0;
                         PagarReceberValor_Operacao.Value   := EmprestimosValor_Principal.Value;
                         PagarReceberValor_Total.Value      := EmprestimosValor_Principal.Value;
+                        PagarReceberValor_TotalPed.Value   := EmprestimosValor_Principal.Value;
                         PagarReceberValor_Baixado.Value    := EmprestimosValor_Principal.Value;
                         PagarReceberProvisorio.Value       := false;
                         PagarReceberForma_Tipo.Value       := EmprestimosForma_Tipo.Value;
@@ -724,6 +725,7 @@ begin
                               PagarReceberDesconto.Value         := 0;
                               PagarReceberValor_Operacao.Value   := EmprestimosParcelasValor.Value;
                               PagarReceberValor_Total.Value      := EmprestimosParcelasValor.Value;
+                              PagarReceberValor_TotalPed.Value   := EmprestimosParcelasValor.Value;
                               PagarReceberValor_Baixado.Value    := 0;
                               PagarReceberProvisorio.Value       := false;
                               PagarReceberEmprestimo.Value       := true;

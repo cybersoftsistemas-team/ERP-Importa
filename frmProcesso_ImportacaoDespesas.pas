@@ -251,6 +251,7 @@ begin
                                 PagarReceberJuros.Value            := 0;
                                 PagarReceberDesconto.Value         := 0;
                                 PagarReceberValor_Total.Value      := tDesp.FieldByName('Valor').Value;
+                                PagarReceberValor_TotalPed.Value   := tDesp.FieldByName('Valor').Value;
                                 PagarReceberValor_Operacao.Value   := tDesp.FieldByName('Valor').Value;
                                 PagarReceberDocumento.Value        := tDesp.FieldByName('Documento').Value;
                                 PagarReceberNumero_Documento.Value := ProcessosDOCNumero_Declaracao.Value;

@@ -2644,6 +2644,7 @@ begin
                                PagarReceberJuros.Value            := 0;
                                PagarReceberDesconto.Value         := 0;
                                PagarReceberValor_Total.Value      := DuplicatasValor_Liquido.Value;
+                               PagarReceberValor_TotalPed.Value   := DuplicatasValor_Liquido.Value;
                                PagarReceberValor_Operacao.Value   := DuplicatasValor_Liquido.Value;
                                PagarReceberCliente.Value          := ClientesCodigo.Value;
                                PagarReceberDocumento.Value        := TipoNotaTipo_Documento.Value;

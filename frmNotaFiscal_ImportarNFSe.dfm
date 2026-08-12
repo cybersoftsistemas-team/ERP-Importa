@@ -4,7 +4,7 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
   BorderStyle = bsDialog
   Caption = 'NotaFiscal_ImportarNFSe'
   ClientHeight = 466
-  ClientWidth = 782
+  ClientWidth = 937
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,14 +20,14 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
   object Panel1: TPanel
     Left = 0
     Top = 436
-    Width = 782
+    Width = 937
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitWidth = 711
+    ExplicitWidth = 782
     object bSair: TButton
-      Left = 714
+      Left = 869
       Top = 1
       Width = 67
       Height = 28
@@ -45,18 +45,19 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
-      ExplicitLeft = 643
+      ExplicitLeft = 714
     end
   end
   object Panel2: TPanel
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 776
+    Width = 931
     Height = 109
     Align = alTop
     BevelOuter = bvLowered
     TabOrder = 1
+    ExplicitWidth = 776
     object bAbrir: TSpeedButton
       Left = 643
       Top = 19
@@ -460,7 +461,7 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
     AlignWithMargins = True
     Left = 3
     Top = 118
-    Width = 776
+    Width = 931
     Height = 308
     Margins.Bottom = 10
     Align = alClient
@@ -473,11 +474,10 @@ object NotaFiscal_ImportarNFSe: TNotaFiscal_ImportarNFSe
     Font.Height = -11
     Font.Name = 'Calibri'
     Font.Style = []
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSelect]
     ParentFont = False
     TabOrder = 2
-    ExplicitTop = 95
-    ExplicitWidth = 705
-    ExplicitHeight = 331
+    ExplicitWidth = 776
   end
   object tTmp: TMSQuery
     Connection = Dados.Banco_Empresas

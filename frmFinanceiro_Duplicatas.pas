@@ -861,6 +861,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor1.Value;
                                      PagarReceberDesconto.Value         := cDesconto1.Value;
                                      PagarReceberValor_Total.Value      := cTotal1.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal1.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal1.Value;
                                      PagarReceberParcela.Value          := cParcela1.Text;
                                   End;
@@ -876,6 +877,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor2.Value;
                                      PagarReceberDesconto.Value         := cDesconto2.Value;
                                      PagarReceberValor_Total.Value      := cTotal2.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal2.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal2.Value;
                                      PagarReceberParcela.Value          := cParcela2.Text;
                                   End;
@@ -891,6 +893,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor3.Value;
                                      PagarReceberDesconto.Value         := cDesconto3.Value;
                                      PagarReceberValor_Total.Value      := cTotal3.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal3.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal3.Value;
                                      PagarReceberParcela.Value          := cParcela3.Text;
                                   End;
@@ -906,6 +909,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor4.Value;
                                      PagarReceberDesconto.Value         := cDesconto4.Value;
                                      PagarReceberValor_Total.Value      := cTotal4.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal4.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal4.Value;
                                      PagarReceberParcela.Value          := cParcela4.Text;
                                   End;
@@ -921,6 +925,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor5.Value;
                                      PagarReceberDesconto.Value         := cDesconto5.Value;
                                      PagarReceberValor_Total.Value      := cTotal5.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal5.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal5.Value;
                                      PagarReceberParcela.Value          := cParcela5.Text;
                                   End;
@@ -936,6 +941,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor6.Value;
                                      PagarReceberDesconto.Value         := cDesconto6.Value;
                                      PagarReceberValor_Total.Value      := cTotal6.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal6.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal6.Value;
                                      PagarReceberParcela.Value          := cParcela6.Text;
                                   End;
@@ -951,6 +957,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor7.Value;
                                      PagarReceberDesconto.Value         := cDesconto7.Value;
                                      PagarReceberValor_Total.Value      := cTotal7.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal7.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal7.Value;
                                      PagarReceberParcela.Value          := cParcela7.Text;
                                   End;
@@ -966,6 +973,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor8.Value;
                                      PagarReceberDesconto.Value         := cDesconto8.Value;
                                      PagarReceberValor_Total.Value      := cTotal8.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal8.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal8.Value;
                                      PagarReceberParcela.Value          := cParcela8.Text;
                                   End;
@@ -977,6 +985,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor9.Value;
                                      PagarReceberDesconto.Value         := cDesconto9.Value;
                                      PagarReceberValor_Total.Value      := cTotal9.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal9.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal9.Value;
                                      PagarReceberParcela.Value          := cParcela9.Text;
                                   End;
@@ -988,6 +997,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor10.Value;
                                      PagarReceberDesconto.Value         := cDesconto10.Value;
                                      PagarReceberValor_Total.Value      := cTotal10.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal10.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal10.Value;
                                      PagarReceberParcela.Value          := cParcela10.Text;
                                   End;
@@ -999,6 +1009,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor11.Value;
                                      PagarReceberDesconto.Value         := cDesconto11.Value;
                                      PagarReceberValor_Total.Value      := cTotal11.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal11.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal11.Value;
                                      PagarReceberParcela.Value          := cParcela11.Text;
                                   End;
@@ -1010,6 +1021,7 @@ begin
                                      PagarReceberValor_Parcela.Value    := cValor12.Value;
                                      PagarReceberDesconto.Value         := cDesconto12.Value;
                                      PagarReceberValor_Total.Value      := cTotal12.Value;
+                                     PagarReceberValor_TotalPed.Value   := cTotal12.Value;
                                      PagarReceberValor_Operacao.Value   := cTotal12.Value;
                                      PagarReceberParcela.Value          := cParcela12.Text;
                                   End;

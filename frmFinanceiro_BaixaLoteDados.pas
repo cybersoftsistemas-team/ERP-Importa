@@ -350,6 +350,7 @@ begin
                            PagarReceberNumero_FormaTipo.Value := cNumeroDOC.Text;
                            If Financeiro_BaixaLote.Grade.SelectedRows.Count = 1 then begin
                               PagarReceberValor_Total.Value    := (PagarReceberValor_Parcela.Value + PagarReceberJuros.Value + PagarReceberMulta.Value - PagarReceberDesconto.Value);
+                              PagarReceberValor_TotalPed.Value := (PagarReceberValor_Parcela.Value + PagarReceberJuros.Value + PagarReceberMulta.Value - PagarReceberDesconto.Value);
                               PagarReceberValor_Operacao.Value := tTotalBaixas.FieldByName('Total').Value;
                               PagarReceberValor_Baixado.Value  := cValorOperacao.Value;
                            end else begin

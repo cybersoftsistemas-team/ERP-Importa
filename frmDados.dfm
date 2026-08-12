@@ -8071,7 +8071,7 @@ object Dados: TDados
         ', Custo_Seletivo, Custo_Entrada, Custo_Outros, Desconto_Liquidac' +
         'ao, Emprestimo, Empresa, Recuperavel, Vinculo, Pago_Cliente, Per' +
         'muta_Recebimento, Lote, Navio, Codigo_Barras, Chave_PIX, Filial,' +
-        ' Taxa_ME, Valor_ME)'
+        ' Taxa_ME, Valor_ME, Valor_TotalPed)'
       'VALUES'
       
         '  (:Numero, :Tipo, :Classificacao, :Centro_Custo, :Data_Previsao' +
@@ -8089,7 +8089,7 @@ object Dados: TDados
         'ivo, :Custo_Entrada, :Custo_Outros, :Desconto_Liquidacao, :Empre' +
         'stimo, :Empresa, :Recuperavel, :Vinculo, :Pago_Cliente, :Permuta' +
         '_Recebimento, :Lote, :Navio, :Codigo_Barras, :Chave_PIX, :Filial' +
-        ', :Taxa_ME, :Valor_ME)')
+        ', :Taxa_ME, :Valor_ME, :Valor_TotalPed)')
     SQLDelete.Strings = (
       'DELETE FROM PagarReceber'
       'WHERE'
@@ -8128,7 +8128,8 @@ object Dados: TDados
         'o = :Vinculo, Pago_Cliente = :Pago_Cliente, Permuta_Recebimento ' +
         '= :Permuta_Recebimento, Lote = :Lote, Navio = :Navio, Codigo_Bar' +
         'ras = :Codigo_Barras, Chave_PIX = :Chave_PIX, Filial = :Filial, ' +
-        'Taxa_ME = :Taxa_ME, Valor_ME = :Valor_ME'
+        'Taxa_ME = :Taxa_ME, Valor_ME = :Valor_ME, Valor_TotalPed = :Valo' +
+        'r_TotalPed'
       'WHERE'
       '  Numero = :Old_Numero')
     SQLRefresh.Strings = (
@@ -8147,7 +8148,7 @@ object Dados: TDados
         'mero, Custo_Seletivo, Custo_Entrada, Custo_Outros, Desconto_Liqu' +
         'idacao, Emprestimo, Empresa, Recuperavel, Vinculo, Pago_Cliente,' +
         ' Permuta_Recebimento, Lote, Navio, Codigo_Barras, Chave_PIX, Fil' +
-        'ial, Taxa_ME, Valor_ME FROM PagarReceber'
+        'ial, Taxa_ME, Valor_ME, Valor_TotalPed FROM PagarReceber'
       'WHERE'
       '  Numero = :Numero')
     SQLLock.Strings = (
@@ -8495,6 +8496,10 @@ object Dados: TDados
       FieldName = 'Valor_ME'
       DisplayFormat = ',##0.00'
     end
+    object PagarReceberValor_TotalPed: TCurrencyField
+      FieldName = 'Valor_TotalPed'
+      DisplayFormat = ',##0.00'
+    end
   end
   object dsPagarReceber: TDataSource
     DataSet = PagarReceber
@@ -8766,38 +8771,38 @@ object Dados: TDados
         '  (Processo, Tipo, Incoterms, Entreposto, Numero_Declaracao, Dat' +
         'a_RegistroDeclaracao, Data_DesembaracoDeclaracao, FOB, Frete, Se' +
         'guro, II, ICMS_DIferido, Aliquota_ICMS, Valor_ICMS, Recinto_Alfa' +
-        'ndegario, Local_Desembaraco, UF_Desembaraco, Quantidade, Volumes' +
-        ', Especie, Quantidade_Liberada, Quantidade_Digitada, Peso_Bruto,' +
-        ' Peso_Liquido, Numero_Fatura, Data_Fatura, FOB_ME, Moeda_FOB, Ta' +
-        'xa_FOB, Frete_ME, Moeda_Frete, Taxa_Frete, Seguro_ME, Moeda_Segu' +
-        'ro, Taxa_Seguro, Condicao_Pgto, Tipo_Mercadoria, Nome_Transporte' +
-        ', Origem, Local_Embarque, Local_Desembarque, Numero_DOC, Data_DO' +
-        'C, Agencia_Maritima, Navio_DataPrevista, Navio_DataChegada, Clie' +
-        'nte, Processo_Abertura, Processo_Fechamento, Conta_Impostos, Con' +
-        'ta_Despesas, Bloqueado, Fornecedor, RE_Numero, RE_DataAverbacao,' +
-        ' Despachante, Canal_SISCOMEX, Valor_PIS, Valor_COFINS, Valor_IPI' +
-        ', Vencimento_Cambio, Courrier, Documento_Carga, Ad_Valorem, Ince' +
-        'ntivo_Fiscal, Tipo_Declaracao, Natureza_Exportacao, Tipo_Conheci' +
-        'mento, Pais, Conta_Adiantamento, Modalidade_Importacao, Responsa' +
-        'vel, Container_Numero, Processo_Mestre, CNPJ_Importado, Margem_L' +
-        'ucro, Desconto_Operacional, Desconto_Adicional, Data_Encerrament' +
-        'o, Data_BL, Valor_FaturaME, Data_PrevFaturamento, Data_PrevRegis' +
-        'tro, Local_DesembaracoCodigo, Desativado, Fator_FaturamentoValor' +
-        ', Fator_SISCOMEXValor, Margem_LucroValor, Desconto_AdicionalValo' +
-        'r, Desconto_OperacionalValor, Valor_Dumping, Condicao_Cambio, Co' +
-        'digo_PaisOrigem, Taxa_SISCOMEX, Reducao_ICMS, Observacao, FOB_ME' +
-        'Adicoes, FOB_Adicoes, DA, Reducao_BC, Valor_PIS2, Valor_COFINS2,' +
-        ' Memorando_Exportacao, CT_Numero, CT_Data, CT_Modelo, CT_Serie, ' +
-        'Origem_Mercadoria, Banco, Reducao_PIS, Reducao_COFINS, PIS_NFEnt' +
-        'rada, PIS_NFESaida, COFINS_NFEntrada, COFINS_NFESaida, PIS_Major' +
-        'ada, COFINS_Majorada, Suspensao_Impostos, Remover_Valoracao, Ref' +
-        'erencia_Cliente, Admissao_Temporaria, Condicao_Pagamento, Data_P' +
-        'revFrete, Fator_FreteValor, Previsao_FreteTransportador, Fator_S' +
-        'ISCOMEXValorReal, Fator_FreteValorReal, Fator_FaturamentoValorRe' +
-        'al, Data_PrevArmazem, Fator_ArmazemValor, Fator_ArmazemValorReal' +
-        ', Previsao_ArmazemFornecedor, Referencia_DataEntrega, CST_PIS, C' +
-        'ST_COFINS, Codigo_BCCredito, Apuracao_PISCOFINS, Consignatario_C' +
-        'NPJ, Consignatario_UF, AFRMM, Preco_Venda, Proforma_Numero, Prof' +
+        'ndegario, UF_Desembaraco, Quantidade, Volumes, Especie, Quantida' +
+        'de_Liberada, Quantidade_Digitada, Peso_Bruto, Peso_Liquido, Nume' +
+        'ro_Fatura, Data_Fatura, FOB_ME, Moeda_FOB, Taxa_FOB, Frete_ME, M' +
+        'oeda_Frete, Taxa_Frete, Seguro_ME, Moeda_Seguro, Taxa_Seguro, Co' +
+        'ndicao_Pgto, Tipo_Mercadoria, Nome_Transporte, Origem, Local_Emb' +
+        'arque, Local_Desembarque, Numero_DOC, Data_DOC, Agencia_Maritima' +
+        ', Navio_DataPrevista, Navio_DataChegada, Cliente, Processo_Abert' +
+        'ura, Processo_Fechamento, Conta_Impostos, Conta_Despesas, Bloque' +
+        'ado, Fornecedor, RE_Numero, RE_DataAverbacao, Despachante, Canal' +
+        '_SISCOMEX, Valor_PIS, Valor_COFINS, Valor_IPI, Vencimento_Cambio' +
+        ', Courrier, Documento_Carga, Ad_Valorem, Incentivo_Fiscal, Tipo_' +
+        'Declaracao, Natureza_Exportacao, Tipo_Conhecimento, Pais, Conta_' +
+        'Adiantamento, Modalidade_Importacao, Responsavel, Container_Nume' +
+        'ro, Processo_Mestre, CNPJ_Importado, Margem_Lucro, Desconto_Oper' +
+        'acional, Desconto_Adicional, Data_Encerramento, Data_BL, Valor_F' +
+        'aturaME, Data_PrevFaturamento, Data_PrevRegistro, Local_Desembar' +
+        'acoCodigo, Desativado, Fator_FaturamentoValor, Fator_SISCOMEXVal' +
+        'or, Margem_LucroValor, Desconto_AdicionalValor, Desconto_Operaci' +
+        'onalValor, Valor_Dumping, Condicao_Cambio, Codigo_PaisOrigem, Ta' +
+        'xa_SISCOMEX, Reducao_ICMS, Observacao, FOB_MEAdicoes, FOB_Adicoe' +
+        's, DA, Reducao_BC, Valor_PIS2, Valor_COFINS2, Memorando_Exportac' +
+        'ao, CT_Numero, CT_Data, CT_Modelo, CT_Serie, Origem_Mercadoria, ' +
+        'Banco, Reducao_PIS, Reducao_COFINS, PIS_NFEntrada, PIS_NFESaida,' +
+        ' COFINS_NFEntrada, COFINS_NFESaida, PIS_Majorada, COFINS_Majorad' +
+        'a, Suspensao_Impostos, Remover_Valoracao, Referencia_Cliente, Ad' +
+        'missao_Temporaria, Condicao_Pagamento, Data_PrevFrete, Fator_Fre' +
+        'teValor, Previsao_FreteTransportador, Fator_SISCOMEXValorReal, F' +
+        'ator_FreteValorReal, Fator_FaturamentoValorReal, Data_PrevArmaze' +
+        'm, Fator_ArmazemValor, Fator_ArmazemValorReal, Previsao_ArmazemF' +
+        'ornecedor, Referencia_DataEntrega, CST_PIS, CST_COFINS, Codigo_B' +
+        'CCredito, Apuracao_PISCOFINS, Consignatario_UF, Consignatario_CN' +
+        'PJ, AFRMM, Local_Desembaraco, Preco_Venda, Proforma_Numero, Prof' +
         'orma_Data, Condicao_Frete, Seguradora, Proforma_DataTaxa, Data_T' +
         'axaFatura, Data, ROF_Numero, ROF_Emissao, ROF_Dias, Notificar, U' +
         'RF_Despacho, Referencia_Despachante, Via_Transporte, Rateia_Fret' +
@@ -8807,46 +8812,47 @@ object Dados: TDados
         'uadramento_Operacao, Navio_Ordem, TUP, Estoque_Bloqueado, Armaze' +
         'm, Numero_BL, CIDE_ValorDevido, CIDE_ValorRecolher, Numero_House' +
         'BL, Numero_TFA, Transporte_Viagem, Navio_PrevSaida, Ultima_Atual' +
-        'izacao, Exonerado)'
+        'izacao, Exonerado, UF_Importacao, Data_PresencaCarga, Data_Embar' +
+        'que, Numero_LI)'
       'VALUES'
       
         '  (:Processo, :Tipo, :Incoterms, :Entreposto, :Numero_Declaracao' +
         ', :Data_RegistroDeclaracao, :Data_DesembaracoDeclaracao, :FOB, :' +
         'Frete, :Seguro, :II, :ICMS_DIferido, :Aliquota_ICMS, :Valor_ICMS' +
-        ', :Recinto_Alfandegario, :Local_Desembaraco, :UF_Desembaraco, :Q' +
-        'uantidade, :Volumes, :Especie, :Quantidade_Liberada, :Quantidade' +
-        '_Digitada, :Peso_Bruto, :Peso_Liquido, :Numero_Fatura, :Data_Fat' +
-        'ura, :FOB_ME, :Moeda_FOB, :Taxa_FOB, :Frete_ME, :Moeda_Frete, :T' +
-        'axa_Frete, :Seguro_ME, :Moeda_Seguro, :Taxa_Seguro, :Condicao_Pg' +
-        'to, :Tipo_Mercadoria, :Nome_Transporte, :Origem, :Local_Embarque' +
-        ', :Local_Desembarque, :Numero_DOC, :Data_DOC, :Agencia_Maritima,' +
-        ' :Navio_DataPrevista, :Navio_DataChegada, :Cliente, :Processo_Ab' +
-        'ertura, :Processo_Fechamento, :Conta_Impostos, :Conta_Despesas, ' +
-        ':Bloqueado, :Fornecedor, :RE_Numero, :RE_DataAverbacao, :Despach' +
-        'ante, :Canal_SISCOMEX, :Valor_PIS, :Valor_COFINS, :Valor_IPI, :V' +
-        'encimento_Cambio, :Courrier, :Documento_Carga, :Ad_Valorem, :Inc' +
-        'entivo_Fiscal, :Tipo_Declaracao, :Natureza_Exportacao, :Tipo_Con' +
-        'hecimento, :Pais, :Conta_Adiantamento, :Modalidade_Importacao, :' +
-        'Responsavel, :Container_Numero, :Processo_Mestre, :CNPJ_Importad' +
-        'o, :Margem_Lucro, :Desconto_Operacional, :Desconto_Adicional, :D' +
-        'ata_Encerramento, :Data_BL, :Valor_FaturaME, :Data_PrevFaturamen' +
-        'to, :Data_PrevRegistro, :Local_DesembaracoCodigo, :Desativado, :' +
-        'Fator_FaturamentoValor, :Fator_SISCOMEXValor, :Margem_LucroValor' +
-        ', :Desconto_AdicionalValor, :Desconto_OperacionalValor, :Valor_D' +
-        'umping, :Condicao_Cambio, :Codigo_PaisOrigem, :Taxa_SISCOMEX, :R' +
-        'educao_ICMS, :Observacao, :FOB_MEAdicoes, :FOB_Adicoes, :DA, :Re' +
-        'ducao_BC, :Valor_PIS2, :Valor_COFINS2, :Memorando_Exportacao, :C' +
-        'T_Numero, :CT_Data, :CT_Modelo, :CT_Serie, :Origem_Mercadoria, :' +
-        'Banco, :Reducao_PIS, :Reducao_COFINS, :PIS_NFEntrada, :PIS_NFESa' +
-        'ida, :COFINS_NFEntrada, :COFINS_NFESaida, :PIS_Majorada, :COFINS' +
-        '_Majorada, :Suspensao_Impostos, :Remover_Valoracao, :Referencia_' +
-        'Cliente, :Admissao_Temporaria, :Condicao_Pagamento, :Data_PrevFr' +
-        'ete, :Fator_FreteValor, :Previsao_FreteTransportador, :Fator_SIS' +
-        'COMEXValorReal, :Fator_FreteValorReal, :Fator_FaturamentoValorRe' +
-        'al, :Data_PrevArmazem, :Fator_ArmazemValor, :Fator_ArmazemValorR' +
-        'eal, :Previsao_ArmazemFornecedor, :Referencia_DataEntrega, :CST_' +
-        'PIS, :CST_COFINS, :Codigo_BCCredito, :Apuracao_PISCOFINS, :Consi' +
-        'gnatario_CNPJ, :Consignatario_UF, :AFRMM, :Preco_Venda, :Proform' +
+        ', :Recinto_Alfandegario, :UF_Desembaraco, :Quantidade, :Volumes,' +
+        ' :Especie, :Quantidade_Liberada, :Quantidade_Digitada, :Peso_Bru' +
+        'to, :Peso_Liquido, :Numero_Fatura, :Data_Fatura, :FOB_ME, :Moeda' +
+        '_FOB, :Taxa_FOB, :Frete_ME, :Moeda_Frete, :Taxa_Frete, :Seguro_M' +
+        'E, :Moeda_Seguro, :Taxa_Seguro, :Condicao_Pgto, :Tipo_Mercadoria' +
+        ', :Nome_Transporte, :Origem, :Local_Embarque, :Local_Desembarque' +
+        ', :Numero_DOC, :Data_DOC, :Agencia_Maritima, :Navio_DataPrevista' +
+        ', :Navio_DataChegada, :Cliente, :Processo_Abertura, :Processo_Fe' +
+        'chamento, :Conta_Impostos, :Conta_Despesas, :Bloqueado, :Fornece' +
+        'dor, :RE_Numero, :RE_DataAverbacao, :Despachante, :Canal_SISCOME' +
+        'X, :Valor_PIS, :Valor_COFINS, :Valor_IPI, :Vencimento_Cambio, :C' +
+        'ourrier, :Documento_Carga, :Ad_Valorem, :Incentivo_Fiscal, :Tipo' +
+        '_Declaracao, :Natureza_Exportacao, :Tipo_Conhecimento, :Pais, :C' +
+        'onta_Adiantamento, :Modalidade_Importacao, :Responsavel, :Contai' +
+        'ner_Numero, :Processo_Mestre, :CNPJ_Importado, :Margem_Lucro, :D' +
+        'esconto_Operacional, :Desconto_Adicional, :Data_Encerramento, :D' +
+        'ata_BL, :Valor_FaturaME, :Data_PrevFaturamento, :Data_PrevRegist' +
+        'ro, :Local_DesembaracoCodigo, :Desativado, :Fator_FaturamentoVal' +
+        'or, :Fator_SISCOMEXValor, :Margem_LucroValor, :Desconto_Adiciona' +
+        'lValor, :Desconto_OperacionalValor, :Valor_Dumping, :Condicao_Ca' +
+        'mbio, :Codigo_PaisOrigem, :Taxa_SISCOMEX, :Reducao_ICMS, :Observ' +
+        'acao, :FOB_MEAdicoes, :FOB_Adicoes, :DA, :Reducao_BC, :Valor_PIS' +
+        '2, :Valor_COFINS2, :Memorando_Exportacao, :CT_Numero, :CT_Data, ' +
+        ':CT_Modelo, :CT_Serie, :Origem_Mercadoria, :Banco, :Reducao_PIS,' +
+        ' :Reducao_COFINS, :PIS_NFEntrada, :PIS_NFESaida, :COFINS_NFEntra' +
+        'da, :COFINS_NFESaida, :PIS_Majorada, :COFINS_Majorada, :Suspensa' +
+        'o_Impostos, :Remover_Valoracao, :Referencia_Cliente, :Admissao_T' +
+        'emporaria, :Condicao_Pagamento, :Data_PrevFrete, :Fator_FreteVal' +
+        'or, :Previsao_FreteTransportador, :Fator_SISCOMEXValorReal, :Fat' +
+        'or_FreteValorReal, :Fator_FaturamentoValorReal, :Data_PrevArmaze' +
+        'm, :Fator_ArmazemValor, :Fator_ArmazemValorReal, :Previsao_Armaz' +
+        'emFornecedor, :Referencia_DataEntrega, :CST_PIS, :CST_COFINS, :C' +
+        'odigo_BCCredito, :Apuracao_PISCOFINS, :Consignatario_UF, :Consig' +
+        'natario_CNPJ, :AFRMM, :Local_Desembaraco, :Preco_Venda, :Proform' +
         'a_Numero, :Proforma_Data, :Condicao_Frete, :Seguradora, :Proform' +
         'a_DataTaxa, :Data_TaxaFatura, :Data, :ROF_Numero, :ROF_Emissao, ' +
         ':ROF_Dias, :Notificar, :URF_Despacho, :Referencia_Despachante, :' +
@@ -8857,7 +8863,8 @@ object Dados: TDados
         'o_Ordem, :TUP, :Estoque_Bloqueado, :Armazem, :Numero_BL, :CIDE_V' +
         'alorDevido, :CIDE_ValorRecolher, :Numero_HouseBL, :Numero_TFA, :' +
         'Transporte_Viagem, :Navio_PrevSaida, :Ultima_Atualizacao, :Exone' +
-        'rado)')
+        'rado, :UF_Importacao, :Data_PresencaCarga, :Data_Embarque, :Nume' +
+        'ro_LI)')
     SQLDelete.Strings = (
       'DELETE FROM ProcessosDocumentos'
       'WHERE'
@@ -8872,74 +8879,74 @@ object Dados: TDados
         'racoDeclaracao = :Data_DesembaracoDeclaracao, FOB = :FOB, Frete ' +
         '= :Frete, Seguro = :Seguro, II = :II, ICMS_DIferido = :ICMS_DIfe' +
         'rido, Aliquota_ICMS = :Aliquota_ICMS, Valor_ICMS = :Valor_ICMS, ' +
-        'Recinto_Alfandegario = :Recinto_Alfandegario, Local_Desembaraco ' +
-        '= :Local_Desembaraco, UF_Desembaraco = :UF_Desembaraco, Quantida' +
-        'de = :Quantidade, Volumes = :Volumes, Especie = :Especie, Quanti' +
-        'dade_Liberada = :Quantidade_Liberada, Quantidade_Digitada = :Qua' +
-        'ntidade_Digitada, Peso_Bruto = :Peso_Bruto, Peso_Liquido = :Peso' +
-        '_Liquido, Numero_Fatura = :Numero_Fatura, Data_Fatura = :Data_Fa' +
-        'tura, FOB_ME = :FOB_ME, Moeda_FOB = :Moeda_FOB, Taxa_FOB = :Taxa' +
-        '_FOB, Frete_ME = :Frete_ME, Moeda_Frete = :Moeda_Frete, Taxa_Fre' +
-        'te = :Taxa_Frete, Seguro_ME = :Seguro_ME, Moeda_Seguro = :Moeda_' +
-        'Seguro, Taxa_Seguro = :Taxa_Seguro, Condicao_Pgto = :Condicao_Pg' +
-        'to, Tipo_Mercadoria = :Tipo_Mercadoria, Nome_Transporte = :Nome_' +
-        'Transporte, Origem = :Origem, Local_Embarque = :Local_Embarque, ' +
-        'Local_Desembarque = :Local_Desembarque, Numero_DOC = :Numero_DOC' +
-        ', Data_DOC = :Data_DOC, Agencia_Maritima = :Agencia_Maritima, Na' +
-        'vio_DataPrevista = :Navio_DataPrevista, Navio_DataChegada = :Nav' +
-        'io_DataChegada, Cliente = :Cliente, Processo_Abertura = :Process' +
-        'o_Abertura, Processo_Fechamento = :Processo_Fechamento, Conta_Im' +
-        'postos = :Conta_Impostos, Conta_Despesas = :Conta_Despesas, Bloq' +
-        'ueado = :Bloqueado, Fornecedor = :Fornecedor, RE_Numero = :RE_Nu' +
-        'mero, RE_DataAverbacao = :RE_DataAverbacao, Despachante = :Despa' +
-        'chante, Canal_SISCOMEX = :Canal_SISCOMEX, Valor_PIS = :Valor_PIS' +
-        ', Valor_COFINS = :Valor_COFINS, Valor_IPI = :Valor_IPI, Vencimen' +
-        'to_Cambio = :Vencimento_Cambio, Courrier = :Courrier, Documento_' +
-        'Carga = :Documento_Carga, Ad_Valorem = :Ad_Valorem, Incentivo_Fi' +
-        'scal = :Incentivo_Fiscal, Tipo_Declaracao = :Tipo_Declaracao, Na' +
-        'tureza_Exportacao = :Natureza_Exportacao, Tipo_Conhecimento = :T' +
-        'ipo_Conhecimento, Pais = :Pais, Conta_Adiantamento = :Conta_Adia' +
-        'ntamento, Modalidade_Importacao = :Modalidade_Importacao, Respon' +
-        'savel = :Responsavel, Container_Numero = :Container_Numero, Proc' +
-        'esso_Mestre = :Processo_Mestre, CNPJ_Importado = :CNPJ_Importado' +
-        ', Margem_Lucro = :Margem_Lucro, Desconto_Operacional = :Desconto' +
-        '_Operacional, Desconto_Adicional = :Desconto_Adicional, Data_Enc' +
-        'erramento = :Data_Encerramento, Data_BL = :Data_BL, Valor_Fatura' +
-        'ME = :Valor_FaturaME, Data_PrevFaturamento = :Data_PrevFaturamen' +
-        'to, Data_PrevRegistro = :Data_PrevRegistro, Local_DesembaracoCod' +
-        'igo = :Local_DesembaracoCodigo, Desativado = :Desativado, Fator_' +
-        'FaturamentoValor = :Fator_FaturamentoValor, Fator_SISCOMEXValor ' +
-        '= :Fator_SISCOMEXValor, Margem_LucroValor = :Margem_LucroValor, ' +
-        'Desconto_AdicionalValor = :Desconto_AdicionalValor, Desconto_Ope' +
-        'racionalValor = :Desconto_OperacionalValor, Valor_Dumping = :Val' +
-        'or_Dumping, Condicao_Cambio = :Condicao_Cambio, Codigo_PaisOrige' +
-        'm = :Codigo_PaisOrigem, Taxa_SISCOMEX = :Taxa_SISCOMEX, Reducao_' +
-        'ICMS = :Reducao_ICMS, Observacao = :Observacao, FOB_MEAdicoes = ' +
-        ':FOB_MEAdicoes, FOB_Adicoes = :FOB_Adicoes, DA = :DA, Reducao_BC' +
-        ' = :Reducao_BC, Valor_PIS2 = :Valor_PIS2, Valor_COFINS2 = :Valor' +
-        '_COFINS2, Memorando_Exportacao = :Memorando_Exportacao, CT_Numer' +
-        'o = :CT_Numero, CT_Data = :CT_Data, CT_Modelo = :CT_Modelo, CT_S' +
-        'erie = :CT_Serie, Origem_Mercadoria = :Origem_Mercadoria, Banco ' +
-        '= :Banco, Reducao_PIS = :Reducao_PIS, Reducao_COFINS = :Reducao_' +
-        'COFINS, PIS_NFEntrada = :PIS_NFEntrada, PIS_NFESaida = :PIS_NFES' +
-        'aida, COFINS_NFEntrada = :COFINS_NFEntrada, COFINS_NFESaida = :C' +
-        'OFINS_NFESaida, PIS_Majorada = :PIS_Majorada, COFINS_Majorada = ' +
-        ':COFINS_Majorada, Suspensao_Impostos = :Suspensao_Impostos, Remo' +
-        'ver_Valoracao = :Remover_Valoracao, Referencia_Cliente = :Refere' +
-        'ncia_Cliente, Admissao_Temporaria = :Admissao_Temporaria, Condic' +
-        'ao_Pagamento = :Condicao_Pagamento, Data_PrevFrete = :Data_PrevF' +
-        'rete, Fator_FreteValor = :Fator_FreteValor, Previsao_FreteTransp' +
-        'ortador = :Previsao_FreteTransportador, Fator_SISCOMEXValorReal ' +
-        '= :Fator_SISCOMEXValorReal, Fator_FreteValorReal = :Fator_FreteV' +
-        'alorReal, Fator_FaturamentoValorReal = :Fator_FaturamentoValorRe' +
-        'al, Data_PrevArmazem = :Data_PrevArmazem, Fator_ArmazemValor = :' +
-        'Fator_ArmazemValor, Fator_ArmazemValorReal = :Fator_ArmazemValor' +
-        'Real, Previsao_ArmazemFornecedor = :Previsao_ArmazemFornecedor, ' +
-        'Referencia_DataEntrega = :Referencia_DataEntrega, CST_PIS = :CST' +
-        '_PIS, CST_COFINS = :CST_COFINS, Codigo_BCCredito = :Codigo_BCCre' +
-        'dito, Apuracao_PISCOFINS = :Apuracao_PISCOFINS, Consignatario_CN' +
-        'PJ = :Consignatario_CNPJ, Consignatario_UF = :Consignatario_UF, ' +
-        'AFRMM = :AFRMM, Preco_Venda = :Preco_Venda, Proforma_Numero = :P' +
+        'Recinto_Alfandegario = :Recinto_Alfandegario, UF_Desembaraco = :' +
+        'UF_Desembaraco, Quantidade = :Quantidade, Volumes = :Volumes, Es' +
+        'pecie = :Especie, Quantidade_Liberada = :Quantidade_Liberada, Qu' +
+        'antidade_Digitada = :Quantidade_Digitada, Peso_Bruto = :Peso_Bru' +
+        'to, Peso_Liquido = :Peso_Liquido, Numero_Fatura = :Numero_Fatura' +
+        ', Data_Fatura = :Data_Fatura, FOB_ME = :FOB_ME, Moeda_FOB = :Moe' +
+        'da_FOB, Taxa_FOB = :Taxa_FOB, Frete_ME = :Frete_ME, Moeda_Frete ' +
+        '= :Moeda_Frete, Taxa_Frete = :Taxa_Frete, Seguro_ME = :Seguro_ME' +
+        ', Moeda_Seguro = :Moeda_Seguro, Taxa_Seguro = :Taxa_Seguro, Cond' +
+        'icao_Pgto = :Condicao_Pgto, Tipo_Mercadoria = :Tipo_Mercadoria, ' +
+        'Nome_Transporte = :Nome_Transporte, Origem = :Origem, Local_Emba' +
+        'rque = :Local_Embarque, Local_Desembarque = :Local_Desembarque, ' +
+        'Numero_DOC = :Numero_DOC, Data_DOC = :Data_DOC, Agencia_Maritima' +
+        ' = :Agencia_Maritima, Navio_DataPrevista = :Navio_DataPrevista, ' +
+        'Navio_DataChegada = :Navio_DataChegada, Cliente = :Cliente, Proc' +
+        'esso_Abertura = :Processo_Abertura, Processo_Fechamento = :Proce' +
+        'sso_Fechamento, Conta_Impostos = :Conta_Impostos, Conta_Despesas' +
+        ' = :Conta_Despesas, Bloqueado = :Bloqueado, Fornecedor = :Fornec' +
+        'edor, RE_Numero = :RE_Numero, RE_DataAverbacao = :RE_DataAverbac' +
+        'ao, Despachante = :Despachante, Canal_SISCOMEX = :Canal_SISCOMEX' +
+        ', Valor_PIS = :Valor_PIS, Valor_COFINS = :Valor_COFINS, Valor_IP' +
+        'I = :Valor_IPI, Vencimento_Cambio = :Vencimento_Cambio, Courrier' +
+        ' = :Courrier, Documento_Carga = :Documento_Carga, Ad_Valorem = :' +
+        'Ad_Valorem, Incentivo_Fiscal = :Incentivo_Fiscal, Tipo_Declaraca' +
+        'o = :Tipo_Declaracao, Natureza_Exportacao = :Natureza_Exportacao' +
+        ', Tipo_Conhecimento = :Tipo_Conhecimento, Pais = :Pais, Conta_Ad' +
+        'iantamento = :Conta_Adiantamento, Modalidade_Importacao = :Modal' +
+        'idade_Importacao, Responsavel = :Responsavel, Container_Numero =' +
+        ' :Container_Numero, Processo_Mestre = :Processo_Mestre, CNPJ_Imp' +
+        'ortado = :CNPJ_Importado, Margem_Lucro = :Margem_Lucro, Desconto' +
+        '_Operacional = :Desconto_Operacional, Desconto_Adicional = :Desc' +
+        'onto_Adicional, Data_Encerramento = :Data_Encerramento, Data_BL ' +
+        '= :Data_BL, Valor_FaturaME = :Valor_FaturaME, Data_PrevFaturamen' +
+        'to = :Data_PrevFaturamento, Data_PrevRegistro = :Data_PrevRegist' +
+        'ro, Local_DesembaracoCodigo = :Local_DesembaracoCodigo, Desativa' +
+        'do = :Desativado, Fator_FaturamentoValor = :Fator_FaturamentoVal' +
+        'or, Fator_SISCOMEXValor = :Fator_SISCOMEXValor, Margem_LucroValo' +
+        'r = :Margem_LucroValor, Desconto_AdicionalValor = :Desconto_Adic' +
+        'ionalValor, Desconto_OperacionalValor = :Desconto_OperacionalVal' +
+        'or, Valor_Dumping = :Valor_Dumping, Condicao_Cambio = :Condicao_' +
+        'Cambio, Codigo_PaisOrigem = :Codigo_PaisOrigem, Taxa_SISCOMEX = ' +
+        ':Taxa_SISCOMEX, Reducao_ICMS = :Reducao_ICMS, Observacao = :Obse' +
+        'rvacao, FOB_MEAdicoes = :FOB_MEAdicoes, FOB_Adicoes = :FOB_Adico' +
+        'es, DA = :DA, Reducao_BC = :Reducao_BC, Valor_PIS2 = :Valor_PIS2' +
+        ', Valor_COFINS2 = :Valor_COFINS2, Memorando_Exportacao = :Memora' +
+        'ndo_Exportacao, CT_Numero = :CT_Numero, CT_Data = :CT_Data, CT_M' +
+        'odelo = :CT_Modelo, CT_Serie = :CT_Serie, Origem_Mercadoria = :O' +
+        'rigem_Mercadoria, Banco = :Banco, Reducao_PIS = :Reducao_PIS, Re' +
+        'ducao_COFINS = :Reducao_COFINS, PIS_NFEntrada = :PIS_NFEntrada, ' +
+        'PIS_NFESaida = :PIS_NFESaida, COFINS_NFEntrada = :COFINS_NFEntra' +
+        'da, COFINS_NFESaida = :COFINS_NFESaida, PIS_Majorada = :PIS_Majo' +
+        'rada, COFINS_Majorada = :COFINS_Majorada, Suspensao_Impostos = :' +
+        'Suspensao_Impostos, Remover_Valoracao = :Remover_Valoracao, Refe' +
+        'rencia_Cliente = :Referencia_Cliente, Admissao_Temporaria = :Adm' +
+        'issao_Temporaria, Condicao_Pagamento = :Condicao_Pagamento, Data' +
+        '_PrevFrete = :Data_PrevFrete, Fator_FreteValor = :Fator_FreteVal' +
+        'or, Previsao_FreteTransportador = :Previsao_FreteTransportador, ' +
+        'Fator_SISCOMEXValorReal = :Fator_SISCOMEXValorReal, Fator_FreteV' +
+        'alorReal = :Fator_FreteValorReal, Fator_FaturamentoValorReal = :' +
+        'Fator_FaturamentoValorReal, Data_PrevArmazem = :Data_PrevArmazem' +
+        ', Fator_ArmazemValor = :Fator_ArmazemValor, Fator_ArmazemValorRe' +
+        'al = :Fator_ArmazemValorReal, Previsao_ArmazemFornecedor = :Prev' +
+        'isao_ArmazemFornecedor, Referencia_DataEntrega = :Referencia_Dat' +
+        'aEntrega, CST_PIS = :CST_PIS, CST_COFINS = :CST_COFINS, Codigo_B' +
+        'CCredito = :Codigo_BCCredito, Apuracao_PISCOFINS = :Apuracao_PIS' +
+        'COFINS, Consignatario_UF = :Consignatario_UF, Consignatario_CNPJ' +
+        ' = :Consignatario_CNPJ, AFRMM = :AFRMM, Local_Desembaraco = :Loc' +
+        'al_Desembaraco, Preco_Venda = :Preco_Venda, Proforma_Numero = :P' +
         'roforma_Numero, Proforma_Data = :Proforma_Data, Condicao_Frete =' +
         ' :Condicao_Frete, Seguradora = :Seguradora, Proforma_DataTaxa = ' +
         ':Proforma_DataTaxa, Data_TaxaFatura = :Data_TaxaFatura, Data = :' +
@@ -8960,7 +8967,9 @@ object Dados: TDados
         'mero_HouseBL = :Numero_HouseBL, Numero_TFA = :Numero_TFA, Transp' +
         'orte_Viagem = :Transporte_Viagem, Navio_PrevSaida = :Navio_PrevS' +
         'aida, Ultima_Atualizacao = :Ultima_Atualizacao, Exonerado = :Exo' +
-        'nerado'
+        'nerado, UF_Importacao = :UF_Importacao, Data_PresencaCarga = :Da' +
+        'ta_PresencaCarga, Data_Embarque = :Data_Embarque, Numero_LI = :N' +
+        'umero_LI'
       'WHERE'
       '  Processo = :Old_Processo AND Tipo = :Old_Tipo')
     SQLRefresh.Strings = (
@@ -8968,38 +8977,38 @@ object Dados: TDados
         'SELECT Processo, Tipo, Incoterms, Entreposto, Numero_Declaracao,' +
         ' Data_RegistroDeclaracao, Data_DesembaracoDeclaracao, FOB, Frete' +
         ', Seguro, II, ICMS_DIferido, Aliquota_ICMS, Valor_ICMS, Recinto_' +
-        'Alfandegario, Local_Desembaraco, UF_Desembaraco, Quantidade, Vol' +
-        'umes, Especie, Quantidade_Liberada, Quantidade_Digitada, Peso_Br' +
-        'uto, Peso_Liquido, Numero_Fatura, Data_Fatura, FOB_ME, Moeda_FOB' +
-        ', Taxa_FOB, Frete_ME, Moeda_Frete, Taxa_Frete, Seguro_ME, Moeda_' +
-        'Seguro, Taxa_Seguro, Condicao_Pgto, Tipo_Mercadoria, Nome_Transp' +
-        'orte, Origem, Local_Embarque, Local_Desembarque, Numero_DOC, Dat' +
-        'a_DOC, Agencia_Maritima, Navio_DataPrevista, Navio_DataChegada, ' +
-        'Cliente, Processo_Abertura, Processo_Fechamento, Conta_Impostos,' +
-        ' Conta_Despesas, Bloqueado, Fornecedor, RE_Numero, RE_DataAverba' +
-        'cao, Despachante, Canal_SISCOMEX, Valor_PIS, Valor_COFINS, Valor' +
-        '_IPI, Vencimento_Cambio, Courrier, Documento_Carga, Ad_Valorem, ' +
-        'Incentivo_Fiscal, Tipo_Declaracao, Natureza_Exportacao, Tipo_Con' +
-        'hecimento, Pais, Conta_Adiantamento, Modalidade_Importacao, Resp' +
-        'onsavel, Container_Numero, Processo_Mestre, CNPJ_Importado, Marg' +
-        'em_Lucro, Desconto_Operacional, Desconto_Adicional, Data_Encerra' +
-        'mento, Data_BL, Valor_FaturaME, Data_PrevFaturamento, Data_PrevR' +
-        'egistro, Local_DesembaracoCodigo, Desativado, Fator_FaturamentoV' +
-        'alor, Fator_SISCOMEXValor, Margem_LucroValor, Desconto_Adicional' +
-        'Valor, Desconto_OperacionalValor, Valor_Dumping, Condicao_Cambio' +
-        ', Codigo_PaisOrigem, Taxa_SISCOMEX, Reducao_ICMS, Observacao, FO' +
-        'B_MEAdicoes, FOB_Adicoes, DA, Reducao_BC, Valor_PIS2, Valor_COFI' +
-        'NS2, Memorando_Exportacao, CT_Numero, CT_Data, CT_Modelo, CT_Ser' +
-        'ie, Origem_Mercadoria, Banco, Reducao_PIS, Reducao_COFINS, PIS_N' +
-        'FEntrada, PIS_NFESaida, COFINS_NFEntrada, COFINS_NFESaida, PIS_M' +
-        'ajorada, COFINS_Majorada, Suspensao_Impostos, Remover_Valoracao,' +
-        ' Referencia_Cliente, Admissao_Temporaria, Condicao_Pagamento, Da' +
-        'ta_PrevFrete, Fator_FreteValor, Previsao_FreteTransportador, Fat' +
-        'or_SISCOMEXValorReal, Fator_FreteValorReal, Fator_FaturamentoVal' +
-        'orReal, Data_PrevArmazem, Fator_ArmazemValor, Fator_ArmazemValor' +
-        'Real, Previsao_ArmazemFornecedor, Referencia_DataEntrega, CST_PI' +
-        'S, CST_COFINS, Codigo_BCCredito, Apuracao_PISCOFINS, Consignatar' +
-        'io_CNPJ, Consignatario_UF, AFRMM, Preco_Venda, Proforma_Numero, ' +
+        'Alfandegario, UF_Desembaraco, Quantidade, Volumes, Especie, Quan' +
+        'tidade_Liberada, Quantidade_Digitada, Peso_Bruto, Peso_Liquido, ' +
+        'Numero_Fatura, Data_Fatura, FOB_ME, Moeda_FOB, Taxa_FOB, Frete_M' +
+        'E, Moeda_Frete, Taxa_Frete, Seguro_ME, Moeda_Seguro, Taxa_Seguro' +
+        ', Condicao_Pgto, Tipo_Mercadoria, Nome_Transporte, Origem, Local' +
+        '_Embarque, Local_Desembarque, Numero_DOC, Data_DOC, Agencia_Mari' +
+        'tima, Navio_DataPrevista, Navio_DataChegada, Cliente, Processo_A' +
+        'bertura, Processo_Fechamento, Conta_Impostos, Conta_Despesas, Bl' +
+        'oqueado, Fornecedor, RE_Numero, RE_DataAverbacao, Despachante, C' +
+        'anal_SISCOMEX, Valor_PIS, Valor_COFINS, Valor_IPI, Vencimento_Ca' +
+        'mbio, Courrier, Documento_Carga, Ad_Valorem, Incentivo_Fiscal, T' +
+        'ipo_Declaracao, Natureza_Exportacao, Tipo_Conhecimento, Pais, Co' +
+        'nta_Adiantamento, Modalidade_Importacao, Responsavel, Container_' +
+        'Numero, Processo_Mestre, CNPJ_Importado, Margem_Lucro, Desconto_' +
+        'Operacional, Desconto_Adicional, Data_Encerramento, Data_BL, Val' +
+        'or_FaturaME, Data_PrevFaturamento, Data_PrevRegistro, Local_Dese' +
+        'mbaracoCodigo, Desativado, Fator_FaturamentoValor, Fator_SISCOME' +
+        'XValor, Margem_LucroValor, Desconto_AdicionalValor, Desconto_Ope' +
+        'racionalValor, Valor_Dumping, Condicao_Cambio, Codigo_PaisOrigem' +
+        ', Taxa_SISCOMEX, Reducao_ICMS, Observacao, FOB_MEAdicoes, FOB_Ad' +
+        'icoes, DA, Reducao_BC, Valor_PIS2, Valor_COFINS2, Memorando_Expo' +
+        'rtacao, CT_Numero, CT_Data, CT_Modelo, CT_Serie, Origem_Mercador' +
+        'ia, Banco, Reducao_PIS, Reducao_COFINS, PIS_NFEntrada, PIS_NFESa' +
+        'ida, COFINS_NFEntrada, COFINS_NFESaida, PIS_Majorada, COFINS_Maj' +
+        'orada, Suspensao_Impostos, Remover_Valoracao, Referencia_Cliente' +
+        ', Admissao_Temporaria, Condicao_Pagamento, Data_PrevFrete, Fator' +
+        '_FreteValor, Previsao_FreteTransportador, Fator_SISCOMEXValorRea' +
+        'l, Fator_FreteValorReal, Fator_FaturamentoValorReal, Data_PrevAr' +
+        'mazem, Fator_ArmazemValor, Fator_ArmazemValorReal, Previsao_Arma' +
+        'zemFornecedor, Referencia_DataEntrega, CST_PIS, CST_COFINS, Codi' +
+        'go_BCCredito, Apuracao_PISCOFINS, Consignatario_UF, Consignatari' +
+        'o_CNPJ, AFRMM, Local_Desembaraco, Preco_Venda, Proforma_Numero, ' +
         'Proforma_Data, Condicao_Frete, Seguradora, Proforma_DataTaxa, Da' +
         'ta_TaxaFatura, Data, ROF_Numero, ROF_Emissao, ROF_Dias, Notifica' +
         'r, URF_Despacho, Referencia_Despachante, Via_Transporte, Rateia_' +
@@ -9009,7 +9018,8 @@ object Dados: TDados
         ' Enquadramento_Operacao, Navio_Ordem, TUP, Estoque_Bloqueado, Ar' +
         'mazem, Numero_BL, CIDE_ValorDevido, CIDE_ValorRecolher, Numero_H' +
         'ouseBL, Numero_TFA, Transporte_Viagem, Navio_PrevSaida, Ultima_A' +
-        'tualizacao, Exonerado FROM ProcessosDocumentos'
+        'tualizacao, Exonerado, UF_Importacao, Data_PresencaCarga, Data_E' +
+        'mbarque, Numero_LI FROM ProcessosDocumentos'
       'WHERE'
       '  Processo = :Processo AND Tipo = :Tipo')
     SQLLock.Strings = (
@@ -9902,6 +9912,21 @@ object Dados: TDados
     end
     object ProcessosDOCNumero_BL: TStringField
       FieldName = 'Numero_BL'
+    end
+    object ProcessosDOCUF_Importacao: TStringField
+      FieldName = 'UF_Importacao'
+      FixedChar = True
+      Size = 2
+    end
+    object ProcessosDOCData_PresencaCarga: TDateTimeField
+      FieldName = 'Data_PresencaCarga'
+    end
+    object ProcessosDOCData_Embarque: TDateTimeField
+      FieldName = 'Data_Embarque'
+    end
+    object ProcessosDOCNumero_LI: TStringField
+      FieldName = 'Numero_LI'
+      Size = 15
     end
   end
   object dsProcessosDOC: TDataSource
@@ -18977,7 +19002,6 @@ object Dados: TDados
       '--WHERE Processo = '#39'ABRTO 0030/12'#39)
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
-    Active = True
     Left = 500
     Top = 475
     object ProcessosFechamentoCodigo: TIntegerField

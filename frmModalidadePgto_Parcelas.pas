@@ -259,6 +259,7 @@ begin
                                     PagarReceberJuros.Value            := 0;
                                     PagarReceberDesconto.Value         := 0;
                                     PagarReceberValor_Total.Value      := TabParcelasValor.Value;
+                                    PagarReceberValor_TotalPed.Value   := TabParcelasValor.Value;
                                     PagarReceberValor_Operacao.Value   := TabParcelasValor.Value;
                                     PagarReceberValor_Baixado.Value    := 0;
                                     PagarReceberFornecedor.Value       := NotasTerceirosFornecedor.Value;
@@ -386,6 +387,7 @@ begin
                                  PagarReceberJuros.Value            := 0;
                                  PagarReceberDesconto.Value         := 0;
                                  PagarReceberValor_Total.Value      := NotasTerceirosItensValor_Liquido.Value;
+                                 PagarReceberValor_TotalPed.Value   := NotasTerceirosItensValor_Liquido.Value;
                                  PagarReceberValor_Operacao.Value   := NotasTerceirosItensValor_Liquido.Value;
                                  PagarReceberValor_Baixado.Value    := 0;
                                  PagarReceberFornecedor.Value       := NotasTerceirosFornecedor.Value;
@@ -915,6 +917,7 @@ begin
                            PagarReceberJuros.Value            := 0;
                            PagarReceberDesconto.Value         := 0;
                            PagarReceberValor_Total.Value      := Valor;
+                           PagarReceberValor_TotalPed.Value   := Valor;
                            PagarReceberValor_Operacao.Value   := Valor;
                            PagarReceberValor_Baixado.Value    := 0;
                            PagarReceberOrgao.Value            := ImpostosOrgao.Value;

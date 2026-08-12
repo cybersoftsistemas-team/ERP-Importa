@@ -4570,6 +4570,11 @@ type
     EmpresasPISCOFINS_F100Financ: TBooleanField;
     TipoNotaTipo_NFDebito: TSmallintField;
     TipoNotaTipo_NFCredito: TSmallintField;
+    ProcessosDOCUF_Importacao: TStringField;
+    ProcessosDOCData_PresencaCarga: TDateTimeField;
+    ProcessosDOCData_Embarque: TDateTimeField;
+    ProcessosDOCNumero_LI: TStringField;
+    PagarReceberValor_TotalPed: TCurrencyField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);

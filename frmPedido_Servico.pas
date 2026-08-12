@@ -1011,6 +1011,7 @@ begin
                                    PagarReceberJuros.Value            := 0;
                                    PagarReceberDesconto.Value         := 0;
                                    PagarReceberValor_Total.Value      := PedidoServicoParcelasValor.Value;
+                                   PagarReceberValor_TotalPed.Value   := PedidoServicoParcelasValor.Value;
                                    PagarReceberValor_Operacao.Value   := PedidoServicoParcelasValor.Value;
                                    PagarReceberCliente.Value          := NotasServicoCliente.Value;
                                    PagarReceberDocumento.Value        := ReferenciasFiscaisEspecie.Value;
@@ -1063,6 +1064,7 @@ begin
                              PagarReceberJuros.Value            := 0;
                              PagarReceberDesconto.Value         := 0;
                              PagarReceberValor_Total.Value      := PedidoServicoValor_ISS.Value;
+                             PagarReceberValor_TotalPed.Value   := PedidoServicoValor_ISS.Value;
                              PagarReceberValor_Operacao.Value   := PedidoServicoValor_ISS.Value;
                              PagarReceberCliente.Value          := PedidoServicoCliente.Value;
                              PagarReceberDocumento.Value        := ReferenciasFiscaisEspecie.Value;

@@ -279,6 +279,7 @@ begin
                         PagarReceberValor_Documento.Value  := cValorTransferir.Value;
                         PagarReceberValor_Parcela.Value    := cValorTransferir.Value;
                         PagarReceberValor_Total.Value      := cValorTransferir.Value;
+                        PagarReceberValor_TotalPed.Value   := cValorTransferir.Value;
                         PagarReceberValor_Operacao.Value   := cValorTransferir.Value;
                         PagarReceberObservacao.Value       := cObservacao.Lines.Text;
                         PagarReceberCustoConta.Value       := False;
@@ -312,6 +313,7 @@ begin
                         PagarReceberValor_Documento.Value     := cValorTransferir.Value;
                         PagarReceberValor_Parcela.Value       := cValorTransferir.Value;
                         PagarReceberValor_Total.Value         := cValorTransferir.Value;
+                        PagarReceberValor_TotalPed.Value      := cValorTransferir.Value;
                         PagarReceberValor_Operacao.Value      := cValorTransferir.Value;
                         PagarReceberObservacao.Value          := cObservacao.Lines.Text;
                         PagarReceberTransferencia.Value       := False;

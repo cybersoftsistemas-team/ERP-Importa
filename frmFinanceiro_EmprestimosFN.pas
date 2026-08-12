@@ -528,6 +528,7 @@ begin
                               PagarReceberDesconto.Value         := 0;
                               PagarReceberValor_Operacao.Value   := EmprestimosFINIMPValor_ME.AsCurrency * EmprestimosTaxa_Cambial.AsFloat;
                               PagarReceberValor_Total.Value      := EmprestimosFINIMPValor_ME.AsCurrency * EmprestimosTaxa_Cambial.AsFloat;
+                              PagarReceberValor_TotalPed.Value   := EmprestimosFINIMPValor_ME.AsCurrency * EmprestimosTaxa_Cambial.AsFloat;
                               PagarReceberValor_Baixado.Value    := 0;
                               PagarReceberProvisorio.Value       := false;
                               PagarReceberForma_Tipo.Value       := EmprestimosForma_Tipo.Value;

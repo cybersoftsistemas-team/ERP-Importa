@@ -318,15 +318,17 @@ begin
                                     PagarReceberValor_Baixado.Value := Boletos.FieldByName('Valor_Documento').AsCurrency;
                                     PagarReceberDesconto.Value      := Boletos.FieldByName('Valor_Desconto').AsCurrency;
                                     if Boletos.FieldByName('Valor_Juros').ascurrency > 0 then begin
-                                       PagarReceberJuros.Value         := Boletos.FieldByName('Valor_Juros').asCurrency;
-                                       PagarReceberMulta.Value         := Boletos.FieldByName('Valor_MultaVencimento').AsCurrency;
-                                       PagarReceberValor_Total.Value   := (PagarReceberValor_Parcela.Value + Boletos.FieldByName('Valor_Juros').asCurrency + Boletos.FieldByName('Valor_MultaVencimento').AsCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency);
-                                       PagarReceberValor_Baixado.Value := (PagarReceberValor_Parcela.Value + Boletos.FieldByName('Valor_Juros').asCurrency + Boletos.FieldByName('Valor_MultaVencimento').AsCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency);
+                                       PagarReceberJuros.Value          := Boletos.FieldByName('Valor_Juros').asCurrency;
+                                       PagarReceberMulta.Value          := Boletos.FieldByName('Valor_MultaVencimento').AsCurrency;
+                                       PagarReceberValor_Total.Value    := (PagarReceberValor_Parcela.Value + Boletos.FieldByName('Valor_Juros').asCurrency + Boletos.FieldByName('Valor_MultaVencimento').AsCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency);
+                                       PagarReceberValor_TotalPed.Value := (PagarReceberValor_Parcela.Value + Boletos.FieldByName('Valor_Juros').asCurrency + Boletos.FieldByName('Valor_MultaVencimento').AsCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency);
+                                       PagarReceberValor_Baixado.Value  := (PagarReceberValor_Parcela.Value + Boletos.FieldByName('Valor_Juros').asCurrency + Boletos.FieldByName('Valor_MultaVencimento').AsCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency);
                                     end else begin
-                                       PagarReceberValor_Total.Value   := (PagarReceberValor_Parcela.Value + Boletos.FieldByName('Valor_Juros').asCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency);
-                                       PagarReceberValor_Baixado.Value := (PagarReceberValor_Parcela.Value + Boletos.FieldByName('Valor_Juros').asCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency);
-                                       PagarReceberJuros.Value         := 0;
-                                       PagarReceberMulta.Value         := 0;
+                                       PagarReceberValor_Total.Value    := (PagarReceberValor_Parcela.Value + Boletos.FieldByName('Valor_Juros').asCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency);
+                                       PagarReceberValor_TotalPed.Value := (PagarReceberValor_Parcela.Value + Boletos.FieldByName('Valor_Juros').asCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency);
+                                       PagarReceberValor_Baixado.Value  := (PagarReceberValor_Parcela.Value + Boletos.FieldByName('Valor_Juros').asCurrency - Boletos.FieldByName('Valor_Desconto').AsCurrency);
+                                       PagarReceberJuros.Value          := 0;
+                                       PagarReceberMulta.Value          := 0;
                                     end;
                        PagarReceber.Post;
 

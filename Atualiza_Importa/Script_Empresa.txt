@@ -3099,3 +3099,18 @@ go
 alter table NotasFiscais drop column Entrega_Futura
 go
 
+--[10/08/2026 12:14:00]
+alter table ProcessosDocumentos add Data_PresencaCarga datetime
+                                   ,Data_Embarque datetime
+                                   ,Numero_LI varchar(15)
+go
+
+--[10/08/2026 13:59:00]
+alter table ProcessosDocumentos add UF_Importacao char(2)
+go
+
+--[11/08/2026 09:50:00]
+alter table PagarReceber add Valor_TotalPed money
+go
+update PagarReceber set Valor_TotalPed = Valor_Total where Valor_TotalPed is null
+go

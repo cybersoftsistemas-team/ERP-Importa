@@ -4,7 +4,7 @@ object Processo_Importacao: TProcesso_Importacao
   HelpContext = 801
   BorderStyle = bsDialog
   Caption = 'Processo Importa'#231#227'o'
-  ClientHeight = 720
+  ClientHeight = 766
   ClientWidth = 1074
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -81,12 +81,13 @@ object Processo_Importacao: TProcesso_Importacao
   end
   object Panel1: TPanel
     Left = 0
-    Top = 688
+    Top = 734
     Width = 1074
     Height = 32
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitTop = 688
     object bSair: TButton
       AlignWithMargins = True
       Left = 998
@@ -283,19 +284,21 @@ object Processo_Importacao: TProcesso_Importacao
     Left = 3
     Top = 40
     Width = 1068
-    Height = 645
+    Height = 691
     ActivePage = TabSheet1
     Align = alClient
     TabHeight = 24
     TabOrder = 1
+    ExplicitHeight = 645
     object TabSheet1: TTabSheet
       Caption = '&Dados Gerais'
       Enabled = False
+      ExplicitHeight = 611
       object GroupBox4: TGroupBox
         Left = 1
         Top = -1
         Width = 521
-        Height = 260
+        Height = 286
         Caption = 'Processo'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
@@ -1422,12 +1425,54 @@ object Processo_Importacao: TProcesso_Importacao
           ParentFont = False
           TabOrder = 11
         end
+        object StaticText148: TStaticText
+          Left = 6
+          Top = 256
+          Width = 104
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkTile
+          BevelOuter = bvNone
+          BorderStyle = sbsSunken
+          Caption = 'Despachante'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 36
+          Transparent = False
+          StyleElements = []
+        end
+        object DBLookupComboBox7: TDBLookupComboBox
+          Left = 111
+          Top = 256
+          Width = 402
+          Height = 21
+          DataField = 'Despachante'
+          DataSource = Dados.dsProcessosDOC
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          KeyField = 'Codigo'
+          ListField = 'Codigo;Nome'
+          ListFieldIndex = 1
+          ListSource = dstDespachantes
+          ParentFont = False
+          TabOrder = 37
+        end
       end
       object GroupBox1: TGroupBox
         Left = 1
-        Top = 261
+        Top = 286
         Width = 521
-        Height = 288
+        Height = 311
         Caption = 'Fatura (Comercial Invoice)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
@@ -1438,7 +1483,7 @@ object Processo_Importacao: TProcesso_Importacao
         TabOrder = 1
         object cFatura: TDBEdit
           Left = 114
-          Top = 213
+          Top = 237
           Width = 250
           Height = 21
           CharCase = ecUpperCase
@@ -1454,7 +1499,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText1: TStaticText
           Left = 6
-          Top = 213
+          Top = 237
           Width = 106
           Height = 21
           AutoSize = False
@@ -1477,7 +1522,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText8: TStaticText
           Left = 6
-          Top = 191
+          Top = 215
           Width = 106
           Height = 21
           AutoSize = False
@@ -1561,7 +1606,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object lDoc: TStaticText
           Left = 6
-          Top = 169
+          Top = 193
           Width = 106
           Height = 21
           AutoSize = False
@@ -1584,7 +1629,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object cNumeroDOC: TDBEdit
           Left = 112
-          Top = 169
+          Top = 193
           Width = 206
           Height = 21
           CharCase = ecUpperCase
@@ -1662,7 +1707,7 @@ object Processo_Importacao: TProcesso_Importacao
         object StaticText17: TStaticText
           Left = 237
           Top = 103
-          Width = 67
+          Width = 82
           Height = 21
           AutoSize = False
           BevelInner = bvNone
@@ -1775,7 +1820,7 @@ object Processo_Importacao: TProcesso_Importacao
           YearDigits = dyFour
         end
         object cDataChegada: TDBDateEdit
-          Left = 306
+          Left = 321
           Top = 103
           Width = 105
           Height = 21
@@ -1868,7 +1913,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object DBLookupComboBox2: TDBLookupComboBox
           Left = 114
-          Top = 191
+          Top = 215
           Width = 402
           Height = 21
           DataField = 'Tipo_Mercadoria'
@@ -1887,7 +1932,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText49: TStaticText
           Left = 366
-          Top = 213
+          Top = 237
           Width = 35
           Height = 21
           AutoSize = False
@@ -1910,7 +1955,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object cDataFatura: TDBDateEdit
           Left = 403
-          Top = 213
+          Top = 237
           Width = 113
           Height = 21
           DataField = 'Data_Fatura'
@@ -2040,7 +2085,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText66: TStaticText
           Left = 6
-          Top = 235
+          Top = 259
           Width = 106
           Height = 21
           AutoSize = False
@@ -2063,7 +2108,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object cValorFatura: TDBEdit
           Left = 114
-          Top = 235
+          Top = 259
           Width = 126
           Height = 21
           DataField = 'Valor_FaturaME'
@@ -2078,7 +2123,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText67: TStaticText
           Left = 242
-          Top = 147
+          Top = 171
           Width = 28
           Height = 21
           AutoSize = False
@@ -2101,7 +2146,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object cDataBL: TDBDateEdit
           Left = 272
-          Top = 147
+          Top = 171
           Width = 104
           Height = 21
           DataField = 'Data_BL'
@@ -2193,7 +2238,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object cCondicaoCambio: TRxDBLookupCombo
           Left = 335
-          Top = 235
+          Top = 259
           Width = 181
           Height = 21
           DropDownCount = 8
@@ -2215,7 +2260,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText69: TStaticText
           Left = 242
-          Top = 235
+          Top = 259
           Width = 91
           Height = 21
           Cursor = crHandPoint
@@ -2286,7 +2331,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText126: TStaticText
           Left = 6
-          Top = 258
+          Top = 282
           Width = 106
           Height = 21
           AutoSize = False
@@ -2309,7 +2354,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object DBEdit43: TDBEdit
           Left = 114
-          Top = 258
+          Top = 282
           Width = 88
           Height = 21
           DataField = 'ROF_Numero'
@@ -2324,7 +2369,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText127: TStaticText
           Left = 204
-          Top = 259
+          Top = 283
           Width = 48
           Height = 21
           AutoSize = False
@@ -2347,7 +2392,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object DBDateEdit6: TDBDateEdit
           Left = 254
-          Top = 259
+          Top = 283
           Width = 113
           Height = 21
           DataField = 'ROF_Emissao'
@@ -2439,7 +2484,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText128: TStaticText
           Left = 371
-          Top = 258
+          Top = 282
           Width = 92
           Height = 21
           AutoSize = False
@@ -2462,7 +2507,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object DBEdit44: TDBEdit
           Left = 465
-          Top = 258
+          Top = 282
           Width = 49
           Height = 21
           DataField = 'ROF_Dias'
@@ -2543,7 +2588,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText137: TStaticText
           Left = 6
-          Top = 147
+          Top = 171
           Width = 106
           Height = 21
           AutoSize = False
@@ -2566,7 +2611,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object DBEdit49: TDBEdit
           Left = 114
-          Top = 147
+          Top = 171
           Width = 126
           Height = 21
           DataField = 'Numero_BL'
@@ -2581,7 +2626,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText138: TStaticText
           Left = 377
-          Top = 147
+          Top = 171
           Width = 35
           Height = 22
           AutoSize = False
@@ -2604,7 +2649,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object DBEdit50: TDBEdit
           Left = 414
-          Top = 147
+          Top = 171
           Width = 102
           Height = 21
           DataField = 'Numero_HouseBL'
@@ -2657,7 +2702,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object StaticText142: TStaticText
           Left = 323
-          Top = 169
+          Top = 193
           Width = 42
           Height = 22
           AutoSize = False
@@ -2680,7 +2725,7 @@ object Processo_Importacao: TProcesso_Importacao
         end
         object DBEdit54: TDBEdit
           Left = 367
-          Top = 169
+          Top = 193
           Width = 149
           Height = 21
           DataField = 'Numero_TFA'
@@ -2808,12 +2853,242 @@ object Processo_Importacao: TProcesso_Importacao
           Transparent = False
           StyleElements = []
         end
+        object StaticText144: TStaticText
+          Left = 6
+          Top = 147
+          Width = 106
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkTile
+          BevelOuter = bvNone
+          BorderStyle = sbsSunken
+          Caption = 'Data Presen'#231'a Caga'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 46
+          Transparent = False
+          StyleElements = []
+        end
+        object DBDateEdit9: TDBDateEdit
+          Left = 114
+          Top = 147
+          Width = 105
+          Height = 21
+          DataField = 'Data_PresencaCarga'
+          DataSource = Dados.dsProcessosDOC
+          CheckOnExit = True
+          DialogTitle = 'Data'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          GlyphKind = gkCustom
+          Glyph.Data = {
+            D2080000424DD208000000000000360000002800000026000000130000000100
+            1800000000009C08000000000000000000000000000000000000171717151515
+            1515151515151515151515151515151515151515151515151515151515151515
+            1515151515151515151515151515151516161617171715151515151515151515
+            1515151515151515151515151515151515151515151515151515151515151515
+            15151515151515151516161600005A5A5A555555565656555555555555565656
+            5656565757575858585858585757575757575555555555555555555555555555
+            555555555959595A5A5A55555556565655555555555556565656565657575758
+            5858585858575757575757555555555555555555555555555555555555595959
+            0000767676B9B9B9AEAEAEABABABAAAAAAA9A9A9A7A7A7A6A6A6A3A3A3A3A3A3
+            A6A6A6ABABABB3B3B3B6B6B6B2B2B2AEAEAEACACACB0B0B0B7B7B7767676B9B9
+            B9AEAEAEABABABAAAAAAA9A9A9A7A7A7A6A6A6A3A3A3A3A3A3A6A6A6ABABABB3
+            B3B3B6B6B6B2B2B2AEAEAEACACACB0B0B0B7B7B700009E9E9EFEFEFEFEFEFEFE
+            FEFEFEFEFEFEFEFEFEFEFEFBFBFBF6F6F6F2F2F2E6E6E6CFCFCFBEBEBEC5C5C5
+            E1E1E1FDFDFDFEFEFEFEFEFEFCFCFC9E9E9EFEFEFEFEFEFEFEFEFEFEFEFEFEFE
+            FEFEFEFEFBFBFBF6F6F6FFFFFFFFFFFFCFCFCFBEBEBEC5C5C5E1E1E1FDFDFDFE
+            FEFEFEFEFEFCFCFC0000818181FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFE
+            FEFEE7E7E7BCBCBCC6C6C6EDEDEDE9E9E9B9B9B98D8D8D8D8D8DCCCCCCFEFEFE
+            F0F0F0818181FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFFFFFFFFFFFFFFFF
+            FFFFFFFFEDEDEDE9E9E9B9B9B98D8D8D8D8D8DCCCCCCFEFEFEF0F0F000006A6A
+            6AFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFECFCFCF565656515151D0
+            D0D0FEFEFEFEFEFEF3F3F3AFAFAF7D7D7DBCBCBCE3E3E36A6A6AFEFEFEFEFEFE
+            FEFEFEFEFEFEFEFEFEFEFEFEFFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFEFEFEFEFE
+            FEF3F3F3AFAFAF7D7D7DBCBCBCE3E3E30000565656F8F8F8FEFEFEFEFEFEFEFE
+            FEFEFEFEFEFEFEFEFEFED3D3D33636362D2D2DCCCCCCFEFEFEFEFEFEFEFEFEFE
+            FEFECFCFCFABABABB5B5B5565656F8F8F8FEFEFEFEFEFEFEFEFEFEFEFEFEFEFE
+            FFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFEFEFEFEFEFEFEFEFEFEFEFECFCFCFABAB
+            ABB5B5B50000424242F0F0F0FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEDDDD
+            DD2121210F0F0FC2C2C2FEFEFEFEFEFEFEFEFEFEFEFEFDFDFDFEFEFEAEAEAE42
+            4242F0F0F0FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFFFFFFC0C0C0C0C0C0FFFFFF
+            FFFFFFFEFEFEFEFEFEFEFEFEFEFEFEFDFDFDFEFEFEAEAEAE0000333333E7E7E7
+            FEFEFEFBFBFBFBFBFBFCFCFCF3F3F3C8C8C8D3D3D31A1A1A030303B3B3B3FEFE
+            FEFDFDFDFDFDFDFDFDFDFEFEFEFEFEFEA7A7A7333333E7E7E7FEFEFEFBFBFBFB
+            FBFBFFFFFFFFFFFFFFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFEFEFEFDFDFDFDFDFD
+            FDFDFDFEFEFEFEFEFEA7A7A70000252525D6D6D6FEFEFEF6F6F6F6F6F6FCFCFC
+            EEEEEE1919191010100D0D0D0D0D0DB3B3B3FEFEFEF8F8F8F8F8F8F8F8F8F9F9
+            F9FEFEFE8E8E8E252525D6D6D6FEFEFEF6F6F6F6F6F6FFFFFFC0C0C0C0C0C0C0
+            C0C0C0C0C0FFFFFFFFFFFFFEFEFEF8F8F8F8F8F8F8F8F8F9F9F9FEFEFE8E8E8E
+            00001A1A1AC4C4C4FDFEFDF2F3F2F3F5F2F4F5F3FAFBF99B9C9A313231151614
+            282928BCBDBCFEFEFEF5F6F5F6F7F5F6F7F5F7F9F6FEFEFE7C7C7B1A1A1AC4C4
+            C4FDFDFDF2F2F2F3F3F3F4F4F4FAFAFAC0C0C0C0C0C0C0C0C0FFFFFFFFFFFFFE
+            FEFEF5F5F5F6F6F6F6F6F6F7F7F7FEFEFE7B7B7B0000131313B3B6B2FDFEFCEE
+            F0ECEFF2EDF0F5EEF4F9F1FEFEFEE6EBE4787D75686C66CED1CCFCFEFBF7FEF2
+            F5FBF2F4F8F2F6FBF3FEFEFE696A69131313B4B4B4FDFDFDEEEEEEF0F0F0F2F2
+            F2F6F6F6FFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFCFCFCF9F9F9F7F7F7F5F5F5F8
+            F8F8FEFEFE696969000020231EAA7D7CE1C1A2E6CAB0E4C59DE7C99BE3C184E5
+            C27EEACA83EFD697EED497EBCC85EBCC85E8C67CEBCE93EACB95E5C485E4C289
+            4A4739212121818181BABABAC5C5C5BCBCBCBEBEBEB2B2B2B1B1B1B7B7B7C5C5
+            C5C4C4C4B9B9B9B9B9B9B3B3B3BFBFBFBDBDBDB4B4B4B4B4B443434300002E35
+            2A7D5545D1A475DEBB97E0BE8DDEB877CE963FC1852FC7892FD7A53DE9C876E8
+            C46CE1B756CA8B2FD9A849E2BB71DEB36CC9954935321F3131315454549A9A9A
+            B3B3B3B2B2B2A8A8A88181817171717474748A8A8AB2B2B2ADADAD9E9E9E7575
+            75909090A8A8A8A2A2A28383832C2C2C000022271F7E5858A0693FA9703EB47D
+            43BA823FBC8538BA7F2FC0832FC89236D9AA58DBAD5BD8A957C1852FCC9743D2
+            A15BD2A35FBF8A532C2B222424245B5B5B616161666666717171737373737373
+            6C6C6C6F6F6F7B7B7B9696969999999595957171718383839090909393937E7E
+            7E28282800001318107C58617E532F85562F935E2FAB775BAE7748AE732FB075
+            2FB47A2FB6782FB6782FC0873DBA8970B27833AA712FA2692F9E683F23232215
+            15155E5E5E4C4C4C4F4F4F5555557373736E6E6E646464656565696969686868
+            6868687676768686866969696262625D5D5D61616122222200000C10093F391D
+            473A0050410045380068655D4946394F4000776300705D007360007D67004F45
+            11757A72342C066754006856004C3E011C1B1B0D0D0D3131312929292F2F2F28
+            28286262624242422E2E2E4747474343434545454A4A4A363636777777212121
+            3C3C3C3E3E3E2D2D2D1B1B1B00000D110A3E3719463900534400292203686C64
+            464B422A22007F69006E5C007A66005A4A00191710888F842926196A57006957
+            00483B001B1B1B0E0E0E2E2E2E2929293131311919196969694747471818184B
+            4B4B4242424949493535351515158B8B8B2222223E3E3E3E3E3E2A2A2A1B1B1B
+            00000D110A3E371A493B003A310B1A1D186A6A6A3C3D3B0000004035007F6A00
+            594A0003020010110F818181161A14302A0E695700493C001B1B1B0E0E0E2F2F
+            2F2A2A2A2626261B1B1B6A6A6A3C3C3C0000002626264C4C4C35353501010110
+            10108181811717172222223E3E3E2B2B2B1B1B1B0000}
+          NumGlyphs = 2
+          ParentFont = False
+          TabOrder = 47
+          YearDigits = dyFour
+        end
+        object DBDateEdit10: TDBDateEdit
+          Left = 321
+          Top = 147
+          Width = 105
+          Height = 21
+          DataField = 'Data_Embarque'
+          DataSource = Dados.dsProcessosDOC
+          CheckOnExit = True
+          DialogTitle = 'Data'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlack
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          GlyphKind = gkCustom
+          Glyph.Data = {
+            D2080000424DD208000000000000360000002800000026000000130000000100
+            1800000000009C08000000000000000000000000000000000000171717151515
+            1515151515151515151515151515151515151515151515151515151515151515
+            1515151515151515151515151515151516161617171715151515151515151515
+            1515151515151515151515151515151515151515151515151515151515151515
+            15151515151515151516161600005A5A5A555555565656555555555555565656
+            5656565757575858585858585757575757575555555555555555555555555555
+            555555555959595A5A5A55555556565655555555555556565656565657575758
+            5858585858575757575757555555555555555555555555555555555555595959
+            0000767676B9B9B9AEAEAEABABABAAAAAAA9A9A9A7A7A7A6A6A6A3A3A3A3A3A3
+            A6A6A6ABABABB3B3B3B6B6B6B2B2B2AEAEAEACACACB0B0B0B7B7B7767676B9B9
+            B9AEAEAEABABABAAAAAAA9A9A9A7A7A7A6A6A6A3A3A3A3A3A3A6A6A6ABABABB3
+            B3B3B6B6B6B2B2B2AEAEAEACACACB0B0B0B7B7B700009E9E9EFEFEFEFEFEFEFE
+            FEFEFEFEFEFEFEFEFEFEFEFBFBFBF6F6F6F2F2F2E6E6E6CFCFCFBEBEBEC5C5C5
+            E1E1E1FDFDFDFEFEFEFEFEFEFCFCFC9E9E9EFEFEFEFEFEFEFEFEFEFEFEFEFEFE
+            FEFEFEFEFBFBFBF6F6F6FFFFFFFFFFFFCFCFCFBEBEBEC5C5C5E1E1E1FDFDFDFE
+            FEFEFEFEFEFCFCFC0000818181FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFE
+            FEFEE7E7E7BCBCBCC6C6C6EDEDEDE9E9E9B9B9B98D8D8D8D8D8DCCCCCCFEFEFE
+            F0F0F0818181FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFFFFFFFFFFFFFFFF
+            FFFFFFFFEDEDEDE9E9E9B9B9B98D8D8D8D8D8DCCCCCCFEFEFEF0F0F000006A6A
+            6AFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFECFCFCF565656515151D0
+            D0D0FEFEFEFEFEFEF3F3F3AFAFAF7D7D7DBCBCBCE3E3E36A6A6AFEFEFEFEFEFE
+            FEFEFEFEFEFEFEFEFEFEFEFEFFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFEFEFEFEFE
+            FEF3F3F3AFAFAF7D7D7DBCBCBCE3E3E30000565656F8F8F8FEFEFEFEFEFEFEFE
+            FEFEFEFEFEFEFEFEFEFED3D3D33636362D2D2DCCCCCCFEFEFEFEFEFEFEFEFEFE
+            FEFECFCFCFABABABB5B5B5565656F8F8F8FEFEFEFEFEFEFEFEFEFEFEFEFEFEFE
+            FFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFEFEFEFEFEFEFEFEFEFEFEFECFCFCFABAB
+            ABB5B5B50000424242F0F0F0FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFEDDDD
+            DD2121210F0F0FC2C2C2FEFEFEFEFEFEFEFEFEFEFEFEFDFDFDFEFEFEAEAEAE42
+            4242F0F0F0FEFEFEFEFEFEFEFEFEFEFEFEFEFEFEFFFFFFC0C0C0C0C0C0FFFFFF
+            FFFFFFFEFEFEFEFEFEFEFEFEFEFEFEFDFDFDFEFEFEAEAEAE0000333333E7E7E7
+            FEFEFEFBFBFBFBFBFBFCFCFCF3F3F3C8C8C8D3D3D31A1A1A030303B3B3B3FEFE
+            FEFDFDFDFDFDFDFDFDFDFEFEFEFEFEFEA7A7A7333333E7E7E7FEFEFEFBFBFBFB
+            FBFBFFFFFFFFFFFFFFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFEFEFEFDFDFDFDFDFD
+            FDFDFDFEFEFEFEFEFEA7A7A70000252525D6D6D6FEFEFEF6F6F6F6F6F6FCFCFC
+            EEEEEE1919191010100D0D0D0D0D0DB3B3B3FEFEFEF8F8F8F8F8F8F8F8F8F9F9
+            F9FEFEFE8E8E8E252525D6D6D6FEFEFEF6F6F6F6F6F6FFFFFFC0C0C0C0C0C0C0
+            C0C0C0C0C0FFFFFFFFFFFFFEFEFEF8F8F8F8F8F8F8F8F8F9F9F9FEFEFE8E8E8E
+            00001A1A1AC4C4C4FDFEFDF2F3F2F3F5F2F4F5F3FAFBF99B9C9A313231151614
+            282928BCBDBCFEFEFEF5F6F5F6F7F5F6F7F5F7F9F6FEFEFE7C7C7B1A1A1AC4C4
+            C4FDFDFDF2F2F2F3F3F3F4F4F4FAFAFAC0C0C0C0C0C0C0C0C0FFFFFFFFFFFFFE
+            FEFEF5F5F5F6F6F6F6F6F6F7F7F7FEFEFE7B7B7B0000131313B3B6B2FDFEFCEE
+            F0ECEFF2EDF0F5EEF4F9F1FEFEFEE6EBE4787D75686C66CED1CCFCFEFBF7FEF2
+            F5FBF2F4F8F2F6FBF3FEFEFE696A69131313B4B4B4FDFDFDEEEEEEF0F0F0F2F2
+            F2F6F6F6FFFFFFC0C0C0C0C0C0FFFFFFFFFFFFFCFCFCF9F9F9F7F7F7F5F5F5F8
+            F8F8FEFEFE696969000020231EAA7D7CE1C1A2E6CAB0E4C59DE7C99BE3C184E5
+            C27EEACA83EFD697EED497EBCC85EBCC85E8C67CEBCE93EACB95E5C485E4C289
+            4A4739212121818181BABABAC5C5C5BCBCBCBEBEBEB2B2B2B1B1B1B7B7B7C5C5
+            C5C4C4C4B9B9B9B9B9B9B3B3B3BFBFBFBDBDBDB4B4B4B4B4B443434300002E35
+            2A7D5545D1A475DEBB97E0BE8DDEB877CE963FC1852FC7892FD7A53DE9C876E8
+            C46CE1B756CA8B2FD9A849E2BB71DEB36CC9954935321F3131315454549A9A9A
+            B3B3B3B2B2B2A8A8A88181817171717474748A8A8AB2B2B2ADADAD9E9E9E7575
+            75909090A8A8A8A2A2A28383832C2C2C000022271F7E5858A0693FA9703EB47D
+            43BA823FBC8538BA7F2FC0832FC89236D9AA58DBAD5BD8A957C1852FCC9743D2
+            A15BD2A35FBF8A532C2B222424245B5B5B616161666666717171737373737373
+            6C6C6C6F6F6F7B7B7B9696969999999595957171718383839090909393937E7E
+            7E28282800001318107C58617E532F85562F935E2FAB775BAE7748AE732FB075
+            2FB47A2FB6782FB6782FC0873DBA8970B27833AA712FA2692F9E683F23232215
+            15155E5E5E4C4C4C4F4F4F5555557373736E6E6E646464656565696969686868
+            6868687676768686866969696262625D5D5D61616122222200000C10093F391D
+            473A0050410045380068655D4946394F4000776300705D007360007D67004F45
+            11757A72342C066754006856004C3E011C1B1B0D0D0D3131312929292F2F2F28
+            28286262624242422E2E2E4747474343434545454A4A4A363636777777212121
+            3C3C3C3E3E3E2D2D2D1B1B1B00000D110A3E3719463900534400292203686C64
+            464B422A22007F69006E5C007A66005A4A00191710888F842926196A57006957
+            00483B001B1B1B0E0E0E2E2E2E2929293131311919196969694747471818184B
+            4B4B4242424949493535351515158B8B8B2222223E3E3E3E3E3E2A2A2A1B1B1B
+            00000D110A3E371A493B003A310B1A1D186A6A6A3C3D3B0000004035007F6A00
+            594A0003020010110F818181161A14302A0E695700493C001B1B1B0E0E0E2F2F
+            2F2A2A2A2626261B1B1B6A6A6A3C3C3C0000002626264C4C4C35353501010110
+            10108181811717172222223E3E3E2B2B2B1B1B1B0000}
+          NumGlyphs = 2
+          ParentFont = False
+          TabOrder = 48
+          YearDigits = dyFour
+        end
+        object StaticText145: TStaticText
+          Left = 237
+          Top = 147
+          Width = 82
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkTile
+          BevelOuter = bvNone
+          BorderStyle = sbsSunken
+          Caption = 'Data Embarque'
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 49
+          Transparent = False
+          StyleElements = []
+        end
       end
       object GroupBox3: TGroupBox
         Left = 532
         Top = -1
         Width = 521
-        Height = 150
+        Height = 176
         Caption = 'Declara'#231#227'o de Importa'#231#227'o (DI)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
@@ -3349,10 +3624,51 @@ object Processo_Importacao: TProcesso_Importacao
           TabOrder = 18
           OnClick = cBloqEstClick
         end
+        object StaticText149: TStaticText
+          Left = 6
+          Top = 148
+          Width = 101
+          Height = 21
+          AutoSize = False
+          BevelInner = bvNone
+          BevelKind = bkTile
+          BevelOuter = bvNone
+          BorderStyle = sbsSunken
+          Caption = 'LI N'#186
+          Color = 7293440
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWhite
+          Font.Height = -11
+          Font.Name = 'Calibri'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+          TabOrder = 19
+          Transparent = False
+          StyleElements = []
+        end
+        object DBEdit55: TDBEdit
+          Left = 109
+          Top = 148
+          Width = 152
+          Height = 21
+          CharCase = ecUpperCase
+          DataField = 'Numero_LI'
+          DataSource = Dados.dsProcessosDOC
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          MaxLength = 13
+          ParentFont = False
+          TabOrder = 20
+          OnChange = cDIChange
+        end
       end
       object GroupBox2: TGroupBox
         Left = 532
-        Top = 149
+        Top = 178
         Width = 521
         Height = 461
         Caption = 'Valores'
@@ -4794,7 +5110,7 @@ object Processo_Importacao: TProcesso_Importacao
       end
       object DBCheckBox5: TDBCheckBox
         Left = 4
-        Top = 555
+        Top = 603
         Width = 288
         Height = 17
         Alignment = taLeftJustify
@@ -4812,7 +5128,7 @@ object Processo_Importacao: TProcesso_Importacao
       end
       object DBCheckBox6: TDBCheckBox
         Left = 4
-        Top = 571
+        Top = 619
         Width = 288
         Height = 17
         Alignment = taLeftJustify
@@ -4830,7 +5146,7 @@ object Processo_Importacao: TProcesso_Importacao
       end
       object DBCheckBox7: TDBCheckBox
         Left = 4
-        Top = 587
+        Top = 635
         Width = 288
         Height = 17
         Alignment = taLeftJustify
@@ -4848,7 +5164,7 @@ object Processo_Importacao: TProcesso_Importacao
       end
       object DBCheckBox8: TDBCheckBox
         Left = 316
-        Top = 555
+        Top = 603
         Width = 116
         Height = 17
         Alignment = taLeftJustify
@@ -4869,6 +5185,7 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = '&Outras Informa'#231#245'es'
       Enabled = False
       ImageIndex = 2
+      ExplicitHeight = 611
       object Label1: TLabel
         Left = 170
         Top = 282
@@ -5281,7 +5598,7 @@ object Processo_Importacao: TProcesso_Importacao
       end
       object GroupBox6: TGroupBox
         Left = 3
-        Top = 416
+        Top = 400
         Width = 1054
         Height = 182
         Caption = 'Previs'#245'es'
@@ -6617,7 +6934,7 @@ object Processo_Importacao: TProcesso_Importacao
       end
       object StaticText43: TStaticText
         Left = 528
-        Top = 2
+        Top = 3
         Width = 72
         Height = 388
         AutoSize = False
@@ -6640,7 +6957,7 @@ object Processo_Importacao: TProcesso_Importacao
       end
       object DBMemo2: TDBMemo
         Left = 602
-        Top = 2
+        Top = 3
         Width = 455
         Height = 388
         DataField = 'Observacao'
@@ -6981,11 +7298,12 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet2: TTabSheet
       Caption = 'I&nf. Complementares'
       ImageIndex = 7
+      ExplicitHeight = 611
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
         Width = 1060
-        Height = 611
+        Height = 657
         Align = alClient
         DataField = 'Texto'
         DataSource = Dados.dsProcessosTexto
@@ -6998,12 +7316,14 @@ object Processo_Importacao: TProcesso_Importacao
         ScrollBars = ssVertical
         TabOrder = 0
         WordWrap = False
+        ExplicitHeight = 611
       end
     end
     object TabSheet8: TTabSheet
       Caption = 'Movimento &Financeiro'
       Enabled = False
       ImageIndex = 7
+      ExplicitHeight = 611
       object bDespesas: TSpeedButton
         Left = 856
         Top = 464
@@ -7760,11 +8080,12 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet9: TTabSheet
       Caption = '&Seriais'
       ImageIndex = 8
+      ExplicitHeight = 611
       object RxDBGrid1: TRxDBGrid
         Left = 0
         Top = 0
         Width = 1060
-        Height = 611
+        Height = 657
         Align = alClient
         Color = clWhite
         Ctl3D = True
@@ -7908,6 +8229,7 @@ object Processo_Importacao: TProcesso_Importacao
       Font.Style = []
       ImageIndex = 6
       ParentFont = False
+      ExplicitHeight = 611
       object DBGrid2: TDBGrid
         Left = 1
         Top = 2
@@ -8073,6 +8395,7 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = 'Contabeis'
       Enabled = False
       ImageIndex = 10
+      ExplicitHeight = 611
       object GroupBox5: TGroupBox
         Left = 3
         Top = 12
@@ -8397,6 +8720,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet4: TTabSheet
       Caption = '&Hist'#243'rico'
       ImageIndex = 3
+      ExplicitHeight = 611
       object DBGrid1: TDBGrid
         Left = 0
         Top = 0
@@ -8505,6 +8829,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet10: TTabSheet
       Caption = '&Documentos Gerais'
       ImageIndex = -1
+      ExplicitHeight = 611
       object Label2: TLabel
         Left = 3
         Top = 230
@@ -9036,6 +9361,7 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = '&Filtros'
       ImageIndex = 5
       OnEnter = TabSheet6Enter
+      ExplicitHeight = 611
       object bLimpar: TSpeedButton
         Left = 527
         Top = 420
@@ -10527,6 +10853,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet5: TTabSheet
       Caption = '&Lista'
       ImageIndex = 4
+      ExplicitHeight = 611
       object GradeLista: TDBGrid
         AlignWithMargins = True
         Left = 3
@@ -11238,5 +11565,26 @@ object Processo_Importacao: TProcesso_Importacao
     DataSet = tArmazem
     Left = 622
     Top = 413
+  end
+  object tDespachantes: TMSQuery
+    Connection = Dados.Banco_Empresas
+    SQL.Strings = (
+      'SELECT Codigo, Nome'
+      ' FROM Fornecedores')
+    FetchRows = 1
+    Left = 734
+    Top = 231
+    object tDespachantesCodigo: TIntegerField
+      FieldName = 'Codigo'
+    end
+    object tDespachantesNome: TStringField
+      FieldName = 'Nome'
+      Size = 60
+    end
+  end
+  object dstDespachantes: TDataSource
+    DataSet = tDespachantes
+    Left = 734
+    Top = 279
   end
 end

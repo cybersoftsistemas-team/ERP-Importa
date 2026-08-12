@@ -225,6 +225,7 @@ begin
                                     PagarReceberJuros.Value            := 0;
                                     PagarReceberDesconto.Value         := 0;
                                     PagarReceberValor_Total.Value      := NotasServicoTotal_Nota.Value;
+                                    PagarReceberValor_TotalPed.Value   := NotasServicoTotal_Nota.Value;
                                     PagarReceberValor_Operacao.Value   := NotasServicoTotal_Nota.Value;
                                     PagarReceberCliente.Value          := NotasServicoCliente.Value;
                                     PagarReceberDocumento.Value        := ReferenciasFiscaisEspecie.Value;
@@ -272,6 +273,7 @@ begin
                                  PagarReceberJuros.Value            := 0;
                                  PagarReceberDesconto.Value         := 0;
                                  PagarReceberValor_Total.Value      := NotasServicoValor_ISS.Value;
+                                 PagarReceberValor_TotalPed.Value   := NotasServicoValor_ISS.Value;
                                  PagarReceberValor_Operacao.Value   := NotasServicoValor_ISS.Value;
                                  PagarReceberCliente.Value          := NotasServicoCliente.Value;
                                  PagarReceberDocumento.Value        := ReferenciasFiscaisEspecie.Value;

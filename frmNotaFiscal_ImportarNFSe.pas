@@ -104,8 +104,8 @@ end;
 
 procedure TNotaFiscal_ImportarNFSe.FormShow(Sender: TObject);
 begin
-     Grade.ColWidths[0] := 450;
-     Grade.ColWidths[1] := 320;
+     Grade.ColWidths[0] := 400;
+     Grade.ColWidths[1] := 510;
      cDataEnt.Date := date;
      with Dados do begin
           with ControleNavios do begin

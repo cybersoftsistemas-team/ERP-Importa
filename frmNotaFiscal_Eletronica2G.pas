@@ -2701,6 +2701,7 @@ begin
                                  PagarReceberJuros.Value            := 0;
                                  PagarReceberDesconto.Value         := 0;
                                  PagarReceberValor_Total.Value      := GNREValor.Value;
+                                 PagarReceberValor_TotalPed.Value   := GNREValor.Value;
                                  PagarReceberValor_Operacao.Value   := GNREValor.Value;
                                  PagarReceberOrgao.Value            := ICMSGNRE_Orgao.Value;
                                  PagarReceberDocumento.Value        := ICMSGNRE_TipoDocumento.Value;
@@ -3204,6 +3205,7 @@ begin
                                              PagarReceberJuros.Value            := 0;
                                              PagarReceberDesconto.Value         := 0;
                                              PagarReceberValor_Total.Value      := RoundTo(PagarReceberValor_Documento.Value, -2);
+                                             PagarReceberValor_TotalPed.Value   := RoundTo(PagarReceberValor_Documento.Value, -2);
                                              PagarReceberValor_Operacao.Value   := RoundTo(PagarReceberValor_Documento.Value, -2);
                                              PagarReceberFornecedor.Value       := PedidosRepresentante.Value;
                                              PagarReceberDocumento.Value        := ConfiguracaoTipo_DocumentoPagamento.Value;
@@ -3260,6 +3262,7 @@ begin
                                              PagarReceberJuros.Value            := 0;
                                              PagarReceberDesconto.Value         := 0;
                                              PagarReceberValor_Total.Value      := RoundTo(PagarReceberValor_Documento.Value, -2);
+                                             PagarReceberValor_TotalPed.Value   := RoundTo(PagarReceberValor_Documento.Value, -2);
                                              PagarReceberValor_Operacao.Value   := RoundTo(PagarReceberValor_Documento.Value, -2);
                                              PagarReceberFornecedor.Value       := PedidosRepresentante.Value;
                                              PagarReceberDocumento.Value        := ConfiguracaoTipo_DocumentoPagamentoOutros.Value;
@@ -3316,6 +3319,7 @@ begin
                                              PagarReceberJuros.Value            := 0;
                                              PagarReceberDesconto.Value         := 0;
                                              PagarReceberValor_Total.Value      := RoundTo(PagarReceberValor_Documento.Value, -2);
+                                             PagarReceberValor_TotalPed.Value   := RoundTo(PagarReceberValor_Documento.Value, -2);
                                              PagarReceberValor_Operacao.Value   := RoundTo(PagarReceberValor_Documento.Value, -2);
                                              PagarReceberFornecedor.Value       := PedidosAtendente.Value;
                                              PagarReceberDocumento.Value        := ConfiguracaoTipo_DocumentoPagamentoTelevendas.Value;
@@ -3447,6 +3451,7 @@ begin
                                                  PagarReceberJuros.Value            := 0;
                                                  PagarReceberDesconto.Value         := 0;
                                                  PagarReceberValor_Total.Value      := RoundTo(PagarReceberValor_Parcela.Value, -2);
+                                                 PagarReceberValor_TotalPed.Value   := RoundTo(PagarReceberValor_Parcela.Value, -2);
                                                  PagarReceberValor_Operacao.Value   := RoundTo(PagarReceberValor_Parcela.Value, -2);
                                                  PagarReceberCliente.Value          := mCliFin;
                                                  PagarReceberDocumento.Value        := TipoNotaTipo_Documento.Value;
@@ -3616,6 +3621,7 @@ begin
                                  PagarReceberJuros.Value            := 0;
                                  PagarReceberDesconto.Value         := 0;
                                  PagarReceberValor_Total.Value      := RoundTo(PagarReceberValor_Parcela.Value, -2);
+                                 PagarReceberValor_TotalPed.Value   := RoundTo(PagarReceberValor_Parcela.Value, -2);
                                  PagarReceberValor_Operacao.Value   := RoundTo(PagarReceberValor_Parcela.Value, -2);
                                  PagarReceberCliente.Value          := 0;
                                  PagarReceberFornecedor.Value       := PedidosFornecedor_Codigo.Value;
@@ -3671,6 +3677,7 @@ begin
                                  PagarReceberJuros.Value            := 0;
                                  PagarReceberDesconto.Value         := 0;
                                  PagarReceberValor_Total.Value      := RoundTo(PagarReceberValor_Parcela.Value, -2);
+                                 PagarReceberValor_TotalPed.Value   := RoundTo(PagarReceberValor_Parcela.Value, -2);
                                  PagarReceberValor_Operacao.Value   := RoundTo(PagarReceberValor_Parcela.Value, -2);
                                  PagarReceberCliente.Value          := mCliFin;
                                  PagarReceberDocumento.Value        := TipoNotaTipo_Documento.Value;
@@ -6515,6 +6522,7 @@ begin
                            PagarReceberJuros.Value            := 0;
                            PagarReceberDesconto.Value         := 0;
                            PagarReceberValor_Total.Value      := RoundTo(mValor, -2);
+                           PagarReceberValor_TotalPed.Value   := RoundTo(mValor, -2);
                            PagarReceberValor_Operacao.Value   := RoundTo(mValor, -2);
                            PagarReceberCliente.Value          := mCliFin;
                            PagarReceberDocumento.Value        := 'DUPL';

@@ -198,28 +198,28 @@ begin
                  end;
                  // Somando as despesas do processo "MESTRE e do FILHO".
                  if ConfiguracaoValor_Despesas.AsInteger = 0 then begin
-                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.Custo_Entrada = 1)), 0)               AS Valor_DespesasMestre');
+                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.Custo_Entrada = 1)), 0)               AS Valor_DespesasMestre');
                  end else begin
-                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.Custo_Entrada = 1)), 0)               AS Valor_DespesasMestre');
+                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.Custo_Entrada = 1)), 0)               AS Valor_DespesasMestre');
                  end;
 
                  tDespesas.ParamByName('pProcessoMestre').AsString := ProcessosDOCProcesso_Mestre.Value;
               end else begin
                  if ConfiguracaoValor_Despesas.AsInteger = 0 then begin
-                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
                     tDespesas.SQL.Add('       0 AS Valor_DespesasMestre');
                  end else begin
-                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada<> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada<> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
                     tDespesas.SQL.Add('       0 AS Valor_DespesasMestre');
                  end;
               end;
@@ -248,28 +248,28 @@ begin
                  
                  // Somando as despesas do processo "MESTRE e do FILHO".
                  If ConfiguracaoValor_Despesas.AsInteger = 0 then begin
-                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.CustoConta = 1)), 0) AS Valor_DespesasMestre');
+                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.CustoConta = 1)), 0) AS Valor_DespesasMestre');
                  end else begin
-                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.CustoConta = 1)), 0) AS Valor_DespesasMestre');
+                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.CustoConta = 1)), 0) AS Valor_DespesasMestre');
                  end;
 
                  tDespesas.ParamByName('pProcessoMestre').AsString := ProcessosDOCProcesso_Mestre.Value;
               end else begin
                  if ConfiguracaoValor_Despesas.AsInteger = 0 then begin
-                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
                     tDespesas.SQL.Add('       0 AS Valor_DespesasMestre');
                  end else begin
-                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                    tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                    tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
                     tDespesas.SQL.Add('       0 AS Valor_DespesasMestre');
                  end;
               end;
@@ -3122,28 +3122,28 @@ begin
                 
                 // Somando as despesas do processo "MESTRE e do FILHO".
                 If ConfiguracaoValor_Despesas.AsInteger = 0 then begin
-                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.Custo_Entrada = 1)), 0)               AS Valor_DespesasMestre');
+                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.Custo_Entrada = 1)), 0)               AS Valor_DespesasMestre');
                 end else begin
-                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.Custo_Entrada = 1)), 0)               AS Valor_DespesasMestre');
+                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.Custo_Entrada = 1)), 0)               AS Valor_DespesasMestre');
                 End;
 
                 tDespesas.ParamByName('pProcessoMestre').AsString := ProcessosDOCProcesso_Mestre.Value;
              end else begin
                 If ConfiguracaoValor_Despesas.AsInteger = 0 then begin
-                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
                    tDespesas.SQL.Add('       0 AS Valor_DespesasMestre');
                 end else begin
-                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada<> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros  = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Entrada<> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
                    tDespesas.SQL.Add('       0 AS Valor_DespesasMestre');
                 End;
              End;
@@ -3172,28 +3172,28 @@ begin
                  
                 // Somando as despesas do processo "MESTRE e do FILHO".
                 If ConfiguracaoValor_Despesas.AsInteger = 0 then begin
-                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.CustoConta = 1)), 0) AS Valor_DespesasMestre');
+                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.CustoConta = 1)), 0) AS Valor_DespesasMestre');
                 end else begin
-                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.CustoConta = 1)), 0) AS Valor_DespesasMestre');
+                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso      ) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcessoMestre) AND (Tipo = ''P'') AND (LTRIM(RTRIM(Processo)) <> '''') AND (PagarReceber.CustoConta = 1)), 0) AS Valor_DespesasMestre');
                 End;
 
                 tDespesas.ParamByName('pProcessoMestre').AsString := ProcessosDOCProcesso_Mestre.Value;
              end else begin
                 If ConfiguracaoValor_Despesas.AsInteger = 0 then begin
-                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
                    tDespesas.SQL.Add('       0 AS Valor_DespesasMestre');
                 end else begin
-                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
-                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_Total+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
+                   tDespesas.SQL.Add('SELECT ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta   = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_Despesas,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.Custo_Outros = 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0) <> 1) AND (Tipo = ''P'')), 0) AS Valor_DespesasOutros,');
+                   tDespesas.SQL.Add('       ISNULL((SELECT SUM(Valor_TotalPed+ISNULL(Desconto, 0)) FROM PagarReceber WHERE (Processo = :pProcesso) AND (PagarReceber.CustoConta  <> 1) AND (ISNULL(PagarReceber.Custo_Seletivo, 0)  = 1) AND (Tipo = ''P'')), 0) AS Valor_Seletivo,');
                    tDespesas.SQL.Add('       0 AS Valor_DespesasMestre');
                 End;
              End;
@@ -4154,9 +4154,9 @@ begin
              End;
 
              If ConfiguracaoValor_Despesas.AsInteger = 0 then
-                tSalvaDesp.SQL.Add('       SUM(ISNULL(Valor_Total,0)) AS Total_Despesa,')
+                tSalvaDesp.SQL.Add('       SUM(ISNULL(Valor_TotalPed,0)) AS Total_Despesa,')
              else
-                tSalvaDesp.SQL.Add('       SUM(ISNULL(Valor_Total,0)+ISNULL(Desconto,0)) AS Total_Despesa,');
+                tSalvaDesp.SQL.Add('       SUM(ISNULL(Valor_TotalPed,0)+ISNULL(Desconto,0)) AS Total_Despesa,');
 
              tSalvaDesp.SQL.Add('         (SELECT ROUND(SUM(Valor_SemAdValorem * Quantidade), 2) FROM Adicoes WHERE DI IN (SELECT DISTINCT DI FROM PedidosItens WHERE Pedido = :pPedido) ) AS FOB');
 
@@ -4178,7 +4178,7 @@ begin
              end else begin
                 tSalvaDesp.SQL.Add('       (SELECT Descricao FROM Cybersoft_Cadastros.dbo.ClassificacaoFinanceira WHERE(Codigo = PR.Classificacao))+'' (MESTRE)'' AS Descricao,');
              End;
-             tSalvaDesp.SQL.Add('       SUM(ISNULL(Valor_Total,0)+ISNULL(Desconto,0)) AS Total_Despesa,');
+             tSalvaDesp.SQL.Add('       SUM(ISNULL(Valor_TotalPed,0)+ISNULL(Desconto,0)) AS Total_Despesa,');
              tSalvaDesp.SQL.Add('         (SELECT ROUND(SUM(Valor_SemAdValorem * Quantidade), 2) FROM Adicoes WHERE DI IN (SELECT DISTINCT DI FROM PedidosItens WHERE Pedido = :pPedido) ) AS FOB');
              tSalvaDesp.SQL.Add('FROM   PagarReceber PR');
              tSalvaDesp.SQL.Add('WHERE  (Tipo = ''P'')');

@@ -303,6 +303,7 @@ begin
                            PagarReceberJuros.Value            := 0;
                            PagarReceberDesconto.Value         := 0;
                            PagarReceberValor_Total.Value      := cICMSRec.Value;
+                           PagarReceberValor_TotalPed.Value   := cICMSRec.Value;
                            PagarReceberValor_Operacao.Value   := cICMSRec.Value;
                            PagarReceberOrgao.Value            := ConfiguracaoVencimento_ICMSOrgao.Value;
                            PagarReceberDocumento.Value        := ConfiguracaoVencimento_ICMSDoc.Value;
@@ -338,6 +339,7 @@ begin
                            PagarReceberJuros.Value            := 0;
                            PagarReceberDesconto.Value         := 0;
                            PagarReceberValor_Total.Value      := cIPIRec.Value;
+                           PagarReceberValor_TotalPed.Value   := cIPIRec.Value;
                            PagarReceberValor_Operacao.Value   := cIPIRec.Value;
                            PagarReceberOrgao.Value            := ConfiguracaoVencimento_IPIOrgao.Value;
                            PagarReceberDocumento.Value        := ConfiguracaoVencimento_IPIDoc.Value;
@@ -373,6 +375,7 @@ begin
                            PagarReceberJuros.Value            := 0;
                            PagarReceberDesconto.Value         := 0;
                            PagarReceberValor_Total.Value      := cPISRec.Value;
+                           PagarReceberValor_TotalPed.Value   := cPISRec.Value;
                            PagarReceberValor_Operacao.Value   := cPISRec.Value;
                            PagarReceberOrgao.Value            := ConfiguracaoVencimento_PISOrgao.Value;
                            PagarReceberDocumento.Value        := ConfiguracaoVencimento_PISDoc.Value;
@@ -408,6 +411,7 @@ begin
                            PagarReceberJuros.Value            := 0;
                            PagarReceberDesconto.Value         := 0;
                            PagarReceberValor_Total.Value      := cCOFINSRec.Value;
+                           PagarReceberValor_TotalPed.Value   := cCOFINSRec.Value;
                            PagarReceberValor_Operacao.Value   := cCOFINSRec.Value;
                            PagarReceberOrgao.Value            := ConfiguracaoVencimento_COFINSOrgao.Value;
                            PagarReceberDocumento.Value        := ConfiguracaoVencimento_COFINSDoc.Value;
@@ -443,6 +447,7 @@ begin
                            PagarReceberJuros.Value            := 0;
                            PagarReceberDesconto.Value         := 0;
                            PagarReceberValor_Total.Value      := cIRPJRec.Value;
+                           PagarReceberValor_TotalPed.Value   := cIRPJRec.Value;
                            PagarReceberValor_Operacao.Value   := cIRPJRec.Value;
                            PagarReceberOrgao.Value            := ConfiguracaoVencimento_IRPJOrgao.Value;
                            PagarReceberDocumento.Value        := ConfiguracaoVencimento_IRPJDoc.Value;
@@ -478,6 +483,7 @@ begin
                            PagarReceberJuros.Value            := 0;
                            PagarReceberDesconto.Value         := 0;
                            PagarReceberValor_Total.Value      := cCSLLRec.Value;
+                           PagarReceberValor_TotalPed.Value   := cCSLLRec.Value;
                            PagarReceberValor_Operacao.Value   := cCSLLRec.Value;
                            PagarReceberOrgao.Value            := ConfiguracaoVencimento_CSLLOrgao.Value;
                            PagarReceberDocumento.Value        := ConfiguracaoVencimento_CSLLDoc.Value;

@@ -148,6 +148,7 @@ begin
                            PagarReceberJuros.Value            := 0;
                            PagarReceberDesconto.Value         := 0;
                            PagarReceberValor_Total.Value      := cValorReal.Value;
+                           PagarReceberValor_TotalPed.Value   := cValorReal.Value;
                            PagarReceberValor_Operacao.Value   := cValorReal.Value;
                            PagarReceberFornecedor.Value       := ContratoCambio.FieldByName('Beneficiario').AsInteger;
                            PagarReceberDocumento.Value        := Configuracao.FieldByName('ContratoCambio_Documento').AsString;

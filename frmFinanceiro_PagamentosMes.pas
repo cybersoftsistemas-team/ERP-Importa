@@ -115,6 +115,7 @@ begin
                                 PagarReceberValor_Operacao.Value   := tLancamentos.FieldByName('Valor').AsCurrency;
                                 PagarReceberValor_Parcela.Value    := tLancamentos.FieldByName('Valor').AsCurrency;
                                 PagarReceberValor_Total.Value      := tLancamentos.FieldByName('Valor').AsCurrency;
+                                PagarReceberValor_TotalPed.Value   := tLancamentos.FieldByName('Valor').AsCurrency;
                                 PagarReceberProvisorio.Value       := false;
                                 PagarReceberRecuperavel.Value      := false;
                                 PagarReceberPago_Cliente.Value     := false;

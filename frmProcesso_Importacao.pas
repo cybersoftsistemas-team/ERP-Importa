@@ -482,6 +482,18 @@ type
     cRecintoAlf: TDBLookupComboBox;
     bPesqCla: TSpeedButton;
     DBCheckBox9: TDBCheckBox;
+    StaticText148: TStaticText;
+    DBLookupComboBox7: TDBLookupComboBox;
+    StaticText149: TStaticText;
+    DBEdit55: TDBEdit;
+    StaticText144: TStaticText;
+    DBDateEdit9: TDBDateEdit;
+    DBDateEdit10: TDBDateEdit;
+    StaticText145: TStaticText;
+    tDespachantes: TMSQuery;
+    dstDespachantes: TDataSource;
+    tDespachantesCodigo: TIntegerField;
+    tDespachantesNome: TStringField;
     procedure bSairClick(Sender: TObject);
     procedure NavegaClick(Sender: TObject; Button: TNavigateBtn);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -726,6 +738,10 @@ begin
              Fornecedores.SQL.Add('WHERE  (Ramo_Atividade = RamoAtividade.Codigo) AND (RamoAtividade.Modulo_Processo = 1)');
              Fornecedores.SQL.Add('ORDER BY Nome');
              Fornecedores.Open;
+
+             tDespachantes.SQL.Clear;
+             tDespachantes.SQL.Add('select Codigo, Nome from Fornecedores where (select Descricao from RamoAtividade where Codigo = Ramo_Atividade) like ''%DESPACHANTE%'' ');
+             tDespachantes.Open;
 
              tFornecedoresPrevisao.SQL.Clear;
              tFornecedoresPrevisao.SQL.Add('SELECT Codigo, Nome FROM Fornecedores');

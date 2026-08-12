@@ -134,7 +134,7 @@ type
     cInfComplementares: TDBMemo;
     cInfComplementares2: TDBMemo;
     TabSheet3: TTabSheet;
-    Grade2: TRxDBGrid;
+    Grade2: TDBGrid;
     tSoma: TMSQuery;
     StaticText95: TStaticText;
     cTotalDespesasCusto2: TCurrencyEdit;
@@ -608,6 +608,8 @@ type
     cArmazem: TDBLookupComboBox;
     Armazem: TMSQuery;
     dsArmazem: TDataSource;
+    N4: TMenuItem;
+    AlterarValor1: TMenuItem;
     procedure bSairClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure NavegaClick(Sender: TObject; Button: TNavigateBtn);
@@ -665,6 +667,7 @@ type
     procedure bPesqCliForClick(Sender: TObject);
     procedure bPesqTransClick(Sender: TObject);
     procedure bPesqArmClick(Sender: TObject);
+    procedure Grade2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
   private
     procedure TotalizaDespesas;
     procedure Ajustamenu;
@@ -2522,13 +2525,13 @@ begin
 
       With Dados do Begin
            // Seleciona as despesas do processo.
-           Grade2.DisableScroll;
+//           Grade2.DisableScroll;
            PagarReceber.SQL.Clear;
            PagarReceber.SQL.Add('SELECT * FROM PagarReceber WHERE(Processo = :pProcesso) AND (ISNULL(Processo, '''') <> '''') ORDER BY Classificacao');
            PagarReceber.ParamByName('pProcesso').AsString := PedidosProcesso.AsString;
            PagarReceber.Open;
            PagarReceber.First;
-           Grade2.EnableScroll;
+//           Grade2.EnableScroll;
 
            // Totaliza as despesas do processo.
            tSoma.SQL.Clear;
@@ -2543,7 +2546,7 @@ begin
               tSoma.SQL.Add('       SUM(CASE WHEN Tipo = ''P'' AND Custo_Entrada  = 1 THEN Valor_Total+ISNULL(Desconto, 0) ELSE 0 END) AS Total_Entrada,');
               tSoma.SQL.Add('       SUM(CASE WHEN Tipo = ''P'' AND Custo_Outros   = 1 THEN Valor_Total+ISNULL(Desconto, 0) ELSE 0 END) AS Total_Outros');
            End;
-           tSoma.SQL.Add('FROM   PagarReceber WHERE(Processo = :pProcesso)');
+           tSoma.SQL.Add('FROM PagarReceber WHERE(Processo = :pProcesso)');
            tSoma.ParamByName('pProcesso').AsString := PedidosProcesso.Value;
            tSoma.Open;
 
@@ -2609,6 +2612,13 @@ begin
               End;
            End;
       End;
+end;
+
+procedure TPedido.Grade2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+    if (key = VK_RETURN) and (Dados.PagarReceber.State = dsEdit) then begin
+       Dados.PagarReceber.post;
+    end;
 end;
 
 procedure TPedido.Grade2CellClick(Column: TColumn);

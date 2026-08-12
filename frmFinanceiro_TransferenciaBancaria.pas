@@ -327,6 +327,7 @@ begin
                          PagarReceberValor_Documento.Value     := cValorTransferir.Value;
                          PagarReceberValor_Parcela.Value       := cValorTransferir.Value;
                          PagarReceberValor_Total.Value         := cValorTransferir.Value;
+                         PagarReceberValor_TotalPed.Value      := cValorTransferir.Value;
                          PagarReceberValor_Operacao.Value      := cValorTransferir.Value;
                          PagarReceberBanco.Value               := mBancoOrigem;
                          PagarReceberDocumento.Value           := TiposDocumentos.FieldByName('Codigo').AsString;
@@ -384,6 +385,7 @@ begin
                          PagarReceberValor_Documento.Value      := cValorTransferir.Value;
                          PagarReceberValor_Parcela.Value        := cValorTransferir.Value;
                          PagarReceberValor_Total.Value          := cValorTransferir.Value;
+                         PagarReceberValor_TotalPed.Value       := cValorTransferir.Value;
                          PagarReceberValor_Operacao.Value       := cValorTransferir.Value;
                          PagarReceberBanco.Value                := mBancoDestino;
                          PagarReceberForma_Tipo.Value           := Trim(cForma.Text);

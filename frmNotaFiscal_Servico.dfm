@@ -68,7 +68,6 @@ object NotaFiscal_Servico: TNotaFiscal_Servico
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitTop = 604
     object bSair: TButton
       Left = 554
       Top = 1
@@ -112,7 +111,7 @@ object NotaFiscal_Servico: TNotaFiscal_Servico
       OnClick = NavegaClick
     end
     object bPesquisa: TButton
-      Left = 389
+      Left = 253
       Top = 1
       Width = 65
       Height = 28
@@ -124,9 +123,11 @@ object NotaFiscal_Servico: TNotaFiscal_Servico
       ShowHint = True
       TabOrder = 2
       OnClick = bPesquisaClick
+      ExplicitLeft = 235
+      ExplicitTop = -3
     end
     object bXML: TButton
-      Left = 253
+      Left = 468
       Top = 1
       Width = 83
       Height = 28
@@ -138,9 +139,10 @@ object NotaFiscal_Servico: TNotaFiscal_Servico
       ShowHint = True
       TabOrder = 3
       OnClick = bXMLClick
+      ExplicitLeft = 253
     end
     object bItens: TButton
-      Left = 336
+      Left = 318
       Top = 1
       Width = 53
       Height = 28
@@ -152,9 +154,11 @@ object NotaFiscal_Servico: TNotaFiscal_Servico
       ShowHint = True
       TabOrder = 4
       OnClick = bItensClick
+      ExplicitLeft = 250
+      ExplicitTop = -3
     end
     object bDuplicatas: TButton
-      Left = 454
+      Left = 371
       Top = 1
       Width = 97
       Height = 28
@@ -166,6 +170,8 @@ object NotaFiscal_Servico: TNotaFiscal_Servico
       ShowHint = True
       TabOrder = 5
       OnClick = bDuplicatasClick
+      ExplicitLeft = 361
+      ExplicitTop = -3
     end
   end
   object PageControl1: TPageControl

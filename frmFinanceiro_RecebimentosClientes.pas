@@ -193,6 +193,7 @@ begin
                               PagarReceberJuros.Value            := 0;
                               PagarReceberDesconto.Value         := 0;
                               PagarReceberValor_Total.Value      := Clientes.FieldByName('Mensalidade').AsCurrency;
+                              PagarReceberValor_TotalPed.Value   := Clientes.FieldByName('Mensalidade').AsCurrency;
                               PagarReceberValor_Operacao.Value   := Clientes.FieldByName('Mensalidade').AsCurrency;
                               PagarReceberCliente.Value          := Clientes.FieldByName('Codigo').AsInteger;
                               PagarReceberDocumento.Value        := cDocumento.KeyValue;

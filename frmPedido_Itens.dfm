@@ -911,7 +911,6 @@ object Pedido_Itens: TPedido_Itens
           Expanded = False
           FieldName = 'CSTCOFINS'
           Title.Alignment = taCenter
-          Width = 64
           Visible = True
         end
         item
@@ -925,7 +924,6 @@ object Pedido_Itens: TPedido_Itens
           Expanded = False
           FieldName = 'CSTIPI'
           Title.Alignment = taCenter
-          Width = 64
           Visible = True
         end
         item
@@ -933,7 +931,6 @@ object Pedido_Itens: TPedido_Itens
           FieldName = 'Valor_COFINS'
           Title.Alignment = taCenter
           Title.Caption = 'Vlr COFINS'
-          Width = 64
           Visible = True
         end
         item
@@ -941,7 +938,6 @@ object Pedido_Itens: TPedido_Itens
           FieldName = 'CodigoTrib_TabA'
           Title.Alignment = taCenter
           Title.Caption = 'CST ICMS'
-          Width = 64
           Visible = True
         end
         item
@@ -949,7 +945,6 @@ object Pedido_Itens: TPedido_Itens
           FieldName = 'CodigoTrib_TabB'
           Title.Alignment = taCenter
           Title.Caption = 'CST ICMS'
-          Width = 64
           Visible = True
         end
         item
@@ -970,7 +965,6 @@ object Pedido_Itens: TPedido_Itens
           FieldName = 'Aliquota_ICMSOper'
           Title.Alignment = taCenter
           Title.Caption = '% ICMS OP'
-          Width = 64
           Visible = True
         end
         item
@@ -978,7 +972,6 @@ object Pedido_Itens: TPedido_Itens
           FieldName = 'Aliquota_ICMSIntegral'
           Title.Alignment = taCenter
           Title.Caption = '% ICMS OP INT'
-          Width = 64
           Visible = True
         end
         item
@@ -993,28 +986,24 @@ object Pedido_Itens: TPedido_Itens
           Expanded = False
           FieldName = 'Codigo_CredPres'
           Title.Caption = 'Cod Cred.Pres.'
-          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Valor_BCICMSPresumido'
           Title.Caption = 'BC ICMS Pres'
-          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Aliquota_ICMSPresumido'
           Title.Caption = 'Aliq ICMS Pres.'
-          Width = 64
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Valor_ICMSPresumido'
           Title.Caption = 'Vlr ICMS Pres'
-          Width = 64
           Visible = True
         end>
     end
