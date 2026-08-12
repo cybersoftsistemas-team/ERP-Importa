@@ -577,6 +577,7 @@ type
     procedure cNavioOrdemExit(Sender: TObject);
     procedure cBloqEstClick(Sender: TObject);
     procedure bPesqClaClick(Sender: TObject);
+    procedure bFollowClick(Sender: TObject);
   private
     procedure SalvaConta(Campo: integer);
     procedure PegaNotas;
@@ -593,7 +594,7 @@ type
     mLinha
    ,mLinha2: Integer;
     mFechou
-   ,mBloq 
+   ,mBloq
    ,mZebra: Boolean;
   end;
 
@@ -604,7 +605,8 @@ implementation
 
 Uses frmDados, frmProcesso_Adicoes, frmCadastro_Incoterms,frmCadastro_Clientes, frmMenu_Principal, frmConversor_Moedas, frmDMContab, frmCadastro_PlanoContas,
      frmJanela_Processamento, frmProcesso_Desativar, frmCadastro_CondicaoCambial, frmCadastro_Fornecedores, frmDMFiscal, frmDMComercial, frmProcesso_Container,
-     frmProcesso_PO, frmProcesso_ImportacaoDespesas, frmDMDespacho, frmProcesso_Historico, frmPesquisaGerais;
+     frmProcesso_PO, frmProcesso_ImportacaoDespesas, frmDMDespacho, frmProcesso_Historico, frmPesquisaGerais,
+     frmImpressao_ProcessosOP_FollowUp;
 
 {$R *.dfm}
 
@@ -2932,6 +2934,20 @@ begin
            ProcessosDOC.EnableControls;
            Adicoes.EnableControls;
       End;
+end;
+
+procedure TProcesso_Importacao.bFollowClick(Sender: TObject);
+var
+  LForm: TfrmImpressaoProcessosOPFollowUp;
+begin
+  LForm := TfrmImpressaoProcessosOPFollowUp.Create(Self);
+  try
+    LForm.Processo := Dados.ProcessosHistoricoProcesso.AsString;
+    LForm.btnSearch.Click;
+    LForm.ShowModal;
+  finally
+    LForm.Free;
+  end;
 end;
 
 procedure TProcesso_Importacao.bHistoricoClick(Sender: TObject);

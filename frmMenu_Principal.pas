@@ -1080,6 +1080,7 @@ uses
      frmImpressao_ProcessosOP_ccCliente,
      frmImpressao_ProcessosOP_Dados,
      frmImpressao_ProcessosOP_Fechamento,
+     frmImpressao_ProcessosOP_FollowUp,
      frmImpressao_ProcessosOP_Container,
      frmImpressao_ProcessosOP_Estoque,
      frmImpressao_ProcessosOP_Relacao,
@@ -2930,10 +2931,18 @@ begin
 end;
 
 procedure TMenu_Principal.mnImpressao_Processos_FollowUpClick(Sender: TObject);
+var
+  LForm: TfrmImpressaoProcessosOPFollowUp;
 begin
-      Impressao_ProcessosOP_Acompanhamento := TImpressao_ProcessosOP_Acompanhamento.Create(Self);
-      Impressao_ProcessosOP_Acompanhamento.Caption := Caption;
-      Impressao_ProcessosOP_Acompanhamento.ShowModal;
+  LForm := TfrmImpressaoProcessosOPFollowUp.Create(Self);
+  try
+    LForm.ShowModal;
+  finally
+    LForm.Free;
+  end;
+//      Impressao_ProcessosOP_Acompanhamento := TImpressao_ProcessosOP_Acompanhamento.Create(Self);
+//      Impressao_ProcessosOP_Acompanhamento.Caption := Caption;
+//      Impressao_ProcessosOP_Acompanhamento.ShowModal;
 end;
 
 procedure TMenu_Principal.mnUtilitarios_ImportarPROSOFTClick(Sender: TObject);

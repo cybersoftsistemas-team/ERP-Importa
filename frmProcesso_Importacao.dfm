@@ -87,7 +87,6 @@ object Processo_Importacao: TProcesso_Importacao
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitTop = 688
     object bSair: TButton
       AlignWithMargins = True
       Left = 998
@@ -285,15 +284,13 @@ object Processo_Importacao: TProcesso_Importacao
     Top = 40
     Width = 1068
     Height = 691
-    ActivePage = TabSheet1
+    ActivePage = TabSheet4
     Align = alClient
     TabHeight = 24
     TabOrder = 1
-    ExplicitHeight = 645
     object TabSheet1: TTabSheet
       Caption = '&Dados Gerais'
       Enabled = False
-      ExplicitHeight = 611
       object GroupBox4: TGroupBox
         Left = 1
         Top = -1
@@ -5185,7 +5182,6 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = '&Outras Informa'#231#245'es'
       Enabled = False
       ImageIndex = 2
-      ExplicitHeight = 611
       object Label1: TLabel
         Left = 170
         Top = 282
@@ -7298,7 +7294,6 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet2: TTabSheet
       Caption = 'I&nf. Complementares'
       ImageIndex = 7
-      ExplicitHeight = 611
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -7316,14 +7311,12 @@ object Processo_Importacao: TProcesso_Importacao
         ScrollBars = ssVertical
         TabOrder = 0
         WordWrap = False
-        ExplicitHeight = 611
       end
     end
     object TabSheet8: TTabSheet
       Caption = 'Movimento &Financeiro'
       Enabled = False
       ImageIndex = 7
-      ExplicitHeight = 611
       object bDespesas: TSpeedButton
         Left = 856
         Top = 464
@@ -8080,7 +8073,6 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet9: TTabSheet
       Caption = '&Seriais'
       ImageIndex = 8
-      ExplicitHeight = 611
       object RxDBGrid1: TRxDBGrid
         Left = 0
         Top = 0
@@ -8229,7 +8221,6 @@ object Processo_Importacao: TProcesso_Importacao
       Font.Style = []
       ImageIndex = 6
       ParentFont = False
-      ExplicitHeight = 611
       object DBGrid2: TDBGrid
         Left = 1
         Top = 2
@@ -8395,7 +8386,6 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = 'Contabeis'
       Enabled = False
       ImageIndex = 10
-      ExplicitHeight = 611
       object GroupBox5: TGroupBox
         Left = 3
         Top = 12
@@ -8720,7 +8710,6 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet4: TTabSheet
       Caption = '&Hist'#243'rico'
       ImageIndex = 3
-      ExplicitHeight = 611
       object DBGrid1: TDBGrid
         Left = 0
         Top = 0
@@ -8824,12 +8813,12 @@ object Processo_Importacao: TProcesso_Importacao
         ParentShowHint = False
         ShowHint = True
         TabOrder = 2
+        OnClick = bFollowClick
       end
     end
     object TabSheet10: TTabSheet
       Caption = '&Documentos Gerais'
       ImageIndex = -1
-      ExplicitHeight = 611
       object Label2: TLabel
         Left = 3
         Top = 230
@@ -9361,7 +9350,6 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = '&Filtros'
       ImageIndex = 5
       OnEnter = TabSheet6Enter
-      ExplicitHeight = 611
       object bLimpar: TSpeedButton
         Left = 527
         Top = 420
@@ -10853,7 +10841,6 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet5: TTabSheet
       Caption = '&Lista'
       ImageIndex = 4
-      ExplicitHeight = 611
       object GradeLista: TDBGrid
         AlignWithMargins = True
         Left = 3

@@ -259,7 +259,7 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Cybersoft - Fechamento do Processo.'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -1542,7 +1542,7 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Cybersoft - Fechamento do Processo.'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -3871,7 +3871,7 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
             PrinterSetup.BinName = 'Default'
             PrinterSetup.DocumentName = 'Cybersoft - Fechamento do Processo.'
             PrinterSetup.Duplex = dpNone
-            PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+            PrinterSetup.PaperName = 'A4'
             PrinterSetup.PrinterName = 'Default'
             PrinterSetup.SaveDeviceSettings = False
             PrinterSetup.mmMarginBottom = 6350
@@ -4169,7 +4169,7 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
             PrinterSetup.BinName = 'Default'
             PrinterSetup.DocumentName = 'Cybersoft - Fechamento do Processo.'
             PrinterSetup.Duplex = dpNone
-            PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+            PrinterSetup.PaperName = 'A4'
             PrinterSetup.PrinterName = 'Default'
             PrinterSetup.SaveDeviceSettings = False
             PrinterSetup.mmMarginBottom = 6350
@@ -7521,7 +7521,7 @@ object Impressao_ProcessosOP_Fechamento: TImpressao_ProcessosOP_Fechamento
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Fechamento do Processo'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

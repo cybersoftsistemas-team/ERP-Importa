@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms,Dialogs, DB, DBAccess, MSAccess, RXCtrls, Vcl.ExtCtrls, RXDBCtrl, Vcl.StdCtrls, 
-  DBCtrls, FUNCOES, ClipBrd, Grids, DBGrids, Mask, Vcl.Buttons, uniGUIBaseClasses, uniGUIClasses, uniPanel;
+  DBCtrls, FUNCOES, ClipBrd, Grids, DBGrids, Mask, Vcl.Buttons;
 
 type
   TCadastro_Servicos = class(TForm)

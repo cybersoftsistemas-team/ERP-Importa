@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DB, ppParameter, ppCtrls, ppBands, ppVar,
   ppReport, ppDBPipe, DBAccess, MSAccess, Vcl.StdCtrls, Mask, Vcl.ExtCtrls, RXCtrls, IniFiles, Funcoes, ComObj, RxToolEdit, ppDesignLayer, ppPrnabl, ppClass, ppCache, ppProd, ppDB, 
-  ppComm, ppRelatv, MemDS, Vcl.Grids, Vcl.DBGrids, ppModule, raCodMod, ppStrtch, ppSubRpt, Vcl.DBCtrls, RxLookup, uniGUIBaseClasses, uniGUIClasses, uniSpinEdit, Vcl.Samples.Spin;
+  ppComm, ppRelatv, MemDS, Vcl.Grids, Vcl.DBGrids, ppModule, raCodMod, ppStrtch, ppSubRpt, Vcl.DBCtrls, RxLookup,
+  Vcl.Samples.Spin;
 
 type
   TImpressao_Financeiros_FluxoCaixaDetalhado2 = class(TForm)

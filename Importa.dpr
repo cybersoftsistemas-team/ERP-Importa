@@ -471,7 +471,8 @@ uses
   frmNotaFiscal_ImportarNFSe in 'frmNotaFiscal_ImportarNFSe.pas' {NotaFiscal_ImportarNFSe},
   uNFSeTipos in 'uNFSeTipos.pas',
   uNFSeModel in 'uNFSeModel.pas',
-  uNFSeXMLReader in 'uNFSeXMLReader.pas';
+  uNFSeXMLReader in 'uNFSeXMLReader.pas',
+  frmImpressao_ProcessosOP_FollowUp in 'frmImpressao_ProcessosOP_FollowUp.pas' {frmImpressaoProcessosOPFollowUp};
 
 {$R *.res}
 
