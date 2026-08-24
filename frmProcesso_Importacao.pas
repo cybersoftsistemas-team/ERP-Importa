@@ -1818,14 +1818,10 @@ end;
 
 procedure TProcesso_Importacao.FormCreate(Sender: TObject);
 begin
-//      if Screen.Height <= 768 then begin
-//         ScaleBy(Height, Menu_Principal.Height);
-//      end;
-      if Menu_Principal.Height <= 768 then begin
-         ScaleBy(93, 100);
+      if Menu_Principal.Height <= 782 then begin
+         ScaleBy(90, 100);
       end;
-
-      If FileExists('fundo_barra.bmp') then Image1.Picture.LoadFromFile('fundo_barra.bmp');
+      if FileExists('fundo_barra.bmp') then Image1.Picture.LoadFromFile('fundo_barra.bmp');
 end;
 
 procedure TProcesso_Importacao.DBEdit1Change(Sender: TObject);

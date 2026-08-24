@@ -1440,6 +1440,7 @@ begin
                                    PedidosItensNota_Referencia.Value       := PedidosNFe_cNFRef.Value;
                                    PedidosItensData_Referencia.Value       := PedidosData_Referencia.AsDateTime;
                                    PedidosItensNumero_Referencia.Value     := PedidosNota_Referencia.AsInteger;
+                                   PedidosItensItem_Referencia.Value       := tItensReferencia.fieldbyname('Item').AsInteger;
 
                                    If tItensReferencia.FieldByName('Sequencia').AsInteger > 0 then begin
                                       PedidosItensSequencia.Value := tItensReferencia.FieldByName('Sequencia').Value;

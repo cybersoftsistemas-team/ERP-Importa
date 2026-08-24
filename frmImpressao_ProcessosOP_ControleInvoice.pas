@@ -159,11 +159,9 @@ begin
      tInvoice.SQL.Add('       1 AS Item,');
      tInvoice.SQL.Add('       IV.Processo,');
      tInvoice.SQL.Add('       Cliente    = (SELECT Nome FROM Clientes     CL WHERE(CL.Codigo = (SELECT Cliente FROM ProcessosDocumentos PD WHERE(PD.Processo = IV.Processo)) )),');
-
      tInvoice.SQL.Add('       Cliente_End1 = (SELECT Rua+'',Nº ''+Rua_Numero+'' - ''+Municipio+''(''+Estado+'')'' FROM Clientes CL WHERE(CL.Codigo = (SELECT Cliente FROM ProcessosDocumentos PD WHERE(PD.Processo = IV.Processo)))),');
      tInvoice.SQL.Add('       Cliente_End2 = (SELECT ''CEP: ''+CEP FROM Clientes CL WHERE(CL.Codigo = (SELECT Cliente FROM ProcessosDocumentos PD WHERE(PD.Processo = IV.Processo)) )),');
      tInvoice.SQL.Add('       Cliente_Pais = (SELECT Nome FROM Cybersoft_Cadastros.dbo.Paises pai WHERE Pai.Codigo = Pais_Destino),');
-     
      tInvoice.SQL.Add('       Exportador = (SELECT Nome FROM Fornecedores FR WHERE(FR.Codigo = IV.Exportador)),');
      tInvoice.SQL.Add('       Numero = LTRIM(RTRIM(IV.Numero)),');
      tInvoice.SQL.Add('       Condicao_Cambial = (SELECT Descricao FROM CondicaoCambial WHERE(Codigo = Condicao_Cambio)),');
@@ -189,13 +187,13 @@ begin
      tInvoice.SQL.Add('       END AS Vencimento3,');
      tInvoice.SQL.Add('       Cambios_PagosME    = ISNULL((SELECT SUM(Valor_ME) FROM ContratoCambioItens CI WHERE(CI.Processo = IV.Processo)),0),');
      tInvoice.SQL.Add('       Saldo_CambiosPagos = Total_FaturaME - ISNULL((SELECT SUM(Valor_ME) FROM ContratoCambioItens CI WHERE(CI.Processo = IV.Processo)), 0)');
-     tInvoice.SQL.Add('FROM   Invoice IV');
-     tInvoice.SQL.Add('WHERE  (Numero IS NOT NULL)');
+     tInvoice.SQL.Add('FROM Invoice IV');
+     tInvoice.SQL.Add('WHERE (Numero IS NOT NULL)');
 
      If DataLimpa(cDataIni.Text) = false then begin
-        If cVencimento.ItemIndex = 0 then tInvoice.SQL.Add('      AND (Data_Vencimento BETWEEN :pDataIni AND :pDataFim)');
-        If cVencimento.ItemIndex = 1 then tInvoice.SQL.Add('      AND ((Data_Vencimento BETWEEN :pDataIni AND :pDataFim) OR (ISNULL(Data_Vencimento, '''') = ''''))');
-        If cVencimento.ItemIndex = 2 then tInvoice.SQL.Add('      AND (ISNULL(Data_Vencimento, '''') = '''')');
+        If cVencimento.ItemIndex = 0 then tInvoice.SQL.Add('AND (Data_Vencimento BETWEEN :pDataIni AND :pDataFim)');
+        If cVencimento.ItemIndex = 1 then tInvoice.SQL.Add('AND ((Data_Vencimento BETWEEN :pDataIni AND :pDataFim) OR (ISNULL(Data_Vencimento, '''') = ''''))');
+        If cVencimento.ItemIndex = 2 then tInvoice.SQL.Add('AND (ISNULL(Data_Vencimento, '''') = '''')');
         If cVencimento.ItemIndex < 2 then begin
            tInvoice.ParamByName('pDataIni').AsDate := cDataIni.Date;
            tInvoice.ParamByName('pDataFim').AsDate := cDataFim.Date;
@@ -204,25 +202,25 @@ begin
         lPeriodo.Caption := 'Período de '+cDataIni.Text + ' á '+ cDataFim.Text;
      End;
      If Trim(cProcesso.Text) <> '' then begin
-        tInvoice.SQL.Add('      AND (IV.Processo = :pProcesso)');
+        tInvoice.SQL.Add('AND (IV.Processo = :pProcesso)');
         tInvoice.ParamByName('pProcesso').AsString := cProcesso.Text;
         lPeriodo.Caption := lPeriodo.Caption+'/ Processo:'+cProcesso.Text;
      End;
      If Trim(cCliente.Text) <> '' then begin
-        tInvoice.SQL.Add('      AND ((SELECT Cliente FROM ProcessosDocumentos PD WHERE(PD.Processo = IV.Processo)) = :pCliente)');
+        tInvoice.SQL.Add('AND ((SELECT Cliente FROM ProcessosDocumentos PD WHERE(PD.Processo = IV.Processo)) = :pCliente)');
         tInvoice.ParamByName('pCliente').AsInteger := Dados.Clientes.FieldByName('Codigo').AsInteger;
         lPeriodo.Caption := lPeriodo.Caption+'/ Cliente:'+cCliente.Text;
      End;
      If Trim(cExportador.Text) <> '' then begin
-        tInvoice.SQL.Add('      AND (Exportador = :pExportador)');
+        tInvoice.SQL.Add('AND (Exportador = :pExportador)');
         tInvoice.ParamByName('pExportador').AsInteger := Dados.Fornecedores.FieldByName('Codigo').AsInteger;
         lPeriodo.Caption := lPeriodo.Caption+'/ Exportador:'+cExportador.Text;
      End;
      If cSaldoZero.Checked = true then begin
-        tInvoice.SQL.Add('      AND (Total_FaturaME - ISNULL((SELECT SUM(Valor_ME) FROM ContratoCambioItens CI WHERE(CI.Processo = IV.Processo)), 0)) <> 0');
+        tInvoice.SQL.Add('AND (Total_FaturaME - ISNULL((SELECT SUM(Valor_ME) FROM ContratoCambioItens CI WHERE(CI.Processo = IV.Processo)), 0)) <> 0');
      End;
      If cDesativados.Checked = true then begin
-        tInvoice.SQL.Add('      AND ((SELECT Desativado FROM ProcessosDocumentos PD WHERE(PD.Processo = IV.Processo)) <> 1)');
+        tInvoice.SQL.Add('AND ((SELECT Desativado FROM ProcessosDocumentos PD WHERE(PD.Processo = IV.Processo)) <> 1)');
      End;
      tInvoice.SQL.Add('ORDER BY Processo, Numero');
      //tInvoice.SQL.SaveToFile('c:\temp\ControleInvoice.SQL');

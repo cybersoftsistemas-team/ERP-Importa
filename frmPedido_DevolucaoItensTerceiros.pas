@@ -251,6 +251,7 @@ begin
                         PedidosItensNota_Referencia.Value       := NotasTerceirosNfe_cNF.Value;
                         PedidosItensData_Referencia.Value       := cDataRef.Date;
                         PedidosItensNumero_Referencia.Value     := cNotaRef.AsInteger;
+                        PedidosItensItem_Referencia.Value       := NotasTerceirosItensItem.value;
                         PedidosItensCEST.Value                  := NotasTerceirosItensCEST.Value;
                         PedidosItensDevolucao.Value             := true;
 

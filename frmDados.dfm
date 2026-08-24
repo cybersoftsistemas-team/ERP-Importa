@@ -6817,7 +6817,7 @@ object Dados: TDados
         ', Valor_BCCOFINSST, Valor_IPIDevol, Percentual_IPIDevol, Valor_B' +
         'CIBS, Aliquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Valor_' +
         'CBS, Valor_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS, Valor_CO' +
-        'FINSDiferenca)'
+        'FINSDiferenca, Item_Referencia)'
       'VALUES'
       
         '  (:Pedido, :Item, :Sequencia_SISCOMEX, :Codigo_Mercadoria, :Cod' +
@@ -6861,7 +6861,8 @@ object Dados: TDados
         'edPres, :Valor_BCPISST, :Valor_BCCOFINSST, :Valor_IPIDevol, :Per' +
         'centual_IPIDevol, :Valor_BCIBS, :Aliquota_IBS, :Valor_IBS, :Valo' +
         'r_BCCBS, :Aliquota_CBS, :Valor_CBS, :Valor_BCIS, :Aliquota_IS, :' +
-        'Valor_IS, :CSTIBS, :CSTCBS, :Valor_COFINSDiferenca)')
+        'Valor_IS, :CSTIBS, :CSTCBS, :Valor_COFINSDiferenca, :Item_Refere' +
+        'ncia)')
     SQLDelete.Strings = (
       'DELETE FROM PedidosItens'
       'WHERE'
@@ -6956,7 +6957,8 @@ object Dados: TDados
         ':Valor_BCCBS, Aliquota_CBS = :Aliquota_CBS, Valor_CBS = :Valor_C' +
         'BS, Valor_BCIS = :Valor_BCIS, Aliquota_IS = :Aliquota_IS, Valor_' +
         'IS = :Valor_IS, CSTIBS = :CSTIBS, CSTCBS = :CSTCBS, Valor_COFINS' +
-        'Diferenca = :Valor_COFINSDiferenca'
+        'Diferenca = :Valor_COFINSDiferenca, Item_Referencia = :Item_Refe' +
+        'rencia'
       'WHERE'
       
         '  Pedido = :Old_Pedido AND Item = :Old_Item AND Sequencia_SISCOM' +
@@ -7003,7 +7005,7 @@ object Dados: TDados
         'ISST, Valor_BCCOFINSST, Valor_IPIDevol, Percentual_IPIDevol, Val' +
         'or_BCIBS, Aliquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Va' +
         'lor_CBS, Valor_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS, Valo' +
-        'r_COFINSDiferenca FROM PedidosItens'
+        'r_COFINSDiferenca, Item_Referencia FROM PedidosItens'
       'WHERE'
       
         '  Pedido = :Pedido AND Item = :Item AND Sequencia_SISCOMEX = :Se' +
@@ -7778,6 +7780,9 @@ object Dados: TDados
     end
     object PedidosItensValor_COFINSDiferenca: TCurrencyField
       FieldName = 'Valor_COFINSDiferenca'
+    end
+    object PedidosItensItem_Referencia: TSmallintField
+      FieldName = 'Item_Referencia'
     end
   end
   object dsPedidosItens: TDataSource
@@ -8587,26 +8592,27 @@ object Dados: TDados
   end
   object Container: TMSQuery
     SQLInsert.Strings = (
-      'INSERT INTO Container'
+      'INSERT INTO Cybersoft_MPL_Filial1..Container'
       
         '  (Numero, Processo, Armazem, Data_Entrada, Hora_Entrada, Data_S' +
         'aida, Hora_Saida, Free_Time, Valor_Demurrage, Tipo, Tamanho, Arm' +
         'ador, Documento_Carga, Terminal, Data_Entrega, Hora_Entrega, Tra' +
         'nsportadora_Entrada, Transportadora_Saida, Observacao, Tipo_Emba' +
-        'rque, Memo_Processos, Data_Pagamento)'
+        'rque, Memo_Processos, Data_Pagamento, Taxa)'
       'VALUES'
       
         '  (:Numero, :Processo, :Armazem, :Data_Entrada, :Hora_Entrada, :' +
         'Data_Saida, :Hora_Saida, :Free_Time, :Valor_Demurrage, :Tipo, :T' +
         'amanho, :Armador, :Documento_Carga, :Terminal, :Data_Entrega, :H' +
         'ora_Entrega, :Transportadora_Entrada, :Transportadora_Saida, :Ob' +
-        'servacao, :Tipo_Embarque, :Memo_Processos, :Data_Pagamento)')
+        'servacao, :Tipo_Embarque, :Memo_Processos, :Data_Pagamento, :Tax' +
+        'a)')
     SQLDelete.Strings = (
-      'DELETE FROM Container'
+      'DELETE FROM Cybersoft_MPL_Filial1..Container'
       'WHERE'
       '  Numero = :Old_Numero')
     SQLUpdate.Strings = (
-      'UPDATE Container'
+      'UPDATE Cybersoft_MPL_Filial1..Container'
       'SET'
       
         '  Numero = :Numero, Processo = :Processo, Armazem = :Armazem, Da' +
@@ -8618,21 +8624,29 @@ object Dados: TDados
         'rega = :Hora_Entrega, Transportadora_Entrada = :Transportadora_E' +
         'ntrada, Transportadora_Saida = :Transportadora_Saida, Observacao' +
         ' = :Observacao, Tipo_Embarque = :Tipo_Embarque, Memo_Processos =' +
-        ' :Memo_Processos, Data_Pagamento = :Data_Pagamento'
+        ' :Memo_Processos, Data_Pagamento = :Data_Pagamento, Taxa = :Taxa'
       'WHERE'
       '  Numero = :Old_Numero')
     SQLRefresh.Strings = (
       
-        'SELECT Container.Numero, Container.Processo, Container.Armazem, ' +
-        'Container.Data_Entrada, Container.Hora_Entrada, Container.Data_S' +
-        'aida, Container.Hora_Saida, Container.Free_Time, Container.Valor' +
-        '_Demurrage, Container.Tipo, Container.Tamanho, Container.Armador' +
-        ', Container.Documento_Carga, Container.Terminal, Container.Data_' +
-        'Entrega, Container.Hora_Entrega, Container.Transportadora_Entrad' +
-        'a, Container.Transportadora_Saida, Container.Observacao, Contain' +
-        'er.Tipo_Embarque, Container.Memo_Processos, Container.Data_Pagam' +
-        'ento FROM Container'
-      'WHERE Container.Numero = :Numero ')
+        'SELECT Numero, Processo, Armazem, Data_Entrada, Hora_Entrada, Da' +
+        'ta_Saida, Hora_Saida, Free_Time, Valor_Demurrage, Tipo, Tamanho,' +
+        ' Armador, Documento_Carga, Terminal, Data_Entrega, Hora_Entrega,' +
+        ' Transportadora_Entrada, Transportadora_Saida, Observacao, Tipo_' +
+        'Embarque, Memo_Processos, Data_Pagamento, Taxa FROM Cybersoft_MP' +
+        'L_Filial1..Container'
+      'WHERE'
+      '  Numero = :Numero')
+    SQLLock.Strings = (
+      'SELECT * FROM Cybersoft_MPL_Filial1..Container'
+      'WITH (UPDLOCK, ROWLOCK, HOLDLOCK)'
+      'WHERE'
+      '  Numero = :Old_Numero')
+    SQLRecCount.Strings = (
+      
+        'SET :PCOUNT = (SELECT COUNT(*) FROM Cybersoft_MPL_Filial1..Conta' +
+        'iner'
+      ')')
     Connection = Banco_Empresas
     SQL.Strings = (
       'SELECT * FROM Container')
@@ -8752,6 +8766,10 @@ object Dados: TDados
     end
     object ContainerData_Pagamento: TDateTimeField
       FieldName = 'Data_Pagamento'
+    end
+    object ContainerTaxa: TFloatField
+      FieldName = 'Taxa'
+      DisplayFormat = ',##0.0000'
     end
   end
   object dsContainer: TDataSource

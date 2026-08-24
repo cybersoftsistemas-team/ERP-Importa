@@ -1525,7 +1525,6 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 69
-          OnExit = cValorUnitarioExit
         end
         object GroupBox1: TGroupBox
           Left = 748
@@ -2213,7 +2212,6 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 72
-          OnExit = cValorUnitarioExit
         end
         object DBDateEdit4: TDBDateEdit
           Left = 499

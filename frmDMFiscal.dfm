@@ -1378,7 +1378,7 @@ object dmFiscal: TdmFiscal
         'ventario, Movimenta_Estoque, Cancelada, Modalidade_BCICMS, Modal' +
         'idade_BCICMSST, DI, Processo, Valor_IsentasICMS, Valor_OutrasICM' +
         'S, Valor_IsentasIPI, Valor_OutrasIPI, Lucro, Lucro_Valor, Valor_' +
-        'BCIPI, Rateio_ICMSProcesso, Sequencia, Nota_Terceiros, Desconto,' +
+        'BCIPI, Rateio_ICMSProcesso, Nota_Terceiros, Sequencia, Desconto,' +
         ' Desconto_Valor, Apuracao_PISCOFINS, Aliquota_PISRed, Aliquota_C' +
         'OFINSRed, Aliquota_ICMSIntegral, Valor_BCMVA, Valor_Dumping, Fin' +
         'alidade_Mercadoria, Total_Item, Rateio_SISCOMEX, Valor_BCICMSOpe' +
@@ -1405,7 +1405,7 @@ object dmFiscal: TdmFiscal
         ' Valor_BCCOFINSST, Valor_IPIDevol, Percentual_IPIDevol, Valor_BC' +
         'IBS, Aliquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Valor_C' +
         'BS, Valor_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS, Valor_COF' +
-        'INSDiferenca)'
+        'INSDiferenca, Item_Referencia)'
       'VALUES'
       
         '  (:Nota, :Data, :Item, :Sequencia_SISCOMEX, :Codigo_Mercadoria,' +
@@ -1422,7 +1422,7 @@ object dmFiscal: TdmFiscal
         'nta_Estoque, :Cancelada, :Modalidade_BCICMS, :Modalidade_BCICMSS' +
         'T, :DI, :Processo, :Valor_IsentasICMS, :Valor_OutrasICMS, :Valor' +
         '_IsentasIPI, :Valor_OutrasIPI, :Lucro, :Lucro_Valor, :Valor_BCIP' +
-        'I, :Rateio_ICMSProcesso, :Sequencia, :Nota_Terceiros, :Desconto,' +
+        'I, :Rateio_ICMSProcesso, :Nota_Terceiros, :Sequencia, :Desconto,' +
         ' :Desconto_Valor, :Apuracao_PISCOFINS, :Aliquota_PISRed, :Aliquo' +
         'ta_COFINSRed, :Aliquota_ICMSIntegral, :Valor_BCMVA, :Valor_Dumpi' +
         'ng, :Finalidade_Mercadoria, :Total_Item, :Rateio_SISCOMEX, :Valo' +
@@ -1450,7 +1450,8 @@ object dmFiscal: TdmFiscal
         'o_CredPres, :Valor_BCPISST, :Valor_BCCOFINSST, :Valor_IPIDevol, ' +
         ':Percentual_IPIDevol, :Valor_BCIBS, :Aliquota_IBS, :Valor_IBS, :' +
         'Valor_BCCBS, :Aliquota_CBS, :Valor_CBS, :Valor_BCIS, :Aliquota_I' +
-        'S, :Valor_IS, :CSTIBS, :CSTCBS, :Valor_COFINSDiferenca)')
+        'S, :Valor_IS, :CSTIBS, :CSTCBS, :Valor_COFINSDiferenca, :Item_Re' +
+        'ferencia)')
     SQLDelete.Strings = (
       'DELETE FROM NotasItens'
       'WHERE'
@@ -1490,8 +1491,8 @@ object dmFiscal: TdmFiscal
         'ntasICMS, Valor_OutrasICMS = :Valor_OutrasICMS, Valor_IsentasIPI' +
         ' = :Valor_IsentasIPI, Valor_OutrasIPI = :Valor_OutrasIPI, Lucro ' +
         '= :Lucro, Lucro_Valor = :Lucro_Valor, Valor_BCIPI = :Valor_BCIPI' +
-        ', Rateio_ICMSProcesso = :Rateio_ICMSProcesso, Sequencia = :Seque' +
-        'ncia, Nota_Terceiros = :Nota_Terceiros, Desconto = :Desconto, De' +
+        ', Rateio_ICMSProcesso = :Rateio_ICMSProcesso, Nota_Terceiros = :' +
+        'Nota_Terceiros, Sequencia = :Sequencia, Desconto = :Desconto, De' +
         'sconto_Valor = :Desconto_Valor, Apuracao_PISCOFINS = :Apuracao_P' +
         'ISCOFINS, Aliquota_PISRed = :Aliquota_PISRed, Aliquota_COFINSRed' +
         ' = :Aliquota_COFINSRed, Aliquota_ICMSIntegral = :Aliquota_ICMSIn' +
@@ -1547,7 +1548,8 @@ object dmFiscal: TdmFiscal
         'BCCBS = :Valor_BCCBS, Aliquota_CBS = :Aliquota_CBS, Valor_CBS = ' +
         ':Valor_CBS, Valor_BCIS = :Valor_BCIS, Aliquota_IS = :Aliquota_IS' +
         ', Valor_IS = :Valor_IS, CSTIBS = :CSTIBS, CSTCBS = :CSTCBS, Valo' +
-        'r_COFINSDiferenca = :Valor_COFINSDiferenca'
+        'r_COFINSDiferenca = :Valor_COFINSDiferenca, Item_Referencia = :I' +
+        'tem_Referencia'
       'WHERE'
       
         '  Nota = :Old_Nota AND Data = :Old_Data AND Item = :Old_Item AND' +
@@ -1568,7 +1570,7 @@ object dmFiscal: TdmFiscal
         'a_Inventario, Movimenta_Estoque, Cancelada, Modalidade_BCICMS, M' +
         'odalidade_BCICMSST, DI, Processo, Valor_IsentasICMS, Valor_Outra' +
         'sICMS, Valor_IsentasIPI, Valor_OutrasIPI, Lucro, Lucro_Valor, Va' +
-        'lor_BCIPI, Rateio_ICMSProcesso, Sequencia, Nota_Terceiros, Desco' +
+        'lor_BCIPI, Rateio_ICMSProcesso, Nota_Terceiros, Sequencia, Desco' +
         'nto, Desconto_Valor, Apuracao_PISCOFINS, Aliquota_PISRed, Aliquo' +
         'ta_COFINSRed, Aliquota_ICMSIntegral, Valor_BCMVA, Valor_Dumping,' +
         ' Finalidade_Mercadoria, Total_Item, Rateio_SISCOMEX, Valor_BCICM' +
@@ -1595,7 +1597,7 @@ object dmFiscal: TdmFiscal
         'SST, Valor_BCCOFINSST, Valor_IPIDevol, Percentual_IPIDevol, Valo' +
         'r_BCIBS, Aliquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Val' +
         'or_CBS, Valor_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS, Valor' +
-        '_COFINSDiferenca FROM NotasItens'
+        '_COFINSDiferenca, Item_Referencia FROM NotasItens'
       'WHERE'
       
         '  Nota = :Nota AND Data = :Data AND Item = :Item AND Sequencia_S' +
@@ -2303,6 +2305,9 @@ object dmFiscal: TdmFiscal
     end
     object NotasItensValor_COFINSDiferenca: TCurrencyField
       FieldName = 'Valor_COFINSDiferenca'
+    end
+    object NotasItensItem_Referencia: TSmallintField
+      FieldName = 'Item_Referencia'
     end
   end
   object dsNotasTerceirosItens: TDataSource

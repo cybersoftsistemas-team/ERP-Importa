@@ -657,7 +657,6 @@ type
     procedure gEcommerceDrawColumnCell(Sender: TObject; const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure bSalvarEcommClick(Sender: TObject);
     procedure bAddEcommClick(Sender: TObject);
-    procedure cCompClassClick(Sender: TObject);
     procedure DBCheckBox3Click(Sender: TObject);
   private
     { Private declarations }
@@ -805,7 +804,6 @@ begin
             cImagens.Text     := ConfiguracaoPasta_Imagens.Value;
             cGNRE.Text        := ConfiguracaoPasta_GNRE.Value;
 
-            //PageControl1.ActivePageIndex := 0;
             PageControl1.ActivePageIndex := mAba;
 
             Configuracao.Edit;
@@ -820,7 +818,6 @@ procedure TConfigSis.gEcommerceCellClick(Column: TColumn);
 begin
      with dmComercial do begin
           cURLAtiva.Checked := EComm.FieldByName('Ativo').AsBoolean;
-//          cTempoEcomm.Text  := EComm.FieldByName('Tempo_Verificacao').AsString;
           cURLEComm.Text    := EComm.FieldByName('URL').AsString;
           cKeyEComm.Text    := EComm.FieldByName('Consumer_Key').AsString;
           cSecretEComm.Text := EComm.FieldByName('Consumer_Secret').AsString;
@@ -908,7 +905,6 @@ begin
           EComm.Append;
                 EComm.FieldByName('Registro').Value              := tItem.FieldByName('Reg').AsInteger;
                 EComm.FieldByName('Ativo').AsBoolean             := cURLAtiva.Checked;
-//                EComm.FieldByName('Tempo_Verificacao').AsString  := cTempoEcomm.Text ;
                 EComm.FieldByName('URL').AsString                := cURLEComm.Text;
                 EComm.FieldByName('Consumer_Key').AsString       := cKeyEComm.Text;
                 EComm.FieldByName('Consumer_Secret').AsString    := cSecretEComm.Text;
@@ -922,7 +918,6 @@ begin
      with dmComercial do begin
           EComm.Edit;
                 EComm.FieldByName('Ativo').AsBoolean             := cURLAtiva.Checked;
-//                EComm.FieldByName('Tempo_Verificacao').AsString  := cTempoEcomm.Text ;
                 EComm.FieldByName('URL').AsString                := cURLEComm.Text;
                 EComm.FieldByName('Consumer_Key').AsString       := cKeyEComm.Text;
                 EComm.FieldByName('Consumer_Secret').AsString    := cSecretEComm.Text;
@@ -956,42 +951,6 @@ end;
 procedure TConfigSis.FormCreate(Sender: TObject);
 begin
       If FileExists('fundo_barra.bmp') then Image1.Picture.LoadFromFile('fundo_barra.bmp');
-end;
-
-procedure TConfigSis.cCompClassClick(Sender: TObject);
-begin
-{
-      with Dados do begin
-           with Empresas do begin
-                sql.Clear;
-                sql.Add('select * from Empresas where Codigo = :pCodigo');
-                ParamByName('pCodigo').AsInteger := Menu_Principal.mEmpresa;
-                open;
-           end;
-           if cCompClass.Checked then begin
-              if MessageDlg('Deseja realmente compartilhar o "Plano Financeiro" ?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then begin
-                 if MessageDlg('Deseja copiar o plano Financeiro da empresa atual?', mtConfirmation, [mbYes, mbNo], 0) = mrYes then begin
-                    with tTmp do begin
-                         try
-                            sql.Clear;
-                            sql.add('use Cybersoft_Cadastros');
-                            sql.Add('');
-                            sql.Add('use Cybersoft_Cadastros');
-                            sql.Add('drop table ClassificacaoFinanceira');
-                            sql.Add('select * into ClassificacaoFinanceira from '+trim(Empresas.FieldByName('Banco_Dados').asstring)+'.dbo.ClassificacaoFinanceira');
-                            sql.Add('use '+trim(Empresas.FieldByName('Banco_Dados').asstring));
-                            execute;
-                         except
-                            MessageDlg('Erro!'+#13+#13+'Erro ao copiar o "Plano Financeiro", entre em contato com o suporte do sistema!', mtError, [mbok], 0);
-                         end;
-                    end;
-                 end;
-              end else begin
-                 cCompClass.Checked := false;
-              end;
-           end;
-      end;
-}
 end;
 
 procedure TConfigSis.DBCheckBox3Click(Sender: TObject);

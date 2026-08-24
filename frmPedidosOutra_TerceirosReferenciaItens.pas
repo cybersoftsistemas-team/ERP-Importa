@@ -195,7 +195,7 @@ begin
                      fieldbyname('Numero_Referencia').Value    := NotasTerceirositensNota.Value;
                      fieldbyname('Nota_Terceiros').Value       := NotasTerceirositensNota.Value;
                      fieldbyname('Data_Referencia').Value      := NotasTerceirosData_Entrada.Value;
-                     fieldbyname('Data_Referencia').Value      := NotasTerceirosData_Entrada.Value;
+                     fieldbyname('Item_Referencia').Value      := NotasTerceirosItensItem.Value;
                      fieldbyname('Movimenta_Inventario').Value := TipoNotaMovimenta_Inventario.AsBoolean;
                      fieldbyname('Movimenta_Estoque').Value    := TipoNotaMovimenta_Estoque.AsBoolean;
                      fieldbyname('Movimenta_EstoqueRep').Value := TipoNotaMovimenta_EstoqueRep.AsBoolean;

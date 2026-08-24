@@ -189,8 +189,9 @@ begin
                         PedidosItensPeso_Liquido.Value           := NotasItensPeso_Liquido.Value;
                         PedidosItensPeso_Bruto.Value             := NotasItensPeso_Bruto.Value;
                         PedidosItensNota_Referencia.Value        := NotasNFe_cNF.Value;
-                        PedidosItensNumero_Referencia.Value      := NotasitensNota.Value;
+                        PedidosItensNumero_Referencia.Value      := NotasItensNota.Value;
                         PedidosItensData_Referencia.Value        := NotasData_Emissao.Value;
+                        PedidosItensItem_Referencia.Value        := NotasItensItem.Value;
                         PedidosItensValor_IsentasIPI.Value       := (NotasItensValor_IsentasIPI.Value /NotasItensQuantidade.Value) * pQtde;
                         PedidosItensValor_OutrasIPI.Value        := (NotasItensValor_OutrasIPI.Value  /NotasItensQuantidade.Value) * pQtde;
                         PedidosItensValor_IsentasICMS.Value      := (NotasItensValor_IsentasICMS.Value/NotasItensQuantidade.Value) * pQtde;

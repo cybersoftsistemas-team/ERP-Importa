@@ -611,6 +611,10 @@ object Pedido_DevolucaoItens: TPedido_DevolucaoItens
       object TabSheet2: TTabSheet
         Caption = 'Lotes/Detalhes'
         ImageIndex = 1
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object RxDBGrid1: TRxDBGrid
           Left = 0
           Top = 0
@@ -697,6 +701,10 @@ object Pedido_DevolucaoItens: TPedido_DevolucaoItens
       object TabSheet3: TTabSheet
         Caption = 'Seriais'
         ImageIndex = 2
+        ExplicitLeft = 0
+        ExplicitTop = 0
+        ExplicitWidth = 0
+        ExplicitHeight = 0
         object RxDBGrid2: TRxDBGrid
           Left = 0
           Top = 0

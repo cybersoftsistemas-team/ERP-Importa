@@ -111,7 +111,7 @@ object ConfigSis: TConfigSis
     Top = 41
     Width = 847
     Height = 601
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     TabHeight = 28
     TabOrder = 1
     object TabSheet1: TTabSheet
@@ -1129,6 +1129,10 @@ object ConfigSis: TConfigSis
     object TabSheet2: TTabSheet
       Caption = '&Pastas'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cLog: TDirectoryEdit
         Left = 133
         Top = 5
@@ -1957,6 +1961,10 @@ object ConfigSis: TConfigSis
     object TabSheet4: TTabSheet
       Caption = '&Impress'#227'o'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox5: TGroupBox
         Left = 8
         Top = 8
@@ -2914,6 +2922,10 @@ object ConfigSis: TConfigSis
         TabPosition = tpBottom
         object TabSheet20: TTabSheet
           Caption = '&Diversos'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox1: TGroupBox
             Left = 5
             Top = 3
@@ -4940,6 +4952,10 @@ object ConfigSis: TConfigSis
     object TabSheet7: TTabSheet
       Caption = '&Cont'#225'beis'
       ImageIndex = 7
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox15: TGroupBox
         Left = 8
         Top = 8
@@ -5401,6 +5417,10 @@ object ConfigSis: TConfigSis
         object TabSheet6: TTabSheet
           Caption = '&Lan'#231'amentos'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox12: TGroupBox
             Left = 9
             Top = 9
@@ -6037,6 +6057,10 @@ object ConfigSis: TConfigSis
         end
         object TabSheet5: TTabSheet
           Caption = '&Duplicatas'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox4: TGroupBox
             Left = 1
             Top = 2
@@ -8778,6 +8802,10 @@ object ConfigSis: TConfigSis
         object TabSheet17: TTabSheet
           Caption = '&Importa'#231#227'o de DI'
           ImageIndex = 1
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox8: TGroupBox
             AlignWithMargins = True
             Left = 3
@@ -9275,6 +9303,10 @@ object ConfigSis: TConfigSis
         end
         object TabSheet18: TTabSheet
           Caption = '&Fechamento de Processos'
+          ExplicitLeft = 0
+          ExplicitTop = 0
+          ExplicitWidth = 0
+          ExplicitHeight = 0
           object GroupBox21: TGroupBox
             Left = 4
             Top = 1
@@ -9716,6 +9748,10 @@ object ConfigSis: TConfigSis
     object TabSheet8: TTabSheet
       Caption = '&Checagens'
       ImageIndex = 8
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object StaticText29: TStaticText
         Left = 13
         Top = 13
@@ -10467,6 +10503,10 @@ object ConfigSis: TConfigSis
     object TabSheet10: TTabSheet
       Caption = '&Banco de Dados'
       ImageIndex = 9
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GroupBox23: TGroupBox
         Left = 19
         Top = 32
@@ -10484,7 +10524,6 @@ object ConfigSis: TConfigSis
           DataField = 'Compartilhar_Classificacao'
           DataSource = Dados.dsConfiguracao
           TabOrder = 0
-          OnClick = cCompClassClick
         end
         object cCompBancos: TDBCheckBox
           Left = 7

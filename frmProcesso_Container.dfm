@@ -29,6 +29,8 @@ object Processo_Container: TProcesso_Container
     Height = 37
     Align = alTop
     Stretch = True
+    ExplicitLeft = 8
+    ExplicitTop = 50
   end
   object RxLabel3: TRxLabel
     Left = 4
@@ -267,7 +269,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 26
+      TabOrder = 25
       Transparent = False
       StyleElements = []
     end
@@ -290,7 +292,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 27
+      TabOrder = 26
       Transparent = False
       StyleElements = []
     end
@@ -361,7 +363,7 @@ object Processo_Container: TProcesso_Container
       TabOrder = 10
       OnExit = cFreeTimeExit
     end
-    object DBEdit8: TDBEdit
+    object cValorDemurrage: TDBEdit
       Left = 97
       Top = 293
       Width = 101
@@ -375,7 +377,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentFont = False
       TabOrder = 20
-      OnChange = DBEdit8Change
+      OnChange = cValorDemurrageChange
     end
     object DBEdit9: TDBEdit
       Left = 384
@@ -441,7 +443,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 28
+      TabOrder = 27
       Transparent = False
       StyleElements = []
     end
@@ -464,7 +466,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 29
+      TabOrder = 28
       Transparent = False
       StyleElements = []
     end
@@ -487,7 +489,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 30
+      TabOrder = 29
       Transparent = False
       StyleElements = []
     end
@@ -510,7 +512,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 31
+      TabOrder = 30
       Transparent = False
       StyleElements = []
     end
@@ -533,7 +535,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 32
+      TabOrder = 31
       Transparent = False
       StyleElements = []
     end
@@ -556,7 +558,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 33
+      TabOrder = 32
       Transparent = False
       StyleElements = []
     end
@@ -579,7 +581,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 34
+      TabOrder = 33
       Transparent = False
       StyleElements = []
     end
@@ -715,7 +717,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 35
+      TabOrder = 34
       Transparent = False
       StyleElements = []
     end
@@ -738,7 +740,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 36
+      TabOrder = 35
       Transparent = False
       StyleElements = []
     end
@@ -854,7 +856,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 37
+      TabOrder = 36
       Transparent = False
       StyleElements = []
     end
@@ -907,7 +909,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 38
+      TabOrder = 37
       Transparent = False
       StyleElements = []
     end
@@ -930,7 +932,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 39
+      TabOrder = 38
       Transparent = False
       StyleElements = []
     end
@@ -1061,7 +1063,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 40
+      TabOrder = 39
       Transparent = False
       StyleElements = []
     end
@@ -1084,7 +1086,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 41
+      TabOrder = 40
       Transparent = False
       StyleElements = []
     end
@@ -1126,7 +1128,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 42
+      TabOrder = 41
       Transparent = False
       StyleElements = []
     end
@@ -1188,7 +1190,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 43
+      TabOrder = 42
       Transparent = False
       StyleElements = []
     end
@@ -1205,7 +1207,7 @@ object Processo_Container: TProcesso_Container
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 25
+      TabOrder = 24
     end
     object StaticText19: TStaticText
       Left = 260
@@ -1226,7 +1228,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 44
+      TabOrder = 43
       Transparent = False
       StyleElements = []
     end
@@ -1275,7 +1277,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 45
+      TabOrder = 44
       Transparent = False
       StyleElements = []
     end
@@ -1298,7 +1300,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 46
+      TabOrder = 45
       Transparent = False
       StyleElements = []
     end
@@ -1333,7 +1335,7 @@ object Processo_Container: TProcesso_Container
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 23
+      TabOrder = 22
     end
     object StaticText22: TStaticText
       Left = 508
@@ -1354,7 +1356,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 47
+      TabOrder = 46
       Transparent = False
       StyleElements = []
     end
@@ -1372,7 +1374,7 @@ object Processo_Container: TProcesso_Container
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 24
+      TabOrder = 23
     end
     object StaticText23: TStaticText
       Left = 201
@@ -1393,25 +1395,9 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 48
+      TabOrder = 47
       Transparent = False
       StyleElements = []
-    end
-    object cTaxa: TCurrencyEdit
-      Left = 236
-      Top = 316
-      Width = 85
-      Height = 21
-      AutoSize = False
-      DecimalPlaces = 4
-      DisplayFormat = ',0.0000'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 22
     end
     object cMemoProcessos: TDBMemo
       Left = 97
@@ -1436,7 +1422,7 @@ object Processo_Container: TProcesso_Container
       Height = 31
       Caption = '&Adicionar Processo'
       Enabled = False
-      TabOrder = 49
+      TabOrder = 48
       OnClick = bAdicionarProcessoClick
     end
     object cAdicionarProcesso: TRxDBLookupCombo
@@ -1454,7 +1440,7 @@ object Processo_Container: TProcesso_Container
       LookupDisplay = 'Processo'
       LookupSource = Dados.dsProcessosDOC
       ParentFont = False
-      TabOrder = 50
+      TabOrder = 49
     end
     object StaticText24: TStaticText
       Left = 5
@@ -1475,7 +1461,7 @@ object Processo_Container: TProcesso_Container
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 51
+      TabOrder = 50
       Transparent = False
       StyleElements = []
     end
@@ -1568,8 +1554,24 @@ object Processo_Container: TProcesso_Container
         10108181811717172222223E3E3E2B2B2B1B1B1B0000}
       NumGlyphs = 2
       ParentFont = False
-      TabOrder = 52
+      TabOrder = 51
       YearDigits = dyFour
+    end
+    object cTaxa: TDBEdit
+      Left = 237
+      Top = 316
+      Width = 83
+      Height = 21
+      DataField = 'Taxa'
+      DataSource = Dados.dsContainer
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 52
+      OnChange = cValorDemurrageChange
     end
   end
   object tPesquisa: TMSQuery

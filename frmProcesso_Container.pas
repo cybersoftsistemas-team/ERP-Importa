@@ -7,8 +7,6 @@ uses
   Vcl.StdCtrls, Mask, DBCtrls, DBGrids, Vcl.ComCtrls, RXDBCtrl, Funcoes, RxLookup, system.UITypes, Buttons, Grids, RxCurrEdit, MemDS, RxToolEdit;
 
 type
-    NewTypeNav = class( TDbNavigator );
-
   TProcesso_Container = class(TForm)
     Panel1: TPanel;
     bSair: TButton;
@@ -23,7 +21,7 @@ type
     DBEdit4: TDBEdit;
     DBEdit6: TDBEdit;
     cFreeTime: TDBEdit;
-    DBEdit8: TDBEdit;
+    cValorDemurrage: TDBEdit;
     DBEdit9: TDBEdit;
     DBEdit10: TDBEdit;
     DBEdit11: TDBEdit;
@@ -71,7 +69,6 @@ type
     StaticText22: TStaticText;
     cTotalReal: TCurrencyEdit;
     StaticText23: TStaticText;
-    cTaxa: TCurrencyEdit;
     cMemoProcessos: TDBMemo;
     bAdicionarProcesso: TButton;
     cAdicionarProcesso: TRxDBLookupCombo;
@@ -80,6 +77,7 @@ type
     Image1: TImage;
     RxLabel3: TRxLabel;
     RxLabel4: TRxLabel;
+    cTaxa: TDBEdit;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -94,7 +92,7 @@ type
     procedure cNumeroChange(Sender: TObject);
     procedure cNumeroExit(Sender: TObject);
     procedure CalculaDemurrage;
-    procedure DBEdit8Change(Sender: TObject);
+    procedure cValorDemurrageChange(Sender: TObject);
     procedure cTipoEmbarqueExit(Sender: TObject);
     procedure bAdicionarProcessoClick(Sender: TObject);
   private
@@ -121,9 +119,6 @@ end;
 
 procedure TProcesso_Container.FormClose(Sender: TObject;var Action: TCloseAction);
 begin
-      If Trim(mProcesso) = '' then FecharTabelas(Dados, nil, nil, nil);
-
-      LimpaMemoria;
       Processo_Container.Release;
       Processo_Container := nil;
 end;
@@ -134,7 +129,7 @@ begin
      If Trim(mProcesso) <> '' then cProcesso.Enabled := false;
      With Dados do begin
           Container.SQL.Clear;
-          Container.SQL.Add('SELECT * FROM Container ORDER BY Processo, Numero');
+          Container.SQL.Add('select * from Container order BY Processo, Numero');
           Container.Open;
 
           ProcessosDOC.SQL.Clear;
@@ -153,15 +148,12 @@ begin
 
           Container.Locate('Processo', mProcesso, [loCaseInsensitive]);
      End;
-
-     //CalculaDemurrage;
-
      Screen.Cursor := crDefault;
 end;
 
 procedure TProcesso_Container.NavegaClick(Sender: TObject;Button: TNavigateBtn);
 Var
-    i : Integer;
+    i: Integer;
 begin
      cNumero.Color := clWindow;
      With Dados do begin
@@ -230,6 +222,7 @@ begin
            End;
         End;
      End;
+     CalculaDemurrage;
 end;
 
 procedure TProcesso_Container.FormCreate(Sender: TObject);
@@ -327,13 +320,15 @@ begin
            end else begin
               cDemurrage.Value := StrtoInt(DifDias(ContainerData_Saida.Value, Date));
            End;
-           cTaxa.Value      := iif(cTaxa.Value = 0, ProcessosDOCTaxa_FOB.AsFloat, cTaxa.Value);
+           if Container.State in[dsInsert, dsEdit] then begin
+              if ContainerTaxa.asfloat = 0 then ContainerTaxa.Value := ProcessosDOCTaxa_FOB.asfloat;
+           end;
            cTotalME.Value   := ContainerValor_Demurrage.Value * cDemurrage.Value;
-           cTotalReal.Value := cTotalME.Value * ProcessosDOCTaxa_FOB.AsFloat;
+           cTotalReal.Value := cTotalME.Value * ContainerTaxa.asfloat;
       End;
 end;
 
-procedure TProcesso_Container.DBEdit8Change(Sender: TObject);
+procedure TProcesso_Container.cValorDemurrageChange(Sender: TObject);
 begin
       CalculaDemurrage;
 end;

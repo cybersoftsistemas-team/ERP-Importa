@@ -306,6 +306,7 @@ begin
                            PedidosItensNota_Referencia.Value   := NotasNFe_cNF.Value;
                            PedidosItensData_Referencia.Value   := NotasData_Emissao.Value;
                            PedidosItensNumero_Referencia.Value := cNotaRef.AsInteger;
+                           PedidosItensItem_Referencia.Value   := NotasItensItem.value;
                            PedidosItensCEST.Value              := NotasItensCEST.Value;
 
                            // Pegando o valor de inventario da ficha de estoque.
@@ -467,6 +468,7 @@ begin
                            PedidosItensNota_Referencia.Value   := NotasNFe_cNF.Value;
                            PedidosItensData_Referencia.Value   := NotasData_Emissao.Value;
                            PedidosItensNumero_Referencia.Value := cNotaRef.AsInteger;
+                           PedidosItensItem_Referencia.Value   := NotasItensItem.AsInteger;
                            PedidosItensCEST.Value              := NotasItensCEST.Value;
 
                            // Pegando o valor de inventario da ficha de estoque.

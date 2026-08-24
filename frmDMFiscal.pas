@@ -1426,6 +1426,7 @@ type
     NotasServicoItensValor_CPP: TCurrencyField;
     NotasServicoItensAliquota_IPI: TFloatField;
     NotasServicoItensValor_IPI: TCurrencyField;
+    NotasItensItem_Referencia: TSmallintField;
     procedure NotasItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure NotasTerceirosItensDescricao_MercadoriaGetText(Sender: TField; var Text: String; DisplayText: Boolean);
     procedure NotasCalcFields(DataSet: TDataSet);

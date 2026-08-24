@@ -1934,7 +1934,7 @@ object Menu_Principal: TMenu_Principal
   object lECommerce: TPanel
     Left = 8
     Top = 72
-    Width = 602
+    Width = 607
     Height = 73
     Hint = 'TESTE DE HINT'
     BevelOuter = bvNone

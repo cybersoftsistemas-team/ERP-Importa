@@ -269,6 +269,10 @@ object Pedido_Outros: TPedido_Outros
     TabOrder = 3
     object TabSheet1: TTabSheet
       Caption = 'Capa do Pedido'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0

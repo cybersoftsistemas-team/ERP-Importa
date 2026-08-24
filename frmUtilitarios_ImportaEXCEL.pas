@@ -220,7 +220,7 @@ begin
       mAdic              := 0;
       mModif             := 0;
 
-      if cTabela.ItemIndex = 0 then ImportaClientes;
+      if cTabela.ItemIndex =  0 then ImportaClientes;
       if cTabela.ItemIndex =  1 then ImportaFornecedores;
       if cTabela.ItemIndex =  2 then ImportaProdutos;
       if cTabela.ItemIndex =  3 then ImportaBancos;
@@ -577,7 +577,7 @@ begin
 
               for mLin := 1 to Grade2.RowCount-1 do begin
                   mExiste := false;
-                  if Trim(Grade2.Cells[0, mLin]) <> '' then begin
+                  if Trim(Grade2.Cells[1, mLin]) <> '' then begin
                      if cCodigo.Checked then begin
                         mExiste := Produtos.Locate('Codigo', Grade2.Cells[mColCod, mLin], [loCaseInsensitive]);
                      end else begin

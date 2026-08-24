@@ -4575,6 +4575,8 @@ type
     ProcessosDOCData_Embarque: TDateTimeField;
     ProcessosDOCNumero_LI: TStringField;
     PagarReceberValor_TotalPed: TCurrencyField;
+    ContainerTaxa: TFloatField;
+    PedidosItensItem_Referencia: TSmallintField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);

@@ -2089,20 +2089,17 @@ begin
                             NotasItensValor_Seguro.Value           := PedidosItensValor_Seguro.Value;
                             NotasItensValor_Frete.Value            := PedidosItensValor_Frete.Value;
                             NotasItensValor_Despesa.Value          := PedidosItensValor_Despesa.Value;
-                            
                             NotasItensValor_BCPIS.Value            := PedidosItensValor_BCPIS.Value;
                             NotasItensAliquota_PIS.Value           := PedidosItensAliquota_PIS.Value;
                             NotasItensValor_PIS.Value              := PedidosItensValor_PIS.Value;
                             NotasItensValor_BCPISST.Value          := PedidosItensValor_BCPISST.Value;
                             NotasItensValor_PISST.Value            := PedidosItensValor_PISST.Value;
-
                             NotasItensAliquota_COFINS.Value        := PedidosItensAliquota_COFINS.Value;
                             NotasItensValor_COFINS.Value           := PedidosItensValor_COFINS.Value;
                             NotasItensValor_BCCOFINSST.Value       := PedidosItensValor_BCCOFINSST.Value;
                             NotasItensValor_COFINSST.Value         := PedidosItensValor_COFINSST.Value;
                             NotasItensApuracao_PISCOFINS.Value     := PedidosItensApuracao_PISCOFINS.Value;
                             NotasItensAliquota_COFINSRed.Value     := PedidosItensAliquota_COFINSRed.Value;
-                            
                             NotasItensPeso_Liquido.Value           := PedidosItensPeso_Liquido.Value;
                             NotasItensPeso_Bruto.Value             := PedidosItensPeso_Bruto.Value;
                             NotasItensVeiculo.Value                := ProdutosDetalhe_Especifico.Value = 'V';
@@ -2142,7 +2139,8 @@ begin
                             NotasItensValor_Inventario.Value       := PedidosItensValor_Inventario.Value;
                             NotasItensNota_Referencia.Value        := PedidosItensNota_Referencia.Value;
                             NotasItensData_Referencia.Value        := PedidosItensData_Referencia.Value;
-                            NotasItensNUmero_Referencia.Value      := PedidosItensNumero_Referencia.Value;
+                            NotasItensNumero_Referencia.Value      := PedidosItensNumero_Referencia.Value;
+                            NotasItensItem_Referencia.Value        := PedidosItensItem_Referencia.Value;
                             NotasItensMovimenta_EstoqueRep.Value   := PedidosItensMovimenta_EstoqueRep.Value;
                             NotasItensCEST.Value                   := PedidosItensCEST.Value;
                             NotasItensValor_BCICMSDest.Value       := PedidosItensValor_BCICMSDest.Value;
@@ -2191,7 +2189,6 @@ begin
                             NotasItensBeneficio_Fiscal.value       := PedidosItensBeneficio_Fiscal.AsString;
                             NotasItensCodigo_CredPres.value        := PedidosItensCodigo_CredPres.AsString;
                             NotasItensValor_COFINSDiferenca.Value  := PedidosItensValor_COFINSDiferenca.Value;
-
                             NotasItensAliquota_CBS.Value           := PedidosItensAliquota_CBS.asfloat;
                             NotasItensValor_BCCBS.Value            := PedidosItensValor_BCCBS.ascurrency;
                             NotasItensValor_CBS.Value              := PedidosItensValor_CBS.ascurrency;
@@ -4057,7 +4054,8 @@ begin
             // Dados da Nota fiscal referenciada quando complementar, Devolução...
             ide_NFRef := '';
 
-            if (TipoNotaNota_Referencia.AsBoolean) or (TipoNotaFinalidade_Mercadoria.AsInteger = 2) then begin
+//            if (TipoNotaNota_Referencia.AsBoolean) or (TipoNotaFinalidade_Mercadoria.AsInteger = 2) then begin
+            if (trim(TipoNotaTipo_NFDebito.asstring+TipoNotaTipo_NFCredito.asstring) <> '') and (TipoNotaFinalidade_Mercadoria.AsInteger <> 2) then begin
                PedidosItensReferencia.SQL.Clear;
                PedidosItensReferencia.SQL.Add('SELECT * FROM PedidosItensReferencia');
                PedidosItensReferencia.SQL.Add('WHERE ISNULL(Chave_Referencia, '''') <> '''' ');
@@ -4736,7 +4734,8 @@ var
    _gTribCompraGov,
    _gIBSCBSMono,
    _IBSCBS,
-  _gIBSCBS,
+   _gIBSCBS,
+   _DFeRef,
    mGTIN,
    mGTINUnidade: WideString;
    mDescricao,
@@ -5012,6 +5011,14 @@ begin
                  _Exporta := Util.detExport('', RemoveCaracterXML(ProcessosDOCRE_Numero.AsString), PedidosItensNota_Referencia.Value, RemoveCaracter(',', '.', FormatFloat('0.0000', PedidosItensQuantidade.AsFloat)));
               end;
            end;
+           
+           // DFe referênciado.
+           _DFeRef := '';
+           if PedidosItensDevolucao.asboolean then begin
+              if trim(PedidosItensNota_Referencia.Value) <> '' then begin
+                  _DFeRef := util.DFeReferenciado(PedidosItensNota_Referencia.Value, PedidosItensItem_Referencia.asinteger);
+              end;
+           end;
 
            mEscala := 'N';
            If ProdutosEscala_Relevante.AsBoolean then begin
@@ -5066,8 +5073,6 @@ begin
               mDesoneracao := ClientesDesoneracao.AsInteger;
            end;
 
-
-//*****************************************************************************************************************************************************************           
            _ICMS := '';
            if ((TipoNotaTipo_NFCredito.asinteger = 0) and (TipoNotaTipo_NFDebito.asinteger = 0)) or (TipoNotaNFE_Estorno.AsBoolean) or (PedidosDevolucao.AsBoolean) then begin
               // ICMS Normal.
@@ -5292,8 +5297,7 @@ begin
                  end;
               end;
            end;
-//
-//*****************************************************************************************************************************************************************
+           
            mAnalise.Lines.Add(floattostr(Roundto(PedidosItensValor_IBS.asfloat, -4)));
            
            _gIBSUF         := '';
@@ -5421,7 +5425,7 @@ begin
                                       ,''                                        // informar o grupo XML com obsCont com as informações do contribuinte do item.
                                       ,''                                        // informar o grupo XML com obsFisco com as informações do fisco do item.
                                       ,PedidosItensValor_TotalNota.value         // informar o Valor Total do Item da NF-e. Valor total do Item, correspondente à sua participação no total da nota.
-                                      ,'');                                      // informar o grupo XML com DFeReferenciado com as informações que referencia um item de outro DF-e.
+                                      ,_DfeRef);                                      // informar o grupo XML com DFeReferenciado com as informações que referencia um item de outro DF-e.
            
            Util := nil;
            MontaDetalhe := _Detalhe;

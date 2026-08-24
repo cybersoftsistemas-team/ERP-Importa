@@ -84,6 +84,7 @@ type
     Image1: TImage;
     ppDBText14: TppDBText;
     ppDBText15: TppDBText;
+    cDemurrage: TRadioGroup;
     procedure bSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -190,42 +191,38 @@ begin
            sql.add('      ,(select Nome from Fornecedores frn where frn.Codigo = ctn.Transportadora_Saida) as TransportaSaida_Nome');
            sql.add('      ,Dias = iif(isnull(Ctn.Data_Entrega, '''') <> '''', datediff(Day, Ctn.Data_Saida, ctn.Data_Entrega), datediff(Day, ctn.Data_Saida, getdate()))');
            sql.add('      ,Valor_Container = Valor_Demurrage * (iif(isnull(Data_Entrega, '''') <> '''', datediff(Day, ctn.Data_Saida, ctn.Data_Entrega), datediff(Day, ctn.Data_Saida, getdate())))');
+           sql.add('into #temp');
            sql.add('from Container ctn');
            sql.add('where Numero is not null');
            if not DataLimpa(cDataIni.text) then begin
-              sql.Add('and Data_Entrada between :pDataIni and :pDataFim');
+              sql.add('and ctn.Data_Entrada between :pDataIni and :pDataFim');
               parambyname('pDataIni').Value := cDataIni.Date;
               parambyname('pDataFim').Value := cDataFim.Date;
            end;
-           if cSituacao.ItemIndex = 1 then begin
-              sql.Add('and Data_Entrega is not null');
-           end;
-           if cSituacao.ItemIndex = 2 then begin
-              sql.Add('and Data_Entrega is null');
-           end;
-           if cSituacao.ItemIndex = 3 then begin
-              sql.Add('and (Data_Entrega is null and iif(isnull(Ctn.Data_Entrega, '''') <> '''', datediff(Day, Ctn.Data_Saida, ctn.Data_Entrega), datediff(Day, ctn.Data_Saida, getdate())) > 0)');
-           end;
            if trim(cProcesso.text) <> '' then begin
-              sql.add('and Processo = :pProc');
+              sql.add('and ctn.Processo = :pProc');
               parambyname('pProc').Value := Dados.ProcessosDOCProcesso.AsString;
            end;
-           {
-           if cSituacao.ItemIndex = 1 then begin
-              sql.add('and Data_Saida is not null');
-           end;
-           if cSituacao.ItemIndex = 2 then begin
-              sql.add('and Data_Saida is null');
-           end;
-           if cSituacao.ItemIndex = 3 then begin
-              sql.add('and Data_Saida is null');
-           end;
-           }
            if trim(cCliente.Text) <> '' then begin
               sql.add('and (Select Cliente from ProcessosDocumentos pdc where pdc.Processo = ctn.Processo) = :pCliente');
               parambyname('pCliente').Value := Dados.ClientesCodigo.AsInteger;
            end;
+           if cSituacao.ItemIndex = 1 then begin
+              sql.Add('and ctn.Data_Entrega is not null');
+           end;
+           if cSituacao.ItemIndex = 2 then begin
+              sql.Add('and ctn.Data_Entrega is null');
+           end;
+           sql.add('select *');
+           sql.add('from #temp');
+           if cDemurrage.ItemIndex = 1 then begin
+              sql.add('where Dias > 0');
+           end;
+           if cDemurrage.ItemIndex = 2 then begin
+              sql.add('where Dias <= 0');
+           end;
            sql.add('order by Numero');
+           sql.add('drop table #temp');
            //sql.SaveToFile('c:\temp\Impressao_Container.sql');
            open;
       end;

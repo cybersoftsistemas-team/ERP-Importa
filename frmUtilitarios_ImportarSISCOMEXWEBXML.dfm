@@ -244,10 +244,6 @@ object Utilitarios_ImportarSISCOMEXWEBXML: TUtilitarios_ImportarSISCOMEXWEBXML
     TabOrder = 2
     object TabSheet6: TTabSheet
       Caption = '&Processo'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Panel3: TPanel
         AlignWithMargins = True
         Left = 1

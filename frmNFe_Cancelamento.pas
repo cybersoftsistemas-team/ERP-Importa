@@ -1287,6 +1287,7 @@ begin
                               PedidosItensNota_Referencia.Value        := NotasItensNota_Referencia.Value;
                               PedidosItensData_Referencia.Value        := NotasItensData_Referencia.Value;
                               PedidosItensNumero_Referencia.Value      := NotasItensNumero_Referencia.Value;
+                              PedidosItensItem_Referencia.Value        := NotasItensItem_Referencia.Value;
                               PedidosItensCEST.Value                   := NotasItensCEST.Value;
                               PedidosItensValor_BCICMSDest.Value       := NotasItensValor_BCICMSDest.Value;
                               PedidosItensAliquota_ICMSDest.Value      := NotasItensAliquota_ICMSDest.Value;

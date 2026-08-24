@@ -641,6 +641,7 @@ begin
                            PedidosItensNota_Referencia.Value   := Chave;
                            PedidosItensData_Referencia.Value   := Data;
                            PedidosItensNumero_Referencia.Value := Nota;
+                           PedidosItensItem_Referencia.Value   := NotasItensItem.value;
                         end;
                         PedidosItensCEST.Value                  := NotasItensCEST.Value;
                         PedidosItensValor_BCICMSDest.Value      := 0;

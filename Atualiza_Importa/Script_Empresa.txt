@@ -3114,3 +3114,17 @@ alter table PagarReceber add Valor_TotalPed money
 go
 update PagarReceber set Valor_TotalPed = Valor_Total where Valor_TotalPed is null
 go
+
+--[18/08/2026 12:08:00]
+update PagarReceber set Valor_TotalPed = Valor_Total where Valor_TotalPed is null
+go
+alter table Container add Taxa float
+go
+
+--[19/08/2026 16:52:00]
+alter table PedidosItens add Item_Referencia smallint
+go
+alter table NotasItens add Item_Referencia smallint
+go
+update PedidosItens set Item_Referencia = (select Item from NotasItens ni where ni.Nota = PedidosItens.Numero_Referencia and ni.Data = PedidosItens.Data_Referencia)
+go

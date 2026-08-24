@@ -3,8 +3,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
   Top = 260
   BorderStyle = bsDialog
   Caption = 'Impressao_ProcessosOP_Container'
-  ClientHeight = 224
-  ClientWidth = 506
+  ClientHeight = 294
+  ClientWidth = 524
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,10 +22,11 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 506
+    Width = 524
     Height = 46
     Align = alTop
     Stretch = True
+    ExplicitWidth = 506
   end
   object RxLabel3: TRxLabel
     Left = 8
@@ -62,18 +63,19 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
   end
   object Panel1: TPanel
     Left = 0
-    Top = 194
-    Width = 506
+    Top = 264
+    Width = 524
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 5
-    ExplicitTop = 186
+    ExplicitTop = 194
+    ExplicitWidth = 506
     DesignSize = (
-      506
+      524
       30)
     object bSair: TButton
-      Left = 430
+      Left = 448
       Top = 1
       Width = 74
       Height = 28
@@ -85,9 +87,10 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
+      ExplicitLeft = 430
     end
     object bImprimir: TButton
-      Left = 356
+      Left = 374
       Top = 1
       Width = 74
       Height = 28
@@ -99,9 +102,10 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
       ShowHint = True
       TabOrder = 1
       OnClick = bImprimirClick
+      ExplicitLeft = 356
     end
     object bLimpar: TButton
-      Left = 282
+      Left = 300
       Top = 1
       Width = 74
       Height = 28
@@ -113,26 +117,25 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
       ShowHint = True
       TabOrder = 2
       OnClick = bLimparClick
+      ExplicitLeft = 282
     end
   end
   object cSituacao: TRadioGroup
-    Left = 9
-    Top = 53
-    Width = 488
-    Height = 43
+    Left = 16
+    Top = 146
+    Width = 150
+    Height = 90
     Caption = 'Situa'#231#227'o'
-    Columns = 4
     ItemIndex = 2
     Items.Strings = (
       'Todos'
       'Devolvidos'
-      'N'#227'o Devolvidos'
-      'Demurrage')
+      'N'#227'o Devolvidos')
     TabOrder = 0
   end
   object cProcesso: TDBLookupComboBox
-    Left = 76
-    Top = 133
+    Left = 84
+    Top = 88
     Width = 173
     Height = 21
     DropDownWidth = 210
@@ -149,8 +152,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
     TabOrder = 3
   end
   object StaticText12: TStaticText
-    Left = 9
-    Top = 133
+    Left = 17
+    Top = 88
     Width = 65
     Height = 21
     AutoSize = False
@@ -172,8 +175,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
     StyleElements = []
   end
   object cCliente: TDBLookupComboBox
-    Left = 76
-    Top = 156
+    Left = 84
+    Top = 111
     Width = 421
     Height = 21
     Font.Charset = DEFAULT_CHARSET
@@ -190,8 +193,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
     TabOrder = 4
   end
   object StaticText1: TStaticText
-    Left = 9
-    Top = 156
+    Left = 17
+    Top = 111
     Width = 65
     Height = 21
     AutoSize = False
@@ -213,8 +216,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
     StyleElements = []
   end
   object cDataIni: TDateEdit
-    Left = 76
-    Top = 110
+    Left = 84
+    Top = 65
     Width = 106
     Height = 21
     CheckOnExit = True
@@ -302,8 +305,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
     TabOrder = 1
   end
   object StaticText8: TStaticText
-    Left = 9
-    Top = 110
+    Left = 17
+    Top = 65
     Width = 65
     Height = 21
     AutoSize = False
@@ -325,8 +328,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
     StyleElements = []
   end
   object cDataFim: TDateEdit
-    Left = 246
-    Top = 110
+    Left = 254
+    Top = 65
     Width = 106
     Height = 21
     CheckOnExit = True
@@ -414,8 +417,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
     TabOrder = 2
   end
   object StaticText10: TStaticText
-    Left = 187
-    Top = 110
+    Left = 195
+    Top = 65
     Width = 57
     Height = 21
     AutoSize = False
@@ -435,6 +438,19 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
     TabOrder = 9
     Transparent = False
     StyleElements = []
+  end
+  object cDemurrage: TRadioGroup
+    Left = 203
+    Top = 146
+    Width = 150
+    Height = 90
+    Caption = 'Demurrage'
+    ItemIndex = 2
+    Items.Strings = (
+      'Todos'
+      'Com Demurrage'
+      'Sem Demurrage')
+    TabOrder = 10
   end
   object pDemurrage: TppDBPipeline
     DataSource = dstContainer
