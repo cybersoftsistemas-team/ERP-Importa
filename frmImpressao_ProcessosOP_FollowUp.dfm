@@ -399,19 +399,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       item
         Expanded = False
         FieldName = 'DI_DUIMP'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Origem'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Documentos'
-        Width = 64
         Visible = True
       end>
   end
@@ -512,6 +509,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     DataPipeline = dbpFollowUp
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
+    PrinterSetup.Orientation = poLandscape
     PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
@@ -519,8 +517,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     PrinterSetup.mmMarginLeft = 6350
     PrinterSetup.mmMarginRight = 6350
     PrinterSetup.mmMarginTop = 6350
-    PrinterSetup.mmPaperHeight = 297000
-    PrinterSetup.mmPaperWidth = 210000
+    PrinterSetup.mmPaperHeight = 210000
+    PrinterSetup.mmPaperWidth = 297000
     PrinterSetup.PaperSize = 9
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
@@ -566,16 +564,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     XLSSettings.WorksheetName = 'Report'
-    Left = 114
-    Top = 354
+    Left = 97
+    Top = 339
     Version = '19.04'
-    mmColumnWidth = 197300
+    mmColumnWidth = 284300
     DataPipelineName = 'dbpFollowUp'
     object ppHeaderBand2: TppHeaderBand
       Background.Brush.Style = bsClear
       Border.mmPadding = 0
       mmBottomOffset = 0
-      mmHeight = 20638
+      mmHeight = 20902
       mmPrintPosition = 0
       object iLogoSint: TppImage
         DesignLayer = ppDesignLayer7
@@ -611,7 +609,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         mmHeight = 5027
         mmLeft = 28310
         mmTop = 0
-        mmWidth = 169008
+        mmWidth = 256646
         BandType = 0
         LayerName = Foreground6
       end
@@ -634,7 +632,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         mmHeight = 3598
         mmLeft = 28310
         mmTop = 6350
-        mmWidth = 169008
+        mmWidth = 256646
         BandType = 0
         LayerName = Foreground6
       end
@@ -654,7 +652,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         TextAlignment = taRightJustified
         Transparent = True
         mmHeight = 1588
-        mmLeft = 192617
+        mmLeft = 280193
         mmTop = 13229
         mmWidth = 4763
         BandType = 0
@@ -671,15 +669,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
+        mmHeight = 1851
         mmLeft = 0
-        mmTop = 18788
-        mmWidth = 5556
+        mmTop = 18786
+        mmWidth = 7411
         BandType = 0
         LayerName = Foreground6
       end
@@ -694,15 +692,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1320
-        mmLeft = 5798
-        mmTop = 18788
-        mmWidth = 16669
+        mmHeight = 1850
+        mmLeft = 7645
+        mmTop = 18786
+        mmWidth = 26209
         BandType = 0
         LayerName = Foreground6
       end
@@ -717,15 +715,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 22734
-        mmTop = 18787
-        mmWidth = 6085
+        mmHeight = 1851
+        mmLeft = 34101
+        mmTop = 18786
+        mmWidth = 7675
         BandType = 0
         LayerName = Foreground6
       end
@@ -740,15 +738,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 29075
-        mmTop = 18787
-        mmWidth = 7144
+        mmHeight = 1851
+        mmLeft = 42028
+        mmTop = 18786
+        mmWidth = 12709
         BandType = 0
         LayerName = Foreground6
       end
@@ -763,15 +761,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 36476
-        mmTop = 18787
-        mmWidth = 5556
+        mmHeight = 1851
+        mmLeft = 54998
+        mmTop = 18786
+        mmWidth = 7411
         BandType = 0
         LayerName = Foreground6
       end
@@ -786,15 +784,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 42296
-        mmTop = 18787
-        mmWidth = 8202
+        mmHeight = 1851
+        mmLeft = 62669
+        mmTop = 18786
+        mmWidth = 10587
         BandType = 0
         LayerName = Foreground6
       end
@@ -809,15 +807,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 50758
-        mmTop = 18787
-        mmWidth = 6085
+        mmHeight = 1851
+        mmLeft = 73512
+        mmTop = 18786
+        mmWidth = 8205
         BandType = 0
         LayerName = Foreground6
       end
@@ -832,15 +830,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 57105
-        mmTop = 18787
-        mmWidth = 6085
+        mmHeight = 1851
+        mmLeft = 81979
+        mmTop = 18786
+        mmWidth = 8205
         BandType = 0
         LayerName = Foreground6
       end
@@ -855,15 +853,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 63452
-        mmTop = 18787
-        mmWidth = 5292
+        mmHeight = 1851
+        mmLeft = 90442
+        mmTop = 18786
+        mmWidth = 7147
         BandType = 0
         LayerName = Foreground6
       end
@@ -878,15 +876,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 69003
-        mmTop = 18787
-        mmWidth = 7673
+        mmHeight = 1851
+        mmLeft = 97844
+        mmTop = 18786
+        mmWidth = 10588
         BandType = 0
         LayerName = Foreground6
       end
@@ -901,15 +899,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 76938
-        mmTop = 18787
-        mmWidth = 5556
+        mmHeight = 1851
+        mmLeft = 108682
+        mmTop = 18786
+        mmWidth = 6881
         BandType = 0
         LayerName = Foreground6
       end
@@ -924,16 +922,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         TextAlignment = taRightJustified
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 82750
-        mmTop = 18787
-        mmWidth = 6350
+        mmHeight = 1851
+        mmLeft = 115819
+        mmTop = 18786
+        mmWidth = 9000
         BandType = 0
         LayerName = Foreground6
       end
@@ -948,15 +946,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 89366
-        mmTop = 18787
-        mmWidth = 5027
+        mmHeight = 1851
+        mmLeft = 125085
+        mmTop = 18786
+        mmWidth = 6617
         BandType = 0
         LayerName = Foreground6
       end
@@ -971,15 +969,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 94671
+        mmHeight = 1851
+        mmLeft = 131980
         mmTop = 18786
-        mmWidth = 5027
+        mmWidth = 8207
         BandType = 0
         LayerName = Foreground6
       end
@@ -994,15 +992,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 99949
+        mmHeight = 1851
+        mmLeft = 140434
         mmTop = 18786
-        mmWidth = 8996
+        mmWidth = 12971
         BandType = 0
         LayerName = Foreground6
       end
@@ -1017,15 +1015,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 109216
+        mmHeight = 1851
+        mmLeft = 153668
         mmTop = 18786
-        mmWidth = 8202
+        mmWidth = 14032
         BandType = 0
         LayerName = Foreground6
       end
@@ -1040,15 +1038,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 117727
+        mmHeight = 1851
+        mmLeft = 168001
         mmTop = 18785
-        mmWidth = 8202
+        mmWidth = 17742
         BandType = 0
         LayerName = Foreground6
       end
@@ -1063,15 +1061,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 126194
+        mmHeight = 1851
+        mmLeft = 201607
         mmTop = 18785
-        mmWidth = 6085
+        mmWidth = 12445
         BandType = 0
         LayerName = Foreground6
       end
@@ -1086,13 +1084,13 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 132545
+        mmHeight = 1851
+        mmLeft = 214298
         mmTop = 18785
         mmWidth = 7673
         BandType = 0
@@ -1109,15 +1107,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 140489
+        mmHeight = 1851
+        mmLeft = 222254
         mmTop = 18785
-        mmWidth = 5292
+        mmWidth = 6882
         BandType = 0
         LayerName = Foreground6
       end
@@ -1127,20 +1125,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
-        Caption = ' PREVISAO CHEGADA'
+        Caption = ' PREV.CHEGADA'
         Color = 10184960
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 146043
+        mmHeight = 1851
+        mmLeft = 229386
         mmTop = 18785
-        mmWidth = 8731
+        mmWidth = 9526
         BandType = 0
         LayerName = Foreground6
       end
@@ -1155,15 +1153,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 155036
+        mmHeight = 1851
+        mmLeft = 239182
         mmTop = 18785
-        mmWidth = 5292
+        mmWidth = 6352
         BandType = 0
         LayerName = Foreground6
       end
@@ -1173,20 +1171,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
-        Caption = ' DOCUMENTOS'
+        Caption = ' DOC.'
         Color = 10184960
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 160589
+        mmHeight = 1851
+        mmLeft = 245791
         mmTop = 18785
-        mmWidth = 5821
+        mmWidth = 6086
         BandType = 0
         LayerName = Foreground6
       end
@@ -1196,18 +1194,18 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
-        Caption = ' PRESENCA DE CARGA'
+        Caption = ' PRES. CARGA'
         Color = 10184960
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 166679
+        mmHeight = 1851
+        mmLeft = 252150
         mmTop = 18785
         mmWidth = 8731
         BandType = 0
@@ -1224,15 +1222,84 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1323
-        mmLeft = 175672
+        mmHeight = 1853
+        mmLeft = 261139
+        mmTop = 18783
+        mmWidth = 17720
+        BandType = 0
+        LayerName = Foreground6
+      end
+      object ppLabel15: TppLabel
+        DesignLayer = ppDesignLayer7
+        UserName = 'Label15'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = ' RESP.'
+        Color = 10184960
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        VerticalAlignment = avCenter
+        mmHeight = 1851
+        mmLeft = 279133
         mmTop = 18785
-        mmWidth = 21960
+        mmWidth = 6086
+        BandType = 0
+        LayerName = Foreground6
+      end
+      object ppLabel27: TppLabel
+        DesignLayer = ppDesignLayer7
+        UserName = 'Label27'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = ' NAVIO'
+        Color = 10184960
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        VerticalAlignment = avCenter
+        mmHeight = 1851
+        mmLeft = 186004
+        mmTop = 18785
+        mmWidth = 8207
+        BandType = 0
+        LayerName = Foreground6
+      end
+      object ppLabel28: TppLabel
+        DesignLayer = ppDesignLayer7
+        UserName = 'Label28'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = ' VIAGEM'
+        Color = 10184960
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        VerticalAlignment = avCenter
+        mmHeight = 1851
+        mmLeft = 194467
+        mmTop = 18785
+        mmWidth = 6879
         BandType = 0
         LayerName = Foreground6
       end
@@ -1243,7 +1310,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       Border.mmPadding = 0
       PrintHeight = phDynamic
       mmBottomOffset = 0
-      mmHeight = 1852
+      mmHeight = 3175
       mmPrintPosition = 0
       object ppDBText1: TppDBText
         DesignLayer = ppDesignLayer7
@@ -1254,16 +1321,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
+        mmHeight = 1852
         mmLeft = 0
         mmTop = 0
-        mmWidth = 5556
+        mmWidth = 7411
         BandType = 4
         LayerName = Foreground6
       end
@@ -1276,16 +1343,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 5798
+        mmHeight = 1852
+        mmLeft = 7645
         mmTop = 0
-        mmWidth = 16669
+        mmWidth = 26209
         BandType = 4
         LayerName = Foreground6
       end
@@ -1298,16 +1365,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 22734
+        mmHeight = 1852
+        mmLeft = 34101
         mmTop = 0
-        mmWidth = 6085
+        mmWidth = 7675
         BandType = 4
         LayerName = Foreground6
       end
@@ -1320,16 +1387,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 29075
+        mmHeight = 1852
+        mmLeft = 42028
         mmTop = 0
-        mmWidth = 7144
+        mmWidth = 12709
         BandType = 4
         LayerName = Foreground6
       end
@@ -1342,16 +1409,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 36476
+        mmHeight = 1852
+        mmLeft = 54998
         mmTop = 0
-        mmWidth = 5556
+        mmWidth = 7411
         BandType = 4
         LayerName = Foreground6
       end
@@ -1364,16 +1431,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 42296
+        mmHeight = 1852
+        mmLeft = 62669
         mmTop = 0
-        mmWidth = 8202
+        mmWidth = 10587
         BandType = 4
         LayerName = Foreground6
       end
@@ -1386,16 +1453,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 50758
+        mmHeight = 1852
+        mmLeft = 73512
         mmTop = 0
-        mmWidth = 6085
+        mmWidth = 8205
         BandType = 4
         LayerName = Foreground6
       end
@@ -1408,16 +1475,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 57105
+        mmHeight = 1852
+        mmLeft = 81979
         mmTop = 0
-        mmWidth = 6085
+        mmWidth = 8205
         BandType = 4
         LayerName = Foreground6
       end
@@ -1430,16 +1497,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 63452
+        mmHeight = 1852
+        mmLeft = 90442
         mmTop = 0
-        mmWidth = 5292
+        mmWidth = 7147
         BandType = 4
         LayerName = Foreground6
       end
@@ -1452,16 +1519,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 69003
+        mmHeight = 1852
+        mmLeft = 97844
         mmTop = 0
-        mmWidth = 7673
+        mmWidth = 10588
         BandType = 4
         LayerName = Foreground6
       end
@@ -1474,16 +1541,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 76938
+        mmHeight = 1852
+        mmLeft = 108682
         mmTop = 0
-        mmWidth = 5556
+        mmWidth = 6881
         BandType = 4
         LayerName = Foreground6
       end
@@ -1497,17 +1564,17 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 82750
+        mmHeight = 1852
+        mmLeft = 115819
         mmTop = 0
-        mmWidth = 6350
+        mmWidth = 9000
         BandType = 4
         LayerName = Foreground6
       end
@@ -1520,16 +1587,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 89366
+        mmHeight = 1852
+        mmLeft = 125085
         mmTop = 0
-        mmWidth = 5027
+        mmWidth = 6617
         BandType = 4
         LayerName = Foreground6
       end
@@ -1542,16 +1609,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 94671
+        mmHeight = 1852
+        mmLeft = 131980
         mmTop = 0
-        mmWidth = 5027
+        mmWidth = 8207
         BandType = 4
         LayerName = Foreground6
       end
@@ -1564,16 +1631,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 99949
+        mmHeight = 1852
+        mmLeft = 140434
         mmTop = 0
-        mmWidth = 8996
+        mmWidth = 12971
         BandType = 4
         LayerName = Foreground6
       end
@@ -1586,16 +1653,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 109216
+        mmHeight = 1852
+        mmLeft = 153668
         mmTop = 0
-        mmWidth = 8202
+        mmWidth = 14032
         BandType = 4
         LayerName = Foreground6
       end
@@ -1608,16 +1675,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 117727
+        mmHeight = 1852
+        mmLeft = 168001
         mmTop = 0
-        mmWidth = 8202
+        mmWidth = 17742
         BandType = 4
         LayerName = Foreground6
       end
@@ -1630,16 +1697,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 126194
+        mmHeight = 1852
+        mmLeft = 201607
         mmTop = 0
-        mmWidth = 6085
+        mmWidth = 12445
         BandType = 4
         LayerName = Foreground6
       end
@@ -1652,14 +1719,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 132545
+        mmHeight = 1852
+        mmLeft = 214298
         mmTop = 0
         mmWidth = 7673
         BandType = 4
@@ -1674,16 +1741,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 140489
+        mmHeight = 1852
+        mmLeft = 222254
         mmTop = 0
-        mmWidth = 5292
+        mmWidth = 6882
         BandType = 4
         LayerName = Foreground6
       end
@@ -1696,16 +1763,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 146043
+        mmHeight = 1852
+        mmLeft = 229386
         mmTop = 0
-        mmWidth = 8731
+        mmWidth = 9526
         BandType = 4
         LayerName = Foreground6
       end
@@ -1718,16 +1785,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 155036
+        mmHeight = 1852
+        mmLeft = 239182
         mmTop = 0
-        mmWidth = 5292
+        mmWidth = 6352
         BandType = 4
         LayerName = Foreground6
       end
@@ -1740,16 +1807,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 160589
+        mmHeight = 1852
+        mmLeft = 245791
         mmTop = 0
-        mmWidth = 5821
+        mmWidth = 6086
         BandType = 4
         LayerName = Foreground6
       end
@@ -1762,14 +1829,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 166679
+        mmHeight = 1852
+        mmLeft = 252150
         mmTop = 0
         mmWidth = 8731
         BandType = 4
@@ -1785,17 +1852,17 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         RemoveEmptyLines = False
         Stretch = True
         TextAlignment = taFullJustified
         Transparent = True
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1323
-        mmLeft = 175672
+        mmHeight = 1852
+        mmLeft = 261139
         mmTop = 0
-        mmWidth = 21695
+        mmWidth = 17456
         BandType = 4
         LayerName = Foreground6
         mmBottomOffset = 0
@@ -1813,9 +1880,73 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         StretchWithParent = True
         Weight = 0.200000002980232200
         mmHeight = 792
-        mmLeft = 0
-        mmTop = 1054
-        mmWidth = 197380
+        mmLeft = 265
+        mmTop = 2367
+        mmWidth = 284957
+        BandType = 4
+        LayerName = Foreground6
+      end
+      object ppDBText16: TppDBText
+        DesignLayer = ppDesignLayer7
+        UserName = 'DBText16'
+        Border.mmPadding = 0
+        DataField = 'Responsavel'
+        DataPipeline = dbpFollowUp
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'dbpFollowUp'
+        mmHeight = 1852
+        mmLeft = 279398
+        mmTop = 0
+        mmWidth = 6081
+        BandType = 4
+        LayerName = Foreground6
+      end
+      object ppDBText27: TppDBText
+        DesignLayer = ppDesignLayer7
+        UserName = 'DBText27'
+        Border.mmPadding = 0
+        DataField = 'Nome_Transporte'
+        DataPipeline = dbpFollowUp
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpFollowUp'
+        mmHeight = 1852
+        mmLeft = 186004
+        mmTop = 0
+        mmWidth = 8207
+        BandType = 4
+        LayerName = Foreground6
+      end
+      object ppDBText42: TppDBText
+        DesignLayer = ppDesignLayer7
+        UserName = 'DBText42'
+        Border.mmPadding = 0
+        DataField = 'Transporte_Viagem'
+        DataPipeline = dbpFollowUp
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpFollowUp'
+        mmHeight = 1852
+        mmLeft = 194467
+        mmTop = 0
+        mmWidth = 6879
         BandType = 4
         LayerName = Foreground6
       end
@@ -1834,7 +1965,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         mmHeight = 259
         mmLeft = 0
         mmTop = 0
-        mmWidth = 197380
+        mmWidth = 284957
         BandType = 8
         LayerName = Foreground6
       end
@@ -1852,8 +1983,255 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   object dbpFollowUp: TppDBPipeline
     DataSource = dsoFLP
     UserName = 'pFollowUp'
-    Left = 86
-    Top = 382
+    Left = 69
+    Top = 367
+    object dbpFollowUpppField1: TppField
+      FieldAlias = 'Processo'
+      FieldName = 'Processo'
+      FieldLength = 0
+      DisplayWidth = 0
+      Position = 0
+    end
+    object dbpFollowUpppField2: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'ClienteCodigo'
+      FieldName = 'ClienteCodigo'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 1
+    end
+    object dbpFollowUpppField3: TppField
+      FieldAlias = 'ClienteNome'
+      FieldName = 'ClienteNome'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 2
+    end
+    object dbpFollowUpppField4: TppField
+      FieldAlias = 'Tipo'
+      FieldName = 'Tipo'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 3
+    end
+    object dbpFollowUpppField5: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'ExportadorCodigo'
+      FieldName = 'ExportadorCodigo'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 4
+    end
+    object dbpFollowUpppField6: TppField
+      FieldAlias = 'Exportador'
+      FieldName = 'Exportador'
+      FieldLength = 60
+      DisplayWidth = 60
+      Position = 5
+    end
+    object dbpFollowUpppField7: TppField
+      FieldAlias = 'BL_AWB'
+      FieldName = 'BL_AWB'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 6
+    end
+    object dbpFollowUpppField8: TppField
+      FieldAlias = 'CE_MERCANTE_RUC'
+      FieldName = 'CE_MERCANTE_RUC'
+      FieldLength = 32
+      DisplayWidth = 32
+      Position = 7
+    end
+    object dbpFollowUpppField9: TppField
+      FieldAlias = 'Container'
+      FieldName = 'Container'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 8
+      Searchable = False
+      Sortable = False
+    end
+    object dbpFollowUpppField10: TppField
+      FieldAlias = 'FREE_TIME'
+      FieldName = 'FREE_TIME'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 9
+      Searchable = False
+      Sortable = False
+    end
+    object dbpFollowUpppField11: TppField
+      FieldAlias = 'CANAL'
+      FieldName = 'CANAL'
+      FieldLength = 8
+      DisplayWidth = 8
+      Position = 10
+    end
+    object dbpFollowUpppField12: TppField
+      FieldAlias = 'DI/DUIMP'
+      FieldName = 'DI_DUIMP'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 11
+    end
+    object dbpFollowUpppField13: TppField
+      FieldAlias = 'Invoce'
+      FieldName = 'Invoce'
+      FieldLength = 40
+      DisplayWidth = 40
+      Position = 12
+    end
+    object dbpFollowUpppField14: TppField
+      FieldAlias = 'VALOR'
+      FieldName = 'VALOR'
+      FieldLength = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
+      Position = 13
+    end
+    object dbpFollowUpppField15: TppField
+      FieldAlias = 'LI'
+      FieldName = 'LI'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 14
+    end
+    object dbpFollowUpppField16: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'ModalCodigo'
+      FieldName = 'ModalCodigo'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 15
+    end
+    object dbpFollowUpppField17: TppField
+      FieldAlias = 'ModalDescricao'
+      FieldName = 'ModalDescricao'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 16
+    end
+    object dbpFollowUpppField18: TppField
+      FieldAlias = 'TIPO_IMPORTACAO'
+      FieldName = 'TIPO_IMPORTACAO'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 17
+    end
+    object dbpFollowUpppField19: TppField
+      FieldAlias = 'Agente_Carga'
+      FieldName = 'Agente_Carga'
+      FieldLength = 40
+      DisplayWidth = 40
+      Position = 18
+    end
+    object dbpFollowUpppField20: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'DESPACHANTE_CODIGO'
+      FieldName = 'DESPACHANTE_CODIGO'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 19
+    end
+    object dbpFollowUpppField21: TppField
+      FieldAlias = 'DESPACHANTE_NOME'
+      FieldName = 'DESPACHANTE_NOME'
+      FieldLength = 60
+      DisplayWidth = 60
+      Position = 20
+    end
+    object dbpFollowUpppField22: TppField
+      FieldAlias = 'Origem'
+      FieldName = 'Origem'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 21
+    end
+    object dbpFollowUpppField23: TppField
+      FieldAlias = 'Destino'
+      FieldName = 'Destino'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 22
+    end
+    object dbpFollowUpppField24: TppField
+      FieldAlias = 'EMBARQUE'
+      FieldName = 'EMBARQUE'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 23
+    end
+    object dbpFollowUpppField25: TppField
+      FieldAlias = 'PREVISAO_CHEGADA'
+      FieldName = 'PREVISAO_CHEGADA'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 24
+    end
+    object dbpFollowUpppField26: TppField
+      FieldAlias = 'CHEGADA'
+      FieldName = 'CHEGADA'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 25
+    end
+    object dbpFollowUpppField27: TppField
+      FieldAlias = 'Documentos'
+      FieldName = 'Documentos'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 26
+    end
+    object dbpFollowUpppField28: TppField
+      FieldAlias = 'PRESENCA_CARGA'
+      FieldName = 'PRESENCA_CARGA'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 27
+    end
+    object dbpFollowUpppField29: TppField
+      FieldAlias = 'HISTORICO_PROCESSO'
+      FieldName = 'HISTORICO_PROCESSO'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 28
+      Searchable = False
+      Sortable = False
+    end
+    object dbpFollowUpppField30: TppField
+      FieldAlias = 'Nome_Transporte'
+      FieldName = 'Nome_Transporte'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 29
+    end
+    object dbpFollowUpppField31: TppField
+      FieldAlias = 'Transporte_Viagem'
+      FieldName = 'Transporte_Viagem'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 30
+    end
+    object dbpFollowUpppField32: TppField
+      FieldAlias = 'Responsavel'
+      FieldName = 'Responsavel'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 31
+    end
   end
   object qryFLP: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -1954,6 +2332,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       '         FOR XML PATH('#39#39'), TYPE'
       '     ).value('#39'.'#39', '#39'varchar(max)'#39')'
       ' ,1,2,'#39#39')'
+      ',PRD.Nome_Transporte'
+      ',PRD.Transporte_Viagem'
       ',PRD.Responsavel'
       'FROM ProcessosDocumentos AS PRD'
       'LEFT JOIN Clientes AS CLI'
@@ -1976,7 +2356,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       'LEFT JOIN Fornecedores AS FORN'
       ' ON FORN.Codigo = PRD.Fornecedor'
       'LEFT JOIN Fornecedores AS DSP'
-      ' ON DSP.Codigo = PRD.Referencia_Despachante'
+      ' ON DSP.Codigo = PRD.Despachante'
       'WHERE PRD.Tipo = '#39'IMPORTA'#199#195'O'#39
       'AND'
       '('
@@ -2023,20 +2403,21 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       ');')
     AfterOpen = qryFLPAfterOpen
     AfterClose = qryFLPAfterClose
-    Left = 58
-    Top = 354
+    Active = True
+    Left = 41
+    Top = 339
     ParamData = <
       item
         DataType = ftDateTime
         Name = 'DataInicial'
         ParamType = ptInput
-        Value = 46023d
+        Value = 36526d
       end
       item
         DataType = ftDateTime
         Name = 'DataFinal'
         ParamType = ptInput
-        Value = 46233d
+        Value = 46598d
       end
       item
         DataType = ftInteger
@@ -2066,7 +2447,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         DataType = ftString
         Name = 'Processo'
         ParamType = ptInput
-        Value = ''
+        Size = 9
+        Value = 'VIX311/26'
       end>
     object qryFLPProcesso: TStringField
       FieldName = 'Processo'
@@ -2189,6 +2571,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       ReadOnly = True
       BlobType = ftMemo
     end
+    object qryFLPNome_Transporte: TStringField
+      FieldName = 'Nome_Transporte'
+      Size = 30
+    end
+    object qryFLPTransporte_Viagem: TStringField
+      FieldName = 'Transporte_Viagem'
+      Size = 15
+    end
     object qryFLPResponsavel: TStringField
       FieldName = 'Responsavel'
       Size = 15
@@ -2196,8 +2586,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   end
   object dsoFLP: TDataSource
     DataSet = qryFLP
-    Left = 30
-    Top = 354
+    Left = 13
+    Top = 339
   end
   object qryCLI: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -2207,8 +2597,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       ',CNPJ'
       'FROM Clientes')
     IndexFieldNames = 'Nome'
-    Left = 58
-    Top = 326
+    Left = 41
+    Top = 311
   end
   object qryRES: TMSQuery
     Connection = Dados.Banco
@@ -2216,8 +2606,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       'SELECT Matricula'
       ',Nome'
       'FROM Usuarios')
-    Left = 86
-    Top = 326
+    Left = 69
+    Top = 311
     object qryRESMatricula: TStringField
       FieldName = 'Matricula'
       Size = 15
@@ -2229,19 +2619,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   end
   object dsoCLI: TDataSource
     DataSet = qryCLI
-    Left = 30
-    Top = 326
+    Left = 13
+    Top = 311
   end
   object dsoRES: TDataSource
     DataSet = qryRES
-    Left = 30
-    Top = 382
+    Left = 13
+    Top = 367
   end
   object pEmpresas: TppDBPipeline
     DataSource = Dados.dsEmpresas
     UserName = 'pEmpresas'
-    Left = 114
-    Top = 326
+    Left = 97
+    Top = 311
     object pEmpresasppField1: TppField
       Alignment = taRightJustify
       FieldAlias = 'Codigo'
@@ -3975,8 +4365,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   object dlgSavePDF: TSaveDialog
     FileName = 'Acompanhamento FollowUp'
     Filter = 'Documento PDF (*.pdf)|*.pdf|Microsoft Excel (*.xls)|*.xls'
-    Left = 142
-    Top = 326
+    Left = 125
+    Top = 311
   end
   object qryPRH: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -3991,8 +4381,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     MasterFields = 'Processo'
     DetailFields = 'Processo'
     IndexFieldNames = 'Data;Hora'
-    Left = 58
-    Top = 382
+    Left = 41
+    Top = 367
     ParamData = <
       item
         DataType = ftString
@@ -4025,8 +4415,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   end
   object dbpPRH: TppBDEPipeline
     UserName = 'dbpPRH'
-    Left = 86
-    Top = 354
+    Left = 69
+    Top = 339
     MasterDataPipelineName = 'dbpFollowUp'
   end
   object pprXLS: TppReport
@@ -4034,6 +4424,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     DataPipeline = dbpFollowUp
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
+    PrinterSetup.Orientation = poLandscape
     PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
@@ -4041,8 +4432,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     PrinterSetup.mmMarginLeft = 6350
     PrinterSetup.mmMarginRight = 6350
     PrinterSetup.mmMarginTop = 6350
-    PrinterSetup.mmPaperHeight = 297000
-    PrinterSetup.mmPaperWidth = 210000
+    PrinterSetup.mmPaperHeight = 210000
+    PrinterSetup.mmPaperWidth = 297000
     PrinterSetup.PaperSize = 9
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
@@ -4083,25 +4474,54 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
-    XLSSettings.DefaultBands = [btHeader, btDetail]
+    XLSSettings.DefaultBands = [btHeader, btTitle, btDetail]
     XLSSettings.ExportComponents = [ecText, ecRichText]
     XLSSettings.IncludeSingleHeader = True
     XLSSettings.ScaleToPageWidth = True
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     XLSSettings.WorksheetName = 'Report'
-    Left = 114
-    Top = 382
+    Left = 97
+    Top = 367
     Version = '19.04'
-    mmColumnWidth = 197300
+    mmColumnWidth = 284300
     DataPipelineName = 'dbpFollowUp'
+    object ppTitleBand1: TppTitleBand
+      Background.Brush.Style = bsClear
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 4763
+      mmPrintPosition = 0
+      object ppLabel30: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'labParams1'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'Per'#237'odo'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 4
+        Font.Style = []
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        Transparent = True
+        mmHeight = 1588
+        mmLeft = 139965
+        mmTop = 1585
+        mmWidth = 4762
+        BandType = 1
+        LayerName = BandLayer2
+      end
+    end
     object ppHeaderBand1: TppHeaderBand
       Background.Brush.Style = bsClear
       Border.mmPadding = 0
       mmBottomOffset = 0
-      mmHeight = 1323
+      mmHeight = 3440
       mmPrintPosition = 0
-      object ppLabel29: TppLabel
+      object ppLabel31: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label12'
         AutoSize = False
@@ -4112,19 +4532,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
+        mmHeight = 1851
         mmLeft = 0
-        mmTop = 0
-        mmWidth = 5556
+        mmTop = 525
+        mmWidth = 7411
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel30: TppLabel
+      object ppLabel32: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label1'
         AutoSize = False
@@ -4135,19 +4555,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1320
-        mmLeft = 5798
-        mmTop = 0
-        mmWidth = 16669
+        mmHeight = 1850
+        mmLeft = 7645
+        mmTop = 525
+        mmWidth = 26209
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel31: TppLabel
+      object ppLabel33: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label2'
         AutoSize = False
@@ -4158,19 +4578,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 22734
-        mmTop = 0
-        mmWidth = 6085
+        mmHeight = 1851
+        mmLeft = 34101
+        mmTop = 525
+        mmWidth = 7675
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel32: TppLabel
+      object ppLabel34: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label3'
         AutoSize = False
@@ -4181,19 +4601,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 29075
-        mmTop = 0
-        mmWidth = 7144
+        mmHeight = 1851
+        mmLeft = 42028
+        mmTop = 525
+        mmWidth = 12709
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel33: TppLabel
+      object ppLabel35: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label4'
         AutoSize = False
@@ -4204,19 +4624,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 36476
-        mmTop = 0
-        mmWidth = 5556
+        mmHeight = 1851
+        mmLeft = 54998
+        mmTop = 525
+        mmWidth = 7411
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel34: TppLabel
+      object ppLabel36: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label5'
         AutoSize = False
@@ -4227,19 +4647,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 42296
-        mmTop = 0
-        mmWidth = 8202
+        mmHeight = 1851
+        mmLeft = 62669
+        mmTop = 525
+        mmWidth = 10587
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel35: TppLabel
+      object ppLabel37: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label6'
         AutoSize = False
@@ -4250,19 +4670,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 50758
-        mmTop = 0
-        mmWidth = 6085
+        mmHeight = 1851
+        mmLeft = 73512
+        mmTop = 525
+        mmWidth = 8205
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel36: TppLabel
+      object ppLabel38: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label7'
         AutoSize = False
@@ -4273,19 +4693,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 57105
-        mmTop = 0
-        mmWidth = 6085
+        mmHeight = 1851
+        mmLeft = 81979
+        mmTop = 525
+        mmWidth = 8205
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel37: TppLabel
+      object ppLabel39: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label8'
         AutoSize = False
@@ -4296,19 +4716,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 63452
-        mmTop = 0
-        mmWidth = 5292
+        mmHeight = 1851
+        mmLeft = 90442
+        mmTop = 525
+        mmWidth = 7147
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel38: TppLabel
+      object ppLabel40: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label9'
         AutoSize = False
@@ -4319,19 +4739,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 69003
-        mmTop = 0
-        mmWidth = 7673
+        mmHeight = 1851
+        mmLeft = 97844
+        mmTop = 525
+        mmWidth = 10588
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel39: TppLabel
+      object ppLabel41: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label10'
         AutoSize = False
@@ -4342,19 +4762,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 76938
-        mmTop = 0
-        mmWidth = 5556
+        mmHeight = 1851
+        mmLeft = 108682
+        mmTop = 525
+        mmWidth = 6881
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel40: TppLabel
+      object ppLabel42: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label101'
         AutoSize = False
@@ -4365,20 +4785,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         TextAlignment = taRightJustified
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 82750
-        mmTop = 0
-        mmWidth = 6350
+        mmHeight = 1851
+        mmLeft = 115819
+        mmTop = 525
+        mmWidth = 9000
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel41: TppLabel
+      object ppLabel43: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label13'
         AutoSize = False
@@ -4389,19 +4809,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 89366
-        mmTop = 0
-        mmWidth = 5027
+        mmHeight = 1851
+        mmLeft = 125085
+        mmTop = 525
+        mmWidth = 6617
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel42: TppLabel
+      object ppLabel44: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label14'
         AutoSize = False
@@ -4412,19 +4832,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 94671
-        mmTop = 0
-        mmWidth = 5027
+        mmHeight = 1851
+        mmLeft = 131980
+        mmTop = 525
+        mmWidth = 8207
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel44: TppLabel
+      object ppLabel45: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label16'
         AutoSize = False
@@ -4435,19 +4855,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 100214
-        mmTop = 0
-        mmWidth = 8996
+        mmHeight = 1851
+        mmLeft = 140434
+        mmTop = 525
+        mmWidth = 12971
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel45: TppLabel
+      object ppLabel46: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label17'
         AutoSize = False
@@ -4458,19 +4878,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 109481
-        mmTop = 0
-        mmWidth = 8202
+        mmHeight = 1851
+        mmLeft = 153668
+        mmTop = 525
+        mmWidth = 14032
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel46: TppLabel
+      object ppLabel47: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label18'
         AutoSize = False
@@ -4481,19 +4901,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 117992
-        mmTop = 0
-        mmWidth = 8202
+        mmHeight = 1851
+        mmLeft = 168001
+        mmTop = 524
+        mmWidth = 17742
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel47: TppLabel
+      object ppLabel48: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label19'
         AutoSize = False
@@ -4504,19 +4924,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 126459
-        mmTop = 0
-        mmWidth = 6085
+        mmHeight = 1851
+        mmLeft = 201607
+        mmTop = 524
+        mmWidth = 12445
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel48: TppLabel
+      object ppLabel49: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label20'
         AutoSize = False
@@ -4527,19 +4947,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 132810
-        mmTop = 0
+        mmHeight = 1851
+        mmLeft = 214298
+        mmTop = 524
         mmWidth = 7673
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel49: TppLabel
+      object ppLabel50: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label201'
         AutoSize = False
@@ -4550,42 +4970,42 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 140754
-        mmTop = 0
-        mmWidth = 5292
+        mmHeight = 1851
+        mmLeft = 222254
+        mmTop = 524
+        mmWidth = 6882
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel50: TppLabel
+      object ppLabel51: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label22'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
-        Caption = ' PREVISAO CHEGADA'
+        Caption = ' PREV.CHEGADA'
         Color = 10184960
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 146308
-        mmTop = 0
-        mmWidth = 8731
+        mmHeight = 1851
+        mmLeft = 229386
+        mmTop = 524
+        mmWidth = 9526
         BandType = 0
         LayerName = BandLayer2
       end
-      object ppLabel51: TppLabel
+      object ppLabel52: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label23'
         AutoSize = False
@@ -4596,65 +5016,65 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 155301
-        mmTop = 0
-        mmWidth = 5292
-        BandType = 0
-        LayerName = BandLayer2
-      end
-      object ppLabel52: TppLabel
-        DesignLayer = ppDesignLayer1
-        UserName = 'Label24'
-        AutoSize = False
-        Border.Weight = 1.000000000000000000
-        Border.mmPadding = 0
-        Caption = ' DOCUMENTOS'
-        Color = 10184960
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWhite
-        Font.Name = 'Arial'
-        Font.Size = 2
-        Font.Style = [fsBold]
-        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
-        FormFieldSettings.FormFieldType = fftNone
-        VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 160854
-        mmTop = 0
-        mmWidth = 5821
+        mmHeight = 1851
+        mmLeft = 239182
+        mmTop = 524
+        mmWidth = 6352
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel53: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label25'
+        UserName = 'Label24'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
-        Caption = ' PRESENCA DE CARGA'
+        Caption = ' DOC.'
         Color = 10184960
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1321
-        mmLeft = 166944
-        mmTop = 0
-        mmWidth = 8731
+        mmHeight = 1851
+        mmLeft = 245791
+        mmTop = 524
+        mmWidth = 6086
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel54: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label25'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = ' PRES. CARGA'
+        Color = 10184960
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        VerticalAlignment = avCenter
+        mmHeight = 1851
+        mmLeft = 252150
+        mmTop = 524
+        mmWidth = 8731
+        BandType = 0
+        LayerName = BandLayer2
+      end
+      object ppLabel55: TppLabel
         DesignLayer = ppDesignLayer1
         UserName = 'Label26'
         AutoSize = False
@@ -4665,15 +5085,84 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
-        mmHeight = 1323
-        mmLeft = 175937
-        mmTop = 0
-        mmWidth = 21441
+        mmHeight = 1853
+        mmLeft = 261139
+        mmTop = 522
+        mmWidth = 17720
+        BandType = 0
+        LayerName = BandLayer2
+      end
+      object ppLabel56: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label15'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = ' RESP.'
+        Color = 10184960
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        VerticalAlignment = avCenter
+        mmHeight = 1851
+        mmLeft = 279133
+        mmTop = 524
+        mmWidth = 6086
+        BandType = 0
+        LayerName = BandLayer2
+      end
+      object ppLabel57: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label27'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = ' NAVIO'
+        Color = 10184960
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        VerticalAlignment = avCenter
+        mmHeight = 1851
+        mmLeft = 186004
+        mmTop = 524
+        mmWidth = 8207
+        BandType = 0
+        LayerName = BandLayer2
+      end
+      object ppLabel58: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label28'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = ' VIAGEM'
+        Color = 10184960
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        VerticalAlignment = avCenter
+        mmHeight = 1851
+        mmLeft = 194467
+        mmTop = 524
+        mmWidth = 6879
         BandType = 0
         LayerName = BandLayer2
       end
@@ -4684,9 +5173,9 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       Border.mmPadding = 0
       PrintHeight = phDynamic
       mmBottomOffset = 0
-      mmHeight = 1852
+      mmHeight = 3175
       mmPrintPosition = 0
-      object ppDBText28: TppDBText
+      object ppDBText29: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText1'
         Border.mmPadding = 0
@@ -4695,20 +5184,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
+        mmHeight = 1852
         mmLeft = 0
         mmTop = 0
-        mmWidth = 5556
+        mmWidth = 7411
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText29: TppDBText
+      object ppDBText30: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText2'
         Border.mmPadding = 0
@@ -4717,20 +5206,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 5798
+        mmHeight = 1852
+        mmLeft = 7645
         mmTop = 0
-        mmWidth = 16669
+        mmWidth = 26209
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText30: TppDBText
+      object ppDBText31: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText3'
         Border.mmPadding = 0
@@ -4739,20 +5228,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 22734
+        mmHeight = 1852
+        mmLeft = 34101
         mmTop = 0
-        mmWidth = 6085
+        mmWidth = 7675
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText31: TppDBText
+      object ppDBText32: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText5'
         Border.mmPadding = 0
@@ -4761,20 +5250,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 29075
+        mmHeight = 1852
+        mmLeft = 42028
         mmTop = 0
-        mmWidth = 7144
+        mmWidth = 12709
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText32: TppDBText
+      object ppDBText33: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText6'
         Border.mmPadding = 0
@@ -4783,20 +5272,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 36476
+        mmHeight = 1852
+        mmLeft = 54998
         mmTop = 0
-        mmWidth = 5556
+        mmWidth = 7411
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText33: TppDBText
+      object ppDBText34: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText7'
         Border.mmPadding = 0
@@ -4805,20 +5294,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 42296
+        mmHeight = 1852
+        mmLeft = 62669
         mmTop = 0
-        mmWidth = 8202
+        mmWidth = 10587
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText34: TppDBText
+      object ppDBText35: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText4'
         Border.mmPadding = 0
@@ -4827,20 +5316,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 50758
+        mmHeight = 1852
+        mmLeft = 73512
         mmTop = 0
-        mmWidth = 6085
+        mmWidth = 8205
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText35: TppDBText
+      object ppDBText36: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText9'
         Border.mmPadding = 0
@@ -4849,20 +5338,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 57105
+        mmHeight = 1852
+        mmLeft = 81979
         mmTop = 0
-        mmWidth = 6085
+        mmWidth = 8205
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText36: TppDBText
+      object ppDBText37: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText10'
         Border.mmPadding = 0
@@ -4871,20 +5360,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 63452
+        mmHeight = 1852
+        mmLeft = 90442
         mmTop = 0
-        mmWidth = 5292
+        mmWidth = 7147
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText37: TppDBText
+      object ppDBText38: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText11'
         Border.mmPadding = 0
@@ -4893,20 +5382,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 69003
+        mmHeight = 1852
+        mmLeft = 97844
         mmTop = 0
-        mmWidth = 7673
+        mmWidth = 10588
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText38: TppDBText
+      object ppDBText39: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText12'
         Border.mmPadding = 0
@@ -4915,20 +5404,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 76938
+        mmHeight = 1852
+        mmLeft = 108682
         mmTop = 0
-        mmWidth = 5556
+        mmWidth = 6881
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText39: TppDBText
+      object ppDBText40: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText13'
         Border.mmPadding = 0
@@ -4938,21 +5427,21 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         TextAlignment = taRightJustified
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 82750
+        mmHeight = 1852
+        mmLeft = 115819
         mmTop = 0
-        mmWidth = 6350
+        mmWidth = 9000
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText40: TppDBText
+      object ppDBText41: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText14'
         Border.mmPadding = 0
@@ -4961,20 +5450,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 89366
+        mmHeight = 1852
+        mmLeft = 125085
         mmTop = 0
-        mmWidth = 5027
+        mmWidth = 6617
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText41: TppDBText
+      object ppDBText43: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText15'
         Border.mmPadding = 0
@@ -4983,20 +5472,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 94671
+        mmHeight = 1852
+        mmLeft = 131980
         mmTop = 0
-        mmWidth = 5027
+        mmWidth = 8207
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText43: TppDBText
+      object ppDBText44: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText17'
         Border.mmPadding = 0
@@ -5005,20 +5494,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 100214
+        mmHeight = 1852
+        mmLeft = 140434
         mmTop = 0
-        mmWidth = 8996
+        mmWidth = 12971
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText44: TppDBText
+      object ppDBText45: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText18'
         Border.mmPadding = 0
@@ -5027,42 +5516,42 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 109481
+        mmHeight = 1852
+        mmLeft = 153668
         mmTop = 0
-        mmWidth = 8202
-        BandType = 4
-        LayerName = BandLayer2
-      end
-      object ppDBText45: TppDBText
-        DesignLayer = ppDesignLayer1
-        UserName = 'DBText19'
-        Border.mmPadding = 0
-        DataField = 'DESPACHANTE'
-        DataPipeline = dbpFollowUp
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Name = 'Arial'
-        Font.Size = 2
-        Font.Style = []
-        ParentDataPipeline = False
-        Transparent = True
-        VerticalAlignment = avCenter
-        DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 117992
-        mmTop = 0
-        mmWidth = 8202
+        mmWidth = 14032
         BandType = 4
         LayerName = BandLayer2
       end
       object ppDBText46: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DBText19'
+        Border.mmPadding = 0
+        DataField = 'DESPACHANTE_NOME'
+        DataPipeline = dbpFollowUp
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpFollowUp'
+        mmHeight = 1852
+        mmLeft = 168001
+        mmTop = 0
+        mmWidth = 17742
+        BandType = 4
+        LayerName = BandLayer2
+      end
+      object ppDBText47: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText20'
         Border.mmPadding = 0
@@ -5071,20 +5560,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 126459
+        mmHeight = 1852
+        mmLeft = 201607
         mmTop = 0
-        mmWidth = 6085
+        mmWidth = 12445
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText47: TppDBText
+      object ppDBText48: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText201'
         Border.mmPadding = 0
@@ -5093,20 +5582,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 132810
+        mmHeight = 1852
+        mmLeft = 214298
         mmTop = 0
         mmWidth = 7673
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText48: TppDBText
+      object ppDBText49: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText22'
         Border.mmPadding = 0
@@ -5115,20 +5604,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 140754
+        mmHeight = 1852
+        mmLeft = 222254
         mmTop = 0
-        mmWidth = 5292
+        mmWidth = 6882
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText49: TppDBText
+      object ppDBText50: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText23'
         Border.mmPadding = 0
@@ -5137,20 +5626,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 146308
+        mmHeight = 1852
+        mmLeft = 229386
         mmTop = 0
-        mmWidth = 8731
+        mmWidth = 9526
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText50: TppDBText
+      object ppDBText51: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText24'
         Border.mmPadding = 0
@@ -5159,20 +5648,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 155301
+        mmHeight = 1852
+        mmLeft = 239182
         mmTop = 0
-        mmWidth = 5292
+        mmWidth = 6352
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText51: TppDBText
+      object ppDBText52: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText25'
         Border.mmPadding = 0
@@ -5181,20 +5670,20 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 160854
+        mmHeight = 1852
+        mmLeft = 245791
         mmTop = 0
-        mmWidth = 5821
+        mmWidth = 6086
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBText52: TppDBText
+      object ppDBText53: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBText26'
         Border.mmPadding = 0
@@ -5203,14 +5692,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         ParentDataPipeline = False
         Transparent = True
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1321
-        mmLeft = 166944
+        mmHeight = 1852
+        mmLeft = 252150
         mmTop = 0
         mmWidth = 8731
         BandType = 4
@@ -5226,17 +5715,17 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Name = 'Arial'
-        Font.Size = 2
+        Font.Size = 3
         Font.Style = []
         RemoveEmptyLines = False
         Stretch = True
         TextAlignment = taFullJustified
         Transparent = True
         DataPipelineName = 'dbpFollowUp'
-        mmHeight = 1323
-        mmLeft = 175937
+        mmHeight = 1852
+        mmLeft = 261139
         mmTop = 0
-        mmWidth = 21441
+        mmWidth = 17456
         BandType = 4
         LayerName = BandLayer2
         mmBottomOffset = 0
@@ -5254,12 +5743,83 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         StretchWithParent = True
         Weight = 0.200000002980232200
         mmHeight = 792
-        mmLeft = 0
-        mmTop = 1054
-        mmWidth = 197380
+        mmLeft = 265
+        mmTop = 2367
+        mmWidth = 284957
         BandType = 4
         LayerName = BandLayer2
       end
+      object ppDBText54: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DBText16'
+        Border.mmPadding = 0
+        DataField = 'Responsavel'
+        DataPipeline = dbpFollowUp
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = []
+        Transparent = True
+        DataPipelineName = 'dbpFollowUp'
+        mmHeight = 1852
+        mmLeft = 279398
+        mmTop = 0
+        mmWidth = 6081
+        BandType = 4
+        LayerName = BandLayer2
+      end
+      object ppDBText55: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DBText27'
+        Border.mmPadding = 0
+        DataField = 'Nome_Transporte'
+        DataPipeline = dbpFollowUp
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpFollowUp'
+        mmHeight = 1852
+        mmLeft = 186004
+        mmTop = 0
+        mmWidth = 8207
+        BandType = 4
+        LayerName = BandLayer2
+      end
+      object ppDBText56: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DBText42'
+        Border.mmPadding = 0
+        DataField = 'Transporte_Viagem'
+        DataPipeline = dbpFollowUp
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = []
+        ParentDataPipeline = False
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpFollowUp'
+        mmHeight = 1852
+        mmLeft = 194467
+        mmTop = 0
+        mmWidth = 6879
+        BandType = 4
+        LayerName = BandLayer2
+      end
+    end
+    object ppFooterBand2: TppFooterBand
+      Background.Brush.Style = bsClear
+      Border.mmPadding = 0
+      mmBottomOffset = 0
+      mmHeight = 5027
+      mmPrintPosition = 0
     end
     object ppDesignLayers1: TppDesignLayers
       object ppDesignLayer1: TppDesignLayer
