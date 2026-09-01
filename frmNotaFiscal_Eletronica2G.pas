@@ -4042,7 +4042,6 @@ begin
             // Indicador de finalidade.
             If (ClientesConsumidor_Final.AsBoolean) then ide_Final := 1;
 
-
             // Indicador de destinatario.
             If PedidosDestinatario_Estado.Value =  EmpresasEstado.Value then
                ide_Dest := 1;
@@ -4055,7 +4054,7 @@ begin
             ide_NFRef := '';
 
 //            if (TipoNotaNota_Referencia.AsBoolean) or (TipoNotaFinalidade_Mercadoria.AsInteger = 2) then begin
-            if (trim(TipoNotaTipo_NFDebito.asstring+TipoNotaTipo_NFCredito.asstring) <> '') and (TipoNotaFinalidade_Mercadoria.AsInteger <> 2) then begin
+            if ((trim(TipoNotaTipo_NFDebito.asstring+TipoNotaTipo_NFCredito.asstring) <> '') and (TipoNotaFinalidade_Mercadoria.AsInteger <> 2)) or PedidosComplementar.AsBoolean then begin
                PedidosItensReferencia.SQL.Clear;
                PedidosItensReferencia.SQL.Add('SELECT * FROM PedidosItensReferencia');
                PedidosItensReferencia.SQL.Add('WHERE ISNULL(Chave_Referencia, '''') <> '''' ');

@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DB, DBAccess, MSAccess, Grids, DBGrids, RXDBCtrl, Vcl.StdCtrls, DBCtrls, Vcl.ExtCtrls,
-  Vcl.ComCtrls, RXCtrls, Funcoes, IniFiles, DateUtils, Mask, RxCurrEdit, RxToolEdit, system.UITypes, MemDS;
+  Vcl.ComCtrls, RXCtrls, Funcoes, IniFiles, DateUtils, Mask, RxCurrEdit, RxToolEdit, system.UITypes, MemDS, RxLookup;
 
 type
   TUtilitarios_ExportaRemessaBoletos = class(TForm)
@@ -34,6 +34,8 @@ type
     cFiltro: TRadioGroup;
     ttmp: TMSQuery;
     tEnvio: TMSQuery;
+    StaticText3: TStaticText;
+    cComando: TRxDBLookupCombo;
     procedure bSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -83,11 +85,12 @@ Var
    aINI : TIniFile;
 begin
       // Carregando as ultimas opções utilizadas no relatório como default.
-      aINI            := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
-      cBanco.KeyValue := aINI.ReadInteger('REMESSAO_BANCO_BOLETOS', 'Banco'  , -1 );
-      cDataIni.Date   := aINI.ReadDate   ('REMESSAO_BANCO_BOLETOS', 'DataIni', Date );
-      cDataFim.Date   := aINI.ReadDate   ('REMESSAO_BANCO_BOLETOS', 'DataFim', Date );
-      cTeste.Checked  := aINI.ReadBool   ('REMESSAO_BANCO_BOLETOS', 'Teste'  , true );
+      aINI              := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
+      cBanco.KeyValue   := aINI.ReadInteger('REMESSAO_BANCO_BOLETOS', 'Banco'  , -1 );
+      cComando.KeyValue := aINI.ReadInteger('REMESSAO_BANCO_BOLETOS', 'Comando' , 1 );
+      cDataIni.Date     := aINI.ReadDate   ('REMESSAO_BANCO_BOLETOS', 'DataIni', Date );
+      cDataFim.Date     := aINI.ReadDate   ('REMESSAO_BANCO_BOLETOS', 'DataFim', Date );
+      cTeste.Checked    := aINI.ReadBool   ('REMESSAO_BANCO_BOLETOS', 'Teste'  , true );
       aINI.Free;
 
       With Dados do begin
@@ -104,6 +107,10 @@ begin
            Clientes.SQL.Add('SELECT * FROM Clientes ORDER BY Codigo');
            Clientes.Open;
 
+           BoletoComando.sql.clear;
+           BoletoComando.sql.add('select * from BoletoComando order by Codigo');
+           BoletoComando.open;
+
            Configuracao.Open;
 
            cFiltro.ItemIndex := 0;
@@ -119,6 +126,7 @@ begin
       // Registrando as opções utilizadas no relatório para ficar como default.
       aIni := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
       aINI.WriteInteger('REMESSAO_BANCO_BOLETOS', 'Banco'  , iif(cBanco.Text <> '', cBanco.KeyValue, -1));
+      aINI.WriteInteger('REMESSAO_BANCO_BOLETOS', 'Comando', iif(cComando.Text <> '', cComando.KeyValue, 1));
       aINI.WriteDate   ('REMESSAO_BANCO_BOLETOS', 'DataIni', cDataIni.Date );
       aINI.WriteDate   ('REMESSAO_BANCO_BOLETOS', 'DataFim', cDataFim.Date );
       aINI.WriteBool   ('REMESSAO_BANCO_BOLETOS', 'Teste'  , cTeste.Checked );
@@ -344,7 +352,8 @@ begin
                    Say( mLinha, 082, Arquivo, '0000000000' );                                                                                           // Desconto Bonificação por dia.
                    Say( mLinha, 092, Arquivo, '2' );                                                                                                    // Condição para Emissão da Papeleta de Cobrança.
                    Say( mLinha, 093, Arquivo, 'N' );                                                                                                    // Ident. se emite papeleta para Débito Automático.
-                   Say( mLinha, 108, Arquivo, '01' );                                                                                                   // Identificação ocorrência.
+//                   Say( mLinha, 108, Arquivo, '01' );                                                                                                   // Identificação ocorrência.
+                   Say( mLinha, 108, Arquivo, PoeZero(2, BoletoComandoCodigo.asinteger));                                                               // 11 IDENTIFICAÇÃO DA OCORRÊNCIA.
                    Say( mLinha, 110, Arquivo, PoeZero(10, tBoletos.FieldByName('Numero_Documento').AsInteger) );                                        // Número do documento.
                    Say( mLinha, 120, Arquivo, mDataVenc );                                                                                              // Data do Vencimento do Título.
                    Say( mLinha, 126, Arquivo, StrZero(ApenasNumeros(FormatFloat('#,##0.00',tBoletos.FieldByName('Valor_Documento').AsCurrency)), 13) ); // Valor do Título.
@@ -455,7 +464,8 @@ begin
                    Say( mLinha, 094, Arquivo, '0' );
                    Say( mLinha, 095, Arquivo, '000000' );
                    Say( mLinha, 106, Arquivo, Trim(tBoletos.FieldByName('Carteira').AsString) );
-                   Say( mLinha, 108, Arquivo, '01');
+//                   Say( mLinha, 108, Arquivo, '01');
+                   Say( mLinha, 108, Arquivo, PoeZero(2, BoletoComandoCodigo.asinteger));                                                               // 11 Identificação da ocorrência.
                    Say( mLinha, 110, Arquivo, PoeZero(10, tBoletos.FieldByName('Numero_Documento').value) );
                    Say( mLinha, 120, Arquivo, mDataVenc );
                    Say( mLinha, 126, Arquivo, StrZero(ApenasNumeros(FormatFloat('#,##0.00',tBoletos.FieldByName('Valor_Documento').AsCurrency)), 13));
@@ -588,10 +598,9 @@ begin
                    Say( mLinha, 023, Arquivo, Copy(Trim(BancosConta.AsString), 1, 5));                                                                  // 06 NÚMERO DA CONTA CORRENTE DA EMPRESA.
                    Say( mLinha, 028, Arquivo, mDigitoCC);                                                                                               // 07 DÍGITO DE AUTO CONFERÊNCIA AG/CONTA EMPRESA.
                    Say( mLinha, 062, Arquivo, Trim(tBoletos.FieldByName('Numero_Documento').AsString));                                                 // 08 IDENTIFICAÇÃO DO TÍTULO NO BANCO.
-                   //Say( mLinha, 083, Arquivo, Trim(BancosCarteira.AsString) );                                                                          // 09 NÚMERO DA CARTEIRA NO BANCO.
                    Say( mLinha, 083, Arquivo, Trim(tBoletos.FieldByName('Carteira').AsString) );                                                        // 09 NÚMERO DA CARTEIRA NO BANCO.
                    Say( mLinha, 107, Arquivo, 'I');                                                                                                     // 10 CÓDIGO DA CARTEIRA.
-                   Say( mLinha, 108, Arquivo, '01');                                                                                                    // 11 IDENTIFICAÇÃO DA OCORRÊNCIA.
+                   Say( mLinha, 108, Arquivo, PoeZero(2, BoletoComandoCodigo.asinteger));                                                               // 11 IDENTIFICAÇÃO DA OCORRÊNCIA.
                    Say( mLinha, 110, Arquivo, Trim(tBoletos.FieldByName('Numero_Documento').AsString));                                                 // 12 Nº DO DOCUMENTO DE COBRANÇA.
                    Say( mLinha, 120, Arquivo, mDataVenc );                                                                                              // 13 DATA DE VENCIMENTO DO TÍTULO.
                    Say( mLinha, 126, Arquivo, StrZero(ApenasNumeros(FormatFloat('#,##0.00',tBoletos.FieldByName('Valor_Documento').AsCurrency)), 13) ); // 14 VALOR NOMINAL DO TÍTULO.
@@ -622,7 +631,6 @@ begin
                    Say( mLinha, 349, Arquivo, UpperCase(RemoveAcentos(Trim(Clientes.FieldByName('Estado').AsString))));                                 // 34 UF DO SACADO.
                    Say( mLinha, 391, Arquivo, FormatFloat('00',ConfiguracaoBoleto_ProtestoDias.AsInteger));                                             // 35 QUANTIDADE DE DIAS.
                    Say( mLinha, 394, Arquivo, PoeZero(6, mItem));                                                                                       // 36 Nº Seqüencial do Registro de Um em Um.
-
                    Inc(mLinha);
 
                    tBoletos.Next;
@@ -630,6 +638,15 @@ begin
                    Application.ProcessMessages;
              End;
 
+             // Registro de detalhe do Bolecode.
+             if trim(BancosChave_PIX.asstring) <> '' then begin
+                Inc(mItem);
+                Say( mLinha, 000, Arquivo, '3' );                               // Identificação Registro.
+                Say( mLinha, 001, Arquivo, trim(BancosChave_PIX.asstring));     // Chave PIX.
+                Say( mLinha, 394, Arquivo, PoeZero(6, mItem) );                 // Nº Sequencial de Registro no Arquivo.
+                Inc(mLinha);
+             end;
+             
              // Registro Trailer do arquivo.
              mTrayler := false;
              Inc(mItem);
@@ -722,7 +739,8 @@ begin
                    Say( mLinha, 084, Arquivo, '0000000000000');                                                                                         // Valor do boleto em outra unidade.
                    Say( mLinha, 101, Arquivo, '000000');                                                                                                // Data para cobrança de multa.
                    Say( mLinha, 107, Arquivo, '5');                                                                                                     // Condição para Emissão da Papeleta de Cobrança.
-                   Say( mLinha, 108, Arquivo, '01');                                                                                                    // Codigo da ocorrência.
+//                   Say( mLinha, 108, Arquivo, '01');                                                                                                    // Codigo da ocorrência.
+                   Say( mLinha, 108, Arquivo, PoeZero(2, BoletoComandoCodigo.asinteger));                                                               // 11 IDENTIFICAÇÃO DA OCORRÊNCIA.
                    Say( mLinha, 110, Arquivo, PoeZero(10, tBoletos.FieldByName('Numero_Documento').AsInteger) );                                        // Número do documento.
                    Say( mLinha, 120, Arquivo, mDataVenc );                                                                                              // Data do Vencimento do Título.
                    Say( mLinha, 126, Arquivo, StrZero(ApenasNumeros(FormatFloat('#,##0.00',tBoletos.FieldByName('Valor_Documento').AsCurrency)), 13) ); // Valor do Título.

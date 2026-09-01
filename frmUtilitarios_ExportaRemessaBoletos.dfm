@@ -166,7 +166,7 @@ object Utilitarios_ExportaRemessaBoletos: TUtilitarios_ExportaRemessaBoletos
     end
     object StaticText4: TStaticText
       Left = 6
-      Top = 75
+      Top = 98
       Width = 99
       Height = 21
       AutoSize = False
@@ -184,7 +184,7 @@ object Utilitarios_ExportaRemessaBoletos: TUtilitarios_ExportaRemessaBoletos
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 5
+      TabOrder = 6
       Transparent = False
       Visible = False
       StyleElements = []
@@ -192,7 +192,7 @@ object Utilitarios_ExportaRemessaBoletos: TUtilitarios_ExportaRemessaBoletos
     object cBanco: TDBLookupComboBox
       Left = 107
       Top = 6
-      Width = 413
+      Width = 595
       Height = 21
       DropDownRows = 15
       Font.Charset = DEFAULT_CHARSET
@@ -228,7 +228,7 @@ object Utilitarios_ExportaRemessaBoletos: TUtilitarios_ExportaRemessaBoletos
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 6
+      TabOrder = 7
       Transparent = False
       StyleElements = []
     end
@@ -340,7 +340,7 @@ object Utilitarios_ExportaRemessaBoletos: TUtilitarios_ExportaRemessaBoletos
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 7
+      TabOrder = 8
       Transparent = False
       StyleElements = []
     end
@@ -431,12 +431,12 @@ object Utilitarios_ExportaRemessaBoletos: TUtilitarios_ExportaRemessaBoletos
       NumGlyphs = 2
       ParentFont = False
       YearDigits = dyFour
-      TabOrder = 3
+      TabOrder = 5
     end
     object cNomeArquivo: TEdit
       Left = 107
-      Top = 75
-      Width = 413
+      Top = 98
+      Width = 595
       Height = 21
       Enabled = False
       Font.Charset = DEFAULT_CHARSET
@@ -468,7 +468,7 @@ object Utilitarios_ExportaRemessaBoletos: TUtilitarios_ExportaRemessaBoletos
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      TabOrder = 8
+      TabOrder = 9
       Transparent = False
       StyleElements = []
     end
@@ -487,13 +487,13 @@ object Utilitarios_ExportaRemessaBoletos: TUtilitarios_ExportaRemessaBoletos
       Font.Name = 'Tahoma'
       Font.Style = [fsBold]
       ParentFont = False
-      TabOrder = 9
+      TabOrder = 3
     end
     object Grade: TDBGrid
       Left = 6
-      Top = 102
+      Top = 131
       Width = 701
-      Height = 345
+      Height = 316
       DataSource = Dados.dsBoletos
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -606,6 +606,48 @@ object Utilitarios_ExportaRemessaBoletos: TUtilitarios_ExportaRemessaBoletos
         'Todos')
       TabOrder = 11
       OnClick = cFiltroClick
+    end
+    object StaticText3: TStaticText
+      Left = 6
+      Top = 75
+      Width = 99
+      Height = 21
+      AutoSize = False
+      BevelInner = bvNone
+      BevelKind = bkSoft
+      BevelOuter = bvSpace
+      BorderStyle = sbsSunken
+      Caption = 'Comando'
+      Color = 7293440
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWhite
+      Font.Height = -11
+      Font.Name = 'Calibri'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 12
+      Transparent = False
+      StyleElements = []
+    end
+    object cComando: TRxDBLookupCombo
+      Left = 107
+      Top = 75
+      Width = 595
+      Height = 21
+      DropDownCount = 20
+      DisplayAllFields = True
+      FieldsDelimiter = '|'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      LookupField = 'Codigo'
+      LookupDisplay = 'Codigo;Descricao'
+      LookupSource = Dados.dsBoletoComando
+      ParentFont = False
+      TabOrder = 13
     end
   end
   object cTeste: TCheckBox

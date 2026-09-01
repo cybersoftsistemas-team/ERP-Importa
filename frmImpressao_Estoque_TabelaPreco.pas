@@ -143,12 +143,14 @@ begin
       end;
       //iLogo.Picture.LoadFromFile(Dados.EmpresasLogo.Value);
       tProdutos.SQL.Clear;
+      tProdutos.sql.add('if object_id(''tempdb..#temp'') is not null drop table #temp');
       tProdutos.SQL.Add('SELECT Codigo');
       tProdutos.SQL.Add('      ,Codigo_Fabricante');
       tProdutos.SQL.Add('      ,GTIN');
       tProdutos.SQL.Add('      ,GTIN_Unidade');
       tProdutos.SQL.Add('      ,Codigo_SKU');
       tProdutos.SQL.Add('      ,Descricao = ltrim(rtrim(replace(replace(Descricao, ''<{''+ltrim(rtrim(cast(Codigo as varchar(10))))+''}>'', ''''), char(10), '''')))');
+      tProdutos.SQL.Add('      ,Descricao_Reduzida');
       tProdutos.SQL.Add('      ,Unidade');
       tProdutos.SQL.Add('      ,Valor_Venda');
       tProdutos.SQL.add('      ,Linha = (select Descricao from ProdutosLinhas where Codigo = Linha)');

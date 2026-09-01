@@ -4577,6 +4577,10 @@ type
     PagarReceberValor_TotalPed: TCurrencyField;
     ContainerTaxa: TFloatField;
     PedidosItensItem_Referencia: TSmallintField;
+    BoletoComando: TMSQuery;
+    dsBoletoComando: TDataSource;
+    BoletoComandoCodigo: TSmallintField;
+    BoletoComandoDescricao: TStringField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);

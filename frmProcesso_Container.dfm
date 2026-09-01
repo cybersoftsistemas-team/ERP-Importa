@@ -936,7 +936,7 @@ object Processo_Container: TProcesso_Container
       Transparent = False
       StyleElements = []
     end
-    object DBDateEdit2: TDBDateEdit
+    object cDataEntrega: TDBDateEdit
       Left = 97
       Top = 247
       Width = 101
@@ -1027,6 +1027,7 @@ object Processo_Container: TProcesso_Container
       ParentFont = False
       TabOrder = 16
       YearDigits = dyFour
+      OnExit = cDataEntregaExit
     end
     object DBEdit2: TDBEdit
       Left = 234

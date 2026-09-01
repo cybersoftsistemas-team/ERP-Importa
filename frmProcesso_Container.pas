@@ -43,7 +43,7 @@ type
     DBEdit1: TDBEdit;
     StaticText13: TStaticText;
     StaticText14: TStaticText;
-    DBDateEdit2: TDBDateEdit;
+    cDataEntrega: TDBDateEdit;
     DBEdit2: TDBEdit;
     StaticText15: TStaticText;
     StaticText16: TStaticText;
@@ -95,6 +95,7 @@ type
     procedure cValorDemurrageChange(Sender: TObject);
     procedure cTipoEmbarqueExit(Sender: TObject);
     procedure bAdicionarProcessoClick(Sender: TObject);
+    procedure cDataEntregaExit(Sender: TObject);
   private
     { Private declarations }
   public
@@ -236,6 +237,11 @@ begin
           If (Container.State = dsInsert) or (Container.State = dsEdit) then
               ContainerData_Saida.Value := ContainerData_Entrada.Value + ContainerFree_Time.Value;
      End;
+end;
+
+procedure TProcesso_Container.cDataEntregaExit(Sender: TObject);
+begin
+     CalculaDemurrage;
 end;
 
 procedure TProcesso_Container.DBEdit4Exit(Sender: TObject);

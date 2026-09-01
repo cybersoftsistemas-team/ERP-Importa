@@ -3,7 +3,7 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
   Top = 260
   BorderStyle = bsDialog
   Caption = 'Impressao_ProcessosOP_Container'
-  ClientHeight = 294
+  ClientHeight = 345
   ClientWidth = 524
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -63,14 +63,13 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
   end
   object Panel1: TPanel
     Left = 0
-    Top = 264
+    Top = 315
     Width = 524
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 5
-    ExplicitTop = 194
-    ExplicitWidth = 506
+    ExplicitTop = 264
     DesignSize = (
       524
       30)
@@ -87,7 +86,6 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
-      ExplicitLeft = 430
     end
     object bImprimir: TButton
       Left = 374
@@ -102,7 +100,6 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
       ShowHint = True
       TabOrder = 1
       OnClick = bImprimirClick
-      ExplicitLeft = 356
     end
     object bLimpar: TButton
       Left = 300
@@ -117,12 +114,11 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
       ShowHint = True
       TabOrder = 2
       OnClick = bLimparClick
-      ExplicitLeft = 282
     end
   end
   object cSituacao: TRadioGroup
-    Left = 16
-    Top = 146
+    Left = 17
+    Top = 155
     Width = 150
     Height = 90
     Caption = 'Situa'#231#227'o'
@@ -440,8 +436,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
     StyleElements = []
   end
   object cDemurrage: TRadioGroup
-    Left = 203
-    Top = 146
+    Left = 204
+    Top = 155
     Width = 150
     Height = 90
     Caption = 'Demurrage'
@@ -451,6 +447,14 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
       'Com Demurrage'
       'Sem Demurrage')
     TabOrder = 10
+  end
+  object cTransp: TCheckBox
+    Left = 17
+    Top = 268
+    Width = 160
+    Height = 17
+    Caption = 'N'#227'o mostrar transportadores'
+    TabOrder = 11
   end
   object pDemurrage: TppDBPipeline
     DataSource = dstContainer
@@ -634,41 +638,68 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
     end
     object pDemurrageppField23: TppField
       Alignment = taRightJustify
+      FieldAlias = 'Taxa'
+      FieldName = 'Taxa'
+      FieldLength = 0
+      DataType = dtDouble
+      DisplayWidth = 10
+      Position = 22
+    end
+    object pDemurrageppField24: TppField
+      Alignment = taRightJustify
       FieldAlias = 'Dias'
       FieldName = 'Dias'
       FieldLength = 0
       DataType = dtInteger
       DisplayWidth = 10
-      Position = 22
+      Position = 23
     end
-    object pDemurrageppField24: TppField
+    object pDemurrageppField25: TppField
       FieldAlias = 'Valor_Container'
       FieldName = 'Valor_Container'
       FieldLength = 0
       DataType = dtCurrency
       DisplayWidth = 10
-      Position = 23
-    end
-    object pDemurrageppField25: TppField
-      FieldAlias = 'Armazem_Nome'
-      FieldName = 'Armazem_Nome'
-      FieldLength = 60
-      DisplayWidth = 60
       Position = 24
     end
     object pDemurrageppField26: TppField
-      FieldAlias = 'TransportaEntrada_Nome'
-      FieldName = 'TransportaEntrada_Nome'
+      FieldAlias = 'Armazem_Nome'
+      FieldName = 'Armazem_Nome'
       FieldLength = 60
       DisplayWidth = 60
       Position = 25
     end
     object pDemurrageppField27: TppField
+      FieldAlias = 'TransportaEntrada_Nome'
+      FieldName = 'TransportaEntrada_Nome'
+      FieldLength = 60
+      DisplayWidth = 60
+      Position = 26
+    end
+    object pDemurrageppField28: TppField
       FieldAlias = 'TransportaSaida_Nome'
       FieldName = 'TransportaSaida_Nome'
       FieldLength = 60
       DisplayWidth = 60
-      Position = 26
+      Position = 27
+    end
+    object pDemurrageppField29: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Valor'
+      FieldName = 'Valor'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 28
+    end
+    object pDemurrageppField30: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'Total'
+      FieldName = 'Total'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 29
     end
   end
   object rContainer: TppReport
@@ -807,7 +838,7 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         mmHeight = 3810
         mmLeft = 0
         mmTop = 18256
-        mmWidth = 31011
+        mmWidth = 27272
         BandType = 0
         LayerName = Foreground1
       end
@@ -850,9 +881,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 31427
+        mmLeft = 27536
         mmTop = 18256
-        mmWidth = 18812
+        mmWidth = 18811
         BandType = 0
         LayerName = Foreground1
       end
@@ -873,9 +904,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 50741
+        mmLeft = 46645
         mmTop = 18256
-        mmWidth = 14314
+        mmWidth = 14313
         BandType = 0
         LayerName = Foreground1
       end
@@ -896,7 +927,7 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 65352
+        mmLeft = 61255
         mmTop = 18256
         mmWidth = 14519
         BandType = 0
@@ -919,9 +950,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 80170
+        mmLeft = 76073
         mmTop = 18256
-        mmWidth = 14048
+        mmWidth = 14049
         BandType = 0
         LayerName = Foreground1
       end
@@ -942,9 +973,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 120018
+        mmLeft = 116126
         mmTop = 18256
-        mmWidth = 17813
+        mmWidth = 14450
         BandType = 0
         LayerName = Foreground1
       end
@@ -965,9 +996,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 161644
+        mmLeft = 172089
         mmTop = 18256
-        mmWidth = 36803
+        mmWidth = 32703
         BandType = 0
         LayerName = Foreground1
       end
@@ -988,9 +1019,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 198950
+        mmLeft = 205300
         mmTop = 18256
-        mmWidth = 49708
+        mmWidth = 45814
         BandType = 0
         LayerName = Foreground1
       end
@@ -1011,9 +1042,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 248956
+        mmLeft = 251415
         mmTop = 18256
-        mmWidth = 35500
+        mmWidth = 32629
         BandType = 0
         LayerName = Foreground1
       end
@@ -1034,9 +1065,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 94781
+        mmLeft = 90686
         mmTop = 18255
-        mmWidth = 9491
+        mmWidth = 9492
         BandType = 0
         LayerName = Foreground1
       end
@@ -1057,7 +1088,7 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 104629
+        mmLeft = 100533
         mmTop = 18255
         mmWidth = 15090
         BandType = 0
@@ -1080,9 +1111,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         TextAlignment = taCentered
         VerticalAlignment = avCenter
         mmHeight = 3810
-        mmLeft = 138334
+        mmLeft = 151442
         mmTop = 18255
-        mmWidth = 23012
+        mmWidth = 20348
         BandType = 0
         LayerName = Foreground1
       end
@@ -1098,6 +1129,52 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         mmLeft = 0
         mmTop = 0
         mmWidth = 27252
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppLabel16: TppLabel
+        DesignLayer = ppDesignLayer2
+        UserName = 'Label16'
+        AutoSize = False
+        Border.mmPadding = 0
+        Caption = 'TOTAL'
+        Color = 4194304
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Calibri'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        VerticalAlignment = avCenter
+        mmHeight = 3810
+        mmLeft = 130898
+        mmTop = 18256
+        mmWidth = 20190
+        BandType = 0
+        LayerName = Foreground1
+      end
+      object ppDBText16: TppDBText
+        DesignLayer = ppDesignLayer2
+        UserName = 'DBText16'
+        Border.mmPadding = 0
+        DataField = 'Valor_Demurrage'
+        DataPipeline = pDemurrage
+        DisplayFormat = ',##0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Calibri'
+        Font.Size = 7
+        Font.Style = []
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'pDemurrage'
+        mmHeight = 2910
+        mmLeft = 130898
+        mmTop = 0
+        mmWidth = 20190
         BandType = 0
         LayerName = Foreground1
       end
@@ -1127,7 +1204,7 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         mmHeight = 2910
         mmLeft = 0
         mmTop = 0
-        mmWidth = 31011
+        mmWidth = 27272
         BandType = 4
         LayerName = Foreground1
       end
@@ -1146,9 +1223,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 31427
+        mmLeft = 27536
         mmTop = 0
-        mmWidth = 18812
+        mmWidth = 18811
         BandType = 4
         LayerName = Foreground1
       end
@@ -1168,9 +1245,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 50741
+        mmLeft = 46645
         mmTop = 0
-        mmWidth = 14049
+        mmWidth = 14313
         BandType = 4
         LayerName = Foreground1
       end
@@ -1190,9 +1267,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 65352
+        mmLeft = 61255
         mmTop = 0
-        mmWidth = 14254
+        mmWidth = 14519
         BandType = 4
         LayerName = Foreground1
       end
@@ -1212,9 +1289,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 80170
+        mmLeft = 76073
         mmTop = 0
-        mmWidth = 14048
+        mmWidth = 14049
         BandType = 4
         LayerName = Foreground1
       end
@@ -1233,9 +1310,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 138334
+        mmLeft = 151647
         mmTop = 0
-        mmWidth = 23012
+        mmWidth = 20348
         BandType = 4
         LayerName = Foreground1
       end
@@ -1254,9 +1331,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 161644
+        mmLeft = 172294
         mmTop = 0
-        mmWidth = 36803
+        mmWidth = 32703
         BandType = 4
         LayerName = Foreground1
       end
@@ -1275,9 +1352,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 198950
+        mmLeft = 205505
         mmTop = 0
-        mmWidth = 49708
+        mmWidth = 45814
         BandType = 4
         LayerName = Foreground1
       end
@@ -1296,9 +1373,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 248956
+        mmLeft = 251415
         mmTop = 0
-        mmWidth = 35764
+        mmWidth = 32629
         BandType = 4
         LayerName = Foreground1
       end
@@ -1319,9 +1396,9 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 94781
+        mmLeft = 90686
         mmTop = 0
-        mmWidth = 9491
+        mmWidth = 9492
         BandType = 4
         LayerName = Foreground1
       end
@@ -1489,7 +1566,7 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
               DesignLayer = ppDesignLayer1
               UserName = 'Line2'
               Border.mmPadding = 0
-              Weight = 0.750000000000000000
+              Pen.Width = 0
               mmHeight = 265
               mmLeft = 794
               mmTop = 16668
@@ -1547,7 +1624,7 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 104775
+        mmLeft = 100533
         mmTop = 0
         mmWidth = 15090
         BandType = 4
@@ -1557,7 +1634,7 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         DesignLayer = ppDesignLayer2
         UserName = 'DBText15'
         Border.mmPadding = 0
-        DataField = 'Valor_Demurrage'
+        DataField = 'Valor'
         DataPipeline = pDemurrage
         DisplayFormat = ',##0.00'
         Font.Charset = DEFAULT_CHARSET
@@ -1570,9 +1647,32 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         VerticalAlignment = avCenter
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 120018
+        mmLeft = 116126
         mmTop = 0
-        mmWidth = 17813
+        mmWidth = 14450
+        BandType = 4
+        LayerName = Foreground1
+      end
+      object ppDBText17: TppDBText
+        DesignLayer = ppDesignLayer2
+        UserName = 'DBText17'
+        Border.mmPadding = 0
+        DataField = 'Total'
+        DataPipeline = pDemurrage
+        DisplayFormat = ',##0.00'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Calibri'
+        Font.Size = 7
+        Font.Style = [fsBold]
+        TextAlignment = taRightJustified
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'pDemurrage'
+        mmHeight = 2910
+        mmLeft = 130897
+        mmTop = 0
+        mmWidth = 20191
         BandType = 4
         LayerName = Foreground1
       end
@@ -1644,8 +1744,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         DesignLayer = ppDesignLayer2
         UserName = 'Line8'
         Border.mmPadding = 0
+        Pen.Width = 0
         Position = lpLeft
-        Weight = 0.750000000000000000
         mmHeight = 3175
         mmLeft = 48683
         mmTop = 0
@@ -1676,8 +1776,8 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         DesignLayer = ppDesignLayer2
         UserName = 'Line10'
         Border.mmPadding = 0
+        Pen.Width = 0
         Position = lpLeft
-        Weight = 0.750000000000000000
         mmHeight = 3175
         mmLeft = 265642
         mmTop = 265
@@ -1689,7 +1789,7 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         DesignLayer = ppDesignLayer2
         UserName = 'Line1'
         Border.mmPadding = 0
-        Weight = 0.750000000000000000
+        Pen.Width = 0
         mmHeight = 529
         mmLeft = 0
         mmTop = 0
@@ -1713,16 +1813,16 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         DisplayFormat = ',##0.00'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Name = 'Arial'
+        Font.Name = 'Calibri'
         Font.Size = 7
         Font.Style = [fsBold]
         TextAlignment = taRightJustified
         Transparent = True
         DataPipelineName = 'pDemurrage'
         mmHeight = 2910
-        mmLeft = 152929
-        mmTop = 3440
-        mmWidth = 17727
+        mmLeft = 130897
+        mmTop = 1392
+        mmWidth = 20191
         BandType = 7
         LayerName = Foreground1
       end
@@ -1733,16 +1833,29 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
         Caption = 'TOTAL DEMURRAGE:'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
-        Font.Name = 'Arial'
+        Font.Name = 'Calibri'
         Font.Size = 7
         Font.Style = [fsBold]
         FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
         FormFieldSettings.FormFieldType = fftNone
         Transparent = True
         mmHeight = 2910
-        mmLeft = 125677
-        mmTop = 3440
-        mmWidth = 25400
+        mmLeft = 104775
+        mmTop = 1323
+        mmWidth = 20109
+        BandType = 7
+        LayerName = Foreground1
+      end
+      object ppLine5: TppLine
+        DesignLayer = ppDesignLayer2
+        UserName = 'Line5'
+        Border.mmPadding = 0
+        Pen.Style = psDot
+        Pen.Width = 0
+        mmHeight = 529
+        mmLeft = 0
+        mmTop = 0
+        mmWidth = 284428
         BandType = 7
         LayerName = Foreground1
       end
@@ -3465,6 +3578,32 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
       DisplayWidth = 5
       Position = 217
     end
+    object pEmpresasppField219: TppField
+      FieldAlias = 'ImportarPlanPed_Bloqueado'
+      FieldName = 'ImportarPlanPed_Bloqueado'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 218
+    end
+    object pEmpresasppField220: TppField
+      FieldAlias = 'Email_MsgPedidos'
+      FieldName = 'Email_MsgPedidos'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 219
+      Searchable = False
+      Sortable = False
+    end
+    object pEmpresasppField221: TppField
+      FieldAlias = 'PISCOFINS_F100Financ'
+      FieldName = 'PISCOFINS_F100Financ'
+      FieldLength = 0
+      DataType = dtBoolean
+      DisplayWidth = 5
+      Position = 220
+    end
   end
   object tContainer: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -3486,8 +3625,11 @@ object Impressao_ProcessosOP_Container: TImpressao_ProcessosOP_Container
       
         '      ,(select Nome from Fornecedores frn where frn.Codigo = ctn' +
         '.Transportadora_Saida) as TransportaSaida_Nome'
+      '      ,Valor = 0'
+      '      ,Total = 0'
       'from Container ctn'
       'order by Numero')
+    Active = True
     Left = 270
     Top = 10
   end

@@ -3485,3 +3485,36 @@ alter table Empresas add PISCOFINS_F100Financ bit
 go
 update Empresas SET PISCOFINS_F100Financ = PISCOFINS_F100
 go
+
+--[26/08/2026 10:10:41]
+create table BoletoComando (Codigo smallint
+                           ,Descricao varchar(100)
+                           )
+go
+truncate table BoletoComando 
+go
+insert into BoletoComando values
+ (01, 'Remessa')
+,(02, 'Cancelar/Baixar')
+,(04, 'Concessão de Abatimento')
+,(05, 'Cancelamento de Abatimento')
+,(06, 'Alteração do Vencimento')
+,(07, 'Alteração do Uso da Empresa')
+,(08, 'Alteração do Seu Número')
+,(09, 'Protestar')
+,(10, 'Não Protestar (Inibi Protesto Automático)')
+,(11, 'Protesto Para Fins Falimentares')
+,(18, 'Sustar o Protesto')
+,(31, 'Alteração de Outros Dados')
+,(34, 'Baixa Por Ter Sido Pago Diretamente ao Beneficiário')
+,(35, 'Cancelamento de Instrução Não Protestar')
+,(36, 'Protesto Urgente (envia a cartório após XX dias úteis do vencimento)')
+,(37, 'Alteração do Vencimento e Sustar Protesto')
+,(39, 'Transferência Entre Contas')
+,(49, 'Alteração de Multa')
+,(66, 'Entrada em Negativação Expressa')
+,(67, 'Não Negativar (inibi negativação automática)')
+,(68, 'Excluir Negativação Expressa (até 15 dias corridos após a entrada em negativação expressa)')
+,(69, 'Cancelar Negativação Expressa (após boleto ter sido negativado) ')
+,(71, 'Remessa –BoleCode(emissão do boleto e QR Code Pix)')
+go
