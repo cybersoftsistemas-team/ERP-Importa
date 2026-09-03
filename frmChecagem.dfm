@@ -3,8 +3,8 @@ object Checagem: TChecagem
   Top = 97
   BorderStyle = bsToolWindow
   Caption = 'Checagem'
-  ClientHeight = 584
-  ClientWidth = 984
+  ClientHeight = 670
+  ClientWidth = 1228
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,16 +21,18 @@ object Checagem: TChecagem
   object Image1: TImage
     Left = 0
     Top = 0
-    Width = 984
+    Width = 1228
     Height = 46
     Align = alTop
     Stretch = True
+    ExplicitWidth = 984
   end
   object lProcesso: TLabel
-    Left = 61
-    Top = 505
-    Width = 862
+    Left = 364
+    Top = 573
+    Width = 500
     Height = 21
+    Alignment = taCenter
     AutoSize = False
     Caption = 'Verificando vencimento de containers "Demurrage"...'
     Font.Charset = DEFAULT_CHARSET
@@ -39,6 +41,7 @@ object Checagem: TChecagem
     Font.Name = 'Tahoma'
     Font.Style = [fsBold]
     ParentFont = False
+    Layout = tlCenter
   end
   object RxLabel1: TRxLabel
     Left = 10
@@ -75,15 +78,17 @@ object Checagem: TChecagem
   end
   object Panel1: TPanel
     Left = 0
-    Top = 552
-    Width = 984
+    Top = 638
+    Width = 1228
     Height = 32
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitTop = 552
+    ExplicitWidth = 984
     object bSair: TButton
       AlignWithMargins = True
-      Left = 915
+      Left = 1159
       Top = 2
       Width = 67
       Height = 28
@@ -99,10 +104,11 @@ object Checagem: TChecagem
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
+      ExplicitLeft = 915
     end
     object bImprimir: TButton
       AlignWithMargins = True
-      Left = 777
+      Left = 1021
       Top = 2
       Width = 67
       Height = 28
@@ -118,10 +124,11 @@ object Checagem: TChecagem
       ShowHint = True
       TabOrder = 1
       OnClick = bImprimirClick
+      ExplicitLeft = 777
     end
     object bRefazer: TButton
       AlignWithMargins = True
-      Left = 846
+      Left = 1090
       Top = 2
       Width = 67
       Height = 28
@@ -137,21 +144,24 @@ object Checagem: TChecagem
       ShowHint = True
       TabOrder = 2
       OnClick = bRefazerClick
+      ExplicitLeft = 846
     end
   end
   object Progresso: TProgressBar
-    Left = 61
-    Top = 524
-    Width = 862
-    Height = 17
+    Left = 364
+    Top = 600
+    Width = 500
+    Height = 21
     TabOrder = 1
   end
   object PageControl1: TPageControl
-    Left = 0
-    Top = 51
-    Width = 984
-    Height = 446
-    ActivePage = TabSheet11
+    AlignWithMargins = True
+    Left = 3
+    Top = 49
+    Width = 1222
+    Height = 510
+    ActivePage = TabSheet13
+    Align = alTop
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
@@ -161,17 +171,17 @@ object Checagem: TChecagem
     ParentFont = False
     TabHeight = 24
     TabOrder = 2
+    ExplicitLeft = 8
+    ExplicitTop = 79
     object TabSheet1: TTabSheet
       Caption = 'Demurrage'
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgDemurrage: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 13158545
         Font.Charset = DEFAULT_CHARSET
@@ -182,21 +192,20 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
-        ExplicitTop = 6
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Contratos Clientes'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgClientes: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 13805311
         Font.Charset = DEFAULT_CHARSET
@@ -207,20 +216,20 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet7: TTabSheet
       Caption = 'Vencimento Radar'
       ImageIndex = 6
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgRadar: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 10485663
         Font.Charset = DEFAULT_CHARSET
@@ -231,20 +240,20 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet8: TTabSheet
       Caption = 'Vencimento Vincula'#231#245'es'
       ImageIndex = 7
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgVinculacao: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 13224393
         Font.Charset = DEFAULT_CHARSET
@@ -255,20 +264,20 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Prazo Retorno de NF (ICMS)'
       ImageIndex = 2
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgRetorno: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = clWhite
         Font.Charset = DEFAULT_CHARSET
@@ -279,21 +288,20 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
-        ExplicitTop = 6
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet4: TTabSheet
       Caption = 'Processos s/Containers Cadastrados'
       ImageIndex = 3
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgContainer: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 8700415
         Font.Charset = DEFAULT_CHARSET
@@ -304,21 +312,20 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
-        ExplicitTop = 6
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet5: TTabSheet
       Caption = 'Prazos Entrega Arquivos'
       ImageIndex = 4
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgArquivos: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 16768477
         Font.Charset = DEFAULT_CHARSET
@@ -329,20 +336,20 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet6: TTabSheet
       Caption = 'Estoque M'#237'nimo'
       ImageIndex = 5
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgEstoque: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 14155775
         Font.Charset = DEFAULT_CHARSET
@@ -353,44 +360,44 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet9: TTabSheet
       Caption = 'Clientes com pagamentos em atraso'
       ImageIndex = 8
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgAtraso: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 12895487
         Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
+        Font.Color = clBlack
         Font.Height = -12
         Font.Name = 'Courier New'
         Font.Style = []
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet10: TTabSheet
       Caption = 'Clientes sem movimenta'#231#227'o no Per'#237'odo'
       ImageIndex = 9
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgMovimento: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 16754511
         Font.Charset = DEFAULT_CHARSET
@@ -401,16 +408,20 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet11: TTabSheet
       Caption = 'Exonera'#231#227'o do ICMS'
       ImageIndex = 10
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgExoneracao: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 14548923
         Font.Charset = DEFAULT_CHARSET
@@ -421,20 +432,20 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
     object TabSheet12: TTabSheet
       Caption = 'Vencimento de DI/DA'
       ImageIndex = 11
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
+      ExplicitWidth = 976
+      ExplicitHeight = 388
       object cMsgDIDA: TMemo
         Left = 0
         Top = 0
-        Width = 976
-        Height = 388
+        Width = 1214
+        Height = 452
         Align = alClient
         Color = 8947967
         Font.Charset = DEFAULT_CHARSET
@@ -445,6 +456,32 @@ object Checagem: TChecagem
         ParentFont = False
         ScrollBars = ssBoth
         TabOrder = 0
+        ExplicitWidth = 976
+        ExplicitHeight = 388
+      end
+    end
+    object TabSheet13: TTabSheet
+      Caption = 'Pagamentos em Atraso'
+      ImageIndex = 12
+      ExplicitWidth = 976
+      ExplicitHeight = 388
+      object cMsgPgto: TMemo
+        Left = 0
+        Top = 0
+        Width = 1214
+        Height = 452
+        Align = alClient
+        Color = clRed
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Height = -12
+        Font.Name = 'Courier New'
+        Font.Style = []
+        ParentFont = False
+        ScrollBars = ssBoth
+        TabOrder = 0
+        ExplicitWidth = 976
+        ExplicitHeight = 388
       end
     end
   end

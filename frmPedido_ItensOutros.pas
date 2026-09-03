@@ -2677,6 +2677,7 @@ begin
            Recalcula;
            if PedidosCalculo_Reverso.AsBoolean then begin
               PedidosItensValor_Unitario.Value := CalculoReverso;
+              Recalcula;
            end;
            PedidosItensValor_Total.Value := Roundto(PedidosItensQuantidade.Value * (PedidosItensValor_Unitario.Value - PedidosItensDesconto_Valor.Value), -2);
       end;

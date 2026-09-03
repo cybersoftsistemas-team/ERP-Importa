@@ -5424,7 +5424,7 @@ begin
                                       ,''                                        // informar o grupo XML com obsCont com as informações do contribuinte do item.
                                       ,''                                        // informar o grupo XML com obsFisco com as informações do fisco do item.
                                       ,PedidosItensValor_TotalNota.value         // informar o Valor Total do Item da NF-e. Valor total do Item, correspondente à sua participação no total da nota.
-                                      ,_DfeRef);                                      // informar o grupo XML com DFeReferenciado com as informações que referencia um item de outro DF-e.
+                                      ,_DfeRef);                                 // informar o grupo XML com DFeReferenciado com as informações que referencia um item de outro DF-e.
            
            Util := nil;
            MontaDetalhe := _Detalhe;

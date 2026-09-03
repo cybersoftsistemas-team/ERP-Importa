@@ -3518,3 +3518,9 @@ insert into BoletoComando values
 ,(69, 'Cancelar Negativação Expressa (após boleto ter sido negativado) ')
 ,(71, 'Remessa –BoleCode(emissão do boleto e QR Code Pix)')
 go
+
+--[01/09/2026 14:21:00]
+alter table Usuarios add Checagem_Pagamentos bit
+go
+update usuarios set Checagem_Pagamentos = 1 where Checagem_Pagamentos is null
+go

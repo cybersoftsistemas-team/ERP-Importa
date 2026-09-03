@@ -44,6 +44,8 @@ type
     cMsgExoneracao: TMemo;
     TabSheet12: TTabSheet;
     cMsgDIDA: TMemo;
+    TabSheet13: TTabSheet;
+    cMsgPgto: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure bSairClick(Sender: TObject);
@@ -94,6 +96,7 @@ begin
           TabSheet10.TabVisible := UsuariosChecagem_ClientesMovimento.AsBoolean;
           TabSheet11.TabVisible := UsuariosChecagem_Exoneracao.AsBoolean;
           TabSheet12.TabVisible := UsuariosChecagem_DIDA.AsBoolean;
+          TabSheet13.TabVisible := UsuariosChecagem_Pagamentos.AsBoolean;
      end;
 end;
 
@@ -121,6 +124,8 @@ begin
      cMsgEstoque.Clear;
      cMsgAtraso.Clear;
      cMsgExoneracao.Clear;
+     cMsgDIDA.Clear;                                                 
+     cMsgPgto.Clear;
 
      With Dados do begin
           // Fazendo checagem de "Demurage".
@@ -151,7 +156,7 @@ begin
                 Progresso.Position := 0;
 
                 mTotal := 0;
-                cMsgDemurrage.Lines.Add('01. CONTAINERS COM PRAZO DE ENTREGA VENCIDOS');
+                cMsgDemurrage.Lines.Add('CONTAINERS COM PRAZO DE ENTREGA VENCIDOS...');
                 tCheca.First;
                 While not tCheca.Eof do begin
                       cMsgDemurrage.Lines.Add(Space(4)+'» Processo  nº: '+tCheca.FieldByName('Processo').AsString+Space(15-Length(Trim(tCheca.FieldByName('Processo').AsString)))+' Container nº: '+tCheca.FieldByName('Numero').AsString+Space(20-Length(Trim(tCheca.FieldByName('Numero').AsString))) + '  Dias: '+PoeZero(5, tCheca.FieldByName('Demurrage').AsInteger)+'  Valor R$: '+PadR(FormatFloat('###,###,##0.00',tCheca.FieldByName('Valor_Demurrage').AsCurrency), 14));
@@ -184,7 +189,7 @@ begin
                 Progresso.Max      := tCheca.RecordCount;
                 Progresso.Position := 0;
 
-                cMsgClientes.Lines.Add('02. CONTRATOS COM CLIENTES COM VENCIMENTO PRÓXIMO OU VENCIDO...');
+                cMsgClientes.Lines.Add('CONTRATOS COM CLIENTES COM VENCIMENTO PRÓXIMO OU VENCIDO...');
                 tCheca.First;
                 While not tCheca.Eof do begin
                          If tCheca.FieldByName('Dias').AsInteger < 0 then
@@ -219,7 +224,7 @@ begin
                 Progresso.Max      := tCheca.RecordCount;
                 Progresso.Position := 0;
 
-                cMsgRadar.Lines.Add('03. RADAR DE CLIENTES COM VENCIMENTO PRÓXIMO OU VENCIDO...');
+                cMsgRadar.Lines.Add('RADAR DE CLIENTES COM VENCIMENTO PRÓXIMO OU VENCIDO...');
                 tCheca.First;
                 While not tCheca.Eof do begin
                          If tCheca.FieldByName('Dias').AsInteger < 0 then
@@ -254,7 +259,7 @@ begin
                 Progresso.Max      := tCheca.RecordCount;
                 Progresso.Position := 0;
 
-                cMsgVinculacao.Lines.Add('04. VINCULAÇÕES DE CLIENTES COM VENCIMENTO PRÓXIMO OU VENCIDO...');
+                cMsgVinculacao.Lines.Add('VINCULAÇÕES DE CLIENTES COM VENCIMENTO PRÓXIMO OU VENCIDO...');
                 tCheca.First;
                 While not tCheca.Eof do begin
                          If tCheca.FieldByName('Dias').AsInteger < 0 then
@@ -298,7 +303,7 @@ begin
                 Progresso.Max      := tCheca.RecordCount;
                 Progresso.Position := 0;
 
-                cMsgRetorno.Lines.Add('07. NOTAS FISCAIS COM PRAZO DE RETORNO VENCENDO OU VENCIDO...');
+                cMsgRetorno.Lines.Add('NOTAS FISCAIS COM PRAZO DE RETORNO VENCENDO OU VENCIDO...');
                 tCheca.First;
                 While not tCheca.Eof do begin
                       If (tCheca.FieldByName('Dias').AsInteger <= tCheca.FieldByName('Prazo').AsInteger) then begin
@@ -336,7 +341,7 @@ begin
                 Progresso.Max      := tCheca.RecordCount;
                 Progresso.Position := 0;
 
-                cMsgContainer.Lines.Add('08. PROCESSOS SEM CONTAINERS CADASTRADOS...');
+                cMsgContainer.Lines.Add('PROCESSOS SEM CONTAINERS CADASTRADOS...');
                 tCheca.First;
                 While not tCheca.Eof do begin
                       mLista := false;
@@ -441,7 +446,7 @@ begin
              TabSheet6.Caption  := 'Estoque Mínimo ['+PoeZero(1, tDisponivel.RecordCount)+']';
              Progresso.Max      := tDisponivel.RecordCount;
 
-             cMsgEstoque.Lines.Add('09. PRODUTOS QUE ATINGIRAM O ESTOQUE MÍNIMO...');
+             cMsgEstoque.Lines.Add('PRODUTOS QUE ATINGIRAM O ESTOQUE MÍNIMO...');
              cMsgEstoque.Lines.Add('----------------------------------------------------------------------------------------------------------------------------------------');
 
              While not tDisponivel.Eof do begin
@@ -468,18 +473,20 @@ begin
              tCheca.SQL.Clear;
              tCheca.SQL.Add('SELECT Cliente AS Codigo,');
              tCheca.SQL.Add('       Data_Vencimento,');
-             tCheca.SQL.Add('       Cliente,');
              tCheca.SQL.Add('       (SELECT Nome          FROM Clientes WHERE Codigo = Cliente) AS Nome,');
              tCheca.SQL.Add('       (SELECT CNPJ          FROM Clientes WHERE Codigo = Cliente) AS CNPJ,');
              tCheca.SQL.Add('       (SELECT Atraso_Maximo FROM Clientes WHERE Codigo = Cliente) AS Maximo,');
              tCheca.SQL.Add('       DATEDIFF(Day, Data_Vencimento, GETDATE()) AS Atraso,');
-             tCheca.SQL.Add('       Numero_Documento');
+             tCheca.SQL.Add('       Numero_Documento,');
+             tCheca.SQL.Add('       Numero,');
+             tCheca.SQL.Add('       Valor_Parcela');
              tCheca.SQL.Add(' FROM  PagarReceber PR');
              tCheca.SQL.Add('WHERE  Tipo = ''R'' ');
              tCheca.SQL.Add('  AND  ISNULL(Cliente, 0) <> 0');
              tCheca.SQL.Add('  AND  DATEDIFF(Day, Data_Vencimento, GETDATE()) > 0');
              tCheca.SQL.Add('  AND  ISNULL(ROUND((SELECT SUM(Valor) FROM PagarReceberBaixas PRB WHERE PR.Numero = PRB.Numero), 2),0) < ROUND(Valor_Total, 2)');
              tCheca.SQL.Add('ORDER  BY Data_Vencimento Desc');
+             //tcheca.sql.savetofile('c:\temp\Checagem_Clientes.sql');
              tCheca.Open;
 
              If tCheca.RecordCount > 0 then begin
@@ -490,10 +497,15 @@ begin
                 Progresso.Max                := tCheca.RecordCount;
                 Progresso.Position           := 0;
 
-                cMsgAtraso.Lines.Add('05. CLIENTES COM PAGAMENTOS EM ATRASO...');
+                cMsgAtraso.Lines.Add('CLIENTES COM PAGAMENTOS EM ATRASO...');
                 tCheca.First;
                 While not tCheca.Eof do begin
-                      cMsgAtraso.Lines.Add(Space(4)+'» '+PoeZero(5, tCheca.FieldByName('Codigo').AsInteger)+' '+tCheca.FieldByName('Nome').AsString+Space(60-Length(Trim(tCheca.FieldByName('Nome').AsString)))+'Título '+tCheca.FieldByName('Numero_Documento').AsString+' Vencto.'+ Copy(tCheca.FieldByName('Data_Vencimento').AsString, 1, 10)+' Vencido á '+tCheca.FieldByName('Atraso').AsString+' dias.');
+                      cMsgAtraso.Lines.Add('  » Titulo: '+padr(tcheca.FieldByName('Numero').asstring, 8)+
+                                           '| '+trim(tCheca.FieldByName('Nome').AsString)+Space(55-Length(Trim(tCheca.FieldByName('Nome').AsString)))+
+                                           '| DOC: '+trim(tcheca.FieldByName('Numero_Documento').AsString)+Space(15-Length(trim(tcheca.FieldByName('Numero_Documento').AsString)))+
+                                           '| Vencto.: '+ Copy(tcheca.FieldByName('Data_Vencimento').AsString, 1, 10)+
+                                           '| Vencido á '+padr(tcheca.FieldByName('Atraso').asstring, 3)+ iif(tcheca.FieldByName('Atraso').asinteger > 1, ' dias', ' dia ')+
+                                           '| Valor: '+padr(formatfloat(',##0.00', tcheca.fieldbyname('Valor_Parcela').AsCurrency), 16));
                       Progresso.Position := Progresso.Position + 1;
                       Application.ProcessMessages;
                       tCheca.Next;
@@ -525,7 +537,7 @@ begin
                 Progresso.Max                := tCheca.RecordCount;
                 Progresso.Position           := 0;
 
-                cMsgMovimento.Lines.Add('06. CLIENTES SEM MOVIMENTAÇÃO...');
+                cMsgMovimento.Lines.Add('CLIENTES SEM MOVIMENTAÇÃO...');
                 tCheca.First;
                 While not tCheca.Eof do begin
                       cMsgMovimento.Lines.Add(Space(4)+'» '+PoeZero(5, tCheca.FieldByName('Codigo').AsInteger)+' '+tCheca.FieldByName('Nome').AsString+Space(60-Length(Trim(tCheca.FieldByName('Nome').AsString)))+' sem movimentação á '+tCheca.FieldByName('Dias').AsString+' dias.');
@@ -564,7 +576,7 @@ begin
                      Progresso.Max      := RecordCount;
                      Progresso.Position := 0;
 
-                     cMsgExoneracao.Lines.Add('10. DI''s COM PRAZO DE EXONERAÇÃO VENCENDO OU VENCIDO.');
+                     cMsgExoneracao.Lines.Add('DI''s COM PRAZO DE EXONERAÇÃO VENCENDO OU VENCIDO.');
                      first;
                      while not Eof do begin
                            if not fieldbyname('Desembaraco').IsNull then begin
@@ -597,7 +609,6 @@ begin
                   sql.add('select DI = Numero_Declaracao');
                   sql.add('      ,Processo');
                   sql.add('      ,Desembaraco = cast(Data_DesembaracoDeclaracao as date)');
-                  //sql.add('      ,Vencimento = Data_DesembaracoDeclaracao + :pPrazoDI');
                   sql.add('      ,Vencimento = Navio_DataChegada + :pPrazoDI');
                   sql.add('      ,Dias = :pPrazoDI - datediff(day, Navio_DataChegada, getdate())');
                   sql.add('from ProcessosDocumentos pd');
@@ -605,7 +616,6 @@ begin
                   sql.add('and Desativado <> 1');
                   sql.add('and isnull(DA, 0) = 0');
                   sql.add('and isnull((select count(*) from NotasItens ni where ni.DI = pd.Numero_Declaracao), 0) = 0');
-                  //sql.add('and (:pPrazoDI - datediff(day, Data_DesembaracoDeclaracao, getdate())) <= :pPrazoDIDias');
                   sql.add('and (:pPrazoDI - datediff(day, Navio_DataChegada, getdate())) <= :pPrazoDIDias');
                   sql.add('order by Numero_Declaracao');
                   parambyname('pPrazoDI').AsInteger     := Dados.ConfiguracaoPrazo_NFDI.AsInteger;
@@ -700,6 +710,53 @@ begin
                   end;
              end;
           end;
+
+          // Fazendo checagem de contas a pagar vencidas.
+          if UsuariosChecagem_Pagamentos.AsBoolean then begin
+             with tCheca do begin
+                  cMsgPgto.Clear;
+                  sql.clear;
+                  sql.add('select Numero');
+                  sql.add('      ,Data_Vencimento');
+                  sql.add('      ,Fornecedor');
+                  sql.add('      ,(select Nome from Fornecedores where Codigo = Fornecedor) as Nome');
+                  sql.add('      ,(select CNPJ from Fornecedores where Codigo = Fornecedor) as CNPJ');
+                  sql.add('      ,datediff(Day, Data_Vencimento, getdate()) as Atraso');
+                  sql.add('      ,Numero_Documento');
+                  sql.add('      ,Valor_Parcela');
+                  sql.add('from PagarReceber pr');
+                  sql.add('where Tipo = ''P'' ');
+                  sql.add('and isnull(Fornecedor, 0) <> 0');
+                  sql.add('and datediff(day, Data_Vencimento, getdate()) > 0');
+                  sql.add('and isnull(round((select sum(Valor) from PagarReceberBaixas prb where pr.Numero = prb.Numero), 2), 0) < round(Valor_Total, 2)');
+                  sql.add('order by Data_Vencimento desc');
+                  //sql.saveToFile('c:\temp\Checagens_Pagamento.sql');
+                  open;
+
+                  if RecordCount > 0 then begin
+                     PageControl1.ActivePageIndex := 12;
+                     TabSheet13.Caption            := 'Pagamentos em atraso ['+PoeZero(1, RecordCount)+']';
+                     lProcesso.Caption            := 'Verificando "Pagamentos em atraso"...';
+                     Progresso.Visible            := true;
+                     Progresso.Max                := RecordCount;
+                     Progresso.Position           := 0;
+
+                     cMsgPgto.Lines.Add('PAGAMENTOS EM ATRASO...');
+                     First;
+                     while not Eof do begin
+                           cMsgPgto.Lines.Add('  » Titulo: '+padr(FieldByName('Numero').asstring, 8)+
+                                              '| '+trim(FieldByName('Nome').AsString)+Space(55-Length(Trim(FieldByName('Nome').AsString)))+
+                                              '| DOC: '+trim(FieldByName('Numero_Documento').AsString)+Space(15-Length(trim(FieldByName('Numero_Documento').AsString)))+
+                                              '| Vencto.: '+ Copy(FieldByName('Data_Vencimento').AsString, 1, 10)+
+                                              '| Vencido á '+padr(FieldByName('Atraso').asstring, 3)+ iif(FieldByName('Atraso').asinteger > 1, ' dias', ' dia ')+
+                                              '| Valor: '+padr(formatfloat(',##0.00', fieldbyname('Valor_Parcela').AsCurrency), 16));
+                           Progresso.Position := Progresso.Position + 1;
+                           Application.ProcessMessages;
+                           tCheca.Next;
+                     end;
+                  end;
+             end;
+          end;
           
           Application.ProcessMessages;
      End;
@@ -717,7 +774,7 @@ end;
 procedure TChecagem.bImprimirClick(Sender: TObject);
 var
   Prn: TextFile;
-  i  : word;
+  i: word;
   Strings: TStrings;
 begin
      Strings := nil;
@@ -733,6 +790,7 @@ begin
      if PageControl1.ActivePageIndex =  9 then Strings := cMsgMovimento.Lines;
      if PageControl1.ActivePageIndex = 10 then Strings := cMsgExoneracao.Lines;
      if PageControl1.ActivePageIndex = 11 then Strings := cMsgDIDA.Lines;
+     if PageControl1.ActivePageIndex = 12 then Strings := cMsgPgto.Lines;
 
      lProcesso.Caption  := 'Imprimindo Erros...';
      Progresso.Position := 0;

@@ -4581,6 +4581,7 @@ type
     dsBoletoComando: TDataSource;
     BoletoComandoCodigo: TSmallintField;
     BoletoComandoDescricao: TStringField;
+    UsuariosChecagem_Pagamentos: TBooleanField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);

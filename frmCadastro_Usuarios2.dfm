@@ -470,9 +470,9 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
     end
     object GroupBox4: TGroupBox
       Left = 5
-      Top = 395
+      Top = 411
       Width = 746
-      Height = 271
+      Height = 250
       Caption = 'Empresas Permitidas'
       TabOrder = 20
       object Grade: TDBGrid
@@ -547,9 +547,9 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       object GradeUsuarios: TDBGrid
         AlignWithMargins = True
         Left = 2
-        Top = 156
+        Top = 153
         Width = 742
-        Height = 110
+        Height = 92
         Margins.Left = 0
         Margins.Top = 0
         Margins.Right = 0
@@ -614,7 +614,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       end
       object bRemover: TButton
         Left = 286
-        Top = 127
+        Top = 124
         Width = 92
         Height = 28
         Caption = '&Remover'
@@ -623,7 +623,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       end
       object bAdicionarTodos: TButton
         Left = 381
-        Top = 127
+        Top = 124
         Width = 92
         Height = 28
         Caption = 'Adicionar &Todas'
@@ -632,7 +632,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       end
       object bRemoverTodos: TButton
         Left = 476
-        Top = 127
+        Top = 124
         Width = 92
         Height = 28
         Caption = 'Re&mover Todas'
@@ -641,7 +641,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       end
       object bAdd: TButton
         Left = 190
-        Top = 127
+        Top = 124
         Width = 92
         Height = 28
         Caption = '&Adicionar'
@@ -836,7 +836,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       Left = 501
       Top = 187
       Width = 250
-      Height = 212
+      Height = 227
       Caption = 'Checagens'
       TabOrder = 28
       object DBCheckBox2: TDBCheckBox
@@ -958,6 +958,16 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
         DataField = 'Checagem_DIDA'
         DataSource = Dados.dsUsuarios
         TabOrder = 11
+      end
+      object DBCheckBox14: TDBCheckBox
+        Left = 11
+        Top = 205
+        Width = 164
+        Height = 17
+        Caption = 'Vencimento dos pagamentos'
+        DataField = 'Checagem_Pagamentos'
+        DataSource = Dados.dsUsuarios
+        TabOrder = 12
       end
     end
     object GroupBox2: TGroupBox
@@ -1334,7 +1344,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
