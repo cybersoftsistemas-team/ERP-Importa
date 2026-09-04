@@ -8828,7 +8828,7 @@ object Dados: TDados
         'm, Numero_BL, CIDE_ValorDevido, CIDE_ValorRecolher, Numero_House' +
         'BL, Numero_TFA, Transporte_Viagem, Navio_PrevSaida, Ultima_Atual' +
         'izacao, Exonerado, UF_Importacao, Data_PresencaCarga, Data_Embar' +
-        'que, Numero_LI)'
+        'que, Numero_LI, LPCO)'
       'VALUES'
       
         '  (:Processo, :Tipo, :Incoterms, :Entreposto, :Numero_Declaracao' +
@@ -8879,7 +8879,7 @@ object Dados: TDados
         'alorDevido, :CIDE_ValorRecolher, :Numero_HouseBL, :Numero_TFA, :' +
         'Transporte_Viagem, :Navio_PrevSaida, :Ultima_Atualizacao, :Exone' +
         'rado, :UF_Importacao, :Data_PresencaCarga, :Data_Embarque, :Nume' +
-        'ro_LI)')
+        'ro_LI, :LPCO)')
     SQLDelete.Strings = (
       'DELETE FROM ProcessosDocumentos'
       'WHERE'
@@ -8984,7 +8984,7 @@ object Dados: TDados
         'aida, Ultima_Atualizacao = :Ultima_Atualizacao, Exonerado = :Exo' +
         'nerado, UF_Importacao = :UF_Importacao, Data_PresencaCarga = :Da' +
         'ta_PresencaCarga, Data_Embarque = :Data_Embarque, Numero_LI = :N' +
-        'umero_LI'
+        'umero_LI, LPCO = :LPCO'
       'WHERE'
       '  Processo = :Old_Processo AND Tipo = :Old_Tipo')
     SQLRefresh.Strings = (
@@ -9034,7 +9034,7 @@ object Dados: TDados
         'mazem, Numero_BL, CIDE_ValorDevido, CIDE_ValorRecolher, Numero_H' +
         'ouseBL, Numero_TFA, Transporte_Viagem, Navio_PrevSaida, Ultima_A' +
         'tualizacao, Exonerado, UF_Importacao, Data_PresencaCarga, Data_E' +
-        'mbarque, Numero_LI FROM ProcessosDocumentos'
+        'mbarque, Numero_LI, LPCO FROM ProcessosDocumentos'
       'WHERE'
       '  Processo = :Processo AND Tipo = :Tipo')
     SQLLock.Strings = (
@@ -9942,6 +9942,9 @@ object Dados: TDados
     object ProcessosDOCNumero_LI: TStringField
       FieldName = 'Numero_LI'
       Size = 15
+    end
+    object ProcessosDOCLPCO: TBooleanField
+      FieldName = 'LPCO'
     end
   end
   object dsProcessosDOC: TDataSource
@@ -15521,6 +15524,7 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
+    Connected = True
     LoginPrompt = False
     Left = 87
     Top = 14

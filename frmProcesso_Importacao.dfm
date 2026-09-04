@@ -4,7 +4,7 @@ object Processo_Importacao: TProcesso_Importacao
   HelpContext = 801
   BorderStyle = bsDialog
   Caption = 'Processo Importa'#231#227'o'
-  ClientHeight = 748
+  ClientHeight = 771
   ClientWidth = 1074
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -81,12 +81,13 @@ object Processo_Importacao: TProcesso_Importacao
   end
   object Panel1: TPanel
     Left = 0
-    Top = 716
+    Top = 739
     Width = 1074
     Height = 32
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitTop = 730
     object bSair: TButton
       AlignWithMargins = True
       Left = 998
@@ -283,14 +284,16 @@ object Processo_Importacao: TProcesso_Importacao
     Left = 3
     Top = 40
     Width = 1068
-    Height = 673
-    ActivePage = TabSheet3
+    Height = 696
+    ActivePage = TabSheet1
     Align = alClient
     TabHeight = 24
     TabOrder = 1
+    ExplicitHeight = 687
     object TabSheet1: TTabSheet
       Caption = '&Dados Gerais'
       Enabled = False
+      ExplicitHeight = 653
       object GroupBox4: TGroupBox
         Left = 1
         Top = -1
@@ -5107,8 +5110,8 @@ object Processo_Importacao: TProcesso_Importacao
       end
       object DBCheckBox5: TDBCheckBox
         Left = 4
-        Top = 599
-        Width = 294
+        Top = 601
+        Width = 284
         Height = 17
         Alignment = taLeftJustify
         Caption = 'Utiliza valor entrada dos produtos como valor de venda'
@@ -5125,8 +5128,8 @@ object Processo_Importacao: TProcesso_Importacao
       end
       object DBCheckBox6: TDBCheckBox
         Left = 4
-        Top = 615
-        Width = 294
+        Top = 619
+        Width = 284
         Height = 17
         Alignment = taLeftJustify
         Caption = 'Rateia  valor das despesas pelo peso.'
@@ -5142,9 +5145,9 @@ object Processo_Importacao: TProcesso_Importacao
         OnClick = cDiferidoClick
       end
       object DBCheckBox7: TDBCheckBox
-        Left = 308
-        Top = 615
-        Width = 216
+        Left = 303
+        Top = 619
+        Width = 212
         Height = 17
         Alignment = taLeftJustify
         Caption = 'Remover Frete Territ.Nac B.C. Impostos'
@@ -5160,9 +5163,9 @@ object Processo_Importacao: TProcesso_Importacao
         OnClick = cDiferidoClick
       end
       object DBCheckBox8: TDBCheckBox
-        Left = 308
-        Top = 599
-        Width = 128
+        Left = 303
+        Top = 601
+        Width = 124
         Height = 17
         Alignment = taLeftJustify
         Caption = 'Apura PIS/COFINS'
@@ -5177,11 +5180,30 @@ object Processo_Importacao: TProcesso_Importacao
         TabOrder = 7
         OnClick = cDiferidoClick
       end
+      object DBCheckBox10: TDBCheckBox
+        Left = 4
+        Top = 637
+        Width = 284
+        Height = 17
+        Alignment = taLeftJustify
+        Caption = 'Cont'#233'm produtos que exigem LPCO'
+        DataField = 'LPCO'
+        DataSource = Dados.dsProcessosDOC
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Height = -11
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 8
+        OnClick = cDiferidoClick
+      end
     end
     object TabSheet3: TTabSheet
       Caption = '&Outras Informa'#231#245'es'
       Enabled = False
       ImageIndex = 2
+      ExplicitHeight = 653
       object Label1: TLabel
         Left = 170
         Top = 282
@@ -7294,11 +7316,12 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet2: TTabSheet
       Caption = 'I&nf. Complementares'
       ImageIndex = 7
+      ExplicitHeight = 653
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
         Width = 1060
-        Height = 639
+        Height = 662
         Align = alClient
         DataField = 'Texto'
         DataSource = Dados.dsProcessosTexto
@@ -7311,12 +7334,14 @@ object Processo_Importacao: TProcesso_Importacao
         ScrollBars = ssVertical
         TabOrder = 0
         WordWrap = False
+        ExplicitHeight = 653
       end
     end
     object TabSheet8: TTabSheet
       Caption = 'Movimento &Financeiro'
       Enabled = False
       ImageIndex = 7
+      ExplicitHeight = 653
       object bDespesas: TSpeedButton
         Left = 856
         Top = 464
@@ -8073,11 +8098,12 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet9: TTabSheet
       Caption = '&Seriais'
       ImageIndex = 8
+      ExplicitHeight = 653
       object RxDBGrid1: TRxDBGrid
         Left = 0
         Top = 0
         Width = 1060
-        Height = 639
+        Height = 662
         Align = alClient
         Color = clWhite
         Ctl3D = True
@@ -8221,6 +8247,7 @@ object Processo_Importacao: TProcesso_Importacao
       Font.Style = []
       ImageIndex = 6
       ParentFont = False
+      ExplicitHeight = 653
       object DBGrid2: TDBGrid
         Left = 1
         Top = 2
@@ -8386,6 +8413,7 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = 'Contabeis'
       Enabled = False
       ImageIndex = 10
+      ExplicitHeight = 653
       object GroupBox5: TGroupBox
         Left = 3
         Top = 12
@@ -8710,6 +8738,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet4: TTabSheet
       Caption = '&Hist'#243'rico'
       ImageIndex = 3
+      ExplicitHeight = 653
       object DBGrid1: TDBGrid
         Left = 0
         Top = 0
@@ -8819,6 +8848,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet10: TTabSheet
       Caption = '&Documentos Gerais'
       ImageIndex = -1
+      ExplicitHeight = 653
       object Label2: TLabel
         Left = 3
         Top = 230
@@ -9350,6 +9380,7 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = '&Filtros'
       ImageIndex = 5
       OnEnter = TabSheet6Enter
+      ExplicitHeight = 653
       object bLimpar: TSpeedButton
         Left = 527
         Top = 420
@@ -10841,6 +10872,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet5: TTabSheet
       Caption = '&Lista'
       ImageIndex = 4
+      ExplicitHeight = 653
       object GradeLista: TDBGrid
         AlignWithMargins = True
         Left = 3

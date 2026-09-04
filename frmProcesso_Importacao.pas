@@ -494,6 +494,7 @@ type
     dstDespachantes: TDataSource;
     tDespachantesCodigo: TIntegerField;
     tDespachantesNome: TStringField;
+    DBCheckBox10: TDBCheckBox;
     procedure bSairClick(Sender: TObject);
     procedure NavegaClick(Sender: TObject; Button: TNavigateBtn);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
