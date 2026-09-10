@@ -700,7 +700,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         mmHeight = 1850
         mmLeft = 7645
         mmTop = 18786
-        mmWidth = 26209
+        mmWidth = 24089
         BandType = 0
         LayerName = Foreground6
       end
@@ -721,7 +721,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 34101
+        mmLeft = 31981
         mmTop = 18786
         mmWidth = 7675
         BandType = 0
@@ -744,7 +744,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 42028
+        mmLeft = 39908
         mmTop = 18786
         mmWidth = 12709
         BandType = 0
@@ -767,7 +767,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 54998
+        mmLeft = 52878
         mmTop = 18786
         mmWidth = 7411
         BandType = 0
@@ -790,7 +790,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 62669
+        mmLeft = 60549
         mmTop = 18786
         mmWidth = 10587
         BandType = 0
@@ -813,7 +813,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 73512
+        mmLeft = 71392
         mmTop = 18786
         mmWidth = 8205
         BandType = 0
@@ -836,7 +836,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 81979
+        mmLeft = 79859
         mmTop = 18786
         mmWidth = 8205
         BandType = 0
@@ -859,7 +859,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 90442
+        mmLeft = 88322
         mmTop = 18786
         mmWidth = 7147
         BandType = 0
@@ -882,7 +882,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 97844
+        mmLeft = 95724
         mmTop = 18786
         mmWidth = 10588
         BandType = 0
@@ -905,7 +905,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 108682
+        mmLeft = 106562
         mmTop = 18786
         mmWidth = 6881
         BandType = 0
@@ -928,8 +928,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         TextAlignment = taRightJustified
         VerticalAlignment = avCenter
-        mmHeight = 1851
-        mmLeft = 115819
+        mmHeight = 1852
+        mmLeft = 113699
         mmTop = 18786
         mmWidth = 9000
         BandType = 0
@@ -952,7 +952,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 125085
+        mmLeft = 127735
         mmTop = 18786
         mmWidth = 6617
         BandType = 0
@@ -975,7 +975,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 131980
+        mmLeft = 134630
         mmTop = 18786
         mmWidth = 8207
         BandType = 0
@@ -998,7 +998,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 140434
+        mmLeft = 143084
         mmTop = 18786
         mmWidth = 12971
         BandType = 0
@@ -1021,9 +1021,9 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 153668
+        mmLeft = 156318
         mmTop = 18786
-        mmWidth = 14032
+        mmWidth = 11382
         BandType = 0
         LayerName = Foreground6
       end
@@ -1303,6 +1303,30 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         BandType = 0
         LayerName = Foreground6
       end
+      object ppLabel29: TppLabel
+        DesignLayer = ppDesignLayer7
+        UserName = 'Label29'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = ' LPCO'
+        Color = 10184960
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        VerticalAlignment = avCenter
+        mmHeight = 1852
+        mmLeft = 123024
+        mmTop = 18785
+        mmWidth = 4498
+        BandType = 0
+        LayerName = Foreground6
+      end
     end
     object ppDetailBand7: TppDetailBand
       Background1.Brush.Style = bsClear
@@ -1352,7 +1376,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         mmHeight = 1852
         mmLeft = 7645
         mmTop = 0
-        mmWidth = 26209
+        mmWidth = 24089
         BandType = 4
         LayerName = Foreground6
       end
@@ -1372,7 +1396,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 34101
+        mmLeft = 31981
         mmTop = 0
         mmWidth = 7675
         BandType = 4
@@ -1394,7 +1418,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 42028
+        mmLeft = 39908
         mmTop = 0
         mmWidth = 12709
         BandType = 4
@@ -1416,7 +1440,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 54998
+        mmLeft = 52878
         mmTop = 0
         mmWidth = 7411
         BandType = 4
@@ -1438,7 +1462,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 62669
+        mmLeft = 60549
         mmTop = 0
         mmWidth = 10587
         BandType = 4
@@ -1460,7 +1484,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 73512
+        mmLeft = 71392
         mmTop = 0
         mmWidth = 8205
         BandType = 4
@@ -1482,7 +1506,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 81979
+        mmLeft = 79859
         mmTop = 0
         mmWidth = 8205
         BandType = 4
@@ -1504,7 +1528,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 90442
+        mmLeft = 88322
         mmTop = 0
         mmWidth = 7147
         BandType = 4
@@ -1526,7 +1550,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 97844
+        mmLeft = 95724
         mmTop = 0
         mmWidth = 10588
         BandType = 4
@@ -1548,7 +1572,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 108682
+        mmLeft = 106562
         mmTop = 0
         mmWidth = 6881
         BandType = 4
@@ -1572,7 +1596,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 115819
+        mmLeft = 113699
         mmTop = 0
         mmWidth = 9000
         BandType = 4
@@ -1594,7 +1618,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 125085
+        mmLeft = 127735
         mmTop = 0
         mmWidth = 6617
         BandType = 4
@@ -1616,7 +1640,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 131980
+        mmLeft = 134630
         mmTop = 0
         mmWidth = 8207
         BandType = 4
@@ -1638,7 +1662,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 140434
+        mmLeft = 143084
         mmTop = 0
         mmWidth = 12971
         BandType = 4
@@ -1660,9 +1684,9 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 153668
+        mmLeft = 156318
         mmTop = 0
-        mmWidth = 14032
+        mmWidth = 11382
         BandType = 4
         LayerName = Foreground6
       end
@@ -1950,6 +1974,29 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         BandType = 4
         LayerName = Foreground6
       end
+      object ppDBText28: TppDBText
+        DesignLayer = ppDesignLayer7
+        UserName = 'DBText28'
+        Border.mmPadding = 0
+        DataField = 'LPCO'
+        DataPipeline = dbpFollowUp
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taCentered
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpFollowUp'
+        mmHeight = 1852
+        mmLeft = 123024
+        mmTop = 0
+        mmWidth = 4498
+        BandType = 4
+        LayerName = Foreground6
+      end
     end
     object ppFooterBand1: TppFooterBand
       Background.Brush.Style = bsClear
@@ -1988,8 +2035,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     object dbpFollowUpppField1: TppField
       FieldAlias = 'Processo'
       FieldName = 'Processo'
-      FieldLength = 0
-      DisplayWidth = 0
+      FieldLength = 15
+      DisplayWidth = 15
       Position = 0
     end
     object dbpFollowUpppField2: TppField
@@ -2232,6 +2279,13 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       DisplayWidth = 15
       Position = 31
     end
+    object dbpFollowUpppField33: TppField
+      FieldAlias = 'LPCO'
+      FieldName = 'LPCO'
+      FieldLength = 3
+      DisplayWidth = 3
+      Position = 32
+    end
   end
   object qryFLP: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -2335,6 +2389,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       ',PRD.Nome_Transporte'
       ',PRD.Transporte_Viagem'
       ',PRD.Responsavel'
+      ',LPCO = IIF(PRD.LPCO = 1, '#39'SIM'#39', '#39#39')'
       'FROM ProcessosDocumentos AS PRD'
       'LEFT JOIN Clientes AS CLI'
       ' ON CLI.Codigo = PRD.Cliente'
@@ -2582,6 +2637,11 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     object qryFLPResponsavel: TStringField
       FieldName = 'Responsavel'
       Size = 15
+    end
+    object qryFLPLPCO: TStringField
+      FieldName = 'LPCO'
+      ReadOnly = True
+      Size = 3
     end
   end
   object dsoFLP: TDataSource
@@ -4523,7 +4583,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       mmPrintPosition = 0
       object ppLabel31: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label12'
+        UserName = 'Label31'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4539,14 +4599,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         mmHeight = 1851
         mmLeft = 0
-        mmTop = 525
+        mmTop = 1588
         mmWidth = 7411
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel32: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label1'
+        UserName = 'Label32'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4561,15 +4621,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1850
-        mmLeft = 7645
-        mmTop = 525
-        mmWidth = 26209
+        mmLeft = 7673
+        mmTop = 1588
+        mmWidth = 24089
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel33: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label2'
+        UserName = 'Label33'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4584,15 +4644,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 34101
-        mmTop = 525
+        mmLeft = 32015
+        mmTop = 1588
         mmWidth = 7675
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel34: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label3'
+        UserName = 'Label34'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4607,15 +4667,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 42028
-        mmTop = 525
+        mmLeft = 39952
+        mmTop = 1588
         mmWidth = 12709
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel35: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label4'
+        UserName = 'Label35'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4630,15 +4690,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 54998
-        mmTop = 525
+        mmLeft = 52917
+        mmTop = 1588
         mmWidth = 7411
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel36: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label5'
+        UserName = 'Label36'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4653,15 +4713,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 62669
-        mmTop = 525
+        mmLeft = 60590
+        mmTop = 1588
         mmWidth = 10587
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel37: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label6'
+        UserName = 'Label37'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4676,15 +4736,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 73512
-        mmTop = 525
+        mmLeft = 71438
+        mmTop = 1588
         mmWidth = 8205
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel38: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label7'
+        UserName = 'Label38'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4699,15 +4759,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 81979
-        mmTop = 525
+        mmLeft = 79904
+        mmTop = 1588
         mmWidth = 8205
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel39: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label8'
+        UserName = 'Label39'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4722,15 +4782,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 90442
-        mmTop = 525
+        mmLeft = 88371
+        mmTop = 1588
         mmWidth = 7147
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel40: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label9'
+        UserName = 'Label40'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4745,15 +4805,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 97844
-        mmTop = 525
+        mmLeft = 95779
+        mmTop = 1588
         mmWidth = 10588
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel41: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label10'
+        UserName = 'Label102'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4768,15 +4828,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 108682
-        mmTop = 525
+        mmLeft = 106627
+        mmTop = 1588
         mmWidth = 6881
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel42: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label101'
+        UserName = 'Label42'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4791,16 +4851,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         TextAlignment = taRightJustified
         VerticalAlignment = avCenter
-        mmHeight = 1851
-        mmLeft = 115819
-        mmTop = 525
+        mmHeight = 1852
+        mmLeft = 113771
+        mmTop = 1588
         mmWidth = 9000
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel43: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label13'
+        UserName = 'Label43'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4815,15 +4875,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 125085
-        mmTop = 525
+        mmLeft = 127794
+        mmTop = 1588
         mmWidth = 6617
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel44: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label14'
+        UserName = 'Label44'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4838,15 +4898,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 131980
-        mmTop = 525
+        mmLeft = 134673
+        mmTop = 1588
         mmWidth = 8207
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel45: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label16'
+        UserName = 'Label45'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4861,15 +4921,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 140434
-        mmTop = 525
+        mmLeft = 143140
+        mmTop = 1588
         mmWidth = 12971
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel46: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label17'
+        UserName = 'Label46'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4884,15 +4944,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 153668
-        mmTop = 525
-        mmWidth = 14032
+        mmLeft = 156369
+        mmTop = 1588
+        mmWidth = 11382
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel47: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label18'
+        UserName = 'Label47'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4907,15 +4967,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 168001
-        mmTop = 524
+        mmLeft = 168011
+        mmTop = 1588
         mmWidth = 17742
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel48: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label19'
+        UserName = 'Label48'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4930,15 +4990,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 201607
-        mmTop = 524
+        mmLeft = 201613
+        mmTop = 1588
         mmWidth = 12445
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel49: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label20'
+        UserName = 'Label202'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4953,15 +5013,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 214298
-        mmTop = 524
+        mmLeft = 214313
+        mmTop = 1588
         mmWidth = 7673
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel50: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label201'
+        UserName = 'Label50'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4976,15 +5036,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 222254
-        mmTop = 524
+        mmLeft = 222250
+        mmTop = 1588
         mmWidth = 6882
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel51: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label22'
+        UserName = 'Label51'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -4999,15 +5059,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 229386
-        mmTop = 524
+        mmLeft = 229394
+        mmTop = 1588
         mmWidth = 9526
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel52: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label23'
+        UserName = 'Label52'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -5022,15 +5082,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 239182
-        mmTop = 524
+        mmLeft = 239184
+        mmTop = 1588
         mmWidth = 6352
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel53: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label24'
+        UserName = 'Label53'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -5045,15 +5105,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 245791
-        mmTop = 524
+        mmLeft = 245798
+        mmTop = 1588
         mmWidth = 6086
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel54: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label25'
+        UserName = 'Label54'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -5068,15 +5128,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 252150
-        mmTop = 524
+        mmLeft = 252148
+        mmTop = 1588
         mmWidth = 8731
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel55: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label26'
+        UserName = 'Label55'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -5091,15 +5151,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1853
-        mmLeft = 261139
-        mmTop = 522
+        mmLeft = 261144
+        mmTop = 1588
         mmWidth = 17720
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel56: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label15'
+        UserName = 'Label56'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -5114,15 +5174,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 279133
-        mmTop = 524
+        mmLeft = 279136
+        mmTop = 1588
         mmWidth = 6086
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel57: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label27'
+        UserName = 'Label57'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -5137,15 +5197,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 186004
-        mmTop = 524
+        mmLeft = 186002
+        mmTop = 1588
         mmWidth = 8207
         BandType = 0
         LayerName = BandLayer2
       end
       object ppLabel58: TppLabel
         DesignLayer = ppDesignLayer1
-        UserName = 'Label28'
+        UserName = 'Label58'
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
@@ -5160,9 +5220,33 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         FormFieldSettings.FormFieldType = fftNone
         VerticalAlignment = avCenter
         mmHeight = 1851
-        mmLeft = 194467
-        mmTop = 524
+        mmLeft = 194469
+        mmTop = 1588
         mmWidth = 6879
+        BandType = 0
+        LayerName = BandLayer2
+      end
+      object ppLabel59: TppLabel
+        DesignLayer = ppDesignLayer1
+        UserName = 'Label59'
+        AutoSize = False
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = ' LPCO'
+        Color = 10184960
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWhite
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taCentered
+        VerticalAlignment = avCenter
+        mmHeight = 1852
+        mmLeft = 123031
+        mmTop = 1588
+        mmWidth = 4498
         BandType = 0
         LayerName = BandLayer2
       end
@@ -5175,9 +5259,24 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       mmBottomOffset = 0
       mmHeight = 3175
       mmPrintPosition = 0
+      object ppLine2: TppLine
+        DesignLayer = ppDesignLayer1
+        UserName = 'Line1'
+        Border.mmPadding = 0
+        Pen.Width = 0
+        Position = lpBottom
+        StretchWithParent = True
+        Weight = 0.200000002980232200
+        mmHeight = 792
+        mmLeft = 265
+        mmTop = 2367
+        mmWidth = 284957
+        BandType = 4
+        LayerName = BandLayer2
+      end
       object ppDBText29: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText1'
+        UserName = 'DBText29'
         Border.mmPadding = 0
         DataField = 'Processo'
         DataPipeline = dbpFollowUp
@@ -5199,7 +5298,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText30: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText2'
+        UserName = 'DBText30'
         Border.mmPadding = 0
         DataField = 'ClienteNome'
         DataPipeline = dbpFollowUp
@@ -5213,15 +5312,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 7645
+        mmLeft = 7673
         mmTop = 0
-        mmWidth = 26209
+        mmWidth = 24089
         BandType = 4
         LayerName = BandLayer2
       end
       object ppDBText31: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText3'
+        UserName = 'DBText31'
         Border.mmPadding = 0
         DataField = 'Tipo'
         DataPipeline = dbpFollowUp
@@ -5235,7 +5334,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 34101
+        mmLeft = 32015
         mmTop = 0
         mmWidth = 7675
         BandType = 4
@@ -5243,7 +5342,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText32: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText5'
+        UserName = 'DBText32'
         Border.mmPadding = 0
         DataField = 'Exportador'
         DataPipeline = dbpFollowUp
@@ -5257,7 +5356,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 42028
+        mmLeft = 39952
         mmTop = 0
         mmWidth = 12709
         BandType = 4
@@ -5265,7 +5364,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText33: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText6'
+        UserName = 'DBText33'
         Border.mmPadding = 0
         DataField = 'BL_AWB'
         DataPipeline = dbpFollowUp
@@ -5279,7 +5378,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 54998
+        mmLeft = 52917
         mmTop = 0
         mmWidth = 7411
         BandType = 4
@@ -5287,7 +5386,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText34: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText7'
+        UserName = 'DBText34'
         Border.mmPadding = 0
         DataField = 'CE_MERCANTE_RUC'
         DataPipeline = dbpFollowUp
@@ -5301,7 +5400,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 62669
+        mmLeft = 60590
         mmTop = 0
         mmWidth = 10587
         BandType = 4
@@ -5309,7 +5408,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText35: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText4'
+        UserName = 'DBText35'
         Border.mmPadding = 0
         DataField = 'Container'
         DataPipeline = dbpFollowUp
@@ -5323,7 +5422,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 73512
+        mmLeft = 71438
         mmTop = 0
         mmWidth = 8205
         BandType = 4
@@ -5331,7 +5430,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText36: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText9'
+        UserName = 'DBText36'
         Border.mmPadding = 0
         DataField = 'FREE_TIME'
         DataPipeline = dbpFollowUp
@@ -5345,7 +5444,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 81979
+        mmLeft = 79904
         mmTop = 0
         mmWidth = 8205
         BandType = 4
@@ -5353,7 +5452,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText37: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText10'
+        UserName = 'DBText101'
         Border.mmPadding = 0
         DataField = 'CANAL'
         DataPipeline = dbpFollowUp
@@ -5367,7 +5466,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 90442
+        mmLeft = 88371
         mmTop = 0
         mmWidth = 7147
         BandType = 4
@@ -5375,7 +5474,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText38: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText11'
+        UserName = 'DBText38'
         Border.mmPadding = 0
         DataField = 'DI_DUIMP'
         DataPipeline = dbpFollowUp
@@ -5389,7 +5488,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 97844
+        mmLeft = 95779
         mmTop = 0
         mmWidth = 10588
         BandType = 4
@@ -5397,7 +5496,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText39: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText12'
+        UserName = 'DBText39'
         Border.mmPadding = 0
         DataField = 'Invoce'
         DataPipeline = dbpFollowUp
@@ -5411,7 +5510,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 108682
+        mmLeft = 106627
         mmTop = 0
         mmWidth = 6881
         BandType = 4
@@ -5419,7 +5518,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText40: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText13'
+        UserName = 'DBText40'
         Border.mmPadding = 0
         DataField = 'VALOR'
         DataPipeline = dbpFollowUp
@@ -5435,7 +5534,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 115819
+        mmLeft = 113771
         mmTop = 0
         mmWidth = 9000
         BandType = 4
@@ -5443,7 +5542,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText41: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText14'
+        UserName = 'DBText41'
         Border.mmPadding = 0
         DataField = 'LI'
         DataPipeline = dbpFollowUp
@@ -5457,7 +5556,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 125085
+        mmLeft = 127794
         mmTop = 0
         mmWidth = 6617
         BandType = 4
@@ -5465,7 +5564,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText43: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText15'
+        UserName = 'DBText43'
         Border.mmPadding = 0
         DataField = 'ModalDescricao'
         DataPipeline = dbpFollowUp
@@ -5479,7 +5578,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 131980
+        mmLeft = 134673
         mmTop = 0
         mmWidth = 8207
         BandType = 4
@@ -5487,7 +5586,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText44: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText17'
+        UserName = 'DBText44'
         Border.mmPadding = 0
         DataField = 'TIPO_IMPORTACAO'
         DataPipeline = dbpFollowUp
@@ -5501,7 +5600,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 140434
+        mmLeft = 143140
         mmTop = 0
         mmWidth = 12971
         BandType = 4
@@ -5509,7 +5608,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText45: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText18'
+        UserName = 'DBText45'
         Border.mmPadding = 0
         DataField = 'Agente_Carga'
         DataPipeline = dbpFollowUp
@@ -5523,15 +5622,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 153668
+        mmLeft = 156369
         mmTop = 0
-        mmWidth = 14032
+        mmWidth = 11382
         BandType = 4
         LayerName = BandLayer2
       end
       object ppDBText46: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText19'
+        UserName = 'DBText46'
         Border.mmPadding = 0
         DataField = 'DESPACHANTE_NOME'
         DataPipeline = dbpFollowUp
@@ -5545,7 +5644,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 168001
+        mmLeft = 168011
         mmTop = 0
         mmWidth = 17742
         BandType = 4
@@ -5553,7 +5652,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText47: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText20'
+        UserName = 'DBText202'
         Border.mmPadding = 0
         DataField = 'Origem'
         DataPipeline = dbpFollowUp
@@ -5567,7 +5666,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 201607
+        mmLeft = 201613
         mmTop = 0
         mmWidth = 12445
         BandType = 4
@@ -5575,7 +5674,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText48: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText201'
+        UserName = 'DBText48'
         Border.mmPadding = 0
         DataField = 'Destino'
         DataPipeline = dbpFollowUp
@@ -5589,7 +5688,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 214298
+        mmLeft = 214313
         mmTop = 0
         mmWidth = 7673
         BandType = 4
@@ -5597,7 +5696,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText49: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText22'
+        UserName = 'DBText49'
         Border.mmPadding = 0
         DataField = 'EMBARQUE'
         DataPipeline = dbpFollowUp
@@ -5611,7 +5710,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 222254
+        mmLeft = 222250
         mmTop = 0
         mmWidth = 6882
         BandType = 4
@@ -5619,7 +5718,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText50: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText23'
+        UserName = 'DBText50'
         Border.mmPadding = 0
         DataField = 'PREVISAO_CHEGADA'
         DataPipeline = dbpFollowUp
@@ -5633,7 +5732,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 229386
+        mmLeft = 229394
         mmTop = 0
         mmWidth = 9526
         BandType = 4
@@ -5641,7 +5740,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText51: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText24'
+        UserName = 'DBText51'
         Border.mmPadding = 0
         DataField = 'CHEGADA'
         DataPipeline = dbpFollowUp
@@ -5655,7 +5754,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 239182
+        mmLeft = 239184
         mmTop = 0
         mmWidth = 6352
         BandType = 4
@@ -5663,7 +5762,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText52: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText25'
+        UserName = 'DBText52'
         Border.mmPadding = 0
         DataField = 'Documentos'
         DataPipeline = dbpFollowUp
@@ -5677,7 +5776,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 245791
+        mmLeft = 245798
         mmTop = 0
         mmWidth = 6086
         BandType = 4
@@ -5685,7 +5784,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText53: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText26'
+        UserName = 'DBText53'
         Border.mmPadding = 0
         DataField = 'PRESENCA_CARGA'
         DataPipeline = dbpFollowUp
@@ -5699,7 +5798,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 252150
+        mmLeft = 252148
         mmTop = 0
         mmWidth = 8731
         BandType = 4
@@ -5707,7 +5806,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBMemo2: TppDBMemo
         DesignLayer = ppDesignLayer1
-        UserName = 'DBMemo1'
+        UserName = 'DBMemo2'
         Border.mmPadding = 0
         CharWrap = False
         DataField = 'HISTORICO_PROCESSO'
@@ -5723,7 +5822,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Transparent = True
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 261139
+        mmLeft = 261144
         mmTop = 0
         mmWidth = 17456
         BandType = 4
@@ -5734,24 +5833,9 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         mmMinHeight = 0
         mmLeading = 0
       end
-      object ppLine2: TppLine
-        DesignLayer = ppDesignLayer1
-        UserName = 'Line1'
-        Border.mmPadding = 0
-        Pen.Width = 0
-        Position = lpBottom
-        StretchWithParent = True
-        Weight = 0.200000002980232200
-        mmHeight = 792
-        mmLeft = 265
-        mmTop = 2367
-        mmWidth = 284957
-        BandType = 4
-        LayerName = BandLayer2
-      end
       object ppDBText54: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText16'
+        UserName = 'DBText54'
         Border.mmPadding = 0
         DataField = 'Responsavel'
         DataPipeline = dbpFollowUp
@@ -5763,7 +5847,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Transparent = True
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 279398
+        mmLeft = 279401
         mmTop = 0
         mmWidth = 6081
         BandType = 4
@@ -5771,7 +5855,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText55: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText27'
+        UserName = 'DBText55'
         Border.mmPadding = 0
         DataField = 'Nome_Transporte'
         DataPipeline = dbpFollowUp
@@ -5785,7 +5869,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 186004
+        mmLeft = 186002
         mmTop = 0
         mmWidth = 8207
         BandType = 4
@@ -5793,7 +5877,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       end
       object ppDBText56: TppDBText
         DesignLayer = ppDesignLayer1
-        UserName = 'DBText42'
+        UserName = 'DBText56'
         Border.mmPadding = 0
         DataField = 'Transporte_Viagem'
         DataPipeline = dbpFollowUp
@@ -5807,9 +5891,32 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         VerticalAlignment = avCenter
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
-        mmLeft = 194467
+        mmLeft = 194469
         mmTop = 0
         mmWidth = 6879
+        BandType = 4
+        LayerName = BandLayer2
+      end
+      object ppDBText57: TppDBText
+        DesignLayer = ppDesignLayer1
+        UserName = 'DBText57'
+        Border.mmPadding = 0
+        DataField = 'LPCO'
+        DataPipeline = dbpFollowUp
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Name = 'Arial'
+        Font.Size = 3
+        Font.Style = []
+        ParentDataPipeline = False
+        TextAlignment = taCentered
+        Transparent = True
+        VerticalAlignment = avCenter
+        DataPipelineName = 'dbpFollowUp'
+        mmHeight = 1852
+        mmLeft = 123031
+        mmTop = 0
+        mmWidth = 4498
         BandType = 4
         LayerName = BandLayer2
       end

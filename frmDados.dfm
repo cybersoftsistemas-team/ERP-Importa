@@ -10,6 +10,7 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
+    Connected = True
     LoginPrompt = False
     Left = 17
     Top = 14
@@ -351,6 +352,7 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = EmpresasBeforePost
     BeforeDelete = EmpresasBeforeDelete
+    Active = True
     Left = 1359
     Top = 14
     object EmpresasCodigo: TIntegerField
@@ -15517,7 +15519,7 @@ object Dados: TDados
     Top = 340
   end
   object Banco_Empresas: TMSConnection
-    Database = 'Cybersoft_Givotrading_Matriz'
+    Database = 'Cybersoft_Vix_Matriz'
     Options.PersistSecurityInfo = True
     Options.ApplicationName = 'Cybersoft ERP Importa'
     Options.Provider = prSQL
