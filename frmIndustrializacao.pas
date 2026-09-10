@@ -185,7 +185,8 @@ begin
                cProcessoOrigem.Enabled := recordcount > 0;
           end;
           with ProdutosMateriaPrima do begin
-               if (RecordCount > 0) or (Industrial.State = dsInsert) then begin
+//               if (RecordCount > 0) or (Industrial.State = dsInsert) then begin
+               if Industrial.State = dsInsert then begin
                   sql.clear;
                   sql.Add('select *');
                   sql.add('      ,Saldo = ((select isnull(sum(Quantidade), 0) from NotasTerceirosItens nti where nti.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Movimenta_Estoque = 1) + ');
@@ -195,6 +196,7 @@ begin
                   sql.add('                (select isnull(sum(Quantidade), 0) from ProdutosTransferencia prt where prt.Produto_Saida = pmp.Codigo_MateriaPrima and Estoque = 1))');
                   sql.Add('from ProdutosMateriaPrima pmp');
                   sql.Add('where Codigo_Produto = ' + iif(Industrial.FieldByName('Codigo_Mercadoria').AsString <> '', Industrial.FieldByName('Codigo_Mercadoria').AsString, '0'));
+                  sql.SaveToFile('c:\temp\ProdutosMateriaPrima.sql');
                   open;
                end;
           end;

@@ -493,7 +493,7 @@ begin
 
       // *** TRANSFERÊNCIAS DE AJUSTE DE ESTOQUE ***
       tItens.SQL.Add('UNION ALL');
-      tItens.SQL.Add('SELECT Tipo = CASE WHEN Motivo <> ''I'' THEN ''P'' ELSE ''T'' END,');
+      tItens.SQL.Add('SELECT Tipo = CASE WHEN (Motivo <> ''I'' AND Motivo <> ''IND'') THEN ''P'' ELSE ''T'' END,');
       tItens.SQL.Add('       Sai_Entra = 0,');
       tItens.SQL.Add('       PT.Produto_Entrada,');
       tItens.SQL.Add('       null,');
@@ -503,8 +503,8 @@ begin
       tItens.SQL.Add('       Nota,');
       tItens.SQL.Add('       CFOP,');
       tItens.SQL.Add('       Nota_Compl        = null,');
-      tItens.SQL.Add('       Entrada_Compra    = CASE WHEN Motivo <> ''I'' THEN Quantidade_Entrada ELSE 0 END,');
-      tItens.SQL.Add('       Entrada_Terceiros = CASE WHEN Motivo  = ''I'' THEN Quantidade_Entrada ELSE 0 END,');
+      tItens.SQL.Add('       Entrada_Compra    = CASE WHEN (Motivo <> ''I'' AND Motivo <> ''IND'') THEN Quantidade_Entrada ELSE 0 END,');
+      tItens.SQL.Add('       Entrada_Terceiros = CASE WHEN (Motivo  = ''I'' AND Motivo <> ''IND'') THEN Quantidade_Entrada ELSE 0 END,');
       tItens.SQL.Add('       Entrada_Devol     = 0,');
       tItens.SQL.Add('       Saida_Devol       = 0,');
       tItens.SQL.Add('       Saida_Venda       = 0,');
@@ -514,8 +514,8 @@ begin
       tItens.SQL.Add('       Valor_Unitario,');
       tItens.SQL.Add('       Destinatario_Nome = CASE WHEN Motivo = ''TRF'' THEN ''*** TRANSFERÊNCIA DE ESTOQUE (ENTRADA) ***''');
       tItens.SQL.Add('                                WHEN Motivo = ''A''   THEN ''*** SALDO DE ABERTURA DE ESTOQUE ***''');
-      tItens.SQL.Add('                                WHEN Motivo = ''I''   THEN ''* BAIXA DE MATERIA PRIMA INDUSTRIALIZAÇÃO *''');
-      tItens.SQL.Add('                                WHEN Motivo = ''IND'' THEN ''* BAIXA DE MATERIA PRIMA INDUSTRIALIZAÇÃO *''');
+      tItens.SQL.Add('                                WHEN Motivo = ''I''   THEN ''* BAIXA DE MATÉRIA-PRIMA INDUSTRIALIZAÇÃO *''');
+      tItens.SQL.Add('                                WHEN Motivo = ''IND'' THEN ''* BAIXA DE MATÉRIA-PRIMA INDUSTRIALIZAÇÃO *''');
       tItens.SQL.Add('                           END,');
       tItens.SQL.Add('       Tipo_Produto = (SELECT CAST(Codigo AS VARCHAR(10))+'' - ''+Descricao FROM Cybersoft_Cadastros.dbo.TipoProduto WHERE Codigo = (SELECT Tipo FROM Produtos WHERE Codigo = PT.Produto_Entrada))');
       tItens.SQL.Add('FROM   ProdutosTransferencia PT');
@@ -543,7 +543,7 @@ begin
       End;
 
       tItens.SQL.Add('UNION ALL');
-      tItens.SQL.Add('SELECT Tipo = CASE WHEN Motivo <> ''I'' THEN ''P'' ELSE ''T'' END,');
+      tItens.SQL.Add('SELECT Tipo = CASE WHEN (Motivo <> ''I'' AND Motivo <> ''IND'') THEN ''P'' ELSE ''T'' END,');
       tItens.SQL.Add('       Sai_Entra = 1,');
       tItens.SQL.Add('       PT.Produto_Saida,');
       tItens.SQL.Add('       null,');
@@ -557,15 +557,15 @@ begin
       tItens.SQL.Add('       Entrada_Terceiros = 0,');
       tItens.SQL.Add('       Entrada_Devol     = 0,');
       tItens.SQL.Add('       Saida_Devol       = 0,');
-      tItens.SQL.Add('       Saida_Venda       = CASE WHEN Motivo <> ''I'' THEN Quantidade ELSE 0 END,');
+      tItens.SQL.Add('       Saida_Venda       = CASE WHEN (Motivo <> ''I'' AND Motivo <> ''IND'') THEN Quantidade ELSE 0 END,');
       tItens.SQL.Add('       Saida_Terceiros   = 0,');
-      tItens.SQL.Add('       Saida_Outras      = CASE WHEN Motivo  = ''I'' THEN Quantidade ELSE 0 END,');
+      tItens.SQL.Add('       Saida_Outras      = CASE WHEN (Motivo  = ''I'' OR Motivo = ''IND'') THEN Quantidade ELSE 0 END,');
       tItens.SQL.Add('       Total_Item        = Valor_Unitario * Quantidade,');
       tItens.SQL.Add('       Valor_Unitario,');
       tItens.SQL.Add('       Destinatario_Nome = CASE WHEN Motivo = ''TRF'' THEN ''*** TRANSFERÊNCIA DE ESTOQUE (ENTRADA) ***''');
       tItens.SQL.Add('                                WHEN Motivo = ''A''   THEN ''*** SALDO DE ABERTURA DE ESTOQUE ***''');
-      tItens.SQL.Add('                                WHEN Motivo = ''I''   THEN ''* BAIXA DE MATERIA PRIMA INDUSTRIALIZAÇÃO *''');
-      tItens.SQL.Add('                                WHEN Motivo = ''IND'' THEN ''* BAIXA DE MATERIA PRIMA INDUSTRIALIZAÇÃO *''');
+      tItens.SQL.Add('                                WHEN Motivo = ''I''   THEN ''* BAIXA DE MATÉRIA-PRIMA INDUSTRIALIZAÇÃO *''');
+      tItens.SQL.Add('                                WHEN Motivo = ''IND'' THEN ''* BAIXA DE MATÉRIA-PRIMA INDUSTRIALIZAÇÃO *''');
       tItens.SQL.Add('                           END,');
       tItens.SQL.Add('       Tipo_Produto = (SELECT CAST(Codigo AS VARCHAR(10))+'' - ''+Descricao FROM Cybersoft_Cadastros.dbo.TipoProduto WHERE Codigo = (SELECT Tipo FROM Produtos WHERE Codigo = PT.Produto_Saida))');
       tItens.SQL.Add('FROM   ProdutosTransferencia PT');
