@@ -503,8 +503,10 @@ begin
       tItens.SQL.Add('       Nota,');
       tItens.SQL.Add('       CFOP,');
       tItens.SQL.Add('       Nota_Compl        = null,');
-      tItens.SQL.Add('       Entrada_Compra    = CASE WHEN (Motivo <> ''I'' AND Motivo <> ''IND'') THEN Quantidade_Entrada ELSE 0 END,');
-      tItens.SQL.Add('       Entrada_Terceiros = CASE WHEN (Motivo  = ''I'' AND Motivo <> ''IND'') THEN Quantidade_Entrada ELSE 0 END,');
+//      tItens.SQL.Add('       Entrada_Compra    = CASE WHEN (Motivo <> ''I'' AND Motivo <> ''IND'') THEN Quantidade_Entrada ELSE 0 END,');
+//      tItens.SQL.Add('       Entrada_Terceiros = CASE WHEN (Motivo  = ''I'' AND Motivo <> ''IND'') THEN Quantidade_Entrada ELSE 0 END,');
+      tItens.SQL.Add('       Entrada_Compra    = CASE WHEN (Motivo <> ''I'') THEN Quantidade_Entrada ELSE 0 END,');
+      tItens.SQL.Add('       Entrada_Terceiros = CASE WHEN (Motivo  = ''I'') THEN Quantidade_Entrada ELSE 0 END,');
       tItens.SQL.Add('       Entrada_Devol     = 0,');
       tItens.SQL.Add('       Saida_Devol       = 0,');
       tItens.SQL.Add('       Saida_Venda       = 0,');
@@ -557,9 +559,11 @@ begin
       tItens.SQL.Add('       Entrada_Terceiros = 0,');
       tItens.SQL.Add('       Entrada_Devol     = 0,');
       tItens.SQL.Add('       Saida_Devol       = 0,');
-      tItens.SQL.Add('       Saida_Venda       = CASE WHEN (Motivo <> ''I'' AND Motivo <> ''IND'') THEN Quantidade ELSE 0 END,');
+//      tItens.SQL.Add('       Saida_Venda       = CASE WHEN (Motivo <> ''I'' AND Motivo <> ''IND'') THEN Quantidade ELSE 0 END,');
+      tItens.SQL.Add('       Saida_Venda       = CASE WHEN (Motivo <> ''I'' ) THEN Quantidade ELSE 0 END,');
       tItens.SQL.Add('       Saida_Terceiros   = 0,');
-      tItens.SQL.Add('       Saida_Outras      = CASE WHEN (Motivo  = ''I'' OR Motivo = ''IND'') THEN Quantidade ELSE 0 END,');
+//      tItens.SQL.Add('       Saida_Outras      = CASE WHEN (Motivo  = ''I'' OR Motivo = ''IND'') THEN Quantidade ELSE 0 END,');
+      tItens.SQL.Add('       Saida_Outras      = CASE WHEN (Motivo  = ''I'') THEN Quantidade ELSE 0 END,');
       tItens.SQL.Add('       Total_Item        = Valor_Unitario * Quantidade,');
       tItens.SQL.Add('       Valor_Unitario,');
       tItens.SQL.Add('       Destinatario_Nome = CASE WHEN Motivo = ''TRF'' THEN ''*** TRANSFERÊNCIA DE ESTOQUE (ENTRADA) ***''');

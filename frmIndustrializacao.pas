@@ -190,13 +190,13 @@ begin
                   sql.clear;
                   sql.Add('select *');
                   sql.add('      ,Saldo = ((select isnull(sum(Quantidade), 0) from NotasTerceirosItens nti where nti.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Movimenta_Estoque = 1) + ');
-                  sql.add('                (select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 0 and Movimenta_Estoque = 1) +');
+                  sql.add('                (select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 0 and Movimenta_Estoque = 1 and Cancelada <> 1 and NFe_Denegada <> 1) +');
                   sql.add('                (select isnull(sum(Quantidade_Entrada), 0) from ProdutosTransferencia prt where prt.Produto_Entrada = pmp.Codigo_MateriaPrima and Estoque = 1)) -');
-                  sql.add('               ((select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 1 and Movimenta_Estoque = 1) +');
+                  sql.add('               ((select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 1 and Movimenta_Estoque = 1 and Cancelada <> 1 and NFe_Denegada <> 1) +');
                   sql.add('                (select isnull(sum(Quantidade), 0) from ProdutosTransferencia prt where prt.Produto_Saida = pmp.Codigo_MateriaPrima and Estoque = 1))');
                   sql.Add('from ProdutosMateriaPrima pmp');
                   sql.Add('where Codigo_Produto = ' + iif(Industrial.FieldByName('Codigo_Mercadoria').AsString <> '', Industrial.FieldByName('Codigo_Mercadoria').AsString, '0'));
-                  sql.SaveToFile('c:\temp\ProdutosMateriaPrima.sql');
+                  //sql.SaveToFile('c:\temp\ProdutosMateriaPrima.sql');
                   open;
                end;
           end;
