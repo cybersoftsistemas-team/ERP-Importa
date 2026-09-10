@@ -3493,6 +3493,10 @@ object Pedido_ItensOutros: TPedido_ItensOutros
     object TabSheet2: TTabSheet
       Caption = 'Produtos'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GradeProdutos: TDBGrid
         AlignWithMargins = True
         Left = 3
@@ -3635,6 +3639,10 @@ object Pedido_ItensOutros: TPedido_ItensOutros
     object TabSheet3: TTabSheet
       Caption = 'Descri'#231#227'o do Poduto'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0

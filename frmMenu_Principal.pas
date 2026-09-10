@@ -3037,57 +3037,57 @@ end;
 
 procedure TMenu_Principal.mnUtilitarios_Importar_ExcelClick(Sender: TObject);
 begin
-      Utilitarios_ImportaEXCEL := TUtilitarios_ImportaEXCEL.Create(Self);
-      Utilitarios_ImportaEXCEL.Caption := Caption;
-      Utilitarios_ImportaEXCEL.ShowModal;
+     Utilitarios_ImportaEXCEL := TUtilitarios_ImportaEXCEL.Create(Self);
+     Utilitarios_ImportaEXCEL.Caption := Caption;
+     Utilitarios_ImportaEXCEL.ShowModal;
 end;
 
 procedure TMenu_Principal.mnFinanceiro_BloqueioClick(Sender: TObject);
 begin
-      Financeiro_BloquearPeriodo := TFinanceiro_BloquearPeriodo.Create(Self);
-      Financeiro_BloquearPeriodo.Caption := Caption;
-      Financeiro_BloquearPeriodo.ShowModal;
+     Financeiro_BloquearPeriodo := TFinanceiro_BloquearPeriodo.Create(Self);
+     Financeiro_BloquearPeriodo.Caption := Caption;
+     Financeiro_BloquearPeriodo.ShowModal;
 end;
 
 procedure TMenu_Principal.mnCadastro_TabelaComissoesClick(Sender: TObject);
 begin
-      Cadastro_TabelaComissoes := TCadastro_TabelaComissoes.Create(Self);
-      Cadastro_TabelaComissoes.Caption := Caption;
-      Cadastro_TabelaComissoes.ShowModal;
+     Cadastro_TabelaComissoes := TCadastro_TabelaComissoes.Create(Self);
+     Cadastro_TabelaComissoes.Caption := Caption;
+     Cadastro_TabelaComissoes.ShowModal;
 end;
 
 procedure TMenu_Principal.mnImpressao_Processos_ContainerClick(Sender: TObject);
 begin
-      Impressao_ProcessosOP_Container := TImpressao_ProcessosOP_Container.Create(Self);
-      Impressao_ProcessosOP_Container.Caption := Caption;
-      Impressao_ProcessosOP_Container.ShowModal;
+     Impressao_ProcessosOP_Container := TImpressao_ProcessosOP_Container.Create(Self);
+     Impressao_ProcessosOP_Container.Caption := Caption;
+     Impressao_ProcessosOP_Container.ShowModal;
 end;
 
 procedure TMenu_Principal.mnUtilitarios_RestoreClick(Sender: TObject);
 begin
-      Utilitarios_Restore := TUtilitarios_Restore.Create(Self);
-      Utilitarios_Restore.Caption := Caption;
-      Utilitarios_Restore.ShowModal;
+     Utilitarios_Restore := TUtilitarios_Restore.Create(Self);
+     Utilitarios_Restore.Caption := Caption;
+     Utilitarios_Restore.ShowModal;
 end;
 
 procedure TMenu_Principal.mnUtilitarios_RecriarContabilClick(Sender: TObject);
 begin
-      with Dados do begin
-           Empresas.SQL.Clear;
-           Empresas.SQL.Add('SELECT * FROM Empresas WHERE (Codigo = :pEmpresa)');
-           Empresas.ParamByName('pEmpresa').AsInteger := mEmpresa;
-           Empresas.Open;
+     with Dados do begin
+          Empresas.SQL.Clear;
+          Empresas.SQL.Add('SELECT * FROM Empresas WHERE (Codigo = :pEmpresa)');
+          Empresas.ParamByName('pEmpresa').AsInteger := mEmpresa;
+          Empresas.Open;
 
-           if EmpresasLancamento_Contabil.AsBoolean then begin
-              Utilitarios_RecriarContabil := TUtilitarios_RecriarContabil.Create(Self);
-              Utilitarios_RecriarContabil.Caption := Caption;
-              Utilitarios_RecriarContabil.ShowModal;
-           end else begin
-              Utilitarios_RecriarContabil2 := TUtilitarios_RecriarContabil2.Create(Self);
-              Utilitarios_RecriarContabil2.Caption := Caption;
-              Utilitarios_RecriarContabil2.ShowModal;
-           end;
-      end;
+          if EmpresasLancamento_Contabil.AsBoolean then begin
+             Utilitarios_RecriarContabil := TUtilitarios_RecriarContabil.Create(Self);
+             Utilitarios_RecriarContabil.Caption := Caption;
+             Utilitarios_RecriarContabil.ShowModal;
+          end else begin
+             Utilitarios_RecriarContabil2 := TUtilitarios_RecriarContabil2.Create(Self);
+             Utilitarios_RecriarContabil2.Caption := Caption;
+             Utilitarios_RecriarContabil2.ShowModal;
+          end;
+     end;
 end;
 
 procedure TMenu_Principal.mnUtilitarios_ImportarDadosEmpresaClick(Sender: TObject);

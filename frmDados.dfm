@@ -8592,7 +8592,7 @@ object Dados: TDados
   end
   object Container: TMSQuery
     SQLInsert.Strings = (
-      'INSERT INTO Cybersoft_MPL_Filial1..Container'
+      'INSERT INTO Container'
       
         '  (Numero, Processo, Armazem, Data_Entrada, Hora_Entrada, Data_S' +
         'aida, Hora_Saida, Free_Time, Valor_Demurrage, Tipo, Tamanho, Arm' +
@@ -8608,11 +8608,11 @@ object Dados: TDados
         'servacao, :Tipo_Embarque, :Memo_Processos, :Data_Pagamento, :Tax' +
         'a)')
     SQLDelete.Strings = (
-      'DELETE FROM Cybersoft_MPL_Filial1..Container'
+      'DELETE FROM Container'
       'WHERE'
       '  Numero = :Old_Numero')
     SQLUpdate.Strings = (
-      'UPDATE Cybersoft_MPL_Filial1..Container'
+      'UPDATE Container'
       'SET'
       
         '  Numero = :Numero, Processo = :Processo, Armazem = :Armazem, Da' +
@@ -8633,19 +8633,16 @@ object Dados: TDados
         'ta_Saida, Hora_Saida, Free_Time, Valor_Demurrage, Tipo, Tamanho,' +
         ' Armador, Documento_Carga, Terminal, Data_Entrega, Hora_Entrega,' +
         ' Transportadora_Entrada, Transportadora_Saida, Observacao, Tipo_' +
-        'Embarque, Memo_Processos, Data_Pagamento, Taxa FROM Cybersoft_MP' +
-        'L_Filial1..Container'
+        'Embarque, Memo_Processos, Data_Pagamento, Taxa FROM Container'
       'WHERE'
       '  Numero = :Numero')
     SQLLock.Strings = (
-      'SELECT * FROM Cybersoft_MPL_Filial1..Container'
+      'SELECT * FROM Container'
       'WITH (UPDLOCK, ROWLOCK, HOLDLOCK)'
       'WHERE'
       '  Numero = :Old_Numero')
     SQLRecCount.Strings = (
-      
-        'SET :PCOUNT = (SELECT COUNT(*) FROM Cybersoft_MPL_Filial1..Conta' +
-        'iner'
+      'SET :PCOUNT = (SELECT COUNT(*) FROM Container'
       ')')
     Connection = Banco_Empresas
     SQL.Strings = (
@@ -8831,7 +8828,7 @@ object Dados: TDados
         'm, Numero_BL, CIDE_ValorDevido, CIDE_ValorRecolher, Numero_House' +
         'BL, Numero_TFA, Transporte_Viagem, Navio_PrevSaida, Ultima_Atual' +
         'izacao, Exonerado, UF_Importacao, Data_PresencaCarga, Data_Embar' +
-        'que, Numero_LI)'
+        'que, Numero_LI, LPCO)'
       'VALUES'
       
         '  (:Processo, :Tipo, :Incoterms, :Entreposto, :Numero_Declaracao' +
@@ -8882,7 +8879,7 @@ object Dados: TDados
         'alorDevido, :CIDE_ValorRecolher, :Numero_HouseBL, :Numero_TFA, :' +
         'Transporte_Viagem, :Navio_PrevSaida, :Ultima_Atualizacao, :Exone' +
         'rado, :UF_Importacao, :Data_PresencaCarga, :Data_Embarque, :Nume' +
-        'ro_LI)')
+        'ro_LI, :LPCO)')
     SQLDelete.Strings = (
       'DELETE FROM ProcessosDocumentos'
       'WHERE'
@@ -8987,7 +8984,7 @@ object Dados: TDados
         'aida, Ultima_Atualizacao = :Ultima_Atualizacao, Exonerado = :Exo' +
         'nerado, UF_Importacao = :UF_Importacao, Data_PresencaCarga = :Da' +
         'ta_PresencaCarga, Data_Embarque = :Data_Embarque, Numero_LI = :N' +
-        'umero_LI'
+        'umero_LI, LPCO = :LPCO'
       'WHERE'
       '  Processo = :Old_Processo AND Tipo = :Old_Tipo')
     SQLRefresh.Strings = (
@@ -9037,7 +9034,7 @@ object Dados: TDados
         'mazem, Numero_BL, CIDE_ValorDevido, CIDE_ValorRecolher, Numero_H' +
         'ouseBL, Numero_TFA, Transporte_Viagem, Navio_PrevSaida, Ultima_A' +
         'tualizacao, Exonerado, UF_Importacao, Data_PresencaCarga, Data_E' +
-        'mbarque, Numero_LI FROM ProcessosDocumentos'
+        'mbarque, Numero_LI, LPCO FROM ProcessosDocumentos'
       'WHERE'
       '  Processo = :Processo AND Tipo = :Tipo')
     SQLLock.Strings = (
@@ -9945,6 +9942,9 @@ object Dados: TDados
     object ProcessosDOCNumero_LI: TStringField
       FieldName = 'Numero_LI'
       Size = 15
+    end
+    object ProcessosDOCLPCO: TBooleanField
+      FieldName = 'LPCO'
     end
   end
   object dsProcessosDOC: TDataSource
@@ -12093,7 +12093,7 @@ object Dados: TDados
         'ulacoes, Checagem_PrazoRetorno, Checagem_ProcessoContainer, Chec' +
         'agem_PrazoArquivos, Checagem_EstoqueMinimo, Checagem_ClientesAtr' +
         'aso, Checagem_ClientesMovimento, Checagem_Exoneracao, Checagem_D' +
-        'IDA, PedidoRep_AlterarPed)'
+        'IDA, PedidoRep_AlterarPed, Checagem_Pagamentos)'
       'VALUES'
       
         '  (:Matricula, :Empresa, :Ativo, :Nome, :Setor, :Funcao, :Chave,' +
@@ -12108,7 +12108,7 @@ object Dados: TDados
         'no, :Checagem_ProcessoContainer, :Checagem_PrazoArquivos, :Checa' +
         'gem_EstoqueMinimo, :Checagem_ClientesAtraso, :Checagem_ClientesM' +
         'ovimento, :Checagem_Exoneracao, :Checagem_DIDA, :PedidoRep_Alter' +
-        'arPed)')
+        'arPed, :Checagem_Pagamentos)')
     SQLDelete.Strings = (
       'DELETE FROM Usuarios'
       'WHERE'
@@ -12141,7 +12141,7 @@ object Dados: TDados
         'cagem_ClientesAtraso, Checagem_ClientesMovimento = :Checagem_Cli' +
         'entesMovimento, Checagem_Exoneracao = :Checagem_Exoneracao, Chec' +
         'agem_DIDA = :Checagem_DIDA, PedidoRep_AlterarPed = :PedidoRep_Al' +
-        'terarPed'
+        'terarPed, Checagem_Pagamentos = :Checagem_Pagamentos'
       'WHERE'
       '  Matricula = :Old_Matricula')
     SQLRefresh.Strings = (
@@ -12157,7 +12157,7 @@ object Dados: TDados
         '_Viculacoes, Checagem_PrazoRetorno, Checagem_ProcessoContainer, ' +
         'Checagem_PrazoArquivos, Checagem_EstoqueMinimo, Checagem_Cliente' +
         'sAtraso, Checagem_ClientesMovimento, Checagem_Exoneracao, Checag' +
-        'em_DIDA, PedidoRep_AlterarPed FROM Usuarios'
+        'em_DIDA, PedidoRep_AlterarPed, Checagem_Pagamentos FROM Usuarios'
       'WHERE'
       '  Matricula = :Matricula')
     SQLLock.Strings = (
@@ -12315,6 +12315,9 @@ object Dados: TDados
     end
     object UsuariosPedidoRep_AlterarPed: TBooleanField
       FieldName = 'PedidoRep_AlterarPed'
+    end
+    object UsuariosChecagem_Pagamentos: TBooleanField
+      FieldName = 'Checagem_Pagamentos'
     end
   end
   object ImageList1: TImageList
@@ -24538,8 +24541,8 @@ object Dados: TDados
       'SELECT * FROM Proforma')
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
-    Left = 827
-    Top = 956
+    Left = 831
+    Top = 990
     object ProformaNumero: TIntegerField
       FieldName = 'Numero'
       Origin = 'Proforma.Numero'
@@ -24606,8 +24609,8 @@ object Dados: TDados
   end
   object dsProforma: TDataSource
     DataSet = Proforma
-    Left = 826
-    Top = 1006
+    Left = 831
+    Top = 1038
   end
   object ProformaItens: TMSQuery
     SQLInsert.Strings = (
@@ -31245,7 +31248,7 @@ object Dados: TDados
       'SELECT * FROM PedidosServicoItens')
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
-    Left = 721
+    Left = 723
     Top = 990
     object PedidoServicoItensPedido: TIntegerField
       FieldName = 'Pedido'
@@ -31341,7 +31344,64 @@ object Dados: TDados
   end
   object dsPedidoServicoItens: TDataSource
     DataSet = PedidoServicoItens
-    Left = 721
+    Left = 723
+    Top = 1038
+  end
+  object BoletoComando: TMSQuery
+    SQLInsert.Strings = (
+      'INSERT INTO Proforma'
+      
+        '  (Numero, Data, Imp_Exp, Processo, Vendedor, Pais_Origem, Pais_' +
+        'Destino, Porto_Embarque, Porto_Destino, Data_Embarque, Seguro, C' +
+        'ondicao_Pagamento, Cliente, Data_EmbarqueFinal)'
+      'VALUES'
+      
+        '  (:Numero, :Data, :Imp_Exp, :Processo, :Vendedor, :Pais_Origem,' +
+        ' :Pais_Destino, :Porto_Embarque, :Porto_Destino, :Data_Embarque,' +
+        ' :Seguro, :Condicao_Pagamento, :Cliente, :Data_EmbarqueFinal)')
+    SQLDelete.Strings = (
+      'DELETE FROM Proforma'
+      'WHERE'
+      '  Numero = :Old_Numero')
+    SQLUpdate.Strings = (
+      'UPDATE Proforma'
+      'SET'
+      
+        '  Numero = :Numero, Data = :Data, Imp_Exp = :Imp_Exp, Processo =' +
+        ' :Processo, Vendedor = :Vendedor, Pais_Origem = :Pais_Origem, Pa' +
+        'is_Destino = :Pais_Destino, Porto_Embarque = :Porto_Embarque, Po' +
+        'rto_Destino = :Porto_Destino, Data_Embarque = :Data_Embarque, Se' +
+        'guro = :Seguro, Condicao_Pagamento = :Condicao_Pagamento, Client' +
+        'e = :Cliente, Data_EmbarqueFinal = :Data_EmbarqueFinal'
+      'WHERE'
+      '  Numero = :Old_Numero')
+    SQLRefresh.Strings = (
+      
+        'SELECT Proforma.Numero, Proforma.Data, Proforma.Imp_Exp, Proform' +
+        'a.Processo, Proforma.Vendedor, Proforma.Pais_Origem, Proforma.Pa' +
+        'is_Destino, Proforma.Porto_Embarque, Proforma.Porto_Destino, Pro' +
+        'forma.Data_Embarque, Proforma.Seguro, Proforma.Condicao_Pagament' +
+        'o, Proforma.Cliente, Proforma.Data_EmbarqueFinal FROM Proforma'
+      'WHERE Proforma.Numero = :Numero ')
+    Connection = Banco
+    SQL.Strings = (
+      'SELECT * FROM BoletoComando')
+    FetchRows = 1
+    RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
+    Left = 936
+    Top = 990
+    object BoletoComandoCodigo: TSmallintField
+      DisplayWidth = 2
+      FieldName = 'Codigo'
+    end
+    object BoletoComandoDescricao: TStringField
+      FieldName = 'Descricao'
+      Size = 100
+    end
+  end
+  object dsBoletoComando: TDataSource
+    DataSet = BoletoComando
+    Left = 936
     Top = 1038
   end
 end

@@ -85,6 +85,11 @@ type
     ppDBText14: TppDBText;
     ppDBText15: TppDBText;
     cDemurrage: TRadioGroup;
+    ppLabel16: TppLabel;
+    ppDBText16: TppDBText;
+    ppDBText17: TppDBText;
+    cTransp: TCheckBox;
+    ppLine5: TppLine;
     procedure bSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -123,11 +128,13 @@ begin
       // Registrando as opções utilizadas no relatório para ficar como default.
       aIni := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
       with aIni do begin
-           WriteInteger( 'IMPRESSAO_Demurrage', 'Situacao', cSituacao.ItemIndex );
-           WriteDate   ( 'IMPRESSAO_Demurrage', 'DataIni' , cDataIni.Date );
-           WriteDate   ( 'IMPRESSAO_Demurrage', 'DataFim' , cDataFim.Date );
-           WriteString ( 'IMPRESSAO_Demurrage', 'Processo', cProcesso.KeyValue );
-           WriteInteger( 'IMPRESSAO_Demurrage', 'Cliente' , iif(cCliente.Text <> '', cCliente.KeyValue, -1));
+           WriteInteger( 'IMPRESSAO_Demurrage', 'Situacao'  , cSituacao.ItemIndex );
+           WriteDate   ( 'IMPRESSAO_Demurrage', 'DataIni'   , cDataIni.Date );
+           WriteDate   ( 'IMPRESSAO_Demurrage', 'DataFim'   , cDataFim.Date );
+           WriteString ( 'IMPRESSAO_Demurrage', 'Processo'  , cProcesso.KeyValue );
+           WriteInteger( 'IMPRESSAO_Demurrage', 'Cliente'   , iif(cCliente.Text <> '', cCliente.KeyValue, -1));
+           WriteInteger( 'IMPRESSAO_Demurrage', 'Demurrage' , cDemurrage.ItemIndex);
+           WriteBool   ( 'IMPRESSAO_Demurrage', 'Transporte', cTransp.Checked);
            Free;
       end;
 
@@ -162,11 +169,13 @@ begin
       // Carregando as ultimas opções utilizadas no relatório como default.
       aINI := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
       with aIni do begin
-           cSituacao.ItemIndex := ReadInteger('IMPRESSAO_Demurrage', 'Situacao', 2 );
-           cDataIni.Date       := ReadDate   ('IMPRESSAO_Demurrage', 'DataIni' , Date );
-           cDataFim.Date       := ReadDate   ('IMPRESSAO_Demurrage', 'DataFim' , Date );
-           cProcesso.KeyValue  := ReadString ('IMPRESSAO_Demurrage', 'Processo', '');
-           cCliente.KeyValue   := ReadInteger('IMPRESSAO_Demurrage', 'Cliente' , 0);
+           cSituacao.ItemIndex  := ReadInteger('IMPRESSAO_Demurrage', 'Situacao'  , 2 );
+           cDataIni.Date        := ReadDate   ('IMPRESSAO_Demurrage', 'DataIni'   , Date );
+           cDataFim.Date        := ReadDate   ('IMPRESSAO_Demurrage', 'DataFim'   , Date );
+           cProcesso.KeyValue   := ReadString ('IMPRESSAO_Demurrage', 'Processo'  , '');
+           cCliente.KeyValue    := ReadInteger('IMPRESSAO_Demurrage', 'Cliente'   , 0);
+           cDemurrage.ItemIndex := ReadInteger('IMPRESSAO_Demurrage', 'Demurrage' , 0);
+           cTransp.Checked      := ReadBool   ('IMPRESSAO_Demurrage', 'Transporte', false);
            aINI.Free;
       end;
       Screen.Cursor := crDefault;
@@ -183,6 +192,7 @@ end;
 
 procedure TImpressao_ProcessosOP_Container.bImprimirClick(Sender: TObject);
 begin
+      lPeriodo.Caption := '| Período de '+cDataIni.Text + ' á ' + cDataFim.Text+' | ';
       with tContainer do begin
            sql.clear;
            sql.add('select *');
@@ -190,7 +200,9 @@ begin
            sql.add('      ,(select Nome from Fornecedores frn where frn.Codigo = ctn.Transportadora_Entrada) as TransportaEntrada_Nome');
            sql.add('      ,(select Nome from Fornecedores frn where frn.Codigo = ctn.Transportadora_Saida) as TransportaSaida_Nome');
            sql.add('      ,Dias = iif(isnull(Ctn.Data_Entrega, '''') <> '''', datediff(Day, Ctn.Data_Saida, ctn.Data_Entrega), datediff(Day, ctn.Data_Saida, getdate()))');
-           sql.add('      ,Valor_Container = Valor_Demurrage * (iif(isnull(Data_Entrega, '''') <> '''', datediff(Day, ctn.Data_Saida, ctn.Data_Entrega), datediff(Day, ctn.Data_Saida, getdate())))');
+           sql.add('      ,Valor_Container = (Valor_Demurrage * Taxa) * (iif(isnull(Data_Entrega, '''') <> '''', datediff(Day, ctn.Data_Saida, ctn.Data_Entrega), datediff(Day, ctn.Data_Saida, getdate())))');
+           sql.add('      ,Valor = Valor_Demurrage * Taxa');
+           sql.add('      ,Total = (Valor_Demurrage * Taxa) * (iif(isnull(Data_Entrega, '''') <> '''', datediff(Day, ctn.Data_Saida, ctn.Data_Entrega), datediff(Day, ctn.Data_Saida, getdate())))');
            sql.add('into #temp');
            sql.add('from Container ctn');
            sql.add('where Numero is not null');
@@ -200,6 +212,7 @@ begin
               parambyname('pDataFim').Value := cDataFim.Date;
            end;
            if trim(cProcesso.text) <> '' then begin
+              lPeriodo.Caption := lPeriodo.text + 'PROCESSO: '+Dados.ProcessosDOCProcesso.AsString+ ' | ';
               sql.add('and ctn.Processo = :pProc');
               parambyname('pProc').Value := Dados.ProcessosDOCProcesso.AsString;
            end;
@@ -217,19 +230,21 @@ begin
            sql.add('from #temp');
            if cDemurrage.ItemIndex = 1 then begin
               sql.add('where Dias > 0');
+              lPeriodo.Caption := lPeriodo.text + 'COM DEMURRAGE | ';
            end;
            if cDemurrage.ItemIndex = 2 then begin
               sql.add('where Dias <= 0');
+              lPeriodo.Caption := lPeriodo.text + 'SEM DEMURRAGE | ';
            end;
            sql.add('order by Numero');
            sql.add('drop table #temp');
            //sql.SaveToFile('c:\temp\Impressao_Container.sql');
            open;
       end;
-      lPeriodo.Caption := 'Período de '+cDataIni.Text + ' á ' + cDataFim.Text;
       if FileExists(Dados.EmpresasLogo.Value) then begin
          iLogo.Picture.LoadFromFile(Dados.EmpresasLogo.Value);
       end;
+      ppSubReport1.Visible := not cTransp.Checked;
       rContainer.Reset;
       rContainer.Print;
 end;

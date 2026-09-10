@@ -3128,3 +3128,9 @@ alter table NotasItens add Item_Referencia smallint
 go
 update PedidosItens set Item_Referencia = (select Item from NotasItens ni where ni.Nota = PedidosItens.Numero_Referencia and ni.Data = PedidosItens.Data_Referencia)
 go
+
+--[04/09/2026 10:50:00]
+alter table ProcessosDocumentos add LPCO bit
+go
+update ProcessosDocumentos set LPCO = 0 where LPCO is null
+go

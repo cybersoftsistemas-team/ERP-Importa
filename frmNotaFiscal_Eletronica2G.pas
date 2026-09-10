@@ -4042,7 +4042,6 @@ begin
             // Indicador de finalidade.
             If (ClientesConsumidor_Final.AsBoolean) then ide_Final := 1;
 
-
             // Indicador de destinatario.
             If PedidosDestinatario_Estado.Value =  EmpresasEstado.Value then
                ide_Dest := 1;
@@ -4055,7 +4054,7 @@ begin
             ide_NFRef := '';
 
 //            if (TipoNotaNota_Referencia.AsBoolean) or (TipoNotaFinalidade_Mercadoria.AsInteger = 2) then begin
-            if (trim(TipoNotaTipo_NFDebito.asstring+TipoNotaTipo_NFCredito.asstring) <> '') and (TipoNotaFinalidade_Mercadoria.AsInteger <> 2) then begin
+            if ((trim(TipoNotaTipo_NFDebito.asstring+TipoNotaTipo_NFCredito.asstring) <> '') and (TipoNotaFinalidade_Mercadoria.AsInteger <> 2)) or PedidosComplementar.AsBoolean then begin
                PedidosItensReferencia.SQL.Clear;
                PedidosItensReferencia.SQL.Add('SELECT * FROM PedidosItensReferencia');
                PedidosItensReferencia.SQL.Add('WHERE ISNULL(Chave_Referencia, '''') <> '''' ');
@@ -5425,7 +5424,7 @@ begin
                                       ,''                                        // informar o grupo XML com obsCont com as informações do contribuinte do item.
                                       ,''                                        // informar o grupo XML com obsFisco com as informações do fisco do item.
                                       ,PedidosItensValor_TotalNota.value         // informar o Valor Total do Item da NF-e. Valor total do Item, correspondente à sua participação no total da nota.
-                                      ,_DfeRef);                                      // informar o grupo XML com DFeReferenciado com as informações que referencia um item de outro DF-e.
+                                      ,_DfeRef);                                 // informar o grupo XML com DFeReferenciado com as informações que referencia um item de outro DF-e.
            
            Util := nil;
            MontaDetalhe := _Detalhe;
