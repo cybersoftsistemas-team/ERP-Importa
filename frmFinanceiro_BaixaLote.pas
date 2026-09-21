@@ -177,6 +177,7 @@ end;
 procedure TFinanceiro_BaixaLote.bSelecionarClick(Sender: TObject);
 begin
      Grade.SelectAll;
+     SomaSel;
 end;
 
 procedure TFinanceiro_BaixaLote.Filtra(Coluna:Integer; Ordem: Boolean);

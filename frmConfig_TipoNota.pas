@@ -456,6 +456,7 @@ type
     StaticText78: TStaticText;
     StaticText79: TStaticText;
     cTipoCred: TRxDBComboBox;
+    SpeedButton3: TSpeedButton;
     procedure FormShow(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -548,6 +549,7 @@ type
     procedure Button19Click(Sender: TObject);
     procedure Button18Click(Sender: TObject);
     procedure Button20Click(Sender: TObject);
+    procedure SpeedButton3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -1707,6 +1709,12 @@ end;
 procedure TConfig_TipoNota.SpeedButton2Click(Sender: TObject);
 begin
       cPesquisa.Clear;
+end;
+
+procedure TConfig_TipoNota.SpeedButton3Click(Sender: TObject);
+begin
+    Dados.TipoNotaTipo_NFCredito.clear;
+    Dados.TipoNotaTipo_NFDebito.clear;
 end;
 
 procedure TConfig_TipoNota.bLimparContabilClick(Sender: TObject);

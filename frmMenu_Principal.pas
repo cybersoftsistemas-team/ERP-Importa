@@ -1275,7 +1275,7 @@ uses
 
      // Controle de Embarques.
      frmProcesso_ControleNavios,
-     frmUtilitarios_AjustarEstoqueNavio, frmImpressao_FinanceirosOP_PagarReceberSimp, frmImpressao_FinanceirosOP_ControleAbertos, frmProcesso_DUIMP, frmCadastro_LPCO, frmIndustrializacao, frmPedido_NFS;
+     frmUtilitarios_AjustarEstoqueNavio, frmImpressao_FinanceirosOP_PagarReceberSimp, frmImpressao_FinanceirosOP_ControleAbertos, frmProcesso_DUIMP, frmCadastro_LPCO, frmIndustrializacao, frmPedido_NFS, frmFichaEstoque3;
      
 
 {$R *.dfm}
@@ -4097,9 +4097,38 @@ end;
 
 procedure TMenu_Principal.mnFiscal_FichaEstoqueClick(Sender: TObject);
 begin
+{
      FichaEstoque2 := TFichaEstoque2.Create(Self);
      FichaEstoque2.Caption := 'Processamento da Ficha de Estoque';
      FichaEstoque2.ShowModal;
+     }
+     {
+      if MessageDlg('ATENÇÃO!'+#13+#13+'Esta rotina pode demorar um pouco para processar.'+#13+#13+'Deseja realmente continuar?', mtConfirmation, [mbyes, mbno], 0) = mrno then Abort;
+      
+      Screen.Cursor := crHourGlass;
+      Janela_Comunicacao := TJanela_Comunicacao.Create(Self);
+      Janela_Comunicacao.lMesagem1.Caption := 'Processando Fichas..Aguarde por favor';
+      Janela_Comunicacao.lTempo.Caption    := '...Processando Ficha de Estoque';
+      Janela_Comunicacao.lTempo.Visible    := true;
+      Janela_Comunicacao.bCancelar.Visible := false;
+      Janela_Comunicacao.Show;
+      Application.ProcessMessages;
+
+      ProcessaEstoque(0);
+      Janela_Comunicacao.lTempo.Caption := 'Ficha de Estoque [OK]'+#13+
+                                           '...Processando Ficha de Inventario';
+      ProcessaInventario(0);
+      Janela_Comunicacao.lTempo.Caption := 'Ficha de Estoque [OK]'+#13+
+                                           'Ficha de Inventario [OK]';
+      Application.ProcessMessages;
+      sleep(2000);
+      Janela_Comunicacao.Close;
+      Showmessage('Processamento da Ficha de Estoque/Inventario terminado.');
+      }
+     FichaEstoque3 := TFichaEstoque3.Create(Self);
+     FichaEstoque3.Caption := 'Processamento da Ficha de Estoque';
+     FichaEstoque3.ShowModal;
+      
 end;
 
 procedure TMenu_Principal.mnFiscal_FichaInventarioClick(Sender: TObject);
@@ -4714,4 +4743,7 @@ end;
 
 
 end.
+
+
+
 

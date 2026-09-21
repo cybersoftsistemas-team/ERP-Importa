@@ -64,6 +64,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    mData: TDate;
   end;
 
 var
@@ -185,8 +186,7 @@ begin
                cProcessoOrigem.Enabled := recordcount > 0;
           end;
           with ProdutosMateriaPrima do begin
-//               if (RecordCount > 0) or (Industrial.State = dsInsert) then begin
-               if Industrial.State = dsInsert then begin
+               if (RecordCount > 0) or (Industrial.State = dsInsert) then begin
                   sql.clear;
                   sql.Add('select *');
                   sql.add('      ,Saldo = ((select isnull(sum(Quantidade), 0) from NotasTerceirosItens nti where nti.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Movimenta_Estoque = 1) + ');
@@ -292,6 +292,7 @@ begin
      Panel2.Enabled := false;
      with Dados do begin
           if (Button = nbEdit) or (Button = nbInsert) then begin
+             mData := Industrial.FieldByName('Data').asdatetime;
              for i := 0 to 6 do begin
                  Navega.Controls[i].Enabled := False;
              end;
@@ -308,7 +309,7 @@ begin
                   sql.clear;
                   sql.add('select * from FichaEstoque where Nota = :pNota and Data = :pData and Destinatario_CNPJ = :pDest');
                   parambyname('pNota').AsInteger := Industrial.fieldbyname('Registro').asinteger;
-                  parambyname('pData').value     := Industrial.fieldbyname('Data').value;
+                  parambyname('pData').value     := mData;
                   parambyname('pDest').value     := tEmpresa.fieldbyname('CNPJ').asstring;
                   open;
              end;
@@ -316,7 +317,7 @@ begin
                   sql.clear;
                   sql.add('select * from FichaInventario where Nota = :pNota and Data = :pData and Destinatario_CNPJ = :pDest');
                   parambyname('pNota').AsInteger := Industrial.fieldbyname('Registro').asinteger;
-                  parambyname('pData').value     := Industrial.fieldbyname('Data').value;
+                  parambyname('pData').value     := mData;
                   parambyname('pDest').value     := tEmpresa.fieldbyname('CNPJ').asstring;
                   open;
              end;
@@ -345,7 +346,7 @@ begin
                sql.clear;
                sql.add('delete from ProdutosTransferencia where Nota = :pNota and Data_Transferencia = :pData and Motivo = ''IND'' ');
                parambyname('pNota').value := Industrial.fieldbyname('Registro').asinteger;
-               parambyname('pData').value := Industrial.FieldByName('Data').value;
+               parambyname('pData').value := mData;
                execute;
                sql.clear;
                sql.add('select * from ProdutosTransferencia where Produto_Entrada = :pProduto');

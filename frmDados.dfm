@@ -10,7 +10,6 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
-    Connected = True
     LoginPrompt = False
     Left = 17
     Top = 14
@@ -352,7 +351,6 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = EmpresasBeforePost
     BeforeDelete = EmpresasBeforeDelete
-    Active = True
     Left = 1359
     Top = 14
     object EmpresasCodigo: TIntegerField
@@ -8830,7 +8828,8 @@ object Dados: TDados
         'm, Numero_BL, CIDE_ValorDevido, CIDE_ValorRecolher, Numero_House' +
         'BL, Numero_TFA, Transporte_Viagem, Navio_PrevSaida, Ultima_Atual' +
         'izacao, Exonerado, UF_Importacao, Data_PresencaCarga, Data_Embar' +
-        'que, Numero_LI, LPCO)'
+        'que, Numero_LI, LPCO, Valor_CBS, Valor_IBSEstadual, Valor_IBSMun' +
+        'icipal)'
       'VALUES'
       
         '  (:Processo, :Tipo, :Incoterms, :Entreposto, :Numero_Declaracao' +
@@ -8881,7 +8880,8 @@ object Dados: TDados
         'alorDevido, :CIDE_ValorRecolher, :Numero_HouseBL, :Numero_TFA, :' +
         'Transporte_Viagem, :Navio_PrevSaida, :Ultima_Atualizacao, :Exone' +
         'rado, :UF_Importacao, :Data_PresencaCarga, :Data_Embarque, :Nume' +
-        'ro_LI, :LPCO)')
+        'ro_LI, :LPCO, :Valor_CBS, :Valor_IBSEstadual, :Valor_IBSMunicipa' +
+        'l)')
     SQLDelete.Strings = (
       'DELETE FROM ProcessosDocumentos'
       'WHERE'
@@ -8986,7 +8986,8 @@ object Dados: TDados
         'aida, Ultima_Atualizacao = :Ultima_Atualizacao, Exonerado = :Exo' +
         'nerado, UF_Importacao = :UF_Importacao, Data_PresencaCarga = :Da' +
         'ta_PresencaCarga, Data_Embarque = :Data_Embarque, Numero_LI = :N' +
-        'umero_LI, LPCO = :LPCO'
+        'umero_LI, LPCO = :LPCO, Valor_CBS = :Valor_CBS, Valor_IBSEstadua' +
+        'l = :Valor_IBSEstadual, Valor_IBSMunicipal = :Valor_IBSMunicipal'
       'WHERE'
       '  Processo = :Old_Processo AND Tipo = :Old_Tipo')
     SQLRefresh.Strings = (
@@ -9036,7 +9037,8 @@ object Dados: TDados
         'mazem, Numero_BL, CIDE_ValorDevido, CIDE_ValorRecolher, Numero_H' +
         'ouseBL, Numero_TFA, Transporte_Viagem, Navio_PrevSaida, Ultima_A' +
         'tualizacao, Exonerado, UF_Importacao, Data_PresencaCarga, Data_E' +
-        'mbarque, Numero_LI, LPCO FROM ProcessosDocumentos'
+        'mbarque, Numero_LI, LPCO, Valor_CBS, Valor_IBSEstadual, Valor_IB' +
+        'SMunicipal FROM ProcessosDocumentos'
       'WHERE'
       '  Processo = :Processo AND Tipo = :Tipo')
     SQLLock.Strings = (
@@ -9947,6 +9949,15 @@ object Dados: TDados
     end
     object ProcessosDOCLPCO: TBooleanField
       FieldName = 'LPCO'
+    end
+    object ProcessosDOCValor_CBS: TCurrencyField
+      FieldName = 'Valor_CBS'
+    end
+    object ProcessosDOCValor_IBSEstadual: TCurrencyField
+      FieldName = 'Valor_IBSEstadual'
+    end
+    object ProcessosDOCValor_IBSMunicipal: TCurrencyField
+      FieldName = 'Valor_IBSMunicipal'
     end
   end
   object dsProcessosDOC: TDataSource
@@ -15519,7 +15530,7 @@ object Dados: TDados
     Top = 340
   end
   object Banco_Empresas: TMSConnection
-    Database = 'Cybersoft_Vix_Matriz'
+    Database = 'Cybersoft_Givotrading_Matriz'
     Options.PersistSecurityInfo = True
     Options.ApplicationName = 'Cybersoft ERP Importa'
     Options.Provider = prSQL
@@ -18115,7 +18126,7 @@ object Dados: TDados
       'SELECT * FROM Desoneracao')
     FetchRows = 1
     Left = 45
-    Top = 705
+    Top = 662
     object DesoneracaoCodigo: TSmallintField
       DisplayWidth = 2
       FieldName = 'Codigo'
@@ -18130,7 +18141,7 @@ object Dados: TDados
   object dsDesoneracao: TDataSource
     DataSet = Desoneracao
     Left = 45
-    Top = 750
+    Top = 707
   end
   object SN: TMSQuery
     SQLInsert.Strings = (
@@ -19601,7 +19612,7 @@ object Dados: TDados
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     Left = 45
-    Top = 887
+    Top = 844
     object SPCRegistro: TLargeintField
       FieldName = 'Registro'
       Origin = 'ConsultaSPC.Registro'
@@ -19623,7 +19634,7 @@ object Dados: TDados
   object dsSPC: TDataSource
     DataSet = SPC
     Left = 45
-    Top = 934
+    Top = 891
   end
   object Invoice: TMSQuery
     SQLInsert.Strings = (
@@ -24659,8 +24670,8 @@ object Dados: TDados
       'FROM ProformaItens')
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
-    Left = 45
-    Top = 613
+    Left = 1043
+    Top = 990
     object ProformaItensRegistro: TIntegerField
       FieldName = 'Registro'
       Origin = 'ProformaItens.Registro'
@@ -24718,8 +24729,8 @@ object Dados: TDados
   end
   object dsProformaItens: TDataSource
     DataSet = ProformaItens
-    Left = 45
-    Top = 613
+    Left = 1040
+    Top = 1042
   end
   object EmprestimosFINIMP: TMSQuery
     SQLInsert.Strings = (
@@ -24964,7 +24975,8 @@ object Dados: TDados
         'Exportador, Peso_Liquido, Lancado_Entrada, Lancado_Saida, Valor_' +
         'PIS, Valor_COFINS, Dumping, Valor_SemAdValorem, Aliquota_ICMS, L' +
         'ancado_Terceiros, Ordem, Pedido, Lucro, CIDE_Aliquota, CIDE_Valo' +
-        'rDevido, CIDE_ValorRecolher, Fabricante, Incoterm)'
+        'rDevido, CIDE_ValorRecolher, Fabricante, Incoterm, Valor_CBS, Va' +
+        'lor_IBSEstadual, Valor_IBSMunicipal)'
       'VALUES'
       
         '  (:Registro, :DI, :Adicao, :Sequencia, :Sequencia_SISCOMEX, :Co' +
@@ -24973,7 +24985,8 @@ object Dados: TDados
         '_Saida, :Valor_PIS, :Valor_COFINS, :Dumping, :Valor_SemAdValorem' +
         ', :Aliquota_ICMS, :Lancado_Terceiros, :Ordem, :Pedido, :Lucro, :' +
         'CIDE_Aliquota, :CIDE_ValorDevido, :CIDE_ValorRecolher, :Fabrican' +
-        'te, :Incoterm)')
+        'te, :Incoterm, :Valor_CBS, :Valor_IBSEstadual, :Valor_IBSMunicip' +
+        'al)')
     SQLDelete.Strings = (
       'DELETE FROM Adicoes'
       'WHERE'
@@ -24994,7 +25007,9 @@ object Dados: TDados
         'ceiros, Ordem = :Ordem, Pedido = :Pedido, Lucro = :Lucro, CIDE_A' +
         'liquota = :CIDE_Aliquota, CIDE_ValorDevido = :CIDE_ValorDevido, ' +
         'CIDE_ValorRecolher = :CIDE_ValorRecolher, Fabricante = :Fabrican' +
-        'te, Incoterm = :Incoterm'
+        'te, Incoterm = :Incoterm, Valor_CBS = :Valor_CBS, Valor_IBSEstad' +
+        'ual = :Valor_IBSEstadual, Valor_IBSMunicipal = :Valor_IBSMunicip' +
+        'al'
       'WHERE'
       '  Registro = :Old_Registro')
     SQLRefresh.Strings = (
@@ -25004,8 +25019,8 @@ object Dados: TDados
         'CM, Exportador, Peso_Liquido, Lancado_Entrada, Lancado_Saida, Va' +
         'lor_PIS, Valor_COFINS, Dumping, Valor_SemAdValorem, Aliquota_ICM' +
         'S, Lancado_Terceiros, Ordem, Pedido, Lucro, CIDE_Aliquota, CIDE_' +
-        'ValorDevido, CIDE_ValorRecolher, Fabricante, Incoterm FROM Adico' +
-        'es'
+        'ValorDevido, CIDE_ValorRecolher, Fabricante, Incoterm, Valor_CBS' +
+        ', Valor_IBSEstadual, Valor_IBSMunicipal FROM Adicoes'
       'WHERE'
       '  Registro = :Registro')
     SQLLock.Strings = (
@@ -25160,6 +25175,15 @@ object Dados: TDados
       FieldName = 'Incoterm'
       FixedChar = True
       Size = 3
+    end
+    object AdicoesValor_CBS: TCurrencyField
+      FieldName = 'Valor_CBS'
+    end
+    object AdicoesValor_IBSEstadual: TCurrencyField
+      FieldName = 'Valor_IBSEstadual'
+    end
+    object AdicoesValor_IBSMunicipal: TCurrencyField
+      FieldName = 'Valor_IBSMunicipal'
     end
   end
   object tEstoque: TMSQuery
@@ -25745,7 +25769,7 @@ object Dados: TDados
   object dsFichaEstoque: TDataSource
     DataSet = FichaEstoque
     Left = 45
-    Top = 660
+    Top = 617
   end
   object FichaInventario: TMSQuery
     SQLInsert.Strings = (
@@ -25819,13 +25843,13 @@ object Dados: TDados
     object FichaInventarioCodigo: TLargeintField
       FieldName = 'Codigo'
     end
-    object FichaInventarioDescricao: TStringField
-      FieldName = 'Descricao'
-      Size = 500
-    end
     object FichaInventarioNCM: TStringField
       FieldName = 'NCM'
       Size = 8
+    end
+    object FichaInventarioDescricao: TStringField
+      FieldName = 'Descricao'
+      Size = 500
     end
     object FichaInventarioUM: TStringField
       FieldName = 'UM'
@@ -25841,7 +25865,7 @@ object Dados: TDados
     end
     object FichaInventarioEstoque: TStringField
       FieldName = 'Estoque'
-      Size = 10
+      Size = 11
     end
     object FichaInventarioEmissor: TStringField
       FieldName = 'Emissor'
@@ -25885,7 +25909,7 @@ object Dados: TDados
     object FichaInventarioQtde_Entrada: TFloatField
       FieldName = 'Qtde_Entrada'
     end
-    object FichaInventarioUnitario_Entrada: TCurrencyField
+    object FichaInventarioUnitario_Entrada: TFloatField
       FieldName = 'Unitario_Entrada'
     end
     object FichaInventarioTotal_Entrada: TCurrencyField
@@ -25894,7 +25918,7 @@ object Dados: TDados
     object FichaInventarioQtde_Saida: TFloatField
       FieldName = 'Qtde_Saida'
     end
-    object FichaInventarioUnitario_Saida: TCurrencyField
+    object FichaInventarioUnitario_Saida: TFloatField
       FieldName = 'Unitario_Saida'
     end
     object FichaInventarioTotal_Saida: TCurrencyField
@@ -25903,7 +25927,7 @@ object Dados: TDados
     object FichaInventarioQtde_Saldo: TFloatField
       FieldName = 'Qtde_Saldo'
     end
-    object FichaInventarioUnitario_Saldo: TCurrencyField
+    object FichaInventarioUnitario_Saldo: TFloatField
       FieldName = 'Unitario_Saldo'
     end
     object FichaInventarioTotal_Saldo: TCurrencyField
@@ -28020,7 +28044,7 @@ object Dados: TDados
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     Left = 45
-    Top = 797
+    Top = 754
     object ProdutosICMSProduto: TIntegerField
       FieldName = 'Produto'
     end
@@ -28039,7 +28063,7 @@ object Dados: TDados
   object dsProdutosICMS: TDataSource
     DataSet = ProdutosICMS
     Left = 45
-    Top = 842
+    Top = 799
   end
   object RecuperarICMS: TMSQuery
     SQLInsert.Strings = (

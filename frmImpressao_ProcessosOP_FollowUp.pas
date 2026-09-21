@@ -19,7 +19,6 @@ type
     cDataFim: TDateEdit;
     btnSearch: TButton;
     Grade: TDBGrid;
-    btnPrint: TButton;
     pprFollowUp: TppReport;
     ppHeaderBand2: TppHeaderBand;
     ppDetailBand7: TppDetailBand;
@@ -41,8 +40,6 @@ type
     dsoRES: TDataSource;
     qryRESMatricula: TStringField;
     qryRESNome: TStringField;
-    btnClear: TButton;
-    lblRecords: TLabel;
     iLogoSint: TppImage;
     ppDBText4: TppDBText;
     lTituloSint: TppLabel;
@@ -98,7 +95,6 @@ type
     ppDBText26: TppDBText;
     ppLabel26: TppLabel;
     ppLine3: TppLine;
-    btnSaveTo: TBitBtn;
     dlgSavePDF: TSaveDialog;
     qryPRH: TMSQuery;
     qryPRHProcesso: TStringField;
@@ -219,6 +215,12 @@ type
     ppDBText55: TppDBText;
     ppDBText56: TppDBText;
     ppDBText57: TppDBText;
+    Panel1: TPanel;
+    bSair: TButton;
+    btnPrint: TButton;
+    btnClear: TButton;
+    btnSaveTo: TBitBtn;
+    lblRecords: TLabel;
     procedure btnSearchClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
@@ -226,6 +228,7 @@ type
     procedure qryFLPAfterOpen(DataSet: TDataSet);
     procedure btnPrintClick(Sender: TObject);
     procedure btnSaveToClick(Sender: TObject);
+    procedure bSairClick(Sender: TObject);
   private
     function GetProcesso: string;
     procedure SaveReportInPDF(const AFileName: string);
@@ -246,6 +249,11 @@ uses
   System.SysUtils,
   System.Variants,
   frmDados;
+
+procedure TfrmImpressaoProcessosOPFollowUp.bSairClick(Sender: TObject);
+begin
+     close;
+end;
 
 procedure TfrmImpressaoProcessosOPFollowUp.btnClearClick(Sender: TObject);
 begin

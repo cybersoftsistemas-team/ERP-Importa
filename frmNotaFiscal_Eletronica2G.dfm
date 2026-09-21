@@ -3695,7 +3695,7 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     RTFSettings.DefaultFont.Style = []
     ShowCancelDialog = False
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<FindText>'
+    TextSearchSettings.DefaultString = '<Texto a localizar>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
