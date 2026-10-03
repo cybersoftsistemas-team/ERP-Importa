@@ -181,7 +181,7 @@ object Config_TipoNota: TConfig_TipoNota
     Top = 45
     Width = 750
     Height = 656
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     TabHeight = 28
     TabOrder = 1
@@ -3557,9 +3557,7 @@ object Config_TipoNota: TConfig_TipoNota
             Top = 406
             Width = 118
             Height = 31
-            Hint = 
-              'Valor Unit'#225'rio do Produto com impostos que s'#227'o calculados sobre ' +
-              'o valor do produto.'
+            Hint = 'Valor do ICMS Desonerado'
             Caption = 'ICMS Desonerado'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlue

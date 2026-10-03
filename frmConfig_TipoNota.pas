@@ -1290,10 +1290,10 @@ end;
 procedure TConfig_TipoNota.bICMSDesonClick(Sender: TObject);
 begin
       Config_TipoNotaFormula := TConfig_TipoNotaFormula.Create(Self);
-      Config_TipoNotaFormula.Caption        := 'Fórmula para cálculo do Valor da B.C. do IBS';
-      Config_TipoNotaFormula.mNomeFormula   := 'Formula_BCIBS';
-      Config_TipoNotaFormula.mNomeCalculo   := 'Calculo_BCIBS';
-      Config_TipoNotaFormula.lCampo.Caption := 'Fórmula do campo : Valor da BC IBS';
+      Config_TipoNotaFormula.Caption        := 'Fórmula para cálculo do ICMS Desonerado.';
+      Config_TipoNotaFormula.mNomeFormula   := 'Formula_VlrICMSDeson';
+      Config_TipoNotaFormula.mNomeCalculo   := 'Calculo_VlrICMSDeson';
+      Config_TipoNotaFormula.lCampo.Caption := 'Fórmula do campo : Valor do ICMS Desonerado.';
       Config_TipoNotaFormula.ShowModal;
 end;
 

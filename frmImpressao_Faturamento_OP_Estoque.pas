@@ -317,92 +317,6 @@ begin
       Dados.Empresas.Locate('Codigo', Menu_Principal.mEmpresa, [loCaseInsensitive]);
 
       //=======================================================================[ NOTAS PRÓPRIAS ]========================================================================]
-      (*
-      tItens.SQL.Clear;
-      tItens.SQL.Add('SELECT Tipo = ''P'',');
-      tItens.SQL.Add('       Sai_Entra = NI.Saida_Entrada,');
-      tItens.SQL.Add('       NI.Codigo_Mercadoria,');
-      tItens.SQL.Add('       NI.Codigo_Fabricante,');
-      tItens.SQL.Add('       NI.Processo,');
-      tItens.SQL.Add('       Descricao_Mercadoria = CAST(NI.Descricao_Mercadoria AS VARCHAR(500)),');
-      tItens.SQL.Add('       NI.Data,');
-      tItens.SQL.Add('       NI.Nota,');
-      tItens.SQL.Add('       CFOP              = NF.Natureza_Codigo,');
-      tItens.SQL.Add('       Nota_Compl        = (SELECT MAX(Numero) FROM NotasFiscais NF WHERE(NF.Nota_referencia = NI.Nota) AND (NF.Data_Referencia = NI.Data) AND (Complementar = 1)),');
-      tItens.SQL.Add('       Entrada_Compra    = CASE WHEN (NI.Saida_Entrada = 0) AND (ISNULL(NF.Devolucao,0) <> 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NF.Tipo_Nota)) <> 4) THEN NI.Quantidade ELSE 0 END,');
-      tItens.SQL.Add('       Entrada_Terceiros = CASE WHEN (NI.Saida_Entrada = 0) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NF.Tipo_Nota)) = 4) THEN NI.Quantidade ELSE 0 END,');
-      tItens.SQL.Add('       Entrada_Devol     = CASE WHEN (NI.Saida_Entrada = 0) AND (ISNULL(NF.Devolucao,0) = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NF.Tipo_Nota)) <> 4) THEN NI.Quantidade ELSE 0 END,');
-      tItens.SQL.Add('       Saida_Devol       = CASE WHEN (NI.Saida_Entrada = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NF.Tipo_Nota)) IN(2, 5)) THEN NI.Quantidade ELSE 0 END,');
-      tItens.SQL.Add('       Saida_Venda       = CASE WHEN (NI.Saida_Entrada = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NF.Tipo_Nota)) = 0 OR (SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NF.Tipo_Nota)) = 1) THEN NI.Quantidade ELSE 0 END,');
-      tItens.SQL.Add('       Saida_Terceiros   = CASE WHEN (NI.Saida_Entrada = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NF.Tipo_Nota)) = 4) THEN NI.Quantidade ELSE 0 END,');
-      tItens.SQL.Add('       Saida_Outras      = CASE WHEN (NI.Saida_Entrada = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NF.Tipo_Nota)) = 9) THEN NI.Quantidade ELSE 0 END,');
-      tItens.SQL.Add('       Total_Item        = Valor_Total,');
-      tItens.SQL.Add('       Valor_Unitario    = Valor_Unitario,');
-      tItens.SQL.Add('       Destinatario_Nome,');
-      tItens.SQL.Add('       Tipo_Produto      = (SELECT CAST(Codigo AS VARCHAR(10))+'' - ''+Descricao FROM Cybersoft_Cadastros.dbo.TipoProduto WHERE Codigo = PD.Tipo)');
-      tItens.SQL.Add('INTO   #TEMP');
-      tItens.SQL.Add('FROM   NotasItens NI, NotasFiscais NF, Produtos PD');
-      tItens.SQL.Add('WHERE (NF.Numero = NI.Nota) AND (NF.Data_Emissao = NI.Data)');
-      tItens.SQL.Add('AND   (PD.Codigo = NI.Codigo_Mercadoria)');
-      tItens.SQL.Add('AND   (NI.Movimenta_Estoque = 1) AND (NI.Cancelada <> 1) AND (ISNULL(NI.Nfe_Denegada,0) = 0)');
-      tItens.SQL.Add('AND   (ISNULL(NF.Complementar,0) = 0)');
-
-      If Trim(Removecaracter('/', '', cData.Text)) <> '' then begin
-         tItens.SQL.Add('       AND (NF.Data_Emissao <= :pData)');
-         tItens.ParamByName('pData').AsDate := cData.Date;
-      End;
-      If cCodigoProduto.Value > 0 then begin
-         tItens.SQL.Add('       AND (Codigo_Mercadoria = :pProduto)');
-         tItens.ParamByName('pProduto').AsInteger := cCodigoProduto.AsInteger;
-      End;
-      If Trim(cProcesso.Value) <> '' then begin
-         tItens.SQL.Add('       AND (NI.Processo = :pProcesso)');
-      End;
-      If Trim(cCFOP.DisplayValue) <> '' then begin
-         tItens.SQL.Add('       AND (NF.Natureza_Codigo = :pCFOP)');
-         tItens.ParamByName('pCFOP').AsString := tNatureza.FieldByName('Codigo').AsString;
-      End;
-      If Trim(cTipoNota.DisplayValue) <> '' then begin
-         tItens.SQL.Add('       AND (NF.Tipo_Nota = :pTipoNota)');
-         tItens.ParamByName('pTipoNota').AsInteger := Dados.TipoNotaCodigo.AsInteger;
-      End;
-      If cANP.Checked = true then begin
-         tItens.SQL.Add('       AND (SELECT LTRIM(RTRIM(Codigo_ANP)) FROM Produtos WHERE(Codigo = NI.Codigo_Mercadoria)) <> '''' ');
-      End;
-      If cReciclavel.Checked = true then begin
-         tItens.SQL.Add('       AND (SELECT Reciclavel FROM Produtos WHERE(Codigo = NI.Codigo_Mercadoria)) = 1 ');
-      End;
-      if Trim(cFornecedor.DisplayValue) <> '' then begin
-         if Trim(cCliente.DisplayValue) = '' then begin
-            // Apenas fornecedor informado.
-            tItens.SQL.Add('       AND ( NF.Fornecedor_Codigo = :pForn');
-            tItens.SQL.Add('       OR (NF.Saida_Entrada = 1 AND (Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Fornecedor_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pForn)))');
-            tItens.SQL.Add('       OR Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasTerceirosItens NI2 WHERE Fornecedor = :pForn) )');
-         end else begin
-            // Fornecedor informado + Cliente informado.
-            tItens.SQL.Add('       AND ( NF.Fornecedor_Codigo = :pForn');
-            tItens.SQL.Add('       OR (NF.Saida_Entrada = 1 AND Cliente_Codigo = :pCli AND Codigo_Mercadoria');
-            tItens.SQL.Add('       IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Fornecedor_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pForn)) )');
-            tItens.ParamByName('pCli').AsInteger := Dados.ClientesCodigo.AsInteger;
-         end;
-         tItens.ParamByName('pForn').AsInteger := Dados.FornecedoresCodigo.AsInteger;
-      end else begin
-         if Trim(cCliente.DisplayValue) <> '' then begin
-            // Apendas cliente informado.
-            tItens.SQL.Add('       AND ( NF.Cliente_Codigo = :pCli ');
-            tItens.SQL.Add('       OR (NF.Saida_Entrada = 0 AND Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Cliente_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pCli)) )');
-            tItens.ParamByName('pCli').AsInteger := Dados.ClientesCodigo.AsInteger;
-         end;
-      end;
-      if Trim(cFabricante.DisplayValue) <> '' then begin
-         tItens.SQL.Add('       AND NI.Codigo_Mercadoria IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
-         tItens.ParamByName('pFabr').AsInteger := Dados.FabricantesCodigo.AsInteger;
-      end;
-      If Trim(cTipoProd.DisplayValue) <> '' then begin
-         tItens.SQL.Add('AND    (PD.Tipo = :pTipoProd)');
-         tItens.ParamByName('pTipoProd').AsInteger := Dados.TipoProdutoCodigo.AsInteger;
-      End;
-      *)
       tItens.SQL.Clear;
       tItens.SQL.Add('SELECT Tipo = ''P'', ');
       tItens.SQL.Add('       Sai_Entra = NI.Saida_Entrada, ');
@@ -418,76 +332,75 @@ begin
       tItens.SQL.Add('       Entrada_Terceiros = CASE WHEN (NI.Saida_Entrada = 0) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NI.Tipo_Nota)) = 4) THEN NI.Quantidade ELSE 0 END, ');
       tItens.SQL.Add('       Entrada_Devol     = CASE WHEN (NI.Saida_Entrada = 0) AND (ISNULL(NI.Devolucao,0) = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NI.Tipo_Nota)) <> 4) THEN NI.Quantidade ELSE 0 END, ');
       tItens.SQL.Add('       Saida_Devol       = CASE WHEN (NI.Saida_Entrada = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NI.Tipo_Nota)) IN(2, 5)) THEN NI.Quantidade ELSE 0 END, ');
-      tItens.SQL.Add('       Saida_Venda       = CASE WHEN (NI.Saida_Entrada = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NI.Tipo_Nota)) = 0 OR (SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NI.Tipo_Nota)) = 1)');
-      tItens.SQL.Add('                                                                  THEN NI.Quantidade ELSE 0 END, ');
+      tItens.SQL.Add('       Saida_Venda       = CASE WHEN (NI.Saida_Entrada = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NI.Tipo_Nota)) IN(0, 1, 3)) THEN NI.Quantidade ELSE 0 END, ');
       tItens.SQL.Add('       Saida_Terceiros   = CASE WHEN (NI.Saida_Entrada = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NI.Tipo_Nota)) = 4) THEN NI.Quantidade ELSE 0 END, ');
       tItens.SQL.Add('       Saida_Outras      = CASE WHEN (NI.Saida_Entrada = 1) AND ((SELECT Finalidade_Mercadoria FROM TipoNota WHERE(Codigo = NI.Tipo_Nota)) = 9) THEN NI.Quantidade ELSE 0 END, ');
       tItens.SQL.Add('       Total_Item        = Valor_Total, ');
       tItens.SQL.Add('       Valor_Unitario    = Valor_Unitario, ');
       tItens.SQL.Add('       Destinatario_Nome = (SELECT Destinatario_Nome FROM NotasFiscais NF WHERE NF.Numero = NI.Nota AND NF.Data_Emissao = NI.Data), ');
       tItens.SQL.Add('       Tipo_Produto      = (SELECT CAST(Codigo AS VARCHAR(10))+'' - ''+Descricao FROM Cybersoft_Cadastros.dbo.TipoProduto WHERE Codigo = (SELECT Tipo FROM Produtos WHERE Codigo = NI.Codigo_Mercadoria)) ');
-      tItens.SQL.Add('INTO   #TEMP');
-      tItens.SQL.Add('FROM   NotasItens NI ');
-      tItens.SQL.Add('WHERE  NI.Movimenta_Estoque = 1 ');
+      tItens.SQL.Add('INTO #TEMP');
+      tItens.SQL.Add('FROM NotasItens NI ');
+      tItens.SQL.Add('WHERE NI.Movimenta_Estoque = 1 ');
 
       If Trim(Removecaracter('/', '', cData.Text)) <> '' then begin
-         tItens.SQL.Add('       AND (NI.Data <= :pData)');
+         tItens.SQL.Add('AND (NI.Data <= :pData)');
          tItens.ParamByName('pData').AsDate := cData.Date;
       end;
 
-      tItens.SQL.Add('  AND  NI.Cancelada <> 1 ');
-      tItens.SQL.Add('  AND  NI.Nfe_Denegada <> 1 ');
-      tItens.SQL.Add('  AND  ISNULL((SELECT Complementar FROM NotasFiscais WHERE Numero = NI.Nota AND Data_Emissao = NI.Data), 0) = 0 ');
+      tItens.SQL.Add('AND NI.Cancelada <> 1 ');
+      tItens.SQL.Add('AND NI.Nfe_Denegada <> 1 ');
+      tItens.SQL.Add('AND ISNULL((SELECT Complementar FROM NotasFiscais WHERE Numero = NI.Nota AND Data_Emissao = NI.Data), 0) = 0 ');
 
       If cCodigoProduto.Value > 0 then begin
-         tItens.SQL.Add('       AND (Codigo_Mercadoria = :pProduto)');
+         tItens.SQL.Add('AND (Codigo_Mercadoria = :pProduto)');
          tItens.ParamByName('pProduto').AsInteger := cCodigoProduto.AsInteger;
       End;
       If Trim(cProcesso.Value) <> '' then begin
-         tItens.SQL.Add('       AND (NI.Processo = :pProcesso)');
+         tItens.SQL.Add('AND (NI.Processo = :pProcesso)');
       End;
       If Trim(cCFOP.DisplayValue) <> '' then begin
-         tItens.SQL.Add('       AND (NI.Natureza_Codigo = :pCFOP)');
+         tItens.SQL.Add('AND (NI.Natureza_Codigo = :pCFOP)');
          tItens.ParamByName('pCFOP').AsString := tNatureza.FieldByName('Codigo').AsString;
       End;
       If Trim(cTipoNota.DisplayValue) <> '' then begin
-         tItens.SQL.Add('       AND (NI.Tipo_Nota = :pTipoNota)');
+         tItens.SQL.Add('AND (NI.Tipo_Nota = :pTipoNota)');
          tItens.ParamByName('pTipoNota').AsInteger := Dados.TipoNotaCodigo.AsInteger;
       End;
       If cANP.Checked = true then begin
-         tItens.SQL.Add('       AND (SELECT LTRIM(RTRIM(Codigo_ANP)) FROM Produtos WHERE(Codigo = NI.Codigo_Mercadoria)) <> '''' ');
+         tItens.SQL.Add('AND (SELECT LTRIM(RTRIM(Codigo_ANP)) FROM Produtos WHERE(Codigo = NI.Codigo_Mercadoria)) <> '''' ');
       End;
       If cReciclavel.Checked = true then begin
-         tItens.SQL.Add('       AND (SELECT Reciclavel FROM Produtos WHERE(Codigo = NI.Codigo_Mercadoria)) = 1 ');
+         tItens.SQL.Add('AND (SELECT Reciclavel FROM Produtos WHERE(Codigo = NI.Codigo_Mercadoria)) = 1 ');
       End;
       if Trim(cFornecedor.DisplayValue) <> '' then begin
          if Trim(cCliente.DisplayValue) = '' then begin
             // Apenas fornecedor informado.
-            titens.SQL.add('       AND ( (SELECT Fornecedor_Codigo FROM NotasFiscais NF WHERE NF.Numero = NI.Nota AND NF.Data_Emissao = NI.Data) = :pForn');
-            tItens.SQL.Add('       OR (NI.Saida_Entrada = 1 AND (Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Fornecedor_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pForn)))');
-            tItens.SQL.Add('       OR Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasTerceirosItens NI2 WHERE Fornecedor = :pForn) )');
+            titens.SQL.add('AND ( (SELECT Fornecedor_Codigo FROM NotasFiscais NF WHERE NF.Numero = NI.Nota AND NF.Data_Emissao = NI.Data) = :pForn');
+            tItens.SQL.Add('OR (NI.Saida_Entrada = 1 AND (Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Fornecedor_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pForn)))');
+            tItens.SQL.Add('OR Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasTerceirosItens NI2 WHERE Fornecedor = :pForn) )');
          end else begin
             // Fornecedor informado + Cliente informado.
-            tItens.SQL.Add('       AND ( NF.Fornecedor_Codigo = :pForn');
-            tItens.SQL.Add('       OR (NF.Saida_Entrada = 1 AND Cliente_Codigo = :pCli AND Codigo_Mercadoria');
-            tItens.SQL.Add('       IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Fornecedor_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pForn)) )');
+            tItens.SQL.Add('AND ( NF.Fornecedor_Codigo = :pForn');
+            tItens.SQL.Add('OR (NF.Saida_Entrada = 1 AND Cliente_Codigo = :pCli AND Codigo_Mercadoria');
+            tItens.SQL.Add('IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Fornecedor_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pForn)) )');
             tItens.ParamByName('pCli').AsInteger := Dados.ClientesCodigo.AsInteger;
          end;
          tItens.ParamByName('pForn').AsInteger := Dados.FornecedoresCodigo.AsInteger;
       end else begin
          if Trim(cCliente.DisplayValue) <> '' then begin
             // Apendas cliente informado.
-            tItens.SQL.Add('       AND ( (SELECT Cliente_Codigo FROM NotasFiscais NF WHERE NF.Data_Emissao = NI.Data AND NF.Numero = NI.Nota) = :pCli ');
-            tItens.SQL.Add('       OR (NI.Saida_Entrada = 0 AND Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Cliente_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pCli)) )');
+            tItens.SQL.Add('AND ( (SELECT Cliente_Codigo FROM NotasFiscais NF WHERE NF.Data_Emissao = NI.Data AND NF.Numero = NI.Nota) = :pCli ');
+            tItens.SQL.Add('OR (NI.Saida_Entrada = 0 AND Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Cliente_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pCli)) )');
             tItens.ParamByName('pCli').AsInteger := Dados.ClientesCodigo.AsInteger;
          end;
       end;
       if Trim(cFabricante.DisplayValue) <> '' then begin
-         tItens.SQL.Add('       AND NI.Codigo_Mercadoria IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
+         tItens.SQL.Add('AND NI.Codigo_Mercadoria IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
          tItens.ParamByName('pFabr').AsInteger := Dados.FabricantesCodigo.AsInteger;
       end;
       If Trim(cTipoProd.DisplayValue) <> '' then begin
-         tItens.SQL.add('AND    (SELECT Tipo FROM Produtos WHERE Codigo = NI.Codigo_Mercadoria) = :pTipoProd');
+         tItens.SQL.add('AND (SELECT Tipo FROM Produtos WHERE Codigo = NI.Codigo_Mercadoria) = :pTipoProd');
          tItens.ParamByName('pTipoProd').AsInteger := Dados.TipoProdutoCodigo.AsInteger;
       End;
 
@@ -503,8 +416,6 @@ begin
       tItens.SQL.Add('       Nota,');
       tItens.SQL.Add('       CFOP,');
       tItens.SQL.Add('       Nota_Compl        = null,');
-//      tItens.SQL.Add('       Entrada_Compra    = CASE WHEN (Motivo <> ''I'' AND Motivo <> ''IND'') THEN Quantidade_Entrada ELSE 0 END,');
-//      tItens.SQL.Add('       Entrada_Terceiros = CASE WHEN (Motivo  = ''I'' AND Motivo <> ''IND'') THEN Quantidade_Entrada ELSE 0 END,');
       tItens.SQL.Add('       Entrada_Compra    = CASE WHEN (Motivo <> ''I'') THEN Quantidade_Entrada ELSE 0 END,');
       tItens.SQL.Add('       Entrada_Terceiros = CASE WHEN (Motivo  = ''I'') THEN Quantidade_Entrada ELSE 0 END,');
       tItens.SQL.Add('       Entrada_Devol     = 0,');
@@ -520,27 +431,27 @@ begin
       tItens.SQL.Add('                                WHEN Motivo = ''IND'' THEN ''* BAIXA DE MATÉRIA-PRIMA INDUSTRIALIZAÇÃO *''');
       tItens.SQL.Add('                           END,');
       tItens.SQL.Add('       Tipo_Produto = (SELECT CAST(Codigo AS VARCHAR(10))+'' - ''+Descricao FROM Cybersoft_Cadastros.dbo.TipoProduto WHERE Codigo = (SELECT Tipo FROM Produtos WHERE Codigo = PT.Produto_Entrada))');
-      tItens.SQL.Add('FROM   ProdutosTransferencia PT');
-      tItens.SQL.Add('WHERE  (Estoque = 1)');
-      tItens.SQL.Add('  AND  (ISNULL(PT.Produto_Entrada, '''') <> '''') ');
-      tItens.SQL.Add('  AND  (PT.Data_Transferencia <= :pData)');
+      tItens.SQL.Add('FROM ProdutosTransferencia PT');
+      tItens.SQL.Add('WHERE (Estoque = 1)');
+      tItens.SQL.Add('AND (ISNULL(PT.Produto_Entrada, '''') <> '''') ');
+      tItens.SQL.Add('AND (PT.Data_Transferencia <= :pData)');
       If cCodigoProduto.Value > 0 then begin
-         tItens.SQL.Add('       AND (PT.Produto_Entrada = :pProduto)');
+         tItens.SQL.Add('AND (PT.Produto_Entrada = :pProduto)');
          tItens.ParamByName('pProduto').AsInteger := cCodigoProduto.AsInteger;
       End;
       If Trim(cProcesso.Value) <> '' then begin
-         tItens.SQL.Add('       AND (PT.Processo_Entrada = :pProcesso)');
+         tItens.SQL.Add('AND (PT.Processo_Entrada = :pProcesso)');
       End;
       if Trim(cFornecedor.DisplayValue) <> '' then begin
          // Fornecedor informado.
-         tItens.SQL.Add('       AND PT.Produto_Entrada IN( SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Fornecedor_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pForn )');
+         tItens.SQL.Add('AND PT.Produto_Entrada IN( SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Fornecedor_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pForn )');
       end;
       if Trim(cFabricante.DisplayValue) <> '' then begin
-         tItens.SQL.Add('       AND PT.Produto_Entrada IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
+         tItens.SQL.Add('AND PT.Produto_Entrada IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
          tItens.ParamByName('pFabr').AsInteger := Dados.FabricantesCodigo.AsInteger;
       end;
       If Trim(cTipoProd.DisplayValue) <> '' then begin
-         tItens.SQL.add('AND    (SELECT Tipo FROM Produtos WHERE Codigo = PT.Produto_Entrada) = :pTipoProd');
+         tItens.SQL.add('AND (SELECT Tipo FROM Produtos WHERE Codigo = PT.Produto_Entrada) = :pTipoProd');
          tItens.ParamByName('pTipoProd').AsInteger := Dados.TipoProdutoCodigo.AsInteger;
       End;
 
@@ -559,10 +470,8 @@ begin
       tItens.SQL.Add('       Entrada_Terceiros = 0,');
       tItens.SQL.Add('       Entrada_Devol     = 0,');
       tItens.SQL.Add('       Saida_Devol       = 0,');
-//      tItens.SQL.Add('       Saida_Venda       = CASE WHEN (Motivo <> ''I'' AND Motivo <> ''IND'') THEN Quantidade ELSE 0 END,');
       tItens.SQL.Add('       Saida_Venda       = CASE WHEN (Motivo <> ''I'' ) THEN Quantidade ELSE 0 END,');
       tItens.SQL.Add('       Saida_Terceiros   = 0,');
-//      tItens.SQL.Add('       Saida_Outras      = CASE WHEN (Motivo  = ''I'' OR Motivo = ''IND'') THEN Quantidade ELSE 0 END,');
       tItens.SQL.Add('       Saida_Outras      = CASE WHEN (Motivo  = ''I'') THEN Quantidade ELSE 0 END,');
       tItens.SQL.Add('       Total_Item        = Valor_Unitario * Quantidade,');
       tItens.SQL.Add('       Valor_Unitario,');
@@ -572,27 +481,27 @@ begin
       tItens.SQL.Add('                                WHEN Motivo = ''IND'' THEN ''* BAIXA DE MATÉRIA-PRIMA INDUSTRIALIZAÇÃO *''');
       tItens.SQL.Add('                           END,');
       tItens.SQL.Add('       Tipo_Produto = (SELECT CAST(Codigo AS VARCHAR(10))+'' - ''+Descricao FROM Cybersoft_Cadastros.dbo.TipoProduto WHERE Codigo = (SELECT Tipo FROM Produtos WHERE Codigo = PT.Produto_Saida))');
-      tItens.SQL.Add('FROM   ProdutosTransferencia PT');
-      tItens.SQL.Add('WHERE  (Estoque = 1)');
-      tItens.SQL.Add('  AND  (ISNULL(PT.Produto_Saida, '''') <> '''') ');
-      tItens.SQL.Add('  AND  (PT.Data_Transferencia <= :pData)');
+      tItens.SQL.Add('FROM ProdutosTransferencia PT');
+      tItens.SQL.Add('WHERE (Estoque = 1)');
+      tItens.SQL.Add('AND (ISNULL(PT.Produto_Saida, '''') <> '''') ');
+      tItens.SQL.Add('AND (PT.Data_Transferencia <= :pData)');
       If cCodigoProduto.Value > 0 then begin
-         tItens.SQL.Add('       AND (PT.Produto_Saida = :pProduto)');
+         tItens.SQL.Add('AND (PT.Produto_Saida = :pProduto)');
          tItens.ParamByName('pProduto').AsInteger := cCodigoProduto.AsInteger;
       End;
       If Trim(cProcesso.Value) <> '' then begin
-         tItens.SQL.Add('       AND (PT.Processo_Saida = :pProcesso)');
+         tItens.SQL.Add('AND (PT.Processo_Saida = :pProcesso)');
       End;
       if Trim(cFornecedor.DisplayValue) <> '' then begin
          // Cliente informado.
-         tItens.SQL.Add('       AND PT.Produto_Saida IN( SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Cliente_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pCli )');
+         tItens.SQL.Add('AND PT.Produto_Saida IN( SELECT DISTINCT Codigo_Mercadoria FROM NotasItens NI2 WHERE (SELECT Cliente_Codigo FROM NotasFiscais NF2 WHERE NF2.Numero = NI2.Nota AND NF2.Data_Emissao = NI2.Data) = :pCli )');
       end;
       if Trim(cFabricante.DisplayValue) <> '' then begin
-         tItens.SQL.Add('       AND PT.Produto_Saida IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
+         tItens.SQL.Add('AND PT.Produto_Saida IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
          tItens.ParamByName('pFabr').AsInteger := Dados.FabricantesCodigo.AsInteger;
       end;
       If Trim(cTipoProd.DisplayValue) <> '' then begin
-         tItens.SQL.add('AND    (SELECT Tipo FROM Produtos WHERE Codigo = PT.Produto_Saida) = :pTipoProd');
+         tItens.SQL.add('AND (SELECT Tipo FROM Produtos WHERE Codigo = PT.Produto_Saida) = :pTipoProd');
          tItens.ParamByName('pTipoProd').AsInteger := Dados.TipoProdutoCodigo.AsInteger;
       End;
 
@@ -622,40 +531,40 @@ begin
          tItens.SQL.Add('       Valor_Unitario    = Valor_Unitario,');
          tItens.SQL.Add('       Destinatario_Nome = (SELECT Nome FROM Fornecedores WHERE(Codigo = NTI.Fornecedor)),');
          tItens.SQL.Add('       Tipo_Produto      = (SELECT CAST(Codigo AS VARCHAR(10))+'' - ''+Descricao FROM Cybersoft_Cadastros.dbo.TipoProduto WHERE Codigo = (SELECT Tipo FROM Produtos WHERE Codigo = NTI.Codigo_Mercadoria))');
-         tItens.SQL.Add('FROM   NotasTerceirosItens NTI');
+         tItens.SQL.Add('FROM NotasTerceirosItens NTI');
          tItens.SQL.Add('WHERE (Movimenta_Estoque = 1)');
-         tItens.SQL.Add('  AND (SELECT ISNULL(Desdobramento, 0) FROM NotasTerceiros NT WHERE NT.Nota = NTI.Nota AND NT.Data_Emissao = NTI.Data_Emissao AND NT.Fornecedor = NTI.Fornecedor) = 0');
+         tItens.SQL.Add('AND (SELECT ISNULL(Desdobramento, 0) FROM NotasTerceiros NT WHERE NT.Nota = NTI.Nota AND NT.Data_Emissao = NTI.Data_Emissao AND NT.Fornecedor = NTI.Fornecedor) = 0');
 
          If Trim(Removecaracter('/', '', cData.Text)) <> '' then begin
-            tItens.SQL.Add('       AND (NTI.Data_Entrada <= :pData)');
+            tItens.SQL.Add('AND (NTI.Data_Entrada <= :pData)');
             tItens.ParamByName('pData').AsDate := cData.Date;
          End;
          If cCodigoProduto.Value > 0 then begin
-            tItens.SQL.Add('       AND (NTI.Codigo_Mercadoria = :pProduto)');
+            tItens.SQL.Add('AND (NTI.Codigo_Mercadoria = :pProduto)');
             tItens.ParamByName('pProduto').AsInteger := cCodigoProduto.AsInteger;
          End;
          If Trim(cProcesso.Value) <> '' then begin
-            tItens.SQL.Add('       AND (NTI.Processo = :pProcesso)');
+            tItens.SQL.Add('AND (NTI.Processo = :pProcesso)');
          End;
          If Trim(cCFOP.DisplayValue) <> '' then begin
-            tItens.SQL.Add('       AND (NTI.Natureza_Codigo = :pCFOP)');
+            tItens.SQL.Add('AND (NTI.Natureza_Codigo = :pCFOP)');
             tItens.ParamByName('pCFOP').AsString := tNatureza.FieldByName('Codigo').AsString;
          End;
          If cANP.Checked = true then begin
-            tItens.SQL.Add('       AND (SELECT LTRIM(RTRIM(Codigo_ANP)) FROM Produtos WHERE(Codigo = NTI.Codigo_Mercadoria)) <> '''' ');
+            tItens.SQL.Add('AND (SELECT LTRIM(RTRIM(Codigo_ANP)) FROM Produtos WHERE(Codigo = NTI.Codigo_Mercadoria)) <> '''' ');
          End;
          If cReciclavel.Checked = true then begin
-            tItens.SQL.Add('       AND (SELECT Reciclavel FROM Produtos WHERE(Codigo = NTI.Codigo_Mercadoria)) = 1 ');
+            tItens.SQL.Add('AND (SELECT Reciclavel FROM Produtos WHERE(Codigo = NTI.Codigo_Mercadoria)) = 1 ');
          End;
          If Trim(cFornecedor.DisplayValue) <> '' then begin
-            tItens.SQL.Add('       AND (NTI.Fornecedor = :pForn)');
+            tItens.SQL.Add('AND (NTI.Fornecedor = :pForn)');
          End;
          if Trim(cFabricante.DisplayValue) <> '' then begin
-            tItens.SQL.Add('       AND NTI.Codigo_Mercadoria IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
+            tItens.SQL.Add('AND NTI.Codigo_Mercadoria IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
             tItens.ParamByName('pFabr').AsInteger := Dados.FabricantesCodigo.AsInteger;
          end;
          If Trim(cTipoProd.DisplayValue) <> '' then begin
-            tItens.SQL.Add('AND   (SELECT Tipo FROM Produtos WHERE Codigo = NTI.Codigo_Mercadoria) = :pTipoProd');
+            tItens.SQL.Add('AND (SELECT Tipo FROM Produtos WHERE Codigo = NTI.Codigo_Mercadoria) = :pTipoProd');
             tItens.ParamByName('pTipoProd').AsInteger := Dados.TipoProdutoCodigo.AsInteger;
          End;
       End;
@@ -684,68 +593,68 @@ begin
          tItens.SQL.Add('       Valor_Unitario    = Valor_Unitario,');
          tItens.SQL.Add('       Destinatario_Nome,');
          tItens.SQL.Add('       Tipo_Produto      = (SELECT CAST(Codigo AS VARCHAR(10))+'' - ''+Descricao FROM Cybersoft_Cadastros.dbo.TipoProduto WHERE Codigo = PD.Tipo)');
-         tItens.SQL.Add('FROM   PedidosItens NI, Pedidos NF, Produtos PD');
-         tItens.SQL.Add('WHERE  (NI.Movimenta_Estoque = 1) AND (NF.Numero = NI.Pedido)');
-         tItens.SQL.Add('AND    (PD.Codigo = NI.Codigo_Mercadoria)');
-         tItens.SQL.Add('AND    (ISNULL(NF.Complementar,0) = 0)');
+         tItens.SQL.Add('FROM PedidosItens NI, Pedidos NF, Produtos PD');
+         tItens.SQL.Add('WHERE (NI.Movimenta_Estoque = 1) AND (NF.Numero = NI.Pedido)');
+         tItens.SQL.Add('AND (PD.Codigo = NI.Codigo_Mercadoria)');
+         tItens.SQL.Add('AND (ISNULL(NF.Complementar,0) = 0)');
 
          If Trim(Removecaracter('/', '', cData.Text)) <> '' then begin
-            tItens.SQL.Add('       AND (NF.Data_Emissao <= :pData)');
+            tItens.SQL.Add('AND (NF.Data_Emissao <= :pData)');
             tItens.ParamByName('pData').AsDate := cData.Date;
          End;
          If cCodigoProduto.Value > 0 then begin
-            tItens.SQL.Add('       AND (Codigo_Mercadoria = :pProduto)');
+            tItens.SQL.Add('AND (Codigo_Mercadoria = :pProduto)');
             tItens.ParamByName('pProduto').AsInteger := cCodigoProduto.AsInteger;
          End;
          If Trim(cProcesso.Value) <> '' then begin
-            tItens.SQL.Add('       AND (NI.Processo = :pProcesso)');
+            tItens.SQL.Add('AND (NI.Processo = :pProcesso)');
          End;
          If Trim(cCFOP.DisplayValue) <> '' then begin
-            tItens.SQL.Add('       AND (NF.Natureza_Codigo = :pCFOP)');
+            tItens.SQL.Add('AND (NF.Natureza_Codigo = :pCFOP)');
             tItens.ParamByName('pCFOP').AsString := tNatureza.FieldByName('Codigo').AsString;
          End;
          If Trim(cTipoNota.DisplayValue) <> '' then begin
-            tItens.SQL.Add('       AND (NF.Tipo_Nota = :pTipoNota)');
+            tItens.SQL.Add('AND (NF.Tipo_Nota = :pTipoNota)');
             tItens.ParamByName('pTipoNota').AsInteger := Dados.TipoNotaCodigo.AsInteger;
          End;
          If cANP.Checked = true then begin
-            tItens.SQL.Add('       AND (SELECT LTRIM(RTRIM(Codigo_ANP)) FROM Produtos WHERE(Codigo = NI.Codigo_Mercadoria)) <> '''' ');
+            tItens.SQL.Add('AND (SELECT LTRIM(RTRIM(Codigo_ANP)) FROM Produtos WHERE(Codigo = NI.Codigo_Mercadoria)) <> '''' ');
          End;
          If cReciclavel.Checked = true then begin
-            tItens.SQL.Add('       AND (SELECT Reciclavel FROM Produtos WHERE(Codigo = NI.Codigo_Mercadoria)) = 1 ');
+            tItens.SQL.Add('AND (SELECT Reciclavel FROM Produtos WHERE(Codigo = NI.Codigo_Mercadoria)) = 1 ');
          End;
          if Trim(cFornecedor.DisplayValue) <> '' then begin
             if Trim(cCliente.DisplayValue) = '' then begin
                // Apendas fornecedor informado.
-               tItens.SQL.Add('       AND ( NF.Fornecedor_Codigo = :pForn');
-               tItens.SQL.Add('       OR (NF.Saida_Entrada = 1 AND Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosItens NI2 WHERE (SELECT Fornecedor_Codigo FROM Pedidos NF2 WHERE NF2.Numero = NI2.Pedido ) = :pForn)) )');
+               tItens.SQL.Add('AND ( NF.Fornecedor_Codigo = :pForn');
+               tItens.SQL.Add('OR (NF.Saida_Entrada = 1 AND Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosItens NI2 WHERE (SELECT Fornecedor_Codigo FROM Pedidos NF2 WHERE NF2.Numero = NI2.Pedido ) = :pForn)) )');
             end else begin
                // Fornecedor informado + Cliente informado.
-               tItens.SQL.Add('       AND ( NF.Fornecedor_Codigo = :pForn');
-               tItens.SQL.Add('       OR (NF.Saida_Entrada = 1 AND Cliente_Codigo = :pCli AND Codigo_Mercadoria');
-               tItens.SQL.Add('       IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosItens NI2 WHERE (SELECT Fornecedor_Codigo FROM Pedidos NF2 WHERE NF2.Numero = NI2.Pedido ) = :pForn)) )');
+               tItens.SQL.Add('AND ( NF.Fornecedor_Codigo = :pForn');
+               tItens.SQL.Add('OR (NF.Saida_Entrada = 1 AND Cliente_Codigo = :pCli AND Codigo_Mercadoria');
+               tItens.SQL.Add('IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosItens NI2 WHERE (SELECT Fornecedor_Codigo FROM Pedidos NF2 WHERE NF2.Numero = NI2.Pedido ) = :pForn)) )');
                tItens.ParamByName('pCli').AsInteger := Dados.ClientesCodigo.AsInteger;
             end;
             tItens.ParamByName('pForn').AsInteger := Dados.FornecedoresCodigo.AsInteger;
          end else begin
             if Trim(cCliente.DisplayValue) <> '' then begin
                // Apendas cliente informado.
-               tItens.SQL.Add('       AND ( NF.Cliente_Codigo = :pCli ');
-               tItens.SQL.Add('       OR (NF.Saida_Entrada = 0 AND Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosItens NI2 WHERE (SELECT Cliente_Codigo FROM Pedidos NF2 WHERE NF2.Numero = NI2.Pedido) = :pCli)) )');
+               tItens.SQL.Add('AND ( NF.Cliente_Codigo = :pCli ');
+               tItens.SQL.Add('OR (NF.Saida_Entrada = 0 AND Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosItens NI2 WHERE (SELECT Cliente_Codigo FROM Pedidos NF2 WHERE NF2.Numero = NI2.Pedido) = :pCli)) )');
                tItens.ParamByName('pCli').AsInteger := Dados.ClientesCodigo.AsInteger;
             end;
          end;
          if Trim(cFabricante.DisplayValue) <> '' then begin
-            tItens.SQL.Add('       AND NI.Codigo_Mercadoria IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
+            tItens.SQL.Add('AND NI.Codigo_Mercadoria IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
             tItens.ParamByName('pFabr').AsInteger := Dados.FabricantesCodigo.AsInteger;
          end;
          If Trim(cTipoProd.DisplayValue) <> '' then begin
-            tItens.SQL.Add('AND    (PD.Tipo = :pTipoProd)');
+            tItens.SQL.Add('AND (PD.Tipo = :pTipoProd)');
             tItens.ParamByName('pTipoProd').AsInteger := Dados.TipoProdutoCodigo.AsInteger;
          End;
 
          //=========================================================[ PEDIDOS DE REPRESENTANTES ]====================================================\\
-         tItens.SQL.Add('UNION  ALL');
+         tItens.SQL.Add('UNION ALL');
          tItens.SQL.Add('SELECT Tipo = ''D'',');
          tItens.SQL.Add('       Sai_Entra = 1,');
          tItens.SQL.Add('       PRI.Codigo_Mercadoria,');
@@ -767,56 +676,56 @@ begin
          tItens.SQL.Add('       Valor_Unitario    = PRI.Valor_Unitario,');
          tItens.SQL.Add('       Destinatario_Nome = (SELECT Cliente_Nome FROM PedidosRepresentantes PR WHERE PR.Pedido = PRI.Pedido),');
          tItens.SQL.Add('       Tipo_Produto      = (SELECT CAST(Codigo AS VARCHAR(10))+'' - ''+Descricao FROM Cybersoft_Cadastros.dbo.TipoProduto WHERE Codigo = PD.Tipo)');
-         tItens.SQL.Add('FROM   PedidosRepresentantesItens PRI, PedidosRepresentantes PR, Produtos PD');
-         tItens.SQL.Add('WHERE  PRI.Pedido = PR.Pedido');
-         tItens.SQL.Add('AND    PD.Codigo = PRI.Codigo_Mercadoria');
-         tItens.SQL.Add('AND    ISNULL(PRI.Faturamento, 0) = 0 AND ISNULL(PR.Faturado, 0) = 0 AND (SELECT Cancelado FROM PedidosRepresentantes PR WHERE PR.Pedido = PRI.Pedido) = 0 ');
+         tItens.SQL.Add('FROM PedidosRepresentantesItens PRI, PedidosRepresentantes PR, Produtos PD');
+         tItens.SQL.Add('WHERE PRI.Pedido = PR.Pedido');
+         tItens.SQL.Add('AND PD.Codigo = PRI.Codigo_Mercadoria');
+         tItens.SQL.Add('AND ISNULL(PRI.Faturamento, 0) = 0 AND ISNULL(PR.Faturado, 0) = 0 AND (SELECT Cancelado FROM PedidosRepresentantes PR WHERE PR.Pedido = PRI.Pedido) = 0 ');
 
          If Trim(Removecaracter('/', '', cData.Text)) <> '' then begin
-            tItens.SQL.Add('       AND PRI.Data <= :pData');
+            tItens.SQL.Add('AND PRI.Data <= :pData');
             tItens.ParamByName('pData').AsDate := cData.Date;
          End;
          If cCodigoProduto.Value > 0 then begin
-            tItens.SQL.Add('       AND PRI.Codigo_Mercadoria = :pProduto');
+            tItens.SQL.Add('AND PRI.Codigo_Mercadoria = :pProduto');
             tItens.ParamByName('pProduto').AsInteger := cCodigoProduto.AsInteger;
          End;
          If Trim(cTipoNota.DisplayValue) <> '' then begin
-            tItens.SQL.Add('       AND (SELECT Tipo_Nota FROM PedidosRepresentantes PR WHERE PR.Pedido = PRI.Pedido) = :pTipoNota');
+            tItens.SQL.Add('AND (SELECT Tipo_Nota FROM PedidosRepresentantes PR WHERE PR.Pedido = PRI.Pedido) = :pTipoNota');
             tItens.ParamByName('pTipoNota').AsInteger := Dados.TipoNotaCodigo.AsInteger;
          End;
          If cANP.Checked = true then begin
-            tItens.SQL.Add('       AND (SELECT LTRIM(RTRIM(Codigo_ANP)) FROM Produtos WHERE(Codigo = PRI.Codigo_Mercadoria)) <> '''' ');
+            tItens.SQL.Add('AND (SELECT LTRIM(RTRIM(Codigo_ANP)) FROM Produtos WHERE(Codigo = PRI.Codigo_Mercadoria)) <> '''' ');
          End;
          If cReciclavel.Checked = true then begin
-            tItens.SQL.Add('       AND (SELECT Reciclavel FROM Produtos WHERE(Codigo = PRI.Codigo_Mercadoria)) = 1 ');
+            tItens.SQL.Add('AND (SELECT Reciclavel FROM Produtos WHERE(Codigo = PRI.Codigo_Mercadoria)) = 1 ');
          End;
          if Trim(cFornecedor.DisplayValue) <> '' then begin
             if Trim(cCliente.DisplayValue) = '' then begin
                // Apendas fornecedor informado.
-               tItens.SQL.Add('       AND ( PR.Fornecedor_Codigo = :pForn');
-               tItens.SQL.Add('       OR (Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosRepresentantesItens PRI2 WHERE (SELECT Fornecedor_Codigo FROM PedidosRepresentantes PR2 WHERE PR2.Pedido = PRI2.Pedido ) = :pForn)) )');
+               tItens.SQL.Add('AND ( PR.Fornecedor_Codigo = :pForn');
+               tItens.SQL.Add('OR (Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosRepresentantesItens PRI2 WHERE (SELECT Fornecedor_Codigo FROM PedidosRepresentantes PR2 WHERE PR2.Pedido = PRI2.Pedido ) = :pForn)) )');
             end else begin
                // Fornecedor informado + Cliente informado.
-               tItens.SQL.Add('       AND ( PR.Fornecedor_Codigo = :pForn');
-               tItens.SQL.Add('       OR (Cliente = :pCli AND Codigo_Mercadoria');
-               tItens.SQL.Add('       IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosRepresentantesItens PRI2 WHERE (SELECT Fornecedor_Codigo FROM PedidosRepresentantes PR2 WHERE NF2.Pedido = PRI2.Pedido ) = :pForn)) )');
+               tItens.SQL.Add('AND ( PR.Fornecedor_Codigo = :pForn');
+               tItens.SQL.Add('OR (Cliente = :pCli AND Codigo_Mercadoria');
+               tItens.SQL.Add('IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosRepresentantesItens PRI2 WHERE (SELECT Fornecedor_Codigo FROM PedidosRepresentantes PR2 WHERE NF2.Pedido = PRI2.Pedido ) = :pForn)) )');
                tItens.ParamByName('pCli').AsInteger := Dados.ClientesCodigo.AsInteger;
             end;
             tItens.ParamByName('pForn').AsInteger := Dados.FornecedoresCodigo.AsInteger;
          end else begin
             if Trim(cCliente.DisplayValue) <> '' then begin
                // Apendas cliente informado.
-               tItens.SQL.Add('       AND ( PR.Cliente = :pCli ');
-               tItens.SQL.Add('       OR (Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosRepresentantesItens PRI2 WHERE (SELECT Cliente FROM PedidosRepresentantes PR2 WHERE PR2.Pedido = PRI2.Pedido) = :pCli)) )');
+               tItens.SQL.Add('AND ( PR.Cliente = :pCli ');
+               tItens.SQL.Add('OR (Codigo_Mercadoria IN(SELECT DISTINCT Codigo_Mercadoria FROM PedidosRepresentantesItens PRI2 WHERE (SELECT Cliente FROM PedidosRepresentantes PR2 WHERE PR2.Pedido = PRI2.Pedido) = :pCli)) )');
                tItens.ParamByName('pCli').AsInteger := Dados.ClientesCodigo.AsInteger;
             end;
          end;
          if Trim(cFabricante.DisplayValue) <> '' then begin
-            tItens.SQL.Add('        AND PRI.Codigo_Mercadoria IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
-           tItens.ParamByName('pFabr').AsInteger := Dados.FabricantesCodigo.AsInteger;
+            tItens.SQL.Add('AND PRI.Codigo_Mercadoria IN(SELECT Codigo FROM Produtos WHERE Fabricante = :pFabr)');
+            tItens.ParamByName('pFabr').AsInteger := Dados.FabricantesCodigo.AsInteger;
          end;
          If Trim(cTipoProd.DisplayValue) <> '' then begin
-            tItens.SQL.Add('AND    (PD.Tipo = :pTipoProd)');
+            tItens.SQL.Add('AND (PD.Tipo = :pTipoProd)');
             tItens.ParamByName('pTipoProd').AsInteger := Dados.TipoProdutoCodigo.AsInteger;
          End;
       End;
@@ -828,10 +737,10 @@ begin
       tItens.SQL.Add('FROM  #TEMP');
       tItens.SQL.Add('WHERE Codigo_Mercadoria IS NOT NULL');
       if cSaldoProcesso.Checked then begin
-         tItens.SQL.Add('AND   (SELECT SUM(CAST(Entrada_Compra+Entrada_Terceiros+Entrada_Devol AS DECIMAL(14,2))-CAST(Saida_Devol+Saida_Venda+Saida_Terceiros+Saida_Outras AS DECIMAL(14,2))) FROM #Temp T2 WHERE T2.Processo = #Temp.Processo) > 0');
+         tItens.SQL.Add('AND (SELECT SUM(CAST(Entrada_Compra+Entrada_Terceiros+Entrada_Devol AS DECIMAL(14,2))-CAST(Saida_Devol+Saida_Venda+Saida_Terceiros+Saida_Outras AS DECIMAL(14,2))) FROM #Temp T2 WHERE T2.Processo = #Temp.Processo) > 0');
       end;
       if cSaldoProduto.Checked then begin
-         tItens.SQL.Add('AND   (SELECT SUM(CAST(Entrada_Compra+Entrada_Terceiros+Entrada_Devol AS DECIMAL(14,2))-CAST(Saida_Devol+Saida_Venda+Saida_Terceiros+Saida_Outras AS DECIMAL(14,2))) FROM #Temp T2 WHERE T2.Codigo_Mercadoria = #Temp.Codigo_Mercadoria) > 0');
+         tItens.SQL.Add('AND (SELECT SUM(CAST(Entrada_Compra+Entrada_Terceiros+Entrada_Devol AS DECIMAL(14,2))-CAST(Saida_Devol+Saida_Venda+Saida_Terceiros+Saida_Outras AS DECIMAL(14,2))) FROM #Temp T2 WHERE T2.Codigo_Mercadoria = #Temp.Codigo_Mercadoria) > 0');
       end;
       tItens.SQL.Add('ORDER BY Codigo_Mercadoria, Data, Sai_Entra, Nota');
       //tItens.SQL.SavetoFile('c:\temp\Posicao_Estoque_Detalhado_New.SQL');
