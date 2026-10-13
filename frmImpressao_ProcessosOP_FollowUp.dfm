@@ -3,8 +3,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Acompanhamento de Processo (Follow-Up)'
-  ClientHeight = 440
-  ClientWidth = 666
+  ClientHeight = 534
+  ClientWidth = 899
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,14 +15,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   Position = poScreenCenter
   OnCreate = FormCreate
   DesignSize = (
-    666
-    440)
+    899
+    534)
   PixelsPerInch = 96
   TextHeight = 13
   object Image2: TImage
     Left = 0
     Top = 0
-    Width = 666
+    Width = 899
     Height = 46
     Align = alTop
     Stretch = True
@@ -63,8 +63,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Transparent = True
   end
   object lblRecords: TLabel
-    Left = 8
-    Top = 413
+    Left = 11
+    Top = 476
     Width = 140
     Height = 13
     Caption = '0 processo(s) encontrado(s).'
@@ -120,7 +120,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   object cResponsavel: TRxDBLookupCombo
     Left = 86
     Top = 99
-    Width = 218
+    Width = 451
     Height = 21
     DropDownCount = 8
     Font.Charset = DEFAULT_CHARSET
@@ -134,12 +134,17 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     LookupDisplayIndex = 1
     LookupSource = dsoRES
     ParentFont = False
+<<<<<<< HEAD
     TabOrder = 10
+=======
+    TabOrder = 2
+    ExplicitWidth = 218
+>>>>>>> 859e0cad77c2fa45a14c02fe5e76a6378f5ea834
   end
   object cCliente: TRxDBLookupCombo
     Left = 86
     Top = 76
-    Width = 218
+    Width = 451
     Height = 21
     DropDownCount = 8
     Font.Charset = DEFAULT_CHARSET
@@ -153,7 +158,12 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     LookupDisplayIndex = 1
     LookupSource = dsoCLI
     ParentFont = False
+<<<<<<< HEAD
     TabOrder = 7
+=======
+    TabOrder = 3
+    ExplicitWidth = 218
+>>>>>>> 859e0cad77c2fa45a14c02fe5e76a6378f5ea834
   end
   object StaticText4: TStaticText
     Left = 10
@@ -360,10 +370,10 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     TabOrder = 4
   end
   object btnSearch: TButton
-    Left = 559
-    Top = 53
-    Width = 98
-    Height = 27
+    Left = 802
+    Top = 76
+    Width = 81
+    Height = 44
     Anchors = [akTop, akRight]
     Caption = 'Pesquisar'
     TabOrder = 5
@@ -371,9 +381,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   end
   object Grade: TDBGrid
     Left = 8
+<<<<<<< HEAD
     Top = 200
     Width = 649
     Height = 201
+=======
+    Top = 155
+    Width = 882
+    Height = 307
+>>>>>>> 859e0cad77c2fa45a14c02fe5e76a6378f5ea834
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = dsoFLP
     Font.Charset = DEFAULT_CHARSET
@@ -394,24 +410,53 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       item
         Expanded = False
         FieldName = 'Processo'
+        Title.Alignment = taCenter
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = [fsBold]
+        Width = 197
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'DI_DUIMP'
+        Title.Alignment = taCenter
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = [fsBold]
+        Width = 117
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Origem'
+        Title.Alignment = taCenter
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = [fsBold]
+        Width = 259
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'Documentos'
+        Title.Alignment = taCenter
+        Title.Font.Charset = DEFAULT_CHARSET
+        Title.Font.Color = clWindowText
+        Title.Font.Height = -11
+        Title.Font.Name = 'MS Sans Serif'
+        Title.Font.Style = [fsBold]
+        Width = 284
         Visible = True
       end>
   end
+<<<<<<< HEAD
   object btnPrint: TButton
     Left = 559
     Top = 81
@@ -423,8 +468,10 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     TabOrder = 8
     OnClick = btnPrintClick
   end
+=======
+>>>>>>> 859e0cad77c2fa45a14c02fe5e76a6378f5ea834
   object rgEst: TRadioGroup
-    Left = 310
+    Left = 543
     Top = 49
     Width = 114
     Height = 140
@@ -435,10 +482,15 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       'Ativos'
       'Desativados'
       'Todos')
+<<<<<<< HEAD
     TabOrder = 0
+=======
+    TabOrder = 9
+    ExplicitLeft = 310
+>>>>>>> 859e0cad77c2fa45a14c02fe5e76a6378f5ea834
   end
   object rgSit: TRadioGroup
-    Left = 430
+    Left = 668
     Top = 49
     Width = 123
     Height = 140
@@ -450,6 +502,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       'Fechados'
       'Encerrados'
       'Todos')
+<<<<<<< HEAD
     TabOrder = 1
   end
   object btnClear: TButton
@@ -471,6 +524,9 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Enabled = False
     TabOrder = 21
     OnClick = btnSaveToClick
+=======
+    TabOrder = 10
+>>>>>>> 859e0cad77c2fa45a14c02fe5e76a6378f5ea834
   end
   object txtProcesso: TStaticText
     Left = 11
@@ -504,6 +560,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     CharCase = ecUpperCase
     TabOrder = 12
   end
+<<<<<<< HEAD
   object txtDataPrevista: TStaticText
     Left = 10
     Top = 144
@@ -707,6 +764,67 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     ParentFont = False
     YearDigits = dyFour
     TabOrder = 15
+=======
+  object Panel1: TPanel
+    Left = 0
+    Top = 504
+    Width = 899
+    Height = 30
+    Align = alBottom
+    BevelOuter = bvLowered
+    TabOrder = 13
+    ExplicitLeft = -21
+    ExplicitTop = 417
+    object bSair: TButton
+      Left = 832
+      Top = 1
+      Width = 66
+      Height = 28
+      Cursor = crHandPoint
+      Hint = 'Fecha a janela atual e cancela os processos pendentes.'
+      Align = alRight
+      Caption = '&Sair'
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      OnClick = bSairClick
+      ExplicitLeft = 492
+    end
+    object btnPrint: TButton
+      Left = 759
+      Top = 1
+      Width = 73
+      Height = 28
+      Align = alRight
+      Caption = 'Imprimir'
+      Enabled = False
+      TabOrder = 1
+      OnClick = btnPrintClick
+      ExplicitLeft = 526
+    end
+    object btnClear: TButton
+      Left = 688
+      Top = 1
+      Width = 71
+      Height = 28
+      Align = alRight
+      Caption = 'Limpar'
+      TabOrder = 2
+      OnClick = btnClearClick
+      ExplicitLeft = 430
+    end
+    object btnSaveTo: TBitBtn
+      Left = 584
+      Top = 1
+      Width = 104
+      Height = 28
+      Align = alRight
+      Caption = 'Salvar como...'
+      Enabled = False
+      TabOrder = 3
+      OnClick = btnSaveToClick
+    end
+>>>>>>> 859e0cad77c2fa45a14c02fe5e76a6378f5ea834
   end
   object txtDataChegada: TStaticText
     Left = 10
@@ -918,7 +1036,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'A4'
+    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -963,7 +1081,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -972,8 +1090,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     XLSSettings.WorksheetName = 'Report'
-    Left = 97
-    Top = 339
+    Left = 199
+    Top = 258
     Version = '19.04'
     mmColumnWidth = 284300
     DataPipelineName = 'dbpFollowUp'
@@ -2438,8 +2556,13 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   object dbpFollowUp: TppDBPipeline
     DataSource = dsoFLP
     UserName = 'pFollowUp'
+<<<<<<< HEAD
     Left = 69
     Top = 367
+=======
+    Left = 195
+    Top = 414
+>>>>>>> 859e0cad77c2fa45a14c02fe5e76a6378f5ea834
   end
   object qryFLP: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -2674,8 +2797,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       ');')
     AfterOpen = qryFLPAfterOpen
     AfterClose = qryFLPAfterClose
+<<<<<<< HEAD
     Left = 41
     Top = 339
+=======
+    Active = True
+    Left = 120
+    Top = 313
+>>>>>>> 859e0cad77c2fa45a14c02fe5e76a6378f5ea834
     ParamData = <
       item
         DataType = ftDateTime
@@ -2881,8 +3010,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   end
   object dsoFLP: TDataSource
     DataSet = qryFLP
-    Left = 13
-    Top = 339
+    Left = 121
+    Top = 364
   end
   object qryCLI: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -2892,8 +3021,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       ',CNPJ'
       'FROM Clientes')
     IndexFieldNames = 'Nome'
-    Left = 41
-    Top = 311
+    Left = 61
+    Top = 210
   end
   object qryRES: TMSQuery
     Connection = Dados.Banco
@@ -2901,8 +3030,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       'SELECT Matricula'
       ',Nome'
       'FROM Usuarios')
-    Left = 69
-    Top = 311
+    Left = 118
+    Top = 207
     object qryRESMatricula: TStringField
       FieldName = 'Matricula'
       Size = 15
@@ -2914,19 +3043,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   end
   object dsoCLI: TDataSource
     DataSet = qryCLI
-    Left = 13
-    Top = 311
+    Left = 64
+    Top = 259
   end
   object dsoRES: TDataSource
     DataSet = qryRES
-    Left = 13
-    Top = 367
+    Left = 115
+    Top = 259
   end
   object pEmpresas: TppDBPipeline
     DataSource = Dados.dsEmpresas
     UserName = 'pEmpresas'
-    Left = 97
-    Top = 311
+    Left = 198
+    Top = 210
     object pEmpresasppField1: TppField
       Alignment = taRightJustify
       FieldAlias = 'Codigo'
@@ -4660,8 +4789,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   object dlgSavePDF: TSaveDialog
     FileName = 'Acompanhamento FollowUp'
     Filter = 'Documento PDF (*.pdf)|*.pdf|Microsoft Excel (*.xls)|*.xls'
-    Left = 125
-    Top = 311
+    Left = 328
+    Top = 365
   end
   object qryPRH: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -4676,8 +4805,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     MasterFields = 'Processo'
     DetailFields = 'Processo'
     IndexFieldNames = 'Data;Hora'
-    Left = 41
-    Top = 367
+    Left = 63
+    Top = 312
     ParamData = <
       item
         DataType = ftString
@@ -4710,8 +4839,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   end
   object dbpPRH: TppBDEPipeline
     UserName = 'dbpPRH'
-    Left = 69
-    Top = 339
+    Left = 194
+    Top = 362
     MasterDataPipelineName = 'dbpFollowUp'
   end
   object pprXLS: TppReport
@@ -4720,7 +4849,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'A4'
+    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -4765,7 +4894,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -4776,8 +4905,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     XLSSettings.WorksheetName = 'Report'
-    Left = 97
-    Top = 367
+    Left = 198
+    Top = 308
     Version = '19.04'
     mmColumnWidth = 284300
     DataPipelineName = 'dbpFollowUp'
