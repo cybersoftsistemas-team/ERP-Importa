@@ -215,12 +215,6 @@ type
     ppDBText55: TppDBText;
     ppDBText56: TppDBText;
     ppDBText57: TppDBText;
-    txtDataPrevista: TStaticText;
-    dedDtPrevistaIni: TDateEdit;
-    dedDtPrevistaFim: TDateEdit;
-    txtDataChegada: TStaticText;
-    dedDtChegadaIni: TDateEdit;
-    dedDtChegadaFim: TDateEdit;
     Panel1: TPanel;
     bSair: TButton;
     btnPrint: TButton;
@@ -322,10 +316,6 @@ begin
   qryFLP.ParamByName('ClienteCodigo').AsInteger := StrToIntDef(VarToStr(cCliente.KeyValue), 0);
   qryFLP.ParamByName('RespNome').AsString := VarToStr(cResponsavel.KeyValue);
   qryFLP.ParamByName('Processo').AsString := edtProcesso.Text;
-  qryFLP.ParamByName('PrevisaoChegadaInicial').AsDateTime := dedDtPrevistaIni.Date;
-  qryFLP.ParamByName('PrevisaoChegadaFinal').AsDateTime := dedDtPrevistaFim.Date;
-  qryFLP.ParamByName('ChegadaInicial').AsDateTime := dedDtChegadaIni.Date;
-  qryFLP.ParamByName('ChegadaFinal').AsDateTime := dedDtChegadaFim.Date;
   qryFLP.Prepare;
   qryFLP.Open;
   qryPRH.Open;
@@ -393,8 +383,8 @@ end;
 
 procedure TfrmImpressaoProcessosOPFollowUp.SetDateDef;
 begin
-  cDataIni.Clear;
-  cDataFim.Clear;
+  cDataIni.Date := Now - 30;
+  cDataFim.Date := Now;
 end;
 
 procedure TfrmImpressaoProcessosOPFollowUp.SetFilterReport;

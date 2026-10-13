@@ -79,6 +79,12 @@ type
     DBEdit3: TDBEdit;
     StaticText19: TStaticText;
     DBEdit4: TDBEdit;
+    StaticText146: TStaticText;
+    DBEdit22: TDBEdit;
+    StaticText147: TStaticText;
+    DBEdit56: TDBEdit;
+    StaticText151: TStaticText;
+    DBEdit58: TDBEdit;
     procedure bSairClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);

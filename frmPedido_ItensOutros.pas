@@ -212,6 +212,8 @@ type
     DBMemo1: TDBMemo;
     cCopiaDesc: TMemo;
     bCopiar: TBitBtn;
+    StaticText61: TStaticText;
+    DBEdit42: TDBEdit;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -1137,6 +1139,7 @@ begin
       cQuantidade.Enabled          := not bDetalhe.Enabled;
       bSeriais.Enabled             := false;
       PageControl1.ActivePageIndex := 0;
+      Panel2.Enabled               := false;
 
       With Dados do begin
            If (Button = nbEdit) or (Button = nbInsert) then begin
@@ -1150,10 +1153,13 @@ begin
               cMinimo.Value                := 0;
               cDisponivel.Value            := 0;
               GradeItens.Enabled           := false;
+              Panel2.Enabled               := true;
 
               if Trim(PedidosNFe_cNFRef.AsString) <> '' then begin
+                 dmFiscal.NotasItens.Locate('Codigo_Mercadoria', PedidosItensCodigo_Mercadoria.asinteger, [loCaseInsensitive]);
                  PedidosItensNota_Referencia.Value := PedidosNFe_cNFRef.Value;
                  PedidosItensData_Referencia.Value := PedidosData_Referencia.Value;
+                 PedidosItensItem_Referencia.Value := dmFiscal.NotasItensItem.asinteger;
               end;
 
               If Button = nbInsert then begin
@@ -1188,7 +1194,7 @@ begin
                  cQuantidade.Enabled := not ProdutosSerial_Obrigatorio.AsBoolean;
               End;
            end else begin
-              GradeItens.Enabled   := true;
+              GradeItens.Enabled := true;
            end;
 
            // Quantidade de itens adicionados ao pedido.

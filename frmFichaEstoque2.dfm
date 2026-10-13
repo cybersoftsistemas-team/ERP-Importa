@@ -3,8 +3,8 @@ object FichaEstoque2: TFichaEstoque2
   Top = 271
   BorderStyle = bsDialog
   Caption = 'FichaEstoque2'
-  ClientHeight = 328
-  ClientWidth = 482
+  ClientHeight = 341
+  ClientWidth = 512
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,10 +20,11 @@ object FichaEstoque2: TFichaEstoque2
   object Image2: TImage
     Left = 0
     Top = 0
-    Width = 482
+    Width = 512
     Height = 44
     Align = alTop
     Stretch = True
+    ExplicitWidth = 482
   end
   object RxLabel1: TRxLabel
     Left = 8
@@ -59,10 +60,10 @@ object FichaEstoque2: TFichaEstoque2
     Transparent = True
   end
   object Panel1: TPanel
-    Left = 16
-    Top = 58
-    Width = 450
-    Height = 108
+    Left = 13
+    Top = 57
+    Width = 485
+    Height = 123
     BevelInner = bvRaised
     BevelOuter = bvLowered
     TabOrder = 0
@@ -70,7 +71,7 @@ object FichaEstoque2: TFichaEstoque2
       Left = 23
       Top = 15
       Width = 187
-      Height = 72
+      Height = 93
       Caption = 'Descri'#231#227'o do Produto na ficha'
       ItemIndex = 0
       Items.Strings = (
@@ -79,35 +80,35 @@ object FichaEstoque2: TFichaEstoque2
       TabOrder = 0
     end
     object cMetodo: TRadioGroup
-      Left = 243
+      Left = 227
       Top = 15
-      Width = 184
-      Height = 72
+      Width = 233
+      Height = 93
       Caption = 'M'#233'todo de Processamento'
       ItemIndex = 0
       Items.Strings = (
         'Em mem'#243'ria (Mais Rapido)'
-        'Direto no banco (Mais Lento)')
+        'Registro a Registro (Mais Lento)'
+        'Direto no banco de dados (Ultra rapido)')
       TabOrder = 1
     end
   end
   object Panel2: TPanel
     Left = 0
-    Top = 297
-    Width = 482
+    Top = 310
+    Width = 512
     Height = 31
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 1
-    DesignSize = (
-      482
-      31)
+    ExplicitTop = 297
+    ExplicitWidth = 482
     object bSair: TButton
-      Left = 414
+      Left = 443
       Top = 1
       Width = 68
-      Height = 30
-      Anchors = [akTop, akRight]
+      Height = 29
+      Align = alRight
       Caption = '&Sair'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -117,21 +118,36 @@ object FichaEstoque2: TFichaEstoque2
       ParentFont = False
       TabOrder = 0
       OnClick = bSairClick
+      ExplicitLeft = 414
+      ExplicitHeight = 30
     end
     object bExecutar: TButton
-      Left = 337
+      Left = 366
       Top = 1
       Width = 77
-      Height = 30
+      Height = 29
+      Align = alRight
       Caption = 'Executar'
       TabOrder = 1
       OnClick = bExecutarClick
+      ExplicitLeft = 337
+      ExplicitHeight = 30
+    end
+    object bDirSQL: TButton
+      Left = 1
+      Top = 1
+      Width = 98
+      Height = 29
+      Align = alLeft
+      Caption = 'Direto no SQL'
+      TabOrder = 2
+      OnClick = bDirSQLClick
     end
   end
   object Panel3: TPanel
-    Left = 16
-    Top = 171
-    Width = 450
+    Left = 13
+    Top = 186
+    Width = 485
     Height = 109
     BevelInner = bvRaised
     BevelOuter = bvLowered
@@ -241,8 +257,8 @@ object FichaEstoque2: TFichaEstoque2
     end
   end
   object Grade: TStringGrid
-    Left = 352
-    Top = 213
+    Left = 354
+    Top = 185
     Width = 89
     Height = 60
     ColCount = 29
@@ -293,8 +309,8 @@ object FichaEstoque2: TFichaEstoque2
       65)
   end
   object mSQL: TMemo
-    Left = 30
-    Top = 208
+    Left = 24
+    Top = 185
     Width = 83
     Height = 49
     Enabled = False

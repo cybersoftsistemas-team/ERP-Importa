@@ -64,6 +64,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    mData: TDate;
   end;
 
 var
@@ -189,12 +190,13 @@ begin
                   sql.clear;
                   sql.Add('select *');
                   sql.add('      ,Saldo = ((select isnull(sum(Quantidade), 0) from NotasTerceirosItens nti where nti.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Movimenta_Estoque = 1) + ');
-                  sql.add('                (select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 0 and Movimenta_Estoque = 1) +');
+                  sql.add('                (select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 0 and Movimenta_Estoque = 1 and Cancelada <> 1 and NFe_Denegada <> 1) +');
                   sql.add('                (select isnull(sum(Quantidade_Entrada), 0) from ProdutosTransferencia prt where prt.Produto_Entrada = pmp.Codigo_MateriaPrima and Estoque = 1)) -');
-                  sql.add('               ((select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 1 and Movimenta_Estoque = 1) +');
+                  sql.add('               ((select isnull(sum(Quantidade), 0) from NotasItens npi where npi.Codigo_Mercadoria = pmp.Codigo_MateriaPrima and Saida_Entrada = 1 and Movimenta_Estoque = 1 and Cancelada <> 1 and NFe_Denegada <> 1) +');
                   sql.add('                (select isnull(sum(Quantidade), 0) from ProdutosTransferencia prt where prt.Produto_Saida = pmp.Codigo_MateriaPrima and Estoque = 1))');
                   sql.Add('from ProdutosMateriaPrima pmp');
                   sql.Add('where Codigo_Produto = ' + iif(Industrial.FieldByName('Codigo_Mercadoria').AsString <> '', Industrial.FieldByName('Codigo_Mercadoria').AsString, '0'));
+                  //sql.SaveToFile('c:\temp\ProdutosMateriaPrima.sql');
                   open;
                end;
           end;
@@ -290,6 +292,7 @@ begin
      Panel2.Enabled := false;
      with Dados do begin
           if (Button = nbEdit) or (Button = nbInsert) then begin
+             mData := Industrial.FieldByName('Data').asdatetime;
              for i := 0 to 6 do begin
                  Navega.Controls[i].Enabled := False;
              end;
@@ -306,7 +309,7 @@ begin
                   sql.clear;
                   sql.add('select * from FichaEstoque where Nota = :pNota and Data = :pData and Destinatario_CNPJ = :pDest');
                   parambyname('pNota').AsInteger := Industrial.fieldbyname('Registro').asinteger;
-                  parambyname('pData').value     := Industrial.fieldbyname('Data').value;
+                  parambyname('pData').value     := mData;
                   parambyname('pDest').value     := tEmpresa.fieldbyname('CNPJ').asstring;
                   open;
              end;
@@ -314,7 +317,7 @@ begin
                   sql.clear;
                   sql.add('select * from FichaInventario where Nota = :pNota and Data = :pData and Destinatario_CNPJ = :pDest');
                   parambyname('pNota').AsInteger := Industrial.fieldbyname('Registro').asinteger;
-                  parambyname('pData').value     := Industrial.fieldbyname('Data').value;
+                  parambyname('pData').value     := mData;
                   parambyname('pDest').value     := tEmpresa.fieldbyname('CNPJ').asstring;
                   open;
              end;
@@ -343,7 +346,7 @@ begin
                sql.clear;
                sql.add('delete from ProdutosTransferencia where Nota = :pNota and Data_Transferencia = :pData and Motivo = ''IND'' ');
                parambyname('pNota').value := Industrial.fieldbyname('Registro').asinteger;
-               parambyname('pData').value := Industrial.FieldByName('Data').value;
+               parambyname('pData').value := mData;
                execute;
                sql.clear;
                sql.add('select * from ProdutosTransferencia where Produto_Entrada = :pProduto');

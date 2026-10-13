@@ -1831,7 +1831,7 @@ begin
          ultNSURec := '0';
 
          Estados.Locate('Codigo',  Empresas.fieldByName('Estado').asstring, [loCaseInsensitive]);
-
+         
          Util   := CoUtil.Create;
          Evento := Util.distNSU('AN'
                                 ,Menu_Principal.Amb_Producao

@@ -960,7 +960,7 @@ begin
                    execute;
                    sql.Clear;
               end;
-
+              
               // Deleta o item da tabela "NotasItensNavios.
               with NotasItensNavios do begin
                    sql.clear;

@@ -72,6 +72,10 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'Dados da Nota Fiscal'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object Panel2: TPanel
         Left = 0
         Top = 0
@@ -2186,6 +2190,10 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     end
     object TabSheet3: TTabSheet
       Caption = 'Seriais/Chassis'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GradeSerial: TDBGrid
         Left = 0
         Top = 1
@@ -2302,6 +2310,10 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     end
     object TabSheet4: TTabSheet
       Caption = 'Lotes'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GradeLote: TDBGrid
         AlignWithMargins = True
         Left = 3
@@ -2404,6 +2416,10 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     end
     object TabSheet5: TTabSheet
       Caption = 'Manifesta'#231#227'o do Destinat'#225'rio'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GradeManif: TDBGrid
         AlignWithMargins = True
         Left = 3
@@ -2821,6 +2837,10 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     end
     object TabSheet2: TTabSheet
       Caption = 'Filtros'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object bFiltrar: TSpeedButton
         Left = 291
         Top = 342

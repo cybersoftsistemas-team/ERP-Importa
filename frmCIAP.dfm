@@ -1053,8 +1053,8 @@ object CIAP: TCIAP
         StyleElements = []
       end
       object cTipo: TRxDBComboBox
-        Left = 135
-        Top = 46
+        Left = 132
+        Top = 42
         Width = 190
         Height = 21
         DataField = 'Tipo_Item'

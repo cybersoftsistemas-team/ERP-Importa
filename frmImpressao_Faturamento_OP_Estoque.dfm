@@ -2861,7 +2861,6 @@ object Impressao_Faturamento_OP_Estoque: TImpressao_Faturamento_OP_Estoque
         'a) = 6'
       'ORDER BY Codigo_Mercadoria, Data, Nota')
     FetchRows = 1
-    Active = True
     Left = 435
     Top = 277
   end
