@@ -87,6 +87,7 @@ object Processo_Importacao: TProcesso_Importacao
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitTop = 730
     object bSair: TButton
       AlignWithMargins = True
       Left = 998
@@ -288,9 +289,11 @@ object Processo_Importacao: TProcesso_Importacao
     Align = alClient
     TabHeight = 24
     TabOrder = 1
+    ExplicitHeight = 687
     object TabSheet1: TTabSheet
       Caption = '&Dados Gerais'
       Enabled = False
+      ExplicitHeight = 653
       object GroupBox4: TGroupBox
         Left = 1
         Top = -1
@@ -3667,7 +3670,7 @@ object Processo_Importacao: TProcesso_Importacao
         Left = 532
         Top = 174
         Width = 521
-        Height = 485
+        Height = 461
         Caption = 'Valores'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlue
@@ -5027,9 +5030,9 @@ object Processo_Importacao: TProcesso_Importacao
           StyleElements = []
         end
         object StaticText139: TStaticText
-          Left = 267
-          Top = 327
-          Width = 94
+          Left = 6
+          Top = 436
+          Width = 101
           Height = 21
           AutoSize = False
           BevelInner = bvNone
@@ -5050,9 +5053,9 @@ object Processo_Importacao: TProcesso_Importacao
           StyleElements = []
         end
         object DBEdit51: TDBEdit
-          Left = 363
-          Top = 327
-          Width = 148
+          Left = 109
+          Top = 436
+          Width = 141
           Height = 21
           DataField = 'CIDE_ValorDevido'
           DataSource = Dados.dsProcessosDOC
@@ -5066,9 +5069,9 @@ object Processo_Importacao: TProcesso_Importacao
           OnChange = cICMSChange
         end
         object StaticText140: TStaticText
-          Left = 267
-          Top = 350
-          Width = 94
+          Left = 289
+          Top = 436
+          Width = 111
           Height = 21
           AutoSize = False
           BevelInner = bvNone
@@ -5089,9 +5092,9 @@ object Processo_Importacao: TProcesso_Importacao
           StyleElements = []
         end
         object DBEdit52: TDBEdit
-          Left = 363
-          Top = 350
-          Width = 148
+          Left = 401
+          Top = 436
+          Width = 114
           Height = 21
           DataField = 'CIDE_ValorRecolher'
           DataSource = Dados.dsProcessosDOC
@@ -5102,121 +5105,6 @@ object Processo_Importacao: TProcesso_Importacao
           Font.Style = [fsBold]
           ParentFont = False
           TabOrder = 72
-          OnChange = cICMSChange
-        end
-        object StaticText146: TStaticText
-          Left = 6
-          Top = 437
-          Width = 101
-          Height = 21
-          AutoSize = False
-          BevelInner = bvNone
-          BevelKind = bkTile
-          BevelOuter = bvNone
-          BorderStyle = sbsSunken
-          Caption = 'CBS'
-          Color = 7293440
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWhite
-          Font.Height = -11
-          Font.Name = 'Calibri'
-          Font.Style = [fsBold]
-          ParentColor = False
-          ParentFont = False
-          TabOrder = 73
-          Transparent = False
-          StyleElements = []
-        end
-        object DBEdit22: TDBEdit
-          Left = 109
-          Top = 437
-          Width = 151
-          Height = 21
-          DataField = 'Valor_CBS'
-          DataSource = Dados.dsProcessosDOC
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 74
-        end
-        object StaticText147: TStaticText
-          Left = 6
-          Top = 459
-          Width = 101
-          Height = 21
-          AutoSize = False
-          BevelInner = bvNone
-          BevelKind = bkTile
-          BevelOuter = bvNone
-          BorderStyle = sbsSunken
-          Caption = 'IBS Estadual'
-          Color = 7293440
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWhite
-          Font.Height = -11
-          Font.Name = 'Calibri'
-          Font.Style = [fsBold]
-          ParentColor = False
-          ParentFont = False
-          TabOrder = 75
-          Transparent = False
-          StyleElements = []
-        end
-        object DBEdit56: TDBEdit
-          Left = 109
-          Top = 459
-          Width = 151
-          Height = 21
-          DataField = 'Valor_IBSEstadual'
-          DataSource = Dados.dsProcessosDOC
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 76
-        end
-        object StaticText151: TStaticText
-          Left = 267
-          Top = 459
-          Width = 94
-          Height = 21
-          AutoSize = False
-          BevelInner = bvNone
-          BevelKind = bkTile
-          BevelOuter = bvNone
-          BorderStyle = sbsSunken
-          Caption = 'IBS Municipal'
-          Color = 7293440
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWhite
-          Font.Height = -11
-          Font.Name = 'Calibri'
-          Font.Style = [fsBold]
-          ParentColor = False
-          ParentFont = False
-          TabOrder = 77
-          Transparent = False
-          StyleElements = []
-        end
-        object DBEdit58: TDBEdit
-          Left = 363
-          Top = 459
-          Width = 148
-          Height = 21
-          DataField = 'Valor_IBSMunicipal'
-          DataSource = Dados.dsProcessosDOC
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 78
           OnChange = cICMSChange
         end
       end
@@ -5315,6 +5203,7 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = '&Outras Informa'#231#245'es'
       Enabled = False
       ImageIndex = 2
+      ExplicitHeight = 653
       object Label1: TLabel
         Left = 170
         Top = 282
@@ -7427,6 +7316,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet2: TTabSheet
       Caption = 'I&nf. Complementares'
       ImageIndex = 7
+      ExplicitHeight = 653
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0
@@ -7444,12 +7334,14 @@ object Processo_Importacao: TProcesso_Importacao
         ScrollBars = ssVertical
         TabOrder = 0
         WordWrap = False
+        ExplicitHeight = 653
       end
     end
     object TabSheet8: TTabSheet
       Caption = 'Movimento &Financeiro'
       Enabled = False
       ImageIndex = 7
+      ExplicitHeight = 653
       object bDespesas: TSpeedButton
         Left = 856
         Top = 464
@@ -8206,6 +8098,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet9: TTabSheet
       Caption = '&Seriais'
       ImageIndex = 8
+      ExplicitHeight = 653
       object RxDBGrid1: TRxDBGrid
         Left = 0
         Top = 0
@@ -8354,6 +8247,7 @@ object Processo_Importacao: TProcesso_Importacao
       Font.Style = []
       ImageIndex = 6
       ParentFont = False
+      ExplicitHeight = 653
       object DBGrid2: TDBGrid
         Left = 1
         Top = 2
@@ -8519,6 +8413,7 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = 'Contabeis'
       Enabled = False
       ImageIndex = 10
+      ExplicitHeight = 653
       object GroupBox5: TGroupBox
         Left = 3
         Top = 12
@@ -8843,6 +8738,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet4: TTabSheet
       Caption = '&Hist'#243'rico'
       ImageIndex = 3
+      ExplicitHeight = 653
       object DBGrid1: TDBGrid
         Left = 0
         Top = 0
@@ -8952,6 +8848,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet10: TTabSheet
       Caption = '&Documentos Gerais'
       ImageIndex = -1
+      ExplicitHeight = 653
       object Label2: TLabel
         Left = 3
         Top = 230
@@ -9483,6 +9380,7 @@ object Processo_Importacao: TProcesso_Importacao
       Caption = '&Filtros'
       ImageIndex = 5
       OnEnter = TabSheet6Enter
+      ExplicitHeight = 653
       object bLimpar: TSpeedButton
         Left = 527
         Top = 420
@@ -10974,6 +10872,7 @@ object Processo_Importacao: TProcesso_Importacao
     object TabSheet5: TTabSheet
       Caption = '&Lista'
       ImageIndex = 4
+      ExplicitHeight = 653
       object GradeLista: TDBGrid
         AlignWithMargins = True
         Left = 3

@@ -90,7 +90,6 @@ Function EstoqueProduto(pProduto: Integer): Real;
 Function EstoqueNavio(pProduto, pNavio: Integer): Real;
 Function InventarioProduto(pProduto: Integer): Real;
 Function DataUTC(pData: TDate): String;
-
 //function DataUTC(const UTCDateTime: TDateTime): String;
 Function HorarioVerao: boolean;
 Function RemoveZeros(Str, Lado:String): String;
@@ -115,6 +114,7 @@ Function  ComplementoHistorico(Macro, Beneficiario, Processo, DI, Classificacao,
 {*********************************** Procedures **********************************}
 procedure GerarLog(Usuario, Tabela, Funcao, Campo, Operacao, Antes, Depois, CampoChave: String);
 procedure LogDados(Tabela: TDataSet; Descricao:String; pEstado: TDataSetState);   // Tipo = 'I'=Inclusção, 'A'=Alteração, 'E'=Exclusão.
+
 procedure Say(nLin, nCol: Integer; Var Arquivo: Text;Texto: Variant);
 procedure CopiarArquivos(const De, Para: string);
 //procedure ModalidadeParcelas(ValorNota, ValorProduto, ValorIPI: Currency; Data: TDate; Parcelas: Integer; Prazo: Integer; Demais: Integer; Nota, Fornecedor: String; DiaFixo: Integer);
@@ -136,8 +136,6 @@ procedure AtualizaInv(pCodigos:string);
 procedure AtualizaEst(pCodigos:string);
 Procedure SalvaComoUTF8(const P_PATH_E_NOME_ARQUIVO:String; P_ARQUIVO_MEMO: TStrings );
 procedure MontaTreeMenu(mnuMenu: TMenu; treeMenu: TTreeView);
-procedure ProcessaEstoque(pProduto: integer; pDescricao: string);
-procedure ProcessaInventario(pProduto: integer; pDescricao: string);
 
 {*********************************** Funções de Boleto Bancário **********************************}
 function  Modulo10(Valor: String) : string;
@@ -5751,6 +5749,7 @@ begin
      Result := SimpleRoundTo(Result, -6); // 6 casas decimais
 end;
 
+<<<<<<< HEAD
 procedure ProcessaEstoque(pProduto: integer; pDescricao: string);
 begin
    Screen.Cursor  := crSQLWait;
@@ -6637,6 +6636,8 @@ begin
 end;
 
 
+=======
+>>>>>>> 93ca7c2e2adf7110d6942649db5c3d8d27693ec6
 
 
 

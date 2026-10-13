@@ -1,0 +1,10 @@
+Timestamp=[05/10/2026 18:15:36]
+WS=[consNSU]
+URL=[]
+ambiente=[2]
+certificado=[CN=RADAR COMERCIO IMPORTACAO E EXPORTACAO LTDA:07904953000123, OU=RFB e-CNPJ A1, OU=ARCORREIOS, OU=Secretaria da Receita Federal do Brasil - RFB, OU=34028316000103, O=ICP-Brasil, L=VITORIA, S=ES, C=BR]
+erro=[5405 - Erro: Nenhum certificado válido foi encontrado com o nome [CN=RADAR COMERCIO IMPORTACAO E EXPORTACAO LTDA:07904953000123, OU=RFB e-CNPJ A1, OU=ARCORREIOS, OU=Secretaria da Receita Federal do Brasil - RFB, OU=34028316000103, O=ICP-Brasil, L=VITORIA, S=ES, C=BR] informado no repositório [MY do CurrentUser]]
+msgDados=[]
+msgRetWS=[]
+
+DLL=[NFe_Util 2G v5.0.2b beta 07-07-2026 - © 2008-2026 - www.flexdocs.com.br - Todos os direitos reservados]

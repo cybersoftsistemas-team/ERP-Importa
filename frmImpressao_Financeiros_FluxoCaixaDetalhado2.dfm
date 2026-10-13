@@ -730,7 +730,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Financeiro - Fluxo de Caixa (Mensal)'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -781,7 +781,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -1470,7 +1470,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Financeiro - Fluxo de Caixa (Mensal)'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -3731,7 +3731,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Financeiro - Fluxo de Caixa (Mensal)'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -3782,7 +3782,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -4432,7 +4432,7 @@ object Impressao_Financeiros_FluxoCaixaDetalhado2: TImpressao_Financeiros_FluxoC
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Financeiro - Fluxo de Caixa (Mensal)'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350

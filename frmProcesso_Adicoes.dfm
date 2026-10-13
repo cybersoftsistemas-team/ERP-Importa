@@ -3,7 +3,7 @@ object Processo_Adicoes: TProcesso_Adicoes
   Top = 240
   BorderStyle = bsDialog
   Caption = 'Processo_Adicoes'
-  ClientHeight = 686
+  ClientHeight = 642
   ClientWidth = 628
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -20,13 +20,12 @@ object Processo_Adicoes: TProcesso_Adicoes
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 654
+    Top = 610
     Width = 628
     Height = 32
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
-    ExplicitTop = 610
     object bImp: TSpeedButton
       Left = 414
       Top = 1
@@ -137,7 +136,7 @@ object Processo_Adicoes: TProcesso_Adicoes
     Left = 3
     Top = 3
     Width = 622
-    Height = 402
+    Height = 359
     Align = alTop
     BevelOuter = bvLowered
     Enabled = False
@@ -286,7 +285,7 @@ object Processo_Adicoes: TProcesso_Adicoes
     end
     object DBMemo1: TDBMemo
       Left = 105
-      Top = 280
+      Top = 235
       Width = 512
       Height = 116
       TabStop = False
@@ -408,7 +407,7 @@ object Processo_Adicoes: TProcesso_Adicoes
     end
     object StaticText4: TStaticText
       Left = 5
-      Top = 280
+      Top = 235
       Width = 98
       Height = 116
       AutoSize = False
@@ -1074,124 +1073,10 @@ object Processo_Adicoes: TProcesso_Adicoes
       ParentFont = False
       TabOrder = 46
     end
-    object StaticText146: TStaticText
-      Left = 5
-      Top = 235
-      Width = 98
-      Height = 21
-      AutoSize = False
-      BevelInner = bvNone
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      BorderStyle = sbsSunken
-      Caption = 'CBS'
-      Color = 7293440
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'Calibri'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      TabOrder = 47
-      Transparent = False
-      StyleElements = []
-    end
-    object DBEdit22: TDBEdit
-      Left = 105
-      Top = 235
-      Width = 113
-      Height = 21
-      DataField = 'Valor_CBS'
-      DataSource = Dados.dsAdicoes
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 48
-    end
-    object StaticText147: TStaticText
-      Left = 5
-      Top = 257
-      Width = 98
-      Height = 21
-      AutoSize = False
-      BevelInner = bvNone
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      BorderStyle = sbsSunken
-      Caption = 'IBS Estadual'
-      Color = 7293440
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'Calibri'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      TabOrder = 49
-      Transparent = False
-      StyleElements = []
-    end
-    object DBEdit56: TDBEdit
-      Left = 105
-      Top = 257
-      Width = 113
-      Height = 21
-      DataField = 'Valor_IBSEstadual'
-      DataSource = Dados.dsAdicoes
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 50
-    end
-    object StaticText151: TStaticText
-      Left = 220
-      Top = 257
-      Width = 83
-      Height = 21
-      AutoSize = False
-      BevelInner = bvNone
-      BevelKind = bkTile
-      BevelOuter = bvNone
-      BorderStyle = sbsSunken
-      Caption = 'IBS Municipal'
-      Color = 7293440
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWhite
-      Font.Height = -11
-      Font.Name = 'Calibri'
-      Font.Style = [fsBold]
-      ParentColor = False
-      ParentFont = False
-      TabOrder = 51
-      Transparent = False
-      StyleElements = []
-    end
-    object DBEdit58: TDBEdit
-      Left = 305
-      Top = 257
-      Width = 113
-      Height = 21
-      DataField = 'Valor_IBSMunicipal'
-      DataSource = Dados.dsAdicoes
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      TabOrder = 52
-    end
   end
   object Grade: TDBGrid
     Left = 3
-    Top = 411
+    Top = 365
     Width = 622
     Height = 212
     DataSource = Dados.dsAdicoes
@@ -1334,7 +1219,7 @@ object Processo_Adicoes: TProcesso_Adicoes
   end
   object StaticText6: TStaticText
     Left = 3
-    Top = 626
+    Top = 580
     Width = 98
     Height = 21
     AutoSize = False
@@ -1357,7 +1242,7 @@ object Processo_Adicoes: TProcesso_Adicoes
   end
   object cTotalQtde: TCurrencyEdit
     Left = 103
-    Top = 626
+    Top = 580
     Width = 103
     Height = 21
     AutoSize = False
@@ -1374,7 +1259,7 @@ object Processo_Adicoes: TProcesso_Adicoes
   end
   object cTotalValor: TCurrencyEdit
     Left = 208
-    Top = 626
+    Top = 580
     Width = 113
     Height = 21
     AutoSize = False
@@ -1390,7 +1275,7 @@ object Processo_Adicoes: TProcesso_Adicoes
   end
   object StaticText8: TStaticText
     Left = 441
-    Top = 626
+    Top = 580
     Width = 67
     Height = 21
     AutoSize = False
@@ -1413,7 +1298,7 @@ object Processo_Adicoes: TProcesso_Adicoes
   end
   object cTotalPeso: TCurrencyEdit
     Left = 510
-    Top = 626
+    Top = 580
     Width = 115
     Height = 21
     AutoSize = False
@@ -1430,7 +1315,7 @@ object Processo_Adicoes: TProcesso_Adicoes
   end
   object cTotalValorReal: TCurrencyEdit
     Left = 323
-    Top = 626
+    Top = 580
     Width = 113
     Height = 21
     AutoSize = False

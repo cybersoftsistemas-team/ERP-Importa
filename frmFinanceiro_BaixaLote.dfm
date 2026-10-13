@@ -418,6 +418,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 1
+    ExplicitWidth = 993
     object bSair: TButton
       AlignWithMargins = True
       Left = 1014
@@ -436,6 +437,7 @@ object Financeiro_BaixaLote: TFinanceiro_BaixaLote
       ShowHint = True
       TabOrder = 0
       OnClick = bSairClick
+      ExplicitLeft = 916
     end
     object bDesmarcar: TButton
       AlignWithMargins = True

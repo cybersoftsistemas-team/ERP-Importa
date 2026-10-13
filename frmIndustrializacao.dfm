@@ -591,7 +591,7 @@ object Industrializacao: TIndustrializacao
       ParentFont = False
       ReadOnly = True
       TabOrder = 17
-      Text = '0'
+      Text = 'cEstoque'
       StyleElements = [seBorder]
     end
   end

@@ -2984,14 +2984,13 @@ object Menu_Principal: TMenu_Principal
         Caption = '-'
       end
       object mnFiscal_FichaEstoque: TMenuItem
-        Caption = 'Processar Ficha de &Estoque/Inventario'
+        Caption = 'Processar Ficha de &Estoque'
         ImageIndex = 138
         OnClick = mnFiscal_FichaEstoqueClick
       end
       object mnFiscal_FichaInventario: TMenuItem
         Caption = 'Processar Ficha de I&nventario'
         ImageIndex = 139
-        Visible = False
         OnClick = mnFiscal_FichaInventarioClick
       end
       object N60: TMenuItem

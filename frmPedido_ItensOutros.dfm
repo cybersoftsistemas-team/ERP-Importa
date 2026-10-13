@@ -295,7 +295,6 @@ object Pedido_ItensOutros: TPedido_ItensOutros
         Height = 513
         Anchors = [akLeft, akTop, akRight, akBottom]
         BevelOuter = bvLowered
-        Enabled = False
         TabOrder = 0
         object bPesqNav: TSpeedButton
           Left = 663
@@ -2590,9 +2589,9 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           StyleElements = []
         end
         object StaticText44: TStaticText
-          Left = 674
+          Left = 609
           Top = 487
-          Width = 63
+          Width = 71
           Height = 21
           AutoSize = False
           BevelInner = bvNone
@@ -2613,7 +2612,7 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           StyleElements = []
         end
         object DBEdit17: TDBEdit
-          Left = 739
+          Left = 682
           Top = 487
           Width = 74
           Height = 21
@@ -3064,7 +3063,7 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           TabOrder = 58
         end
         object DBEdit34: TDBEdit
-          Left = 894
+          Left = 837
           Top = 487
           Width = 68
           Height = 21
@@ -3081,7 +3080,7 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           OnChange = cBCIPIChange
         end
         object StaticText54: TStaticText
-          Left = 817
+          Left = 760
           Top = 487
           Width = 75
           Height = 21
@@ -3489,50 +3488,15 @@ object Pedido_ItensOutros: TPedido_ItensOutros
           TabOrder = 152
           OnChange = cBCPISExit
         end
-        object StaticText61: TStaticText
-          Left = 605
-          Top = 487
-          Width = 32
-          Height = 21
-          AutoSize = False
-          BevelInner = bvNone
-          BevelKind = bkSoft
-          BevelOuter = bvSpace
-          BorderStyle = sbsSunken
-          Caption = 'Item'
-          Color = 7293440
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWhite
-          Font.Height = -11
-          Font.Name = 'Calibri'
-          Font.Style = [fsBold]
-          ParentColor = False
-          ParentFont = False
-          TabOrder = 153
-          Transparent = False
-          StyleElements = []
-        end
-        object DBEdit42: TDBEdit
-          Left = 640
-          Top = 487
-          Width = 29
-          Height = 21
-          TabStop = False
-          DataField = 'Item_Referencia'
-          DataSource = Dados.dsPedidosItens
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'Tahoma'
-          Font.Style = [fsBold]
-          ParentFont = False
-          TabOrder = 154
-        end
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Produtos'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object GradeProdutos: TDBGrid
         AlignWithMargins = True
         Left = 3
@@ -3675,6 +3639,10 @@ object Pedido_ItensOutros: TPedido_ItensOutros
     object TabSheet3: TTabSheet
       Caption = 'Descri'#231#227'o do Poduto'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object DBMemo1: TDBMemo
         Left = 0
         Top = 0

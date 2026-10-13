@@ -495,12 +495,6 @@ type
     tDespachantesCodigo: TIntegerField;
     tDespachantesNome: TStringField;
     DBCheckBox10: TDBCheckBox;
-    StaticText146: TStaticText;
-    DBEdit22: TDBEdit;
-    StaticText147: TStaticText;
-    DBEdit56: TDBEdit;
-    StaticText151: TStaticText;
-    DBEdit58: TDBEdit;
     procedure bSairClick(Sender: TObject);
     procedure NavegaClick(Sender: TObject; Button: TNavigateBtn);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -1825,11 +1819,8 @@ end;
 
 procedure TProcesso_Importacao.FormCreate(Sender: TObject);
 begin
-//      if Menu_Principal.Height <= 782 then begin
-//         ScaleBy(85, 100);
-//      end;
-      if Screen.Height <= 782 then begin
-         ScaleBy(95, 100);
+      if Menu_Principal.Height <= 782 then begin
+         ScaleBy(90, 100);
       end;
       if FileExists('fundo_barra.bmp') then Image1.Picture.LoadFromFile('fundo_barra.bmp');
 end;

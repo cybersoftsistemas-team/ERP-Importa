@@ -376,7 +376,7 @@ uses
   frmImpressao_ProcessosOP_PO in 'frmImpressao_ProcessosOP_PO.pas' {Impressao_ProcessosOP_PO},
   frmProcesso_POImportaItens in 'frmProcesso_POImportaItens.pas' {Processo_POImportaItens},
   frmFiscal_ProcessosREINF in 'frmFiscal_ProcessosREINF.pas' {Fiscal_ProcessosREINF},
-  frmFichaEstoque3 in 'frmFichaEstoque3.pas' {FichaEstoque3},
+  frmFichaEstoque2 in 'frmFichaEstoque2.pas' {FichaEstoque2},
   frmImpressao_Estoque_TabelaPreco in 'frmImpressao_Estoque_TabelaPreco.pas' {Impressao_Estoque_TabelaPreco},
   frmPedidosOutra_ProprioReferenciaItens in 'frmPedidosOutra_ProprioReferenciaItens.pas' {PedidosOutra_ProprioReferenciaItens},
   frmFinanceiro_ImpostosMes in 'frmFinanceiro_ImpostosMes.pas' {Financeiro_ImpostosMes},
