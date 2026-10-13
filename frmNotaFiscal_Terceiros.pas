@@ -1833,9 +1833,7 @@ begin
          Estados.Locate('Codigo',  Empresas.fieldByName('Estado').asstring, [loCaseInsensitive]);
 
          Util   := CoUtil.Create;
-         {
-         Evento := Util.distNSU(
-                                'AN'
+         Evento := Util.distNSU('AN'
                                 ,Menu_Principal.Amb_Producao
                                 ,Trim(EmpresasCertificado_Digital.AsString)
                                 ,Trim(EmpresasNFEletronica_Layout.Value)
@@ -1856,10 +1854,11 @@ begin
                                 ,Trim(ConfiguracaoSenha_Proxy.AsString)
                                 ,Trim(EmpresasLicensa_NFe_Util.Value)
                                );
+         {                      
          mBusca.lines.add('Ultimo NSU Rec: '+ultNSURec);
          mBusca.lines.add('Ultimo NSU    : '+ultNSU);
          mBusca.lines.add('Maximo NSU    : '+maxNSU);
-         }
+         
 
          Evento := Util.consNSU('AN'
                           ,Menu_Principal.Amb_Producao
@@ -1871,7 +1870,7 @@ begin
                           ,msgResultado
                           ,Empresas.FieldByName('CNPJ').asstring
                           ,Estados.fieldByName('Numero').asstring
-                          ,'5443'
+                          ,'000000000000000'
                           ,verAplic
                           ,dhResp
                           ,ultNSU
@@ -1886,10 +1885,10 @@ begin
 
          //mBusca.lines.add('Retorno Status: '+inttostr(cStat));
          //mBusca.lines.add('');
+         }
          cMensagens.lines.add('Ultimo NSU Rec: '+ultNSURec);
          cMensagens.lines.add('Ultimo NSU    : '+ultNSU);
          cmensagens.lines.add('Maximo NSU    : '+maxNSU);
-
 //         mXML.Lines.Add(NSUXml);
 //         mXML.Lines.Add('***************************************************************************************************');
 //         mXML.Lines.Add(NSUXML);

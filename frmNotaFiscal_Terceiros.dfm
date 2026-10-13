@@ -66,7 +66,7 @@ object NotaFiscal_Terceiros: TNotaFiscal_Terceiros
     Top = 40
     Width = 809
     Height = 587
-    ActivePage = TabSheet1
+    ActivePage = TabSheet5
     Align = alClient
     TabHeight = 28
     TabOrder = 0

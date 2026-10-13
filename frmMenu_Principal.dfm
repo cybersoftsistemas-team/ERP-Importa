@@ -1956,7 +1956,7 @@ object Menu_Principal: TMenu_Principal
   object Menu: TMainMenu
     Images = Icones
     Left = 26
-    Top = 167
+    Top = 166
     object mnCadastros: TMenuItem
       Tag = 1
       Caption = '&Cadastros'

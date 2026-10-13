@@ -5742,8 +5742,8 @@ begin
         Exit;
      end;
      if AFatorConversao <= 0 then begin
-       AMsgErro := 'Fator de conversão inválido';
-       Exit;
+        AMsgErro := 'Fator de conversão inválido';
+        Exit;
      end;
      // Receita NÃO aceita valores negativos ou zerados
      Result := AQtdComercial * AFatorConversao;
@@ -6032,8 +6032,8 @@ begin
            sql.add('      ,Processo = nti.Processo');
            sql.add('      ,Tipo_Processo = pd.Modalidade_Importacao');
            sql.add('      ,Qtde_Entrada = nti.Quantidade');
-           sql.add('      ,Unitario_Entrada = round(NTI.Valor_Inventario,2)');
-           sql.add('      ,Total_Entrada = round(NTI.Valor_Inventario,2) * NTI.Quantidade');
+           sql.add('      ,Unitario_Entrada = round(isnull(nti.Valor_Inventario, nti.Valor_Unitario),2)');
+           sql.add('      ,Total_Entrada = round(isnull(nti.Valor_Inventario, nti.Valor_Unitario),2) * NTI.Quantidade');
            sql.add('      ,Qtde_Saida = cast(0 as float)');
            sql.add('      ,Unitario_Saida = cast(0 as float)');
            sql.add('      ,Total_Saida = cast(0 as float)');
@@ -6116,7 +6116,7 @@ begin
            sql.add('         ,T.Unitario_Entrada');
            sql.add('         ,T.Total_Entrada');
            sql.add('         ,Qtde_Saida = T.Qtde_Saida');
-           sql.add('         ,Unitario_Saida = e.Unitario_Saldo');
+           sql.add('         ,Unitario_Saida = iif(t.Emissor = ''P'', e.Unitario_Saldo, 0)');
            sql.add('         ,Total_Saida = e.Unitario_Saldo * T.Qtde_Saida');
            sql.add('         ,Qtde_Saldo = cast(round(E.Qtde_Saldo + T.Qtde_Entrada - T.Qtde_Saida, 3) as decimal(18,3))');
            sql.add('         ,Total_Saldo = cast(case when e.Qtde_Saldo + t.Qtde_Entrada - t.Qtde_Saida > 0 then');
@@ -6223,7 +6223,6 @@ begin
            sql.add('declare @Maior_Data datetime;');
            sql.add('select @Menor_Data = min(Data), @Maior_Data = getdate() from #tempdt;');
            sql.add('select Codigo = ni.Codigo_Mercadoria');
-//           sql.add('      ,Descricao = cast(ni.Descricao_Mercadoria as varchar(500))');
            if pDescricao = 'NF' then begin
               sql.add('      ,Descricao = cast(ni.Descricao_Mercadoria as varchar(500))');
            end else begin
@@ -6290,7 +6289,6 @@ begin
            sql.add('and (isnull(ni.Movimenta_Estoque,0) = 1 OR isnull(nf.Complementar,0) = 1);');
            sql.add('insert into #temp');
            sql.add('select Codigo = ni.Codigo_Mercadoria');
-//           sql.add('      ,Descricao = cast(ni.Descricao_Mercadoria as varchar(500))');
            if pDescricao = 'NF' then begin
               sql.add('      ,Descricao = cast(ni.Descricao_Mercadoria as varchar(500))');
            end else begin
@@ -6440,7 +6438,6 @@ begin
            sql.add('and pt.Motivo in (''TRF'',''IND'')');
            sql.add('insert into #temp');
            sql.add('select Codigo = nti.Codigo_Mercadoria');
-//           sql.add('      ,Descricao = cast(NTI.Descricao_Mercadoria as varchar(500))');
            if pDescricao = 'NF' then begin
               sql.add('      ,Descricao = cast(nti.Descricao_Mercadoria as varchar(500))');
            end else begin
@@ -6479,8 +6476,8 @@ begin
            sql.add('      ,Processo = nti.Processo');
            sql.add('      ,Tipo_Processo = pd.Modalidade_Importacao');
            sql.add('      ,Qtde_Entrada = nti.Quantidade');
-           sql.add('      ,Unitario_Entrada = round(NTI.Valor_Inventario,2)');
-           sql.add('      ,Total_Entrada = round(NTI.Valor_Inventario,2) * NTI.Quantidade');
+           sql.add('      ,Unitario_Entrada = round(isnull(nti.Valor_Inventario, nti.Valor_Unitario),2)');
+           sql.add('      ,Total_Entrada = round(isnull(nti.Valor_Inventario, nti.Valor_Unitario),2) * NTI.Quantidade');
            sql.add('      ,Qtde_Saida = cast(0 as float)');
            sql.add('      ,Unitario_Saida = cast(0 as float)');
            sql.add('      ,Total_Saida = cast(0 as float)');
@@ -6563,7 +6560,7 @@ begin
            sql.add('         ,T.Unitario_Entrada');
            sql.add('         ,T.Total_Entrada');
            sql.add('         ,Qtde_Saida = T.Qtde_Saida');
-           sql.add('         ,Unitario_Saida = e.Unitario_Saldo');
+           sql.add('         ,Unitario_Saida = iif(t.Emissor = ''P'', e.Unitario_Saldo, 0)');
            sql.add('         ,Total_Saida = e.Unitario_Saldo * T.Qtde_Saida');
            sql.add('         ,Qtde_Saldo = cast(round(E.Qtde_Saldo + T.Qtde_Entrada - T.Qtde_Saida, 3) as decimal(18,3))');
            sql.add('         ,Total_Saldo = cast(case when e.Qtde_Saldo + t.Qtde_Entrada - t.Qtde_Saida > 0 then');

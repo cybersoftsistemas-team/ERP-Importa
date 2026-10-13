@@ -979,7 +979,7 @@ object Pedido_NFS: TPedido_NFS
     Configuracoes.WebServices.UF = 'SP'
     Configuracoes.WebServices.AguardarConsultaRet = 0
     Configuracoes.WebServices.QuebradeLinha = '|'
-    Left = 326
-    Top = 252
+    Left = 348
+    Top = 257
   end
 end
