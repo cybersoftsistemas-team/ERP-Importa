@@ -3134,3 +3134,13 @@ alter table ProcessosDocumentos add LPCO bit
 go
 update ProcessosDocumentos set LPCO = 0 where LPCO is null
 go
+
+--[14/09/2026 14:08:00]
+alter table ProcessosDocumentos add Valor_CBS money
+                                   ,Valor_IBSEstadual money
+                                   ,Valor_IBSMunicipal money
+go
+alter table Adicoes add Valor_CBS money 
+                       ,Valor_IBSEstadual money
+                       ,Valor_IBSMunicipal money
+go
