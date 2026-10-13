@@ -215,21 +215,18 @@ type
     ppDBText55: TppDBText;
     ppDBText56: TppDBText;
     ppDBText57: TppDBText;
-<<<<<<< HEAD
     txtDataPrevista: TStaticText;
     dedDtPrevistaIni: TDateEdit;
     dedDtPrevistaFim: TDateEdit;
     txtDataChegada: TStaticText;
     dedDtChegadaIni: TDateEdit;
     dedDtChegadaFim: TDateEdit;
-=======
     Panel1: TPanel;
     bSair: TButton;
     btnPrint: TButton;
     btnClear: TButton;
     btnSaveTo: TBitBtn;
     lblRecords: TLabel;
->>>>>>> 859e0cad77c2fa45a14c02fe5e76a6378f5ea834
     procedure btnSearchClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
