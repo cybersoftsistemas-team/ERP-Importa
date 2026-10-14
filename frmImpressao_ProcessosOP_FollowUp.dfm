@@ -3,8 +3,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Acompanhamento de Processo (Follow-Up)'
-  ClientHeight = 440
-  ClientWidth = 666
+  ClientHeight = 564
+  ClientWidth = 784
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,14 +15,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   Position = poScreenCenter
   OnCreate = FormCreate
   DesignSize = (
-    666
-    440)
+    784
+    564)
   PixelsPerInch = 96
   TextHeight = 13
   object Image2: TImage
     Left = 0
     Top = 0
-    Width = 666
+    Width = 784
     Height = 46
     Align = alTop
     Stretch = True
@@ -89,7 +89,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 9
+    TabOrder = 8
     Transparent = False
     StyleElements = []
   end
@@ -120,7 +120,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   object cResponsavel: TRxDBLookupCombo
     Left = 86
     Top = 99
-    Width = 218
+    Width = 336
     Height = 21
     DropDownCount = 8
     Font.Charset = DEFAULT_CHARSET
@@ -134,12 +134,12 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     LookupDisplayIndex = 1
     LookupSource = dsoRES
     ParentFont = False
-    TabOrder = 10
+    TabOrder = 9
   end
   object cCliente: TRxDBLookupCombo
     Left = 86
     Top = 76
-    Width = 218
+    Width = 336
     Height = 21
     DropDownCount = 8
     Font.Charset = DEFAULT_CHARSET
@@ -360,10 +360,10 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     TabOrder = 4
   end
   object btnSearch: TButton
-    Left = 559
+    Left = 677
     Top = 53
-    Width = 98
-    Height = 27
+    Width = 85
+    Height = 28
     Anchors = [akTop, akRight]
     Caption = 'Pesquisar'
     TabOrder = 5
@@ -372,8 +372,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   object Grade: TDBGrid
     Left = 8
     Top = 200
-    Width = 649
-    Height = 201
+    Width = 767
+    Height = 297
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = dsoFLP
     Font.Charset = DEFAULT_CHARSET
@@ -384,7 +384,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     ParentFont = False
     ReadOnly = True
-    TabOrder = 20
+    TabOrder = 19
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -412,19 +412,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Visible = True
       end>
   end
-  object btnPrint: TButton
-    Left = 559
-    Top = 81
-    Width = 98
-    Height = 27
-    Anchors = [akTop, akRight]
-    Caption = 'Imprimir'
-    Enabled = False
-    TabOrder = 8
-    OnClick = btnPrintClick
-  end
   object rgEst: TRadioGroup
-    Left = 310
+    Left = 428
     Top = 49
     Width = 114
     Height = 140
@@ -438,7 +427,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     TabOrder = 0
   end
   object rgSit: TRadioGroup
-    Left = 430
+    Left = 548
     Top = 49
     Width = 123
     Height = 140
@@ -453,24 +442,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     TabOrder = 1
   end
   object btnClear: TButton
-    Left = 559
-    Top = 162
-    Width = 98
-    Height = 27
+    Left = 677
+    Top = 83
+    Width = 85
+    Height = 28
     Anchors = [akTop, akRight]
     Caption = 'Limpar'
-    TabOrder = 16
+    TabOrder = 15
     OnClick = btnClearClick
-  end
-  object btnSaveTo: TBitBtn
-    Left = 567
-    Top = 407
-    Width = 91
-    Height = 25
-    Caption = 'Salvar como...'
-    Enabled = False
-    TabOrder = 21
-    OnClick = btnSaveToClick
   end
   object txtProcesso: TStaticText
     Left = 11
@@ -492,7 +471,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 11
+    TabOrder = 10
     Transparent = False
     StyleElements = []
   end
@@ -502,7 +481,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Width = 106
     Height = 21
     CharCase = ecUpperCase
-    TabOrder = 12
+    TabOrder = 11
   end
   object txtDataPrevista: TStaticText
     Left = 10
@@ -524,7 +503,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 13
+    TabOrder = 12
     Transparent = False
     StyleElements = []
   end
@@ -616,7 +595,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     NumGlyphs = 2
     ParentFont = False
     YearDigits = dyFour
-    TabOrder = 14
+    TabOrder = 13
   end
   object dedDtPrevistaFim: TDateEdit
     Left = 197
@@ -706,7 +685,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     NumGlyphs = 2
     ParentFont = False
     YearDigits = dyFour
-    TabOrder = 15
+    TabOrder = 14
   end
   object txtDataChegada: TStaticText
     Left = 10
@@ -728,7 +707,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 17
+    TabOrder = 16
     Transparent = False
     StyleElements = []
   end
@@ -820,7 +799,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     NumGlyphs = 2
     ParentFont = False
     YearDigits = dyFour
-    TabOrder = 18
+    TabOrder = 17
   end
   object dedDtChegadaFim: TDateEdit
     Left = 197
@@ -910,7 +889,57 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     NumGlyphs = 2
     ParentFont = False
     YearDigits = dyFour
-    TabOrder = 19
+    TabOrder = 18
+  end
+  object Panel1: TPanel
+    AlignWithMargins = True
+    Left = 3
+    Top = 531
+    Width = 778
+    Height = 30
+    Align = alBottom
+    BevelOuter = bvLowered
+    TabOrder = 20
+    object btnSaveTo: TBitBtn
+      Left = 511
+      Top = 1
+      Width = 102
+      Height = 28
+      Align = alRight
+      Caption = 'Salvar como...'
+      Enabled = False
+      TabOrder = 0
+      OnClick = btnSaveToClick
+      ExplicitLeft = 514
+      ExplicitHeight = 36
+    end
+    object btnPrint: TButton
+      Left = 613
+      Top = 1
+      Width = 89
+      Height = 28
+      Align = alRight
+      Caption = 'Imprimir'
+      Enabled = False
+      TabOrder = 1
+      OnClick = btnPrintClick
+      ExplicitHeight = 36
+    end
+    object bSair: TButton
+      Left = 702
+      Top = 1
+      Width = 75
+      Height = 28
+      Cursor = crHandPoint
+      Hint = 'Fecha a janela atual e cancela os processos pendentes.'
+      Align = alRight
+      Caption = '&Sair'
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 2
+      OnClick = bSairClick
+      ExplicitHeight = 36
+    end
   end
   object pprFollowUp: TppReport
     AutoStop = False
@@ -918,7 +947,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'A4'
+    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -4720,7 +4749,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'A4'
+    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

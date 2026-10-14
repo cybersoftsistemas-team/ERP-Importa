@@ -221,12 +221,13 @@ type
     txtDataChegada: TStaticText;
     dedDtChegadaIni: TDateEdit;
     dedDtChegadaFim: TDateEdit;
-    Panel1: TPanel;
-    bSair: TButton;
-    btnPrint: TButton;
+//    bSair: TButton;
     btnClear: TButton;
-    btnSaveTo: TBitBtn;
     lblRecords: TLabel;
+    Panel1: TPanel;
+    btnSaveTo: TBitBtn;
+    btnPrint: TButton;
+    bSair: TButton;
     procedure btnSearchClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
