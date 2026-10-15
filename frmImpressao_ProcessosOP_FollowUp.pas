@@ -222,6 +222,7 @@ type
     dedDtChegadaIni: TDateEdit;
     dedDtChegadaFim: TDateEdit;
 //    bSair: TButton;
+//    btnPrint: TButton;
     btnClear: TButton;
     lblRecords: TLabel;
     Panel1: TPanel;
@@ -313,23 +314,33 @@ begin
 end;
 
 procedure TfrmImpressaoProcessosOPFollowUp.btnSearchClick(Sender: TObject);
+var
+  LCursor: TCursor;
 begin
-  qryPRH.Close;
-  qryFLP.Close;
-  qryFLP.ParamByName('DataInicial').AsDateTime := cDataIni.Date;
-  qryFLP.ParamByName('DataFinal').AsDateTime := cDataFim.Date;
-  qryFLP.ParamByName('Situacao').AsInteger := rgSit.ItemIndex;
-  qryFLP.ParamByName('Estado').AsInteger := rgEst.ItemIndex;
-  qryFLP.ParamByName('ClienteCodigo').AsInteger := StrToIntDef(VarToStr(cCliente.KeyValue), 0);
-  qryFLP.ParamByName('RespNome').AsString := VarToStr(cResponsavel.KeyValue);
-  qryFLP.ParamByName('Processo').AsString := edtProcesso.Text;
-  qryFLP.ParamByName('PrevisaoChegadaInicial').AsDateTime := dedDtPrevistaIni.Date;
-  qryFLP.ParamByName('PrevisaoChegadaFinal').AsDateTime := dedDtPrevistaFim.Date;
-  qryFLP.ParamByName('ChegadaInicial').AsDateTime := dedDtChegadaIni.Date;
-  qryFLP.ParamByName('ChegadaFinal').AsDateTime := dedDtChegadaFim.Date;
-  qryFLP.Prepare;
-  qryFLP.Open;
-  qryPRH.Open;
+  LCursor := Screen.Cursor;
+  Screen.Cursor := crSQLWait;
+  try
+    qryPRH.Close;
+    qryFLP.Close;
+
+    qryFLP.ParamByName('DataInicial').AsDateTime := cDataIni.Date;
+    qryFLP.ParamByName('DataFinal').AsDateTime := cDataFim.Date;
+    qryFLP.ParamByName('Situacao').AsInteger := rgSit.ItemIndex;
+    qryFLP.ParamByName('Estado').AsInteger := rgEst.ItemIndex;
+    qryFLP.ParamByName('ClienteCodigo').AsInteger := StrToIntDef(VarToStr(cCliente.KeyValue), 0);
+    qryFLP.ParamByName('RespNome').AsString := VarToStr(cResponsavel.KeyValue);
+    qryFLP.ParamByName('Processo').AsString := edtProcesso.Text;
+    qryFLP.ParamByName('PrevisaoChegadaInicial').AsDateTime := dedDtPrevistaIni.Date;
+    qryFLP.ParamByName('PrevisaoChegadaFinal').AsDateTime := dedDtPrevistaFim.Date;
+    qryFLP.ParamByName('ChegadaInicial').AsDateTime := dedDtChegadaIni.Date;
+    qryFLP.ParamByName('ChegadaFinal').AsDateTime := dedDtChegadaFim.Date;
+
+    qryFLP.Prepare;
+    qryFLP.Open;
+    qryPRH.Open;
+  finally
+    Screen.Cursor := LCursor;
+  end;
 end;
 
 procedure TfrmImpressaoProcessosOPFollowUp.FormCreate(Sender: TObject);
@@ -396,6 +407,10 @@ procedure TfrmImpressaoProcessosOPFollowUp.SetDateDef;
 begin
   cDataIni.Clear;
   cDataFim.Clear;
+  dedDtPrevistaIni.Clear;
+  dedDtPrevistaFim.Clear;
+  dedDtChegadaIni.Clear;
+  dedDtChegadaFim.Clear;
 end;
 
 procedure TfrmImpressaoProcessosOPFollowUp.SetFilterReport;

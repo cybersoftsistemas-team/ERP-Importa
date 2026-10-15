@@ -910,8 +910,6 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       Enabled = False
       TabOrder = 0
       OnClick = btnSaveToClick
-      ExplicitLeft = 514
-      ExplicitHeight = 36
     end
     object btnPrint: TButton
       Left = 613
@@ -923,7 +921,6 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       Enabled = False
       TabOrder = 1
       OnClick = btnPrintClick
-      ExplicitHeight = 36
     end
     object bSair: TButton
       Left = 702
@@ -938,7 +935,6 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       ShowHint = True
       TabOrder = 2
       OnClick = bSairClick
-      ExplicitHeight = 36
     end
   end
   object pprFollowUp: TppReport
@@ -2497,6 +2493,30 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       'SET @ChegadaInicial = :ChegadaInicial;'
       'SET @ChegadaFinal = :ChegadaFinal;'
       ''
+      'SET @DataInicial ='
+      '    CASE WHEN @DataInicial < '#39'19000102'#39
+      '         THEN NULL ELSE @DataInicial END;'
+      ''
+      'SET @DataFinal ='
+      '    CASE WHEN @DataFinal < '#39'19000102'#39
+      '         THEN NULL ELSE @DataFinal END;'
+      ''
+      'SET @PrevisaoChegadaInicial ='
+      '    CASE WHEN @PrevisaoChegadaInicial < '#39'19000102'#39
+      '         THEN NULL ELSE @PrevisaoChegadaInicial END;'
+      ''
+      'SET @PrevisaoChegadaFinal ='
+      '    CASE WHEN @PrevisaoChegadaFinal < '#39'19000102'#39
+      '         THEN NULL ELSE @PrevisaoChegadaFinal END;'
+      ''
+      'SET @ChegadaInicial ='
+      '    CASE WHEN @ChegadaInicial < '#39'19000102'#39
+      '         THEN NULL ELSE @ChegadaInicial END;'
+      ''
+      'SET @ChegadaFinal ='
+      '    CASE WHEN @ChegadaFinal < '#39'19000102'#39
+      '         THEN NULL ELSE @ChegadaFinal END;'
+      ''
       'WITH DuimpVersoes AS'
       '('
       '    SELECT Id'
@@ -2627,9 +2647,21 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       '    ('
       '        @Processo = '#39#39
       ''
-      '        -- Data de abertura do processo'
-      '        AND PRD.Processo_Abertura >= @DataInicial'
-      '        AND PRD.Processo_Abertura < DATEADD(DAY, 1, @DataFinal)'
+      '        -- Data de abertura inicial'
+      '        AND'
+      '        ('
+      '               @DataInicial IS NULL'
+      '            OR PRD.Processo_Abertura >= @DataInicial'
+      '        )'
+      ''
+      '        -- Data de abertura final'
+      '        AND'
+      '        ('
+      '               @DataFinal IS NULL'
+      
+        '            OR PRD.Processo_Abertura < DATEADD(DAY, 1, @DataFina' +
+        'l)'
+      '        )'
       ''
       '        -- Situa'#231#227'o do processo'
       '        AND'
@@ -2671,14 +2703,21 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       '        -- Previs'#227'o de chegada inicial'
       '        AND'
       '        ('
-      '               @PrevisaoChegadaInicial = 0'
+      '               @PrevisaoChegadaInicial IS NULL'
+      '            OR PRD.Navio_DataPrevista >= @PrevisaoChegadaInicial'
+      '        )'
+      ''
+      '       -- Previs'#227'o de chegada inicial'
+      '        AND'
+      '        ('
+      '               @PrevisaoChegadaInicial IS NULL'
       '            OR PRD.Navio_DataPrevista >= @PrevisaoChegadaInicial'
       '        )'
       ''
       '        -- Previs'#227'o de chegada final'
       '        AND'
       '        ('
-      '               @PrevisaoChegadaFinal = 0'
+      '               @PrevisaoChegadaFinal IS NULL'
       
         '            OR PRD.Navio_DataPrevista < DATEADD(DAY, 1, @Previsa' +
         'oChegadaFinal)'
@@ -2687,14 +2726,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       '        -- Chegada efetiva inicial'
       '        AND'
       '        ('
-      '               @ChegadaInicial = 0'
+      '               @ChegadaInicial IS NULL'
       '            OR PRD.Navio_DataChegada >= @ChegadaInicial'
       '        )'
       ''
       '        -- Chegada efetiva final'
       '        AND'
       '        ('
-      '               @ChegadaFinal = 0'
+      '               @ChegadaFinal IS NULL'
       
         '            OR PRD.Navio_DataChegada < DATEADD(DAY, 1, @ChegadaF' +
         'inal)'
