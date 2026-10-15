@@ -3,7 +3,7 @@
         <ProjectGuid>{33C7D3DE-45F0-495D-99EF-3E11E771E216}</ProjectGuid>
         <MainSource>Importa.dpr</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <TargetedPlatforms>1153</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>

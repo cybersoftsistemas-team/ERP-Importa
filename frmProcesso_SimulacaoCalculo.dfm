@@ -1730,7 +1730,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
         end
         object DBEdit6: TDBEdit
           Left = 124
-          Top = 28
+          Top = 24
           Width = 260
           Height = 21
           CharCase = ecUpperCase
@@ -3501,6 +3501,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'Tahoma'
             Title.Font.Style = [fsBold]
+            Width = 64
             Visible = True
           end>
       end
@@ -4056,6 +4057,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'MS Sans Serif'
             Title.Font.Style = [fsBold]
+            Width = 64
             Visible = True
           end
           item
@@ -4090,6 +4092,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'MS Sans Serif'
             Title.Font.Style = [fsBold]
+            Width = 64
             Visible = True
           end>
       end
@@ -15878,7 +15881,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
       'where Simulacao = 20')
     FetchRows = 1
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
-    Active = True
     Left = 306
     Top = 6
   end
