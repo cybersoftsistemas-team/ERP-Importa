@@ -26,9 +26,8 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     Height = 46
     Align = alTop
     Stretch = True
-    ExplicitLeft = 8
-    ExplicitTop = 79
-    ExplicitWidth = 803
+    ExplicitLeft = 37
+    ExplicitTop = 22
   end
   object RxLabel3: TRxLabel
     Left = 8
