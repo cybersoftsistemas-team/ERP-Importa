@@ -4097,7 +4097,7 @@ end;
 
 procedure TMenu_Principal.mnFiscal_FichaEstoqueClick(Sender: TObject);
 begin
-{
+     {
      FichaEstoque2 := TFichaEstoque2.Create(Self);
      FichaEstoque2.Caption := 'Processamento da Ficha de Estoque';
      FichaEstoque2.ShowModal;
@@ -4125,9 +4125,11 @@ begin
       Janela_Comunicacao.Close;
       Showmessage('Processamento da Ficha de Estoque/Inventario terminado.');
       }
+      
      FichaEstoque3 := TFichaEstoque3.Create(Self);
      FichaEstoque3.Caption := 'Processamento da Ficha de Estoque';
      FichaEstoque3.ShowModal;
+     
       
 end;
 

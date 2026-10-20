@@ -838,11 +838,21 @@ begin
                      SQL.Add('      ,FI1.ES');
                      SQL.Add('      ,FI1.Destinatario_Codigo');
                      sql.add('      ,Qtde_Saldo = (select sum(isnull(fi2.Qtde_Saida, 0)-isnull(fi2.Qtde_Entrada, 0)) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pData)');
-                     SQL.Add('      ,Unitario_Saldo = case when fi1.Unitario_Saldo > 0 then ');
-                     SQL.Add('                             fi1.Unitario_Saldo');
-                     SQL.Add('                        else');
-                     sql.add('                             dbo.PegaValor(fi1.Codigo, ''1-ARMAZEM'', :pData)');
-                     SQL.Add('                        end');
+//                     SQL.Add('      ,Unitario_Saldo = case when fi1.Unitario_Saldo > 0 then ');
+//                     SQL.Add('                             fi1.Unitario_Saldo');
+//                     SQL.Add('                        else');
+//                     sql.add('                             dbo.PegaValor(fi1.Codigo, ''1-ARMAZEM'', :pData)');
+//                     SQL.Add('                        end');
+                     SQL.Add('       ,Unitario_Saldo = case when Unitario_Saldo > 0 then');
+                     SQL.Add('                              Unitario_Saldo');
+                     SQL.Add('                         else');
+                     SQL.Add('                             (select isnull(fi.Unitario_Entrada, 0) + isnull(fi.Unitario_Saida, 0)');
+                     SQL.Add('                              from FichaInventario fi');
+                     SQL.Add('                              where fi.Codigo = fi1.Codigo');
+                     SQL.Add('                              and fi.Estoque = ''1-ARMAZEM'' ');
+                     SQL.Add('                              and fi.Data <= :pData');
+                     SQL.Add('                              and fi.Item = (select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi.Codigo and fi2.Estoque = ''1-ARMAZEM'' and fi2.Data <= :pData))');
+                     SQL.Add('                         end');
                      SQL.Add('      ,Total_Saldo = 0');
                      SQL.Add('      ,Tipo = CASE WHEN Emissor = ''P'' AND ES = ''E'' THEN ''F'' ');
                      SQL.Add('                   WHEN Emissor = ''P'' AND ES = ''S'' THEN ''C'' ');
@@ -863,10 +873,20 @@ begin
                      SQL.Add('       ,FI1.ES');
                      SQL.Add('       ,FI1.Destinatario_Codigo');
                      sql.add('       ,Qtde_Saldo = (select sum(isnull(fi2.Qtde_Saida, 0)-isnull(fi2.Qtde_Entrada, 0)) from FichaInventario fi2 where fi2.Codigo = fi1.Codigo and fi2.Estoque = ''2-TERCEIROS'' and fi2.Data <= :pData)');
-                     SQL.Add('       ,Unitario_Saldo = case when fi1.Unitario_Saldo > 0 then ');
-                     SQL.Add('                              fi1.Unitario_Saldo');
+//                     SQL.Add('       ,Unitario_Saldo = case when fi1.Unitario_Saldo > 0 then ');
+//                     SQL.Add('                              fi1.Unitario_Saldo');
+//                     SQL.Add('                         else');
+//                     sql.add('                              dbo.PegaValor(fi1.Codigo, ''2-TERCEIROS'', :pData)');
+//                     SQL.Add('                         end');
+                     SQL.Add('       ,Unitario_Saldo = case when Unitario_Saldo > 0 then');
+                     SQL.Add('                              Unitario_Saldo');
                      SQL.Add('                         else');
-                     sql.add('                              dbo.PegaValor(fi1.Codigo, ''2-TERCEIROS'', :pData)');
+                     SQL.Add('                             (select isnull(fi.Unitario_Entrada, 0) + isnull(fi.Unitario_Saida, 0)');
+                     SQL.Add('                              from FichaInventario fi');
+                     SQL.Add('                              where fi.Codigo = fi1.Codigo');
+                     SQL.Add('                              and fi.Estoque = ''2-TERCEIROS'' ');
+                     SQL.Add('                              and fi.Data <= :pData');
+                     SQL.Add('                              and fi.Item = (select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi.Codigo and fi2.Estoque = ''2-TERCEIROS'' and fi2.Data <= :pData))');
                      SQL.Add('                         end');
                      SQL.Add('       ,Total_Saldo = 0');
                      SQL.Add('       ,Tipo = CASE WHEN Emissor = ''P'' AND ES = ''E'' THEN ''F'' ');
@@ -888,9 +908,15 @@ begin
                      SQL.Add('DROP TABLE #TEMP');
                      ParamByName('pData').AsDate := mDataInventF;
                      //SQL.SaveToFile('c:\temp\SPED_FISCAL_FichaInventario.sql');
-                     Open;
+                     open;
+                     first;
+                     mTotalInvent := 0;
+                     while not tFichainventario.Eof do begin
+                           mTotalInvent := mTotalInvent + fieldbyname('Total_Saldo').ascurrency;
+                           next;
+                     end;                     
                 end;
-                
+                (*
                 // Apurando o total do Inventario.
                 with tTotalInventario do begin
                      SQL.Clear;
@@ -904,6 +930,7 @@ begin
                      SQL.Add('WHERE  Data IN(SELECT MAX(FI2.Data) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pData GROUP BY Codigo)');
                      SQL.Add('  AND  Item IN(SELECT MAX(FI2.Item) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pData GROUP BY Codigo)');
                      SQL.Add('  AND (SELECT Tipo_Item FROM Produtos PRD WHERE PRD.Codigo = FI1.Codigo) IN(0,1,2,3,4,5,6,10)');
+                     
                      SQL.Add('-- MERCADORIA PRÓPRIA EM PODER TERCEIROS.');
                      SQL.Add('UNION ALL');
                      SQL.Add('SELECT  Estoque = ''1-ARMAZEM'' ');
@@ -926,6 +953,7 @@ begin
                      SQL.Add('  AND  FI1.Registro IS NOT NULL');
                      SQL.Add('  AND  Item IN(SELECT MAX(FI2.Item) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pData AND Estoque = ''1-ARMAZEM'' GROUP BY Codigo)');
                      SQL.Add('  AND (SELECT Tipo_Item FROM Produtos PRD WHERE PRD.Codigo = FI1.Codigo) IN(0,1,2,3,4,5,6,10)');
+
                      SQL.Add('-- MERCADORIA DE TERCEIROS EM PODER DA EMPRESA');
                      SQL.Add('UNION ALL');
                      SQL.Add('SELECT  Estoque = ''2-TERCEIROS'' ');
@@ -943,13 +971,14 @@ begin
                      SQL.Add('                              and fi.Item = (select max(fi2.Item) from FichaInventario fi2 where fi2.Codigo = fi.Codigo and fi2.Estoque = ''2-TERCEIROS'' and fi2.Data <= :pData))');
                      SQL.Add('                         end');
                      sql.add('       ,Total_Saldo = 0');
-
                      SQL.Add('FROM   FichaInventario FI1');
                      SQL.Add('WHERE  FI1.Estoque = ''2-TERCEIROS'' ');
                      SQL.Add('  AND  FI1.Registro IS NOT NULL');
                      SQL.Add('  AND  FI1.Item IN(SELECT MAX(FI2.Item) FROM FichaInventario FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pData AND Estoque = ''2-TERCEIROS'' GROUP BY Codigo)');
                      SQL.Add('  AND (SELECT Tipo_Item FROM Produtos PRD WHERE PRD.Codigo = FI1.Codigo) IN(0,1,2,3,4,5,6,10)');
+                     
                      sql.add('update #temp set Total_Saldo = Unitario_Saldo * Qtde_Saldo where Estoque in(''1-ARMAZEM'', ''2-TERCEIROS'')');
+
                      SQL.Add('SELECT Total = SUM(Total_Saldo)');
                      SQL.Add('FROM #TEMP');
                      SQL.Add('WHERE Qtde_Saldo > 0 ');
@@ -958,8 +987,9 @@ begin
                      ParamByName('pData').AsDate := mDataInventF;
                      //SQL.SaveToFile('c:\temp\SPED_TotalInventario.sql');
                      Open;
-                     mTotalInvent := FieldByName('Total').AsCurrency;
+//                     mTotalInvent := FieldByName('Total').AsCurrency;
                 end;
+                *)
              end else begin
                 InventarioAntigo;
              end;
@@ -1011,6 +1041,7 @@ begin
                      SQL.Add('WHERE  Data IN(SELECT MAX(FI2.Data) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pData GROUP BY Codigo)');
                      SQL.Add('  AND  Item IN(SELECT MAX(FI2.Item) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pData GROUP BY Codigo)');
                      SQL.Add('  AND (SELECT Tipo_Item FROM Produtos PRD WHERE PRD.Codigo = FI1.Codigo) IN(0,1,2,3,4,5,6,10)');
+                     
                      SQL.Add('-- MERCADORIA PRÓPRIA EM PODER TERCEIROS.');
                      SQL.Add('UNION ALL');
                      SQL.Add('SELECT  FI1.Codigo');
@@ -1036,6 +1067,7 @@ begin
                      SQL.Add('  AND  FI1.Registro IS NOT NULL');
                      SQL.Add('  AND  Item IN(SELECT MAX(FI2.Item) FROM FichaEstoque FI2 WHERE FI2.Codigo = FI1.Codigo AND FI2.Data <= :pData AND Estoque = ''1-ARMAZEM'' GROUP BY Codigo)');
                      SQL.Add('  AND (SELECT Tipo_Item FROM Produtos PRD WHERE PRD.Codigo = FI1.Codigo) IN(0,1,2,3,4,5,6,10)');
+                     
                      SQL.Add('-- MERCADORIA DE TERCEIROS EM PODER DA EMPRESA');
                      SQL.Add('UNION ALL');
                      SQL.Add('SELECT  FI1.Codigo');
@@ -2059,7 +2091,6 @@ begin
                 sql.add('where year(Data) = :pAno and Month(Data) = :pMes');
                 sql.add('and Valor_ICMSOper > 0');
                 sql.add('and (select isnull(Codigo_AjusteNFE, '''')+isnull(Codigo_AjusteNFS, '''') from Cybersoft_Cadastros.dbo.IncentivosFiscais ifs where ifs.Nome = (select Incentivo_Fiscal from NotasFiscais nf where nf.Numero = ni.Nota and nf.Data_Emissao = ni.Data)) <> '''' ');                
-                
                 sql.add('union all');
                 sql.add('select Codigo = Codigo_Mercadoria');
                 sql.add('      ,Codigo_Fabricante = cast(Codigo_Mercadoria as varchar(10))');
@@ -2070,9 +2101,11 @@ begin
                 sql.add('      ,0 AS ICMS');
                 sql.add('      ,Tipo_Item = (select Tipo_Item from Produtos where Codigo = nti.Codigo_Mercadoria)');
                 sql.add('      ,QTDE = 1');
-                sql.add('from NotasTerceirosItens nti');
-                sql.add('where year(Data_Entrada) = :pAno and Month(Data_Entrada) = :pMes');
-                sql.add('and Valor_ICMSOper > 0');
+                sql.add('from NotasTerceirosItens nti, NotasTerceiros nt');
+                sql.add('where year(nti.Data_Entrada) = :pAno and Month(nti.Data_Entrada) = :pMes');
+                sql.add('and nti.Valor_ICMSOper > 0');
+                sql.add('and nt.Nota = nti.Nota and nt.Data_Emissao = nti.Data_Emissao');
+                sql.add('and nt.Modelo in(''01'', ''1B'', ''04'', ''55'')');
                 sql.add('and (select Codigo_AjusteNFE from Cybersoft_Cadastros.dbo.IncentivosFiscais IFS where IFS.Nome=(select distinct Incentivo_Fiscal from NotasTerceiros nt where nt.Nota=nti.Nota and nt.Data_Emissao=nti.Data_Emissao and nt.Fornecedor=nti.Fornecedor))<>'''' ');
                 sql.add('update #Temp set unidade = (select Unidade_Origem from Produtos where Codigo = #Temp.Codigo) where isnull(Unidade, '''') = '''' ');
                 sql.add('select * from #Temp where QTDE > 0 order by Codigo');
@@ -2757,7 +2790,7 @@ begin
                             '|'+ Trim(tNotas.FieldByName('Numero').AsString) +                                      // 08 - Numero da NF.
                             '|'+ Trim(tNotas.FieldByName('Nfe_cNF').AsString) +                                     // 09 - Chave da Nota Fiscal Eletrônica.
                             '|'+ Trim(RemoveCaracter('/', '', tNotas.FieldByName('Data_Emissao').AsString)) +       // 10 - Data emissao da NF.
-                            '|'+ Trim(RemoveCaracter('/', '', tNotas.FieldByName('Data_Emissao').AsString))+        // 11 - Data Entrada/Saida da NF.
+                            '|'+ Trim(RemoveCaracter('/', '', tNotas.FieldByName('Data_EntradaSaida').AsString))+   // 11 - Data Entrada/Saida da NF.
                             '|'+ FormatFloat('#0.00', tNotas.FieldByName('Valor_TotalNota').AsCurrency) +           // 12 - Valor total da NF.
                             '|'+ tNotas.FieldByName('Tipo_Pagamento').asstring +                                    // 13 - Forma de Pagamento.
                             '|'+ FormatFloat('#0.00', tNotas.FieldByName('Total_Descontos').AsCurrency) +           // 14 - Total dos descontos.
@@ -4299,7 +4332,6 @@ begin
      mCredFUNDAP := tAjustes.FieldByName('Credito_FUNDAP').AsCurrency;
      mDebFUNDAP  := tAjustes.FieldByName('Debito_FUNDAP').AsCurrency;
 
-
      // Buscando o saldo credor do periodo anterior na tabela "SaldoICMS."
      tSaldoICMS.SQL.Clear;
      tSaldoICMS.SQL.Add('SELECT SUM(Saldo) AS Saldo FROM SaldoICMS WHERE (Mes_Ano = :pMes_Ano)');
@@ -4307,9 +4339,8 @@ begin
         tSaldoICMS.ParamByName('pMes_Ano').AsString := '12'+InttoStr(cAno.AsInteger-1)
      else
         tSaldoICMS.ParamByName('pMes_Ano').AsString := PoeZero(2,cMes.ItemIndex)+InttoStr(cAno.AsInteger);
-
      tSaldoICMS.Open;
-
+     
      Janela_ProcessamentoSPED.Progresso2.Position := 0;
      Janela_ProcessamentoSPED.Progresso2.Max      := tNotas.RecordCount;
      Janela_ProcessamentoSPED.lRegistro.Caption   := 'Registro: E110...';
@@ -5520,9 +5551,9 @@ begin
                  mRegistro := '|H010' +                                                                              // 01 - REG.
                               '|' + Trim(tFichaInventario.FieldByName('Codigo').AsString) +                          // 02 - Codigo do item.
                               '|' + Trim(tFichaInventario.FieldByName('UM').AsString) +                              // 03 - Unidade do item.
-                              '|' + FormatFloat('#0.00', tFichaInventario.FieldByName('Qtde_Saldo').Value ) +        // 04 - Quantidade do item.
-                              '|' + FormatFloat('#0.0000', tFichaInventario.FieldByName('Unitario_Saldo').Value ) +  // 05 - Valor unitario do item.
-                              '|' + FormatFloat('#0.00', tFichaInventario.FieldByName('Total_Saldo').Value ) +       // 06 - Valor do item.
+                              '|' + FormatFloat('#0.00', tFichaInventario.FieldByName('Qtde_Saldo').asfloat) +        // 04 - Quantidade do item.
+                              '|' + FormatFloat('#0.0000', tFichaInventario.FieldByName('Unitario_Saldo').ascurrency) +  // 05 - Valor unitario do item.
+                              '|' + FormatFloat('#0.00', tFichaInventario.FieldByName('Total_Saldo').ascurrency) +       // 06 - Valor do item.
                               '|' + Copy(tFichaInventario.FieldByName('Estoque').AsString, 1, 1);                    // 07 - Indicador de propriedade.
 
                               If Copy(tFichaInventario.FieldByName('Estoque').AsString, 1, 1) <> '0' then begin      // 08 - Participante (Mercadoria de terceiros).
@@ -6183,37 +6214,42 @@ end;
 {REGISTRO 1920: SUB-APURAÇÃO DO ICMS}
 procedure TUtilitarios_ExportaSPED_Fiscal.Registro1920;
 var
-   mSaldo: real;
+   mSaldoDev
+  ,mSaldoCre : real;
 begin
       with tAjustes do begin
            sql.clear;
            sql.add('select Credito_ICMS = isnull((select sum(Valor_ICMS) from NotasFiscais where Incentivo_Fiscal = ''FUNDAP'' and Cancelada <> 1 and NFe_Denegada <> 1 and Valor_ICMS > 0');
            sql.Add('                              and Saida_Entrada = 0 and Year(Data_Emissao) = :pAno and month(Data_Emissao) = :pMes), 0) +');
            sql.add('                      isnull((select sum(Valor_ICMSOper) from NotasTerceiros where Incentivo_Fiscal = ''FUNDAP'' and Valor_ICMSOper > 0 and Year(Data_Entrada) = :pAno and month(Data_Entrada) = :pMes), 0)');
-           sql.add('	    ,Debito_ICMS  = isnull((select sum(Valor_ICMS) from NotasFiscais   where Incentivo_Fiscal = ''FUNDAP'' and Cancelada <> 1 and NFe_Denegada <> 1 and Valor_ICMS     > 0');
+           sql.add('      ,Debito_ICMS  = isnull((select sum(Valor_ICMS) from NotasFiscais where Incentivo_Fiscal = ''FUNDAP'' and Cancelada <> 1 and NFe_Denegada <> 1 and Valor_ICMS > 0');
            sql.Add('                              and Saida_Entrada = 1 and Year(Data_Emissao) = :pAno and month(Data_Emissao) = :pMes), 0)');
            ParamByName('pAno').AsInteger := cAno.AsInteger;
            ParamByName('pMes').AsInteger := cMes.ItemIndex+1;
            //sql.savetofile('c:\temp\REGISTRO1920.sql');
            Open;
-           mSaldo := tAjustes.FieldByName('Debito_ICMS').ascurrency - tAjustes.FieldByName('Credito_ICMS').AsCurrency;
-         end;
+           //mSaldo := tAjustes.FieldByName('Debito_ICMS').ascurrency - tAjustes.FieldByName('Credito_ICMS').AsCurrency;
+           mSaldoCre := tAjustes.FieldByName('Credito_ICMS').AsCurrency - tAjustes.FieldByName('Debito_ICMS').ascurrency;
+           if mSaldoCre < 0 then mSaldoCre := 0;
+           mSaldoDev := tAjustes.FieldByName('Debito_ICMS').ascurrency - tAjustes.FieldByName('Credito_ICMS').AsCurrency;
+           if mSaldoDev < 0 then mSaldoDev := 0;
+      end;
 
-         Inc(mLinha);
-         mRegistro := '|1920' +                                                                   // 01 - REG.
-                      '|' + FormatFloat('#0.00', tAjustes.FieldByName('Debito_ICMS').Value) +     // 02 - Valor total dos débitos por “Saídas e prestações com débito do imposto”.
-                      '|0'+                                                                       // 03 - Valor total de “Ajustes a débito”.
-                      '|0'+                                                                       // 04 - Valor total de Ajustes “Estornos de créditos”.
-                      '|' + FormatFloat('#0.00', tAjustes.FieldByName('Credito_ICMS').Value) +    // 05 - Valor total dos créditos por “Entradas e aquisições com crédito do imposto”.
-                      '|0'+                                                                       // 06 - Valor total de “Ajustes a crédito”.
-                      '|0'+                                                                       // 07 - Valor total de Ajustes “Estornos de Débitos”.
-                      '|0'+                                                                       // 08 - Valor total de “Saldo credor do período anterior”.
-                      '|' + FormatFloat('#0.00', mSaldo) +                                        // 09 - Valor do saldo devedor apurado.
-                      '|0'+                                                                       // 10 - Valor total de “Deduções”.
-                      '|' + FormatFloat('#0.00', mSaldo) +                                        // 11 - Valor total de "ICMS a recolher (09-10).
-                      '|0'+                                                                       // 12 - Valor total de “Saldo credor a transportar para o período seguinte”.
-                      '|0'+                                                                       // 13 - Valores recolhidos ou a recolher, extraapuração.
-                      '|';
+      Inc(mLinha);
+      mRegistro := '|1920' +                                                                   // 01 - REG.
+                   '|' + FormatFloat('#0.00', tAjustes.FieldByName('Debito_ICMS').Value) +     // 02 - Valor total dos débitos por “Saídas e prestações com débito do imposto”.
+                   '|0'+                                                                       // 03 - Valor total de “Ajustes a débito”.
+                   '|0'+                                                                       // 04 - Valor total de Ajustes “Estornos de créditos”.
+                   '|' + FormatFloat('#0.00', tAjustes.FieldByName('Credito_ICMS').Value) +    // 05 - Valor total dos créditos por “Entradas e aquisições com crédito do imposto”.
+                   '|0'+                                                                       // 06 - Valor total de “Ajustes a crédito”.
+                   '|0'+                                                                       // 07 - Valor total de Ajustes “Estornos de Débitos”.
+                   '|0'+                                                                       // 08 - Valor total de “Saldo credor do período anterior”.
+                   '|' + FormatFloat('#0.00', mSaldoDev) +                                     // 09 - Valor do saldo devedor apurado.
+                   '|0'+                                                                       // 10 - Valor total de “Deduções”.
+                   '|' + FormatFloat('#0.00', mSaldoDev) +                                     // 11 - Valor total de "ICMS a recolher (09-10).
+                   '|' + FormatFloat('#0.00', mSaldoCre) +                                     // 12 - Valor total de “Saldo credor a transportar para o período seguinte”.
+                   '|0'+                                                                       // 13 - Valores recolhidos ou a recolher, extraapuração.
+                   '|';
       Say( mLinha, 000, Arquivo, mRegistro );
 
       Inc(mQtdeReg1920);
@@ -6242,14 +6278,14 @@ begin
           sql.add('                            (select Codigo_Receita  from Cybersoft_Cadastros.dbo.IncentivosFiscais where Nome = (select Incentivo_Fiscal from NotasFiscais where Numero = Nota and Data_Emissao = Data))');
           sql.add('                        end');
           sql.add('into #temp');
-          sql.add('from   NotasItens');
-          sql.add('where  (select Incentivo_Fiscal from NotasFiscais where Numero = Nota and Data_Emissao = Data) = ''FUNDAP'' ');
-          sql.add('  and  Valor_ICMSOper > 0');
-          sql.add('  and  Saida_Entrada  = 1');
-          sql.add('  and  year(Data)     = :pAno');
-          sql.add('  and  month(Data)    = :pMes');
-          sql.add('  and  Cancelada     <> 1');
-          sql.add('  and  Nfe_Denegada  <> 1');
+          sql.add('from NotasItens');
+          sql.add('where (select Incentivo_Fiscal from NotasFiscais where Numero = Nota and Data_Emissao = Data) = ''FUNDAP'' ');
+          sql.add('and Valor_ICMSOper > 0');
+          sql.add('and Saida_Entrada = 1');
+          sql.add('and year(Data) = :pAno');
+          sql.add('and month(Data) = :pMes');
+          sql.add('and Cancelada <> 1');
+          sql.add('and Nfe_Denegada <> 1');
           sql.add('select Codigo');
           sql.add('      ,Debito_ICMS  = sum(Debito_ICMS)');
           sql.add('      ,Credito_ICMS = sum(Credito_ICMS)');

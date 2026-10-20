@@ -3500,7 +3500,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'Tahoma'
             Title.Font.Style = [fsBold]
-            Width = 64
             Visible = True
           end>
       end
@@ -4056,7 +4055,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'MS Sans Serif'
             Title.Font.Style = [fsBold]
-            Width = 64
             Visible = True
           end
           item
@@ -4091,7 +4089,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
             Title.Font.Height = -11
             Title.Font.Name = 'MS Sans Serif'
             Title.Font.Style = [fsBold]
-            Width = 64
             Visible = True
           end>
       end

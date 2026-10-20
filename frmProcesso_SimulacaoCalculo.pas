@@ -1933,9 +1933,9 @@ begin
       with Dados, tDespesa do begin
            sql.Clear;
            sql.add('select Valor = case :pTipo');
-           sql.add('                    when 0 then (select MIN(Valor_Total) AS Valor FROM PagarReceber WHERE Classificacao = :pClass)');
-           sql.add('                    when 1 then (select AVG(Valor_Total) AS Valor FROM PagarReceber WHERE Classificacao = :pClass)');
-           sql.add('                    when 2 then (select MAX(Valor_Total) AS Valor FROM PagarReceber WHERE Classificacao = :pClass)');
+           sql.add('                    when 0 then isnull((select min(Valor_Total) as Valor from PagarReceber where Classificacao = :pClass), 0)');
+           sql.add('                    when 1 then isnull((select avg(Valor_Total) as Valor from PagarReceber where Classificacao = :pClass), 0)');
+           sql.add('                    when 2 then isnull((select max(Valor_Total) as Valor from PagarReceber where Classificacao = :pClass), 0)');
            sql.add('               end');
            ParamByName('pClass').AsString := ClassificacaoFinanceiraCodigo.Value;
            ParamByName('pTipo').asinteger := cTipoValor.ItemIndex;

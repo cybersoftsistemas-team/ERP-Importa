@@ -698,7 +698,7 @@ begin
            
            sql.Add('drop table #Temp, #temp2, #temp3');
            ParamByName('pData').AsDate := cDataFim.Date;
-           //sql.SaveToFile('c:\temp\Fiscal_Ficha_Inventario.sql');
+           //sql.SaveToFile('c:\temp\Fiscal_Ficha_Inventario_Novo.sql');
            open;
       end;
 
