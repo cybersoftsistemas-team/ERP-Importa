@@ -181,7 +181,7 @@ object Config_TipoNota: TConfig_TipoNota
     Top = 45
     Width = 750
     Height = 656
-    ActivePage = TabSheet3
+    ActivePage = TabSheet1
     Align = alClient
     TabHeight = 28
     TabOrder = 1

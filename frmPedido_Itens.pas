@@ -1501,7 +1501,7 @@ begin
                                  if PedidosItensAliquota_ICMSOper.Value <> ICMSICMS_Interno.Value then begin
                                     if (Clientes.FieldByName('Consumidor_Final').AsBoolean) and (not Clientes.FieldByName('MEI').AsBoolean) then begin
                                        if (PedidosDestinatario_Estado.Value <> EmpresasEstado.Value) then begin
-                                          if TipoNotaFinalidade_Mercadoria.Value = 0 then begin
+                                          //if TipoNotaFinalidade_Mercadoria.Value = 0 then begin
                                              PedidosItensValor_BCICMSDest.Value := PedidosItensValor_BCICMSOper.Value;
                                              PedidosItensValor_ICMSDest.Value   := Roundto(Percentual(PedidosItensValor_BCICMSOper.Value, ICMSICMS_Interno.Value), -2);
                                              PedidosItensValor_BCDIFAL.Value    := CalculaMacro('Calculo_BCDIFAL');
@@ -1510,7 +1510,7 @@ begin
                                              PedidosItensDIFAL_ValorOrig.Value  := Roundto(Percentual(PedidosItensDIFAL_Valor.Value, (100-ConfiguracaoDIFAL_ICMSPart.Value)), -2);
                                              PedidosItensDIFAL_PercDest.Value   := ConfiguracaoDIFAL_ICMSPart.Value;
                                              PedidosItensDIFAL_ValorDest.Value  := Roundto(Percentual(PedidosItensDIFAL_Valor.Value, ConfiguracaoDIFAL_ICMSPart.Value), -2);
-                                          end;
+                                          //end;
                                        end;
                                     end;
                                  end;

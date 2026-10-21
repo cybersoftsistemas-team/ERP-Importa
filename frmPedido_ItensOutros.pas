@@ -3765,14 +3765,14 @@ begin
                 if (TipoNotaSaida_Entrada.Value = 1) and (TipoNotaVisiveis_DIFAL.AsBoolean) then Begin                   // Nota Fiscal de saída.
                    if PedidosItensAliquota_ICMSOper.Value <> mAliquotaDIFAL then begin                                   // Aliquota de icms dos estados diferente.
                       if (PedidosDestinatario_Estado.Value <> EmpresasEstado.Value) then begin                           // Cliente é de fora do estado.
-                         if TipoNotaFinalidade_Mercadoria.Value = 0 then begin
+                         //if TipoNotaFinalidade_Mercadoria.Value = 0 then begin
                             PedidosItensValor_BCDIFAL.Value   := CalculaMacro('Calculo_BCDIFAL');
                             PedidosItensDIFAL_Valor.Value     := CalculaMacro('Calculo_DIFAL');
                             PedidosItensDIFAL_PercOrig.Value  := 100 - ConfiguracaoDIFAL_ICMSPart.Value;
                             PedidosItensDIFAL_ValorOrig.Value := Roundto(Percentual(PedidosItensDIFAL_Valor.Value, (100-ConfiguracaoDIFAL_ICMSPart.Value)), -2);
                             PedidosItensDIFAL_PercDest.Value  := ConfiguracaoDIFAL_ICMSPart.Value;
                             PedidosItensDIFAL_ValorDest.Value := Roundto(Percentual(PedidosItensDIFAL_Valor.Value, ConfiguracaoDIFAL_ICMSPart.Value), -2);
-                         end;
+                         //end;
                       end;
                    end;
                 end;
