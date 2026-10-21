@@ -2489,14 +2489,21 @@ begin
            sql.add('WHERE ISNULL(Apuracao_PISCOFINS,0) = 1');
            sql.add('AND (ISNUMERIC(Conta_TotalNota_D) = 1 OR ISNUMERIC(Conta_TotalNota_C) = 1)');
            sql.add('AND (SELECT COUNT(*) FROM NotasServico   WHERE Data_Emissao BETWEEN :pDataIni AND :pDataFim AND Referencia_Fiscal = Codigo) > 0');
- 
+           {
            sql.add('union all');
            sql.add('select Conta = (select Pagamento_Conta from ClassificacaoFinanceira cf where cf.Codigo = (select Classificacao from PagarReceber pr where pr.Numero = prb.Numero))');
            sql.add('from PagarReceberBaixas prb');
            sql.add('where Data between :pDataIni and :pDataFim');
-//           sql.add('and Tipo = ''R'' ');             
            sql.add('and (select isnull(CST_PIS, '''') from ClassificacaoFinanceira cf where cf.Codigo = (select Classificacao from PagarReceber pr where pr.Numero = prb.Numero)) <> '''' ');
            sql.add('and isnull(Juros, 0) = 0');
+           }
+           sql.add('union all');
+           sql.add('select Conta = cf.Pagamento_Conta');
+           sql.add('from PagarReceberBaixas prb');
+           sql.add('inner join PagarReceber pr on pr.Numero = prb.Numero');
+           sql.add('inner join ClassificacaoFinanceira cf on cf.Codigo = pr.Classificacao');
+           sql.add('where Data between :pDataIni and :pDataFim');
+           sql.add('and isnull(cf.Pagamento_Conta, '''') <> '''' ');
            
            sql.add('union all');
            sql.add('select Conta = (select Pagamento_Conta from ClassificacaoFinanceira cf where cf.Codigo = (select Classificacao_JurosRC from Configuracao))');
@@ -2559,7 +2566,7 @@ begin
       tContas.SQL.Add('drop table #Temp, #Temp2, #Temp3');
       tContas.ParamByName('pDataIni').AsDate := StrtoDate(mDataIni);
       tContas.ParamByName('pDataFim').AsDate := StrtoDate(mDataFim);
-      //tContas.SQL.SaveToFile('c:\temp\SPED_PIS_COFINS_REGISTRO_0500.sql');
+//      tContas.SQL.SaveToFile('c:\temp\SPED_PIS_COFINS_REGISTRO_0500.sql');
       tContas.Open;
 
       Progresso3('Plano de Contas Cont beis', tContas.RecordCount);

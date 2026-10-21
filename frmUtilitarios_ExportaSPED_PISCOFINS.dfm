@@ -473,10 +473,6 @@ object Utilitarios_ExportaSPED_PISCOFINS: TUtilitarios_ExportaSPED_PISCOFINS
     object TabSheet2: TTabSheet
       Caption = '&Consist'#234'ncias'
       ImageIndex = 1
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object cMsg: TMemo
         Left = 0
         Top = 0

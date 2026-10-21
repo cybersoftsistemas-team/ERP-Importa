@@ -3,7 +3,7 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
   Top = 356
   BorderStyle = bsDialog
   Caption = 'Impressao_FiscaisOP_Inventario_Novo'
-  ClientHeight = 391
+  ClientHeight = 402
   ClientWidth = 736
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -107,12 +107,13 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
   end
   object Panel1: TPanel
     Left = 0
-    Top = 361
+    Top = 372
     Width = 736
     Height = 30
     Align = alBottom
     BevelOuter = bvLowered
     TabOrder = 0
+    ExplicitTop = 361
     DesignSize = (
       736
       30)
@@ -505,8 +506,8 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
   end
   object dstInventario: TDataSource
     DataSet = tInventario
-    Left = 506
-    Top = 298
+    Left = 562
+    Top = 306
   end
   object rFichaInventario: TppReport
     AutoStop = False
@@ -574,8 +575,8 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     XLSSettings.WorksheetName = 'Report'
-    Left = 360
-    Top = 298
+    Left = 416
+    Top = 306
     Version = '19.04'
     mmColumnWidth = 0
     DataPipelineName = 'pInventario'
@@ -2243,8 +2244,8 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
   object pEmpresas: TppDBPipeline
     DataSource = Dados.dsEmpresas
     UserName = 'pEmpresas'
-    Left = 223
-    Top = 298
+    Left = 279
+    Top = 306
     object pEmpresasppField1: TppField
       Alignment = taRightJustify
       FieldAlias = 'Codigo'
@@ -3970,8 +3971,8 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
   object pInventario: TppDBPipeline
     DataSource = dstInventario
     UserName = 'pInventario'
-    Left = 284
-    Top = 298
+    Left = 340
+    Top = 306
     object pInventarioppField1: TppField
       Alignment = taRightJustify
       FieldAlias = 'Registro'
@@ -4211,8 +4212,8 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
       'FROM   FichaInventario'
       'ORDER  BY Estoque, Codigo')
     FetchRows = 1
-    Left = 578
-    Top = 298
+    Left = 634
+    Top = 306
   end
   object tInventario: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -4220,7 +4221,7 @@ object Impressao_FiscaisOP_Inventario_Novo: TImpressao_FiscaisOP_Inventario_Novo
       'select * from fichainventario'
       'where Codigo = 24350')
     FetchRows = 1
-    Left = 434
-    Top = 299
+    Left = 490
+    Top = 307
   end
 end

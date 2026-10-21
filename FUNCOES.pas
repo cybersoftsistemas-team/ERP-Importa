@@ -6286,7 +6286,7 @@ begin
            sql.add('and ni.Valor_Unitario > 0');
            sql.add('and isnull(ni.Cancelada,0) <> 1');
            sql.add('and isnull(ni.Nfe_Denegada,0) <> 1');
-           sql.add('and (isnull(ni.Movimenta_Estoque,0) = 1 OR isnull(nf.Complementar,0) = 1);');
+           sql.add('and (isnull(ni.Movimenta_Inventario, 0) = 1 OR isnull(nf.Complementar,0) = 1);');
            sql.add('insert into #temp');
            sql.add('select Codigo = ni.Codigo_Mercadoria');
            if pDescricao = 'NF' then begin
@@ -6350,7 +6350,7 @@ begin
            end;
            sql.add('and ni.Cancelada <> 1');
            sql.add('and ni.Nfe_Denegada <> 1');
-           sql.add('and ni.Movimenta_Estoque = 1');
+           sql.add('and ni.Movimenta_Inventario = 1');
            sql.add('and ni.Valor_Unitario > 0');
            sql.add('and nf.Complementar <> 1;');
            sql.add('insert into #temp');
@@ -6491,7 +6491,7 @@ begin
            sql.add('left join Fornecedores F on F.Codigo = NTI.Fornecedor');
            sql.add('left join ReferenciasFiscais RF on RF.Codigo = NTI.Referencia_Fiscal');
            sql.add('outer apply (select top 1 pd.Modalidade_Importacao from ProcessosDocumentos PD where pd.Processo = NTI.Processo and pd.Tipo = ''IMPORTAÇÃO'') pd');
-           sql.add('where nti.Movimenta_Estoque = 1');
+           sql.add('where nti.Movimenta_Inventario = 1');
            if pProduto > 0 then begin
               sql.add('and nti.Codigo_Mercadoria = :pCod');
            end;
