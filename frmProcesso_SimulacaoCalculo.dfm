@@ -69,7 +69,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     Width = 801
     Height = 629
     Margins.Bottom = 6
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     Align = alClient
     HotTrack = True
     MultiLine = True

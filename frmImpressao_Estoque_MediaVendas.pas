@@ -44,6 +44,8 @@ type
     cMesFim: TSpinEdit;
     bPesqProd: TSpeedButton;
     bPesqCli: TSpeedButton;
+    tOutros: TMSQuery;
+    dstOutros: TDataSource;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -51,6 +53,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure bPesqProdClick(Sender: TObject);
     procedure bPesqCliClick(Sender: TObject);
+    procedure cLinhaChange(Sender: TObject);
   private
     procedure ExportaEXCEL;
     { Private declarations }
@@ -168,9 +171,9 @@ begin
           sql.add('                     select Quantidade_Entrada, Data_Transferencia from ProdutosTransferencia where Produto_Entrada = #temp2.Produto) as Todas)');
           }
           sql.Add('      ,Entrada    = cast((select max(Data_Entrada) from (select Data_Entrada from NotasTerceirosItens where Codigo_Mercadoria = #temp2.Produto) as todas) as date)');
-          sql.Add('      ,Quantidade = ( select sum(Quantidade) from NotasTerceirosItens nti');
-          sql.Add('                      where nti.Codigo_Mercadoria = #temp2.Produto');
-          sql.Add('                      and nti.Data_Entrada = (select MAX(Data_Entrada) from NotasTerceirosItens nti2 where nti2.Codigo_Mercadoria = #temp2.Produto) )');
+          sql.Add('      ,Quantidade = (select sum(Quantidade) from NotasTerceirosItens nti');
+          sql.Add('                     where nti.Codigo_Mercadoria = #temp2.Produto');
+          sql.Add('                     and nti.Data_Entrada = (select MAX(Data_Entrada) from NotasTerceirosItens nti2 where nti2.Codigo_Mercadoria = #temp2.Produto))');
           sql.add('from #temp2');
           
           if cSaldo.Checked then begin
@@ -185,7 +188,33 @@ begin
           //sql.SaveToFile('c:\temp\Estoque_Media_Venda_Dinamico.sql');
           open;
      end;
-    
+     with tOutros do begin
+          sql.clear;
+          sql.add('select n.Codigo_Mercadoria');
+          sql.add('      ,pr.Codigo_SKU');
+          sql.Add('      ,Linha = ln.Descricao');
+          sql.add('      ,Descricao_Reduzida');
+          sql.add('      ,Qtde = sum(n.quantidade)');
+          sql.add('      ,Valor_Unitario = max(n.Valor_Unitario)');
+          sql.Add('      ,Total = sum(n.Valor_Liquido)');
+          sql.add('      ,Data = max(n.Data_Entrada)');
+          sql.add('from NotasTerceirosItens n');
+          sql.add('inner join Produtos pr on pr.Codigo = n.Codigo_Mercadoria');
+          sql.Add('inner join ProdutosLinhas ln on ln.Codigo = pr.Linha');
+          sql.add('where not exists (select 1 from PedidosRepresentantesItens p where p.Codigo_Mercadoria = n.Codigo_Mercadoria)');
+          if Trim(cProduto.Text) <> '' then begin
+             sql.Add('and n.Codigo_Mercadoria = :pCodigo');
+             ParamByName('pCodigo').AsInteger := tProdutos.FieldByName('Codigo').AsInteger;
+          end;
+          if trim(cLinha.Text) <> '' then begin
+             sql.Add('and ln.Codigo = :pLinha');
+             parambyname('pLinha').AsInteger := Dados.ProdutosLinhasCodigo.AsInteger;
+          end;
+          sql.add('group by n.Codigo_Mercadoria, pr.Codigo_SKU, ln.Descricao, pr.Descricao_Reduzida, n.Valor_Unitario');
+          sql.Add('order by n.Codigo_Mercadoria;');
+          open;
+     end;
+     
      ExportaExcel;
 
      Screen.Cursor := crDefault;
@@ -207,13 +236,16 @@ var
 begin
      Janela_Processamento := TJanela_Processamento.Create(Self);
      Janela_Processamento.Progresso.Position := 0;
-     Janela_Processamento.Progresso.Max      := titens.RecordCount;
+     Janela_Processamento.Progresso.Max      := titens.RecordCount + tOutros.RecordCount;
      Janela_Processamento.lProcesso.Caption  := 'Enviando dados para o EXCEL...';
      Janela_Processamento.Show;
 
      mPlanilha := CreateOleObject('Excel.Application');
      mPlanilha.Visible := false;
      mPlanilha.WorkBooks.add(1);
+     mPlanilha.Workbooks[1].Sheets.Add;
+     mPlanilha.Workbooks[1].WorkSheets[1].Name := 'MÉDIA MENSAL DE VENDAS';
+     mPlanilha.Workbooks[1].WorkSheets[2].Name := 'PRODUTOS SEM MOVIMENTO';
 
      mPlanilha.Range['A1', 'FZ5000'].VerticalAlignment := 2;
      mPlanilha.Range['A6', 'FZ5000'].Borders.LineStyle := 1; //xlContinuous;
@@ -389,6 +421,109 @@ begin
            Application.ProcessMessages;
      end;
 
+     mPlanilha.Columns.Autofit;
+     
+     // Congela as linhas do cabeçalho (Obs: só funcionou depois do visible = true).
+     mPlanilha.Rows[7].Select;
+     mPlanilha.ActiveWindow.FreezePanes := True;
+
+     
+     //=======================================================[ PLANILHA 2 - PRODUTOS SEM MOVIMENTO ]============================================================
+     mPlanilha.WorkSheets[2].Activate;
+
+     if FileExists(Dados.Empresas.FieldByName('Logo').AsString) then begin
+        Img                           := mPlanilha.Worksheets[2].Pictures.Insert(Dados.Empresas.FieldByName('Logo').AsString);
+        Img.ShapeRange.LockAspectRatio := false;
+        Img.Left                       := 15;     // Posição horizontal da imagem
+        Img.Top                        := 10;     // Posição vertical da imagem
+        Img.Width                      := 80;     // Largura da imagem
+        Img.Height                     := 42;     // Altura da imagem
+     end;
+
+     mPlanilha.Range['A1','H1'].Font.Size           := 20;
+     mPlanilha.Range['A1','H3'].Font.Bold           := true;
+     mPlanilha.Range['A1','H1'].HorizontalAlignment := 3;
+     mPlanilha.Range['A1','H1'].Mergecells          := True;
+     mPlanilha.Range['A2','H2'].Mergecells          := True;
+     mPlanilha.Range['A2','H2'].HorizontalAlignment := 3;
+     mPlanilha.Range['A2','H2'].VerticalAlignment   := 2;
+     mPlanilha.Range['A3','H3'].Mergecells          := True;
+     mPlanilha.Range['A3','H3'].HorizontalAlignment := 3;
+     mPlanilha.Range['A3','H3'].VerticalAlignment   := 2;
+
+     mPeriodo := '| Período: 01/'+PoeZero(2, cMesIni.value)+'/'+cAnoIni.text + ' á ' + datetostr(UltimoDiaMes(strtodate('01/'+PoeZero(2, cMesFim.value)+'/'+cAnoFim.text)))+ ' | ';
+     if cCliente.Text <> '' then begin
+        mPeriodo := mPeriodo +tClientes.FieldByName('Nome').asstring+'  '+FormatMaskText('00\.000\.000\/0000\-00;0;', tClientes.FieldByName('CNPJ').asstring) + ' | ';
+     end;
+     if Dados.EmpresasMatriz_Filial.AsBoolean = true then
+        mPlanilha.Cells[01,01] := Dados.EmpresasRazao_Social.AsString +' - MATRIZ ('+ Dados.EmpresasEstado.AsString+')'
+     else
+        mPlanilha.Cells[01,01] := Dados.EmpresasRazao_Social.AsString +' - FILIAL ' + Dados.EmpresasNumero_Filial.AsString +' (' + Dados.EmpresasEstado.AsString+')';
+
+     mPlanilha.Cells[02,01]               := 'PRODUTOS SEM VENDAS';
+     mPlanilha.Cells[03,01]               := mPeriodo;
+     mPlanilha.Range['A2','H2'].Font.Size := 16;
+     mPlanilha.Range['A3','H3'].Font.Size := 12;
+
+     // Nomes das colunas.
+     mPlanilha.Range['A5','H5'].Interior.Color      := RGB(102, 102, 153);
+     mPlanilha.Range['A5','H5'].Interior.Pattern    := 1;
+     mPlanilha.Range['A5','H5'].Font.Bold           := true;
+     mPlanilha.Range['A5','H5'].Font.Color          := clWhite;
+     mPlanilha.Range['A5','H5'].Borders.LineStyle   := 1; //xlContinuous;
+     mPlanilha.Range['A5','H5'].Borders.Weight      := 2; //xlThin;
+     mPlanilha.Range['A5','H5'].Borders.Color       := RGB(0,0,0);
+     mPlanilha.Range['A5','H5'].HorizontalAlignment := 3;
+     mPlanilha.Range['A5','H5'].VerticalAlignment   := 2;
+     mPlanilha.Range['A5','H5'].Font.Size           := 8;
+     mPlanilha.Range['A5','H5'].rowheight           := 20; 
+     
+     mPlanilha.Cells[5,1] := 'PRODUTO';
+     mPlanilha.Cells[5,1].ColumnWidth := 15;
+     mPlanilha.Cells[5,2] := 'SKU';
+     mPlanilha.Cells[5,2].ColumnWidth := 20;
+     mPlanilha.Cells[5,3] := 'LINHA';
+     mPlanilha.Cells[5,3].ColumnWidth := 30;
+     mPlanilha.Cells[5,4] := 'DESCRIÇÃO';
+     mPlanilha.Cells[5,4].ColumnWidth := 80;
+     mPlanilha.Cells[5,5] := 'QUANTIDADE';
+     mPlanilha.Cells[5,5].ColumnWidth := 12;
+     mPlanilha.Cells[5,6] := 'VLR UNITARIO';
+     mPlanilha.Cells[5,6].ColumnWidth := 12;
+     mPlanilha.Cells[5,7] := 'TOTAL';
+     mPlanilha.Cells[5,7].ColumnWidth := 15;
+     mPlanilha.Cells[5,8] := 'ENTRADA';
+     mPlanilha.Cells[5,8].ColumnWidth := 12;
+
+     mLin := 6;
+     with tOutros do begin
+          while not eof do begin
+                mPlanilha.Range['A'+inttostr(mLin),'H'+inttostr(mLin)].Font.Size := 8;
+                
+                mPlanilha.Cells[mLin, 1] := tOutros.fieldbyname('Codigo_Mercadoria').asinteger;
+                mPlanilha.Cells[mLin, 2] := tOutros.fieldbyname('Codigo_SKU').asstring;
+                mPlanilha.Cells[mLin, 3] := tOutros.fieldbyname('Linha').asstring;
+                mPlanilha.Cells[mLin, 4] := tOutros.fieldbyname('Descricao_Reduzida').asstring;
+                mPlanilha.Cells[mLin, 5] := tOutros.fieldbyname('Qtde').asfloat;
+                mPlanilha.Cells[mLin, 5].NumberFormat := '#.##0,000_);(#.##0,000)';
+                mPlanilha.Cells[mLin, 6] := tOutros.fieldbyname('Valor_Unitario').ascurrency;
+                mPlanilha.Cells[mLin, 6].NumberFormat := '#.##0,00_);(#.##0,00)';
+                mPlanilha.Cells[mLin, 7] := tOutros.fieldbyname('Total').ascurrency;
+                mPlanilha.Cells[mLin, 7].NumberFormat := '#.##0,00_);(#.##0,00)';
+                mPlanilha.Cells[mLin, 8] := tOutros.fieldbyname('Data').value;
+          
+                next;
+                inc(mLin);
+                
+                Janela_Processamento.Progresso.Position := Janela_Processamento.Progresso.Position + 1;
+                Application.ProcessMessages;
+          end;
+     end;
+     
+     
+     mPlanilha.WorkSheets[1].Activate;
+     mPlanilha.Visible := true;
+     
      // Fecha o Excel
      if Funcoes.Cancelado then begin
         Abort;
@@ -396,13 +531,6 @@ begin
         mPlanilha.Destroy;
      end;
      Janela_Processamento.Close;
-     
-     mPlanilha.Columns.Autofit;
-     mPlanilha.Visible := true;
-     
-     // Congela as linhas do cabeçalho (Obs: só funcionou depois do visible = true).
-     mPlanilha.Rows[7].Select;
-     mPlanilha.ActiveWindow.FreezePanes := True;
 end;
 
 procedure TImpressao_Estoque_MediaVendas.bPesqProdClick(Sender: TObject);
@@ -420,6 +548,31 @@ end;
 procedure TImpressao_Estoque_MediaVendas.bSairClick(Sender: TObject);
 begin
      Close;
+end;
+
+procedure TImpressao_Estoque_MediaVendas.cLinhaChange(Sender: TObject);
+begin
+     with tProdutos do begin
+          sql.clear;
+          sql.add('select p.Codigo,');
+          sql.add('       p.Codigo_Fabricante,');
+          sql.add('       p.Descricao_Reduzida');
+          sql.add('from Produtos p');
+          sql.add('where exists (select 1 from NotasItens n where n.Codigo_Mercadoria = p.Codigo and n.Saida_Entrada = 1 and n.Cancelada <> 1)');
+          sql.add('or exists (select 1 from PedidosRepresentantesItens r where r.Codigo_Mercadoria = p.Codigo and r.Cancelado <> 1)');
+          sql.add('and Linha = :pLinha');
+          sql.add('order by p.Descricao_Reduzida;');
+          parambyname('pLinha').AsInteger := Dados.ProdutosLinhasCodigo.AsInteger;
+          open;
+     end;
+
+//     with Dados.Produtos do begin
+//          sql.clear;
+//          sql.add('select * from Produtos where Linha = :pLinha order by Descricao');
+//          parambyname('pLinha').AsInteger := Dados.ProdutosLinhasCodigo.AsInteger;
+//          open;
+//     end;
+
 end;
 
 procedure TImpressao_Estoque_MediaVendas.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -491,6 +644,7 @@ begin
                 SQL.Add('where Ativo = 1 and Gerar_Financeiro = 1 and Saida_Entrada = 1');
                 Open;
            end;
+           {
            with tProdutos do begin
                 sql.clear;
                 sql.add('select Codigo');
@@ -506,8 +660,24 @@ begin
                 sql.add('                 from PedidosRepresentantesItens');
                 sql.add('                 where Cancelado <> 1))');
                 sql.add('order by Descricao_Reduzida');
+                sql.savetofile('c:\temp\Media_Venda_Mesal_Produtos.sql');
                 open;
            end;
+           }
+           {
+           with tProdutos do begin
+                sql.clear;
+                sql.add('select p.Codigo,');
+                sql.add('       p.Codigo_Fabricante,');
+                sql.add('       p.Descricao_Reduzida');
+                sql.add('from Produtos p');
+                sql.add('where');
+                sql.add('    exists (select 1 from NotasItens n where n.Codigo_Mercadoria = p.Codigo and n.Saida_Entrada = 1 and n.Cancelada <> 1)');
+                sql.add('    or exists (select 1 from PedidosRepresentantesItens r where r.Codigo_Mercadoria = p.Codigo and r.Cancelado <> 1)');
+                sql.add('order by p.Descricao_Reduzida;');
+                open;
+           end;
+           }
            with TipoProduto do begin
                 SQL.Clear;
                 SQL.Add('select * from TipoProduto order by Descricao');
@@ -518,11 +688,24 @@ begin
                 SQL.Add('select * from ProdutosLinhas order by Descricao');
                 Open;
            end;
+           {
            with tClientes do begin
                 sql.clear;
                 sql.Add('select Codigo, CNPJ, Nome  from Clientes where Codigo in(select distinct Cliente from PedidosRepresentantes) order by Nome');
                 open;
            end;
+           }
+           with tClientes do begin
+                sql.clear;
+                sql.add('select c.Codigo');
+                sql.add('      ,c.CNPJ');
+                sql.add('      ,c.Nome');
+                sql.add('from Clientes c');
+                sql.add('where exists (select 1 from PedidosRepresentantes p where p.Cliente = c.Codigo)');
+                sql.add('order by c.Nome;');
+                open;
+           end;
+           
       end;
       Screen.Cursor := crDefault;
 end;

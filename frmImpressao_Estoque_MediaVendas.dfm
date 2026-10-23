@@ -221,6 +221,7 @@ object Impressao_Estoque_MediaVendas: TImpressao_Estoque_MediaVendas
     LookupSource = Dados.dsProdutosLinhas
     ParentFont = False
     TabOrder = 4
+    OnChange = cLinhaChange
   end
   object StaticText5: TStaticText
     Left = 13
@@ -664,6 +665,145 @@ object Impressao_Estoque_MediaVendas: TImpressao_Estoque_MediaVendas
   object dstProdutos: TDataSource
     DataSet = tProdutos
     Left = 274
+    Top = 200
+  end
+  object tOutros: TMSQuery
+    Connection = Dados.Banco_Empresas
+    SQL.Strings = (
+      'select Codigo_Mercadoria'
+      
+        '      ,Linha_Cod = (select pr.Linha from Produtos pr where pr.Co' +
+        'digo = Codigo_Mercadoria)'
+      '      ,Janeiro_2020 = [12020]'
+      '      ,Fevereiro_2020 = [22020]'
+      '      ,Mar'#231'o_2020 = [32020]'
+      '      ,Janeiro_2021 = [42021]'
+      '      ,Fevereiro_2021 = [52021]'
+      '      ,Mar'#231'o_2021 = [62021]'
+      '      ,Janeiro_2022 = [72022]'
+      '      ,Fevereiro_2022 = [82022]'
+      '      ,Mar'#231'o_2022 = [92022]'
+      '      ,Janeiro_2023 = [102023]'
+      '      ,Fevereiro_2023 = [112023]'
+      '      ,Mar'#231'o_2023 = [122023]'
+      'into #temp'
+      'from (select Codigo_Mercadoria'
+      '            ,Quantidade = sum(Quantidade)'
+      
+        '            ,Mes = cast(month(Data) as varchar(2))+cast(YEAR(Dat' +
+        'a) as varchar(4))'
+      '      from PedidosRepresentantesItens pri'
+      '      where Cancelado <> 1'
+      '      and Data between '#39'01/01/2020'#39' and '#39'12/31/2023'#39
+      '      and Codigo_Mercadoria > 0'
+      '      and Cancelado <> 1'
+      '      group by Codigo_Mercadoria, Data) as Tabela'
+      
+        'pivot (sum(Quantidade) for Mes in([12020],[22020],[32020],[42021' +
+        '],[52021],[62021],[72022],[82022],[92022],[102023],[112023],[122' +
+        '023])) as PivotTable'
+      'select Produto = Codigo_Mercadoria'
+      
+        '      ,SKU = rtrim(ltrim((select pr.Codigo_SKU from Produtos pr ' +
+        'where pr.Codigo = #temp.Codigo_Mercadoria)))'
+      
+        '      ,Linha = (select Descricao from ProdutosLinhas pl where pl' +
+        '.Codigo = Linha_Cod)'
+      
+        '      ,Descricao = ltrim(substring((select pr.Descricao_reduzida' +
+        ' from Produtos pr where pr.Codigo = #temp.Codigo_Mercadoria), 1,' +
+        ' charindex('#39'<{'#39', (select pr.Descricao from Produtos pr where pr.' +
+        'Codigo = #temp.Codigo_Mercadoria))-1))'
+      '      '
+      #9'  ,Janeiro_2020 = isnull(Janeiro_2020, 0)'
+      '      ,Fevereiro_2020 = isnull(Fevereiro_2020, 0)'
+      '      ,Mar'#231'o_2020 = isnull(Mar'#231'o_2020, 0)'
+      
+        '      ,Media_2020 = (isnull(Janeiro_2020, 0)+isnull(Fevereiro_20' +
+        '20, 0)+isnull(Mar'#231'o_2020, 0)) / 3'
+      '      '
+      #9'  ,Janeiro_2021 = isnull(Janeiro_2021, 0)'
+      '      ,Fevereiro_2021 = isnull(Fevereiro_2021, 0)'
+      '      ,Mar'#231'o_2021 = isnull(Mar'#231'o_2021, 0)'
+      
+        '      ,Media_2021 = (isnull(Janeiro_2021, 0)+isnull(Fevereiro_20' +
+        '21, 0)+isnull(Mar'#231'o_2021, 0)) / 3'
+      '      '
+      #9'  ,Janeiro_2022 = isnull(Janeiro_2022, 0)'
+      '      ,Fevereiro_2022 = isnull(Fevereiro_2022, 0)'
+      '      ,Mar'#231'o_2022 = isnull(Mar'#231'o_2022, 0)'
+      
+        '      ,Media_2022 = (isnull(Janeiro_2022, 0)+isnull(Fevereiro_20' +
+        '22, 0)+isnull(Mar'#231'o_2022, 0)) / 3'
+      '      '
+      #9'  ,Janeiro_2023 = isnull(Janeiro_2023, 0)'
+      '      ,Fevereiro_2023 = isnull(Fevereiro_2023, 0)'
+      '      ,Mar'#231'o_2023 = isnull(Mar'#231'o_2023, 0)'
+      
+        '      ,Media_2023 = (isnull(Janeiro_2023, 0)+isnull(Fevereiro_20' +
+        '23, 0)+isnull(Mar'#231'o_2023, 0)) / 3'
+      ''
+      
+        '      ,Estoque = cast((isnull((select sum(Quantidade) from Notas' +
+        'Itens where Codigo_Mercadoria = #Temp.Codigo_Mercadoria and Said' +
+        'a_Entrada = 0 and Movimenta_Estoque = 1 and Cancelada <> 1 and i' +
+        'snull(NFe_Denegada, 0) = 0), 0) +'
+      
+        '                       isnull((select sum(Quantidade) from Notas' +
+        'TerceirosItens where Codigo_Mercadoria = #Temp.Codigo_Mercadoria' +
+        ' and Movimenta_Estoque = 1), 0) +'
+      
+        '                       isnull((select sum(Quantidade_Entrada) fr' +
+        'om ProdutosTransferencia where Produto_Entrada = #Temp.Codigo_Me' +
+        'rcadoria), 0) -'
+      
+        '                       isnull((select sum(Quantidade) from Notas' +
+        'Itens nfi where Codigo_Mercadoria = #Temp.Codigo_Mercadoria and ' +
+        'Saida_Entrada = 1 and Movimenta_Estoque = 1 and Cancelada <> 1 a' +
+        'nd isnull(NFe_Denegada, 0) = 0'
+      
+        '                               and (select Finalidade_Mercadoria' +
+        ' from TipoNota tpn where tpn.Codigo = nfi.Tipo_Nota) <> 4), 0) -'
+      
+        '                       isnull((select sum(Quantidade) from Pedid' +
+        'osItens pdi where Codigo_Mercadoria = #Temp.Codigo_Mercadoria an' +
+        'd Saida_Entrada = 1 and Movimenta_Estoque = 1'
+      
+        '                               and (select Finalidade_Mercadoria' +
+        ' from TipoNota tpn where tpn.Codigo = pdi.Tipo_Nota) <> 4), 0)) ' +
+        '-'
+      
+        '                       isnull((select sum(Quantidade) from Produ' +
+        'tosTransferencia where Produto_Saida = #Temp.Codigo_Mercadoria),' +
+        ' 0) -'
+      
+        '                       isnull((select sum(Quantidade) from Pedid' +
+        'osRepresentantesItens pri where Codigo_Mercadoria = #Temp.Codigo' +
+        '_Mercadoria and isnull(Faturamento, 0) = 0 and isnull(Faturado, ' +
+        '0) = 0'
+      
+        '                               and (select isnull(Cancelado, 0) ' +
+        'from PedidosRepresentantes pr where pr.Pedido = pri.Pedido) = 0)' +
+        ', 0) '
+      '                       as decimal(14,3))'
+      
+        '      ,Custo = (select isnull(Unitario_Saldo, 0) from FichaInven' +
+        'tario fi where fi.Codigo = #temp.Codigo_Mercadoria and fi.Item =' +
+        ' (select isnull(max(Item), 0) from FichaInventario fi2 where fi2' +
+        '.Codigo = fi.Codigo))'
+      'into #temp2'
+      'from #temp'
+      'select * from #temp2'
+      'where Estoque > 0'
+      'order by Linha, Produto'
+      'drop table #temp, #temp2')
+    FetchRows = 1
+    Left = 458
+    Top = 152
+  end
+  object dstOutros: TDataSource
+    DataSet = tOutros
+    Left = 458
     Top = 200
   end
 end
