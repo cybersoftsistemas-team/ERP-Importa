@@ -210,7 +210,7 @@ type
     ppDBText51: TppDBText;
     ppDBText52: TppDBText;
     ppDBText53: TppDBText;
-    ppDBMemo2: TppDBMemo;
+    ppDBMemo2: TppDBText;
     ppDBText54: TppDBText;
     ppDBText55: TppDBText;
     ppDBText56: TppDBText;
@@ -221,14 +221,10 @@ type
     txtDataChegada: TStaticText;
     dedDtChegadaIni: TDateEdit;
     dedDtChegadaFim: TDateEdit;
-//    bSair: TButton;
-//    btnPrint: TButton;
-    btnClear: TButton;
-    lblRecords: TLabel;
-    Panel1: TPanel;
-    btnSaveTo: TBitBtn;
     btnPrint: TButton;
-    bSair: TButton;
+    btnClear: TButton;
+    btnSaveTo: TBitBtn;
+    lblRecords: TLabel;
     procedure btnSearchClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
@@ -256,7 +252,427 @@ implementation
 uses
   System.SysUtils,
   System.Variants,
-  frmDados;
+  frmDados,
+  System.IOUtils,
+  System.Zip,
+  System.Generics.Collections,
+  Xml.XMLIntf,
+  Xml.XMLDoc;
+
+procedure RebuildXlsx(
+  const AXlsxFile: string;
+  const AStylesPath: string;
+  const ASheetPath: string);
+const
+  CStylesFile = 'xl/styles.xml';
+  CSheetFile = 'xl/worksheets/sheet1.xml';
+var
+  LSourceZip: TZipFile;
+  LTargetZip: TZipFile;
+  LNewFile: string;
+  LEntry: string;
+  LEntries: TArray<string>;
+  LBytes: TBytes;
+  LStream: TBytesStream;
+begin
+  LNewFile := AXlsxFile + '.new';
+
+  if TFile.Exists(LNewFile) then
+    TFile.Delete(LNewFile);
+
+  LSourceZip := TZipFile.Create;
+  LTargetZip := TZipFile.Create;
+  try
+    LSourceZip.Open(AXlsxFile, zmRead);
+    try
+      LTargetZip.Open(LNewFile, zmWrite);
+      try
+        LEntries := LSourceZip.FileNames;
+
+        for LEntry in LEntries do
+        begin
+          if SameText(LEntry, CStylesFile) then
+          begin
+            LTargetZip.Add(AStylesPath, CStylesFile);
+            Continue;
+          end;
+
+          if SameText(LEntry, CSheetFile) then
+          begin
+            LTargetZip.Add(ASheetPath, CSheetFile);
+            Continue;
+          end;
+
+          LSourceZip.Read(LEntry, LBytes);
+
+          LStream := TBytesStream.Create(LBytes);
+          try
+            LTargetZip.Add(LStream, LEntry);
+          finally
+            LStream.Free;
+          end;
+        end;
+      finally
+        LTargetZip.Close;
+      end;
+    finally
+      LSourceZip.Close;
+    end;
+
+    TFile.Copy(LNewFile, AXlsxFile, True);
+    TFile.Delete(LNewFile);
+  finally
+    LTargetZip.Free;
+    LSourceZip.Free;
+  end;
+end;
+
+procedure FormatExcelHistorico(const AFileName: string);
+const
+  CStylesFile = 'xl/styles.xml';
+  CSheetFile = 'xl/worksheets/sheet1.xml';
+  CMainNS =
+    'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+var
+  LZip: TZipFile;
+  LStylesDoc: IXMLDocument;
+  LSheetDoc: IXMLDocument;
+  LCellXfs: IXMLNode;
+  LSheetData: IXMLNode;
+  LRow: IXMLNode;
+  LCell: IXMLNode;
+  LNewXf: IXMLNode;
+  LAlignment: IXMLNode;
+  LStyleMap: TDictionary<Integer, Integer>;
+  LOriginalStyle: Integer;
+  LNewStyle: Integer;
+  LCellRef: string;
+  LTempDir: string;
+  LTempFile: string;
+  LStylesPath: string;
+  LSheetPath: string;
+  I, J: Integer;
+
+  function FindChild(
+    const AParent: IXMLNode;
+    const AName: string): IXMLNode;
+  var
+    N: Integer;
+  begin
+    Result := nil;
+
+    if AParent = nil then
+      Exit;
+
+    for N := 0 to AParent.ChildNodes.Count - 1 do
+      if SameText(AParent.ChildNodes[N].LocalName, AName) then
+        Exit(AParent.ChildNodes[N]);
+  end;
+
+  function GetIntAttribute(
+    const ANode: IXMLNode;
+    const AName: string;
+    const ADefault: Integer): Integer;
+  begin
+    Result := ADefault;
+
+    if ANode.HasAttribute(AName) then
+      Result := StrToIntDef(
+        VarToStr(ANode.Attributes[AName]),
+        ADefault
+      );
+  end;
+
+  procedure RemoveAttribute(
+    const ANode: IXMLNode;
+    const AName: string);
+  var
+    LAttribute: IXMLNode;
+  begin
+    LAttribute := ANode.AttributeNodes.FindNode(AName);
+
+    if LAttribute <> nil then
+      ANode.AttributeNodes.Remove(LAttribute);
+  end;
+
+  function LoadXmlFile(
+    const APath: string): IXMLDocument;
+  begin
+    Result := TXMLDocument.Create(nil);
+    Result.LoadFromFile(APath);
+    Result.Active := True;
+  end;
+
+  procedure CopyAttributes(
+    const ASource: IXMLNode;
+    const ADestination: IXMLNode);
+  var
+    N: Integer;
+    LAttribute: IXMLNode;
+  begin
+    for N := 0 to ASource.AttributeNodes.Count - 1 do
+    begin
+      LAttribute := ASource.AttributeNodes[N];
+
+      ADestination.Attributes[LAttribute.NodeName] :=
+        LAttribute.NodeValue;
+    end;
+  end;
+
+  procedure CopyChildren(
+    const ASource: IXMLNode;
+    const ADestination: IXMLNode);
+  var
+    N: Integer;
+    LSourceChild: IXMLNode;
+    LDestinationChild: IXMLNode;
+  begin
+    for N := 0 to ASource.ChildNodes.Count - 1 do
+    begin
+      LSourceChild := ASource.ChildNodes[N];
+
+      LDestinationChild := ADestination.AddChild(
+        LSourceChild.LocalName,
+        CMainNS
+      );
+
+      CopyAttributes(LSourceChild, LDestinationChild);
+
+      if LSourceChild.ChildNodes.Count > 0 then
+        CopyChildren(LSourceChild, LDestinationChild);
+    end;
+  end;
+
+  function GetWrapStyle(
+    const AOriginalStyle: Integer): Integer;
+  var
+    LOriginalXf: IXMLNode;
+    LChild: IXMLNode;
+    LNewChild: IXMLNode;
+    LChildName: string;
+    N: Integer;
+    LAlignmentAdded: Boolean;
+  begin
+    if LStyleMap.TryGetValue(AOriginalStyle, Result) then
+      Exit;
+
+    if (AOriginalStyle < 0) or
+       (AOriginalStyle >= LCellXfs.ChildNodes.Count) then
+      raise Exception.CreateFmt(
+        'Estilo XLSX inválido: %d',
+        [AOriginalStyle]
+      );
+
+    LOriginalXf := LCellXfs.ChildNodes[AOriginalStyle];
+
+    LNewXf := LCellXfs.AddChild('xf', CMainNS);
+    CopyAttributes(LOriginalXf, LNewXf);
+
+    LNewXf.Attributes['applyAlignment'] := '1';
+
+    LAlignmentAdded := False;
+    LAlignment := nil;
+
+    for N := 0 to LOriginalXf.ChildNodes.Count - 1 do
+    begin
+      LChild := LOriginalXf.ChildNodes[N];
+      LChildName := LChild.LocalName;
+
+      // Insere alignment antes de protection/extLst.
+      if not LAlignmentAdded and
+         (SameText(LChildName, 'protection') or
+          SameText(LChildName, 'extLst')) then
+      begin
+        LAlignment := LNewXf.AddChild(
+          'alignment',
+          CMainNS
+        );
+
+        LAlignment.Attributes['wrapText'] := '1';
+        LAlignmentAdded := True;
+      end;
+
+      LNewChild := LNewXf.AddChild(
+        LChildName,
+        CMainNS
+      );
+
+      CopyAttributes(LChild, LNewChild);
+      CopyChildren(LChild, LNewChild);
+
+      if SameText(LChildName, 'alignment') then
+      begin
+        LNewChild.Attributes['wrapText'] := '1';
+        LAlignmentAdded := True;
+      end;
+    end;
+
+    if not LAlignmentAdded then
+    begin
+      LAlignment := LNewXf.AddChild(
+        'alignment',
+        CMainNS
+      );
+
+      LAlignment.Attributes['wrapText'] := '1';
+    end;
+
+    Result := LCellXfs.ChildNodes.Count - 1;
+    LStyleMap.Add(AOriginalStyle, Result);
+  end;
+
+  function IsHistoricoCell(
+    const AReference: string): Boolean;
+  begin
+    Result :=
+      (Length(AReference) > 2) and
+      SameText(Copy(AReference, 1, 2), 'AB') and
+      CharInSet(AReference[3], ['0'..'9']);
+  end;
+
+begin
+  if not TFile.Exists(AFileName) then
+    raise Exception.CreateFmt(
+      'Arquivo XLSX não encontrado: %s',
+      [AFileName]
+    );
+
+  LTempDir := TPath.Combine(
+    TPath.GetTempPath,
+    'XlsxHistorico_' + TGUID.NewGuid.ToString
+  );
+
+  TDirectory.CreateDirectory(LTempDir);
+
+  LTempFile := TPath.Combine(
+    LTempDir,
+    'Acompanhamento.xlsx'
+  );
+
+  LStyleMap := TDictionary<Integer, Integer>.Create;
+  LZip := TZipFile.Create;
+
+  try
+    // Preserva o arquivo original.
+    TFile.Copy(AFileName, LTempFile, True);
+
+    // Extrai os XMLs necessários.
+    LZip.Open(LTempFile, zmRead);
+    try
+      LZip.Extract(CStylesFile, LTempDir, True);
+      LZip.Extract(CSheetFile, LTempDir, True);
+    finally
+      LZip.Close;
+    end;
+
+    LStylesPath := TPath.Combine(
+      LTempDir,
+      CStylesFile.Replace('/', PathDelim)
+    );
+
+    LSheetPath := TPath.Combine(
+      LTempDir,
+      CSheetFile.Replace('/', PathDelim)
+    );
+
+    LStylesDoc := LoadXmlFile(LStylesPath);
+    LSheetDoc := LoadXmlFile(LSheetPath);
+
+    LCellXfs := FindChild(
+      LStylesDoc.DocumentElement,
+      'cellXfs'
+    );
+
+    LSheetData := FindChild(
+      LSheetDoc.DocumentElement,
+      'sheetData'
+    );
+
+    if (LCellXfs = nil) or (LSheetData = nil) then
+      raise Exception.Create(
+        'Estrutura XLSX incompatível.'
+      );
+
+    // Aplica WrapText às células da coluna AB.
+    for I := 0 to LSheetData.ChildNodes.Count - 1 do
+    begin
+      LRow := LSheetData.ChildNodes[I];
+
+      if not SameText(LRow.LocalName, 'row') then
+        Continue;
+
+      if GetIntAttribute(LRow, 'r', 0) < 2 then
+        Continue;
+
+      for J := 0 to LRow.ChildNodes.Count - 1 do
+      begin
+        LCell := LRow.ChildNodes[J];
+
+        if not SameText(LCell.LocalName, 'c') then
+          Continue;
+
+        if not LCell.HasAttribute('r') then
+          Continue;
+
+        LCellRef := VarToStr(LCell.Attributes['r']);
+
+        if not IsHistoricoCell(LCellRef) then
+          Continue;
+
+        LOriginalStyle := GetIntAttribute(LCell, 's', 0);
+        LNewStyle := GetWrapStyle(LOriginalStyle);
+
+        LCell.Attributes['s'] := LNewStyle;
+
+        // Permite que o aplicativo recalcule a altura.
+        RemoveAttribute(LRow, 'ht');
+        RemoveAttribute(LRow, 'customHeight');
+      end;
+    end;
+
+    LCellXfs.Attributes['count'] :=
+      LCellXfs.ChildNodes.Count;
+
+    LStylesDoc.SaveToFile(LStylesPath);
+    LSheetDoc.SaveToFile(LSheetPath);
+
+    LStylesDoc := nil;
+    LSheetDoc := nil;
+
+    // Reconstrói o XLSX sem utilizar TZipFile.Delete.
+    RebuildXlsx(
+      LTempFile,
+      LStylesPath,
+      LSheetPath
+    );
+
+    // Valida a presença dos XMLs.
+    LZip.Open(LTempFile, zmRead);
+    try
+      if LZip.IndexOf(CStylesFile) < 0 then
+        raise Exception.Create(
+          'styles.xml não encontrado no XLSX.'
+        );
+
+      if LZip.IndexOf(CSheetFile) < 0 then
+        raise Exception.Create(
+          'sheet1.xml não encontrado no XLSX.'
+        );
+    finally
+      LZip.Close;
+    end;
+
+    // Atualiza o arquivo original.
+    TFile.Copy(LTempFile, AFileName, True);
+
+  finally
+    LZip.Free;
+    LStyleMap.Free;
+
+    if TDirectory.Exists(LTempDir) then
+      TDirectory.Delete(LTempDir, True);
+  end;
+end;
 
 procedure TfrmImpressaoProcessosOPFollowUp.bSairClick(Sender: TObject);
 begin
@@ -305,7 +721,7 @@ begin
         begin
           if ExtractFileExt(dlgSavePDF.FileName) = '' then
           begin
-            dlgSavePDF.FileName := ChangeFileExt(dlgSavePDF.FileName, '.xls');
+            dlgSavePDF.FileName := ChangeFileExt(dlgSavePDF.FileName, '.xlsx');
           end;
           SaveReportInXLS(dlgSavePDF.FileName);
         end;
@@ -387,18 +803,28 @@ begin
   end;
 end;
 
-procedure TfrmImpressaoProcessosOPFollowUp.SaveReportInXLS(const AFileName: string);
+procedure TfrmImpressaoProcessosOPFollowUp.SaveReportInXLS(
+  const AFileName: string);
 var
   LOldDevice: String;
+  LOldPreserveLineBreaks: Boolean;
 begin
   LOldDevice := pprXLS.DeviceType;
+  LOldPreserveLineBreaks := pprXLS.XLSSettings.PreserveLineBreaks;
   try
     pprXLS.ShowPrintDialog := False;
-    pprXLS.DeviceType := 'XLSData';
+    pprXLS.DeviceType := 'XlsxData';
     pprXLS.TextFileName := AFileName;
     pprXLS.PDFSettings.OpenPDFFile := False;
+
+    // Preserva as quebras de linha dos campos Memo.
+    pprXLS.XLSSettings.PreserveLineBreaks := True;
+
     pprXLS.Print;
+
+    FormatExcelHistorico(pprXLS.TextFileName);
   finally
+    pprXLS.XLSSettings.PreserveLineBreaks := LOldPreserveLineBreaks;
     pprXLS.DeviceType := LOldDevice;
   end;
 end;

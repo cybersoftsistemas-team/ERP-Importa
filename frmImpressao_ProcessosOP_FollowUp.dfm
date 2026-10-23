@@ -3,8 +3,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Acompanhamento de Processo (Follow-Up)'
-  ClientHeight = 564
-  ClientWidth = 784
+  ClientHeight = 440
+  ClientWidth = 666
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,14 +15,14 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   Position = poScreenCenter
   OnCreate = FormCreate
   DesignSize = (
-    784
-    564)
+    666
+    440)
   PixelsPerInch = 96
   TextHeight = 13
   object Image2: TImage
     Left = 0
     Top = 0
-    Width = 784
+    Width = 666
     Height = 46
     Align = alTop
     Stretch = True
@@ -89,7 +89,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 8
+    TabOrder = 9
     Transparent = False
     StyleElements = []
   end
@@ -120,7 +120,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   object cResponsavel: TRxDBLookupCombo
     Left = 86
     Top = 99
-    Width = 336
+    Width = 218
     Height = 21
     DropDownCount = 8
     Font.Charset = DEFAULT_CHARSET
@@ -134,12 +134,12 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     LookupDisplayIndex = 1
     LookupSource = dsoRES
     ParentFont = False
-    TabOrder = 9
+    TabOrder = 10
   end
   object cCliente: TRxDBLookupCombo
     Left = 86
     Top = 76
-    Width = 336
+    Width = 218
     Height = 21
     DropDownCount = 8
     Font.Charset = DEFAULT_CHARSET
@@ -360,10 +360,10 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     TabOrder = 4
   end
   object btnSearch: TButton
-    Left = 677
+    Left = 559
     Top = 53
-    Width = 85
-    Height = 28
+    Width = 98
+    Height = 27
     Anchors = [akTop, akRight]
     Caption = 'Pesquisar'
     TabOrder = 5
@@ -372,8 +372,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   object Grade: TDBGrid
     Left = 8
     Top = 200
-    Width = 767
-    Height = 297
+    Width = 649
+    Height = 201
     Anchors = [akLeft, akTop, akRight, akBottom]
     DataSource = dsoFLP
     Font.Charset = DEFAULT_CHARSET
@@ -384,7 +384,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Options = [dgTitles, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgMultiSelect]
     ParentFont = False
     ReadOnly = True
-    TabOrder = 19
+    TabOrder = 20
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
@@ -412,8 +412,19 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Visible = True
       end>
   end
+  object btnPrint: TButton
+    Left = 559
+    Top = 81
+    Width = 98
+    Height = 27
+    Anchors = [akTop, akRight]
+    Caption = 'Imprimir'
+    Enabled = False
+    TabOrder = 8
+    OnClick = btnPrintClick
+  end
   object rgEst: TRadioGroup
-    Left = 428
+    Left = 310
     Top = 49
     Width = 114
     Height = 140
@@ -427,7 +438,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     TabOrder = 0
   end
   object rgSit: TRadioGroup
-    Left = 548
+    Left = 430
     Top = 49
     Width = 123
     Height = 140
@@ -442,14 +453,24 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     TabOrder = 1
   end
   object btnClear: TButton
-    Left = 677
-    Top = 83
-    Width = 85
-    Height = 28
+    Left = 559
+    Top = 162
+    Width = 98
+    Height = 27
     Anchors = [akTop, akRight]
     Caption = 'Limpar'
-    TabOrder = 15
+    TabOrder = 16
     OnClick = btnClearClick
+  end
+  object btnSaveTo: TBitBtn
+    Left = 567
+    Top = 407
+    Width = 91
+    Height = 25
+    Caption = 'Salvar como...'
+    Enabled = False
+    TabOrder = 21
+    OnClick = btnSaveToClick
   end
   object txtProcesso: TStaticText
     Left = 11
@@ -471,7 +492,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 10
+    TabOrder = 11
     Transparent = False
     StyleElements = []
   end
@@ -481,7 +502,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Width = 106
     Height = 21
     CharCase = ecUpperCase
-    TabOrder = 11
+    TabOrder = 12
   end
   object txtDataPrevista: TStaticText
     Left = 10
@@ -503,7 +524,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 12
+    TabOrder = 13
     Transparent = False
     StyleElements = []
   end
@@ -595,7 +616,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     NumGlyphs = 2
     ParentFont = False
     YearDigits = dyFour
-    TabOrder = 13
+    TabOrder = 14
   end
   object dedDtPrevistaFim: TDateEdit
     Left = 197
@@ -685,7 +706,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     NumGlyphs = 2
     ParentFont = False
     YearDigits = dyFour
-    TabOrder = 14
+    TabOrder = 15
   end
   object txtDataChegada: TStaticText
     Left = 10
@@ -707,7 +728,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Font.Style = [fsBold]
     ParentColor = False
     ParentFont = False
-    TabOrder = 16
+    TabOrder = 17
     Transparent = False
     StyleElements = []
   end
@@ -799,7 +820,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     NumGlyphs = 2
     ParentFont = False
     YearDigits = dyFour
-    TabOrder = 17
+    TabOrder = 18
   end
   object dedDtChegadaFim: TDateEdit
     Left = 197
@@ -889,53 +910,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     NumGlyphs = 2
     ParentFont = False
     YearDigits = dyFour
-    TabOrder = 18
-  end
-  object Panel1: TPanel
-    AlignWithMargins = True
-    Left = 3
-    Top = 531
-    Width = 778
-    Height = 30
-    Align = alBottom
-    BevelOuter = bvLowered
-    TabOrder = 20
-    object btnSaveTo: TBitBtn
-      Left = 511
-      Top = 1
-      Width = 102
-      Height = 28
-      Align = alRight
-      Caption = 'Salvar como...'
-      Enabled = False
-      TabOrder = 0
-      OnClick = btnSaveToClick
-    end
-    object btnPrint: TButton
-      Left = 613
-      Top = 1
-      Width = 89
-      Height = 28
-      Align = alRight
-      Caption = 'Imprimir'
-      Enabled = False
-      TabOrder = 1
-      OnClick = btnPrintClick
-    end
-    object bSair: TButton
-      Left = 702
-      Top = 1
-      Width = 75
-      Height = 28
-      Cursor = crHandPoint
-      Hint = 'Fecha a janela atual e cancela os processos pendentes.'
-      Align = alRight
-      Caption = '&Sair'
-      ParentShowHint = False
-      ShowHint = True
-      TabOrder = 2
-      OnClick = bSairClick
-    end
+    TabOrder = 19
   end
   object pprFollowUp: TppReport
     AutoStop = False
@@ -943,7 +918,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -2313,7 +2288,6 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Style = []
         RemoveEmptyLines = False
         Stretch = True
-        TextAlignment = taFullJustified
         Transparent = True
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
@@ -2465,6 +2439,260 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     UserName = 'pFollowUp'
     Left = 69
     Top = 367
+    object dbpFollowUpppField1: TppField
+      FieldAlias = 'Processo'
+      FieldName = 'Processo'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 0
+    end
+    object dbpFollowUpppField2: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'ClienteCodigo'
+      FieldName = 'ClienteCodigo'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 1
+    end
+    object dbpFollowUpppField3: TppField
+      FieldAlias = 'ClienteNome'
+      FieldName = 'ClienteNome'
+      FieldLength = 50
+      DisplayWidth = 50
+      Position = 2
+    end
+    object dbpFollowUpppField4: TppField
+      FieldAlias = 'Tipo'
+      FieldName = 'Tipo'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 3
+    end
+    object dbpFollowUpppField5: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'ExportadorCodigo'
+      FieldName = 'ExportadorCodigo'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 4
+    end
+    object dbpFollowUpppField6: TppField
+      FieldAlias = 'Exportador'
+      FieldName = 'Exportador'
+      FieldLength = 60
+      DisplayWidth = 60
+      Position = 5
+    end
+    object dbpFollowUpppField7: TppField
+      FieldAlias = 'BL_AWB'
+      FieldName = 'BL_AWB'
+      FieldLength = 20
+      DisplayWidth = 20
+      Position = 6
+    end
+    object dbpFollowUpppField8: TppField
+      FieldAlias = 'CE_MERCANTE_RUC'
+      FieldName = 'CE_MERCANTE_RUC'
+      FieldLength = 32
+      DisplayWidth = 32
+      Position = 7
+    end
+    object dbpFollowUpppField9: TppField
+      FieldAlias = 'Container'
+      FieldName = 'Container'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 8
+      Searchable = False
+      Sortable = False
+    end
+    object dbpFollowUpppField10: TppField
+      FieldAlias = 'FREE_TIME'
+      FieldName = 'FREE_TIME'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 9
+      Searchable = False
+      Sortable = False
+    end
+    object dbpFollowUpppField11: TppField
+      FieldAlias = 'CANAL'
+      FieldName = 'CANAL'
+      FieldLength = 8
+      DisplayWidth = 8
+      Position = 10
+    end
+    object dbpFollowUpppField12: TppField
+      FieldAlias = 'DI/DUIMP'
+      FieldName = 'DI_DUIMP'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 11
+    end
+    object dbpFollowUpppField13: TppField
+      FieldAlias = 'Invoce'
+      FieldName = 'Invoce'
+      FieldLength = 40
+      DisplayWidth = 40
+      Position = 12
+    end
+    object dbpFollowUpppField14: TppField
+      FieldAlias = 'VALOR'
+      FieldName = 'VALOR'
+      FieldLength = 0
+      DataType = dtCurrency
+      DisplayWidth = 10
+      Position = 13
+    end
+    object dbpFollowUpppField15: TppField
+      FieldAlias = 'LI'
+      FieldName = 'LI'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 14
+    end
+    object dbpFollowUpppField16: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'ModalCodigo'
+      FieldName = 'ModalCodigo'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 15
+    end
+    object dbpFollowUpppField17: TppField
+      FieldAlias = 'ModalDescricao'
+      FieldName = 'ModalDescricao'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 16
+    end
+    object dbpFollowUpppField18: TppField
+      FieldAlias = 'TIPO_IMPORTACAO'
+      FieldName = 'TIPO_IMPORTACAO'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 17
+    end
+    object dbpFollowUpppField19: TppField
+      FieldAlias = 'Agente_Carga'
+      FieldName = 'Agente_Carga'
+      FieldLength = 40
+      DisplayWidth = 40
+      Position = 18
+    end
+    object dbpFollowUpppField20: TppField
+      Alignment = taRightJustify
+      FieldAlias = 'DESPACHANTE_CODIGO'
+      FieldName = 'DESPACHANTE_CODIGO'
+      FieldLength = 0
+      DataType = dtInteger
+      DisplayWidth = 10
+      Position = 19
+    end
+    object dbpFollowUpppField21: TppField
+      FieldAlias = 'DESPACHANTE_NOME'
+      FieldName = 'DESPACHANTE_NOME'
+      FieldLength = 60
+      DisplayWidth = 60
+      Position = 20
+    end
+    object dbpFollowUpppField22: TppField
+      FieldAlias = 'Origem'
+      FieldName = 'Origem'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 21
+    end
+    object dbpFollowUpppField23: TppField
+      FieldAlias = 'Destino'
+      FieldName = 'Destino'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 22
+    end
+    object dbpFollowUpppField24: TppField
+      FieldAlias = 'EMBARQUE'
+      FieldName = 'EMBARQUE'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 23
+    end
+    object dbpFollowUpppField25: TppField
+      FieldAlias = 'PREVISAO_CHEGADA'
+      FieldName = 'PREVISAO_CHEGADA'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 24
+    end
+    object dbpFollowUpppField26: TppField
+      FieldAlias = 'CHEGADA'
+      FieldName = 'CHEGADA'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 25
+    end
+    object dbpFollowUpppField27: TppField
+      FieldAlias = 'Documentos'
+      FieldName = 'Documentos'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 26
+    end
+    object dbpFollowUpppField28: TppField
+      FieldAlias = 'PRESENCA_CARGA'
+      FieldName = 'PRESENCA_CARGA'
+      FieldLength = 0
+      DataType = dtDateTime
+      DisplayWidth = 18
+      Position = 27
+    end
+    object dbpFollowUpppField29: TppField
+      FieldAlias = 'HISTORICO_PROCESSO'
+      FieldName = 'HISTORICO_PROCESSO'
+      FieldLength = 0
+      DataType = dtMemo
+      DisplayWidth = 10
+      Position = 28
+      Searchable = False
+      Sortable = False
+    end
+    object dbpFollowUpppField30: TppField
+      FieldAlias = 'Nome_Transporte'
+      FieldName = 'Nome_Transporte'
+      FieldLength = 30
+      DisplayWidth = 30
+      Position = 29
+    end
+    object dbpFollowUpppField31: TppField
+      FieldAlias = 'Transporte_Viagem'
+      FieldName = 'Transporte_Viagem'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 30
+    end
+    object dbpFollowUpppField32: TppField
+      FieldAlias = 'Responsavel'
+      FieldName = 'Responsavel'
+      FieldLength = 15
+      DisplayWidth = 15
+      Position = 31
+    end
+    object dbpFollowUpppField33: TppField
+      FieldAlias = 'LPCO'
+      FieldName = 'LPCO'
+      FieldLength = 3
+      DisplayWidth = 3
+      Position = 32
+    end
   end
   object qryFLP: TMSQuery
     Connection = Dados.Banco_Empresas
@@ -2598,10 +2826,8 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       '     ('
       '         SELECT'
       '               CHAR(13) + CHAR(10)'
-      '             + CONVERT(VARCHAR(10), PRH.Data, 23)'
-      '             + '#39' '#39
-      '             + CONVERT(VARCHAR(5), PRH.Hora, 108)'
-      '             + '#39' - '#39
+      '             + CONVERT(VARCHAR(5), PRH.Data, 103)'
+      '             + '#39': '#39
       '             + CAST(PRH.Descricao AS VARCHAR(MAX))'
       '               COLLATE DATABASE_DEFAULT'
       '         FROM ProcessosHistorico AS PRH'
@@ -2742,6 +2968,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       ');')
     AfterOpen = qryFLPAfterOpen
     AfterClose = qryFLPAfterClose
+    Active = True
     Left = 41
     Top = 339
     ParamData = <
@@ -2791,22 +3018,22 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       item
         DataType = ftUnknown
         Name = 'PrevisaoChegadaInicial'
-        Value = nil
+        Value = Null
       end
       item
         DataType = ftUnknown
         Name = 'PrevisaoChegadaFinal'
-        Value = nil
+        Value = Null
       end
       item
         DataType = ftUnknown
         Name = 'ChegadaInicial'
-        Value = nil
+        Value = Null
       end
       item
         DataType = ftUnknown
         Name = 'ChegadaFinal'
-        Value = nil
+        Value = Null
       end>
     object qryFLPProcesso: TStringField
       FieldName = 'Processo'
@@ -4727,7 +4954,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
   end
   object dlgSavePDF: TSaveDialog
     FileName = 'Acompanhamento FollowUp'
-    Filter = 'Documento PDF (*.pdf)|*.pdf|Microsoft Excel (*.xls)|*.xls'
+    Filter = 'Documento PDF (*.pdf)|*.pdf|Microsoft Excel (*.xlsx)|*.xlsx'
     Left = 125
     Top = 311
   end
@@ -4788,7 +5015,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Report'
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -4800,7 +5027,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     PrinterSetup.PaperSize = 9
     ArchiveFileName = '($MyDocuments)\ReportArchive.raf'
     DeviceType = 'Screen'
-    DefaultFileDeviceType = 'PDF'
+    DefaultFileDeviceType = 'XlsxData'
     EmailSettings.ReportFormat = 'PDF'
     LanguageID = 'Default'
     OpenFile = False
@@ -4832,7 +5059,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     RTFSettings.DefaultFont.Height = -13
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
-    TextFileName = '($MyDocuments)\Report.pdf'
+    TextFileName = '($MyDocuments)\Report.xlsx'
     TextSearchSettings.DefaultString = '<Texto a localizar>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
@@ -4840,7 +5067,6 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     XLSSettings.DefaultBands = [btHeader, btTitle, btDetail]
     XLSSettings.ExportComponents = [ecText, ecRichText]
     XLSSettings.IncludeSingleHeader = True
-    XLSSettings.ScaleToPageWidth = True
     XLSSettings.Subject = 'Report'
     XLSSettings.Title = 'Report'
     XLSSettings.WorksheetName = 'Report'
@@ -6107,11 +6333,10 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         BandType = 4
         LayerName = BandLayer2
       end
-      object ppDBMemo2: TppDBMemo
+      object ppDBMemo2: TppDBText
         DesignLayer = ppDesignLayer1
         UserName = 'DBMemo2'
         Border.mmPadding = 0
-        CharWrap = False
         DataField = 'HISTORICO_PROCESSO'
         DataPipeline = dbpFollowUp
         Font.Charset = DEFAULT_CHARSET
@@ -6119,9 +6344,6 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Font.Name = 'Arial'
         Font.Size = 3
         Font.Style = []
-        RemoveEmptyLines = False
-        Stretch = True
-        TextAlignment = taFullJustified
         Transparent = True
         DataPipelineName = 'dbpFollowUp'
         mmHeight = 1852
@@ -6130,11 +6352,6 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         mmWidth = 17456
         BandType = 4
         LayerName = BandLayer2
-        mmBottomOffset = 0
-        mmOverFlowOffset = 0
-        mmStopPosition = 0
-        mmMinHeight = 0
-        mmLeading = 0
       end
       object ppDBText54: TppDBText
         DesignLayer = ppDesignLayer1
