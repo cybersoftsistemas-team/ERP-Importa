@@ -480,9 +480,12 @@ Var
     mValor_BCIS,
     mValor_IS,
     mValor_BCICMSPresumido,
-    mValor_ICMSPresumido: Currency;
+    mValor_ICMSPresumido,
+    mValor_Liquido,
+    mValor_ICMSAntecipado: Currency;
     
     mRateioDespesa: Double;
+    
     mTextoLimpo: WideString;
     mUF: String;
 begin
@@ -553,6 +556,8 @@ begin
         mValor_IBS              := 0;
         mValor_BCIS             := 0;
         mValor_IS               := 0;
+        mValor_Liquido          := 0;
+        mValor_ICMSAntecipado   := 0;
 
         // Calcula todos os campos de valores totais do pedido.
         With Dados, dmFiscal do Begin
@@ -614,6 +619,8 @@ begin
                      PedidosValor_IBS.Value              := 0;
                      PedidosValor_BCIS.Value             := 0;
                      PedidosValor_IS.Value               := 0;
+                     PedidosValor_Liquido.Value          := 0;
+                     PedidosValor_ICMSAntecipado.Value   := 0;
              Pedidos.Post;
 
              Progresso.Max      := PedidosItens.RecordCount;
@@ -682,6 +689,7 @@ begin
 
                       PedidosItens.Edit;
                                    mValor_TotalProdutos := mValor_TotalProdutos + RoundTo(PedidosItensValor_Total.Value, -2);
+                                   mValor_Liquido       := mValor_Liquido + RoundTo(PedidosItensValor_Liquido.Value * PedidosItensQuantidade.asfloat, -2);
 
                                    // Executa o rateio das despesas caso tenha sido informado na capa do pedido.
                                    If PedidosRatear_Despesa.AsBoolean then begin
@@ -776,14 +784,16 @@ begin
                                             PedidosItensValor_COFINSST.Value := RoundTo(CalculaMacro('Calculo_COFINSST'), -2);
                                       end;
 
-                                      mBCICMS            := mBCICMS + Roundto(PedidosItensValor_BCICMSOper.Value, -2);
-                                      mValorICMS         := mValorICMS + PedidosItensValor_ICMSOper.AsCurrency;
-                                      mValorICMS_Reducao := mValorICMS_Reducao + PedidosItensValor_ICMSReducao.Value;
+                                      mBCICMS               := mBCICMS + Roundto(PedidosItensValor_BCICMSOper.Value, -2);
+                                      mValorICMS            := mValorICMS + PedidosItensValor_ICMSOper.AsCurrency;
+                                      mValorICMS_Reducao    := mValorICMS_Reducao + PedidosItensValor_ICMSReducao.Value;
+
                                       if mValorICMS <> 0 then
                                          mAliquota_ICMSOper := PedidosItensAliquota_ICMSOper.Value
                                       else
                                          mAliquota_ICMSOper := 0;
                                    end;
+                                   mValor_ICMSAntecipado := mValor_ICMSAntecipado + RoundTo(PedidosItensValor_ICMSAntecipado.Value * PedidosItensQuantidade.asfloat, -2);
 
                                    // Totaliza o ICMS monofasico e o ICMS crédito presumido.
                                    mValor_ICMSMono        := mValor_ICMSMono        + PedidosItensValor_ICMSMono.AsCurrency;
@@ -1045,6 +1055,8 @@ begin
                      PedidosValor_BCICMSMonoRet.Value   := mValor_BCICMSMonoRet;
                      PedidosValor_BCICMSPresumido.Value := mValor_BCICMSPresumido;
                      PedidosValor_ICMSPresumido.Value   := mValor_ICMSPresumido;
+                     PedidosValor_Liquido.Value         := mValor_Liquido;
+                     PedidosValor_ICMSAntecipado.Value  := mValor_ICMSAntecipado;
              Pedidos.Post;
 
              // Rateio do valor total da nota para os itens.
@@ -1554,6 +1566,9 @@ begin
                     PedidosItensValor_ICMSOper.Value    := 0;
                  end;
               End;
+              if Trim(TipoNotaFormula_VlrLiquido.AsString) <> '' then begin
+                 PedidosItensValor_Liquido.Value := CalculaMacro('Calculo_VlrLiquido');
+              end;
               if Trim(TipoNotaFormula_MercadoriaImp.AsString) <> '' then begin
                  PedidosItensValor_Unitario.Value := CalculaMacro('Calculo_MercadoriaImp');
                  Recalcula;
@@ -2925,6 +2940,11 @@ begin
                          end;
                       end;
                  end;
+              end;
+
+              // Calculo do ICMS Antecipado.
+              if TipoNotaCalculo_VlrICMSAnt.Value <> '' then begin
+                 PedidosItensValor_ICMSAntecipado.value := roundto(CalculaMacro('Calculo_VlrICMSAnt'), -2);
               end;
               
               // Aliquota de PIS/COFINS.

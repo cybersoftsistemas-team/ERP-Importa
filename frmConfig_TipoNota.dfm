@@ -181,7 +181,7 @@ object Config_TipoNota: TConfig_TipoNota
     Top = 45
     Width = 750
     Height = 656
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
     Align = alClient
     TabHeight = 28
     TabOrder = 1
@@ -2686,7 +2686,7 @@ object Config_TipoNota: TConfig_TipoNota
           Caption = 'C'#225'lculos dos &Itens '
           object bUnitario: TButton
             Left = 1
-            Top = 43
+            Top = 76
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para a Base de C'#225'lculo do ICMS'
@@ -2704,7 +2704,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object Button1: TButton
             Left = 1
-            Top = 76
+            Top = 109
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para a Base de C'#225'lculo do ICMS'
@@ -2722,7 +2722,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo1: TDBMemo
             Left = 120
-            Top = 43
+            Top = 76
             Width = 120
             Height = 31
             TabStop = False
@@ -2743,7 +2743,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo2: TDBMemo
             Left = 120
-            Top = 142
+            Top = 175
             Width = 120
             Height = 31
             TabStop = False
@@ -2764,7 +2764,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo3: TDBMemo
             Left = 120
-            Top = 175
+            Top = 208
             Width = 120
             Height = 31
             TabStop = False
@@ -2785,7 +2785,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bBCIPI: TButton
             Left = 1
-            Top = 109
+            Top = 142
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para a Base de C'#225'lculo do ICMS'
@@ -2803,7 +2803,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo12: TDBMemo
             Left = 120
-            Top = 109
+            Top = 142
             Width = 120
             Height = 31
             TabStop = False
@@ -2824,7 +2824,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bBCICMS: TButton
             Left = 1
-            Top = 142
+            Top = 175
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para a Base de C'#225'lculo do ICMS'
@@ -2842,7 +2842,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bVlICMS: TButton
             Left = 1
-            Top = 175
+            Top = 208
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para o Valor do ICMS'
@@ -2860,7 +2860,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo13: TDBMemo
             Left = 120
-            Top = 208
+            Top = 241
             Width = 120
             Height = 31
             TabStop = False
@@ -2881,7 +2881,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bBCMVA: TButton
             Left = 1
-            Top = 208
+            Top = 241
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para a Base de C'#225'lculo do ICMS Substitui'#231#227'o'
@@ -2899,7 +2899,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo14: TDBMemo
             Left = 120
-            Top = 241
+            Top = 274
             Width = 120
             Height = 31
             TabStop = False
@@ -2920,7 +2920,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bValorMVA: TButton
             Left = 1
-            Top = 241
+            Top = 274
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para a Base de C'#225'lculo do ICMS Substitui'#231#227'o'
@@ -2938,7 +2938,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo4: TDBMemo
             Left = 120
-            Top = 274
+            Top = 307
             Width = 120
             Height = 31
             TabStop = False
@@ -2959,7 +2959,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo5: TDBMemo
             Left = 120
-            Top = 307
+            Top = 340
             Width = 120
             Height = 31
             TabStop = False
@@ -2980,7 +2980,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo9: TDBMemo
             Left = 120
-            Top = 439
+            Top = 472
             Width = 120
             Height = 31
             TabStop = False
@@ -3001,7 +3001,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo6: TDBMemo
             Left = 120
-            Top = 340
+            Top = 373
             Width = 120
             Height = 31
             TabStop = False
@@ -3022,7 +3022,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo7: TDBMemo
             Left = 120
-            Top = 472
+            Top = 505
             Width = 120
             Height = 31
             TabStop = False
@@ -3043,7 +3043,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo10: TDBMemo
             Left = 120
-            Top = 406
+            Top = 439
             Width = 120
             Height = 31
             TabStop = False
@@ -3064,7 +3064,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bBCISMCSub: TButton
             Left = 1
-            Top = 274
+            Top = 307
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para a Base de C'#225'lculo do ICMS Substitui'#231#227'o'
@@ -3082,7 +3082,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bVlICMSSub: TButton
             Left = 1
-            Top = 307
+            Top = 340
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para o Valor do ICMS Substitui'#231#227'o'
@@ -3100,7 +3100,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bReducaoICMS: TButton
             Left = 1
-            Top = 340
+            Top = 373
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para o Valor do ICMS Substitui'#231#227'o'
@@ -3118,7 +3118,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bTotalSeguro: TButton
             Left = 1
-            Top = 406
+            Top = 439
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para o Valor total do seguro'
@@ -3136,7 +3136,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bDespesas: TButton
             Left = 1
-            Top = 439
+            Top = 472
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para o Valor de Outras Despesas Acess'#243'rias'
@@ -3154,7 +3154,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bProdutoImpostos: TButton
             Left = 1
-            Top = 472
+            Top = 505
             Width = 118
             Height = 31
             Hint = 
@@ -3412,7 +3412,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo24: TDBMemo
             Left = 120
-            Top = 76
+            Top = 109
             Width = 120
             Height = 31
             TabStop = False
@@ -3433,7 +3433,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo8: TDBMemo
             Left = 120
-            Top = 373
+            Top = 406
             Width = 120
             Height = 31
             TabStop = False
@@ -3454,7 +3454,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object bTotalFrete: TButton
             Left = 1
-            Top = 373
+            Top = 406
             Width = 118
             Height = 31
             Hint = 'Definir a f'#243'rmula para o Valor total do frete'
@@ -4038,7 +4038,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object Button17: TButton
             Left = 485
-            Top = 208
+            Top = 241
             Width = 118
             Height = 31
             Hint = 'Valor da base de c'#225'lculo do CBS'
@@ -4056,7 +4056,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo39: TDBMemo
             Left = 605
-            Top = 208
+            Top = 241
             Width = 120
             Height = 31
             TabStop = False
@@ -4077,7 +4077,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object Button18: TButton
             Left = 485
-            Top = 274
+            Top = 307
             Width = 118
             Height = 31
             Hint = 'Valor Base de c'#225'lculo do IS'
@@ -4095,7 +4095,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo40: TDBMemo
             Left = 605
-            Top = 274
+            Top = 307
             Width = 120
             Height = 31
             TabStop = False
@@ -4116,7 +4116,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object Button19: TButton
             Left = 485
-            Top = 241
+            Top = 274
             Width = 118
             Height = 31
             Hint = 'Valor do CBS'
@@ -4134,7 +4134,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo41: TDBMemo
             Left = 605
-            Top = 241
+            Top = 274
             Width = 120
             Height = 31
             TabStop = False
@@ -4155,7 +4155,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object Button20: TButton
             Left = 485
-            Top = 307
+            Top = 340
             Width = 118
             Height = 31
             Hint = 'Valor do IS'
@@ -4173,7 +4173,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo42: TDBMemo
             Left = 605
-            Top = 307
+            Top = 340
             Width = 120
             Height = 31
             TabStop = False
@@ -4194,7 +4194,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo43: TDBMemo
             Left = 605
-            Top = 175
+            Top = 208
             Width = 120
             Height = 31
             TabStop = False
@@ -4215,7 +4215,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object Button21: TButton
             Left = 485
-            Top = 175
+            Top = 208
             Width = 118
             Height = 31
             Hint = 'Valor do IBS'
@@ -4233,7 +4233,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object DBMemo44: TDBMemo
             Left = 605
-            Top = 142
+            Top = 175
             Width = 120
             Height = 31
             TabStop = False
@@ -4254,7 +4254,7 @@ object Config_TipoNota: TConfig_TipoNota
           end
           object Button22: TButton
             Left = 485
-            Top = 142
+            Top = 175
             Width = 118
             Height = 31
             Hint = 'Valor da Base de C'#225'lculo do IBS'
@@ -4269,6 +4269,86 @@ object Config_TipoNota: TConfig_TipoNota
             ShowHint = True
             TabOrder = 77
             OnClick = Button22Click
+          end
+          object Button23: TButton
+            Left = 1
+            Top = 43
+            Width = 118
+            Height = 31
+            Hint = 'Definir a f'#243'rmula para a Base de C'#225'lculo do ICMS'
+            Caption = 'Valor &L'#237'quido'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlue
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 78
+            OnClick = Button23Click
+          end
+          object DBMemo45: TDBMemo
+            Left = 120
+            Top = 43
+            Width = 120
+            Height = 31
+            TabStop = False
+            Color = 13565951
+            Ctl3D = True
+            DataField = 'Formula_VlrLiquido'
+            DataSource = Dados.dsTipoNota
+            Enabled = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -9
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentCtl3D = False
+            ParentFont = False
+            ReadOnly = True
+            TabOrder = 79
+          end
+          object Button24: TButton
+            Left = 485
+            Top = 142
+            Width = 118
+            Height = 31
+            Hint = 
+              'Valor Unit'#225'rio do Produto com impostos que s'#227'o calculados sobre ' +
+              'o valor do produto.'
+            Caption = 'ICMS Antecipado'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlue
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 80
+            OnClick = Button24Click
+          end
+          object DBMemo46: TDBMemo
+            Left = 605
+            Top = 142
+            Width = 120
+            Height = 31
+            TabStop = False
+            Color = 13565951
+            Ctl3D = True
+            DataField = 'Formula_VlrICMSAnt'
+            DataSource = Dados.dsTipoNota
+            Enabled = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlack
+            Font.Height = -9
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentCtl3D = False
+            ParentFont = False
+            ReadOnly = True
+            TabOrder = 81
           end
         end
         object TabSheet7: TTabSheet

@@ -1,8 +1,47 @@
 FlexDocs Documentos Eletrônicos
 
-DLL de utilidades da NF-e - NFe_Util_2G_v5.02b (C) 2008-2026 - Todos os direitos reservados
+DLL de utilidades da NF-e - NFe_Util_2G_v5.03a (C) 2008-2026 - Todos os direitos reservados
 
 Vide guia on-line, disponível em www.flexdocs.net/guiaNFe
+
+2026-10-09 - correções diversas
+
+  * [RTC-5.0.3a-001] - correção da quantidade de casas decimais do vBCMonoRet
+
+  * [RTC-5.0.3a-002] - validaAssinatura - alteração para permitir a validação da assinatura digital de XML que tenham mais de uma assinatura digital
+                                          a validação da assinatura será realizada somente na primeira assinatura digital encontrada e as demais assinaturas serão ignoradas.
+
+
+2026-09-10
+
+   * [RTC-5.0.3-001] - gIBSCBSMono da v1.50
+
+     public string gIBSCBSMonov150(string gIBSMonoAdRem_Opc, string gIBSMonoAdValorem_Opc, string gCBSMonoAdRem_Opc, string gCBSMonoAdValorem_Opc, double vTotIBSMonoItem, double vTotCBSMonoItem)
+
+   * [RTC-5.0.3-002] - gIBSMonoAdRem
+
+     public string gIBSMonoAdRem(double qBCMono_Opc, double adRemIBS_Opc, double vIBSMono_Opc, double qBCMonoReten_Opc, double adRemIBSReten_Opc, double vIBSMonoReten_Opc, double vIBSMonoRet_Opc, double qBCBioComb_Opc, double vIBSDiferenca_Opc)
+
+   * [RTC-5.0.3-003] - gIBSMonoAdValorem
+
+     public string gIBSMonoAdValorem(double vBCMono_Opc, double pAliqMonoUF_Opc, double vIBSMonoUF_Opc, double pAliqMonoMun_Opc, double vIBSMonoMun_Opc, double vIBSMono_Opc, double vBCMonoReten_Opc, double pAliqMonoReten_Opc, double vIBSMonoReten_Opc, double vIBSMonoRet_Opc, double qBCBioComb_Opc, double vIBSDiferenca_Opc)
+
+   * [RTC-5.0.3-004] - gCBSMonoAdRem
+
+     public string gCBSMonoAdRem(double qBCMono_Opc, double adRemCBS_Opc, double vCBSMono_Opc, double qBCMonoReten_Opc, double adRemCBSReten_Opc, double vCBSMonoReten_Opc, double vCBSMonoRet_Opc, double qBCBioComb_Opc, double vCBSDiferenca_Opc)
+
+   * [RTC-5.0.3-005] - gCBSMonoAdValorem
+
+     public string gCBSMonoAdValorem(double vBCMono_Opc, double pAliqMonoCBS_Opc, double vCBSMono_Opc, double vBCMonoReten_Opc, double pAliqMonoReten_Opc, double vCBSMonoReten_Opc, double vCBSMonoRet_Opc, double qBCBioComb_Opc, double vCBSDiferenca_Opc)
+
+   * [RTC-5.0.3-006] - tratamento para o CNPJ alfa não ultrapassar o quadro no geraPdfDANFE
+
+   * [RTC-5.0.3-007] - alteração para permitir a omissão de qualquer tributo no grupo imposto
+
+   * [RTC-5.0.3-008] - alteração para permitir a omissão da IE nos dados do emitente da NF-e para contribuinte exclusivo do IBS/CBS - NT2026/007
+
+   * [RTC-5.0.3-009] - alteração para aceitar o "Autorizado o uso da NF-e, com alerta” (cStat = 120) como situação de NF-e autorizada
+
 
 2026-07-07
 

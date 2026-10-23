@@ -3144,3 +3144,22 @@ alter table Adicoes add Valor_CBS money
                        ,Valor_IBSEstadual money
                        ,Valor_IBSMunicipal money
 go
+
+--[23/10/2026 10:47:00]
+alter table TipoNota add Formula_VlrLiquido text
+                        ,Calculo_VlrLiquido text
+                        ,Formula_VlrICMSAnt text
+                        ,Calculo_VlrICMSAnt text
+go
+alter table PedidosItens add Valor_Liquido money
+                            ,Valor_ICMSAntecipado money
+go
+alter table NotasItens add Valor_Liquido money
+                          ,Valor_ICMSAntecipado money
+go
+alter table Pedidos add Valor_Liquido money
+                       ,Valor_ICMSAntecipado money
+go
+alter table NotasFiscais add Valor_Liquido money
+                            ,Valor_ICMSAntecipado money
+go

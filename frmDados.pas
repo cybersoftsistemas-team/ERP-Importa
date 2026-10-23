@@ -4589,6 +4589,14 @@ type
     AdicoesValor_CBS: TCurrencyField;
     AdicoesValor_IBSEstadual: TCurrencyField;
     AdicoesValor_IBSMunicipal: TCurrencyField;
+    PedidosItensValor_Liquido: TCurrencyField;
+    PedidosItensValor_ICMSAntecipado: TCurrencyField;
+    PedidosValor_Liquido: TCurrencyField;
+    PedidosValor_ICMSAntecipado: TCurrencyField;
+    TipoNotaFormula_VlrLiquido: TMemoField;
+    TipoNotaCalculo_VlrLiquido: TMemoField;
+    TipoNotaFormula_VlrICMSAnt: TMemoField;
+    TipoNotaCalculo_VlrICMSAnt: TMemoField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);

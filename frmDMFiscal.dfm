@@ -155,7 +155,8 @@ object dmFiscal: TdmFiscal
         ', Valor_BCICMSPresumido, Valor_ICMSPresumido, CCe, Exonerada, In' +
         'centivo_Codigo, Aliquota_ICMSPresumido, Valor_BCDIFALST, DIFAL_V' +
         'alorST, Valor_BCPISST, Valor_BCCOFINSST, Valor_IPIDevol, Valor_B' +
-        'CIBS, Valor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_IS)'
+        'CIBS, Valor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_IS, V' +
+        'alor_Liquido, Valor_ICMSAntecipado)'
       'VALUES'
       
         '  (:Numero, :Pedido, :Saida_Entrada, :Data_Emissao, :Data_Entrad' +
@@ -213,7 +214,7 @@ object dmFiscal: TdmFiscal
         ':Incentivo_Codigo, :Aliquota_ICMSPresumido, :Valor_BCDIFALST, :D' +
         'IFAL_ValorST, :Valor_BCPISST, :Valor_BCCOFINSST, :Valor_IPIDevol' +
         ', :Valor_BCIBS, :Valor_IBS, :Valor_BCCBS, :Valor_CBS, :Valor_BCI' +
-        'S, :Valor_IS)')
+        'S, :Valor_IS, :Valor_Liquido, :Valor_ICMSAntecipado)')
     SQLDelete.Strings = (
       'DELETE FROM NotasFiscais'
       'WHERE'
@@ -334,7 +335,8 @@ object dmFiscal: TdmFiscal
         'COFINSST = :Valor_BCCOFINSST, Valor_IPIDevol = :Valor_IPIDevol, ' +
         'Valor_BCIBS = :Valor_BCIBS, Valor_IBS = :Valor_IBS, Valor_BCCBS ' +
         '= :Valor_BCCBS, Valor_CBS = :Valor_CBS, Valor_BCIS = :Valor_BCIS' +
-        ', Valor_IS = :Valor_IS'
+        ', Valor_IS = :Valor_IS, Valor_Liquido = :Valor_Liquido, Valor_IC' +
+        'MSAntecipado = :Valor_ICMSAntecipado'
       'WHERE'
       
         '  Numero = :Old_Numero AND Saida_Entrada = :Old_Saida_Entrada AN' +
@@ -393,7 +395,7 @@ object dmFiscal: TdmFiscal
         ', Incentivo_Codigo, Aliquota_ICMSPresumido, Valor_BCDIFALST, DIF' +
         'AL_ValorST, Valor_BCPISST, Valor_BCCOFINSST, Valor_IPIDevol, Val' +
         'or_BCIBS, Valor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_I' +
-        'S FROM NotasFiscais'
+        'S, Valor_Liquido, Valor_ICMSAntecipado FROM NotasFiscais'
       'WHERE'
       
         '  Numero = :Numero AND Saida_Entrada = :Saida_Entrada AND Data_E' +
@@ -1355,6 +1357,12 @@ object dmFiscal: TdmFiscal
     object NotasValor_IS: TCurrencyField
       FieldName = 'Valor_IS'
     end
+    object NotasValor_Liquido: TCurrencyField
+      FieldName = 'Valor_Liquido'
+    end
+    object NotasValor_ICMSAntecipado: TCurrencyField
+      FieldName = 'Valor_ICMSAntecipado'
+    end
   end
   object dsNotasItens: TDataSource
     DataSet = NotasItens
@@ -1405,7 +1413,8 @@ object dmFiscal: TdmFiscal
         ' Valor_BCCOFINSST, Valor_IPIDevol, Percentual_IPIDevol, Valor_BC' +
         'IBS, Aliquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Valor_C' +
         'BS, Valor_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS, Valor_COF' +
-        'INSDiferenca, Item_Referencia)'
+        'INSDiferenca, Item_Referencia, Valor_Liquido, Valor_ICMSAntecipa' +
+        'do)'
       'VALUES'
       
         '  (:Nota, :Data, :Item, :Sequencia_SISCOMEX, :Codigo_Mercadoria,' +
@@ -1451,7 +1460,7 @@ object dmFiscal: TdmFiscal
         ':Percentual_IPIDevol, :Valor_BCIBS, :Aliquota_IBS, :Valor_IBS, :' +
         'Valor_BCCBS, :Aliquota_CBS, :Valor_CBS, :Valor_BCIS, :Aliquota_I' +
         'S, :Valor_IS, :CSTIBS, :CSTCBS, :Valor_COFINSDiferenca, :Item_Re' +
-        'ferencia)')
+        'ferencia, :Valor_Liquido, :Valor_ICMSAntecipado)')
     SQLDelete.Strings = (
       'DELETE FROM NotasItens'
       'WHERE'
@@ -1549,7 +1558,8 @@ object dmFiscal: TdmFiscal
         ':Valor_CBS, Valor_BCIS = :Valor_BCIS, Aliquota_IS = :Aliquota_IS' +
         ', Valor_IS = :Valor_IS, CSTIBS = :CSTIBS, CSTCBS = :CSTCBS, Valo' +
         'r_COFINSDiferenca = :Valor_COFINSDiferenca, Item_Referencia = :I' +
-        'tem_Referencia'
+        'tem_Referencia, Valor_Liquido = :Valor_Liquido, Valor_ICMSAnteci' +
+        'pado = :Valor_ICMSAntecipado'
       'WHERE'
       
         '  Nota = :Old_Nota AND Data = :Old_Data AND Item = :Old_Item AND' +
@@ -1597,7 +1607,8 @@ object dmFiscal: TdmFiscal
         'SST, Valor_BCCOFINSST, Valor_IPIDevol, Percentual_IPIDevol, Valo' +
         'r_BCIBS, Aliquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Val' +
         'or_CBS, Valor_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS, Valor' +
-        '_COFINSDiferenca, Item_Referencia FROM NotasItens'
+        '_COFINSDiferenca, Item_Referencia, Valor_Liquido, Valor_ICMSAnte' +
+        'cipado FROM NotasItens'
       'WHERE'
       
         '  Nota = :Nota AND Data = :Data AND Item = :Item AND Sequencia_S' +
@@ -2308,6 +2319,12 @@ object dmFiscal: TdmFiscal
     end
     object NotasItensItem_Referencia: TSmallintField
       FieldName = 'Item_Referencia'
+    end
+    object NotasItensValor_Liquido: TCurrencyField
+      FieldName = 'Valor_Liquido'
+    end
+    object NotasItensValor_ICMSAntecipado: TCurrencyField
+      FieldName = 'Valor_ICMSAntecipado'
     end
   end
   object dsNotasTerceirosItens: TDataSource

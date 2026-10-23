@@ -5619,7 +5619,8 @@ object Dados: TDados
         ' Valor_COFINSST, Valor_BCICMSPresumido, Valor_ICMSPresumido, Inc' +
         'entivo_Codigo, Aliquota_ICMSPresumido, Valor_BCDIFALST, DIFAL_Va' +
         'lorST, Valor_BCPISST, Valor_BCCOFINSST, Valor_IPIDevol, Valor_BC' +
-        'IBS, Valor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_IS)'
+        'IBS, Valor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_IS, Va' +
+        'lor_Liquido, Valor_ICMSAntecipado)'
       'VALUES'
       
         '  (:Numero, :Saida_Entrada, :Data_Emissao, :Data_EntradaSaida, :' +
@@ -5674,7 +5675,7 @@ object Dados: TDados
         'Codigo, :Aliquota_ICMSPresumido, :Valor_BCDIFALST, :DIFAL_ValorS' +
         'T, :Valor_BCPISST, :Valor_BCCOFINSST, :Valor_IPIDevol, :Valor_BC' +
         'IBS, :Valor_IBS, :Valor_BCCBS, :Valor_CBS, :Valor_BCIS, :Valor_I' +
-        'S)')
+        'S, :Valor_Liquido, :Valor_ICMSAntecipado)')
     SQLDelete.Strings = (
       'DELETE FROM Pedidos'
       'WHERE'
@@ -5786,7 +5787,9 @@ object Dados: TDados
         ', Valor_BCPISST = :Valor_BCPISST, Valor_BCCOFINSST = :Valor_BCCO' +
         'FINSST, Valor_IPIDevol = :Valor_IPIDevol, Valor_BCIBS = :Valor_B' +
         'CIBS, Valor_IBS = :Valor_IBS, Valor_BCCBS = :Valor_BCCBS, Valor_' +
-        'CBS = :Valor_CBS, Valor_BCIS = :Valor_BCIS, Valor_IS = :Valor_IS'
+        'CBS = :Valor_CBS, Valor_BCIS = :Valor_BCIS, Valor_IS = :Valor_IS' +
+        ', Valor_Liquido = :Valor_Liquido, Valor_ICMSAntecipado = :Valor_' +
+        'ICMSAntecipado'
       'WHERE'
       '  Numero = :Old_Numero')
     SQLRefresh.Strings = (
@@ -5840,7 +5843,7 @@ object Dados: TDados
         ' Incentivo_Codigo, Aliquota_ICMSPresumido, Valor_BCDIFALST, DIFA' +
         'L_ValorST, Valor_BCPISST, Valor_BCCOFINSST, Valor_IPIDevol, Valo' +
         'r_BCIBS, Valor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_IS' +
-        ' FROM Pedidos'
+        ', Valor_Liquido, Valor_ICMSAntecipado FROM Pedidos'
       'WHERE'
       '  Numero = :Numero')
     SQLLock.Strings = (
@@ -6162,7 +6165,7 @@ object Dados: TDados
       FieldName = 'NFe_Protocolo'
       Origin = 'Pedidos.NFe_Protocolo'
       FixedChar = True
-      Size = 15
+      Size = 17
     end
     object PedidosNfe_DataProtocolo: TDateTimeField
       FieldName = 'Nfe_DataProtocolo'
@@ -6768,6 +6771,12 @@ object Dados: TDados
     object PedidosValor_IS: TCurrencyField
       FieldName = 'Valor_IS'
     end
+    object PedidosValor_Liquido: TCurrencyField
+      FieldName = 'Valor_Liquido'
+    end
+    object PedidosValor_ICMSAntecipado: TCurrencyField
+      FieldName = 'Valor_ICMSAntecipado'
+    end
   end
   object dsPedidos: TDataSource
     DataSet = Pedidos
@@ -6817,7 +6826,8 @@ object Dados: TDados
         ', Valor_BCCOFINSST, Valor_IPIDevol, Percentual_IPIDevol, Valor_B' +
         'CIBS, Aliquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Valor_' +
         'CBS, Valor_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS, Valor_CO' +
-        'FINSDiferenca, Item_Referencia)'
+        'FINSDiferenca, Item_Referencia, Valor_Liquido, Valor_ICMSAntecip' +
+        'ado)'
       'VALUES'
       
         '  (:Pedido, :Item, :Sequencia_SISCOMEX, :Codigo_Mercadoria, :Cod' +
@@ -6862,7 +6872,7 @@ object Dados: TDados
         'centual_IPIDevol, :Valor_BCIBS, :Aliquota_IBS, :Valor_IBS, :Valo' +
         'r_BCCBS, :Aliquota_CBS, :Valor_CBS, :Valor_BCIS, :Aliquota_IS, :' +
         'Valor_IS, :CSTIBS, :CSTCBS, :Valor_COFINSDiferenca, :Item_Refere' +
-        'ncia)')
+        'ncia, :Valor_Liquido, :Valor_ICMSAntecipado)')
     SQLDelete.Strings = (
       'DELETE FROM PedidosItens'
       'WHERE'
@@ -6958,7 +6968,8 @@ object Dados: TDados
         'BS, Valor_BCIS = :Valor_BCIS, Aliquota_IS = :Aliquota_IS, Valor_' +
         'IS = :Valor_IS, CSTIBS = :CSTIBS, CSTCBS = :CSTCBS, Valor_COFINS' +
         'Diferenca = :Valor_COFINSDiferenca, Item_Referencia = :Item_Refe' +
-        'rencia'
+        'rencia, Valor_Liquido = :Valor_Liquido, Valor_ICMSAntecipado = :' +
+        'Valor_ICMSAntecipado'
       'WHERE'
       
         '  Pedido = :Old_Pedido AND Item = :Old_Item AND Sequencia_SISCOM' +
@@ -7005,7 +7016,8 @@ object Dados: TDados
         'ISST, Valor_BCCOFINSST, Valor_IPIDevol, Percentual_IPIDevol, Val' +
         'or_BCIBS, Aliquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Va' +
         'lor_CBS, Valor_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS, Valo' +
-        'r_COFINSDiferenca, Item_Referencia FROM PedidosItens'
+        'r_COFINSDiferenca, Item_Referencia, Valor_Liquido, Valor_ICMSAnt' +
+        'ecipado FROM PedidosItens'
       'WHERE'
       
         '  Pedido = :Pedido AND Item = :Item AND Sequencia_SISCOMEX = :Se' +
@@ -7783,6 +7795,12 @@ object Dados: TDados
     end
     object PedidosItensItem_Referencia: TSmallintField
       FieldName = 'Item_Referencia'
+    end
+    object PedidosItensValor_Liquido: TCurrencyField
+      FieldName = 'Valor_Liquido'
+    end
+    object PedidosItensValor_ICMSAntecipado: TCurrencyField
+      FieldName = 'Valor_ICMSAntecipado'
     end
   end
   object dsPedidosItens: TDataSource
@@ -15537,6 +15555,7 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
+    Connected = True
     LoginPrompt = False
     Left = 87
     Top = 14
@@ -20560,7 +20579,9 @@ object Dados: TDados
         'S, Formula_BCIS, Calculo_BCIS, Formula_VlrIS, Calculo_VlrIS, Cla' +
         'ssificacao_Tributaria, IBS_Isencao, IBS_Imunidade, IBS_Diferido,' +
         ' IBS_Suspensao, CBS_Isencao, CBS_Imunidade, CBS_Diferido, CBS_Su' +
-        'spensao, Visiveis_II, Tipo_NFDebito, Tipo_NFCredito)'
+        'spensao, Visiveis_II, Tipo_NFDebito, Tipo_NFCredito, Formula_Vlr' +
+        'Liquido, Calculo_VlrLiquido, Formula_VlrICMSAnt, Calculo_VlrICMS' +
+        'Ant)'
       'VALUES'
       
         '  (:Codigo, :Saida_Entrada, :Descricao, :Inf_Complementares, :Li' +
@@ -20637,7 +20658,9 @@ object Dados: TDados
         'S, :Calculo_BCIS, :Formula_VlrIS, :Calculo_VlrIS, :Classificacao' +
         '_Tributaria, :IBS_Isencao, :IBS_Imunidade, :IBS_Diferido, :IBS_S' +
         'uspensao, :CBS_Isencao, :CBS_Imunidade, :CBS_Diferido, :CBS_Susp' +
-        'ensao, :Visiveis_II, :Tipo_NFDebito, :Tipo_NFCredito)')
+        'ensao, :Visiveis_II, :Tipo_NFDebito, :Tipo_NFCredito, :Formula_V' +
+        'lrLiquido, :Calculo_VlrLiquido, :Formula_VlrICMSAnt, :Calculo_Vl' +
+        'rICMSAnt)')
     SQLDelete.Strings = (
       'DELETE FROM TipoNota'
       'WHERE'
@@ -20795,7 +20818,10 @@ object Dados: TDados
         ':IBS_Suspensao, CBS_Isencao = :CBS_Isencao, CBS_Imunidade = :CBS' +
         '_Imunidade, CBS_Diferido = :CBS_Diferido, CBS_Suspensao = :CBS_S' +
         'uspensao, Visiveis_II = :Visiveis_II, Tipo_NFDebito = :Tipo_NFDe' +
-        'bito, Tipo_NFCredito = :Tipo_NFCredito'
+        'bito, Tipo_NFCredito = :Tipo_NFCredito, Formula_VlrLiquido = :Fo' +
+        'rmula_VlrLiquido, Calculo_VlrLiquido = :Calculo_VlrLiquido, Form' +
+        'ula_VlrICMSAnt = :Formula_VlrICMSAnt, Calculo_VlrICMSAnt = :Calc' +
+        'ulo_VlrICMSAnt'
       'WHERE'
       '  Codigo = :Old_Codigo')
     SQLRefresh.Strings = (
@@ -20870,8 +20896,9 @@ object Dados: TDados
         'lrCBS, Formula_BCIS, Calculo_BCIS, Formula_VlrIS, Calculo_VlrIS,' +
         ' Classificacao_Tributaria, IBS_Isencao, IBS_Imunidade, IBS_Difer' +
         'ido, IBS_Suspensao, CBS_Isencao, CBS_Imunidade, CBS_Diferido, CB' +
-        'S_Suspensao, Visiveis_II, Tipo_NFDebito, Tipo_NFCredito FROM Tip' +
-        'oNota'
+        'S_Suspensao, Visiveis_II, Tipo_NFDebito, Tipo_NFCredito, Formula' +
+        '_VlrLiquido, Calculo_VlrLiquido, Formula_VlrICMSAnt, Calculo_Vlr' +
+        'ICMSAnt FROM TipoNota'
       'WHERE'
       '  Codigo = :Codigo')
     SQLLock.Strings = (
@@ -21998,6 +22025,22 @@ object Dados: TDados
     end
     object TipoNotaTipo_NFCredito: TSmallintField
       FieldName = 'Tipo_NFCredito'
+    end
+    object TipoNotaFormula_VlrLiquido: TMemoField
+      FieldName = 'Formula_VlrLiquido'
+      BlobType = ftMemo
+    end
+    object TipoNotaCalculo_VlrLiquido: TMemoField
+      FieldName = 'Calculo_VlrLiquido'
+      BlobType = ftMemo
+    end
+    object TipoNotaFormula_VlrICMSAnt: TMemoField
+      FieldName = 'Formula_VlrICMSAnt'
+      BlobType = ftMemo
+    end
+    object TipoNotaCalculo_VlrICMSAnt: TMemoField
+      FieldName = 'Calculo_VlrICMSAnt'
+      BlobType = ftMemo
     end
   end
   object CondicaoCambial: TMSQuery

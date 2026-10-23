@@ -457,6 +457,10 @@ type
     StaticText79: TStaticText;
     cTipoCred: TRxDBComboBox;
     SpeedButton3: TSpeedButton;
+    Button23: TButton;
+    DBMemo45: TDBMemo;
+    Button24: TButton;
+    DBMemo46: TDBMemo;
     procedure FormShow(Sender: TObject);
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -550,6 +554,8 @@ type
     procedure Button18Click(Sender: TObject);
     procedure Button20Click(Sender: TObject);
     procedure SpeedButton3Click(Sender: TObject);
+    procedure Button23Click(Sender: TObject);
+    procedure Button24Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -1324,6 +1330,26 @@ begin
       Config_TipoNotaFormula.mNomeFormula   := 'Formula_BCIBS';
       Config_TipoNotaFormula.mNomeCalculo   := 'Calculo_BCIBS';
       Config_TipoNotaFormula.lCampo.Caption := 'Fórmula do campo : Valor da BC IBS';
+      Config_TipoNotaFormula.ShowModal;
+end;
+
+procedure TConfig_TipoNota.Button23Click(Sender: TObject);
+begin
+     Config_TipoNotaFormula := TConfig_TipoNotaFormula.Create(Self);
+     Config_TipoNotaFormula.Caption        := 'Fórmula para cálculo do Valor unitário líquido.';
+     Config_TipoNotaFormula.mNomeFormula   := 'Formula_VlrLiquido';
+     Config_TipoNotaFormula.mNomeCalculo   := 'Calculo_VlrLiquido';
+     Config_TipoNotaFormula.lCampo.Caption := 'Fórmula do campo : Valor líquido unitário do Produto';
+     Config_TipoNotaFormula.ShowModal;
+end;
+
+procedure TConfig_TipoNota.Button24Click(Sender: TObject);
+begin
+      Config_TipoNotaFormula := TConfig_TipoNotaFormula.Create(Self);
+      Config_TipoNotaFormula.Caption        := 'Fórmula para cálculo do Valor do ICMS Antecipado';
+      Config_TipoNotaFormula.mNomeFormula   := 'Formula_VlrICMSAnt';
+      Config_TipoNotaFormula.mNomeCalculo   := 'Calculo_VlrICMSAnt';
+      Config_TipoNotaFormula.lCampo.Caption := 'Fórmula do campo : Valor do ICMS Antecipado';
       Config_TipoNotaFormula.ShowModal;
 end;
 

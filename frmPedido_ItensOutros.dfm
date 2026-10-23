@@ -285,6 +285,10 @@ object Pedido_ItensOutros: TPedido_ItensOutros
     TabWidth = 120
     object TabSheet1: TTabSheet
       Caption = '&Item da Nota'
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       DesignSize = (
         968
         524)

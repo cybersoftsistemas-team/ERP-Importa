@@ -1519,11 +1519,24 @@ begin
               tbProcesso.Open;
               mMovimento := mMovimento + tbProcesso.FieldByName('Qtde').AsInteger;
 
-              tbProcesso.SQL.Clear;
-              tbProcesso.SQL.Add('SELECT COUNT(*) AS Qtde FROM NotasItens WHERE(Processo = :pProcesso) AND (LTRIM(RTRIM(Processo)) <> '''') AND (Processo IS NOT NULL)');
-              tbProcesso.ParamByName('pProcesso').AsString := ProcessosDOCProcesso.AsString;
-              tbProcesso.Open;
-              mMovimento := mMovimento + tbProcesso.FieldByName('Qtde').AsInteger;
+//              tbProcesso.SQL.Clear;
+//              tbProcesso.SQL.Add('SELECT COUNT(*) AS Qtde FROM NotasItens WHERE(Processo = :pProcesso) AND (LTRIM(RTRIM(Processo)) <> '''') AND (Processo IS NOT NULL)');
+//              tbProcesso.ParamByName('pProcesso').AsString := ProcessosDOCProcesso.AsString;
+//              tbProcesso.Open;
+//              mMovimento := mMovimento + tbProcesso.FieldByName('Qtde').AsInteger;
+              with tbProcesso do begin
+                   SQL.Clear;
+                   SQL.Add('select count(*) as Qtde');
+                   sql.add('from NotasItens');
+                   sql.add('where Processo = :pProcesso');
+                   sql.add('and ltrim(rtrim(Processo)) <> '''' ');
+                   sql.add('and Processo is not null');
+                   sql.add('and Cancelada <> 1');
+                   sql.add('and nfe_Denegada <> 1');
+                   parambyname('pProcesso').asstring := ProcessosDOCProcesso.AsString;
+                   Open;
+                   mMovimento := mMovimento + fieldbyname('Qtde').AsInteger;
+              end;
 
               If mMovimento > 0 then begin
                  MessageDlg('Atenção!'+#13+#13+'Existe movimento para este processo.'+#13+#13+'O Processo não pode ser excluído.', mtInformation, [mbOK], 0);

@@ -1311,6 +1311,10 @@ begin
 
                         // Caculando o valor do produto sem impostos.
                         // Se houver valor informado pelo usuario utiliza-o ao inves do valor unitario calculado.
+                        if Trim(TipoNotaFormula_VlrLiquido.AsString) <> '' then begin
+                           PedidosItensValor_Liquido.Value := CalculaMacro('Calculo_VlrLiquido');
+                        end;
+                        
                         PedidosItensValor_Unitario.Value := mValorInformado;
                         if mValorInformado <= 0 then begin
                            if Trim(TipoNotaCalculo_Mercadoria.AsString) <> '' then begin
@@ -1748,12 +1752,15 @@ begin
                         if trim(TipoNotaCalculo_BCCBS.AsString)  <> '' then PedidosItensValor_BCCBS.Value := RoundTo(CalculaMacro('Calculo_BCCBS'), -2);
                         if trim(TipoNotaCalculo_VlrCBS.AsString) <> '' then begin 
                            PedidosItensValor_CBS.Value := RoundTo(CalculaMacro('Calculo_VlrCBS'), -2);
-//                           if PedidosItensValor_CBS.Value < 0.005 then PedidosItensValor_CBS.Value := 0.005;
                         end;
                         if trim(TipoNotaCalculo_BCIBS.AsString)  <> '' then PedidosItensValor_BCIBS.Value := RoundTo(CalculaMacro('Calculo_BCIBS'), -2);
                         if trim(TipoNotaCalculo_VlrIBS.AsString) <> '' then begin 
                            PedidosItensValor_IBS.Value := RoundTo(CalculaMacro('Calculo_VlrIBS'), -2);
-//                           if PedidosItensValor_IBS.Value < 0.005 then PedidosItensValor_IBS.Value := 0.005;
+                        end;
+
+                        // Calculo do ICMS Antecipado.
+                        if TipoNotaCalculo_VlrICMSAnt.Value <> '' then begin
+                           PedidosItensValor_ICMSAntecipado.value := roundto(CalculaMacro('Calculo_VlrICMSAnt'), -2);
                         end;
 
                         // Código de situação tributaria do ICMS e apuração de "Isentas e Outras" de ICMS.
@@ -3608,7 +3615,10 @@ Var
     mValor_IBS,
     mValor_BCIS,
     mValor_IS,
-    mValor_ICMSPresumido: Currency;
+    mValor_ICMSPresumido,
+    mValor_Liquido,
+    mValor_ICMSAntecipado: Currency;
+
 begin
      Application.ShowHint := false;
 
@@ -3686,6 +3696,8 @@ begin
      mValor_IBS              := 0;
      mValor_BCIS             := 0;
      mValor_IS               := 0;
+     mValor_Liquido          := 0;
+     mValor_ICMSAntecipado   := 0;
 
      // Calula todos os campos de valores totais do pedido.
      With Dados do Begin
@@ -3793,6 +3805,8 @@ begin
                    mValor_IBS             := mValor_IBS             + PedidosItensValor_IBS.AsCurrency;
                    mValor_BCIS            := mValor_BCIS            + PedidosItensValor_BCIS.AsCurrency;
                    mValor_IS              := mValor_IS              + PedidosItensValor_IS.AsCurrency;
+                   mValor_Liquido         := mValor_Liquido         + Roundto(PedidosItensValor_Liquido.ascurrency * PedidosItensQuantidade.asfloat, -2);
+                   mValor_ICMSAntecipado  := mValor_ICMSAntecipado  + Roundto(PedidosItensValor_ICMSAntecipado.ascurrency * PedidosItensQuantidade.asfloat, -2);
 
                    PedidosItens.Edit;
                                 mValor_TotalProdutos := Roundto(mValor_TotalProdutos + PedidosItensValor_Total.Value, -4);
@@ -4035,13 +4049,14 @@ begin
                      PedidosValor_BCICMSMonoRet.Value   := mValor_BCICMSMonoRet;
                      PedidosValor_BCICMSPresumido.Value := mValor_BCICMSPresumido;
                      PedidosValor_ICMSPresumido.Value   := mValor_ICMSPresumido;
-                     
-                     PedidosValor_BCCBS.value := mValor_BCCBS;
-                     PedidosValor_CBS.value   := mValor_CBS;
-                     PedidosValor_BCIBS.Value := mValor_BCIBS;
-                     PedidosValor_IBS.value   := mValor_IBS;
-                     PedidosValor_BCIS.value  := mValor_BCIS;
-                     PedidosValor_IS.value    := mValor_IS;
+                     PedidosValor_BCCBS.value           := mValor_BCCBS;
+                     PedidosValor_CBS.value             := mValor_CBS;
+                     PedidosValor_BCIBS.Value           := mValor_BCIBS;
+                     PedidosValor_IBS.value             := mValor_IBS;
+                     PedidosValor_BCIS.value            := mValor_BCIS;
+                     PedidosValor_IS.value              := mValor_IS;
+                     PedidosValor_Liquido.Value         := mValor_Liquido;
+                     PedidosValor_ICMSAntecipado.Value  := mValor_ICMSAntecipado;
              Pedidos.Post;
 
              If Trim(TipoNotaCalculo_OutrasDespesas.AsString) <> '' then begin

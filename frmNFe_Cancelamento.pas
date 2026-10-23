@@ -1153,6 +1153,8 @@ begin
                    PedidosValor_BCICMSPresumido.Value  := NotasValor_BCICMSPresumido.Value;
                    PedidosValor_ICMSPresumido.Value    := NotasValor_ICMSPresumido.Value;
                    PedidosIncentivo_Codigo.Value       := NotasIncentivo_Codigo.Value;
+                   PedidosValor_Liquido.Value          := NotasValor_Liquido.value;
+                   PedidosValor_ICMSAntecipado.Value   := NotasValor_ICMSAntecipado.Value;
            Pedidos.Post;
            tPedido.Close;
 
@@ -1342,6 +1344,8 @@ begin
                               PedidosItensValor_IBS.Value              := NotasItensValor_IBS.Value;
                               PedidosItensCSTIBS.Value                 := NotasItensCSTIBS.Value;
                               PedidosItensValor_COFINSDiferenca.Value  := NotasItensValor_COFINSDiferenca.Value;
+                              PedidosItensValor_Liquido.Value          := NotasItensValor_Liquido.value;
+                              PedidosItensValor_ICMSAntecipado.Value   := NotasItensValor_ICMSAntecipado.Value;
                  PedidosItens.Post;
 
                  // Posiciona o estoque com os itens.

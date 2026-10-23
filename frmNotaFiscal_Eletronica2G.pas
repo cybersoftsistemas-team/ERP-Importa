@@ -1862,6 +1862,8 @@ begin
                  NotasValor_IBS.Value                  := PedidosValor_IBS.ascurrency;
                  NotasValor_BCIS.Value                 := PedidosValor_BCIS.ascurrency;
                  NotasValor_IS.Value                   := PedidosValor_IS.ascurrency;
+                 NotasValor_Liquido.Value              := PedidosValor_Liquido.ascurrency;
+                 NotasValor_ICMSAntecipado.Value       := PedidosValor_ICMSAntecipado.ascurrency;
            Notas.Post;
 
            // Capa da nota salva.
@@ -2200,6 +2202,8 @@ begin
                             NotasItensValor_IS.Value               := PedidosItensValor_IS.ascurrency;
                             NotasItensCSTCBS.Value                 := PedidosItensCSTCBS.asstring;
                             NotasItensCSTIBS.Value                 := PedidosItensCSTIBS.asstring;
+                            NotasItensValor_Liquido.Value          := PedidosItensValor_Liquido.ascurrency;
+                            NotasItensValor_ICMSAntecipado.Value   := PedidosItensValor_ICMSAntecipado.ascurrency;
                  NotasItens.Post;                                     
 
                  // Adiciona o item a ficha de Estoque.
@@ -5027,8 +5031,7 @@ begin
            if PedidosItensValor_ICMSPresumido.Ascurrency > 0 then begin
               _CredPresumido := Util.CredPresumido(PedidosItensCodigo_CredPres.AsString          // 01.Informar o Código de Benefício Fiscal de Crédito Presumido utilizado pela UF.
                                                   ,0                                             // 02.Informar o percentual do crédito presumido relativo ao código do crédito presumido informado.
-                                                  ,0                                             // 03.Informar o valor do crédito presumido relativo ao código do crédito presumido informado.
-                                                  );
+                                                  ,0);                                           // 03.Informar o valor do crédito presumido relativo ao código do crédito presumido informado.
            end;
 
            // Monta a TAG dos produtos.
@@ -5066,6 +5069,44 @@ begin
                                           ,_CredPresumido                                                        // 32.Informar o grupo de Informa  es do Cr dito Presumido.
                                           ,0                                                                     // 33.Informar o Indicador de fornecimento de bem móvel usado.
                                           ,'');                                                                  // 35.informar a Classificação para subapuração do IBS na ZFM.
+           {
+           _produto := Util.produtoRTCvProdLiq(mCodigoProd                                                                 // 01.informar o código do produto ou serviço.
+                                              ,mGTIN                                                                       // 02.informar o GTIN (Global Trade Item Number) do produto, antigo c digo EAN ou c digo de barras.
+                                              ,mDescricao                                                                  // 03.informar a descrição do produto ou servi o.
+                                              ,PedidosItensNCM.Value                                                       // 04.nformar o Codigo NCM com 8 d gitos.
+                                              ,''                                                                          // 05.Codifica o NVE-Nomenclatura Valor Aduaneiro e Estat stica, Codifica  o opcional que detalha alguns NCM.
+                                              ,PedidosItensCEST.Value                                                      // 06.informar Código Especificador da Substitui  o Tribut ria - CEST.
+                                              ,mEscala                                                                     // 07.Indicador de Produção em escala relevante.
+                                              ,ProdutosCNPJ_Fabricante.AsString                                            // 08.CNPJ do Fabricante da Mercadoria, obrigat rio para produto em escala N O relevante.
+                                              ,PedidosItensBeneficio_Fiscal.AsString                                       // 09.Código de Benef cio Fiscal utilizado pela UF, aplicado ao item.
+                                              ,Trim(NCMCodigo_EXTIPI.AsString)                                             // 10.EXTIPI.
+                                              ,PedidosItensNatureza_Codigo.AsInteger                                       // 11.C digo da CFOP.
+                                              ,RemoveCaracterXML(PedidosItensUnidade_Medida.AsString)                      // 12.informar a unidade de comercialização do produto.
+                                              ,FormatFloat('0.0000', mQuantidade)                                          // 13.nformar a quantidade de comercialização do do produto.
+                                              ,FormatFloat('0.0000000000', PedidosItensValor_Unitario.Value)               // 14.Informar o valor unitario de comercializa o do produto.
+                                              ,PedidosItensValor_Total.AsCurrency                                          // 15.informar o valor total bruto do produto ou serviços.
+                                              ,RemoveCaracterXML(mGTINUnidade)                                             // 16.informar o GTIN (Global Trade Item Number) da unidade de tributa  o do produto.
+                                              ,RemoveCaracterXML(ProdutosUnidade_Origem.Value)                             // 17.informar a unidade de tributação do produto.
+                                              ,FormatFloat('0.0000', Roundto(mQtdeTrib, -4))                               // 18.Qtde Tributação.
+                                              ,FormatFloat('0.0000000000', mValTrib)                                       // 19.Valor Unitario de tributação.
+                                              ,mValorFrete                                                                 // 20.Valor Frete.
+                                              ,0                                                                           // 21.Valor Seguro.
+                                              ,mDesconto                                                                   // 22.Valor Desconto.
+                                              ,mDespesa                                                                    // 23.Valor Outros.
+                                              ,1                                                                           // 24.Este campo devera ser preenchido com: 0 - o valor do item (vProd) n o comp e o valor total da NF-e (vProd).
+                                              ,_DI                                                                         // 25.informar o XML do grupo DI - dados da importa  o nas opera  es de importa  o.
+                                              ,_Exporta                                                                    // 26.Detalhamento da exportação.
+                                              ,_Especifico                                                                 // 27.informar o XML do grupo - detalhamento de espec fico.
+                                              ,PedidosItensPO.AsString                                                     // 28.informar o n mero do pedido de compra, o campo   de livre uso do emissor.
+                                              ,PedidosItensOrdem.AsString                                                  // 29.informar o n mero do item do pedido de compra, o campo   de livre uso do emissor.
+                                              ,''                                                                          // 30.informar o N mero de controle da FCI - Ficha de Conte do de Importa  o com formata  o.
+                                              ,_lote                                                                       // 31.N mero de controle da FCI - Ficha de Conte do de Importa  o.
+                                              ,_CredPresumido                                                              // 32.Informar o grupo de Informa  es do Cr dito Presumido.
+                                              ,0                                                                           // 33.Informar o Indicador de fornecimento de bem móvel usado.
+                                              ,''                                                                          // 35.informar a Classificação para subapuração do IBS na ZFM.
+                                              ,PedidosItensValor_Liquido.ascurrency                                        // 36.informar o valor Líquido Unitário do Produto ou Serviço (sem IBS/CBS).
+                                              ,(PedidosItensValor_Liquido.ascurrency * PedidosItensQuantidade.asfloat));   // 37.informar o Valor Líquido do Produto ou Serviço (sem IBS/CBS).
+            }
 
            mDesoneracao := 0;
            if (PedidosItensSaida_Entrada.Value = 1) and (ClientesDesoneracao.AsInteger > 0) then begin
