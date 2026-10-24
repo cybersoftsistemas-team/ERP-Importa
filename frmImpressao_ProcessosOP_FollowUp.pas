@@ -255,103 +255,133 @@ uses
   frmDados,
   System.IOUtils,
   System.Zip,
+  System.Math,
   System.Generics.Collections,
-  Xml.XMLIntf,
-  Xml.XMLDoc;
+  Xml.XMLDoc,
+  Xml.XMLIntf;
 
 procedure RebuildXlsx(
   const AXlsxFile: string;
-  const AStylesPath: string;
-  const ASheetPath: string);
-const
-  CStylesFile = 'xl/styles.xml';
-  CSheetFile = 'xl/worksheets/sheet1.xml';
+  const AModifiedFiles: TDictionary<string, string>);
 var
-  LSourceZip: TZipFile;
-  LTargetZip: TZipFile;
+  LSource: TZipFile;
+  LTarget: TZipFile;
   LNewFile: string;
   LEntry: string;
-  LEntries: TArray<string>;
+  LReplacement: string;
   LBytes: TBytes;
   LStream: TBytesStream;
+  LEntries: TArray<string>;
 begin
   LNewFile := AXlsxFile + '.new';
 
   if TFile.Exists(LNewFile) then
     TFile.Delete(LNewFile);
 
-  LSourceZip := TZipFile.Create;
-  LTargetZip := TZipFile.Create;
+  LSource := TZipFile.Create;
+  LTarget := TZipFile.Create;
   try
-    LSourceZip.Open(AXlsxFile, zmRead);
+    LSource.Open(AXlsxFile, zmRead);
     try
-      LTargetZip.Open(LNewFile, zmWrite);
+      LTarget.Open(LNewFile, zmWrite);
       try
-        LEntries := LSourceZip.FileNames;
+        LEntries := LSource.FileNames;
 
         for LEntry in LEntries do
         begin
-          if SameText(LEntry, CStylesFile) then
+          if AModifiedFiles.TryGetValue(LEntry, LReplacement) then
           begin
-            LTargetZip.Add(AStylesPath, CStylesFile);
+            LTarget.Add(LReplacement, LEntry);
             Continue;
           end;
 
-          if SameText(LEntry, CSheetFile) then
-          begin
-            LTargetZip.Add(ASheetPath, CSheetFile);
-            Continue;
-          end;
-
-          LSourceZip.Read(LEntry, LBytes);
+          LSource.Read(LEntry, LBytes);
 
           LStream := TBytesStream.Create(LBytes);
           try
-            LTargetZip.Add(LStream, LEntry);
+            LTarget.Add(LStream, LEntry);
           finally
             LStream.Free;
           end;
         end;
       finally
-        LTargetZip.Close;
+        LTarget.Close;
       end;
     finally
-      LSourceZip.Close;
+      LSource.Close;
     end;
 
+    // Substitui apenas depois da criação do novo arquivo.
     TFile.Copy(LNewFile, AXlsxFile, True);
-    TFile.Delete(LNewFile);
   finally
-    LTargetZip.Free;
-    LSourceZip.Free;
+    LTarget.Free;
+    LSource.Free;
+
+    if TFile.Exists(LNewFile) then
+      TFile.Delete(LNewFile);
   end;
 end;
 
-procedure FormatExcelHistorico(const AFileName: string);
+
+procedure FormatExcelHistorico(
+  const AFileName: string;
+  const AColumn: string);
 const
   CStylesFile = 'xl/styles.xml';
   CSheetFile = 'xl/worksheets/sheet1.xml';
+  CSharedStringsFile = 'xl/sharedStrings.xml';
   CMainNS =
     'http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+  CHistoryWidth = 80.0;
+  CMinWidth = 10.0;
+  CMaxWidth = 65.0;
+  CRowHeight = 15.0;
+  CMaxRowHeight = 409.5;
 var
   LZip: TZipFile;
+  LFiles: TDictionary<string, string>;
+  LStyleMap: TDictionary<Integer, Integer>;
+  LWidths: TDictionary<Integer, Double>;
+  LSharedStrings: TStringList;
   LStylesDoc: IXMLDocument;
   LSheetDoc: IXMLDocument;
+  LStringsDoc: IXMLDocument;
+  LFonts: IXMLNode;
   LCellXfs: IXMLNode;
   LSheetData: IXMLNode;
+  LCols: IXMLNode;
   LRow: IXMLNode;
   LCell: IXMLNode;
+  LNode: IXMLNode;
+  LNewNode: IXMLNode;
+  LOriginalXf: IXMLNode;
   LNewXf: IXMLNode;
   LAlignment: IXMLNode;
-  LStyleMap: TDictionary<Integer, Integer>;
-  LOriginalStyle: Integer;
-  LNewStyle: Integer;
-  LCellRef: string;
+  LFont: IXMLNode;
+  LFontNode: IXMLNode;
   LTempDir: string;
   LTempFile: string;
   LStylesPath: string;
   LSheetPath: string;
-  I, J: Integer;
+  LStringsPath: string;
+  LHistoryColumn: Integer;
+  LColumnIndex: Integer;
+  LMaxColumn: Integer;
+  LOriginalStyle: Integer;
+  LNewStyle: Integer;
+  LFontId: Integer;
+  LCellText: string;
+  LCellType: string;
+  LCellRef: string;
+  LHeight: Double;
+  LWidth: Double;
+  LValue: IXMLNode;
+  LStringIndex: Integer;
+  LLineCount: Integer;
+  I, J, K: Integer;
+  LMergeCells: IXMLNode;
+  LMergeCell: IXMLNode;
+  LMergeExists: Boolean;
 
   function FindChild(
     const AParent: IXMLNode;
@@ -368,6 +398,103 @@ var
       if SameText(AParent.ChildNodes[N].LocalName, AName) then
         Exit(AParent.ChildNodes[N]);
   end;
+
+  procedure MergeFirstRowAB;
+  const
+    CMergeRange = 'A1:B1';
+  var
+    LRoot: IXMLNode;
+    LMergeCells: IXMLNode;
+    LMergeCell: IXMLNode;
+    LChild: IXMLNode;
+    LReferenceNode: IXMLNode;
+    I: Integer;
+  begin
+    LRoot := LSheetDoc.DocumentElement;
+
+    LMergeCells := FindChild(LRoot, 'mergeCells');
+
+    if LMergeCells <> nil then
+    begin
+      // Evita criar uma mesclagem duplicada.
+      for I := 0 to LMergeCells.ChildNodes.Count - 1 do
+      begin
+        LChild := LMergeCells.ChildNodes[I];
+
+        if SameText(LChild.LocalName, 'mergeCell') and
+           LChild.HasAttribute('ref') and
+           SameText(
+             VarToStr(LChild.Attributes['ref']),
+             CMergeRange
+           ) then
+          Exit;
+      end;
+    end
+    else
+    begin
+      LMergeCells := LRoot.AddChild(
+        'mergeCells',
+        CMainNS
+      );
+
+      // Procura o primeiro elemento que deve aparecer
+      // depois de mergeCells na estrutura worksheet.
+      LReferenceNode := nil;
+
+      for I := 0 to LRoot.ChildNodes.Count - 1 do
+      begin
+        LChild := LRoot.ChildNodes[I];
+
+        if SameText(LChild.LocalName, 'phoneticPr') or
+           SameText(LChild.LocalName, 'conditionalFormatting') or
+           SameText(LChild.LocalName, 'dataValidations') or
+           SameText(LChild.LocalName, 'hyperlinks') or
+           SameText(LChild.LocalName, 'printOptions') or
+           SameText(LChild.LocalName, 'pageMargins') or
+           SameText(LChild.LocalName, 'pageSetup') or
+           SameText(LChild.LocalName, 'headerFooter') or
+           SameText(LChild.LocalName, 'rowBreaks') or
+           SameText(LChild.LocalName, 'colBreaks') or
+           SameText(LChild.LocalName, 'customProperties') or
+           SameText(LChild.LocalName, 'cellWatches') or
+           SameText(LChild.LocalName, 'ignoredErrors') or
+           SameText(LChild.LocalName, 'smartTags') or
+           SameText(LChild.LocalName, 'drawing') or
+           SameText(LChild.LocalName, 'legacyDrawing') or
+           SameText(LChild.LocalName, 'legacyDrawingHF') or
+           SameText(LChild.LocalName, 'picture') or
+           SameText(LChild.LocalName, 'oleObjects') or
+           SameText(LChild.LocalName, 'controls') or
+           SameText(LChild.LocalName, 'webPublishItems') or
+           SameText(LChild.LocalName, 'tableParts') or
+           SameText(LChild.LocalName, 'extLst') then
+        begin
+          LReferenceNode := LChild;
+          Break;
+        end;
+      end;
+
+      if LReferenceNode <> nil then
+      begin
+        // Reposiciona mergeCells antes do elemento encontrado.
+        LRoot.DOMNode.insertBefore(
+          LMergeCells.DOMNode,
+          LReferenceNode.DOMNode
+        );
+      end;
+    end;
+
+    LMergeCell := LMergeCells.AddChild(
+      'mergeCell',
+      CMainNS
+    );
+
+    LMergeCell.Attributes['ref'] := CMergeRange;
+
+    LMergeCells.Attributes['count'] :=
+      LMergeCells.ChildNodes.Count;
+  end;
+
 
   function GetIntAttribute(
     const ANode: IXMLNode;
@@ -395,31 +522,14 @@ var
       ANode.AttributeNodes.Remove(LAttribute);
   end;
 
-  function LoadXmlFile(
-    const APath: string): IXMLDocument;
+  function LoadXml(const APath: string): IXMLDocument;
   begin
     Result := TXMLDocument.Create(nil);
     Result.LoadFromFile(APath);
     Result.Active := True;
   end;
 
-  procedure CopyAttributes(
-    const ASource: IXMLNode;
-    const ADestination: IXMLNode);
-  var
-    N: Integer;
-    LAttribute: IXMLNode;
-  begin
-    for N := 0 to ASource.AttributeNodes.Count - 1 do
-    begin
-      LAttribute := ASource.AttributeNodes[N];
-
-      ADestination.Attributes[LAttribute.NodeName] :=
-        LAttribute.NodeValue;
-    end;
-  end;
-
-  procedure CopyChildren(
+  procedure CopyNodeContent(
     const ASource: IXMLNode;
     const ADestination: IXMLNode);
   var
@@ -427,140 +537,356 @@ var
     LSourceChild: IXMLNode;
     LDestinationChild: IXMLNode;
   begin
+    for N := 0 to ASource.AttributeNodes.Count - 1 do
+      ADestination.Attributes[
+        ASource.AttributeNodes[N].NodeName
+      ] := ASource.AttributeNodes[N].NodeValue;
+
     for N := 0 to ASource.ChildNodes.Count - 1 do
     begin
       LSourceChild := ASource.ChildNodes[N];
+
+      if LSourceChild.NodeType = ntText then
+      begin
+        ADestination.Text := LSourceChild.Text;
+        Continue;
+      end;
+
+      if LSourceChild.NodeType <> ntElement then
+        Continue;
 
       LDestinationChild := ADestination.AddChild(
         LSourceChild.LocalName,
         CMainNS
       );
 
-      CopyAttributes(LSourceChild, LDestinationChild);
-
-      if LSourceChild.ChildNodes.Count > 0 then
-        CopyChildren(LSourceChild, LDestinationChild);
+      CopyNodeContent(LSourceChild, LDestinationChild);
     end;
   end;
 
-  function GetWrapStyle(
-    const AOriginalStyle: Integer): Integer;
+  function ColumnToIndex(const AName: string): Integer;
   var
-    LOriginalXf: IXMLNode;
+    C: Char;
+  begin
+    Result := 0;
+
+    for C in UpperCase(Trim(AName)) do
+    begin
+      if not CharInSet(C, ['A'..'Z']) then
+        raise Exception.Create('Coluna inválida: ' + AName);
+
+      Result := Result * 26 + Ord(C) - Ord('A') + 1;
+    end;
+
+    if Result = 0 then
+      raise Exception.Create('Coluna não informada.');
+  end;
+
+  function CellColumn(const AReference: string): Integer;
+  var
+    N: Integer;
+    C: Char;
+  begin
+    Result := 0;
+
+    for N := 1 to Length(AReference) do
+    begin
+      C := UpCase(AReference[N]);
+
+      if C = '$' then
+        Continue;
+
+      if not CharInSet(C, ['A'..'Z']) then
+        Break;
+
+      Result := Result * 26 + Ord(C) - Ord('A') + 1;
+    end;
+  end;
+
+  function GetSharedText(const ANode: IXMLNode): string;
+  var
+    N: Integer;
+    LChild: IXMLNode;
+  begin
+    Result := '';
+
+    if ANode = nil then
+      Exit;
+
+    if SameText(ANode.LocalName, 't') then
+      Result := ANode.Text;
+
+    for N := 0 to ANode.ChildNodes.Count - 1 do
+    begin
+      LChild := ANode.ChildNodes[N];
+
+      if LChild.NodeType = ntElement then
+        Result := Result + GetSharedText(LChild);
+    end;
+  end;
+
+  function GetCellText(const ACell: IXMLNode): string;
+  var
+    LType: string;
+    LValueNode: IXMLNode;
+    LInline: IXMLNode;
+    LIndex: Integer;
+  begin
+    Result := '';
+
+    LType := '';
+
+    if ACell.HasAttribute('t') then
+      LType := VarToStr(ACell.Attributes['t']);
+
+    if SameText(LType, 'inlineStr') then
+    begin
+      LInline := FindChild(ACell, 'is');
+      Result := GetSharedText(LInline);
+      Exit;
+    end;
+
+    LValueNode := FindChild(ACell, 'v');
+
+    if LValueNode = nil then
+      Exit;
+
+    Result := LValueNode.Text;
+
+    if SameText(LType, 's') then
+    begin
+      LIndex := StrToIntDef(Result, -1);
+
+      if (LIndex >= 0) and
+         (LIndex < LSharedStrings.Count) then
+        Result := LSharedStrings[LIndex];
+    end;
+  end;
+
+  function EstimateLines(
+    const AText: string;
+    const AWidth: Double): Integer;
+  var
+    LNormalized: string;
+    LParts: TStringList;
+    N: Integer;
+    LCharsPerLine: Integer;
+  begin
+    Result := 1;
+
+    LNormalized := StringReplace(
+      AText, #13#10, #10, [rfReplaceAll]
+    );
+
+    LNormalized := StringReplace(
+      LNormalized, #13, #10, [rfReplaceAll]
+    );
+
+    LCharsPerLine := Max(
+      1,
+      Trunc(AWidth * 0.9)
+    );
+
+    LParts := TStringList.Create;
+    try
+      LParts.Text := StringReplace(
+        LNormalized, #10, sLineBreak, [rfReplaceAll]
+      );
+
+      Result := 0;
+
+      for N := 0 to LParts.Count - 1 do
+        Inc(
+          Result,
+          Max(
+            1,
+            Ceil(Length(LParts[N]) / LCharsPerLine)
+          )
+        );
+
+      Result := Max(1, Result);
+    finally
+      LParts.Free;
+    end;
+  end;
+
+  function GetCalibriStyle(
+    const AOriginalStyle: Integer;
+    const AWrap: Boolean): Integer;
+  var
+    LKey: Integer;
     LChild: IXMLNode;
     LNewChild: IXMLNode;
-    LChildName: string;
     N: Integer;
     LAlignmentAdded: Boolean;
   begin
-    if LStyleMap.TryGetValue(AOriginalStyle, Result) then
+    LKey := AOriginalStyle * 2 + Ord(AWrap);
+
+    if LStyleMap.TryGetValue(LKey, Result) then
       Exit;
 
     if (AOriginalStyle < 0) or
        (AOriginalStyle >= LCellXfs.ChildNodes.Count) then
       raise Exception.CreateFmt(
-        'Estilo XLSX inválido: %d',
+        'Índice de estilo inválido: %d',
         [AOriginalStyle]
       );
 
     LOriginalXf := LCellXfs.ChildNodes[AOriginalStyle];
 
     LNewXf := LCellXfs.AddChild('xf', CMainNS);
-    CopyAttributes(LOriginalXf, LNewXf);
 
-    LNewXf.Attributes['applyAlignment'] := '1';
+    for N := 0 to LOriginalXf.AttributeNodes.Count - 1 do
+      LNewXf.Attributes[
+        LOriginalXf.AttributeNodes[N].NodeName
+      ] := LOriginalXf.AttributeNodes[N].NodeValue;
+
+    LNewXf.Attributes['fontId'] := LFontId;
+    LNewXf.Attributes['applyFont'] := '1';
+
+    if AWrap then
+      LNewXf.Attributes['applyAlignment'] := '1';
 
     LAlignmentAdded := False;
-    LAlignment := nil;
 
     for N := 0 to LOriginalXf.ChildNodes.Count - 1 do
     begin
       LChild := LOriginalXf.ChildNodes[N];
-      LChildName := LChild.LocalName;
 
-      // Insere alignment antes de protection/extLst.
-      if not LAlignmentAdded and
-         (SameText(LChildName, 'protection') or
-          SameText(LChildName, 'extLst')) then
+      if AWrap and
+         not LAlignmentAdded and
+         (SameText(LChild.LocalName, 'protection') or
+          SameText(LChild.LocalName, 'extLst')) then
       begin
-        LAlignment := LNewXf.AddChild(
-          'alignment',
-          CMainNS
-        );
-
+        LAlignment := LNewXf.AddChild('alignment', CMainNS);
         LAlignment.Attributes['wrapText'] := '1';
         LAlignmentAdded := True;
       end;
 
       LNewChild := LNewXf.AddChild(
-        LChildName,
+        LChild.LocalName,
         CMainNS
       );
 
-      CopyAttributes(LChild, LNewChild);
-      CopyChildren(LChild, LNewChild);
+      CopyNodeContent(LChild, LNewChild);
 
-      if SameText(LChildName, 'alignment') then
+      if SameText(LChild.LocalName, 'alignment') then
       begin
-        LNewChild.Attributes['wrapText'] := '1';
+        if AWrap then
+          LNewChild.Attributes['wrapText'] := '1';
+
         LAlignmentAdded := True;
       end;
     end;
 
-    if not LAlignmentAdded then
+    if AWrap and not LAlignmentAdded then
     begin
-      LAlignment := LNewXf.AddChild(
-        'alignment',
-        CMainNS
-      );
-
+      LAlignment := LNewXf.AddChild('alignment', CMainNS);
       LAlignment.Attributes['wrapText'] := '1';
     end;
 
     Result := LCellXfs.ChildNodes.Count - 1;
-    LStyleMap.Add(AOriginalStyle, Result);
+    LStyleMap.Add(LKey, Result);
   end;
 
-  function IsHistoricoCell(
-    const AReference: string): Boolean;
+  procedure AlignMergedCellLeft;
+  var
+    LFirstRow: IXMLNode;
+    LFirstCell: IXMLNode;
+    LOriginalStyle: Integer;
+    LNewStyle: Integer;
+    LXf: IXMLNode;
+    LAlignment: IXMLNode;
+    I: Integer;
   begin
-    Result :=
-      (Length(AReference) > 2) and
-      SameText(Copy(AReference, 1, 2), 'AB') and
-      CharInSet(AReference[3], ['0'..'9']);
+    LFirstRow := nil;
+    LFirstCell := nil;
+
+    // Localiza a primeira linha.
+    for I := 0 to LSheetData.ChildNodes.Count - 1 do
+    begin
+      if GetIntAttribute(
+        LSheetData.ChildNodes[I], 'r', 0
+      ) = 1 then
+      begin
+        LFirstRow := LSheetData.ChildNodes[I];
+        Break;
+      end;
+    end;
+
+    if LFirstRow = nil then
+      Exit;
+
+    // Localiza a célula A1.
+    for I := 0 to LFirstRow.ChildNodes.Count - 1 do
+    begin
+      if SameText(
+        VarToStr(LFirstRow.ChildNodes[I].Attributes['r']),
+        'A1'
+      ) then
+      begin
+        LFirstCell := LFirstRow.ChildNodes[I];
+        Break;
+      end;
+    end;
+
+    if LFirstCell = nil then
+      Exit;
+
+    LOriginalStyle := GetIntAttribute(
+      LFirstCell, 's', 0
+    );
+
+    // Cria um estilo exclusivo para A1.
+    // Não altera estilos compartilhados por outras células.
+    LNewStyle := GetCalibriStyle(LOriginalStyle, False);
+
+    LXf := LCellXfs.ChildNodes[LNewStyle];
+    LAlignment := FindChild(LXf, 'alignment');
+
+    if LAlignment = nil then
+      LAlignment := LXf.AddChild('alignment', CMainNS);
+
+    LAlignment.Attributes['horizontal'] := 'left';
+    LXf.Attributes['applyAlignment'] := '1';
+
+    LFirstCell.Attributes['s'] := LNewStyle;
   end;
 
 begin
   if not TFile.Exists(AFileName) then
     raise Exception.CreateFmt(
-      'Arquivo XLSX não encontrado: %s',
+      'Arquivo não encontrado: %s',
       [AFileName]
     );
 
+  LHistoryColumn := ColumnToIndex(AColumn);
+
   LTempDir := TPath.Combine(
     TPath.GetTempPath,
-    'XlsxHistorico_' + TGUID.NewGuid.ToString
+    'XlsxFormat_' + TGUID.NewGuid.ToString
   );
 
   TDirectory.CreateDirectory(LTempDir);
 
-  LTempFile := TPath.Combine(
-    LTempDir,
-    'Acompanhamento.xlsx'
-  );
+  LTempFile := TPath.Combine(LTempDir, 'report.xlsx');
 
+  LFiles := TDictionary<string, string>.Create;
   LStyleMap := TDictionary<Integer, Integer>.Create;
+  LWidths := TDictionary<Integer, Double>.Create;
+  LSharedStrings := TStringList.Create;
   LZip := TZipFile.Create;
 
   try
-    // Preserva o arquivo original.
     TFile.Copy(AFileName, LTempFile, True);
 
-    // Extrai os XMLs necessários.
     LZip.Open(LTempFile, zmRead);
     try
       LZip.Extract(CStylesFile, LTempDir, True);
       LZip.Extract(CSheetFile, LTempDir, True);
+
+      if LZip.IndexOf(CSharedStringsFile) >= 0 then
+        LZip.Extract(CSharedStringsFile, LTempDir, True);
     finally
       LZip.Close;
     end;
@@ -575,25 +901,51 @@ begin
       CSheetFile.Replace('/', PathDelim)
     );
 
-    LStylesDoc := LoadXmlFile(LStylesPath);
-    LSheetDoc := LoadXmlFile(LSheetPath);
-
-    LCellXfs := FindChild(
-      LStylesDoc.DocumentElement,
-      'cellXfs'
+    LStringsPath := TPath.Combine(
+      LTempDir,
+      CSharedStringsFile.Replace('/', PathDelim)
     );
 
-    LSheetData := FindChild(
-      LSheetDoc.DocumentElement,
-      'sheetData'
-    );
+    LStylesDoc := LoadXml(LStylesPath);
+    LSheetDoc := LoadXml(LSheetPath);
 
-    if (LCellXfs = nil) or (LSheetData = nil) then
-      raise Exception.Create(
-        'Estrutura XLSX incompatível.'
-      );
+    if TFile.Exists(LStringsPath) then
+    begin
+      LStringsDoc := LoadXml(LStringsPath);
 
-    // Aplica WrapText às células da coluna AB.
+      for I := 0 to LStringsDoc.DocumentElement.ChildNodes.Count - 1 do
+      begin
+        LNode := LStringsDoc.DocumentElement.ChildNodes[I];
+
+        if SameText(LNode.LocalName, 'si') then
+          LSharedStrings.Add(GetSharedText(LNode));
+      end;
+    end;
+
+    LFonts := FindChild(LStylesDoc.DocumentElement, 'fonts');
+    LCellXfs := FindChild(LStylesDoc.DocumentElement, 'cellXfs');
+    LSheetData := FindChild(LSheetDoc.DocumentElement, 'sheetData');
+
+    if (LFonts = nil) or
+       (LCellXfs = nil) or
+       (LSheetData = nil) then
+      raise Exception.Create('Estrutura XLSX incompatível.');
+
+    // Cria a fonte Calibri 11.
+    LFont := LFonts.AddChild('font', CMainNS);
+
+    LFontNode := LFont.AddChild('sz', CMainNS);
+    LFontNode.Attributes['val'] := '11';
+
+    LFontNode := LFont.AddChild('name', CMainNS);
+    LFontNode.Attributes['val'] := 'Calibri';
+
+    LFontId := LFonts.ChildNodes.Count - 1;
+    LFonts.Attributes['count'] := LFonts.ChildNodes.Count;
+
+    LMaxColumn := LHistoryColumn;
+
+    // Primeira passagem: calcula larguras das colunas.
     for I := 0 to LSheetData.ChildNodes.Count - 1 do
     begin
       LRow := LSheetData.ChildNodes[I];
@@ -601,73 +953,175 @@ begin
       if not SameText(LRow.LocalName, 'row') then
         Continue;
 
-      if GetIntAttribute(LRow, 'r', 0) < 2 then
+      for J := 0 to LRow.ChildNodes.Count - 1 do
+      begin
+        LCell := LRow.ChildNodes[J];
+
+        if not SameText(LCell.LocalName, 'c') or
+           not LCell.HasAttribute('r') then
+          Continue;
+
+        LCellRef := VarToStr(LCell.Attributes['r']);
+        LColumnIndex := CellColumn(LCellRef);
+
+        if LColumnIndex <= 0 then
+          Continue;
+
+        LMaxColumn := Max(LMaxColumn, LColumnIndex);
+
+        if LColumnIndex = LHistoryColumn then
+          Continue;
+
+        LCellText := GetCellText(LCell);
+
+        LWidth := EnsureRange(
+          Length(LCellText) + 3.0,
+          CMinWidth,
+          CMaxWidth
+        );
+
+        if not LWidths.ContainsKey(LColumnIndex) or
+           (LWidths[LColumnIndex] < LWidth) then
+          LWidths.AddOrSetValue(LColumnIndex, LWidth);
+      end;
+    end;
+
+    LWidths.AddOrSetValue(
+      LHistoryColumn,
+      CHistoryWidth
+    );
+
+    // Segunda passagem: aplica estilos e alturas.
+    for I := 0 to LSheetData.ChildNodes.Count - 1 do
+    begin
+      LRow := LSheetData.ChildNodes[I];
+
+      if not SameText(LRow.LocalName, 'row') then
         Continue;
+
+      LHeight := CRowHeight;
 
       for J := 0 to LRow.ChildNodes.Count - 1 do
       begin
         LCell := LRow.ChildNodes[J];
 
-        if not SameText(LCell.LocalName, 'c') then
-          Continue;
-
-        if not LCell.HasAttribute('r') then
+        if not SameText(LCell.LocalName, 'c') or
+           not LCell.HasAttribute('r') then
           Continue;
 
         LCellRef := VarToStr(LCell.Attributes['r']);
+        LColumnIndex := CellColumn(LCellRef);
 
-        if not IsHistoricoCell(LCellRef) then
+        if LColumnIndex <= 0 then
           Continue;
 
-        LOriginalStyle := GetIntAttribute(LCell, 's', 0);
-        LNewStyle := GetWrapStyle(LOriginalStyle);
+        LCellText := GetCellText(LCell);
+
+        LOriginalStyle := GetIntAttribute(
+          LCell, 's', 0
+        );
+
+        LNewStyle := GetCalibriStyle(
+          LOriginalStyle,
+          LColumnIndex = LHistoryColumn
+        );
 
         LCell.Attributes['s'] := LNewStyle;
 
-        // Permite que o aplicativo recalcule a altura.
-        RemoveAttribute(LRow, 'ht');
-        RemoveAttribute(LRow, 'customHeight');
+        if LWidths.TryGetValue(LColumnIndex, LWidth) then
+        begin
+          LLineCount := EstimateLines(
+            LCellText,
+            LWidth
+          );
+
+          LHeight := Max(
+            LHeight,
+            LLineCount * CRowHeight
+          );
+        end;
       end;
+
+      LHeight := Min(LHeight, CMaxRowHeight);
+
+      LRow.Attributes['ht'] := FormatFloat(
+        '0.##',
+        LHeight,
+        TFormatSettings.Invariant
+      );
+
+      LRow.Attributes['customHeight'] := '1';
+    end;
+
+    // Configura as larguras das colunas.
+    LCols := FindChild(LSheetDoc.DocumentElement, 'cols');
+
+    if LCols = nil then
+    begin
+      LCols := LSheetDoc.DocumentElement.AddChild(
+        'cols',
+        CMainNS
+      );
+
+      // Posiciona cols imediatamente antes de sheetData.
+      LSheetDoc.DocumentElement.ChildNodes.Remove(LCols);
+
+      LSheetDoc.DocumentElement.ChildNodes.Insert(
+        LSheetData.ChildNodes.IndexOf(LCols),
+        LCols
+      );
+    end;
+
+    // Substitui definições anteriores.
+    while LCols.ChildNodes.Count > 0 do
+      LCols.ChildNodes.Delete(0);
+
+    for K := 1 to LMaxColumn do
+    begin
+      if not LWidths.TryGetValue(K, LWidth) then
+        Continue;
+
+      LNode := LCols.AddChild('col', CMainNS);
+      LNode.Attributes['min'] := K;
+      LNode.Attributes['max'] := K;
+      LNode.Attributes['width'] := FormatFloat(
+        '0.##',
+        LWidth,
+        TFormatSettings.Invariant
+      );
+      LNode.Attributes['customWidth'] := '1';
     end;
 
     LCellXfs.Attributes['count'] :=
       LCellXfs.ChildNodes.Count;
+
+    // Mescla as células A1 e B1.
+    MergeFirstRowAB;
+
+    // Alinha o conteúdo da célula mesclada à esquerda.
+    AlignMergedCellLeft;
 
     LStylesDoc.SaveToFile(LStylesPath);
     LSheetDoc.SaveToFile(LSheetPath);
 
     LStylesDoc := nil;
     LSheetDoc := nil;
+    LStringsDoc := nil;
 
-    // Reconstrói o XLSX sem utilizar TZipFile.Delete.
-    RebuildXlsx(
-      LTempFile,
-      LStylesPath,
-      LSheetPath
-    );
+    LFiles.Add(CStylesFile, LStylesPath);
+    LFiles.Add(CSheetFile, LSheetPath);
 
-    // Valida a presença dos XMLs.
-    LZip.Open(LTempFile, zmRead);
-    try
-      if LZip.IndexOf(CStylesFile) < 0 then
-        raise Exception.Create(
-          'styles.xml não encontrado no XLSX.'
-        );
+    RebuildXlsx(LTempFile, LFiles);
 
-      if LZip.IndexOf(CSheetFile) < 0 then
-        raise Exception.Create(
-          'sheet1.xml não encontrado no XLSX.'
-        );
-    finally
-      LZip.Close;
-    end;
-
-    // Atualiza o arquivo original.
+    // Substitui o arquivo original após a reconstrução.
     TFile.Copy(LTempFile, AFileName, True);
 
   finally
     LZip.Free;
+    LSharedStrings.Free;
+    LWidths.Free;
     LStyleMap.Free;
+    LFiles.Free;
 
     if TDirectory.Exists(LTempDir) then
       TDirectory.Delete(LTempDir, True);
@@ -803,8 +1257,7 @@ begin
   end;
 end;
 
-procedure TfrmImpressaoProcessosOPFollowUp.SaveReportInXLS(
-  const AFileName: string);
+procedure TfrmImpressaoProcessosOPFollowUp.SaveReportInXLS(const AFileName: string);
 var
   LOldDevice: String;
   LOldPreserveLineBreaks: Boolean;
@@ -822,7 +1275,7 @@ begin
 
     pprXLS.Print;
 
-    FormatExcelHistorico(pprXLS.TextFileName);
+    FormatExcelHistorico(pprXLS.TextFileName, 'AB');
   finally
     pprXLS.XLSSettings.PreserveLineBreaks := LOldPreserveLineBreaks;
     pprXLS.DeviceType := LOldDevice;

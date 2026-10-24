@@ -5623,7 +5623,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         AutoSize = False
         Border.Weight = 1.000000000000000000
         Border.mmPadding = 0
-        Caption = ' DOC.'
+        Caption = ' DOCUMENTO'
         Color = 10184960
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWhite
@@ -5636,7 +5636,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         mmHeight = 1851
         mmLeft = 245798
         mmTop = 1588
-        mmWidth = 6086
+        mmWidth = 9531
         BandType = 0
         LayerName = BandLayer2
       end
@@ -6307,7 +6307,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         mmHeight = 1852
         mmLeft = 245798
         mmTop = 0
-        mmWidth = 6086
+        mmWidth = 9531
         BandType = 4
         LayerName = BandLayer2
       end
