@@ -4540,7 +4540,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Simula'#231#227'o de calculo de importa'#231#227'o'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -5339,7 +5339,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Simula'#231#227'o de calculo de importa'#231#227'o'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -7589,7 +7589,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Simula'#231#227'o de calculo de importa'#231#227'o'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -7911,7 +7911,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Simula'#231#227'o de calculo de importa'#231#227'o'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -8233,7 +8233,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Simula'#231#227'o de calculo de importa'#231#227'o'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -9683,7 +9683,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Simula'#231#227'o de calculo de importa'#231#227'o'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -14247,7 +14247,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     OpenDataSource = False
     UserName = 'pSimulacao'
     Left = 712
-    Top = 112
+    Top = 111
     object pSimulacaoppField1: TppField
       FieldAlias = 'Numero'
       FieldName = 'Numero'
@@ -25306,7 +25306,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Simula'#231#227'o de calculo de importa'#231#227'o'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -25371,7 +25371,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     XLSSettings.Subject = 'Simula'#231#227'o de Importa'#231#227'o'
     XLSSettings.Title = 'Simula'#231#227'o de Importa'#231#227'o'
     XLSSettings.WorksheetName = 'Simula'#231#227'o'
-    Left = 137
+    Left = 134
     Top = 436
     Version = '19.04'
     mmColumnWidth = 0
@@ -27808,7 +27808,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Simula'#231#227'o de calculo de importa'#231#227'o'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -28151,7 +28151,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Simula'#231#227'o de calculo de importa'#231#227'o'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -32067,7 +32067,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     PrinterSetup.DocumentName = 'Simula'#231#227'o de calculo de importa'#231#227'o'
     PrinterSetup.Duplex = dpNone
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

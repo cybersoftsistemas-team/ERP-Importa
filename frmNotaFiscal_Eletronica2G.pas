@@ -4057,7 +4057,6 @@ begin
             // Dados da Nota fiscal referenciada quando complementar, Devolução...
             ide_NFRef := '';
 
-//            if (TipoNotaNota_Referencia.AsBoolean) or (TipoNotaFinalidade_Mercadoria.AsInteger = 2) then begin
             if ((trim(TipoNotaTipo_NFDebito.asstring+TipoNotaTipo_NFCredito.asstring) <> '') and (TipoNotaFinalidade_Mercadoria.AsInteger <> 2)) or (PedidosComplementar.AsBoolean or (TipoNotaFinalidade_Mercadoria.AsInteger = 3)) then begin
                PedidosItensReferencia.SQL.Clear;
                PedidosItensReferencia.SQL.Add('SELECT * FROM PedidosItensReferencia');
