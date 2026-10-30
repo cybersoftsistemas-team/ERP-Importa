@@ -1577,6 +1577,10 @@ begin
                  PedidosItensDI.Value := ProcessosDocNumero_Declaracao.Value;
               end;
 
+              if not TipoNotaFormula_Produto.AsBoolean then begin
+                 PedidosItensValor_Liquido.value := PedidosItensValor_Unitario.Value;
+              end;
+
               // Log de operações do sistema.
               LogDados(Dados.PedidosItens, '('+Dados.PedidosItensPedido.AsString+') '+mSaiEntra[Dados.PedidosItensSaida_Entrada.AsInteger]+ ' [Outras], de '+Dados.PedidosData_Emissao.AsString+' Item '+Dados.PedidosItensItem.AsString+ ' - '+Dados.PedidosItensCodigo_Mercadoria.AsString, Dados.PedidosItens.State);
            End;

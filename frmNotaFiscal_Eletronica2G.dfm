@@ -783,6 +783,10 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     object TabSheet2: TTabSheet
       Caption = 'Pedidos com pend'#234'ncias de container'
       ImageIndex = 1
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object RxDBGrid1: TRxDBGrid
         AlignWithMargins = True
         Left = 3
@@ -937,6 +941,10 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     object TabSheet3: TTabSheet
       Caption = 'Enviando'
       ImageIndex = 2
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object cMensagens: TMemo
         AlignWithMargins = True
         Left = 3
@@ -962,6 +970,10 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     object TabSheet4: TTabSheet
       Caption = 'An'#225'lise'
       ImageIndex = 3
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 0
+      ExplicitHeight = 0
       object mAnalise: TMemo
         Left = 0
         Top = 0
@@ -3625,7 +3637,7 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Cybersoft - DANFE Retrato'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -3683,7 +3695,7 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
     RTFSettings.DefaultFont.Style = []
     ShowCancelDialog = False
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -4791,7 +4803,7 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Cybersoft - DANFE Retrato'
           PrinterSetup.Duplex = dpNone
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -11720,7 +11732,7 @@ object NotaFiscal_Eletronica2G: TNotaFiscal_Eletronica2G
             PrinterSetup.BinName = 'Default'
             PrinterSetup.DocumentName = 'Cybersoft - DANFE Retrato'
             PrinterSetup.Duplex = dpNone
-            PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+            PrinterSetup.PaperName = 'A4'
             PrinterSetup.PrinterName = 'Default'
             PrinterSetup.SaveDeviceSettings = False
             PrinterSetup.mmMarginBottom = 6350

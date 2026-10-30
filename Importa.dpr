@@ -432,7 +432,6 @@ uses
   frmUtilitarios_ImportarAPIPUCOMEX in 'frmUtilitarios_ImportarAPIPUCOMEX.pas' {Utilitarios_ImportarAPIPUCOMEX},
   frmImpressao_ControleNaviosNotas in 'frmImpressao_ControleNaviosNotas.pas' {Impressao_ControleNaviosNotas},
   frmCTE_PrestacaoDesacordo in 'frmCTE_PrestacaoDesacordo.pas' {CTE_PrestacaoDesacordo},
-  CTe_Util_TLB in 'C:\Users\Ded\Documents\Embarcadero\Studio\20.0\Imports\CTe_Util_TLB.pas',
   Vcl.Themes,
   Vcl.Styles,
   frmImpressao_Financeiros_FluxoCaixaDetalhado2 in 'frmImpressao_Financeiros_FluxoCaixaDetalhado2.pas' {Impressao_Financeiros_FluxoCaixaDetalhado2},
@@ -472,7 +471,9 @@ uses
   uNFSeTipos in 'uNFSeTipos.pas',
   uNFSeModel in 'uNFSeModel.pas',
   uNFSeXMLReader in 'uNFSeXMLReader.pas',
-  frmImpressao_ProcessosOP_FollowUp in 'frmImpressao_ProcessosOP_FollowUp.pas' {frmImpressaoProcessosOPFollowUp};
+  frmImpressao_ProcessosOP_FollowUp in 'frmImpressao_ProcessosOP_FollowUp.pas' {frmImpressaoProcessosOPFollowUp},
+  CTe_Util_TLB in 'CTe_Util_TLB.pas',
+  NFe_Util_2G_TLB in 'NFe_Util_2G_TLB.pas';
 
 {$R *.res}
 

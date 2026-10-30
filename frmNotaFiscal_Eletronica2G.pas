@@ -4325,6 +4325,7 @@ begin
 
             // ICMS (Totais).
             mQtdeMono := iif(TipoNotaVisiveis_QuantidadeItem.AsBoolean, PedidosValor_BCICMSMono.asfloat, 0);
+            
             totICMS   := Util.totalICMSNT2023001(PedidosBCICMS.AsCurrency,                                                                                           // 01 somatório da BC do ICMS (vBC) informado nos itens.
                                                  PedidosValor_ICMS.AsFloat,                                                                                          // 02 somatório de ICMS (vICMS) informado nos itens.
                                                  PedidosBCICMS_Substitutivo.AsFloat,                                                                                 // 03 somatório da BC ST (vBCST) informado nos itens.
@@ -4389,21 +4390,6 @@ begin
             end;
                                                
             _IBSCBSTotv130 := '';
-            {
-            if PedidosValor_BCCBS.AsCurrency > 0 then begin
-               _IBSCBSTotv130 := util.IBSCBSTotv130(PedidosValor_BCCBS.AsCurrency   // informar o Valor total da BC do IBS e da CBS.
-                                                   ,_gIBSTot                        // informar o XML do grupo de totalização do gIBS se existirem valores.
-                                                   ,_gCBSTot                        // informar o XML do grupo de totalização do gCBS se existirem valores.
-                                                   ,_gMonoTot                       // informar o XML do grupo de totalização do gMono se existirem valores.
-                                                   ,_gEstornoCred);                 // informar o XML do grupo de totalização do gEstornoCred se existirem valores.
-            end else begin
-               _IBSCBSTotv130 := util.IBSCBSTotv130(0     
-                                                   ,''    
-                                                   ,''    
-                                                   ,''    
-                                                   ,'');  
-            end;
-            }
             if PedidosItensCSTCBS.value <> '410' then begin
                _IBSCBSTotv130 := util.IBSCBSTotv130(PedidosValor_BCCBS.AsCurrency   // informar o Valor total da BC do IBS e da CBS.
                                                    ,_gIBSTot                        // informar o XML do grupo de totalização do gIBS se existirem valores.
@@ -4411,7 +4397,6 @@ begin
                                                    ,_gMonoTot                       // informar o XML do grupo de totalização do gMono se existirem valores.
                                                    ,_gEstornoCred                   // informar o XML do grupo de totalização do gEstornoCred se existirem valores.
                                                    );
-                                                   
             end else begin
                _IBSCBSTotv130 := util.IBSCBSTotv130(0                               // informar o Valor total da BC do IBS e da CBS.
                                                    ,''                              // informar o XML do grupo de totalização do gIBS se existirem valores.
@@ -4420,13 +4405,21 @@ begin
                                                    ,_gEstornoCred                   // informar o XML do grupo de totalização do gEstornoCred se existirem valores.
                                                    );
             end;
-
+            {
             total := util.totalRTC(totICMS                                       // informar o XML do grupo ICMSTot.
                                   ,''                                            // informar o XML do grupo ISSQNTot.
                                   ,''                                            // informar o XML do grupo retTrib.
                                   ,PedidosValor_IS.AsCurrency                    // informar o Valor Total do IS.
                                   ,_IBSCBSTotv130                                // informar o XML do grupo IBSCBSTot.
                                   ,PedidosValor_TotalNota.AsCurrency);           // informar o Valor total da NF-e com IBS/CBS/IS.
+            }
+            total := util.totalRTCvProdLiqTot(totICMS                              // informar o XML do grupo ICMSTot.
+                                             ,''                                   // informar o XML do grupo ISSQNTot.
+                                             ,''                                   // informar o XML do grupo retTrib.
+                                             ,PedidosValor_IS.AsCurrency           // informar o Valor Total do IS.
+                                             ,_IBSCBSTotv130                       // informar o XML do grupo IBSCBSTot.
+                                             ,PedidosValor_TotalNota.AsCurrency    // informar o Valor total da NF-e com IBS/CBS/IS.
+                                             ,PedidosValor_Liquido.ascurrency);    // Valor Total Líquido dos Produtos ou Serviços (sem tributos).
 
             TranspModFrete := PedidosModalidade_Frete.AsString;
 
@@ -4717,6 +4710,7 @@ var
    _Adi,
    _ICMS,
    _ICMSUFDest,
+   _ICMSPrev,
    _PIS,
    _COFINS,
    _PISST,
@@ -5034,6 +5028,7 @@ begin
            end;
 
            // Monta a TAG dos produtos.
+           {
            _produto := Util.produtoRTCv130(mCodigoProd                                                           // 01.informar o código do produto ou serviço.
                                           ,mGTIN                                                                 // 02.informar o GTIN (Global Trade Item Number) do produto, antigo c digo EAN ou c digo de barras.
                                           ,mDescricao                                                            // 03.informar a descrição do produto ou servi o.
@@ -5068,7 +5063,7 @@ begin
                                           ,_CredPresumido                                                        // 32.Informar o grupo de Informa  es do Cr dito Presumido.
                                           ,0                                                                     // 33.Informar o Indicador de fornecimento de bem móvel usado.
                                           ,'');                                                                  // 35.informar a Classificação para subapuração do IBS na ZFM.
-           {
+            }
            _produto := Util.produtoRTCvProdLiq(mCodigoProd                                                                 // 01.informar o código do produto ou serviço.
                                               ,mGTIN                                                                       // 02.informar o GTIN (Global Trade Item Number) do produto, antigo c digo EAN ou c digo de barras.
                                               ,mDescricao                                                                  // 03.informar a descrição do produto ou servi o.
@@ -5103,9 +5098,8 @@ begin
                                               ,_CredPresumido                                                              // 32.Informar o grupo de Informa  es do Cr dito Presumido.
                                               ,0                                                                           // 33.Informar o Indicador de fornecimento de bem móvel usado.
                                               ,''                                                                          // 35.informar a Classificação para subapuração do IBS na ZFM.
-                                              ,PedidosItensValor_Liquido.ascurrency                                        // 36.informar o valor Líquido Unitário do Produto ou Serviço (sem IBS/CBS).
-                                              ,(PedidosItensValor_Liquido.ascurrency * PedidosItensQuantidade.asfloat));   // 37.informar o Valor Líquido do Produto ou Serviço (sem IBS/CBS).
-            }
+                                              ,PedidosItensValor_Liquido.asstring                                          // 36.informar o valor Líquido Unitário do Produto ou Serviço (sem IBS/CBS).
+                                              ,(PedidosItensValor_Liquido.ascurrency * PedidosItensQuantidade.asfloat) );  // 37.informar o Valor Líquido do Produto ou Serviço (sem IBS/CBS).
 
            mDesoneracao := 0;
            if (PedidosItensSaida_Entrada.Value = 1) and (ClientesDesoneracao.AsInteger > 0) then begin
@@ -5258,6 +5252,12 @@ begin
                                                    PedidosItensValor_FCP.Value,                   // 07. Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino.
                                                    PedidosItensDIFAL_ValorDest.Value,             // 08. Valor do ICMS Interestadual para a UF de destino, já considerando o valor do ICMS relativo FCP.
                                                    PedidosItensDIFAL_ValorOrig.Value);            // 09. Valor do ICMS Interestadual para a UF do remetente.
+              end;
+
+              // ICMS Previsto.
+              _ICMSPrev := '';
+              if trim(TipoNotaFormula_VlrICMSAnt.AsString) <> '' then begin
+                 _ICMSPrev := util.ICMSPrevistoPagAnt(PedidosItensValor_ICMSAntecipado.ascurrency);
               end;
            
               // PIS.
@@ -5443,7 +5443,7 @@ begin
 
            // Monta as TAGS de impostos dos produtos "Reforma tributária".
            _Imposto := Util.impostoRTC(PedidosItensTotal_Impostos.AsCurrency
-                                      ,_ICMS
+                                      ,iif(_ICMSPrev = '', _ICMS, _ICMSPrev)
                                       ,_IPI
                                       ,_II
                                       ,_PIS
