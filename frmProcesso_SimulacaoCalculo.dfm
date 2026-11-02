@@ -4592,7 +4592,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.txt'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'Cybersoft ERP Importa'
     XLSSettings.Author = 'Cybersoft'
@@ -4605,8 +4605,8 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     XLSSettings.Subject = 'Simula'#231#227'o de Importa'#231#227'o'
     XLSSettings.Title = 'Simula'#231#227'o de Importa'#231#227'o'
     XLSSettings.WorksheetName = 'Simula'#231#227'o'
-    Left = 141
-    Top = 290
+    Left = 41
+    Top = 412
     Version = '19.04'
     mmColumnWidth = 0
     DataPipelineName = 'pSimulacao'
@@ -7875,8 +7875,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
               LayerName = Foreground
             end
           end
-          object raCodeModule1: TraCodeModule
-          end
           object ppDesignLayers1: TppDesignLayers
             object ppDesignLayer1: TppDesignLayer
               UserName = 'Foreground'
@@ -8196,8 +8194,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
               BandType = 7
               LayerName = Foreground3
             end
-          end
-          object raCodeModule3: TraCodeModule
           end
           object ppDesignLayers5: TppDesignLayers
             object ppDesignLayer5: TppDesignLayer
@@ -8519,8 +8515,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
               BandType = 7
               LayerName = Foreground4
             end
-          end
-          object raCodeModule4: TraCodeModule
           end
           object ppDesignLayers6: TppDesignLayers
             object ppDesignLayer6: TppDesignLayer
@@ -12494,8 +12488,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
           end
         end
       end
-    end
-    object raCodeModule2: TraCodeModule
     end
     object ppDesignLayers3: TppDesignLayers
       object ppDesignLayer3: TppDesignLayer
@@ -17049,7 +17041,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.txt'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'Cybersoft ERP Importa'
     XLSSettings.Author = 'Cybersoft'
@@ -17062,8 +17054,8 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     XLSSettings.Subject = 'Simula'#231#227'o de Importa'#231#227'o'
     XLSSettings.Title = 'Simula'#231#227'o de Importa'#231#227'o'
     XLSSettings.WorksheetName = 'Simula'#231#227'o'
-    Left = 140
-    Top = 340
+    Left = 39
+    Top = 470
     Version = '19.04'
     mmColumnWidth = 0
     DataPipelineName = 'pSimulacao'
@@ -20448,8 +20440,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
               LayerName = Foreground5
             end
           end
-          object raCodeModule5: TraCodeModule
-          end
           object ppDesignLayers8: TppDesignLayers
             object ppDesignLayer8: TppDesignLayer
               UserName = 'Foreground5'
@@ -20774,8 +20764,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
               BandType = 7
               LayerName = BandLayer13
             end
-          end
-          object raCodeModule6: TraCodeModule
           end
           object ppDesignLayers9: TppDesignLayers
             object ppDesignLayer9: TppDesignLayer
@@ -21102,8 +21090,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
               BandType = 7
               LayerName = BandLayer14
             end
-          end
-          object raCodeModule7: TraCodeModule
           end
           object ppDesignLayers10: TppDesignLayers
             object ppDesignLayer10: TppDesignLayer
@@ -25194,8 +25180,6 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
         LayerName = BandLayer16
       end
     end
-    object raCodeModule8: TraCodeModule
-    end
     object ppDesignLayers12: TppDesignLayers
       object ppDesignLayer12: TppDesignLayer
         UserName = 'BandLayer16'
@@ -25358,7 +25342,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.txt'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'Cybersoft ERP Importa'
     XLSSettings.Author = 'Cybersoft'
@@ -32119,7 +32103,7 @@ object Processo_SimulacaoCalculo: TProcesso_SimulacaoCalculo
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.txt'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'Cybersoft ERP Importa'
     XLSSettings.Author = 'Cybersoft'
