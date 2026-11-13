@@ -3690,3 +3690,12 @@ insert into AjustesICMS (Codigo, Texto, Estado, Descricao) values
 go
 update AjustesICMS set Descricao = substring(texto, 1, 80)
 go
+
+--[06/11/2026 11:13:00]
+alter table Usuarios add PedidoRep_FaturarPed bit
+                        ,PedidoRep_BaixarPed bit
+go
+update usuarios set PedidoRep_FaturarPed = 0
+                   ,PedidoRep_BaixarPed = 0
+where PedidoRep_FaturarPed is null
+go

@@ -470,9 +470,9 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
     end
     object GroupBox4: TGroupBox
       Left = 5
-      Top = 411
+      Top = 423
       Width = 746
-      Height = 250
+      Height = 239
       Caption = 'Empresas Permitidas'
       TabOrder = 20
       object Grade: TDBGrid
@@ -547,7 +547,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       object GradeUsuarios: TDBGrid
         AlignWithMargins = True
         Left = 2
-        Top = 153
+        Top = 142
         Width = 742
         Height = 92
         Margins.Left = 0
@@ -834,9 +834,9 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
     end
     object GroupBox3: TGroupBox
       Left = 501
-      Top = 187
+      Top = 190
       Width = 250
-      Height = 227
+      Height = 233
       Caption = 'Checagens'
       TabOrder = 28
       object DBCheckBox2: TDBCheckBox
@@ -1094,9 +1094,9 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
     end
     object GroupBox5: TGroupBox
       Left = 5
-      Top = 303
+      Top = 295
       Width = 482
-      Height = 76
+      Height = 88
       Caption = 'Abas vis'#237'veis no gerenciador de pedidos de representantes'
       TabOrder = 30
       object cVerLib: TDBCheckBox
@@ -1111,7 +1111,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       end
       object cVerConf: TDBCheckBox
         Left = 9
-        Top = 35
+        Top = 39
         Width = 150
         Height = 17
         Caption = 'Aguardando Confer'#234'ncia'
@@ -1121,7 +1121,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       end
       object cVerFat: TDBCheckBox
         Left = 162
-        Top = 35
+        Top = 39
         Width = 150
         Height = 17
         Caption = 'Faturados'
@@ -1131,7 +1131,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       end
       object cVerdesp: TDBCheckBox
         Left = 162
-        Top = 51
+        Top = 59
         Width = 150
         Height = 17
         Caption = 'Despachados'
@@ -1141,7 +1141,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
       end
       object DBCheckBox252: TDBCheckBox
         Left = 9
-        Top = 51
+        Top = 59
         Width = 150
         Height = 17
         Caption = 'Separados'
@@ -1168,6 +1168,26 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
         DataField = 'PedidoRep_AlterarPed'
         DataSource = Dados.dsUsuarios
         TabOrder = 6
+      end
+      object DBCheckBox15: TDBCheckBox
+        Left = 319
+        Top = 39
+        Width = 142
+        Height = 17
+        Caption = 'Permitido Faturar Pedidos'
+        DataField = 'PedidoRep_FaturarPed'
+        DataSource = Dados.dsUsuarios
+        TabOrder = 7
+      end
+      object DBCheckBox16: TDBCheckBox
+        Left = 319
+        Top = 59
+        Width = 142
+        Height = 17
+        Caption = 'Permitido Baixar Pedidos'
+        DataField = 'PedidoRep_BaixarPed'
+        DataSource = Dados.dsUsuarios
+        TabOrder = 8
       end
     end
   end
@@ -1296,7 +1316,7 @@ object Cadastro_Usuarios2: TCadastro_Usuarios2
     DataPipeline = pPerfil
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'PERFIL DE USU'#193'RIOS'
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

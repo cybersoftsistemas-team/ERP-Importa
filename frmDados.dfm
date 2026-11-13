@@ -10,6 +10,7 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
+    Connected = True
     LoginPrompt = False
     Left = 17
     Top = 14
@@ -351,6 +352,7 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = EmpresasBeforePost
     BeforeDelete = EmpresasBeforeDelete
+    Active = True
     Left = 1359
     Top = 14
     object EmpresasCodigo: TIntegerField
@@ -10091,6 +10093,7 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = ModalidadesPgtoBeforePost
     BeforeDelete = ModalidadesPgtoBeforeDelete
+    Active = True
     Left = 169
     Top = 193
     object ModalidadesPgtoCodigo: TSmallintField
@@ -12124,7 +12127,8 @@ object Dados: TDados
         'ulacoes, Checagem_PrazoRetorno, Checagem_ProcessoContainer, Chec' +
         'agem_PrazoArquivos, Checagem_EstoqueMinimo, Checagem_ClientesAtr' +
         'aso, Checagem_ClientesMovimento, Checagem_Exoneracao, Checagem_D' +
-        'IDA, PedidoRep_AlterarPed, Checagem_Pagamentos)'
+        'IDA, PedidoRep_AlterarPed, Checagem_Pagamentos, PedidoRep_Fatura' +
+        'rPed, PedidoRep_BaixarPed)'
       'VALUES'
       
         '  (:Matricula, :Empresa, :Ativo, :Nome, :Setor, :Funcao, :Chave,' +
@@ -12139,7 +12143,8 @@ object Dados: TDados
         'no, :Checagem_ProcessoContainer, :Checagem_PrazoArquivos, :Checa' +
         'gem_EstoqueMinimo, :Checagem_ClientesAtraso, :Checagem_ClientesM' +
         'ovimento, :Checagem_Exoneracao, :Checagem_DIDA, :PedidoRep_Alter' +
-        'arPed, :Checagem_Pagamentos)')
+        'arPed, :Checagem_Pagamentos, :PedidoRep_FaturarPed, :PedidoRep_B' +
+        'aixarPed)')
     SQLDelete.Strings = (
       'DELETE FROM Usuarios'
       'WHERE'
@@ -12172,7 +12177,9 @@ object Dados: TDados
         'cagem_ClientesAtraso, Checagem_ClientesMovimento = :Checagem_Cli' +
         'entesMovimento, Checagem_Exoneracao = :Checagem_Exoneracao, Chec' +
         'agem_DIDA = :Checagem_DIDA, PedidoRep_AlterarPed = :PedidoRep_Al' +
-        'terarPed, Checagem_Pagamentos = :Checagem_Pagamentos'
+        'terarPed, Checagem_Pagamentos = :Checagem_Pagamentos, PedidoRep_' +
+        'FaturarPed = :PedidoRep_FaturarPed, PedidoRep_BaixarPed = :Pedid' +
+        'oRep_BaixarPed'
       'WHERE'
       '  Matricula = :Old_Matricula')
     SQLRefresh.Strings = (
@@ -12188,7 +12195,8 @@ object Dados: TDados
         '_Viculacoes, Checagem_PrazoRetorno, Checagem_ProcessoContainer, ' +
         'Checagem_PrazoArquivos, Checagem_EstoqueMinimo, Checagem_Cliente' +
         'sAtraso, Checagem_ClientesMovimento, Checagem_Exoneracao, Checag' +
-        'em_DIDA, PedidoRep_AlterarPed, Checagem_Pagamentos FROM Usuarios'
+        'em_DIDA, PedidoRep_AlterarPed, Checagem_Pagamentos, PedidoRep_Fa' +
+        'turarPed, PedidoRep_BaixarPed FROM Usuarios'
       'WHERE'
       '  Matricula = :Matricula')
     SQLLock.Strings = (
@@ -12349,6 +12357,12 @@ object Dados: TDados
     end
     object UsuariosChecagem_Pagamentos: TBooleanField
       FieldName = 'Checagem_Pagamentos'
+    end
+    object UsuariosPedidoRep_FaturarPed: TBooleanField
+      FieldName = 'PedidoRep_FaturarPed'
+    end
+    object UsuariosPedidoRep_BaixarPed: TBooleanField
+      FieldName = 'PedidoRep_BaixarPed'
     end
   end
   object ImageList1: TImageList

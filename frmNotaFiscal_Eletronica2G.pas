@@ -4405,14 +4405,14 @@ begin
                                                    ,_gEstornoCred                   // informar o XML do grupo de totalização do gEstornoCred se existirem valores.
                                                    );
             end;
-            {
+            
             total := util.totalRTC(totICMS                                       // informar o XML do grupo ICMSTot.
                                   ,''                                            // informar o XML do grupo ISSQNTot.
                                   ,''                                            // informar o XML do grupo retTrib.
                                   ,PedidosValor_IS.AsCurrency                    // informar o Valor Total do IS.
                                   ,_IBSCBSTotv130                                // informar o XML do grupo IBSCBSTot.
                                   ,PedidosValor_TotalNota.AsCurrency);           // informar o Valor total da NF-e com IBS/CBS/IS.
-            }
+            {
             total := util.totalRTCvProdLiqTot(totICMS                              // informar o XML do grupo ICMSTot.
                                              ,''                                   // informar o XML do grupo ISSQNTot.
                                              ,''                                   // informar o XML do grupo retTrib.
@@ -4420,7 +4420,7 @@ begin
                                              ,_IBSCBSTotv130                       // informar o XML do grupo IBSCBSTot.
                                              ,PedidosValor_TotalNota.AsCurrency    // informar o Valor total da NF-e com IBS/CBS/IS.
                                              ,PedidosValor_Liquido.ascurrency);    // Valor Total Líquido dos Produtos ou Serviços (sem tributos).
-
+            }
             TranspModFrete := PedidosModalidade_Frete.AsString;
 
             // Dados do transportador.
@@ -5028,7 +5028,6 @@ begin
            end;
 
            // Monta a TAG dos produtos.
-           {
            _produto := Util.produtoRTCv130(mCodigoProd                                                           // 01.informar o código do produto ou serviço.
                                           ,mGTIN                                                                 // 02.informar o GTIN (Global Trade Item Number) do produto, antigo c digo EAN ou c digo de barras.
                                           ,mDescricao                                                            // 03.informar a descrição do produto ou servi o.
@@ -5063,7 +5062,7 @@ begin
                                           ,_CredPresumido                                                        // 32.Informar o grupo de Informa  es do Cr dito Presumido.
                                           ,0                                                                     // 33.Informar o Indicador de fornecimento de bem móvel usado.
                                           ,'');                                                                  // 35.informar a Classificação para subapuração do IBS na ZFM.
-            }
+            {
            _produto := Util.produtoRTCvProdLiq(mCodigoProd                                                                 // 01.informar o código do produto ou serviço.
                                               ,mGTIN                                                                       // 02.informar o GTIN (Global Trade Item Number) do produto, antigo c digo EAN ou c digo de barras.
                                               ,mDescricao                                                                  // 03.informar a descrição do produto ou servi o.
@@ -5100,7 +5099,7 @@ begin
                                               ,''                                                                          // 35.informar a Classificação para subapuração do IBS na ZFM.
                                               ,PedidosItensValor_Liquido.asstring                                          // 36.informar o valor Líquido Unitário do Produto ou Serviço (sem IBS/CBS).
                                               ,(PedidosItensValor_Liquido.ascurrency * PedidosItensQuantidade.asfloat) );  // 37.informar o Valor Líquido do Produto ou Serviço (sem IBS/CBS).
-
+           }
            mDesoneracao := 0;
            if (PedidosItensSaida_Entrada.Value = 1) and (ClientesDesoneracao.AsInteger > 0) then begin
               mDesoneracao := ClientesDesoneracao.AsInteger;

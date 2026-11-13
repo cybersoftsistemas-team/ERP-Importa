@@ -171,7 +171,7 @@ object Pedido_RepresentantesSimp: TPedido_RepresentantesSimp
     Top = 49
     Width = 1651
     Height = 538
-    ActivePage = TabSheet3
+    ActivePage = TabSheet5
     Align = alTop
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
@@ -6527,7 +6527,7 @@ object Pedido_RepresentantesSimp: TPedido_RepresentantesSimp
     DataPipeline = pPedidos
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Romaneio de Carga'
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -6578,7 +6578,7 @@ object Pedido_RepresentantesSimp: TPedido_RepresentantesSimp
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -8694,7 +8694,7 @@ object Pedido_RepresentantesSimp: TPedido_RepresentantesSimp
           DataPipeline = pItens
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Romaneio de Carga'
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350
@@ -9400,7 +9400,7 @@ object Pedido_RepresentantesSimp: TPedido_RepresentantesSimp
     DataPipeline = pPedidos
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Pedido de Venda'
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -9453,7 +9453,7 @@ object Pedido_RepresentantesSimp: TPedido_RepresentantesSimp
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -11569,7 +11569,7 @@ object Pedido_RepresentantesSimp: TPedido_RepresentantesSimp
           DataPipeline = pItens
           PrinterSetup.BinName = 'Default'
           PrinterSetup.DocumentName = 'Pedido de Venda'
-          PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+          PrinterSetup.PaperName = 'A4'
           PrinterSetup.PrinterName = 'Default'
           PrinterSetup.SaveDeviceSettings = False
           PrinterSetup.mmMarginBottom = 6350

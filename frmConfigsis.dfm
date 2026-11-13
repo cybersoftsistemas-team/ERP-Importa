@@ -111,7 +111,7 @@ object ConfigSis: TConfigSis
     Top = 41
     Width = 847
     Height = 601
-    ActivePage = TabSheet13
+    ActivePage = TabSheet14
     TabHeight = 28
     TabOrder = 1
     object TabSheet1: TTabSheet

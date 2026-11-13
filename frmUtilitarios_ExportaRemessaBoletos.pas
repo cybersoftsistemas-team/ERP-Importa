@@ -457,7 +457,8 @@ begin
                    Say( mLinha, 022, Arquivo, PoeZero(8, StrtoInt(mConta)));
                    Say( mLinha, 030, Arquivo, mDigitoCC);                                                                                               
                    Say( mLinha, 031, Arquivo, PoeZero(7, StrtoInt(Trim(Bancos.FieldByName('Convenio').AsString))));
-                   Say( mLinha, 063, Arquivo, StringOfChar('0', 17-Length(trim(ApenasNumeros(tBoletos.FieldByName('Nosso_Numero').AsString))))+trim(ApenasNumeros(tBoletos.FieldByName('Nosso_Numero').AsString)) );
+//                   Say( mLinha, 063, Arquivo, StringOfChar('0', 17-Length(trim(ApenasNumeros(tBoletos.FieldByName('Nosso_Numero').AsString))))+trim(ApenasNumeros(tBoletos.FieldByName('Nosso_Numero').AsString)) );
+                   Say( mLinha, 063, Arquivo, trim(tBoletos.FieldByName('Nosso_Numero').AsString) );
                    Say( mLinha, 080, Arquivo, '00' );
                    Say( mLinha, 082, Arquivo, '00' );
                    Say( mLinha, 091, Arquivo, Trim(Bancos.FieldByName('Variacao_Carteira').AsString) );

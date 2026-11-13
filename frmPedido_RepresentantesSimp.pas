@@ -1775,14 +1775,24 @@ begin
                 sql.Add('select * from Usuarios where Ativo = 1');
                 open;
                 cUsuario.KeyValue := Menu_Principal.mUsuarioCodigo;
+                bFaturado.Enabled := Dados.UsuariosPedidoRep_FaturarPed.AsBoolean;
+                bBaixar.Enabled   := Dados.UsuariosPedidoRep_BaixarPed.AsBoolean;
            end;
            with tClientes do begin
+                {
                 sql.Clear;
                 sql.Add('select *');
                 sql.add('from  Clientes');
                 sql.add('where Ativo = 1');
                 sql.add('and   Codigo in(select distinct Cliente from PedidosRepresentantes)');
                 open;
+                }
+                sql.clear;
+                sql.add('select c.*');
+                sql.add('from Clientes c');
+                sql.add('where c.Ativo = 1');
+                sql.add('and exists (select 1 from PedidosRepresentantes p where p.Cliente = c.Codigo)');
+                open;                
                 cFiltroCliente.KeyValue := null;
            end;
            with tTemp do begin
@@ -1807,13 +1817,11 @@ begin
                      for i := pred(PageCount) downto 0 do begin
                          if Pages[i].TabVisible then ActivePageIndex := i;
                      end;
-//                     bAlterar.Tag     := iif(fieldbyname('PedidoRep_VerFat').asboolean, 0, 1);
-//                     bAlterar.Enabled := bAlterar.Tag = 0;
                      bAlterar.Enabled := fieldbyname('PedidoRep_AlterarPed').asboolean;
                 end;
            end;
-           //FiltraTodos('Data');
            with tForn do begin
+           {
                 sql.Clear;
                 sql.Add('select Nome');
                 sql.Add('      ,CNPJ');
@@ -1823,8 +1831,18 @@ begin
                 sql.add('and (select Descricao from RamoAtividade where Codigo = Ramo_Atividade) like ''%ARMAZ%'' ');
                 //sql.SaveToFile('c:\temp\Conferencia_Representante.sql');
                 open;
+                }
+                sql.clear;
+                sql.add('select f.Nome');
+                sql.add('      ,f.cnpj');
+                sql.add('      ,f.Email');
+                sql.add('from Fornecedores f');
+                sql.add('where f.Ativo = 1');
+                sql.add('and exists (select 1 from RamoAtividade r where r.Codigo = f.Ramo_Atividade and r.Descricao like ''%ARMAZ%'')');
+                open;                
            end;
            with tArmazem do begin
+                {
                 sql.Clear;
                 sql.Add('select Nome');
                 sql.Add('      ,CNPJ');
@@ -1835,6 +1853,16 @@ begin
                 sql.add('and (select Descricao from RamoAtividade where Codigo = Ramo_Atividade) like ''%ARMAZ%'' ');
                 //sql.SaveToFile('c:\temp\Conferencia_Representante.sql');
                 open;
+                }
+                sql.clear;
+                sql.add('select f.Nome');
+                sql.add('      ,f.cnpj');
+                sql.add('      ,f.Email');
+                sql.Add('      ,Codigo');
+                sql.add('from Fornecedores f');
+                sql.add('where f.Ativo = 1');
+                sql.add('and exists (select 1 from RamoAtividade r where r.Codigo = f.Ramo_Atividade and r.Descricao like ''%ARMAZ%'')');
+                open;                
            end;
 
            bGerarPed.Enabled                := not ConfiguracaoTela_LiberaPedidos.AsBoolean;
@@ -2009,7 +2037,6 @@ end;
 procedure TPedido_RepresentantesSimp.PageControl1Change(Sender: TObject);
 begin
      with PageControl1 do begin
-//          bAlterar.Enabled := (ActivePageIndex < 3) and (bAlterar.Tag = 0);
           if ActivePageIndex = 0 then FiltraItens(Grade.DataSource.DataSet.FieldByName('Pedido').AsString);
           if ActivePageIndex = 1 then FiltraItens(GradeConf.DataSource.DataSet.FieldByName('Pedido').AsString);
           if ActivePageIndex = 2 then FiltraItens(GradeSep.DataSource.DataSet.FieldByName('Pedido').AsString);
@@ -2035,6 +2062,7 @@ var
    mValParc:real;
 begin
       with tItens do begin
+      (*
            sql.clear;
            sql.Add('select Item');
            sql.Add('      ,Codigo_Mercadoria');
@@ -2050,6 +2078,23 @@ begin
            sql.Add('order by Item, Codigo_Mercadoria');
            parambyname('pPed').value := tPedidos.FieldByName('Numero').Asstring;
            open;
+           *)
+           sql.clear;
+           sql.add('select I.Item');
+           sql.add('      ,I.Codigo_Mercadoria');
+           sql.add('      ,Descricao = rtrim(replace(p.Descricao, ''<{'' + cast(I.Codigo_Mercadoria as varchar(15)) + ''}>'', ''''))');
+           sql.add('      ,I.Quantidade');
+           sql.add('      ,Quantidade_Master = P.Quantidade_CaixaMaster');
+           sql.add('      ,Unidade = P.Unidade');
+           sql.add('      ,Volumes = I.Quantidade / case when P.Quantidade_CaixaMaster >= 1 then P.Quantidade_CaixaMaster else 1 end');
+           sql.add('      ,I.Valor_Unitario');
+           sql.add('      ,Valor_Total = round(I.Valor_Unitario * I.Quantidade, 2)');
+           sql.add('from PedidosRepresentantesItens I');
+           sql.add('left join Produtos P on P.Codigo = I.Codigo_Mercadoria');
+           sql.add('where I.Pedido = :pPed');
+           sql.add('order by I.Item, I.Codigo_Mercadoria');
+           parambyname('pped').Value := tPedidos.FieldByName('Numero').AsString;
+           open;           
       end;
       mParcelas.lines.clear;
       if tPedidos.FieldByName('Faturado').AsBoolean then begin
@@ -2157,6 +2202,7 @@ end;
 procedure TPedido_RepresentantesSimp.ppHeaderBand2AfterPrint(Sender: TObject);
 begin
       with tItens do begin
+           (*
            sql.clear;
            sql.Add('select Item');
            sql.Add('      ,Codigo_Mercadoria');
@@ -2172,6 +2218,23 @@ begin
            sql.Add('order by Item, Codigo_Mercadoria');
            parambyname('pPed').value := tPedidos.FieldByName('Numero').AsString;
            open;
+           *)
+           sql.clear;
+           sql.add('select I.Item');
+           sql.add('      ,I.Codigo_Mercadoria');
+           sql.add('      ,Descricao = case when charindex(''<{'', P.Descricao) > 0 then substring(P.Descricao, 1, charindex(''<{'', P.Descricao) - 1) else P.Descricao end');
+           sql.add('      ,I.Quantidade');
+           sql.add('      ,Quantidade_Master = P.Quantidade_CaixaMaster');
+           sql.add('      ,Unidade = P.Unidade');
+           sql.add('      ,Volumes = I.Quantidade / case when P.Quantidade_CaixaMaster >= 1 then P.Quantidade_CaixaMaster else 1 end');
+           sql.add('      ,I.Valor_Unitario');
+           sql.add('      ,Valor_Total = round(I.Valor_Unitario * I.Quantidade, 2)');
+           sql.add('from PedidosRepresentantesItens I');
+           sql.add('left join Produtos P on P.Codigo = I.Codigo_Mercadoria');
+           sql.add('where I.Pedido = :pPed');
+           sql.add('order by I.Item, I.Codigo_Mercadoria');
+           ParamByName('pPed').Value := tPedidos.FieldByName('Numero').AsString;
+           Open;           
       end;
 end;
 
@@ -2551,6 +2614,7 @@ end;
 procedure TPedido_RepresentantesSimp.FiltraTodos(ordem: string);
 var
    mScript: TMemo;
+   Inicio: UInt64;   
 begin
       screen.Cursor := crsqlwait; 
 
@@ -2558,6 +2622,7 @@ begin
       mScript.Visible := False;
       mScript.Parent  := Pedido_RepresentantesSimp;
       with mScript.Lines do begin
+           (*
            Add('select Pedido');   
            Add('      ,Pedido_Pai');
            Add('      ,Parcial');
@@ -2591,6 +2656,38 @@ begin
            Add('      ,Tipo_Nota');
            Add('      ,Bloqueado');
            Add('from PedidosRepresentantes pr');
+           *)
+           Add('select PR.Pedido');
+           Add('      ,PR.Pedido_Pai');
+           Add('      ,PR.Parcial');
+           Add('      ,PR.Data');
+           Add('      ,PR.Ordem_Compra');
+           Add('      ,Representante_Nome = case when isnull(PR.Representante, 0) <> 0 then coalesce(FR.Nome, FC.Nome)');
+           Add('                                 when isnull(PR.Atendente, '''') <> '''' then U.Nome else ''VENDA VIA '' + PR.Origem_Pedido');
+           Add('                            end');
+           Add('      ,PR.Cliente_Nome');
+           Add('      ,PR.Total_Pedido');
+           Add('      ,PR.Desconto');
+           Add('      ,PR.Comissao');
+           Add('      ,Quantidade = Q.Quantidade');
+           Add('      ,PR.Cliente_CNPJ');
+           Add('      ,PR.Cliente_Estado');
+           Add('      ,PR.Cliente_MunicipioNome');
+           Add('      ,PR.Modalidade_Pagamento');
+           Add('      ,Modalidade_Nome = MP.Descricao');
+           Add('      ,Pessoa = case when isnull(PR.Cliente_CNPJ, '''') <> '''' then ''J'' else ''F'' end');
+           Add('      ,PR.Observacao');
+           Add('      ,PR.Armazem');
+           Add('      ,Armazem_Nome = FA.Nome');
+           Add('      ,PR.Tipo_Nota');
+           Add('      ,PR.Bloqueado');
+           Add('from PedidosRepresentantes PR');
+           Add('left join Fornecedores FR on FR.Representante_Codigo = PR.Representante');
+           Add('left join Fornecedores FC on FC.Codigo = PR.Representante');
+           Add('left join Cybersoft_Cadastros.dbo.Usuarios U on U.Matricula = PR.Atendente');
+           Add('left join Cybersoft_Cadastros.dbo.ModalidadesPagamento MP on MP.Codigo = PR.Modalidade_Pagamento');
+           Add('left join Fornecedores FA on FA.Codigo = PR.Armazem');
+           Add('outer apply (select Quantidade = sum(I.Quantidade) from PedidosRepresentantesItens I where I.Pedido = PR.Pedido) Q');
       end;
       if (mDirecao = '') or (mDirecao = 'desc') then
          mDirecao := 'asc'
@@ -2904,7 +3001,6 @@ begin
            StatusBar1.Panels[6].Text := 'Baixados: '+inttostr(recordcount);
       end;
       with PageControl1 do begin
-//          bAlterar.Enabled := (ActivePageIndex < 3) and (bAlterar.Tag = 0);
           if ActivePageIndex = 0 then FiltraItens(Grade.DataSource.DataSet.FieldByName('Pedido').AsString);
           if ActivePageIndex = 1 then FiltraItens(GradeConf.DataSource.DataSet.FieldByName('Pedido').AsString);
           if ActivePageIndex = 2 then FiltraItens(GradeSep.DataSource.DataSet.FieldByName('Pedido').AsString);
@@ -2921,6 +3017,7 @@ begin
       screen.Cursor := crsqlwait;
       with tDespachados do begin
            sql.Clear;
+           (*
            sql.Add('select Pedido');   
            sql.Add('      ,Pedido_Pai');
            sql.Add('      ,Parcial');
@@ -2956,6 +3053,42 @@ begin
            sql.Add('from PedidosRepresentantes pr');
            sql.Add('where isnull(Local, 0) = 6');
            sql.Add('and   isnull(Cancelado, 0) = 0');
+           *)
+
+           SQL.Clear;
+           SQL.Add('SELECT PR.Pedido');
+           SQL.Add('      ,PR.Pedido_Pai');
+           SQL.Add('      ,PR.Parcial');
+           SQL.Add('      ,PR.Data');
+           SQL.Add('      ,PR.Ordem_Compra');
+           SQL.Add('      ,Representante_Nome = case when isnull(PR.Representante, 0) <> 0 then coalesce(FR.Nome, FC.Nome)');
+           SQL.Add('                                 when isnull(PR.Atendente, '''') <> '''' then U.Nome else ''VENDA VIA '' + PR.Origem_Pedido');
+           SQL.Add('                            end');
+           SQL.Add('      ,PR.Cliente_Nome');
+           SQL.Add('      ,PR.Total_Pedido');
+           SQL.Add('      ,PR.Desconto');
+           SQL.Add('      ,PR.Comissao');
+           SQL.Add('      ,Quantidade = Q.Quantidade');
+           SQL.Add('      ,PR.Cliente_CNPJ');
+           SQL.Add('      ,PR.Cliente_Estado');
+           SQL.Add('      ,PR.Cliente_MunicipioNome');
+           SQL.Add('      ,PR.Modalidade_Pagamento');
+           SQL.Add('      ,Modalidade_Nome = MP.Descricao');
+           SQL.Add('      ,Pessoa = case when isnull(pr.Cliente_CNPJ, '''') <> '''' then ''J'' else ''F'' end');
+           SQL.Add('      ,PR.Observacao');
+           SQL.Add('      ,PR.Armazem');
+           SQL.Add('      ,Armazem_Nome = FA.Nome');
+           SQL.Add('      ,PR.Tipo_Nota');
+           SQL.Add('      ,PR.Bloqueado');
+           SQL.Add('from PedidosRepresentantes PR');
+           SQL.Add('left join Fornecedores FR on FR.Representante_Codigo = PR.Representante');
+           SQL.Add('left join Fornecedores FC on FC.Codigo = PR.Representante');
+           SQL.Add('left join Cybersoft_Cadastros.dbo.Usuarios U on U.Matricula = PR.Atendente');
+           SQL.Add('left join Cybersoft_Cadastros.dbo.ModalidadesPagamento MP on MP.Codigo = PR.Modalidade_Pagamento');
+           SQL.Add('left join Fornecedores FA on FA.Codigo = PR.Armazem');
+           SQL.Add('outer applY (select Quantidade = sum(I.Quantidade) from PedidosRepresentantesItens I where I.Pedido = PR.Pedido) Q');
+           SQL.Add('where pr.Local = 6');
+           sql.add('and (PR.Cancelado = 0 or PR.Cancelado is null)');
            // Filtro por usuário.
            if cUsuario.keyvalue <> null then begin
               sql.Add('and Usuario = '+quotedstr(Dados.Usuarios.FieldByName('Matricula').AsString));
@@ -3031,6 +3164,7 @@ procedure TPedido_RepresentantesSimp.FiltraItens(Pedido: string);
 begin
       with tGradeItens do begin
            sql.clear;
+           (*
            sql.Add('select Pedido');
            sql.add('      ,Item');
            sql.Add('      ,Codigo_Mercadoria');
@@ -3043,6 +3177,21 @@ begin
            sql.Add('      ,Valor_Total = round(Valor_Unitario * Quantidade, 2)');
            sql.Add('from PedidosRepresentantesItens');
            sql.Add('where Pedido = :pPed');
+           *)
+           sql.clear;
+           sql.add('select I.Pedido');
+           sql.add('      ,I.Item');
+           sql.add('      ,I.Codigo_Mercadoria');
+           sql.add('      ,Descricao = case when charindex(''<{'', P.Descricao) > 0 then substring(P.Descricao, 1, charindex(''<{'', P.Descricao) - 1) else P.Descricao end');
+           sql.add('      ,I.Quantidade');
+           sql.add('      ,Quantidade_Master = P.Quantidade_CaixaMaster');
+           sql.add('      ,Unidade = P.Unidade');
+           sql.add('      ,Volumes = I.Quantidade / case when P.Quantidade_CaixaMaster >= 1 then P.Quantidade_CaixaMaster else 1 end');
+           sql.add('      ,I.Valor_Unitario');
+           sql.add('      ,Valor_Total = ROUND(I.Valor_Unitario * I.Quantidade, 2)');
+           sql.add('from pedidosRepresentantesItens I');
+           sql.add('left join Produtos P on P.Codigo = I.Codigo_Mercadoria');
+           sql.add('where I.Pedido = :pPed');
            sql.Add('order by Item, Codigo_Mercadoria');
            parambyname('pPed').value := Pedido;
            open;

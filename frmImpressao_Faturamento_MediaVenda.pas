@@ -31,19 +31,12 @@ type
     ppDBText8: TppDBText;
     lTitulo: TppLabel;
     lPeriodo: TppLabel;
-    ppShape3: TppShape;
     ppLabel3: TppLabel;
-    ppShape19: TppShape;
     ppLabel21: TppLabel;
-    ppShape6: TppShape;
     ppLabel7: TppLabel;
-    ppShape2: TppShape;
     ppLabel4: TppLabel;
-    ppShape4: TppShape;
     ppLabel5: TppLabel;
-    ppShape1: TppShape;
     ppLabel2: TppLabel;
-    ppShape5: TppShape;
     ppLabel6: TppLabel;
     ppDetailBand1: TppDetailBand;
     ppDBText7: TppDBText;
@@ -79,6 +72,7 @@ type
     RxLabel1: TRxLabel;
     RxLabel2: TRxLabel;
     Image1: TImage;
+    cDirecao: TRadioGroup;
     procedure bSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -121,12 +115,14 @@ var
 begin
       Screen.Cursor := crSQLWait;
       // Carregando as ultimas opções utilizadas no relatório como default.
-      aINI              := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
-      cDataIni.Date     := aINI.ReadDate   ('IMPRESSAO_FATURAMENTO_MEDIA', 'DataIni', Date );
-      cDataFim.Date     := aINI.ReadDate   ('IMPRESSAO_FATURAMENTO_MEDIA', 'DataFim', Date );
-      cProduto.KeyValue := aINI.ReadInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Produto', 0 );
-      cLinha.KeyValue   := aINI.ReadInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Linha'  , 0 );
-      cTipo.ItemIndex   := aINI.ReadInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Tipo'   , 0 );
+      aINI               := TIniFile.Create(ExtractFilePath(Application.ExeName)+'ImportaRelatorios.ini');
+      cDataIni.Date      := aINI.ReadDate   ('IMPRESSAO_FATURAMENTO_MEDIA', 'DataIni', Date );
+      cDataFim.Date      := aINI.ReadDate   ('IMPRESSAO_FATURAMENTO_MEDIA', 'DataFim', Date );
+      cProduto.KeyValue  := aINI.ReadInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Produto', 0 );
+      cLinha.KeyValue    := aINI.ReadInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Linha'  , 0 );
+      cTipo.ItemIndex    := aINI.ReadInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Tipo'   , 0 );
+      cOrdem.ItemIndex   := aINI.ReadInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Ordem'   , 0 );
+      cDirecao.ItemIndex := aINI.ReadInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Direacao', 0 );
       aINI.Free;
 
       With Dados do begin
@@ -147,59 +143,166 @@ begin
 
       Dados.Empresas.Open;
       Dados.Empresas.Locate('Codigo', Menu_Principal.mEmpresa, [loCaseInsensitive]);
+      Dados.Configuracao.open;
       
-      tItens.SQL.Clear;
-      tItens.SQL.Add('SELECT Codigo_Mercadoria,');
-      If cTipo.ItemIndex = 1 then begin
-         tItens.SQL.Add('       Valor_Total,');
+      if not Dados.ConfiguracaoTela_LiberaPedidos.AsBoolean then begin
+         with tItens do begin
+              SQL.Clear;
+              SQL.Add('SELECT Codigo_Mercadoria,');
+              If cTipo.ItemIndex = 1 then begin
+                 SQL.Add('       Valor_Total,');
+              end else begin
+                 SQL.Add('       (Valor_Total + Valor_ICMSOper + Total_IPI + (Valor_PIS+Valor_COFINS * Quantidade)) AS Valor_Total,');
+              End;   
+              SQL.Add('       Quantidade');
+              SQL.Add('INTO  #Temp');
+              SQL.Add('FROM  NotasItens');
+              If cTipo.ItemIndex = 1 then begin
+                 SQL.Add('WHERE(Saida_Entrada = 1) AND (Cancelada <> 1) AND (Data BETWEEN :pDataIni AND :pDataFim)');
+                 SQL.Add('      AND (SELECT Gerar_Financeiro FROM TipoNota WHERE(Codigo = (SELECT DISTINCT Tipo_Nota FROM NotasFiscais WHERE(Numero = Nota) AND (Data_Emissao = Data)))) = 1');
+                 ParamByName('pDataIni').AsDateTime := cDataIni.Date;
+                 ParamByName('pDataFim').AsDateTime := cDataFim.Date;
+              end else begin
+                 SQL.Add('WHERE(Saida_Entrada = 0) AND (Cancelada <> 1) AND (Movimenta_Inventario = 1)');
+              End;
+              If cProduto.KeyValue > 0 then begin
+                 SQL.Add(' AND (Codigo_Mercadoria = :pCodigo)');
+                 ParamByName('pCodigo').AsInteger := Dados.ProdutosCodigo.AsInteger;
+              End;
+              If cLinha.KeyValue > 0 then begin
+                 SQL.Add(' AND (SELECT Linha FROM Produtos WHERE(Codigo = Codigo_Mercadoria)) = :pLinha');
+                 ParamByName('pLinha').AsInteger := Dados.ProdutosLinhasCodigo.AsInteger;
+              End;
+              SQL.Add('SELECT Codigo_Mercadoria,');
+              SQL.Add('       ISNULL(SUM(Quantidade), 0)                    AS Quantidade,');
+              SQL.Add('       ISNULL(MIN(Valor_Total/Quantidade), 0)        AS Valor_Menor,');
+              SQL.Add('       ISNULL((SUM(Valor_Total)/SUM(Quantidade)), 0) AS Valor_Medio,');
+              SQL.Add('       ISNULL(MAX(Valor_Total/Quantidade), 0)        AS Valor_Maior');
+              SQL.Add('INTO   #Temp2');
+              SQL.Add('FROM   #Temp');
+              SQL.Add('WHERE  Quantidade > 0');
+              SQL.Add('GROUP  BY Codigo_Mercadoria');
+              SQL.Add('SELECT #Temp2.*,');
+              SQL.Add('      (SELECT Unidade FROM Produtos WHERE(Codigo = #Temp2.Codigo_Mercadoria)) AS Unidade,');
+              SQL.Add('      (SELECT Descricao_Reduzida FROM Produtos WHERE (Codigo = #Temp2.Codigo_Mercadoria)) AS Descricao,');
+              SQL.Add('      (SELECT Linha FROM Produtos WHERE(Codigo = Codigo_Mercadoria)) AS Linha,');
+              SQL.Add('      (SELECT Descricao FROM ProdutosLinhas WHERE(Codigo = (SELECT Linha FROM Produtos WHERE(Codigo = Codigo_Mercadoria)))) AS Linha_Descricao');
+              SQL.Add('FROM   #Temp2');
+              if cOrdem.ItemIndex = 0 then SQL.Add('order by Linha, Codigo_Mercadoria'+iif(cDirecao.ItemIndex = 1, ' desc', ''));
+              if cOrdem.ItemIndex = 1 then SQL.Add('order by Linha, Descricao'+iif(cDirecao.ItemIndex = 1, ' desc', ''));
+              if cOrdem.ItemIndex = 2 then sql.add('order by Linha, Valor_Menor'+iif(cDirecao.ItemIndex = 1, ' desc', ''));
+              if cOrdem.ItemIndex = 3 then sql.add('order by Linha, Valor_Medio'+iif(cDirecao.ItemIndex = 1, ' desc', ''));
+              if cOrdem.ItemIndex = 4 then sql.add('order by Linha, Valor_Maior'+iif(cDirecao.ItemIndex = 1, ' desc', ''));
+              SQL.Add('DROP TABLE #Temp');
+              SQL.Add('DROP TABLE #Temp2');
+              SQL.SaveToFile('C:\Temp\Media_Preco.sql');
+              Open;
+         end;
       end else begin
-         tItens.SQL.Add('       (Valor_Total + Valor_ICMSOper + Total_IPI + (Valor_PIS+Valor_COFINS * Quantidade)) AS Valor_Total,');
-      End;   
-      tItens.SQL.Add('       Quantidade');
-      tItens.SQL.Add('INTO  #Temp');
-      tItens.SQL.Add('FROM  NotasItens');
-      If cTipo.ItemIndex = 1 then begin
-         tItens.SQL.Add('WHERE(Saida_Entrada = 1) AND (Cancelada <> 1) AND (Data BETWEEN :pDataIni AND :pDataFim)');
-         tItens.SQL.Add('      AND (SELECT Gerar_Financeiro FROM TipoNota WHERE(Codigo = (SELECT DISTINCT Tipo_Nota FROM NotasFiscais WHERE(Numero = Nota) AND (Data_Emissao = Data)))) = 1');
-         tItens.ParamByName('pDataIni').AsDateTime := cDataIni.Date;
-         tItens.ParamByName('pDataFim').AsDateTime := cDataFim.Date;
-      end else begin
-         tItens.SQL.Add('WHERE(Saida_Entrada = 0) AND (Cancelada <> 1) AND (Movimenta_Inventario = 1)');
-      End;
-      If cProduto.KeyValue > 0 then begin
-         tItens.SQL.Add(' AND (Codigo_Mercadoria = :pCodigo)');
-         tItens.ParamByName('pCodigo').AsInteger := Dados.ProdutosCodigo.AsInteger;
-      End;
-
-      If cLinha.KeyValue > 0 then begin
-         tItens.SQL.Add(' AND (SELECT Linha FROM Produtos WHERE(Codigo = Codigo_Mercadoria)) = :pLinha');
-         tItens.ParamByName('pLinha').AsInteger := Dados.ProdutosLinhasCodigo.AsInteger;
-      End;
-
-      tItens.SQL.Add('SELECT Codigo_Mercadoria,');
-      tItens.SQL.Add('       ISNULL(SUM(Quantidade), 0)                    AS Quantidade,');
-      tItens.SQL.Add('       ISNULL(MIN(Valor_Total/Quantidade), 0)        AS Valor_Menor,');
-      tItens.SQL.Add('       ISNULL((SUM(Valor_Total)/SUM(Quantidade)), 0) AS Valor_Medio,');
-      tItens.SQL.Add('       ISNULL(MAX(Valor_Total/Quantidade), 0)        AS Valor_Maior');
-      tItens.SQL.Add('INTO   #Temp2');
-      tItens.SQL.Add('FROM   #Temp');
-      tItens.SQL.Add('WHERE  Quantidade > 0');
-      tItens.SQL.Add('GROUP  BY Codigo_Mercadoria');
-      tItens.SQL.Add('SELECT #Temp2.*,');
-      tItens.SQL.Add('      (SELECT Unidade FROM Produtos WHERE(Codigo = #Temp2.Codigo_Mercadoria)) AS Unidade,');
-      tItens.SQL.Add('      (SELECT Descricao_Reduzida FROM Produtos WHERE (Codigo = #Temp2.Codigo_Mercadoria)) AS Descricao,');
-      tItens.SQL.Add('      (SELECT Linha FROM Produtos WHERE(Codigo = Codigo_Mercadoria)) AS Linha,');
-      tItens.SQL.Add('      (SELECT Descricao FROM ProdutosLinhas WHERE(Codigo = (SELECT Linha FROM Produtos WHERE(Codigo = Codigo_Mercadoria)))) AS Linha_Descricao');
-      tItens.SQL.Add('FROM   #Temp2');
-
-      If cOrdem.ItemIndex = 0 then tItens.SQL.Add('ORDER  BY Linha, Codigo_Mercadoria');
-      If cOrdem.ItemIndex = 1 then tItens.SQL.Add('ORDER  BY Linha, Descricao');
-
-      tItens.SQL.Add('DROP TABLE #Temp');
-      tItens.SQL.Add('DROP TABLE #Temp2');
-
-      //titens.SQL.SaveToFile('C:\Temp\Media_Preco.txt');
-      tItens.Open;
+         with tItens do begin
+              if cTipo.ItemIndex = 1 then begin
+                 sql.clear;
+                 sql.add(';with Resumo as');
+                 sql.add('      (select pi.Codigo_Mercadoria');
+                 sql.add('             ,Quantidade  = sum(pi.Quantidade)');
+                 sql.add('             ,Valor_Menor = isnull(min(pi.Valor_Unitario), 0)');
+                 sql.add('             ,Valor_Medio = isnull(sum(cast(pi.Valor_Unitario as decimal(18,8)) * pi.Quantidade) / nullif(sum(pi.Quantidade), 0), 0)');
+                 sql.add('             ,Valor_Maior = isnull(max(pi.Valor_Unitario), 0)');
+                 sql.add('       from PedidosRepresentantesItens pi');
+                 sql.add('       inner join Produtos pd on pd.Codigo = pi.Codigo_Mercadoria');
+                 sql.add('       where pi.Cancelado <> 1');
+                 if cLinha.Text <> '' then begin
+                    sql.add('       and pd.Linha = :pLinha');
+                    parambyname('pLinha').asinteger := Dados.ProdutosLinhasCodigo.AsInteger;
+                 end;
+                 if cCodigoProduto.Value >0 then begin
+                    sql.add('       and pi.Codigo_Mercadoria = :pCod');
+                    parambyname('pCod').asinteger := Dados.ProdutosCodigo.AsInteger;
+                 end;
+                 sql.add('       and pi.Quantidade > 0');
+                 sql.add('       and pi.Data >= :pDataIni');
+                 sql.add('       and pi.Data <= :pDataFim');
+                 sql.add('       and exists (select 1 from PedidosRepresentantes nf where nf.Pedido = pi.Pedido AND nf.Data = pi.Data) group by pi.Codigo_Mercadoria)');
+                 sql.add('       select r.Codigo_Mercadoria');
+                 sql.add('             ,r.Quantidade');
+                 sql.add('             ,r.Valor_Menor');
+                 sql.add('             ,r.Valor_Medio');
+                 sql.add('             ,r.Valor_Maior');
+                 sql.add('             ,p.Unidade');
+                 sql.add('             ,p.Descricao_Reduzida as Descricao');
+                 sql.add('             ,p.Linha');
+                 sql.add('             ,pl.Descricao as Linha_Descricao');
+                 sql.add('      from Resumo r');
+                 sql.add('      left join Produtos p on p.Codigo = r.Codigo_Mercadoria');
+                 sql.add('      left join ProdutosLinhas pl on pl.Codigo = p.Linha');
+                 if cOrdem.ItemIndex = 0 then SQL.Add('order by Linha, Codigo_Mercadoria'+iif(cDirecao.ItemIndex = 1, ' desc', ''));
+                 if cOrdem.ItemIndex = 1 then SQL.Add('order by Linha, Descricao'+iif(cDirecao.ItemIndex = 1, ' desc', ''));
+                 if cOrdem.ItemIndex = 2 then sql.add('order by Linha, Valor_Menor'+iif(cDirecao.ItemIndex = 1, ' desc', ''));
+                 if cOrdem.ItemIndex = 3 then sql.add('order by Linha, Valor_Medio'+iif(cDirecao.ItemIndex = 1, ' desc', ''));
+                 if cOrdem.ItemIndex = 4 then sql.add('order by Linha, Valor_Maior'+iif(cDirecao.ItemIndex = 1, ' desc', ''));
+                 parambyname('pDataIni').asdatetime := cDataIni.Date;
+                 parambyname('pDataFim').asdatetime := cDataFim.Date;
+                 //sql.SaveToFile('c:\Temp\Media_Preco_Vendas.sql');
+                 open;
+              end else begin
+                 SQL.Clear;
+                 SQL.Add(';with Resumo as');
+                 SQL.Add('(select ni.Codigo_Mercadoria,');
+                 SQL.Add('        Quantidade = sum(ni.Quantidade),');
+                 if cTipo.ItemIndex = 1 then begin
+                    SQL.Add('        Valor_Menor = isnull(min(ni.Valor_Total / nullif(ni.Quantidade, 0)), 0),');
+                    SQL.Add('        Valor_Medio = isnull(sum(ni.Valor_Total) / nullif(sum(ni.Quantidade), 0), 0),');
+                    SQL.Add('        Valor_Maior = isnull(max(ni.Valor_Total / nullif(ni.Quantidade, 0)), 0)');
+                 end else begin
+                    SQL.Add('        Valor_Menor = isnull(min((ni.Valor_Liquido+isnull(ni.Valor_ICMSOper,0)+isnull(ni.Valor_IPI,0)+(isnull(ni.Valor_PIS,0)+isnull(ni.Valor_COFINS,0)*ni.Quantidade))/nullif(ni.Quantidade, 0)), 0),');
+                    SQL.Add('        Valor_Medio = isnull(sum(ni.Valor_Liquido +isnull(ni.Valor_ICMSOper,0)+isnull(ni.Valor_IPI,0)+(isnull(ni.Valor_PIS,0)+isnull(ni.Valor_COFINS,0)*ni.Quantidade))/nullif(sum(ni.Quantidade), 0), 0),');
+                    SQL.Add('        Valor_Maior = isnull(max((ni.Valor_Liquido+isnull(ni.Valor_ICMSOper,0)+isnull(ni.Valor_IPI,0)+(isnull(ni.Valor_PIS,0)+isnull(ni.Valor_COFINS,0)*ni.Quantidade))/nullif(ni.Quantidade, 0)), 0)');
+                 end;
+                 SQL.Add('    from NotasTerceirosItens ni');
+                 SQL.Add('    inner join Produtos pf on pf.Codigo = ni.Codigo_Mercadoria');
+                 SQL.Add('    where (ni.Data_Entrada >= :pDataIni and ni.Data_Entrada <= :pDataFim)');
+                 SQL.Add('    and ni.Movimenta_Estoque = 1');
+                 SQL.Add('    and ni.Quantidade > 0');
+                 if cProduto.KeyValue > 0 then begin
+                    SQL.Add('      and ni.Codigo_Mercadoria = :pCodigo');
+                    ParamByName('pCodigo').AsInteger := Dados.ProdutosCodigo.AsInteger;
+                 end;
+                 if cLinha.KeyValue > 0 then begin
+                    SQL.Add('      and pf.Linha = :pLinha');
+                    ParamByName('pLinha').AsInteger := Dados.ProdutosLinhasCodigo.AsInteger;
+                 end;
+                 SQL.Add('    group by ni.Codigo_Mercadoria');
+                 SQL.Add(')');
+                 SQL.Add('select');
+                 SQL.Add('    r.Codigo_Mercadoria,');
+                 SQL.Add('    r.Quantidade,');
+                 SQL.Add('    r.Valor_Menor,');
+                 SQL.Add('    r.Valor_Medio,');
+                 SQL.Add('    r.Valor_Maior,');
+                 SQL.Add('    p.Unidade,');
+                 SQL.Add('    p.Descricao_Reduzida AS Descricao,');
+                 SQL.Add('    p.Linha,');
+                 SQL.Add('    pl.Descricao AS Linha_Descricao');
+                 SQL.Add('from Resumo r');
+                 SQL.Add('left join Produtos p on p.Codigo = r.Codigo_Mercadoria');
+                 SQL.Add('left join ProdutosLinhas pl on pl.Codigo = p.Linha');
+                 case cOrdem.ItemIndex of
+                     0: SQL.Add('order by p.Linha, r.Codigo_Mercadoria');
+                     1: SQL.Add('order by p.Linha, p.Descricao_Reduzida');
+                     2: SQL.Add('order by p.Linha, r.Valor_Menor');
+                     3: SQL.Add('order by p.Linha, r.Valor_Medio');
+                     4: SQL.Add('order by p.Linha, r.Valor_Maior');
+                 else
+                     SQL.Add('order by p.Linha, r.Codigo_Mercadoria');
+                 end;
+                 if cDirecao.ItemIndex = 1 then SQL.Add('DESC');
+                 parambyname('pDataIni').asdatetime := cDataIni.Date;
+                 parambyname('pDataFim').asdatetime := cDataFim.Date;
+                 //SQL.SaveToFile('C:\Temp\Media_Preco_Compras.sql');
+                 Open;
+              end;
+         end;
+      end;
       Screen.Cursor := crDefault;
 
       If tItens.RecordCount > 0 then begin
@@ -241,8 +344,9 @@ begin
          aINI.WriteInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Linha'  , cLinha.KeyValue)
       else
          aINI.WriteInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Linha'  , 0);
-      aINI.WriteInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Tip', cTipo.ItemIndex);
-
+      aINI.WriteInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Tipo', cTipo.ItemIndex);
+      aINI.WriteInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Ordem', cOrdem.ItemIndex);
+      aINI.WriteInteger('IMPRESSAO_FATURAMENTO_MEDIA', 'Direacao', cDirecao.ItemIndex);
       aINI.Free;
 end;
 
@@ -277,8 +381,11 @@ end;
 
 procedure TImpressao_Faturamento_MediaVenda.cCodigoProdutoExit(Sender: TObject);
 begin
-      Dados.Produtos.Locate('Codigo', cCodigoProduto.AsInteger, [loCaseInsensitive]);
-      cProduto.KeyValue := Dados.ProdutosCodigo.Value;
+      cProduto.KeyValue := null;
+      if cCodigoProduto.AsInteger > 0 then begin
+         Dados.Produtos.Locate('Codigo', cCodigoProduto.AsInteger, [loCaseInsensitive]);
+         cProduto.KeyValue := Dados.ProdutosCodigo.Value;
+      end;
 end;
 
 procedure TImpressao_Faturamento_MediaVenda.bLimparClick(Sender: TObject);

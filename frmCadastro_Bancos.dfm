@@ -239,13 +239,12 @@ object Cadastro_Bancos: TCadastro_Bancos
     Top = 49
     Width = 612
     Height = 458
-    ActivePage = TabSheet1
+    ActivePage = TabSheet2
     TabHeight = 25
     TabOrder = 2
     object TabSheet1: TTabSheet
       Caption = '&Dados do banco'
       Enabled = False
-      ExplicitHeight = 405
       object SpeedButton2: TSpeedButton
         Left = 570
         Top = 210
@@ -1279,7 +1278,6 @@ object Cadastro_Bancos: TCadastro_Bancos
       Caption = 'Dados do Boleto'
       Enabled = False
       ImageIndex = 1
-      ExplicitHeight = 404
       object StaticText15: TStaticText
         Left = 5
         Top = 51

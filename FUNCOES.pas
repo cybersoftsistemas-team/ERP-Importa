@@ -3774,7 +3774,7 @@ begin
                    sql.Add('                                  and Movimenta_Estoque = 1');
                    sql.Add('                                  and Cancelada <> 1');
                    sql.Add('                                  and isnull(NFe_Denegada, 0) = 0), 0) +');
-                   sql.Add('                                  isnull((select sum(Quantidade) from NotasTerceirosItens where Codigo_Mercadoria = :pCodigo and Movimenta_Estoque = 1), 0) +');
+                   sql.Add('                          isnull((select sum(Quantidade) from NotasTerceirosItens where Codigo_Mercadoria = :pCodigo and Movimenta_Estoque = 1), 0) +');
                    sql.Add('                          isnull((select sum(Quantidade_Entrada)');
                    sql.Add('                                  from ProdutosTransferencia');
                    sql.Add('                                  where Produto_Entrada = :pCodigo), 0) -');
