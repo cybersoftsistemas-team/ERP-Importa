@@ -503,7 +503,7 @@ begin
                    inc(mLinha);
 
                    // Registro Detalhe Tipo 5 – Multa/Prazo Limite de Recebimento – Opcional – Remessa
-                   if Trim(ConfiguracaoBoleto_InstrucaoCod.asString) = '1' then  begin
+                   if Trim(ConfiguracaoBoleto_InstrucaoCod.asString) = '1' then begin
                       mDataMulta := tBoletos.FieldByName('Data_Vencimento').Value+1;
                       mDtMul     := PoeZero(2, DayOf(mDataMulta))+
                                     PoeZero(2, MonthOf(mDataMulta))+

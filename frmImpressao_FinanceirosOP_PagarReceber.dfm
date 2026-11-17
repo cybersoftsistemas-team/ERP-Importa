@@ -1149,7 +1149,7 @@ object Impressao_FinanceirosOP_PagarReceber: TImpressao_FinanceirosOP_PagarReceb
     OnClick = cAgruparBenefClick
   end
   object cDataBaixa: TCheckBox
-    Left = 432
+    Left = 424
     Top = 149
     Width = 234
     Height = 17
@@ -3231,7 +3231,7 @@ object Impressao_FinanceirosOP_PagarReceber: TImpressao_FinanceirosOP_PagarReceb
     PrinterSetup.DocumentName = 'F01 - Contas a pagar / Receber'
     PrinterSetup.Duplex = dpHorizontal
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

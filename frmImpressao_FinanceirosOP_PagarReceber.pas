@@ -519,7 +519,7 @@ begin
      If Dados.EmpresasMatriz_Filial.AsBoolean then
         lTitulo.Caption := lTitulo.Caption + ' - MATRIZ'
       else
-         lTitulo.Caption := lTitulo.Caption + ' - FILIAL '+PoeZero(2, Dados.EmpresasNumero_Filial.AsInteger);
+        lTitulo.Caption := lTitulo.Caption + ' - FILIAL '+PoeZero(2, Dados.EmpresasNumero_Filial.AsInteger);
 
      lPeriodo.Caption := '';
      if trim(cCondicao.text) <> '' then begin
@@ -697,10 +697,10 @@ begin
           sql.Add('       PR.Tipo,');
           if cDataBaixa.Checked then begin
              If not DataLimpa(cDataIni.Text) then begin
-                sql.Add('       ISNULL((SELECT SUM(Valor) FROM PagarReceberBaixas AS PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataFim),0) AS Valor_Baixa,');
-              end else begin
-                sql.Add('       ISNULL((SELECT SUM(Valor) FROM PagarReceberBaixas AS PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataDOCFim),0) AS Valor_Baixa,');
-              end;
+               sql.Add('       ISNULL((SELECT SUM(Valor) FROM PagarReceberBaixas AS PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataFim),0) AS Valor_Baixa,');
+             end else begin
+               sql.Add('       ISNULL((SELECT SUM(Valor) FROM PagarReceberBaixas AS PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataDOCFim),0) AS Valor_Baixa,');
+             end;
           end else begin
               sql.Add('       ISNULL((SELECT SUM(Valor) FROM PagarReceberBaixas AS PRB WHERE PR.Numero = PRB.Numero), 0) AS Valor_Baixa,');
           end;
@@ -766,10 +766,18 @@ begin
           
           if not DataLimpa(cDataIni.Text) then begin
              if cMovimento.ItemIndex = 0 then begin
-                sql.Add('AND ISNULL(ROUND((SELECT SUM(Valor) FROM PagarReceberBaixas PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataFim), 2),0) < ROUND(Valor_Total, 2)');
+                if cDataBaixa.Checked then begin
+                   sql.Add('AND ISNULL(ROUND((SELECT SUM(Valor) FROM PagarReceberBaixas PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataFim), 2),0) < ROUND(Valor_Total, 2)');
+                end else begin
+                   sql.Add('AND ISNULL(ROUND((SELECT SUM(Valor) FROM PagarReceberBaixas PRB WHERE PR.Numero = PRB.Numero), 2),0) < ROUND(Valor_Total, 2)');
+                end;
              end;
              if cMovimento.ItemIndex = 1 then begin
-                sql.Add('AND ISNULL(ROUND((SELECT SUM(Valor) FROM PagarReceberBaixas PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataFim), 2),0) > 0');
+                if cDataBaixa.Checked then begin
+                   sql.Add('AND ISNULL(ROUND((SELECT SUM(Valor) FROM PagarReceberBaixas PRB WHERE PR.Numero = PRB.Numero and prb.Data <= :pDataFim), 2),0) > 0');
+                end else begin
+                   sql.Add('AND ISNULL(ROUND((SELECT SUM(Valor) FROM PagarReceberBaixas PRB WHERE PR.Numero = PRB.Numero ), 2),0) > 0');
+                end;
              end;
           end else begin
              if cMovimento.ItemIndex = 0 then begin
@@ -915,7 +923,7 @@ begin
              ParamByName('pModalidade').AsInteger := Dados.ModalidadesPgtoCodigo.AsInteger;
           End;
           sql.Add('DROP TABLE #TEMP');
-          //sql.SaveToFile('c:\temp\Impressao_PagarReceber.sql');
+          sql.SaveToFile('c:\temp\Impressao_PagarReceber.sql');
           Open;
      end;
 
