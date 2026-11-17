@@ -228,6 +228,12 @@ type
     labCriterios: TppLabel;
     redCliente: TppLabel;
     redClienteNome: TppDBText;
+    qryFLPReferencia_DataEntrega: TDateTimeField;
+    qryFLPProcesso_Fechamento: TDateTimeField;
+    ppLabel60: TppLabel;
+    ppDBText58: TppDBText;
+    ppDBText59: TppDBText;
+    ppLabel61: TppLabel;
     procedure btnSearchClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
@@ -1287,7 +1293,7 @@ begin
 
     pprXLS.Print;
 
-    FormatExcelHistorico(pprXLS.TextFileName, 'AB');
+    FormatExcelHistorico(pprXLS.TextFileName, 'AD');
   finally
     pprXLS.XLSSettings.PreserveLineBreaks := LOldPreserveLineBreaks;
     pprXLS.DeviceType := LOldDevice;
@@ -1402,8 +1408,6 @@ begin
   lPeriodoSint.Caption := LFiltro;
   ppLabel30.Caption := LFiltro;
 end;
-
-
 
 procedure TfrmImpressaoProcessosOPFollowUp.SetlblRecordsCaption(const ARecordCount: Integer);
 begin
