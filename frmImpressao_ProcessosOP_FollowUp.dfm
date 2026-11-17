@@ -1045,6 +1045,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         LayerName = Foreground6
       end
       object lPeriodoSint: TppLabel
+        OnPrint = lPeriodoSintPrint
         DesignLayer = ppDesignLayer7
         UserName = 'labParams'
         Border.Weight = 1.000000000000000000
@@ -1732,6 +1733,71 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         mmLeft = 123024
         mmTop = 18785
         mmWidth = 4498
+        BandType = 0
+        LayerName = Foreground6
+      end
+      object labCriterios: TppLabel
+        DesignLayer = ppDesignLayer7
+        UserName = 'labParams2'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'Crit'#233'rios:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 4
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 1588
+        mmLeft = 273315
+        mmTop = 13229
+        mmWidth = 6085
+        BandType = 0
+        LayerName = Foreground6
+      end
+      object redCliente: TppLabel
+        DesignLayer = ppDesignLayer7
+        UserName = 'redCliente'
+        Border.Weight = 1.000000000000000000
+        Border.mmPadding = 0
+        Caption = 'Cliente:'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 4
+        Font.Style = [fsBold]
+        FormFieldSettings.FormSubmitInfo.SubmitMethod = fstPost
+        FormFieldSettings.FormFieldType = fftNone
+        TextAlignment = taRightJustified
+        Transparent = True
+        mmHeight = 1588
+        mmLeft = 28310
+        mmTop = 13229
+        mmWidth = 5027
+        BandType = 0
+        LayerName = Foreground6
+      end
+      object redClienteNome: TppDBText
+        DesignLayer = ppDesignLayer7
+        UserName = 'DBText21'
+        AutoSize = True
+        Border.mmPadding = 0
+        DataField = 'ClienteNome'
+        DataPipeline = dbpFollowUp
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlack
+        Font.Name = 'Arial'
+        Font.Size = 4
+        Font.Style = [fsBold]
+        Transparent = True
+        DataPipelineName = 'dbpFollowUp'
+        mmHeight = 1588
+        mmLeft = 34131
+        mmTop = 13229
+        mmWidth = 19315
         BandType = 0
         LayerName = Foreground6
       end
@@ -2973,16 +3039,16 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
     Top = 339
     ParamData = <
       item
-        DataType = ftDateTime
+        DataType = ftUnknown
         Name = 'DataInicial'
         ParamType = ptInput
-        Value = 36526d
+        Value = nil
       end
       item
-        DataType = ftDateTime
+        DataType = ftUnknown
         Name = 'DataFinal'
         ParamType = ptInput
-        Value = 46598d
+        Value = nil
       end
       item
         DataType = ftInteger
@@ -2997,10 +3063,9 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
         Value = 0
       end
       item
-        DataType = ftInteger
+        DataType = ftString
         Name = 'ClienteCodigo'
-        ParamType = ptInput
-        Value = 0
+        Value = ''
       end
       item
         DataType = ftString
@@ -3011,9 +3076,7 @@ object frmImpressaoProcessosOPFollowUp: TfrmImpressaoProcessosOPFollowUp
       item
         DataType = ftString
         Name = 'Processo'
-        ParamType = ptInput
-        Size = 9
-        Value = 'VIX311/26'
+        Value = ''
       end
       item
         DataType = ftUnknown

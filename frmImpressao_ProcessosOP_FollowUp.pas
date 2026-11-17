@@ -225,6 +225,9 @@ type
     btnClear: TButton;
     btnSaveTo: TBitBtn;
     lblRecords: TLabel;
+    labCriterios: TppLabel;
+    redCliente: TppLabel;
+    redClienteNome: TppDBText;
     procedure btnSearchClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
@@ -233,6 +236,7 @@ type
     procedure btnPrintClick(Sender: TObject);
     procedure btnSaveToClick(Sender: TObject);
     procedure bSairClick(Sender: TObject);
+    procedure lPeriodoSintPrint(Sender: TObject);
   private
     function GetProcesso: string;
     procedure SaveReportInPDF(const AFileName: string);
@@ -1231,6 +1235,14 @@ begin
   Result := edtProcesso.Text;
 end;
 
+procedure TfrmImpressaoProcessosOPFollowUp.lPeriodoSintPrint(Sender: TObject);
+const
+  CEspacamento = -0.05; // milímetros
+begin
+  labCriterios.Left :=
+    lPeriodoSint.Left - labCriterios.Width - CEspacamento;
+end;
+
 procedure TfrmImpressaoProcessosOPFollowUp.qryFLPAfterClose(DataSet: TDataSet);
 begin
   SetlblRecordsCaption(0);
@@ -1292,24 +1304,106 @@ begin
   dedDtChegadaFim.Clear;
 end;
 
+
+
 procedure TfrmImpressaoProcessosOPFollowUp.SetFilterReport;
 var
   LFiltro: string;
+  LClienteSelecionado: Boolean;
+
+  procedure AddFiltro(const ATexto: string);
+  begin
+    if ATexto.IsEmpty then
+      Exit;
+
+    if not LFiltro.IsEmpty then
+      LFiltro := LFiltro + '; ';
+
+    LFiltro := LFiltro + ATexto;
+  end;
+
+  procedure AddPeriodo(
+    const ATitulo: string;
+    const ADataInicial, ADataFinal: TDateTime);
+  begin
+    if (ADataInicial <= 0) and (ADataFinal <= 0) then
+      Exit;
+
+    if (ADataInicial > 0) and (ADataFinal > 0) then
+      AddFiltro(Format(
+        '%s: %s até %s',
+        [ATitulo, DateToStr(ADataInicial), DateToStr(ADataFinal)]
+      ))
+    else if ADataInicial > 0 then
+      AddFiltro(Format(
+        '%s: a partir de %s',
+        [ATitulo, DateToStr(ADataInicial)]
+      ))
+    else
+      AddFiltro(Format(
+        '%s: até %s',
+        [ATitulo, DateToStr(ADataFinal)]
+      ));
+  end;
+
 begin
-  LFiltro := Format('Período: %s até %s', [DateToStr(cDataIni.Date), DateToStr(cDataFim.Date)]);
-  if not VarIsNull(cCliente.KeyValue) then
-  begin
-    LFiltro := LFiltro + '; Cliente: ' + cCliente.Text;
-  end;
-  if not VarIsNull(cResponsavel.KeyValue) then
-  begin
-    LFiltro := LFiltro + '; Responsável: ' + cResponsavel.Text;
-  end;
-  LFiltro := LFiltro + '; ' + rgEst.Caption + ': ' + rgEst.Items[rgEst.ItemIndex];
-  LFiltro := LFiltro + '; ' + rgSit.Caption + ': ' + rgSit.Items[rgSit.ItemIndex];
+  LFiltro := '';
+
+  // Verifica se existe um cliente selecionado.
+  LClienteSelecionado :=
+    not VarIsNull(cCliente.KeyValue) and
+    not VarIsEmpty(cCliente.KeyValue);
+
+  // Controla a visibilidade dos componentes do relatório.
+  redCliente.Visible := LClienteSelecionado;
+  redClienteNome.Visible := LClienteSelecionado;
+
+  // Período do processo.
+  AddPeriodo(
+    'Período',
+    cDataIni.Date,
+    cDataFim.Date
+  );
+
+  // Previsão de chegada.
+  AddPeriodo(
+    'Data Prevista',
+    dedDtPrevistaIni.Date,
+    dedDtPrevistaFim.Date
+  );
+
+  // Data efetiva de chegada.
+  AddPeriodo(
+    'Data Chegada',
+    dedDtChegadaIni.Date,
+    dedDtChegadaFim.Date
+  );
+
+  // O cliente não é incluído nos critérios,
+  // pois será exibido separadamente no relatório.
+
+  if not VarIsNull(cResponsavel.KeyValue) and
+     not VarIsEmpty(cResponsavel.KeyValue) then
+    AddFiltro('Responsável: ' + cResponsavel.Text);
+
+  if (rgEst.ItemIndex >= 0) and
+     (rgEst.ItemIndex < rgEst.Items.Count) then
+    AddFiltro(
+      rgEst.Caption + ': ' + rgEst.Items[rgEst.ItemIndex]
+    );
+
+  if (rgSit.ItemIndex >= 0) and
+     (rgSit.ItemIndex < rgSit.Items.Count) then
+    AddFiltro(
+      rgSit.Caption + ': ' + rgSit.Items[rgSit.ItemIndex]
+    );
+
+  // Atualiza os critérios dos relatórios.
   lPeriodoSint.Caption := LFiltro;
   ppLabel30.Caption := LFiltro;
 end;
+
+
 
 procedure TfrmImpressaoProcessosOPFollowUp.SetlblRecordsCaption(const ARecordCount: Integer);
 begin
