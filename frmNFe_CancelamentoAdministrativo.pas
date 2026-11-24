@@ -930,6 +930,7 @@ begin
                               PedidosItensValor_II.Value              := NotasItensValor_II.Value;
                               PedidosItensValor_BCICMSOper.Value      := NotasItensValor_BCICMSOper.Value;
                               PedidosItensAliquota_ICMSOper.Value     := NotasItensAliquota_ICMSOper.Value;
+                              PedidosItensAliquota_ICMSInter.Value    := NotasItensAliquota_ICMSInter.Value;
                               PedidosItensValor_ICMSOper.Value        := NotasItensValor_ICMSOper.Value;
                               PedidosItensValor_BCICMSSub.Value       := NotasItensValor_BCICMSSub.Value;
                               PedidosItensAliquota_ICMSSub.Value      := NotasItensAliquota_ICMSSub.Value;

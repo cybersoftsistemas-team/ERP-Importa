@@ -877,6 +877,9 @@ begin
                            PedidosItensAliquota_ICMSIntegral.Value := ProcessosDOCAliquota_ICMS.AsFloat;
                         end;
 
+                        // Alíquota interestadual das UF envolvidas (DIFAL).
+                        PedidosItensAliquota_ICMSInter.Value := PedidosItensAliquota_ICMSOper.Value;
+
                         if TipoNotaVisiveis_DIFAL.AsBoolean then begin
                            // DIFAL.
                            mAliquotaDIFAL := ICMSICMS_Interno.AsFloat;

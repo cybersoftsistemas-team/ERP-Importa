@@ -4599,6 +4599,7 @@ type
     TipoNotaCalculo_VlrICMSAnt: TMemoField;
     UsuariosPedidoRep_FaturarPed: TBooleanField;
     UsuariosPedidoRep_BaixarPed: TBooleanField;
+    PedidosItensAliquota_ICMSInter: TFloatField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);

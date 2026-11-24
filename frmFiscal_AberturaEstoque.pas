@@ -112,7 +112,7 @@ procedure TFiscal_AberturaEstoque.NavegaBeforeAction(Sender: TObject;Button: TNa
 begin
       With Dados, dmFiscal do begin
            If Button = nbPost then begin
-              ProdutosTransferenciaQuantidade_Entrada.Value := ProdutosTransferenciaQuantidade.Value;
+//              ProdutosTransferenciaQuantidade_Entrada.Value := ProdutosTransferenciaQuantidade.Value;
 
               If Trim(RemoveCaracter('/', '', ProdutosTransferencia.FieldByName('Data_Transferencia').AsString)) = '' then begin
                  MessageDlg('Data de entrada invalida!', mtError, [mbOK], 0);

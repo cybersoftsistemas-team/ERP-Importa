@@ -248,7 +248,7 @@ object Impressao_Estoque_TabelaPreco: TImpressao_Estoque_TabelaPreco
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Cybersoft - Controle de Estoque do Processo'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

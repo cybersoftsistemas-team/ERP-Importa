@@ -3163,3 +3163,13 @@ go
 alter table NotasFiscais add Valor_Liquido money
                             ,Valor_ICMSAntecipado money
 go
+
+--[23/11/2026 17:11:00]
+alter table PedidosItens add Aliquota_ICMSInter float
+go
+alter table NotasItens add Aliquota_ICMSInter float
+go
+update PedidosItens set Aliquota_ICMSInter = Aliquota_ICMSOper
+go
+update NotasItens set Aliquota_ICMSInter = Aliquota_ICMSOPer where DIFAL_Valor > 0
+go

@@ -31,7 +31,8 @@ type
     cProduto: TDBLookupComboBox;
     cCodigo: TDBEdit;
     StaticText1: TStaticText;
-    cAliquotaICMSOper: TDBEdit;
+    cAliquotaICMSOper
+    : TDBEdit;
     cValorICMSOper: TDBEdit;
     StaticText3: TStaticText;
     cAliquotaIPI: TDBEdit;
@@ -2562,7 +2563,10 @@ begin
                  PedidosItensAliquota_ICMSIntegral.Value := ICMSICMS_CAMEX.AsFloat;
               end;
            end;
-           PedidosItensValor_Total.Value := Roundto(PedidosItensValor_Unitario.Value * PedidosItensQuantidade.Value, -2)-PedidosItensDesconto_Valor.Value;
+           PedidosItensValor_Total.Value        := Roundto(PedidosItensValor_Unitario.Value * PedidosItensQuantidade.Value, -2)-PedidosItensDesconto_Valor.Value;
+           
+           // Alíquota interestadual das UF envolvidas (DIFAL).
+           PedidosItensAliquota_ICMSInter.Value := PedidosItensAliquota_ICMSOper.value;
 
            if TipoNotaVisiveis_DIFAL.AsBoolean then begin
               // DIFAL.

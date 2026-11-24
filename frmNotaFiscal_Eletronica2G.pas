@@ -2080,6 +2080,7 @@ begin
                             NotasItensValor_II.Value               := PedidosItensValor_II.Value;
                             NotasItensValor_BCICMSOper.Value       := PedidosItensValor_BCICMSOper.Value;
                             NotasItensAliquota_ICMSOper.Value      := PedidosItensAliquota_ICMSOper.Value;
+                            NotasItensAliquota_ICMSInter.Value     := PedidosItensAliquota_ICMSInter.Value;
                             NotasItensValor_ICMSOper.Value         := PedidosItensValor_ICMSOper.Value;
                             NotasItensValor_BCICMSSub.Value        := PedidosItensValor_BCICMSSub.Value;
                             NotasItensAliquota_ICMSSub.Value       := PedidosItensAliquota_ICMSSub.Value;
@@ -5242,6 +5243,7 @@ begin
 
               // ICMS Destino (Diferencial de alíquota - DIFAL).
               if PedidosItensDIFAL_Valor.Value > 0 then begin
+                 {
                  _ICMSUFDest := Util.ICMSUFDest400(PedidosItensValor_BCDIFAL.Value,               // 01. Valor da Base de Cálculo do ICMS na UF de destino.
                                                    PedidosItensValor_BCFCP.Value,                 // 02. Informar o Valor da Base de Cálculo do FCP na UF Destino
                                                    PedidosItensFCP_Aliquota.Value,                // 03. Percentual adicional inserido na alíquota interna da UF de destino,(FCP) naquela UF.
@@ -5251,6 +5253,17 @@ begin
                                                    PedidosItensValor_FCP.Value,                   // 07. Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino.
                                                    PedidosItensDIFAL_ValorDest.Value,             // 08. Valor do ICMS Interestadual para a UF de destino, já considerando o valor do ICMS relativo FCP.
                                                    PedidosItensDIFAL_ValorOrig.Value);            // 09. Valor do ICMS Interestadual para a UF do remetente.
+                 }
+                 _ICMSUFDest := Util.ICMSUFDest400(PedidosItensValor_BCDIFAL.Value,               // 01. Valor da Base de Cálculo do ICMS na UF de destino.
+                                                   PedidosItensValor_BCFCP.Value,                 // 02. Informar o Valor da Base de Cálculo do FCP na UF Destino
+                                                   PedidosItensFCP_Aliquota.Value,                // 03. Percentual adicional inserido na alíquota interna da UF de destino,(FCP) naquela UF.
+                                                   PedidosItensAliquota_ICMSDest.Value,           // 04. Alíquota adotada nas operações internas na UF de destino.
+                                                   PedidosItensAliquota_ICMSInter.Value,          // 05. Alíquota interestadual das UF envolvidas.
+                                                   ConfiguracaoDIFAL_ICMSPart.Value,              // 06. Percentual de ICMS Interestadual para a UF de destino.
+                                                   PedidosItensValor_FCP.Value,                   // 07. Valor do ICMS relativo ao Fundo de Combate à Pobreza (FCP) da UF de destino.
+                                                   PedidosItensDIFAL_ValorDest.Value,             // 08. Valor do ICMS Interestadual para a UF de destino, já considerando o valor do ICMS relativo FCP.
+                                                   PedidosItensDIFAL_ValorOrig.Value);            // 09. Valor do ICMS Interestadual para a UF do remetente.
+                                                   
               end;
 
               // ICMS Previsto.

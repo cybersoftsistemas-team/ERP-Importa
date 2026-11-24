@@ -2180,8 +2180,8 @@ begin
      if (not DataLimpa(cPerIni.Text)) and (not DataLimpa(cPerFim.Text)) then begin
         cAgrupar.Checked := true;
         cAgrupar.Enabled := (Trim(cClassificacao.Text) <> '') or (Trim(cProcesso.Text) <> '') or (Trim(cBeneficiario.Text) <> '') or
-                         (Trim(cBanco.Text) <> '') or (cProvisorio.Checked) or (not DataLimpa(cPerIni.text)) or
-                         (not DataLimpa(cPerFim.text)) or (trim(cRaizCNPJ.Text) <> '');
+                            (Trim(cBanco.Text) <> '') or (cProvisorio.Checked) or (not DataLimpa(cPerIni.text)) or
+                            (not DataLimpa(cPerFim.text)) or (trim(cRaizCNPJ.Text) <> '');
         PegaDias;
      end;
 end;

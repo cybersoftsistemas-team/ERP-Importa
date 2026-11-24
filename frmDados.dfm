@@ -352,7 +352,6 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = EmpresasBeforePost
     BeforeDelete = EmpresasBeforeDelete
-    Active = True
     Left = 1359
     Top = 14
     object EmpresasCodigo: TIntegerField
@@ -6829,7 +6828,7 @@ object Dados: TDados
         'CIBS, Aliquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Valor_' +
         'CBS, Valor_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS, Valor_CO' +
         'FINSDiferenca, Item_Referencia, Valor_Liquido, Valor_ICMSAntecip' +
-        'ado)'
+        'ado, Aliquota_ICMSInter)'
       'VALUES'
       
         '  (:Pedido, :Item, :Sequencia_SISCOMEX, :Codigo_Mercadoria, :Cod' +
@@ -6874,7 +6873,8 @@ object Dados: TDados
         'centual_IPIDevol, :Valor_BCIBS, :Aliquota_IBS, :Valor_IBS, :Valo' +
         'r_BCCBS, :Aliquota_CBS, :Valor_CBS, :Valor_BCIS, :Aliquota_IS, :' +
         'Valor_IS, :CSTIBS, :CSTCBS, :Valor_COFINSDiferenca, :Item_Refere' +
-        'ncia, :Valor_Liquido, :Valor_ICMSAntecipado)')
+        'ncia, :Valor_Liquido, :Valor_ICMSAntecipado, :Aliquota_ICMSInter' +
+        ')')
     SQLDelete.Strings = (
       'DELETE FROM PedidosItens'
       'WHERE'
@@ -6971,7 +6971,7 @@ object Dados: TDados
         'IS = :Valor_IS, CSTIBS = :CSTIBS, CSTCBS = :CSTCBS, Valor_COFINS' +
         'Diferenca = :Valor_COFINSDiferenca, Item_Referencia = :Item_Refe' +
         'rencia, Valor_Liquido = :Valor_Liquido, Valor_ICMSAntecipado = :' +
-        'Valor_ICMSAntecipado'
+        'Valor_ICMSAntecipado, Aliquota_ICMSInter = :Aliquota_ICMSInter'
       'WHERE'
       
         '  Pedido = :Old_Pedido AND Item = :Old_Item AND Sequencia_SISCOM' +
@@ -7019,7 +7019,7 @@ object Dados: TDados
         'or_BCIBS, Aliquota_IBS, Valor_IBS, Valor_BCCBS, Aliquota_CBS, Va' +
         'lor_CBS, Valor_BCIS, Aliquota_IS, Valor_IS, CSTIBS, CSTCBS, Valo' +
         'r_COFINSDiferenca, Item_Referencia, Valor_Liquido, Valor_ICMSAnt' +
-        'ecipado FROM PedidosItens'
+        'ecipado, Aliquota_ICMSInter FROM PedidosItens'
       'WHERE'
       
         '  Pedido = :Pedido AND Item = :Item AND Sequencia_SISCOMEX = :Se' +
@@ -7803,6 +7803,9 @@ object Dados: TDados
     end
     object PedidosItensValor_ICMSAntecipado: TCurrencyField
       FieldName = 'Valor_ICMSAntecipado'
+    end
+    object PedidosItensAliquota_ICMSInter: TFloatField
+      FieldName = 'Aliquota_ICMSInter'
     end
   end
   object dsPedidosItens: TDataSource
@@ -15562,14 +15565,13 @@ object Dados: TDados
     Top = 340
   end
   object Banco_Empresas: TMSConnection
-    Database = 'Cybersoft_Givotrading_Matriz'
+    Database = 'Cybersoft_ECB_Filial1'
     Options.PersistSecurityInfo = True
     Options.ApplicationName = 'Cybersoft ERP Importa'
     Options.Provider = prSQL
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
-    Connected = True
     LoginPrompt = False
     Left = 87
     Top = 14

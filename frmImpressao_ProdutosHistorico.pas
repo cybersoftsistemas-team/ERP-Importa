@@ -401,7 +401,7 @@ begin
        tItens.SQL.Add('                                   WHEN Motivo = ''IND'' THEN ''* RETORNO MAT.PRIMA INDUSTRIAL.*'' ');
        tItens.SQL.Add('                              END,');
        tItens.SQL.Add('       Processo_Entrada AS Processo,');
-       tItens.SQL.Add('       Quantidade AS Qtde_Entrada,');
+       tItens.SQL.Add('       Quantidade_Entrada AS Qtde_Entrada,');
        tItens.SQL.Add('       0 AS Qtde_Saida,');
        tItens.SQL.Add('       Estoque,');
        tItens.SQL.Add('       Inventario,');

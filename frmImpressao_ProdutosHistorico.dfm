@@ -2586,7 +2586,7 @@ object Impressao_ProdutosHistorico: TImpressao_ProdutosHistorico
     PrinterSetup.BinName = 'Default'
     PrinterSetup.DocumentName = 'Estoque - Hist'#243'rico Movimenta'#231#227'o dos Produtos'
     PrinterSetup.Duplex = dpNone
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350
@@ -4185,7 +4185,7 @@ object Impressao_ProdutosHistorico: TImpressao_ProdutosHistorico
     PrinterSetup.DocumentName = 'Estoque - Hist'#243'rico Movimenta'#231#227'o dos Produtos'
     PrinterSetup.Duplex = dpNone
     PrinterSetup.Orientation = poLandscape
-    PrinterSetup.PaperName = 'A4 (210 x 297 mm)'
+    PrinterSetup.PaperName = 'A4'
     PrinterSetup.PrinterName = 'Default'
     PrinterSetup.SaveDeviceSettings = False
     PrinterSetup.mmMarginBottom = 6350

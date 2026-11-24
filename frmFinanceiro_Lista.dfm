@@ -3428,7 +3428,7 @@ object Financeiro_Lista: TFinanceiro_Lista
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'
@@ -7022,7 +7022,7 @@ object Financeiro_Lista: TFinanceiro_Lista
     RTFSettings.DefaultFont.Name = 'Arial'
     RTFSettings.DefaultFont.Style = []
     TextFileName = '($MyDocuments)\Report.pdf'
-    TextSearchSettings.DefaultString = '<Texto a localizar>'
+    TextSearchSettings.DefaultString = '<FindText>'
     TextSearchSettings.Enabled = True
     XLSSettings.AppName = 'ReportBuilder'
     XLSSettings.Author = 'ReportBuilder'

@@ -1431,6 +1431,7 @@ type
     NotasValor_ICMSAntecipado: TCurrencyField;
     NotasItensValor_Liquido: TCurrencyField;
     NotasItensValor_ICMSAntecipado: TCurrencyField;
+    NotasItensAliquota_ICMSInter: TFloatField;
     procedure NotasItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure NotasTerceirosItensDescricao_MercadoriaGetText(Sender: TField; var Text: String; DisplayText: Boolean);
     procedure NotasCalcFields(DataSet: TDataSet);

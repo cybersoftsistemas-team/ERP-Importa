@@ -380,7 +380,7 @@ object Fiscal_AberturaEstoque: TFiscal_AberturaEstoque
       Top = 98
       Width = 102
       Height = 21
-      DataField = 'Quantidade'
+      DataField = 'Quantidade_Entrada'
       DataSource = dmFiscal.dsProdutosTransferencia
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -576,7 +576,7 @@ object Fiscal_AberturaEstoque: TFiscal_AberturaEstoque
       end
       item
         Expanded = False
-        FieldName = 'Quantidade'
+        FieldName = 'Quantidade_Entrada'
         Title.Alignment = taCenter
         Title.Font.Charset = DEFAULT_CHARSET
         Title.Font.Color = clWindowText
