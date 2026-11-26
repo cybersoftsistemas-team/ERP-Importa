@@ -610,6 +610,8 @@ type
     dsArmazem: TDataSource;
     N4: TMenuItem;
     AlterarValor1: TMenuItem;
+    cData_Entrega: TDBDateEdit;
+    StaticText25: TStaticText;
     procedure bSairClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure NavegaClick(Sender: TObject; Button: TNavigateBtn);

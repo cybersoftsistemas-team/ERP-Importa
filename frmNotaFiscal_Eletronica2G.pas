@@ -518,6 +518,8 @@ type
     EmailMSg: TIdMessage;
     TabSheet4: TTabSheet;
     mAnalise: TMemo;
+    cDataEntrega: TDateEdit;
+    StaticText4: TStaticText;
     procedure bSairClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
@@ -593,6 +595,7 @@ var
   ide_xJust,
   ide_dEmi310,
   ide_dSaiEnt310,
+  ide_dEntrega,
   ide_tpNFCred,
   ide_tpNFDeb,
   ide_verProc:widestring;
@@ -767,7 +770,7 @@ var
 
   //======= Assinatura NFe  ========
   NFE_xmlDoc,
-  xmlassinado,
+  xmlAssinado,
   MsgResultado: WideString;
   xmlProtocolo: TMemo;
   mDir        : string;
@@ -1019,6 +1022,9 @@ procedure TNotaFiscal_Eletronica2G.bEnviarClick(Sender: TObject);
 Var
     mSel    : Integer;
     mParcela: Integer;
+    msgResultado: widestring;
+    Util: NFe_Util_2G_Interface;
+    res: integer;
 begin
        if not bEnviar.Enabled then Abort;
        bEnviar.Enabled := false;
@@ -1386,6 +1392,7 @@ begin
 
                    TipoNota.Locate('Codigo', tbNotas.FieldByName('Tipo_Nota').AsInteger, [loCaseInsensitive]);
 
+                   
                    DANFE_Retrato.AllowPrintToFile := True;
                    DANFE_Retrato.DeviceType       := dtPDF;
                    DANFE_Retrato.TextFileName     := mAnexo;
@@ -1395,7 +1402,21 @@ begin
                    DANFE_Retrato.Print;
                    DANFE_Retrato.FreeOnRelease;
                    DANFE_Retrato.Reset;
-
+                   
+                   {                                              
+                   Util := CoUtil.Create;
+                   res  := util.geraPdfDANFE(xmlAssinado                              // informar uma string com o XML da NF-e ou procNFe que deseja gerar o PDF.
+                                            ,''                                       // informar a forma de identificação do emitente, possibilidades.
+                                            ,'S'                                      // informar S ou I para indicar a posição onde será gerado o quadro do Recibo de Entrega: posição [S]uperior ou posição [I]nferior].
+                                            ,'S'                                      // informar S ou N para indicar a impressão do quadro Fatura/Duplicatas, se existir informação o quadro Fatura/Duplicatas será impresso independente do valor informado.   
+                                            ,'S'                                      // informar S ou N para indicar a impressão do quadro ISSQN, se existir informação de ISSQN o quadro ISSQN será impresso independente do valor informado.
+                                            ,''                                       // informar o número e a data e hora de registro do DPEC quando a NF-e tiver sido emitido em contingência DPEC
+                                            ,'Z'                                      // informar L ou T ou B ou Z para indicar a forma de separação dos itens de detalhes.
+                                            ,'[VISUALIZAR][RODAPE=texto do rodape]'   // Gerar arquivo PDF - informar o nome do arquivo PDF que será gravado, se o conteúdo for omitido, a PDF será gerado para visualização. 
+                                            ,msgResultado);
+                   cMensagens.lines.add('Gerando DNAFE: '+msgResultado);
+                   }
+                                     
                    RegistraPasso('7.1');
 
                    // Enviando o XML da nota fiscal para "Cliente/Fornecedor/Armazém".
@@ -1665,12 +1686,14 @@ begin
 
            // Copiando os dados do pedido para a nota fiscal.
            Notas.Append;
-                 NotasNumero.Value        := mNota;
-                 NotasPedido.Value        := PedidosNumero.Value;
-                 NotasLote.Value          := PedidosLote.Value;
-                 NotasPedido_Nota.Value   := PedidosPedido_Nota.Value;
-                 NotasSaida_Entrada.Value := PedidosSaida_Entrada.Value;
-                 NotasData_Emissao.Value  := cDataEmissao.Date;
+                 NotasNumero.Value           := mNota;
+                 NotasPedido.Value           := PedidosNumero.Value;
+                 NotasLote.Value             := PedidosLote.Value;
+                 NotasPedido_Nota.Value      := PedidosPedido_Nota.Value;
+                 NotasSaida_Entrada.Value    := PedidosSaida_Entrada.Value;
+                 NotasData_Emissao.Value     := cDataEmissao.Date;
+                 NotasData_Entrega.Value     := cDataEntrega.Date;
+                 NotasAtualiza_Entrega.Value := 0;
 
                  If Trim(RemoveCaracter('/','',cDataEntradaSaida.Text)) <> '' then begin
                     NotasData_EntradaSaida.Value := cDataEntradaSaida.Date;
@@ -1864,6 +1887,7 @@ begin
                  NotasValor_IS.Value                   := PedidosValor_IS.ascurrency;
                  NotasValor_Liquido.Value              := PedidosValor_Liquido.ascurrency;
                  NotasValor_ICMSAntecipado.Value       := PedidosValor_ICMSAntecipado.ascurrency;
+                 NotasData_Entrega.Value               := cDataEntrega.date;
            Notas.Post;
 
            // Capa da nota salva.
@@ -4026,15 +4050,20 @@ begin
                ide_tpNFCred := ''
             End;
 
-            ide_nNF     := PedidosNota.Value;
-            ide_dEmi    := cDataEmissao.Date;
-            ide_dEmi310 := DataUTC(cDataEmissao.Date);
-            ide_dSaiEnt := cDataEntradaSaida.Date;
+            ide_nNF      := PedidosNota.Value;
+            ide_dEmi     := cDataEmissao.Date;
+            ide_dEmi310  := DataUTC(cDataEmissao.Date);
+            ide_dSaiEnt  := cDataEntradaSaida.Date;
             If not DataLimpa(cDataEntradaSaida.Text) then
                ide_dSaiEnt310 := DataUTC(cDataEntradaSaida.Date)
             else
                ide_dSaiEnt310 := '';
 
+            if not DataLimpa(cDataEntrega.Text) then
+               ide_dEntrega := DataUTC(cDataEntradaSaida.Date)
+            else
+               ide_dEntrega := '';
+            
             ide_tpNF   := PedidosSaida_Entrada.AsInteger;
             ide_tpImp  := ConfiguracaoNFE_DANFE_Orientacao.Value;
             ide_tpAmb  := Menu_Principal.Amb_Producao;
@@ -4167,7 +4196,7 @@ begin
                                             ,ide_tpNFCred                                                    // informar o Tipo de Nota de Crédito.
                                             ,''                                                              // informar o grupo gCompraGov - Compra Governamental.
                                             ,''                                                              // informar a(s) chave(s) das NFe(s) gPagAntecipado - Notas de antecipação de pagamentos.
-                                            ,''                                                              // Data da previsão de entrega ou disponibilização do bem no formato AAAA-MM-DD.
+                                            ,ide_dEntrega                                                    // Data da previsão de entrega ou disponibilização do bem no formato AAAA-MM-DD.
                                             ,'');                                                            // Código indicador do local da operação de fornecimento.
                                             
             // Dados do emitente.
@@ -4691,7 +4720,6 @@ begin
                Pedidos.Post;
           end;
        end;
-       util := nil;;
        Janela_Processamento.close;
        
        // Verifica se o tamanho do XML é maior que 500kb.
@@ -4700,6 +4728,8 @@ begin
           cMensagens.Lines.Add('Reduza o número de itens da nota fiscal e tente novamente...');
           Inc(mQtdErros);
        end;
+
+       util := nil;
 end;
 
 // Monta os itens da nota o arquivo XML.
@@ -5647,7 +5677,12 @@ begin
 end;
 
 procedure TNotaFiscal_Eletronica2G.bDANFEClick(Sender: TObject);
+var
+   Util: NFe_Util_2G_Interface;
+   res: integer;
+   xml:widestring;
 begin
+{
       DANFE_Retrato.AllowPrintToFile := True;
       DANFE_Retrato.DeviceType       := dtScreen;
       DANFE_Retrato.TextFileName     := '';
@@ -5655,6 +5690,24 @@ begin
       DANFE_Retrato.Print;
       DANFE_Retrato.FreeOnRelease;
       DANFE_Retrato.Reset;
+}
+      Util := CoUtil.create;
+      
+//      XML  := Util.LeArquivoANSI('c:\temp\NFe_42240708947074000303550010000118771990450733.xml', res, msgResultado);
+      
+      if Res = 7330 then begin
+         res  := util.geraPdfDANFE(xml                                      // informar uma string com o XML da NF-e ou procNFe que deseja gerar o PDF.
+                                  ,''                                       // informar a forma de identificação do emitente, possibilidades.
+                                  ,'S'                                      // informar S ou I para indicar a posição onde será gerado o quadro do Recibo de Entrega: posição [S]uperior ou posição [I]nferior].
+                                  ,'S'                                      // informar S ou N para indicar a impressão do quadro Fatura/Duplicatas, se existir informação o quadro Fatura/Duplicatas será impresso independente do valor informado.   
+                                  ,'S'                                      // informar S ou N para indicar a impressão do quadro ISSQN, se existir informação de ISSQN o quadro ISSQN será impresso independente do valor informado.
+                                  ,''                                       // informar o número e a data e hora de registro do DPEC quando a NF-e tiver sido emitido em contingência DPEC
+                                  ,'Z'                                      // informar L ou T ou B ou Z para indicar a forma de separação dos itens de detalhes.
+                                  , '[RODAPE=powered by ERP Importa - Cybersoft Sistemas Ltda. - (C) 2026 - Todos os direitos reservados.][VISUALIZAR][ARQUIVO=TESTE.PDF][PASTA=C:\TEMP\]'      // Gerar arquivo PDF - informar o nome do arquivo PDF que será gravado, se o conteúdo for omitido, a PDF será gerado para visualização. 
+                                  ,msgResultado);
+      end else begin
+         MessageDlg( msgResultado, mtInformation, [mbOk], 0);                                
+      end;
 end;
  
 procedure TNotaFiscal_Eletronica2G.FormCreate(Sender: TObject);
@@ -6838,8 +6891,8 @@ begin
      Grade.Enabled := false;
      Grade.UnselectAll;
      Grade.SelectedRows.CurrentRowSelected := True;
-     If Dados.PedidosNumero.AsInteger > 0 then
-        PegaErros;
+     cDataEntrega.date := iif(DataLimpa(Dados.PedidosData_Entrega.asstring), cDataEmissao.date, Dados.PedidosData_Emissao.value);
+     If Dados.PedidosNumero.AsInteger > 0 then PegaErros;
      Grade.Enabled := true;
 end;
 

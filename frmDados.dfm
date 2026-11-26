@@ -10,9 +10,8 @@ object Dados: TDados
     Options.KeepDesignConnected = False
     Username = 'sa'
     Server = 'SERVER-DADOS'
-    Connected = True
     LoginPrompt = False
-    Left = 17
+    Left = 16
     Top = 14
     EncryptedPassword = '9CFF86FF9DFF9AFF8DFF8CFF90FF99FF8BFFBFFFCEFFCDFFCCFF'
   end
@@ -5621,7 +5620,7 @@ object Dados: TDados
         'entivo_Codigo, Aliquota_ICMSPresumido, Valor_BCDIFALST, DIFAL_Va' +
         'lorST, Valor_BCPISST, Valor_BCCOFINSST, Valor_IPIDevol, Valor_BC' +
         'IBS, Valor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_IS, Va' +
-        'lor_Liquido, Valor_ICMSAntecipado)'
+        'lor_Liquido, Valor_ICMSAntecipado, Data_Entrega)'
       'VALUES'
       
         '  (:Numero, :Saida_Entrada, :Data_Emissao, :Data_EntradaSaida, :' +
@@ -5676,7 +5675,7 @@ object Dados: TDados
         'Codigo, :Aliquota_ICMSPresumido, :Valor_BCDIFALST, :DIFAL_ValorS' +
         'T, :Valor_BCPISST, :Valor_BCCOFINSST, :Valor_IPIDevol, :Valor_BC' +
         'IBS, :Valor_IBS, :Valor_BCCBS, :Valor_CBS, :Valor_BCIS, :Valor_I' +
-        'S, :Valor_Liquido, :Valor_ICMSAntecipado)')
+        'S, :Valor_Liquido, :Valor_ICMSAntecipado, :Data_Entrega)')
     SQLDelete.Strings = (
       'DELETE FROM Pedidos'
       'WHERE'
@@ -5790,7 +5789,7 @@ object Dados: TDados
         'CIBS, Valor_IBS = :Valor_IBS, Valor_BCCBS = :Valor_BCCBS, Valor_' +
         'CBS = :Valor_CBS, Valor_BCIS = :Valor_BCIS, Valor_IS = :Valor_IS' +
         ', Valor_Liquido = :Valor_Liquido, Valor_ICMSAntecipado = :Valor_' +
-        'ICMSAntecipado'
+        'ICMSAntecipado, Data_Entrega = :Data_Entrega'
       'WHERE'
       '  Numero = :Old_Numero')
     SQLRefresh.Strings = (
@@ -5844,7 +5843,7 @@ object Dados: TDados
         ' Incentivo_Codigo, Aliquota_ICMSPresumido, Valor_BCDIFALST, DIFA' +
         'L_ValorST, Valor_BCPISST, Valor_BCCOFINSST, Valor_IPIDevol, Valo' +
         'r_BCIBS, Valor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_IS' +
-        ', Valor_Liquido, Valor_ICMSAntecipado FROM Pedidos'
+        ', Valor_Liquido, Valor_ICMSAntecipado, Data_Entrega FROM Pedidos'
       'WHERE'
       '  Numero = :Numero')
     SQLLock.Strings = (
@@ -6777,6 +6776,9 @@ object Dados: TDados
     end
     object PedidosValor_ICMSAntecipado: TCurrencyField
       FieldName = 'Valor_ICMSAntecipado'
+    end
+    object PedidosData_Entrega: TDateTimeField
+      FieldName = 'Data_Entrega'
     end
   end
   object dsPedidos: TDataSource
@@ -10096,7 +10098,6 @@ object Dados: TDados
     RefreshOptions = [roAfterInsert, roAfterUpdate, roBeforeEdit]
     BeforePost = ModalidadesPgtoBeforePost
     BeforeDelete = ModalidadesPgtoBeforeDelete
-    Active = True
     Left = 169
     Top = 193
     object ModalidadesPgtoCodigo: TSmallintField

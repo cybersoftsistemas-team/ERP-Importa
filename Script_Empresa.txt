@@ -3173,3 +3173,9 @@ update PedidosItens set Aliquota_ICMSInter = Aliquota_ICMSOper
 go
 update NotasItens set Aliquota_ICMSInter = Aliquota_ICMSOPer where DIFAL_Valor > 0
 go
+
+--[25/11/2026 09:54:00]
+alter table Pedidos add Data_Entrega datetime
+go
+alter table NotasFiscais add Data_Entrega datetime
+go

@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DBCtrls, Vcl.StdCtrls, RXCtrls, Vcl.ExtCtrls, Mask,
   DB, DBAccess, MSAccess, Funcoes, MaskUtils, Vcl.ComCtrls, ppParameter, ppBands, ppClass, ppMemo, raCodMod, ppReport, ppSubRpt, ppCtrls, ppPrnabl, ppDBPipe, CalcExpress, RxLookup, ClipBrd,
-  RxDBComb, RXDBCtrl, jpeg, Grids, DBGrids, ppDesignLayer, ppModule, ppStrtch, ppCache, ppProd, ppDB, ppComm, ppRelatv, MemDS, System.UITypes, Vcl.Buttons, math;
+  RxDBComb, RXDBCtrl, jpeg, Grids, DBGrids, ppDesignLayer, ppModule, ppStrtch, ppCache, ppProd, ppDB, ppComm, ppRelatv, MemDS, System.UITypes, Vcl.Buttons, math, RxToolEdit;
 
 type
   TPedido_Outros = class(TForm)
@@ -603,6 +603,8 @@ type
     dsArmazem: TDataSource;
     bPesqArm: TSpeedButton;
     titem: TMSQuery;
+    cData_Entrega: TDBDateEdit;
+    StaticText32: TStaticText;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure bSairClick(Sender: TObject);

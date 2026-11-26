@@ -473,7 +473,8 @@ uses
   uNFSeXMLReader in 'uNFSeXMLReader.pas',
   frmImpressao_ProcessosOP_FollowUp in 'frmImpressao_ProcessosOP_FollowUp.pas' {frmImpressaoProcessosOPFollowUp},
   CTe_Util_TLB in 'CTe_Util_TLB.pas',
-  NFe_Util_2G_TLB in 'NFe_Util_2G_TLB.pas';
+  NFe_Util_2G_TLB in 'NFe_Util_2G_TLB.pas',
+  frmNFe_PrevisaoEntrega in 'frmNFe_PrevisaoEntrega.pas' {NFe_PrevisaoEntrega};
 
 {$R *.res}
 
@@ -496,6 +497,7 @@ begin
   Application.CreateForm(TdmFiscal, dmFiscal);
   Application.CreateForm(TdmComercial, dmComercial);
   Application.CreateForm(TdmDespacho, dmDespacho);
+  Application.CreateForm(TNFe_PrevisaoEntrega, NFe_PrevisaoEntrega);
   Application.Run;
 end.
 

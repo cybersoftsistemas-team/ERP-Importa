@@ -523,6 +523,7 @@ type
     mnFaturamento_Industrial: TMenuItem;
     ServiosPrestadosNFSew1: TMenuItem;
     bNFS: TSpeedButton;
+    AlteraodaDatadePrevisodeEntrega1: TMenuItem;
     procedure mnCadastro_EmpresasClick(Sender: TObject);
     procedure mnCadastro_ClientesClick(Sender: TObject);
     procedure mnCadastro_FornecedoresClick(Sender: TObject);
@@ -868,6 +869,7 @@ type
     procedure mnFaturamento_IndustrialClick(Sender: TObject);
     procedure ServiosPrestadosNFSew1Click(Sender: TObject);
     procedure bNFSClick(Sender: TObject);
+    procedure AlteraodaDatadePrevisodeEntrega1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -1275,7 +1277,7 @@ uses
 
      // Controle de Embarques.
      frmProcesso_ControleNavios,
-     frmUtilitarios_AjustarEstoqueNavio, frmImpressao_FinanceirosOP_PagarReceberSimp, frmImpressao_FinanceirosOP_ControleAbertos, frmProcesso_DUIMP, frmCadastro_LPCO, frmIndustrializacao, frmPedido_NFS, frmFichaEstoque3;
+     frmUtilitarios_AjustarEstoqueNavio, frmImpressao_FinanceirosOP_PagarReceberSimp, frmImpressao_FinanceirosOP_ControleAbertos, frmProcesso_DUIMP, frmCadastro_LPCO, frmIndustrializacao, frmPedido_NFS, frmFichaEstoque3, frmNFe_PrevisaoEntrega;
      
 
 {$R *.dfm}
@@ -3570,6 +3572,13 @@ begin
       NFe_CartaCorrecaoItem := TNFe_CartaCorrecaoItem.Create(Self);
       NFe_CartaCorrecaoItem.Caption := Caption;
       NFe_CartaCorrecaoItem.ShowModal;
+end;
+
+procedure TMenu_Principal.AlteraodaDatadePrevisodeEntrega1Click(Sender: TObject);
+begin
+      NFe_PrevisaoEntrega := TNFe_PrevisaoEntrega.Create(Self);
+      NFe_PrevisaoEntrega.Caption := Caption;
+      NFe_PrevisaoEntrega.ShowModal;
 end;
 
 procedure TMenu_Principal.lEmpresaClick(Sender: TObject);

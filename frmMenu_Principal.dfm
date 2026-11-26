@@ -2805,6 +2805,10 @@ object Menu_Principal: TMenu_Principal
             OnClick = AjustarCampodeQuantidade1Click
           end
         end
+        object AlteraodaDatadePrevisodeEntrega1: TMenuItem
+          Caption = 'Atualiza'#231#227'o da Data de &Previs'#227'o de Entrega'
+          OnClick = AlteraodaDatadePrevisodeEntrega1Click
+        end
         object N2: TMenuItem
           Caption = '-'
         end

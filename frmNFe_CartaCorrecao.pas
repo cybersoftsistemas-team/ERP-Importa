@@ -158,6 +158,7 @@ var
   IndText,
   TipoAmbiente : Integer;
   mCancela     : Boolean;
+  
 implementation
 
 uses frmDados, frmDMFiscal, frmMenu_Principal, frmDMContab;

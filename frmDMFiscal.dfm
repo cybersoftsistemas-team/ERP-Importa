@@ -156,7 +156,8 @@ object dmFiscal: TdmFiscal
         'centivo_Codigo, Aliquota_ICMSPresumido, Valor_BCDIFALST, DIFAL_V' +
         'alorST, Valor_BCPISST, Valor_BCCOFINSST, Valor_IPIDevol, Valor_B' +
         'CIBS, Valor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_IS, V' +
-        'alor_Liquido, Valor_ICMSAntecipado)'
+        'alor_Liquido, Valor_ICMSAntecipado, Data_Entrega, Atualiza_Entre' +
+        'ga)'
       'VALUES'
       
         '  (:Numero, :Pedido, :Saida_Entrada, :Data_Emissao, :Data_Entrad' +
@@ -214,7 +215,8 @@ object dmFiscal: TdmFiscal
         ':Incentivo_Codigo, :Aliquota_ICMSPresumido, :Valor_BCDIFALST, :D' +
         'IFAL_ValorST, :Valor_BCPISST, :Valor_BCCOFINSST, :Valor_IPIDevol' +
         ', :Valor_BCIBS, :Valor_IBS, :Valor_BCCBS, :Valor_CBS, :Valor_BCI' +
-        'S, :Valor_IS, :Valor_Liquido, :Valor_ICMSAntecipado)')
+        'S, :Valor_IS, :Valor_Liquido, :Valor_ICMSAntecipado, :Data_Entre' +
+        'ga, :Atualiza_Entrega)')
     SQLDelete.Strings = (
       'DELETE FROM NotasFiscais'
       'WHERE'
@@ -336,7 +338,8 @@ object dmFiscal: TdmFiscal
         'Valor_BCIBS = :Valor_BCIBS, Valor_IBS = :Valor_IBS, Valor_BCCBS ' +
         '= :Valor_BCCBS, Valor_CBS = :Valor_CBS, Valor_BCIS = :Valor_BCIS' +
         ', Valor_IS = :Valor_IS, Valor_Liquido = :Valor_Liquido, Valor_IC' +
-        'MSAntecipado = :Valor_ICMSAntecipado'
+        'MSAntecipado = :Valor_ICMSAntecipado, Data_Entrega = :Data_Entre' +
+        'ga, Atualiza_Entrega = :Atualiza_Entrega'
       'WHERE'
       
         '  Numero = :Old_Numero AND Saida_Entrada = :Old_Saida_Entrada AN' +
@@ -395,7 +398,8 @@ object dmFiscal: TdmFiscal
         ', Incentivo_Codigo, Aliquota_ICMSPresumido, Valor_BCDIFALST, DIF' +
         'AL_ValorST, Valor_BCPISST, Valor_BCCOFINSST, Valor_IPIDevol, Val' +
         'or_BCIBS, Valor_IBS, Valor_BCCBS, Valor_CBS, Valor_BCIS, Valor_I' +
-        'S, Valor_Liquido, Valor_ICMSAntecipado FROM NotasFiscais'
+        'S, Valor_Liquido, Valor_ICMSAntecipado, Data_Entrega, Atualiza_E' +
+        'ntrega FROM NotasFiscais'
       'WHERE'
       
         '  Numero = :Numero AND Saida_Entrada = :Saida_Entrada AND Data_E' +
@@ -419,6 +423,7 @@ object dmFiscal: TdmFiscal
     FetchRows = 1
     BeforePost = NotasBeforePost
     OnCalcFields = NotasCalcFields
+    Active = True
     Left = 73
     Top = 16
     object NotasNumero: TIntegerField
@@ -764,7 +769,7 @@ object dmFiscal: TdmFiscal
       FieldName = 'NFe_Protocolo'
       Origin = 'NotasFiscais.NFe_Protocolo'
       FixedChar = True
-      Size = 15
+      Size = 17
     end
     object NotasNfe_DataRecibo: TDateTimeField
       FieldName = 'Nfe_DataRecibo'
@@ -1362,6 +1367,12 @@ object dmFiscal: TdmFiscal
     end
     object NotasValor_ICMSAntecipado: TCurrencyField
       FieldName = 'Valor_ICMSAntecipado'
+    end
+    object NotasData_Entrega: TDateTimeField
+      FieldName = 'Data_Entrega'
+    end
+    object NotasAtualiza_Entrega: TSmallintField
+      FieldName = 'Atualiza_Entrega'
     end
   end
   object dsNotasItens: TDataSource

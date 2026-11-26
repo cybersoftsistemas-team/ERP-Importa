@@ -1,15 +1,53 @@
 FlexDocs Documentos Eletrônicos
 
-DLL de utilidades da NF-e - NFe_Util_2G_v5.04a (C) 2008-2026 - Todos os direitos reservados
+DLL de utilidades da NF-e - NFe_Util_2G_v5.05a (C) 2008-2026 - Todos os direitos reservados
 
 Vide guia on-line, disponível em www.flexdocs.net/guiaNFe
+
+2026-11-14
+
+  * [RTC-5.0.5a-001] - correção do nome da tag tpRegimeIBSCBS no grupo emit
+
+2026-11-13
+
+  - NT2026-005 - Simples Nacional
+
+  * [RTC-5.0.5-001] - acréscimo da tag tpRegimeIBSBS no grupo emit
+
+    string emitenteSN(string CNPJ, string IE, string IEST_Opc, string xNome, string xFant_Opc, string xLgr, string nro, string xCpl_Opc, string xBairro, string cMun, string xMun, string CEP_Opc, string UF, string fone_Opc, string CRT_Opc, string ISUFEmit_Opc, string tpRegimeIBSCBS_Opc)
+
+  * [RTC-5.0.5-002] - acréscimo da tag cAtivSN no grupo prod
+
+    string produtoSN(string cProd, string cEAN, string xProd, string NCM, string NVE_Opc, string CEST_Opc, string indEscala_Opc, string CNPJFab_Opc, string cBenef_Opc, string EXTIPI, int CFOP, string uCom, string qCom, string vUnCom, double vProd, string cEANTrib, string uTrib, string qTrib, string vUnTrib, double vFrete, double vSeg,double vDesc, double vOutro, int indTot, string DI, string detExport_Opc, string DetEspecifico, string xPed, string nItemPed, string nFCI_Opc, string rastro_Opc, string credPresumido_Opc, int indBemMovelUsado_Opc, string tpCredPresIBSZFM_Opc, string vUnComLiq, double vProdLiq, string cAtivSN_Opc)
+
+  * [RTC-5.0.5-003] - acréscimo da tag cAtivSN no produto400VFP - VFP
+
+    camposV400 = "indEscala | CNPJFab | cBenef | nFCI | rastro | credPresumido | indBemMovelUsado | tpCredPresIBSZFM | vUnComLiq | vProdLiq | cAtivSN" camposV400 = "indEscala | CNPJFab | cBenef | nFCI | rastro | credPresumido | indBemMovelUsado | tpCredPresIBSZFM | vUnComLiq | vProdLiq" camposV400 = "indEscala | CNPJFab | cBenef | nFCI | rastro | credPresumido | indBemMovelUsado | tpCredPresIBSZFM" camposV400 = "indEscala | CNPJFab | cBenef | nFCI | rastro | credPresumido | indBemMovelUsado" camposV400 = "indEscala | CNPJFab | cBenef | nFCI | rastro | credPresumido" camposV400 = "indEscala | CNPjFab | cBenef | nFCI | rastro"
+
+  * [RTC-5.0.5-004] - grupo gTribSN
+
+    string gTribSN(double pIBSSN_Opc, double vIBSSN_Opc, double pCBSSN_Opc, double vCBSSN_Opc )
+
+  * [RTC-5.0.5-005] - acréscimo do grupo gTribSN no IBSCBS
+
+    string IBSCBSSN(string CST, string cClassTrib, string indDoacao_Opc, string gTributo, string gEstornoCred_Opc, string gCredPresumido_Opc, string SN)
+
+  * [RTC-5.0.5-006] - grupo gTribSN do total
+
+    string gTribSNTot(double vIBSSN, double vCBSSN)
+
+  * [RTC-5.0.5-007] - acréscimo do grupo gTribSN no gIBSCBSTot
+
+    string IBSCBSTotSN(double vBCIBSCBS, string gIBS_Opc, string gCBS_Opc, string gMono_Opc, string gEstornoCred_Opc, string gTribSN_Opc)
+
+ *  [RTC-5.0.5-008] - alteração para sempre gerar a tag vProdLiqTot do grupo total
 
 
 2026-10-27
 
  * [RTC-5.0.4a-001] - correção da posição do vProdLiqTot
 
-                     string totalRTCvProdLiqTot(string ICMSTot, string ISSQNtot, string retTrib, double vIS, string IBSCBSTot, double vNFTot, double vProdLiqTot)
+   string totalRTCvProdLiqTot(string ICMSTot, string ISSQNtot, string retTrib, double vIS, string IBSCBSTot, double vNFTot, double vProdLiqTot)
 
 
 2026-10-20
@@ -18,7 +56,7 @@ Vide guia on-line, disponível em www.flexdocs.net/guiaNFe
 
  * [RTC-5.0.4-001] - vUnComLiq e vProdLiq
 
-                    string produtoRTCvProdLiq(string cProd, string cEAN, string xProd, string NCM, string NVE_Opc, string CEST_Opc, string indEscala_Opc, string CNPJFab_Opc, string cBenef_Opc, string EXTIPI_Opc, int CFOP, string uCom, string qCom, string vUnCom, double vProd, string cEANTrib, string uTrib, string qTrib, string vUnTrib, double vFrete, double vSeg, double vDesc, double vOutro, int indTot, string DI_Opc, string detExport_Opc, string DetEspecifico_Opc, string xPed_Opc, string nItemPed_Opc, string nFCI_Opc, string rastro_Opc, string credPresumido_Opc, int indBemMovelUsado_Opc, string tpCredPresIBSZFM_Opc, string vUnComLiq, double vProdLiq)
+   string produtoRTCvProdLiq(string cProd, string cEAN, string xProd, string NCM, string NVE_Opc, string CEST_Opc, string indEscala_Opc, string CNPJFab_Opc, string cBenef_Opc, string EXTIPI_Opc, int CFOP, string uCom, string qCom, string vUnCom, double vProd, string cEANTrib, string uTrib, string qTrib, string vUnTrib, double vFrete, double vSeg, double vDesc, double vOutro, int indTot, string DI_Opc, string detExport_Opc, string DetEspecifico_Opc, string xPed_Opc, string nItemPed_Opc, string nFCI_Opc, string rastro_Opc, string credPresumido_Opc, int indBemMovelUsado_Opc, string tpCredPresIBSZFM_Opc, string vUnComLiq, double vProdLiq)
 
  * [RTC-5.0.4-002] - vUnComLiq e vProdLiq VFP - produto400VFP
 
@@ -39,12 +77,12 @@ Vide guia on-line, disponível em www.flexdocs.net/guiaNFe
 
  * [RTC-5.0.4-006] - NF-e
 
-                     string NFeRTC(string versao, string Id, string ide, string emit, string avulsa_Opc, string dest_Opc, string retirada_Opc, string entrega_Opc, string detalhes, string total, string transp, string cobr_Opc, string pag_Opc, string infAdic_Opc, string exporta_Opc, string compra_Opc, string cana_Opc, string autXML_Opc, string infRespTec_Opc, string infIntermed_Opc, string agropecuario_Opc, string gPgtoVinc_Opc)
+   string NFeRTC(string versao, string Id, string ide, string emit, string avulsa_Opc, string dest_Opc, string retirada_Opc, string entrega_Opc, string detalhes, string total, string transp, string cobr_Opc, string pag_Opc, string infAdic_Opc, string exporta_Opc, string compra_Opc, string cana_Opc, string autXML_Opc, string infRespTec_Opc, string infIntermed_Opc, string agropecuario_Opc, string gPgtoVinc_Opc)
 
 
  * [RTC-5.0.4-007] - Evento 110300 - vinculação da transação de pagamento da DF-e
 
-                    string ev110300_vinculaPagto(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, int tpAutor, string CNPJAutor, string cOrgaoAutor, string chaveNFe, string dhEvento, int nSeqEvento, string verAplic, string nProt, string idTransacao, string tpMeioPgto, string CNPJReceb, string CNPJBasePSP, out string nProtocolo, out string dProtocolo, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, string proxy, string usuario, string senha, string licenca) 
+   string ev110300_vinculaPagto(string siglaWS, int tipoAmbiente, string nomeCertificado, string versao, int tpAutor, string CNPJAutor, string cOrgaoAutor, string chaveNFe, string dhEvento, int nSeqEvento, string verAplic, string nProt, string idTransacao, string tpMeioPgto, string CNPJReceb, string CNPJBasePSP, out string nProtocolo, out string dProtocolo, out string msgDados, out string msgRetWS, out int cStat, out string msgResultado, string proxy, string usuario, string senha, string licenca) 
 
 
 

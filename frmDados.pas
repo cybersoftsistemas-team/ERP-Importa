@@ -4600,6 +4600,7 @@ type
     UsuariosPedidoRep_FaturarPed: TBooleanField;
     UsuariosPedidoRep_BaixarPed: TBooleanField;
     PedidosItensAliquota_ICMSInter: TFloatField;
+    PedidosData_Entrega: TDateTimeField;
     procedure ProcessosDOCBeforeDelete(DataSet: TDataSet);
     procedure PedidosItensDescricao_MercadoriaGetText(Sender: TField;var Text: String; DisplayText: Boolean);
     procedure EXTIPIDescricaoGetText(Sender: TField; var Text: String;DisplayText: Boolean);
